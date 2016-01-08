@@ -1,0 +1,20 @@
+<resources>
+
+    <!--px(象素): 屏幕实际的象素，常说的分辨率1024*768pixels，就是横向1024px, 纵向768px，不同设备显示效果相同。
+        in(英寸): 屏幕的物理尺寸, 每英寸等于2.54厘米。
+        mm(毫米): 屏幕的物理尺寸。
+        pt(点)  : 屏幕的物理尺寸。1/72英寸。
+        dp/dip  : 与密度无关的象素，一种基于屏幕密度的抽象单位。在每英寸160点的显示器上，
+                  1dp = 1px。但dp和px的比例会随着屏幕密度的变化而改变，不同设备有不同的显示效果。
+                  设置宽度或者高度等属性时，推荐使用dp(dip)作为单位
+        sp      : 与刻度无关的象素，主要用于字体显示best for textsize，作为和文字相关大小单位。-->
+
+    <!--
+        ML: android:textSize="@dimen/some_name"
+        Java: float dimen = Resources.getDimen(R.dimen.some_name)
+     -->
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+</resources>

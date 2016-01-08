@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.kingz.uiusingListViews"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="20" />
+
+
+    <!-- 创建与删除文件权限 -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <!-- 向SDCard写入数据权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <!-- 网络权限 -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <!-- 主Activity -->
+        <activity
+            android:name="com.kingz.uiusingListViews.MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+				<!-- 决定应用程序是否显示在程序列表里 -->
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- 原生SeekBar -->
+        <activity android:name="com.kingz.uiusingWidgets.UsingSeekBarScrAct"/>
+        <!-- 自定义 SeekBar -->
+        <activity android:name="com.kingz.uiusingWidgets.UsingCustomSeekBar"/>
+        <!-- 绘画的方式画seekBar -->
+        <activity
+            android:name="com.kingz.uiusingMediaTest.CustomCanvasSeekBarAct"
+	        android:screenOrientation="landscape">
+        </activity>
+
+        <!-- progressBar -->
+        <activity android:name="com.kingz.uiusingWidgets.UsingProgressBarAct"/>
+
+        <!-- 布局测试的ListView -->
+        <activity android:name="com.kingz.uiusingListViews.LayoutActivityListView"/>
+
+        <activity android:name="com.kingz.uiusingLayout.LinearLayoutTest_Act"/>
+
+        <!-- 自定义控件的ListView-->
+        <activity android:name=".CustomWidgetsActivity"/>
+        <activity android:name="com.kingz.uiusingActivity.LableTextView_Act"/>
+
+        <!-- 四大组件的listview -->
+        <activity android:name="com.kingz.uiusingListViews.FourComponentListView"/>
+
+        <activity android:name="com.kingz.four_components.ServiceComponentsACT"/>
+
+        <!--文件及bitmap操作的activity-->
+        <activity android:name="com.kingz.uiusingActivity.FileAndPicTestACT"/>
+        <!--BitmapDemo页面-->
+        <activity android:name="com.kingz.uiusingActivity.BitmapActivity"/>
+         <!--图片缓存测试页面-->
+        <activity android:name="com.AsuyncTaskJsonTest.AsynctaskBitmapMainActivity"/>
+
+        <!-- 自定义View -->
+        <activity android:name="com.customview.FingerBallActivity"/>
+
+        <service android:name="com.kingz.four_components.ComponentsOfService"/>
+
+    </application>
+
+</manifest>

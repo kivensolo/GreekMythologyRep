@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">UIUsingListView</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="seek_bar">SeekBar Src</string>
+    <string name="action_settings">Settings</string>
+    <string name="seekbar_info">采用图片资源和颜色：</string>
+
+    <string name="add">增加</string>
+    <string name="reduce">减少</string>
+    <string name="reset">重置</string>
+    <string name="clear">清除</string>
+    <string name="canvas_seekbar_info">绘图测试</string>
+    <string name="checkSdCard">检测SD卡</string>
+    <string name="getDefaultFilePath">获取默认的文件存放路径</string>
+    <string name="inputData">请输入需要保存的数据</string>
+    <string name="desc">
+        把输入的数据保存在Sd卡中或者手机内存中，简单的SD卡数据读写以及文件读写，需要加权限:创建与删除文件权限--MOUNT_UNMOUNT_FILESYSTEMS;向SDCard写入数据权限:WRITE_EXTERNAL_STORAGE
+    </string>
+    <string name="save_data">保存</string>
+    <string name="underlinSpanStr">UnderlinSpan</string>
+
+</resources>
