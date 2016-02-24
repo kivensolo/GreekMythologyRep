@@ -7,8 +7,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import com.kingz.uiusingListViews.R;
 
-import java.security.PrivateKey;
-
 /**
  * Created by KingZ on 2015/11/3.
  * Discription:

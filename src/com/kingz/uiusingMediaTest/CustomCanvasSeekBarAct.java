@@ -9,10 +9,7 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
-
-import com.customview.CuastomProgressbar;
 import com.customview.CusSeekBarView;
-import com.kingz.uiusingListViews.R;
 
 /**
  * @author: KingZ

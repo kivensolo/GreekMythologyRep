@@ -2,7 +2,6 @@ package com.kingz.uiusingLayout;
 
 import android.app.Activity;
 import android.os.Bundle;
-
 import com.kingz.uiusingListViews.R;
 
 /**

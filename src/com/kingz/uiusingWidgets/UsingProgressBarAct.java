@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import com.kingz.uiusingListViews.R;
 
 public class UsingProgressBarAct extends Activity implements OnClickListener{

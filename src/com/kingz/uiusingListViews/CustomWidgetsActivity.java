@@ -8,8 +8,8 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
 import com.customview.FingerBallActivity;
+import com.customview.ViewsDeepSearch;
 import com.customview.livstview.CustomListViewActivity;
 import com.customview.livstview.SliderListViewActivity;
 import com.kingz.basic_controls.SpansActivity;
@@ -29,7 +29,7 @@ public class CustomWidgetsActivity extends  Activity implements OnItemClickListe
 		super.onCreate(savedInstanceState);
 
  		//1:加载ListView布局
-		setContentView(R.layout.customWidgets_MainPage);
+		setContentView(R.layout.customwidgets_mainpage);
 		ListView listView = (ListView) findViewById(R.id.widgetsListView_id);
 		//2:初始化适配器
 		mAdapter = new ArrayAdapter<ListBillData>(this, R.layout.list_bill);
@@ -47,6 +47,7 @@ public class CustomWidgetsActivity extends  Activity implements OnItemClickListe
 		mAdapter.add(new ListBillData(this,"Custom ListView",new Intent(this,CustomListViewActivity.class)));
 		mAdapter.add(new ListBillData(this,"自定义左右滑动删除的ListView()存在bug",new Intent(this,SliderListViewActivity.class)));
 		mAdapter.add(new ListBillData(this,"SpanLable",new Intent(this,SpansActivity.class)));
+		mAdapter.add(new ListBillData(this,"ViewsDeepSearch",new Intent(this,ViewsDeepSearch.class)));
 	}
 
 	@Override

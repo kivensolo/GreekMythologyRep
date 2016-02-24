@@ -29,7 +29,7 @@ public class CustomListViewActivity extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.customListViewLayout);
+        setContentView(R.layout.customlistview_layout);
         initViews();
     }
 

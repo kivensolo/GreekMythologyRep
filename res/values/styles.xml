@@ -1,5 +1,4 @@
 <resources>
-
     <!--
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
@@ -11,12 +10,10 @@
             backward-compatibility can go here.
         -->
     </style>
-
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
-
     <style name="customstyle">
 4         <item name="android:background">@android:color/holo_red_light</item>
 5         [... or other style code...]
@@ -24,5 +21,4 @@
              1:直接在布局文件该view标签里使用:style="@style/customstyle"
              2:在AndroidManifest.xml的application标签里使用:android:theme="@style/customstyle"-->
 6     </style>
-
 </resources>

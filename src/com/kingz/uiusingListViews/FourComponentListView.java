@@ -8,8 +8,8 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import com.kingz.uiusingActivity.LableTextView_Act;
 import com.kingz.four_components.ServiceComponentsACT;
+import com.kingz.uiusingActivity.LableTextView_Act;
 import com.kingz.uiusingMediaTest.CustomCanvasSeekBarAct;
 
 public class FourComponentListView extends  Activity implements OnItemClickListener{

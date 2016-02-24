@@ -89,6 +89,9 @@
         <activity android:name="com.customview.FingerBallActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
+        <activity android:name="com.customview.ViewsDeepSearch"
+                  android:theme="@android:style/Theme.Black.NoTitleBar"/>
+
         <!-- 自定义显示的listView -->
         <activity android:name="com.customview.livstview.CustomListViewActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
