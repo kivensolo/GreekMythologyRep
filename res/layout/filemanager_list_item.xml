@@ -4,9 +4,16 @@
               android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
         <!--scrollTo()方法是对里面的子View进行滚动的，而不是对整个布局进行滚动的，
         所以用LinearLayout来套住item的布局，不然滚动的只是TextView。-->
+        <ImageView
+                android:id="@+id/file_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_launcher"/>
+
         <TextView
             android:id="@+id/list_item"
             android:layout_width="match_parent"

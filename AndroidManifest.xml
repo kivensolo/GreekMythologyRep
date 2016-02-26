@@ -93,14 +93,18 @@
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!-- 自定义显示的listView -->
-        <activity android:name="com.customview.livstview.CustomListViewActivity"
+        <activity android:name="com.customview.listview.CustomListViewActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
         <!-- 可左右滑动的ListView -->
-        <activity android:name="com.customview.livstview.SliderListViewActivity"
+        <activity android:name="com.customview.listview.SliderListViewActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!-- Span页面 -->
         <activity android:name="com.kingz.basic_controls.SpansActivity"
+                  android:theme="@android:style/Theme.Black.NoTitleBar"/>
+
+        <!-- 文件管理器页面 -->
+        <activity android:name="com.kingz.filemanager.FileManagerActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
 

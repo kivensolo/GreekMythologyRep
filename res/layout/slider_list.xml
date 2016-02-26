@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:myapp="http://schemas.android.com/apk/res/com.customview.listview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+        <com.customview.listview.CustomSliderDeleteListView
+                android:id="@+id/sliderCustomListView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@android:color/darker_gray">
-        <com.customview.livstview.CustomSliderDeleteListView
-            android:id="@+id/sliderCustomListView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:listSelector="@android:color/transparent"
-            android:divider="@color/red"
-            android:cacheColorHint="@android:color/transparent">
-        </com.customview.livstview.CustomSliderDeleteListView>
-    <!--<ListView-->
+                android:listSelector="@color/mediumseagreen"
+                android:divider="@color/lightskyblue"
+                android:dividerHeight="2dp"
+                android:background="@color/black"
+                android:cacheColorHint="@android:color/transparent">
+        </com.customview.listview.CustomSliderDeleteListView>
 
 </RelativeLayout>

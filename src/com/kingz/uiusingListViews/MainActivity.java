@@ -9,6 +9,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import com.AsuyncTaskJsonTest.AsynctaskBitmapMainActivity;
+import com.kingz.filemanager.FileManagerActivity;
 import com.kingz.uiusingActivity.BitmapActivity;
 import com.kingz.uiusingActivity.FileAndPicTestACT;
 import com.kingz.uiusingWidgets.UsingProgressBarAct;
@@ -53,6 +54,7 @@ public class MainActivity extends Activity implements OnItemClickListener{
 		mAdapter.add(new ListBillData(this,"File test",new Intent(this,FileAndPicTestACT.class)));
 		mAdapter.add(new ListBillData(this,"Bitmap Test",new Intent(this,BitmapActivity.class)));
 		mAdapter.add(new ListBillData(this,"JsonParseAndPicLru ",new Intent(this,AsynctaskBitmapMainActivity.class)));
+		mAdapter.add(new ListBillData(this,"FileManager ",new Intent(this,FileManagerActivity.class)));
 	}
 
 	/**

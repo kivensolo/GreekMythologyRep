@@ -3,6 +3,7 @@ package com.kingz.uiusingListViews;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -10,8 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import com.customview.FingerBallActivity;
 import com.customview.ViewsDeepSearch;
-import com.customview.livstview.CustomListViewActivity;
-import com.customview.livstview.SliderListViewActivity;
+import com.customview.listview.CustomListViewActivity;
+import com.customview.listview.SliderListViewActivity;
 import com.kingz.basic_controls.SpansActivity;
 import com.kingz.uiusingActivity.LableTextView_Act;
 import com.kingz.uiusingMediaTest.CustomCanvasSeekBarAct;
@@ -27,6 +28,7 @@ public class CustomWidgetsActivity extends  Activity implements OnItemClickListe
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Log.i("CustomWidgetsActivity","CustomWidgetsActivity onCreate");
 
  		//1:加载ListView布局
 		setContentView(R.layout.customwidgets_mainpage);
@@ -45,7 +47,7 @@ public class CustomWidgetsActivity extends  Activity implements OnItemClickListe
 		mAdapter.add(new ListBillData(this,"LableText",new Intent(this,LableTextView_Act.class)));
 		mAdapter.add(new ListBillData(this,"TrackBall",new Intent(this,FingerBallActivity.class)));
 		mAdapter.add(new ListBillData(this,"Custom ListView",new Intent(this,CustomListViewActivity.class)));
-		mAdapter.add(new ListBillData(this,"自定义左右滑动删除的ListView()存在bug",new Intent(this,SliderListViewActivity.class)));
+		mAdapter.add(new ListBillData(this,"左右滑动删除的ListView",new Intent(this,SliderListViewActivity.class)));
 		mAdapter.add(new ListBillData(this,"SpanLable",new Intent(this,SpansActivity.class)));
 		mAdapter.add(new ListBillData(this,"ViewsDeepSearch",new Intent(this,ViewsDeepSearch.class)));
 	}
