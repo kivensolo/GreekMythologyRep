@@ -1,6 +1,7 @@
 package com.kingz.uiusingListViews;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,7 +11,6 @@ import android.widget.ListView;
 
 /**
  * Created by KingZ on 2015/11/1.
- * Discription:Í¼Æ¬¹ÜÀíµÄÒ»Ğ©Demo
  */
 public class PicManagerList extends Activity implements AdapterView.OnItemClickListener {
 
@@ -26,19 +26,20 @@ public class PicManagerList extends Activity implements AdapterView.OnItemClickL
 
 		listView = (ListView) findViewById(R.id.picture_manager_liastview);
 		mAdapter = new ArrayAdapter<ListBillData>(this, R.layout.list_bill);
-		listView.setAdapter(mAdapter);//ÉèÖÃÊı¾İÊÊÅäÆ÷
+		listView.setAdapter(mAdapter);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 		addData();
 		listView.setOnItemClickListener(this);
     }
 
     private void addData() {
-		mAdapter.add(new ListBillData(this,"ÍøÂçÏÂÔØÍ¼Æ¬-±£´æ-É¾³ı",new Intent(this,LayoutActivityListView.class)));
+		mAdapter.add(new ListBillData(this,"å›¾ç‰‡ç®¡ç†",new Intent(this,LayoutActivityListView.class)));
 	}
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-	    ListBillData data = mAdapter.getItem(position);
-		data.startActivity();
+	    ActivityOptions opts = ActivityOptions.makeCustomAnimation(this,R.anim.zoom_enter,R.anim.zoom_enter);
+		ListBillData data = mAdapter.getItem(position);
+		data.startActivity(opts);
     }
 }

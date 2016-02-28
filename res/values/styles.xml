@@ -21,4 +21,19 @@
              1:直接在布局文件该view标签里使用:style="@style/customstyle"
              2:在AndroidManifest.xml的application标签里使用:android:theme="@style/customstyle"-->
 6     </style>
+
+    <!-- 无Title的Dialog -->
+    <style name="dialogNoTitle" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:background">#00000000</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+  <!--  <style name="dialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/dialog_anim_in</item>
+    </style>-->
+
 </resources>

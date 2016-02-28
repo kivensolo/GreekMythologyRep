@@ -1,6 +1,7 @@
 package com.kingz.uiusingListViews;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,12 +11,13 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import com.customview.FingerBallActivity;
-import com.customview.ViewsDeepSearch;
 import com.customview.listview.CustomListViewActivity;
 import com.customview.listview.SliderListViewActivity;
 import com.kingz.basic_controls.SpansActivity;
 import com.kingz.uiusingActivity.LableTextView_Act;
 import com.kingz.uiusingMediaTest.CustomCanvasSeekBarAct;
+import com.kingz.uiusingWidgets.KingWebViewActivity;
+import com.kingz.uiusingWidgets.ToastTestActivity;
 import com.kingz.uiusingWidgets.UsingCustomSeekBar;
 
 /**
@@ -49,13 +51,16 @@ public class CustomWidgetsActivity extends  Activity implements OnItemClickListe
 		mAdapter.add(new ListBillData(this,"Custom ListView",new Intent(this,CustomListViewActivity.class)));
 		mAdapter.add(new ListBillData(this,"左右滑动删除的ListView",new Intent(this,SliderListViewActivity.class)));
 		mAdapter.add(new ListBillData(this,"SpanLable",new Intent(this,SpansActivity.class)));
-		mAdapter.add(new ListBillData(this,"ViewsDeepSearch",new Intent(this,ViewsDeepSearch.class)));
+		mAdapter.add(new ListBillData(this,"WebAPP",new Intent(this,KingWebViewActivity.class)));
+		mAdapter.add(new ListBillData(this,"Toast",new Intent(this,ToastTestActivity.class)));
 	}
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,long id) {
+		/** 窗口切换自定义动画设置 */
+		ActivityOptions opts = ActivityOptions.makeCustomAnimation(this,R.anim.zoom_enter,R.anim.zoom_enter);
 		ListBillData data = mAdapter.getItem(position);
-		data.startActivity();
+		data.startActivity(opts);
 	}
 
 }

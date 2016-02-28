@@ -20,5 +20,10 @@
     </string>
     <string name="save_data">保存</string>
     <string name="underlinSpanStr">UnderlinSpan</string>
+    <string name="address">地址:</string>
+    <string name="accountinfo">账户信息:</string>
+    <string name="Common_Map">普通地图</string>
+    <string name="Site_Map">卫星地图</string>
+    <string name="Map_Traffic">实时交通（off）</string>
 
 </resources>

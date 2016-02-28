@@ -1,6 +1,7 @@
 package com.kingz.uiusingListViews;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import com.kingz.uiusingLayout.FragmentBasicActivity;
 import com.kingz.uiusingLayout.LinearLayoutTest_Act;
 
 public class LayoutActivityListView extends Activity implements OnItemClickListener{
@@ -31,6 +33,7 @@ public class LayoutActivityListView extends Activity implements OnItemClickListe
 
 	private void addData() {
 		mAdapter.add(new ListBillData(this,"LinnerLayout",new Intent(this,LinearLayoutTest_Act.class)));
+		mAdapter.add(new ListBillData(this,"Fragment_Basic",new Intent(this,FragmentBasicActivity.class)));
 	}
 
 	/**
@@ -39,7 +42,8 @@ public class LayoutActivityListView extends Activity implements OnItemClickListe
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
+		ActivityOptions opts = ActivityOptions.makeCustomAnimation(this,R.anim.zoom_enter,R.anim.zoom_enter);
 		ListBillData data = mAdapter.getItem(position);
-		data.startActivity();
+		data.startActivity(opts);
 	}
 }

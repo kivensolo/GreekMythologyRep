@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+                android:layout_height="match_parent" tools:context="com.kingz.uiusingLayout.RelativeLayoutPage">
+    <!--
+        Layout above:选择ID A，则该控件在A控件的上方，
+        Layout below、Layout to left of。。。。等同样用法。
+        使用 RelativeLayout布局的时候，最好在界面设计时 做好布局，尽少程序运行时 做控件布局的更改，
+        因为 RelativeLayout布局里面的属性之间，很容易冲突，例如， Layout below、 Layout above同选ID A，
+        那就肯定发生冲突了。
+    -->
+
+    <!-- 仿用户登录的layout -->
+    <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:background="@color/black" android:id="@+id/user_area_layout">
+         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                   android:id="@+id/address_id" android:background="@color/black"
+                   android:gravity="left" android:text="@string/address"
+                   android:textColor="@color/white" android:textStyle="bold"
+                   android:textSize="24sp" android:layout_alignBaseline="@+id/eidt_address_id"
+                   android:typeface="sans"/>
+
+        <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
+                  android:layout_toRightOf="@+id/address_id" android:textStyle="bold"
+                  android:textColor="@android:color/holo_red_light"
+                  android:id="@+id/eidt_address_id" android:singleLine="true"/>
+
+        <View   android:id="@+id/vHDivider_a" android:background="@color/magenta"
+                android:layout_width="match_parent" android:layout_height="1.0dip"
+                android:layout_centerVertical="true" android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"/>
+
+        <TextView  android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:id="@+id/account_info_id" android:text="@string/accountinfo"
+                    android:layout_below="@+id/address_id" android:textSize="24sp"
+                    android:textColor="@color/white" android:textStyle="bold"
+                    android:layout_alignBaseline="@+id/edit_account_id"/>
+
+        <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
+                   android:id="@+id/edit_account_id" android:textStyle="bold"
+                   android:textColor="@android:color/holo_red_light"
+                   android:layout_toRightOf="@+id/account_info_id"
+                   android:layout_below="@+id/eidt_address_id" android:typeface="serif"
+                   android:password="true" android:singleLine="true"/>
+    </RelativeLayout>
+
+    <RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent"
+                    android:id="@+id/function_area_id" android:background="@color/bright_green"
+                    android:layout_below="@+id/user_area_layout" android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp">
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

@@ -1,5 +1,6 @@
 package com.kingz.uiusingListViews;
 
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 
@@ -39,8 +40,12 @@ public class ListBillData {
 		this.mIntent = mIntent;
 	}
 
-	public void startActivity(){
-		getContext().startActivity(getmIntent());
+	public void startActivity(ActivityOptions opts){
+		if(opts == null){
+			getContext().startActivity(getmIntent());
+		}else{
+			getContext().startActivity(getmIntent(),opts.toBundle());
+		}
 	}
 
 	@Override

@@ -126,8 +126,8 @@
     <color name="steelblue">#4682b4</color><!--钢兰色 -->
     <color name="royalblue">#4169e1</color><!--皇家蓝 -->
     <color name="turquoise">#40e0d0</color><!--青绿色 -->
-    <color name="mediumseagreen">#3cb371</color><!--中海蓝 -->
     <color name="limegreen">#32cd32</color><!--橙绿色 -->
+    <color name="mediumseagreen">#3cb371</color><!--中海蓝 -->
     <color name="darkslategray">#2f4f4f</color><!--暗瓦灰色 -->
     <color name="darkslategrey">#2f4f4f</color><!--暗瓦灰色 -->
     <color name="seagreen">#2e8b57</color><!--海绿色 -->

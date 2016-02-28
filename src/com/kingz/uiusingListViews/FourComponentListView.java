@@ -1,6 +1,7 @@
 package com.kingz.uiusingListViews;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import com.kingz.four_components.ObtainConnectPeopleActivity;
 import com.kingz.four_components.ServiceComponentsACT;
 import com.kingz.uiusingActivity.LableTextView_Act;
 import com.kingz.uiusingMediaTest.CustomCanvasSeekBarAct;
@@ -35,6 +37,7 @@ public class FourComponentListView extends  Activity implements OnItemClickListe
 		mAdapter.add(new ListBillData(this,"服务",new Intent(this,ServiceComponentsACT.class)));
 		mAdapter.add(new ListBillData(this,"自定义seekBar",new Intent(this,CustomCanvasSeekBarAct.class)));
 		mAdapter.add(new ListBillData(this,"LableTextView_Act",new Intent(this,LableTextView_Act.class)));
+		mAdapter.add(new ListBillData(this,"ContentProvider",new Intent(this,ObtainConnectPeopleActivity.class)));
 	}
 
 	/**
@@ -43,8 +46,9 @@ public class FourComponentListView extends  Activity implements OnItemClickListe
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
+		ActivityOptions opts = ActivityOptions.makeCustomAnimation(this,R.anim.zoom_enter,R.anim.zoom_enter);
 		ListBillData data = mAdapter.getItem(position);
-		data.startActivity();
+		data.startActivity(opts);
 	}
 
 }

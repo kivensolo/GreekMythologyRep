@@ -12,8 +12,22 @@
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
     <!-- 向SDCard写入数据权限 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <!-- 网络权限 -->
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <!-- 百度地图所需权限 -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+	<uses-permission android:name="android.permission.USE_CREDENTIALS" />
+	<uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+	<uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+	<uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+	<uses-permission android:name="android.permission.READ_PHONE_STATE" />
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.BROADCAST_STICKY" />
+	<uses-permission android:name="android.permission.WRITE_SETTINGS" />
+	<uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:allowBackup="true"
@@ -23,11 +37,16 @@
         android:theme="@style/AppTheme" >
         <!-- supportsRtl 支持从右到左布局,API17以上 -->
 
+        <meta-data
+        android:name="com.baidu.lbsapi.API_KEY"
+        android:value="XwMW9CR6w14VOWGG4AkGue8W" />
+
         <!-- 主Activity -->
         <activity
             android:name="com.kingz.uiusingListViews.MainActivity"
             android:theme="@android:style/Theme.Black.NoTitleBar"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -36,7 +55,7 @@
         </activity>
 
         <!-- 原生SeekBar -->
-        <activity android:name="com.kingz.uiusingWidgets.UsingSeekBarScrAct"
+        <activity android:name="com.kingz.uiusingWidgets.SeekBarActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar" />
 
         <!-- 自定义 SeekBar -->
@@ -44,19 +63,32 @@
                  android:theme="@android:style/Theme.Black.NoTitleBar"/>
         <!-- 绘画的方式画seekBar -->
         <activity
-            android:name="com.kingz.uiusingMediaTest.CustomCanvasSeekBarAct"
+            android:name="com.kingz.uiusingCanvas.CustomCanvasSeekBarAct"
             android:theme="@android:style/Theme.Black.NoTitleBar"/>
          <!--android:screenOrientation="landscape">-->
 
         <!-- progressBar -->
         <activity android:name="com.kingz.uiusingWidgets.UsingProgressBarAct"
-                android:theme="@android:style/Theme.Black.NoTitleBar" />
+                android:theme="@android:style/Theme.Black.NoTitleBar"/>
+
+        <activity android:name="com.kingz.uiusingWidgets.ToastTestActivity"
+                android:theme="@android:style/Theme.Black.NoTitleBar"/>
+
 
         <!-- 布局测试的ListView -->
         <activity android:name="com.kingz.uiusingListViews.LayoutActivityListView"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <activity android:name="com.kingz.uiusingLayout.LinearLayoutTest_Act"
+                  android:theme="@android:style/Theme.Black.NoTitleBar"/>
+
+        <activity android:name="com.kingz.uiusingLayout.FragmentBasicActivity"
+                  android:theme="@android:style/Theme.Black.NoTitleBar"/>
+
+        <!--常用控件集合-->
+        <activity android:name="com.kingz.controls.BasicControlsActivity"
+                  android:theme="@android:style/Theme.Black.NoTitleBar"/>
+        <activity android:name="com.kingz.controls.MyGridView"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!-- 自定义控件的ListView-->
@@ -73,6 +105,9 @@
         <activity android:name="com.kingz.four_components.ServiceComponentsACT"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
+        <activity android:name="com.kingz.four_components.ObtainConnectPeopleActivity"
+                  android:theme="@android:style/Theme.Black.NoTitleBar"/>
+
         <!--文件及bitmap操作的activity-->
         <activity android:name="com.kingz.uiusingActivity.FileAndPicTestACT"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
@@ -85,11 +120,16 @@
         <activity android:name="com.AsuyncTaskJsonTest.AsynctaskBitmapMainActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
+         <!--文件管理页面-->
+        <activity android:name="com.kingz.filemanager.FileManagerActivity"
+                  android:theme="@android:style/Theme.Black.NoTitleBar"/>
+
         <!-- 自定义View -->
         <activity android:name="com.customview.FingerBallActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
-        <activity android:name="com.customview.ViewsDeepSearch"
+        <!--webAppActivity-->
+        <activity android:name="com.kingz.uiusingWidgets.KingWebViewActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!-- 自定义显示的listView -->
@@ -99,18 +139,41 @@
         <activity android:name="com.customview.listview.SliderListViewActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
-        <!-- Span页面 -->
-        <activity android:name="com.kingz.basic_controls.SpansActivity"
+        <!-- 百度地图View -->
+        <activity android:name="com.baidudemo.BaiduMapActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
-        <!-- 文件管理器页面 -->
-        <activity android:name="com.kingz.filemanager.FileManagerActivity"
+  	    <!-- Span页面 -->
+        <activity android:name="com.kingz.controls.SpansActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
 
 
-    <!--服务-->
+        <!-- ************ 媒体 *********** -->
+        <activity android:name="com.kingz.uiusingMedia.KingZMediaPlayer"
+                  android:theme="@android:style/Theme.Black.NoTitleBar"
+                  android:screenOrientation="landscape"/>
+
+        <!--服务-->
         <service android:name="com.kingz.four_components.ComponentsOfService"/>
+
+        <service android:name="com.kingz.four_components.HelloIntentService"/>
+
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" >
+            <intent-filter>
+                <action android:name="com.baidu.location.service_v2.2" >
+                </action>
+            </intent-filter>
+        </service>
+
+        <!--内容提供者-->
+        <provider android:name="com.kingz.four_components.MyDemoContentProvider"
+                  android:authorities="com.kingz.four_components.myprovider"
+                  android:exported="true">
+        </provider>
 
     </application>
 
