@@ -12,7 +12,7 @@ import android.widget.ListView;
 import com.kingz.four_components.ObtainConnectPeopleActivity;
 import com.kingz.four_components.ServiceComponentsACT;
 import com.kingz.uiusingActivity.LableTextView_Act;
-import com.kingz.uiusingMediaTest.CustomCanvasSeekBarAct;
+import com.kingz.uiusingCanvas.CustomCanvasSeekBarAct;
 
 public class FourComponentListView extends  Activity implements OnItemClickListener{
 

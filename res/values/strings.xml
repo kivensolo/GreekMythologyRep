@@ -26,4 +26,7 @@
     <string name="Site_Map">卫星地图</string>
     <string name="Map_Traffic">实时交通（off）</string>
 
+
+    <string name="startIntentServer">启动IntentService</string>
+
 </resources>

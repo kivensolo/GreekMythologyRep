@@ -14,7 +14,7 @@
         android:layout_centerHorizontal="true"
         android:text="@string/canvas_seekbar_info" />
 
-    <com.kingz.uiusingMediaTest.SeekBarView
+    <com.kingz.uiusingCanvas.SeekBarView
         android:id="@+id/mplayer_seekbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

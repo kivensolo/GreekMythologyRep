@@ -15,7 +15,7 @@ import com.customview.listview.CustomListViewActivity;
 import com.customview.listview.SliderListViewActivity;
 import com.kingz.basic_controls.SpansActivity;
 import com.kingz.uiusingActivity.LableTextView_Act;
-import com.kingz.uiusingMediaTest.CustomCanvasSeekBarAct;
+import com.kingz.uiusingCanvas.CustomCanvasSeekBarAct;
 import com.kingz.uiusingWidgets.KingWebViewActivity;
 import com.kingz.uiusingWidgets.ToastTestActivity;
 import com.kingz.uiusingWidgets.UsingCustomSeekBar;

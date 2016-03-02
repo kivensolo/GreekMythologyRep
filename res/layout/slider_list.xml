@@ -40,7 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="2dip"
                 android:background="#09c"/>-->
-        <ListView
+        <com.customview.listview.CustomSliderDeleteListView
                 android:id="@+id/sliderCustomListView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -49,6 +49,6 @@
                 android:dividerHeight="2dp"
                 android:background="@color/black"
                 android:cacheColorHint="@android:color/transparent">
-        </ListView>
+        </com.customview.listview.CustomSliderDeleteListView>
 
 </LinearLayout>

@@ -65,7 +65,6 @@
         <activity
             android:name="com.kingz.uiusingCanvas.CustomCanvasSeekBarAct"
             android:theme="@android:style/Theme.Black.NoTitleBar"/>
-         <!--android:screenOrientation="landscape">-->
 
         <!-- progressBar -->
         <activity android:name="com.kingz.uiusingWidgets.UsingProgressBarAct"
@@ -154,10 +153,17 @@
                   android:theme="@android:style/Theme.Black.NoTitleBar"
                   android:screenOrientation="landscape"/>
 
-        <!--服务-->
-        <service android:name="com.kingz.four_components.ComponentsOfService"/>
+        <!--服务 exported:外部是否可访问  process:为服务设置不同进程-->
+        <service android:name="com.kingz.four_components.ComponentsOfService"
+                 android:enabled="true"
+                 android:exported="true"/>
 
-        <service android:name="com.kingz.four_components.HelloIntentService"/>
+        <service android:name="com.kingz.four_components.BoundServiceDemo"/>
+
+        <service android:name="com.kingz.four_components.IntentServicDemo"
+                 android:exported="false">
+        </service>
+
 
         <service
             android:name="com.baidu.location.f"
