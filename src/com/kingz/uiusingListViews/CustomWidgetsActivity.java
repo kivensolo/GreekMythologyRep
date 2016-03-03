@@ -13,7 +13,7 @@ import android.widget.ListView;
 import com.customview.FingerBallActivity;
 import com.customview.listview.CustomListViewActivity;
 import com.customview.listview.SliderListViewActivity;
-import com.kingz.basic_controls.SpansActivity;
+import com.kingz.controls.SpansActivity;
 import com.kingz.uiusingActivity.LableTextView_Act;
 import com.kingz.uiusingCanvas.CustomCanvasSeekBarAct;
 import com.kingz.uiusingWidgets.KingWebViewActivity;

@@ -31,7 +31,7 @@ import java.util.List;
 public class FileManagerActivity extends Activity implements
         AdapterView.OnItemClickListener,View.OnLongClickListener{
 
-    private static final String TAG = "FileManagerActivity";
+    private static final String  TAG= "FileManagerActivity";
     private ListView fileListView;
     private TextView titlePath;
     private TextView item_count;
@@ -39,15 +39,17 @@ public class FileManagerActivity extends Activity implements
     private List<String> filePathsList;             //目录路径
     private List<String> fileNamesList;             //文件名
     private ArrayList<File> currentPageFilesList;              //文件名
+    private boolean isRoot;
 
 //    private static final String ROOT_PATH = Environment.getExternalStorageDirectory().getPath();  //根目录
     private static final String ROOT_PATH = "sdcard";  //根目录
      //文件是否成功删除
-    private boolean isDeteSuccess;
+    private boolean isDeletSuccess;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "FileManagerActivity --- onCreate()");
         setContentView(R.layout.slider_list);
         initViews();
 
@@ -120,11 +122,11 @@ public class FileManagerActivity extends Activity implements
      * 显示文件列表
      */
     private void showFileDir(File folder) {
-        boolean isRoot = TextUtils.isEmpty(folder.getParent()); //是否是根目录
+        isRoot = TextUtils.isEmpty(folder.getParent()); //是否是根目录
         Log.d(TAG, "showFileDir isRoot = " + isRoot);
         currentPageFilesList = new ArrayList<File>();
-        filePathsList = new ArrayList<String>();
-        fileNamesList = new ArrayList<String>();
+        filePathsList = new ArrayList<>();
+        fileNamesList = new ArrayList<>();
         if(!isRoot){
             currentPageFilesList.add(folder.getParentFile());
             Log.d(TAG,"非根目录，添加上页目录 = " + currentPageFilesList.toString());
@@ -206,6 +208,7 @@ public class FileManagerActivity extends Activity implements
          intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
          intent.setAction(Intent.ACTION_VIEW);
          String type = getMIMEType(file);
+         Log.d(TAG, "Clicked File Type is :" + type);
          intent.setDataAndType(Uri.fromFile(file), type);   //打开设置打开文件的类型
          try {
              startActivity(intent);
@@ -222,7 +225,7 @@ public class FileManagerActivity extends Activity implements
    * @return MIME类型值
    */
     private String getMIMEType(File file) {
-        String type = "*/*";
+        String type = "";
         String fileName = file.getName();
         int dotIndex = fileName.indexOf('.');
         if(dotIndex < 0) {
@@ -316,4 +319,12 @@ public class FileManagerActivity extends Activity implements
     };
 
 
+    @Override
+    public void onBackPressed() {
+        if(!isRoot){
+            showFileDir(currentPageFilesList.get(0));
+            return;
+        }
+        super.onBackPressed();
+    }
 }
