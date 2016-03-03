@@ -2,7 +2,7 @@
 
 /*
  * This file is auto-generated.  DO NOT MODIFY.
- * Original file: C:\\Users\\Administrator\\Documents\\GitHub\\UiUsingListView\\src\\com\\kingz\\four_components\\IAnimal.aidl
+ * Original file: C:\\Users\\admin\\Documents\\GitHub\\UiUsingListView\\src\\com\\kingz\\four_components\\IAnimal.aidl
  */
 package com.kingz.four_components;
 public interface IAnimal extends android.os.IInterface

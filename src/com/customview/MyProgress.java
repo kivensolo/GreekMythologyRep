@@ -8,7 +8,7 @@ import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import com.kingz.uiusingListViews.R;
-import com.utils.ScreenSize;
+import com.utils.ScreenTools;
 
 /**
  * Created by KingZ on 2016/1/5.
@@ -37,8 +37,8 @@ public class MyProgress extends ProgressDialog{
 
         setContentView(R.layout.progress_dialog);
         android.view.WindowManager.LayoutParams params = getWindow().getAttributes();
-        params.width = ScreenSize.OperationWidth(200);
-        params.height = ScreenSize.OperationHeight(200);
+        params.width = ScreenTools.OperationWidth(200);
+        params.height = ScreenTools.OperationHeight(200);
         getWindow().setAttributes(params);
 
         initViews(savedInstanceState);
@@ -55,8 +55,8 @@ public class MyProgress extends ProgressDialog{
 
         //ImageView设置
         iv_progress = (ImageView) findViewById(R.id.iv_progress);
-        iv_progress.getLayoutParams().width = ScreenSize.OperationWidth(100);
-        iv_progress.getLayoutParams().height = ScreenSize.OperationWidth(100);
+        iv_progress.getLayoutParams().width = ScreenTools.OperationWidth(100);
+        iv_progress.getLayoutParams().height = ScreenTools.OperationWidth(100);
             //设置尺寸Type(是一个枚举类型的)
         iv_progress.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         iv_progress.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.loading_new));

@@ -74,8 +74,8 @@ public class UITools {
             Log.e( TAG, "setViewSize view.getLayoutParams()==null");
             return;
         }
-        view.getLayoutParams().width=ScreenSize.Operation(width);
-		view.getLayoutParams().height=ScreenSize.Operation(height);
+        view.getLayoutParams().width= ScreenTools.Operation(width);
+		view.getLayoutParams().height= ScreenTools.Operation(height);
 	}
 
 	/**

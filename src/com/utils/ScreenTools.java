@@ -4,7 +4,7 @@ package com.utils;
  * Created by KingZ on 2016/1/5.
  * Discription:
  */
-public class ScreenSize{
+public class ScreenTools {
     public static final int DESIGN_WIDTH = 1280;
 	public static final int DESIGN_HEIGHT = 720;
 
