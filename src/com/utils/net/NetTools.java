@@ -91,8 +91,7 @@ public class NetTools {
 	}
 
 	/**
-	 * 获取第一个符合name_pattern的网卡的MAC地址 需要netcfg工具, <uses-permission
-	 * android:name="android.permission.INTERNET"/>
+	 * 获取第一个符合name_pattern的网卡的MAC地址 需要netcfg工具
 	 */
 	private static String getMacNetcfg(String name_pattern_rgx) {
 		Process proc;

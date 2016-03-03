@@ -18,6 +18,7 @@ import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.*;
 import com.baidu.mapapi.model.LatLng;
 import com.kingz.uiusingListViews.R;
+import com.utils.net.NetTools;
 
 /**
  * Created by KingZ on 2016/1/7.
@@ -51,6 +52,15 @@ public class BaiduMapActivity extends Activity {
         initLocation();//初始化定位
 	}
 
+
+	private void initView() {
+		mMapView = (MapView) findViewById(R.id.bmapView);
+		//修改默认显示尺寸
+		mBaiduMap = mMapView.getMap();
+		MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(15.0f);//大约五百米
+		mBaiduMap.setMapStatus(msu);
+	}
+
 	/**
 	 * 初始化判断网络
 	 */
@@ -71,7 +81,8 @@ public class BaiduMapActivity extends Activity {
 				if (networkInfo[i].getState() == NetworkInfo.State.CONNECTED){
 					Toast.makeText(this,"当前网络正常",Toast.LENGTH_SHORT).show();
 					if(networkInfo[i].getType() == cm.TYPE_WIFI){
-						Toast.makeText(this,"当前为wifi网络",Toast.LENGTH_SHORT).show();
+						String wifiName = NetTools.getWifiName(context);
+						Toast.makeText(this,"当前为wifi网络,所连接的网络为：" + wifiName,Toast.LENGTH_SHORT).show();
 					}else if(networkInfo[i].getType() == cm.TYPE_MOBILE){
 						Toast.makeText(this,"当前为移动网络",Toast.LENGTH_SHORT).show();
 					}
@@ -109,16 +120,6 @@ public class BaiduMapActivity extends Activity {
 
 		bitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.navi_map_gps_locked);
 
-	}
-
-	/**
-	 */
-	private void initView() {
-		mMapView = (MapView) findViewById(R.id.bmapView);
-		//修改默认显示尺寸
-		mBaiduMap = mMapView.getMap();
-		MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(15.0f);//大约五百米
-		mBaiduMap.setMapStatus(msu);
 	}
 
 	@Override
@@ -166,9 +167,9 @@ public class BaiduMapActivity extends Activity {
                 mBaiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);		//普通地图
                 break;
             case R.id.id_map_site:
-                mBaiduMap.setMapType(BaiduMap.MAP_TYPE_SATELLITE);	//卫星地图
+                mBaiduMap.setMapType(BaiduMap.MAP_TYPE_SATELLITE);		//卫星地图
                 break;
-            case R.id.id_map_traffic:								//交通地图
+            case R.id.id_map_traffic:									//交通地图
                 if (mBaiduMap.isTrafficEnabled()) {
                     mBaiduMap.setTrafficEnabled(false);
                     item.setTitle("实时交通Off");

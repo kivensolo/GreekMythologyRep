@@ -28,22 +28,22 @@ import java.util.List;
  * date:  2016/2/26 13:50
  * description:文件管理器
  */
-public class FileManagerActivity extends Activity implements  AdapterView.OnItemClickListener,
-                                                    View.OnLongClickListener{
+public class FileManagerActivity extends Activity implements
+        AdapterView.OnItemClickListener,View.OnLongClickListener{
 
     private static final String TAG = "FileManagerActivity";
     private ListView fileListView;
     private TextView titlePath;
     private TextView item_count;
     private FileListAdapter fileAdapter;
-    private List<String> filePathsList;             //目录路径S
-    private List<String> fileNamesList;             //文件名S
-    private ArrayList<File> filesList;             //文件名S
+    private List<String> filePathsList;             //目录路径
+    private List<String> fileNamesList;             //文件名
+    private ArrayList<File> currentPageFilesList;              //文件名
 
 //    private static final String ROOT_PATH = Environment.getExternalStorageDirectory().getPath();  //根目录
     private static final String ROOT_PATH = "sdcard";  //根目录
      //文件是否成功删除
-    private boolean flag;
+    private boolean isDeteSuccess;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +90,9 @@ public class FileManagerActivity extends Activity implements  AdapterView.OnItem
                 if (os != null) {
                     os.close();
                 }
-                process.destroy();
+                if (process != null) {
+                    process.destroy();
+                }
             }
             catch (Exception e) {
                 e.printStackTrace();
@@ -119,12 +121,13 @@ public class FileManagerActivity extends Activity implements  AdapterView.OnItem
      */
     private void showFileDir(File folder) {
         boolean isRoot = TextUtils.isEmpty(folder.getParent()); //是否是根目录
-        Log.d(TAG, "是否为根目录：" + isRoot);
-        filesList = new ArrayList<>();
-        filePathsList = new ArrayList<>();
-        fileNamesList = new ArrayList<>();
+        Log.d(TAG, "showFileDir isRoot = " + isRoot);
+        currentPageFilesList = new ArrayList<File>();
+        filePathsList = new ArrayList<String>();
+        fileNamesList = new ArrayList<String>();
         if(!isRoot){
-             filesList.add(folder.getParentFile());
+            currentPageFilesList.add(folder.getParentFile());
+            Log.d(TAG,"非根目录，添加上页目录 = " + currentPageFilesList.toString());
         }
 
         //判断SD卡是否插入,外置储存状态是否是“mounted”
@@ -132,20 +135,21 @@ public class FileManagerActivity extends Activity implements  AdapterView.OnItem
             //File skRoot  = Environment.getExternalStorageDirectory();
             File[] files = folder.listFiles();
             titlePath.setText(folder.getAbsolutePath());
+            Log.i(TAG,"currentPage files = " + files.length);
             item_count.setText("共" + files.length + "项");
             if (files.length > 0) {
                 for (File f : files) {
-                    filesList.add(f);
+                    currentPageFilesList.add(f);
                     fileNamesList.add(f.getName());
                     filePathsList.add(f.getPath());
                 }
             }
-            fileAdapter = new FileListAdapter(FileManagerActivity.this,filesList,isRoot);
+            fileAdapter = new FileListAdapter(FileManagerActivity.this, currentPageFilesList,isRoot);
             fileListView.setAdapter(fileAdapter);
         }else{
             Log.d(TAG, "无外置储存卡");
         }
-//        fileAdapter = new FileListAdapter(FileManagerActivity.this,filesList,isRoot);
+//        fileAdapter = new FileListAdapter(FileManagerActivity.this,currentPageFilesList,isRoot);
 //        fileListView.setAdapter(fileAdapter);
     }
 
@@ -168,10 +172,10 @@ public class FileManagerActivity extends Activity implements  AdapterView.OnItem
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Log.d(TAG, "OnItemClickListener()..............");
-//        File file = (File) fileAdapter.getItem(position);
-        String path = filePathsList.get(position);
-        Log.d(TAG, "clicked path = " + path);
-        File file = new File(path);
+        File file = (File) fileAdapter.getItem(position);
+        //String path = filePathsList.get(position);
+        //Log.d(TAG, "clicked path = " + path);
+        //File file = new File(path);
 
         //文件不可读
         if(!file.canRead()){

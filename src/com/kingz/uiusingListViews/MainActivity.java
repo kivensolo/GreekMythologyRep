@@ -39,7 +39,7 @@ public class MainActivity extends Activity implements OnItemClickListener{
 
 		/****添加列表项***/
 		//原生
-//		mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
+		//mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
 		//自定义的
 		mAdapter = new ArrayAdapter<>(this, R.layout.list_bill);
 		listView.setAdapter(mAdapter);//设置数据适配器
@@ -51,7 +51,7 @@ public class MainActivity extends Activity implements OnItemClickListener{
 	private void addData() {
 		mAdapter.add(new ListBillData(this,"SrcLayoutTest",new Intent(this,LayoutActivityListView.class)));
 		mAdapter.add(new ListBillData(this,"BasicControls",new Intent(this,BasicControlsActivity.class)));
-//		mAdapter.add(new ListBillData(this,"SeniorControls",new Intent(this,SeniorControls.class)));
+		//mAdapter.add(new ListBillData(this,"SeniorControls",new Intent(this,SeniorControls.class)));
 		mAdapter.add(new ListBillData(this,"ProgressBar",new Intent(this,UsingProgressBarAct.class)));
 		mAdapter.add(new ListBillData(this,"SeekBar",new Intent(this,SeekBarActivity.class)));
 		mAdapter.add(new ListBillData(this,"Custom controls",new Intent(this,CustomWidgetsActivity.class)));
@@ -64,9 +64,6 @@ public class MainActivity extends Activity implements OnItemClickListener{
 		mAdapter.add(new ListBillData(this,"FileManager ",new Intent(this,FileManagerActivity.class)));
 	}
 
-	/**
-	 * ListItem被点击的事件处理
-	 */
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
