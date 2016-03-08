@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.kingz.uiusingListViews.R;
-import com.kingz.utils.Commutils;
+import com.utils.ToastTools;
 
 /**
  * Created by KingZ.
@@ -23,7 +23,7 @@ public class BasicControlsActivity extends Activity implements View.OnClickListe
                                         ,CompoundButton.OnCheckedChangeListener
                                         ,RatingBar.OnRatingBarChangeListener
                                         ,AdapterView.OnItemSelectedListener{
-    private Commutils mToast;
+    private ToastTools mToast;
     private RadioButton rbLeft,rbRight;
     private Button disabledButton;
     private Button gridViewButton;
@@ -47,7 +47,7 @@ public class BasicControlsActivity extends Activity implements View.OnClickListe
     };
 
     private void initViews() {
-        mToast = new Commutils();
+        mToast = new ToastTools();
         disabledButton = (Button) findViewById(R.id.button_disabled);
         disabledButton.setEnabled(false);
         gridViewButton  = (Button) findViewById(R.id.btn_gridView);

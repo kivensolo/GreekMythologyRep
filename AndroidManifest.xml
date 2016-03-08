@@ -119,6 +119,11 @@
         <activity android:name="com.AsuyncTaskJsonTest.AsynctaskBitmapMainActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
+         <!--图片缓存测试页面-->
+        <activity android:name="com.customview.NetworkSpeed.NetworkSpeedActivity"
+                  android:theme="@android:style/Theme.Black.NoTitleBar"
+                    android:screenOrientation="landscape"/>
+
          <!--文件管理页面-->
         <activity android:name="com.kingz.filemanager.FileManagerActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>

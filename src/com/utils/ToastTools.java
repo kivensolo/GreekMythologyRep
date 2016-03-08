@@ -1,4 +1,4 @@
-package com.kingz.utils;
+package com.utils;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -16,10 +16,8 @@ import com.kingz.uiusingListViews.R;
  * Data: 2016 2016/2/1
  * Discription:  公共工具类
  */
-public class Commutils {
-
-
-     public void showMgtvWaringToast(Context context,String info) {
+public class ToastTools {
+     public static void showMgtvWaringToast(Context context,String info) {
         Toast mToast = new Toast(context);
 //        View view = View.inflate(this,R.layout.custom_toast_layout,null);
         LinearLayout root = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.custom_toast_layout,null);
