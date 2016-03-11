@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import com.kingz.uiusingListViews.R;
-import com.utils.ScreenTools;
+import com.utils.ui.ScreenTools;
 import com.utils.ToastTools;
 import com.utils.net.NetTools;
 
