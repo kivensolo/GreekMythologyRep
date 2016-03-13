@@ -132,6 +132,10 @@
         <activity android:name="com.customview.FingerBallActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
+        <!-- TitleViewActivity -->
+        <activity android:name="com.customview.TitleViewActivity"
+                  android:theme="@android:style/Theme.Black.NoTitleBar"/>
+
         <!--webAppActivity-->
         <activity android:name="com.kingz.uiusingWidgets.KingWebViewActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>

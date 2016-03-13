@@ -11,10 +11,10 @@ import com.kingz.uiusingListViews.R;
  * date:  2016/1/22 16:56
  * description:
  */
-public class ViewsDeepSearch extends Activity{
+public class TitleViewActivity extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.simplelayout);
+        setContentView(R.layout.hyview_demo);
     }
 }

@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import com.customview.FingerBallActivity;
 import com.customview.NetworkSpeed.NetworkSpeedActivity;
+import com.customview.TitleViewActivity;
 import com.customview.listview.CustomListViewActivity;
 import com.customview.listview.SliderListViewActivity;
 import com.kingz.controls.SpansActivity;
@@ -34,7 +35,7 @@ public class CustomWidgetsActivity extends  Activity implements OnItemClickListe
 		Log.i("CustomWidgetsActivity","CustomWidgetsActivity onCreate");
 
  		//1:加载ListView布局
-		setContentView(R.layout.customwidgets_mainpage);
+		setContentView(R.layout.customview_main);
 		ListView listView = (ListView) findViewById(R.id.widgetsListView_id);
 		//2:初始化适配器
 		mAdapter = new ArrayAdapter<ListBillData>(this, R.layout.list_bill);
@@ -45,6 +46,7 @@ public class CustomWidgetsActivity extends  Activity implements OnItemClickListe
 	}
 
 	private void addData() {
+		mAdapter.add(new ListBillData(this,"Customer TitleView",new Intent(this,TitleViewActivity.class)));
 		mAdapter.add(new ListBillData(this,"Customer SeekBar",new Intent(this,UsingCustomSeekBar.class)));
 		mAdapter.add(new ListBillData(this,"Canvas SeekBar",new Intent(this,CustomCanvasSeekBarAct.class)));
 		mAdapter.add(new ListBillData(this,"LableText",new Intent(this,LableTextView_Act.class)));
