@@ -6,8 +6,9 @@
     <com.customview.CustomTitleView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="20dp"
             kingZAttr:titleColor="#00ff99"
-            kingZAttr:titleText="9527"
+            kingZAttr:titleText="9527asadasdaas"
             kingZAttr:titleSize="40sp"/>
 
 </RelativeLayout>

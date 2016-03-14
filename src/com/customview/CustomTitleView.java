@@ -3,6 +3,8 @@ package com.customview;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.*;
+import android.text.TextPaint;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
@@ -40,6 +42,19 @@ public class CustomTitleView extends View {
      * 包裹文字的最小矩形
      */
     private Rect mBound;
+
+    /**
+     * Image图片
+     */
+    private Bitmap mImage;
+    /**
+     * Pic Scale
+     */
+    private int mImageScale ;
+    /**
+     * 视图宽高
+     */
+    int width, height;
 
     private RectF mRectF;
 
@@ -100,6 +115,12 @@ public class CustomTitleView extends View {
                     // 默认颜色设置为黑色
                     mTitleTextColor = typedArray.getColor(attr, Color.BLACK);
                     break;
+                case R.styleable.KingZView_image:
+                    mImage = BitmapFactory.decodeResource(getResources(),typedArray.getResourceId(attr,0));
+                    break;
+                case R.styleable.KingZView_imageScaleType:
+                    mImageScale = typedArray.getIndex(attr);
+                    break;
             }
         }
         //注意回收
@@ -130,28 +151,26 @@ public class CustomTitleView extends View {
      *                          低30位是测量的大小。采用位运算和运行效率有关。
      *                          <p/>
      *                          另一种说法：这个值由高32位和低16位组成，
-     *                          高32位保存的值叫widthSpecMode，可以通过
+     *                          高32位保存的值叫specMode，可以通过
      *                          MeasureSpec.getMode()获取；
-     *                          低16位为widthSpecSize，
+     *                          低16位为specSize，
      *                          可以由MeasureSpec.getSize()获取。
      * @param heightMeasureSpec
      */
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        Log.d(TAG,""+MeasureSpec.AT_MOST);
         //检测View组件及它所包含的所有子组件的大小
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 //        Log.d(TAG,"------", new Throwable());
-        int width, height;
-        int widthSpecSize = MeasureSpec.getSize(widthMeasureSpec);
-        int widthSpecMode = MeasureSpec.getMode(widthMeasureSpec);
-        int heightSpecSize = MeasureSpec.getSize(heightMeasureSpec);
-        int heightSpecMode = MeasureSpec.getMode(heightMeasureSpec);
-
-        Log.d(TAG, "---widthSpecSize = " + widthSpecSize + "---widthSpecMode = " + widthSpecMode +
-                "\n" + "---heightSpecSize = " + heightSpecSize + "---heightSpecMode = " + heightSpecMode);
-        if (widthSpecMode == MeasureSpec.EXACTLY) {
+         /**
+         *  Get Width
+         */
+        int specSize = MeasureSpec.getSize(widthMeasureSpec);
+        int specMode = MeasureSpec.getMode(widthMeasureSpec);
+        if (specMode == MeasureSpec.EXACTLY) {
             Log.d(TAG, "---width EXACTLY---");
-            width = widthSpecMode;
+            width = specSize;
         } else {
             Log.d(TAG, "---width NOT EXACTLY---");
             mPaint.setTextSize(mTitleTextSize);
@@ -160,11 +179,25 @@ public class CustomTitleView extends View {
             float textWidth = mBound.width();
             //实际宽度
             width = (int) (getPaddingLeft() + textWidth + getPaddingRight());
-            Log.d(TAG, "width = " + width);
+            Log.d(TAG, "width text = " + width);
+
+            //int widthByImg = mImage.getWidth();
+            //int widthByTitle = mBound.width();
+            //if(specMode == MeasureSpec.AT_MOST){//wrao_content
+            //    int maxWidth = Math.max(widthByImg,widthByTitle);
+            //    width = Math.min(maxWidth,specSize);
+            //    Log.d(TAG, "width final = " + width);
+            //}
         }
-        if (heightSpecSize == MeasureSpec.EXACTLY) {
+
+        /**
+         *  Get Height
+         */
+        specSize = MeasureSpec.getSize(heightMeasureSpec);
+        specMode = MeasureSpec.getMode(heightMeasureSpec);
+        if (specMode == MeasureSpec.EXACTLY) {
             Log.d(TAG, "---height EXACTLY---");
-            height = heightSpecSize;
+            height = specSize;
         } else {
             Log.d(TAG, "---height NOT EXACTLY---");
             mPaint.setTextSize(mTitleTextSize);
@@ -179,22 +212,36 @@ public class CustomTitleView extends View {
     }
 
     /**
+     * 组件需要绘制内容的时候回调
      * 注意： onDraw的时候不能new对象哟
-     *
      * @param canvas
      */
     @Override
     protected void onDraw(Canvas canvas) {
-        //组件需要绘制内容的时候回调
         super.onDraw(canvas);
-        mPaint.setColor(Color.YELLOW);
-        //回绘制矩形的宽高通过 getMeasuredXXXX()获取
-//        canvas.drawRoundRect(mRectF,25,25,mPaint);
+        //Border
+        mPaint.setStyle(Paint.Style.STROKE);
+        mPaint.setStrokeWidth(5);
+        mPaint.setColor(Color.CYAN);
+        //绘制矩形的宽高通过 getMeasuredXXXX()获取
         canvas.drawRect(0, 0, getMeasuredWidth(), getMeasuredHeight(), mPaint);
+
+
         mPaint.setColor(mTitleTextColor);
-        mPaint.setShadowLayer(30, 30, 30, Color.RED);    //设置阴影
-        canvas.drawText(mTitleText, getWidth() / 2 - mBound.width() / 2, getHeight() / 2 + mBound.height() / 2, mPaint);
+        mPaint.setStyle(Paint.Style.FILL);
+        mPaint.setShadowLayer(10, 15, 15, Color.RED);    //设置阴影
+        //文本宽度超过View宽度
+        if(mBound.width() > width){
+            TextPaint paint = new TextPaint(mPaint);
+            String msg = TextUtils.ellipsize(mTitleText,paint,
+                    width-getPaddingLeft()-getPaddingRight(),
+                    TextUtils.TruncateAt.END).toString();
+            canvas.drawText(msg, getPaddingLeft(), height - getPaddingBottom(), mPaint);
+        }else{
+            canvas.drawText(mTitleText, getWidth() / 2 - mBound.width() / 2, getHeight() / 2 + mBound.height() / 2, mPaint);
+        }
         setBackgroundColor(Color.YELLOW);
+
     }
 
     @Override
@@ -241,12 +288,25 @@ public class CustomTitleView extends View {
         super.onWindowFocusChanged(hasWindowFocus);
     }
 
+    /**
+     * 当此view附加到窗体上时调用该方法，在这时，view有了一个用于显示的Surface，
+     * 将开始绘制。【注意】此方法要保证在调用onDraw(Canvas) 之前调用（View还没画出来的时候）
+     * 但可能在调用 onDraw(Canvas) 之前的任何时刻，
+     * 包括调用 onMeasure(int, int) 之前或之后。
+     * 如：google的AlarmClock动态时钟View就是在这个方法中进行广播的注册。
+     * 详见：http://blog.csdn.net/eyu8874521/article/details/8493995
+     */
     @Override
     protected void onAttachedToWindow() {
-        //把该组件放入某个窗口的时候触发
         super.onAttachedToWindow();
+        Log.i(TAG,"--------onAttachedToWindow()--------");
     }
 
+    /**
+     * 将视图从窗体上分离的时候调用该方法。这时视图已经不具有可绘制部分。
+     * 在destroy view的时候调用.所以可以加入取消广播注册等的操作。
+     * 见谷歌的闹钟代码。
+     */
     @Override
     protected void onDetachedFromWindow() {
         //把该组件脱离某个窗口的时候触发
