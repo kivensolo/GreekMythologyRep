@@ -1,14 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:kingZAttr="http://schemas.android.com/apk/res/com.kingz.uiusingListViews"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:zhi="http://schemas.android.com/apk/res/com.kingz.uiusingListViews"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
     <com.customview.CustomTitleView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="20dp"
-            kingZAttr:titleColor="#00ff99"
-            kingZAttr:titleText="9527asadasdaas"
-            kingZAttr:titleSize="40sp"/>
+            android:padding="50dp"
+            zhi:titleColor="#00ff99"
+            zhi:titleText="9527"
+            zhi:titleSize="40sp"/>
 
-</RelativeLayout>
+    <com.customview.CustomTitleView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="50dp"
+            android:layout_margin="10dp"
+            zhi:myImage="@drawable/zhuyin"
+            zhi:titleColor="#00ff99"
+            zhi:titleText="3333"
+            zhi:titleSize="40sp" />
+
+    <com.customview.CustomTitleView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="50dp"
+            android:layout_margin="10dp"
+            zhi:myImage="@drawable/zy_smile"
+            zhi:titleColor="#00ff99"
+            zhi:titleText="3333"
+            zhi:titleSize="40sp"/>
+</LinearLayout>

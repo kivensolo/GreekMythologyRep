@@ -1,20 +1,16 @@
 <resources>
     <!--定义字体、字体颜色、字体大小。 format是值的取值类型 -->
-    <attr name="titleText" format="string"/>
-    <attr name="titleColor" format="color"/>
-    <attr name="titleSize" format="dimension"/>
-    <attr name="image" format="reference"/>
     <attr name="imageScaleType">
         <enum name="match" value="0" />
         <enum name="center" value="1" />
     </attr>
 
-    <declare-styleable name="KingZView">
-        <attr name="titleText"/>
-        <attr name="titleColor"/>
-        <attr name="titleSize"/>
-        <attr name="image" />
-        <attr name="imageScaleType" />
+    <declare-styleable name="testView">
+        <attr name="titleText" format="string"/>
+        <attr name="titleColor" format="color"/>
+        <attr name="titleSize" format="dimension"/>
+        <attr name="myImage" format="reference"/>
+        <attr name="imageScaleType"/>
     </declare-styleable>
 
     <declare-styleable name="PieChart">

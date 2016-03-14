@@ -25,6 +25,9 @@ import java.util.Set;
 public class CustomTitleView extends View {
 
     public static final String TAG = CustomTitleView.class.getSimpleName();
+    public static final int IMAGE_SCALE_MATCH = 0;
+    public static final int IMAGE_SCALE_CENTER = 1;
+
     /**
      * 文本
      */
@@ -47,10 +50,14 @@ public class CustomTitleView extends View {
      * Image图片
      */
     private Bitmap mImage;
+     /**
+     * 图片外部Rect
+     */
+    private Rect imageRect;
     /**
      * Pic Scale
      */
-    private int mImageScale ;
+    private int mImageScale = -1;
     /**
      * 视图宽高
      */
@@ -96,29 +103,34 @@ public class CustomTitleView extends View {
         /**
          * 获得自定义的样式属性
          */
-        TypedArray typedArray = context.getTheme().obtainStyledAttributes(attrs, R.styleable.KingZView, defStyle, 0);
+        TypedArray typedArray = context.getTheme().obtainStyledAttributes(attrs, R.styleable.testView, defStyle, 0);
+       Log.d(TAG,"获取的 typeArray = " +  typedArray.toString());
         int typeCount = typedArray.getIndexCount();
         for (int i = 0; i < typeCount; i++) {
             int attr = typedArray.getIndex(i);
             switch (attr) {
-                case R.styleable.KingZView_titleText:
-                    //Text
+                case R.styleable.testView_titleText:
+                    Log.d(TAG,"GET titleText");
                     mTitleText = typedArray.getString(attr);
                     break;
-                case R.styleable.KingZView_titleSize:
+                case R.styleable.testView_titleSize:
                     //Sise 默认设置为16sp，TypeValue也可以把sp转化为px
+                    Log.d(TAG,"GET titleSize");
                     mTitleTextSize = typedArray.getDimensionPixelSize(attr,
                             (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 16, getResources().getDisplayMetrics()));
                     break;
-                case R.styleable.KingZView_titleColor:
+                case R.styleable.testView_titleColor:
                     //color default is black
+                     Log.d(TAG,"GET titleColor");
                     // 默认颜色设置为黑色
                     mTitleTextColor = typedArray.getColor(attr, Color.BLACK);
                     break;
-                case R.styleable.KingZView_image:
+                case R.styleable.testView_myImage:
+                    Log.d(TAG,"GET image");
                     mImage = BitmapFactory.decodeResource(getResources(),typedArray.getResourceId(attr,0));
                     break;
-                case R.styleable.KingZView_imageScaleType:
+                case R.styleable.testView_imageScaleType:
+                    Log.d(TAG,"GET imageScaleType");
                     mImageScale = typedArray.getIndex(attr);
                     break;
             }
@@ -126,6 +138,7 @@ public class CustomTitleView extends View {
         //注意回收
         typedArray.recycle();
 
+        imageRect = new Rect();
         mPaint = new Paint();
         mPaint.setTextSize(mTitleTextSize);
         mPaint.setColor(mTitleTextColor);
@@ -219,18 +232,17 @@ public class CustomTitleView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        //Border
-        mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setStrokeWidth(5);
-        mPaint.setColor(Color.CYAN);
-        //绘制矩形的宽高通过 getMeasuredXXXX()获取
-        canvas.drawRect(0, 0, getMeasuredWidth(), getMeasuredHeight(), mPaint);
+
+        drawBorder(canvas);
+        drawImageMatchRect();
 
 
         mPaint.setColor(mTitleTextColor);
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setShadowLayer(10, 15, 15, Color.RED);    //设置阴影
-        //文本宽度超过View宽度
+        /**
+         *  文本宽度超过View宽度
+         */
         if(mBound.width() > width){
             TextPaint paint = new TextPaint(mPaint);
             String msg = TextUtils.ellipsize(mTitleText,paint,
@@ -240,9 +252,23 @@ public class CustomTitleView extends View {
         }else{
             canvas.drawText(mTitleText, getWidth() / 2 - mBound.width() / 2, getHeight() / 2 + mBound.height() / 2, mPaint);
         }
-        setBackgroundColor(Color.YELLOW);
+
+        if(mImageScale ==  IMAGE_SCALE_MATCH){
+            Log.d(TAG,"mImageScale == IMAGE_SCALE_MATCH");
+             canvas.drawBitmap(mImage,null,imageRect,mPaint);
+        }else{
+            Log.d(TAG,"mImageScale == IMAGE_SCALE_CENTER");
+            //计算居中的矩形范围
+            imageRect.left = width / 2 - mImage.getWidth() / 2;
+            imageRect.right = width / 2 + mImage.getWidth() / 2;
+            imageRect.top = (height - mBound.height()) / 2 - mImage.getHeight() / 2;
+            imageRect.bottom = (height - mBound.height()) / 2 + mImage.getHeight() / 2;
+            canvas.drawBitmap(mImage, null, imageRect, mPaint);
+        }
+//        setBackgroundColor(Color.YELLOW);
 
     }
+
 
     @Override
     protected void onFinishInflate() {
@@ -337,4 +363,26 @@ public class CustomTitleView extends View {
         }
         return sb.toString();
     }
+     /**
+     * 绘制图片外部矩形
+     */
+    private void drawImageMatchRect() {
+        imageRect.left = getPaddingLeft();
+        imageRect.right = width-getPaddingLeft();
+        imageRect.top = getPaddingTop();
+        imageRect.bottom = height - getPaddingBottom();
+    }
+
+    /**
+     * 绘制View边框
+     */
+    private void drawBorder(Canvas canvas) {
+        mPaint.setStyle(Paint.Style.STROKE);
+        mPaint.setStrokeWidth(5);
+        mPaint.setColor(Color.CYAN);
+        //绘制矩形的宽高通过 getMeasuredXXXX()获取
+        canvas.drawRect(0, 0, getMeasuredWidth(), getMeasuredHeight(), mPaint);
+    }
+
+
 }

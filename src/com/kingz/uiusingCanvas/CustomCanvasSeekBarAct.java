@@ -81,11 +81,7 @@ public class CustomCanvasSeekBarAct extends Activity implements OnTouchListener 
 	}
 
 	private boolean isShow() {
-		if(myProgressBar.isShown()){
-			return true;
-		}else{
-			return false;
-		}
+		return myProgressBar.isShown();
 	}
 
 	@Override

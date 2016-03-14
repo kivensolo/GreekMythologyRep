@@ -47,3 +47,6 @@ Temporary Items
 .apdisk
 
 *.class
+*.apk
+bin/classes/com/kingz/four_components/IAnimal.aidl
+*.aidl

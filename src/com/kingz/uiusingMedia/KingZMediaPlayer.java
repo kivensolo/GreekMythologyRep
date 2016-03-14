@@ -21,7 +21,8 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
     private static final String TAG = "KingZMediaPlayer";
 
     /** 播放器状态参数 */
-    private enum MPstate{Play,Stop,Pause,Idle,End};
+    private enum MPstate{Play,Stop,Pause,Idle,End}
+
 	private MPstate mediaState = MPstate.Idle;	     //初始化播放器状态
 	private MPstate currentPlayState = MPstate.Play; //默认为播放状态
 
@@ -243,10 +244,10 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
 //		isStartToPlay = false;
 		mediaState = MPstate.End;
 		super.onDestroy();
-	};
+	}
 
 
-    @Override
+	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		if(event.getAction() == MotionEvent.ACTION_DOWN){
 			if( mediaState == MPstate.Play){
