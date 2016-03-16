@@ -18,6 +18,7 @@
             android:padding="50dp"
             android:layout_margin="10dp"
             zhi:myImage="@drawable/zhuyin"
+            zhi:imageScaleType="center"
             zhi:titleColor="#00ff99"
             zhi:titleText="3333"
             zhi:titleSize="40sp" />

@@ -104,7 +104,7 @@ public class CustomTitleView extends View {
          * 获得自定义的样式属性
          */
         TypedArray typedArray = context.getTheme().obtainStyledAttributes(attrs, R.styleable.testView, defStyle, 0);
-       Log.d(TAG,"获取的 typeArray = " +  typedArray.toString());
+        Log.d(TAG,"获取的 typeArray = " +  typedArray.length());
         int typeCount = typedArray.getIndexCount();
         for (int i = 0; i < typeCount; i++) {
             int attr = typedArray.getIndex(i);
@@ -129,15 +129,17 @@ public class CustomTitleView extends View {
                     Log.d(TAG,"GET image");
                     mImage = BitmapFactory.decodeResource(getResources(),typedArray.getResourceId(attr,0));
                     break;
-                case R.styleable.testView_imageScaleType:
-                    Log.d(TAG,"GET imageScaleType");
-                    mImageScale = typedArray.getIndex(attr);
-                    break;
+                //case R.styleable.testView_imageScaleType:
+                //    Log.d(TAG,"GET imageScaleType");
+                //    mImageScale = typedArray.getIndex(attr);
+                //    break;
             }
         }
         //注意回收
         typedArray.recycle();
-
+        if(mImage==null){
+            mImage=Bitmap.createBitmap(10,10, Bitmap.Config.ARGB_8888);
+        }
         imageRect = new Rect();
         mPaint = new Paint();
         mPaint.setTextSize(mTitleTextSize);
