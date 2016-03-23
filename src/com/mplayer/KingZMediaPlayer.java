@@ -1,4 +1,4 @@
-package com.kingz.uiusingMedia;
+package com.mplayer;
 
 import android.app.Activity;
 import android.media.AudioManager;
@@ -7,10 +7,15 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.*;
+import android.widget.ListView;
 import android.widget.Toast;
+import com.datainfo.ChannelData;
 import com.kingz.uiusingListViews.R;
+import com.utils.ToastTools;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by KingZ on 2016/1/24.
@@ -36,9 +41,14 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
     private long duration;				// 影片持续时间
     private int mVideoWidth;
     private int mVideoHeight;
-	private View rootView;
+	private ListView leftListView;
+	private ChanellListAdapter chanellListAdapter;
+	private List<ChannelData> channelLists;
+	private ChannelData channelData;
+//	private ListView leftListView;
 
-    private String play_url;
+
+    private String play_url = "http://182.138.101.48:57850/nn_live.ts?id=MGYY&url_c1=2000&nn_ak=01626a8d247dec670bc542614b6756e051&npips=192.168.95.78:5100&ncmsid=100001&ngs=56f1427800080441628cb21aa78d6b71&nn_user_id=wz&ndt=stb&nn_day=20160323&nn_begin=203239&ndv=4.2.24.0.0.SC-XJCBC-STB-QZ.0.0_Release&nn_timezone=8";
 
 
     @Override
@@ -52,10 +62,22 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
 
 	private void initViews() {
 		mSFview = (SurfaceView) findViewById(R.id.surface);
-		seekBar = (SeekBarView) LayoutInflater.from(this)
-				.inflate(R.layout.mplayer_views,null)
-				.findViewById(R.id.mplayer_progress);
+		seekBar = (SeekBarView) LayoutInflater.from(this).
+				inflate(R.layout.mplayer_views,null).
+				findViewById(R.id.mplayer_progress);
+		channelData = new ChannelData();
 
+		channelLists = new ArrayList<>();
+		for (int i = 0; i < 15; i++) {
+			channelData.textInfo = i + "";
+			channelLists.add(channelData);
+		}
+		chanellListAdapter = new ChanellListAdapter(this,channelLists,R.layout.simple_listviewitem);
+		View leftRoot = LayoutInflater.from(this).inflate(R.layout.customlistview_layout,null);
+		leftListView = (ListView) leftRoot.findViewById(R.id.customControlsPage_id);
+		leftListView.setAdapter(chanellListAdapter);
+		ViewGroup.LayoutParams lps = new ViewGroup.LayoutParams(150,-1);
+		this.addContentView(leftListView,lps);
 	}
 
 	/**
@@ -69,7 +91,7 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
 		mPlayer.setOnErrorListener(mOErrorListener);
 		mPlayer.setOnCompletionListener(mOnCompletionListener);
 		mPlayer.setOnVideoSizeChangedListener(mOnVideoSizeListener);
-//		String play_url = Environment.getExternalStorageDirectory().getPath()+"/Test_Movie.m4v";
+
         /*************** SurfaceView 设置 *********************************/
 		mSFview = (SurfaceView) this.findViewById(R.id.surface);
 		holder = mSFview.getHolder();
@@ -79,13 +101,14 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
 //		holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 //		holder.setFixedSize(480, 320);
 
+//		mSFview.getParent().
+
     }
 
     /**
      * 开始播放
      */
     private void startoPlay() {
-		play_url = "http://169.254.124.89:8080/video/test_1.mp4";
 		Log.d(TAG, "the videoFilePath:"+play_url);
 		mediaState = MPstate.Play;
 		mPlayer.reset(); 										//转为Idel
@@ -168,7 +191,7 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
 	private MediaPlayer.OnErrorListener mOErrorListener = new MediaPlayer.OnErrorListener() {
 		@Override
 		public boolean onError(MediaPlayer mp, int what, int extra) {
-			Toast.makeText(KingZMediaPlayer.this, "播放出错啦~！", Toast.LENGTH_SHORT).show();
+			ToastTools.showMgtvWaringToast(KingZMediaPlayer.this, "播放出错！");
 			switch (what) {
 				case MediaPlayer.MEDIA_ERROR_SERVER_DIED:
 					Log.v("Play Error:::", "MEDIA_ERROR_SERVER_DIED" +  ", extra:" + extra);
@@ -202,18 +225,18 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
 	private SurfaceHolder.Callback mSurfaceHolderCallback = new SurfaceHolder.Callback() {
 		@Override
 		public void surfaceCreated(SurfaceHolder holder) {
-			Toast.makeText(KingZMediaPlayer.this, "surfaceCreated", Toast.LENGTH_SHORT).show();
+			Log.i(TAG, "surfaceCreated()");
 			startoPlay();
 		}
 
 		@Override
 		public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-
+			Log.i(TAG, "surfaceChanged()");
 		}
 
 		@Override
 		public void surfaceDestroyed(SurfaceHolder holder) {
-
+			Log.i(TAG, "surfaceDestroyed()");
 		}
 	};
     /*******************************  各类监听器  End   *********************************/
@@ -250,8 +273,9 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		if(event.getAction() == MotionEvent.ACTION_DOWN){
+			showSeekBarView();
 			if( mediaState == MPstate.Play){
-				doPuase();
+//				doPuase();
 				return true;
 			}else if(mediaState == MPstate.Pause){
 				doPlay();
@@ -268,7 +292,10 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
 		return super.onTouchEvent(event);
 	}
 
-
-
+	private void showSeekBarView(){
+		if(!seekBar.isShown()){
+			seekBar.setVisibility(View.VISIBLE);
+		}
+	}
 
 }

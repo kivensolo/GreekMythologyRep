@@ -1,4 +1,4 @@
-package com.kingz.uiusingMedia;
+package com.mplayer;
 
 import android.content.Context;
 import android.content.res.Resources;

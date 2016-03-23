@@ -158,7 +158,7 @@
 
 
         <!-- ************ 媒体 *********** -->
-        <activity android:name="com.kingz.uiusingMedia.KingZMediaPlayer"
+        <activity android:name="com.mplayer.KingZMediaPlayer"
                   android:theme="@android:style/Theme.Black.NoTitleBar"
                   android:screenOrientation="landscape"/>
 

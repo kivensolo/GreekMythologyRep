@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
+              android:orientation="horizontal"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-
-    <ListView android:layout_width="match_parent" android:layout_height="match_parent"
-            android:id="@+id/customControlsPage_id"
-            android:layout_gravity="center_horizontal"
-            android:background="@color/lightslategray"
-            android:divider="@color/lightskyblue"
-            android:dividerHeight="2dp"
-            android:listSelector="@color/mediumseagreen">
+    <ListView android:layout_width="150dp"
+              android:layout_height="match_parent"
+              android:id="@+id/customControlsPage_id"
+              android:layout_gravity="center_horizontal"
+              android:background="@color/lightslategray"
+              android:divider="@color/lightskyblue"
+              android:dividerHeight="2dp"
+              android:listSelector="@color/mediumseagreen">
     </ListView>
 </LinearLayout>

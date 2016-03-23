@@ -14,7 +14,7 @@ import com.kingz.controls.BasicControlsActivity;
 import com.kingz.filemanager.FileManagerActivity;
 import com.kingz.uiusingActivity.BitmapActivity;
 import com.kingz.uiusingActivity.FileAndPicTestACT;
-import com.kingz.uiusingMedia.KingZMediaPlayer;
+import com.mplayer.KingZMediaPlayer;
 import com.kingz.uiusingWidgets.SeekBarActivity;
 import com.kingz.uiusingWidgets.UsingProgressBarAct;
 

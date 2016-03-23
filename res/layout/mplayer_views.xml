@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true">
-         <com.kingz.uiusingMedia.SeekBarView
+         <com.mplayer.SeekBarView
             android:id="@+id/mplayer_progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
