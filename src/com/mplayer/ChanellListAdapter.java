@@ -28,7 +28,7 @@ public class ChanellListAdapter extends CommonAdapter{
         ImageView imageView = holder.getView(R.id.commonadapter_item_img);
         TextView textView = holder.getView(R.id.commonadapter_item_text);
         ChannelData data = (ChannelData) listDatas.get(position);
-        imageView.setImageBitmap(data.img);
-        textView.setText(data.textInfo+"项");
+//        imageView.setImageBitmap(data.img);
+        textView.setText(data.textInfo);
     }
 }

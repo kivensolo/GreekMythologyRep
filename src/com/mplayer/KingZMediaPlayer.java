@@ -48,7 +48,17 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
 //	private ListView leftListView;
 
 
-    private String play_url = "http://182.138.101.48:57850/nn_live.ts?id=MGYY&url_c1=2000&nn_ak=01626a8d247dec670bc542614b6756e051&npips=192.168.95.78:5100&ncmsid=100001&ngs=56f1427800080441628cb21aa78d6b71&nn_user_id=wz&ndt=stb&nn_day=20160323&nn_begin=203239&ndv=4.2.24.0.0.SC-XJCBC-STB-QZ.0.0_Release&nn_timezone=8";
+//    private String play_url = "http://182.138.101.48:57850/nn_live.ts?id=MGYY&url_c1=2000&nn_ak=01626a8d247dec670bc542614b6756e051&npips=192.168.95.78:5100&ncmsid=100001&ngs=56f1427800080441628cb21aa78d6b71&nn_user_id=wz&ndt=stb&nn_day=20160324&nn_begin=203239&ndv=4.2.24.0.0.SC-XJCBC-STB-QZ.0.0_Release&nn_timezone=8";
+
+    private String play_url = "http://v6.pstatp.com/origin/9582/6002841301?Signature=orKrL7Nng7LFSqKYclJ58HhU5BM%3D&Expires=1458839167&KSSAccessKeyId=qh0h9TdcEMrm1VlR2ad/";
+
+
+	private String dataList[] = {"北京卫视","上冻卫视",
+								"天津卫视","四川卫视",
+								"东方卫视","黑龙江电视台",
+								"成都电视台","广西电视台",
+								"天津卫视","四川卫视",
+						};
 
 
     @Override
@@ -62,22 +72,19 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
 
 	private void initViews() {
 		mSFview = (SurfaceView) findViewById(R.id.surface);
-		seekBar = (SeekBarView) LayoutInflater.from(this).
-				inflate(R.layout.mplayer_views,null).
+		seekBar = (SeekBarView) LayoutInflater.from(this).inflate(R.layout.mplayer_views,null).
 				findViewById(R.id.mplayer_progress);
-		channelData = new ChannelData();
+		leftListView = (ListView) findViewById(R.id.leftchanellView);
+		leftListView.setX(0);
 
 		channelLists = new ArrayList<>();
-		for (int i = 0; i < 15; i++) {
-			channelData.textInfo = i + "";
+		for (int i = 0; i < 5; i++) {
+			channelData = new ChannelData();
+			channelData.textInfo = dataList[i];
 			channelLists.add(channelData);
 		}
 		chanellListAdapter = new ChanellListAdapter(this,channelLists,R.layout.simple_listviewitem);
-		View leftRoot = LayoutInflater.from(this).inflate(R.layout.customlistview_layout,null);
-		leftListView = (ListView) leftRoot.findViewById(R.id.customControlsPage_id);
 		leftListView.setAdapter(chanellListAdapter);
-		ViewGroup.LayoutParams lps = new ViewGroup.LayoutParams(150,-1);
-		this.addContentView(leftListView,lps);
 	}
 
 	/**
@@ -202,6 +209,8 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
 				default:
 					break;
 			}
+			mPlayer.release();
+			finish();
 			return false;
 		}
 	};
@@ -212,6 +221,7 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
 			Log.i(TAG, "OnCompletionListener.onCompletion()   finish");
 			Toast.makeText(KingZMediaPlayer.this,"播放完成", Toast.LENGTH_SHORT).show();
 			mPlayer.stop();
+			mPlayer.release();
 		}
 	};
 
@@ -274,6 +284,7 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
 	public boolean onTouchEvent(MotionEvent event) {
 		if(event.getAction() == MotionEvent.ACTION_DOWN){
 			showSeekBarView();
+			showListView();
 			if( mediaState == MPstate.Play){
 //				doPuase();
 				return true;
@@ -295,6 +306,14 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
 	private void showSeekBarView(){
 		if(!seekBar.isShown()){
 			seekBar.setVisibility(View.VISIBLE);
+		}
+	}
+
+	private void showListView(){
+		if(!leftListView.isShown()){
+			leftListView.setVisibility(View.VISIBLE);
+		}else{
+			leftListView.setVisibility(View.INVISIBLE);
 		}
 	}
 

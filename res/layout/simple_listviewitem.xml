@@ -3,16 +3,18 @@
               android:orientation="horizontal"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-    <ImageView android:layout_width="match_parent"
-               android:layout_height="35dp"
-               android:layout_weight="5"
-               android:background="@color/yello"
+    <ImageView android:layout_width="wrap_content"
+               android:layout_height="40dp"
+               android:layout_marginLeft="5dp"
+               android:background="@color/transparent"
+               android:src="@drawable/islive"
+               android:layout_gravity="center_horizontal"
                android:id="@+id/commonadapter_item_img"/>
-    <TextView android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_weight="2"
-              android:background="@color/green"
+    <TextView android:layout_width="150dp"
+              android:layout_height="40dp"
               android:textSize="30sp"
+              android:textColor="@color/white"
+              android:gravity="center"
               android:id="@+id/commonadapter_item_text"/>
 
 </LinearLayout>
