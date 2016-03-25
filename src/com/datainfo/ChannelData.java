@@ -16,13 +16,15 @@ public class ChannelData implements Serializable {
     private static final long serialVersionUID = 1L;
 
     public Bitmap img;
-    public String textInfo;
+    public String channelName;
+    public String playUrl;
 
     @Override
     public String toString() {
         return "ChannelData{" +
-                "itemTitle='" + img + '\'' +
-                ", spanText='" + textInfo + '\'' +
+                "img=" + img +
+                ", channelName='" + channelName + '\'' +
+                ", playUrl='" + playUrl + '\'' +
                 '}';
     }
 }

@@ -1,31 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <videos>
     <video>
-        <name>大力哥</name>
-        <play_url>http://v7.pstatp.com/3a3cad72738424975e2aeb876fc0acdf/56f406ad/origin/11157/2151127790</play_url>
-    </video>
-    <video>
-        <name>日本广告</name>
-        <play_url>http://v6.pstatp.com/origin/9582/6002841301?Signature=orKrL7Nng7LFSqKYclJ58HhU5BM%3D&Expires=1458839167&KSSAccessKeyId=qh0h9TdcEMrm1VlR2ad/</play_url>
-    </video>
-    <video>
-        <name>臭屁虫</name>
-        <play_url>http://v6.pstatp.com/origin/10182/6956707813?Signature=v2nKxA3vu6OnvC9QIXsX4jM%2FCjw%3D&Expires=1458838826&KSSAccessKeyId=qh0h9TdcEMrm1VlR2ad/</play_url>
-    </video>
-    <video>
-        <name>搞笑拉丁</name>
-        <play_url>http://v4.pstatp.com/94c4c93e0dff7c8d03c9ff5216dee455/56f40de8/origin/10784/3353067063</play_url>
-    </video>
-    <video>
-        <name>一群狗</name>
-        <play_url>http://v7.pstatp.com/5813b19ffebd9fa8dba1ea1fd27b6492/56f40dcc/origin/10787/3221261029</play_url>
-    </video>
-    <video>
-        <name>川普复仇</name>
-        <play_url>http://v7.pstatp.com/efebb9338c7e27d8d521a7207ea34fa5/56f40d54/origin/11286/5992354546</play_url>
+        <name>测试视频1</name>
+        <play_url>http://v7.pstatp.com/a6472abcfb707d4dfefaa2c4f1db83ec/56f57010/origin/11798/1401700743</play_url>
     </video>
     <video>
         <name>CCTV5</name>
-        <play_url>http://182.138.101.48:57850/nn_live.ts?id=MGYY&url_c1=2000&nn_ak=01626a8d247dec670bc542614b6756e051&npips=192.168.95.78:5100&ncmsid=100001&ngs=56f1427800080441628cb21aa78d6b71&nn_user_id=wz&ndt=stb&nn_day=20160324&nn_begin=223239&ndv=4.2.24.0.0.SC-XJCBC-STB-QZ.0.0_Release&nn_timezone=8</play_url>
+        <play_url>http://182.138.101.48:57850/nn_live.ts?id=MGYY&amp;url_c1=2000&amp;nn_ak=01626a8d247dec670bc542614b6756e051&amp;npips=192.168.95.78:5100&amp;ncmsid=100001&amp;ngs=56f1427800080441628cb21aa78d6b71&amp;nn_user_id=wz&amp;ndt=stb&amp;nn_day=20160325&amp;nn_begin=223239&amp;ndv=4.2.24.0.0.SC-XJCBC-STB-QZ.0.0_Release&amp;nn_timezone=8</play_url>
+    </video>
+    <video>
+        <name>央视新闻</name>
+        <play_url>http://v4.pstatp.com/b3b5940f6e1ea61273ee1fabf6dc21c7/56f55852/origin/11933/6173776570</play_url>
     </video>
 </videos>

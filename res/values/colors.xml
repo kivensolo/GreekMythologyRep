@@ -41,6 +41,7 @@
     <color name="deeppink">#ff1493</color><!--深粉红色 -->
     <color name="fuchsia">#ff00ff</color><!--紫红色 -->
     <color name="magenta">#ff00ff</color><!--红紫色 -->
+    <color name="magenta2">#9aff00ff</color><!--红紫色 -->
     <color name="oldlace">#fdf5e6</color><!--老花色 -->
     <color name="red">#ff0000</color><!--红色 -->
     <color name="lightgoldenrodyellow">#fafad2</color><!--亮金黄色 -->
@@ -109,6 +110,7 @@
     <color name="maroon">#800000</color><!--粟色 -->
     <color name="aquamarine">#7fffd4</color><!--碧绿色 -->
     <color name="chartreuse">#7fff00</color><!--黄绿色 -->
+    <color name="chartreuse2">#3c7fff00</color><!--黄绿色 -->
     <color name="lawngreen">#7cfc00</color><!--草绿色 -->
     <color name="mediumslateblue">#7b68ee</color><!--中暗蓝色 -->
     <color name="lightslategray">#778899</color><!--亮蓝灰 -->
@@ -142,6 +144,7 @@
     <color name="mediumspringgreen">#00fa9a</color><!--中春绿色 -->
     <color name="darkturquoise">#00ced1</color><!--暗宝石绿 -->
     <color name="deepskyblue">#00bfff</color><!--深天蓝色 -->
+    <color name="notdeepskyblue">#3c00bfff</color><!--深天蓝色 -->
     <color name="darkcyan">#008b8b</color><!--暗青色 -->
     <color name="teal">#008080</color><!--水鸭色 -->
     <color name="green">#008000</color><!--绿色 -->
