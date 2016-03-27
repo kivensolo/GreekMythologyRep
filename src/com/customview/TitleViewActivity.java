@@ -15,6 +15,6 @@ public class TitleViewActivity extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.hyview_demo);
+        setContentView(R.layout.circleview_layout);
     }
 }

@@ -4,7 +4,7 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-    <com.customview.CustomTitleView
+<!--    <com.customview.CustomOnMeasureView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="50dp"
@@ -12,7 +12,7 @@
             zhi:titleText="9527"
             zhi:titleSize="40sp"/>
 
-    <com.customview.CustomTitleView
+    <com.customview.CustomOnMeasureView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="50dp"
@@ -21,16 +21,20 @@
             zhi:imageScaleType="center"
             zhi:titleColor="#00ff99"
             zhi:titleText="3333"
-            zhi:titleSize="40sp" />
+            zhi:titleSize="40sp" />-->
 
-    <com.customview.CustomTitleView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+    <com.customview.CustomOnMeasureView
+            android:layout_width="440dp"
+            android:layout_height="330dp"
             android:padding="50dp"
+            android:layout_gravity="center"
             android:layout_margin="10dp"
             zhi:myImage="@drawable/zy_smile"
+            zhi:imageWidth="100dp"
+            zhi:imageHeight="250dp"
             zhi:imageScaleType="center"
             zhi:titleColor="#00ff99"
-            zhi:titleText="3333"
+            zhi:titleText="至尊宝"
             zhi:titleSize="40sp"/>
+
 </LinearLayout>

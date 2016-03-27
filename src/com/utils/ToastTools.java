@@ -20,10 +20,11 @@ public class ToastTools {
      public static void showMgtvWaringToast(Context context,String info) {
         Toast mToast = new Toast(context);
 //        View view = View.inflate(this,R.layout.custom_toast_layout,null);
+        //设置View
         LinearLayout root = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.custom_toast_layout,null);
         root.setBackgroundResource(R.drawable.custom_toast_bg);
+
         ImageView mIcon=(ImageView) root.findViewById(R.id.toast_img);
-        //设置图片
 		LinearLayout.LayoutParams mIconParams=(LinearLayout.LayoutParams) mIcon.getLayoutParams();
 		mIconParams.width = 32;
 		mIconParams.height = 32;
@@ -43,6 +44,7 @@ public class ToastTools {
         LinearLayout.LayoutParams mtxtParams=(LinearLayout.LayoutParams) txtContent.getLayoutParams();
 		mtxtParams.rightMargin = 15;
 
+        //设置需要显示的View
         mToast.setView(root);
         mToast.setGravity(Gravity.CENTER_VERTICAL,0,50);
         mToast.setDuration(Toast.LENGTH_SHORT);

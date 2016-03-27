@@ -10,7 +10,16 @@
         <attr name="titleColor" format="color"/>
         <attr name="titleSize" format="dimension"/>
         <attr name="myImage" format="reference"/>
+        <attr name="imageWidth" format="dimension"/>
+        <attr name="imageHeight" format="dimension"/>
         <attr name="imageScaleType"/>
+    </declare-styleable>
+
+    <declare-styleable name="circleView">
+        <attr name="innerColor" format="color"/>
+        <attr name="outerColor" format="color"/>
+        <attr name="circleWidth" format="dimension"/>
+        <attr name="speed" format="integer"/>
     </declare-styleable>
 
     <declare-styleable name="PieChart">

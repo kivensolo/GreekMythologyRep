@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:zhi="http://schemas.android.com/apk/res/com.kingz.uiusingListViews"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+        <com.customview.circleProgressView
+            android:layout_width="330dp"
+            android:layout_height="330dp"
+            android:layout_gravity="center"
+            zhi:innerColor="#FF00FF"
+            zhi:outerColor="#00FF00"
+            zhi:circleWidth="20dp"
+            zhi:speed="20"/>
+
+</LinearLayout>
