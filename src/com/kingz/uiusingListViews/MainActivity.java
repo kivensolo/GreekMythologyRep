@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import com.AsuyncTaskJsonTest.AsynctaskBitmapMainActivity;
 import com.baidudemo.BaiduMapActivity;
+import com.iflytek.synthesizer.VoiceActivity;
 import com.kingz.controls.BasicControlsActivity;
 import com.kingz.filemanager.FileManagerActivity;
 import com.kingz.uiusingActivity.BitmapActivity;
@@ -62,6 +63,7 @@ public class MainActivity extends Activity implements OnItemClickListener{
 		mAdapter.add(new ListBillData(this,"BaiduMapTest",new Intent(this,BaiduMapActivity.class)));
 		mAdapter.add(new ListBillData(this,"Media",new Intent(this,KingZMediaPlayer.class)));
 		mAdapter.add(new ListBillData(this,"FileManager ",new Intent(this,FileManagerActivity.class)));
+		mAdapter.add(new ListBillData(this,"Iflytek",new Intent(this,VoiceActivity.class)));
 	}
 
 	@Override

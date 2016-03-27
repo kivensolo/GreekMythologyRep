@@ -155,6 +155,10 @@
         <activity android:name="com.kingz.controls.SpansActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
+  	    <!-- 讯飞语音页面 -->
+        <activity android:name="com.iflytek.synthesizer.VoiceActivity"
+                  android:theme="@android:style/Theme.Black.NoTitleBar"/>
+
 
 
         <!-- ************ 媒体 *********** -->
