@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import com.kingz.uiusingListViews.R;
@@ -16,15 +17,15 @@ import com.kingz.uiusingListViews.R;
  * All rights reserved.
  * author: King.Z
  * date: 2016 2016/3/27 21:57
- * description:
+ * description: 圆形进度条的绘制
  */
-public class circleProgressView extends View {
+public class CircleProgressView extends View {
     public static final String TAG = "circleProgressView";
 
     /**
      * 是否停止绘图
      */
-    public static boolean isDrawing = true;
+    public boolean isDrawing = false;
 
     /**
      * 第一圈的颜色
@@ -40,7 +41,7 @@ public class circleProgressView extends View {
     private int mCircleWidth;
 
     /**
-     * 圈的r
+     * 圈的半径
      */
     private int mCircleRadius;
     /**
@@ -58,7 +59,7 @@ public class circleProgressView extends View {
     private int mSweepAngle;
 
     /**
-     * 速度
+     * 刷新速度
      */
     private int mSpeed;
 
@@ -67,31 +68,39 @@ public class circleProgressView extends View {
      */
     private boolean isNext = false;
 
-    public circleProgressView(Context context) {
+    private ICircleDrawStart iCircleDrawStartListner;
+    private ICircleDrawFinished iCircleDrawFinishedListner;
+
+    public CircleProgressView(Context context) {
         this(context, null);
     }
 
-    public circleProgressView(Context context, AttributeSet attrs) {
+    public CircleProgressView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public circleProgressView(Context context, AttributeSet attrs, int defStyle) {
+    public CircleProgressView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         mSweepAngle = 0;
         getCustomArray(context, attrs, defStyle);
         initTools();
     }
 
-    private void startProgressTimer() {
+    public void beginDrawCircle() {
+        isDrawing = true;
+        iCircleDrawStartListner.onStart();
+        
         // 绘图线程
         new Thread(){
             public void run(){
+                Log.i(TAG,"绘图线程在运行中......");
                 while (isDrawing){
                     mSweepAngle++;
                     if (mSweepAngle == 360){
                         mSweepAngle = 0;
                         isNext = !isNext;
                         isDrawing = false;
+                        iCircleDrawFinishedListner.onFinished();
                     }
                     postInvalidate();
                     try
@@ -102,7 +111,7 @@ public class circleProgressView extends View {
                         e.printStackTrace();
                     }
                 }
-            };
+            }
         }.start();
     }
 
@@ -136,7 +145,6 @@ public class circleProgressView extends View {
         typedArray.recycle();
         mFirstPaint = new Paint();
         mSecondPaint = new Paint();
-        startProgressTimer();
     }
 
     private void initTools() {
@@ -158,7 +166,7 @@ public class circleProgressView extends View {
         super.onDraw(canvas);
 
         int centre = getWidth() / 2;                // 获取圆心的x坐标
-        int radius = centre - mCircleWidth / 2;     // 半径
+        int radius = centre - mCircleWidth / 2 - 10;     // 半径(防止切View的边缘)
 
         //设置一个弧的矩形区域(圆的直径长度)
         RectF oval = new RectF(centre - radius,
@@ -168,10 +176,30 @@ public class circleProgressView extends View {
         // 用于定义的圆弧的形状和大小的界限
 
         canvas.drawCircle(centre,centre,radius,mFirstPaint);
-        if(mSweepAngle % 360 == 0){
+        if(mSweepAngle != 0 &&  mSweepAngle % 360 == 0){
             canvas.drawCircle(centre,centre,radius,mSecondPaint);
         }else{
             canvas.drawArc(oval, -90, mSweepAngle, false, mSecondPaint); // 根据进度画圆弧
         }
+    }
+
+    public boolean getDrawState(){
+        return isDrawing;
+    }
+
+    public void setCircleDrawFinishedListner(ICircleDrawFinished iCircleDrawFinishedListner){
+        this.iCircleDrawFinishedListner = iCircleDrawFinishedListner;
+    }
+
+    interface ICircleDrawFinished{
+        void onFinished();
+    }
+
+    public void setCircleDrawStartListner(ICircleDrawStart iCircleDrawStartListner){
+        this.iCircleDrawStartListner = iCircleDrawStartListner;
+    }
+
+    interface ICircleDrawStart{
+        void onStart();
     }
 }

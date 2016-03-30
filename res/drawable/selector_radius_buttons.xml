@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
+
     <item android:state_pressed="false">
         <shape
             android:shape="rectangle">
-            <solid android:color="@color/lightseagreen" /> <!-- 填充的颜色 -->
-            <corners android:radius="15dip" /> <!-- 设置弧形的半径 -->
+            <solid android:color="@color/lightseagreen" />  <!-- 填充的颜色 -->
+            <corners android:radius="6dip" />               <!-- 设置弧形的半径 -->
             <!-- padding：Button里面的文字与Button边界的间隔 -->
             <padding
-               android:left="10dp" android:top="10dp"
-               android:right="10dp" android:bottom="10dp"/>
+               android:left="10dp"
+               android:top="10dp"
+               android:right="10dp"
+               android:bottom="10dp"/>
         </shape>
     </item>
 
@@ -16,14 +19,14 @@
         <shape
             android:shape="rectangle">
             <solid android:color="#ff00ff" /> <!-- 填充的颜色 -->
-            <corners android:radius="15dip" /> <!-- 设置弧形的半径 -->
+            <corners android:radius="6dip" /> <!-- 设置弧形的半径 -->
         </shape>
     </item>
 
     <item android:state_focused="true">
         <shape android:shape="rectangle">
             <solid android:color="@color/mediumseagreen"/>
-            <corners android:radius="15dip" />
+            <corners android:radius="6dip" />
         </shape>
     </item>
 

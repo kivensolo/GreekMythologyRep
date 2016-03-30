@@ -20,7 +20,7 @@ import java.util.Set;
 /**
  * Created by KingZ.
  * Data: 2016 2016/3/13
- * Discription:
+ * Discription: 自定义View的onMeasure计算
  */
 public class CustomOnMeasureView extends View {
 
