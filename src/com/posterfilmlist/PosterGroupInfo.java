@@ -17,6 +17,25 @@ public class PosterGroupInfo implements Serializable {
     public String title;
     public ArrayList<Poster> poster;
 
+    @Override
+    public String toString() {
+        return "PosterGroupInfo{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", poster=" + poster +
+                '}';
+    }
 
+    public class Poster implements Serializable {
+        public String poster_ur;
+        public String title; //海报标题
+
+        @Override
+        public String toString() {
+            return "Poster{" +
+                    "poster_ur='" + poster_ur + '\'' +
+                    ", title='" + title + '\'' +
+                    '}';
+        }
     }
 }
