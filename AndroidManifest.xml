@@ -145,7 +145,13 @@
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
         <!-- 可左右滑动的ListView -->
         <activity android:name="com.customview.listview.SliderListViewActivity"
+                  android:screenOrientation="portrait"/>
+
+         <!-- WZViewPagerActicity -->
+        <activity android:name="com.customview.slider.wzviewpager.WZViewPagerActicity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
+
+
 
         <!-- 百度地图View -->
         <activity android:name="com.baidudemo.BaiduMapActivity"

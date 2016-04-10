@@ -21,16 +21,16 @@
       <sourceFolder url="file://$MODULE_DIR$/gen" isTestSource="false" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
     </content>
-    <orderEntry type="jdk" jdkName="Android API 17 Platform" jdkType="Android SDK" />
+    <orderEntry type="jdk" jdkName="Android API 21 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="libs" level="project" />
-    <orderEntry type="library" name="baidumapapi_v3_3_0" level="project" />
-    <orderEntry type="library" name="locSDK_5.0" level="project" />
     <orderEntry type="library" name="Msc" level="project" />
     <orderEntry type="library" name="Sunflower" level="project" />
     <orderEntry type="library" name="QRcore" level="project" />
     <orderEntry type="library" name="Msc" level="project" />
     <orderEntry type="library" name="Sunflower" level="project" />
     <orderEntry type="library" name="gson-2.0" level="project" />
+    <orderEntry type="library" name="locSDK_5.0" level="project" />
+    <orderEntry type="library" name="baidumapapi_v3_3_0" level="project" />
   </component>
 </module>
