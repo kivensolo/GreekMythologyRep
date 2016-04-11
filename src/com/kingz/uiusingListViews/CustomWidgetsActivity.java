@@ -15,6 +15,7 @@ import com.customview.FingerBallActivity;
 import com.customview.NetworkSpeed.NetworkSpeedActivity;
 import com.customview.listview.CustomListViewActivity;
 import com.customview.listview.SliderListViewActivity;
+import com.customview.slider.wzviewpager.OriginViewPagerActivity;
 import com.customview.slider.wzviewpager.WZViewPagerActicity;
 import com.kingz.controls.SpansActivity;
 import com.kingz.uiusingActivity.LableTextView_Act;
@@ -58,6 +59,7 @@ public class CustomWidgetsActivity extends  Activity implements OnItemClickListe
 		mAdapter.add(new ListBillData(this,"WebAPP",new Intent(this,KingWebViewActivity.class)));
 		mAdapter.add(new ListBillData(this,"Toast",new Intent(this,ToastTestActivity.class)));
 		mAdapter.add(new ListBillData(this,"NetworkSpeed",new Intent(this,NetworkSpeedActivity.class)));
+		mAdapter.add(new ListBillData(this,"原生ViewPager",new Intent(this,OriginViewPagerActivity.class)));
 		mAdapter.add(new ListBillData(this,"WZViewPager",new Intent(this,WZViewPagerActicity.class)));
 	}
 

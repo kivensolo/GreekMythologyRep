@@ -15,9 +15,9 @@ import com.kingz.controls.BasicControlsActivity;
 import com.kingz.filemanager.FileManagerActivity;
 import com.kingz.uiusingActivity.BitmapActivity;
 import com.kingz.uiusingActivity.FileAndPicTestACT;
-import com.mplayer.KingZMediaPlayer;
 import com.kingz.uiusingWidgets.SeekBarActivity;
 import com.kingz.uiusingWidgets.UsingProgressBarAct;
+import com.mplayer.KingZMediaPlayer;
 
 /**
  * @author: KingZ
@@ -69,11 +69,12 @@ public class MainActivity extends Activity implements OnItemClickListener{
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-//		ActivityOptions opts = ActivityOptions.makeCustomAnimation(this,R.anim.fade,R.anim.hold);
+		//ActivityOptions opts = ActivityOptions.makeCustomAnimation(this,R.anim.fade,R.anim.hold);
 //		ActivityOptions opts = ActivityOptions.makeScaleUpAnimation(view, 0, 0, view.getWidth(), view.getHeight());
 		ListBillData data = mAdapter.getItem(position);
 		data.startActivity(null);
-		overridePendingTransition(R.anim.zoom_enter, R.anim.zoom_exit);
+		//TODO Activity切换的动画
+		//overridePendingTransition(R.anim.zoom_enter, R.anim.zoom_exit);
 	}
 
 	@Override

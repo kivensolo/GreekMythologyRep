@@ -14,9 +14,9 @@
     <SeekBar
         android:id="@+id/seekbar_self"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" 
+        android:layout_height="wrap_content"
         android:progressDrawable="@drawable/seekbar_self_style"
-        android:thumb="@drawable/seekbar_thumb"/>
+        android:thumb="@drawable/seekbar_thumb_img"/>
 
     <!-- 颜色更改的方式  -->
     <SeekBar
@@ -24,6 +24,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:progressDrawable="@drawable/seekbar_self_color_style"
-        android:thumb="@drawable/seekbar_thumb" />
+        android:thumb="@drawable/seekbar_thumb_img" />
 
 </LinearLayout>

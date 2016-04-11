@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * All rights reserved.
  * author: King.Z
  * date: 2016 2016/4/2 16:49
- * description:
+ * description: 影片列表页  用GridView和本地的图片url去显示图片
  */
 public class FilmsListActivity extends Activity{
 
@@ -26,10 +26,6 @@ public class FilmsListActivity extends Activity{
     private PosterGroupInfo posterGroupInfo = new PosterGroupInfo();
     private ArrayList<PosterGroupInfo.Poster> posterList = new ArrayList<>();
     private PosterGroupInfo.Poster posterInfo = new PosterGroupInfo().new Poster();;
-
-
-
-
 
     @Override
     protected void onResume() {
@@ -49,8 +45,6 @@ public class FilmsListActivity extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //TODO 页面初始化
 
         getLocalPosterData();
 

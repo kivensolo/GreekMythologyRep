@@ -151,6 +151,10 @@
         <activity android:name="com.customview.slider.wzviewpager.WZViewPagerActicity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
+         <!-- OriginViewPagerActivity -->
+        <activity android:name="com.customview.slider.wzviewpager.OriginViewPagerActivity"
+                  android:theme="@android:style/Theme.Black.NoTitleBar"/>
+
 
 
         <!-- 百度地图View -->

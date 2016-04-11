@@ -1,7 +1,6 @@
 package com.posterfilmlist;
 
 import android.os.AsyncTask;
-import com.AsuyncTaskJsonTest.NewsBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,13 +23,15 @@ public class GetPosterImageTask extends AsyncTask<String,Void,List<PosterInfo>> 
     protected void onPostExecute(List<PosterInfo> posterInfos) {
         super.onPostExecute(posterInfos);
         //TODO 为GridView设置图片
+
+
     }
 
     private List<PosterInfo> getLocalUrl(String url) {
         List<PosterInfo> posteUrlList = new ArrayList<>();
         PosterInfo posterInfo;
 
-        posterInfo =
+        //posterInfo =
 
         return posteUrlList;
     }

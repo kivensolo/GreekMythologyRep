@@ -20,6 +20,7 @@ public class DotsView extends LinearLayout {
     private int numberOfPage = 0;
     private int mSelectedRessource;
     private int mUnSelectedRessource;
+    private IItemClickedListenner clickedListenner;
 
     public DotsView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -58,6 +59,19 @@ public class DotsView extends LinearLayout {
             Drawable drawable = res.getDrawable(drawableId);
             dots.get(i).setImageDrawable(drawable);
         }
+    }
+
+    @Override
+    public void setOnClickListener(OnClickListener l) {
+        super.setOnClickListener(l);
+    }
+
+    public void setOnItemclickListenner(IItemClickedListenner lsr){
+        clickedListenner = lsr;
+    }
+
+    public interface IItemClickedListenner{
+        void onItemClicked();
     }
 
 }
