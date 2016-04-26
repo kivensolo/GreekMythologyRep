@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
+import com.kingz.four_components.service.BoundServiceDemo;
+import com.kingz.four_components.service.IAnimalRemoteService;
 import com.kingz.uiusingListViews.R;
 
 /**
@@ -23,7 +25,7 @@ import com.kingz.uiusingListViews.R;
 public class ServiceComponentsACT extends Activity
 						implements OnClickListener, ServiceConnection{
 	public static final String TAG = "ServiceComponentsACT";
-	private IAnimal animal;
+	private IAnimalRemoteService animalRemoteService;
 	private Button bt_start,bt_stop,bt_bind,bt_unbind,bt_getNum,btn_startIntent,btn_ipc_method;
 	private Intent seviceIntent;
 	private Intent intent_2;
@@ -73,7 +75,7 @@ public class ServiceComponentsACT extends Activity
 			Log.d(TAG, "绑定回调onServiceConnected!!!");
 			mBound = true;
 			//绑定成功后的回调方法
-			animal = IAnimal.Stub.asInterface(service);
+			animalRemoteService = IAnimalRemoteService.Stub.asInterface(service);
 			btn_ipc_method.setEnabled(true);
 			Toast.makeText(ServiceComponentsACT.this, "绑定成功", Toast.LENGTH_SHORT).show();
 		}
@@ -121,13 +123,14 @@ public class ServiceComponentsACT extends Activity
 				}
 				break;
 			case R.id.btn_ipc_method:
-				if(animal == null){
+				//TODO   AIDL方法测试
+				if(animalRemoteService == null){
 					return;
 				}else{
 					try {
-						animal.setName("KingZ");
-						Toast.makeText(ServiceComponentsACT.this, ""+animal.getValue(), Toast.LENGTH_SHORT).show();
-						Log.d(TAG, "获取到的信息:"+ animal.getValue());
+						animalRemoteService.setName("KingZ");
+						Toast.makeText(ServiceComponentsACT.this, "获取远程的name:"+ animalRemoteService.getValue(), Toast.LENGTH_SHORT).show();
+						Log.d(TAG, "获取到的信息:"+ animalRemoteService.getValue());
 					} catch (RemoteException e) {
 						e.printStackTrace();
 					}

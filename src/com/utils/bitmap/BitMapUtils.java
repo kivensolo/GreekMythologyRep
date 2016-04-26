@@ -1,7 +1,10 @@
 package com.utils.bitmap;
 
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.graphics.PixelFormat;
+import android.graphics.drawable.Drawable;
 
 /**
  * Copyright(C) 2015, 北京视达科科技有限公司
@@ -29,4 +32,19 @@ public class BitMapUtils {
 				bitmap.getWidth(), bitmap.getHeight(), matrix, true);
 		return resizedBitmap;
 	}
+
+	/**
+     * drawable转换为Bitmap
+     */
+
+    public static Bitmap drawable2Bitmap(Drawable drawable, int width, int height) {
+        Bitmap bitmap = Bitmap.createBitmap(width,height,
+				drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888: Bitmap.Config.RGB_565);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, width,height);
+        drawable.draw(canvas);
+        return bitmap;
+    }
+
+
 }

@@ -181,7 +181,9 @@
                  android:enabled="true"
                  android:exported="true"/>
 
-        <service android:name="com.kingz.four_components.BoundServiceDemo"/>
+        <!-- aidl测试 -->
+        <service android:name="com.kingz.four_components.service.BoundServiceDemo">
+        </service>
 
         <service android:name="com.kingz.four_components.IntentServicDemo"
                  android:exported="false">

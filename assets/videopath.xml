@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <videos>
-    <video>
+     <video>
         <name>测试视频1</name>
+        <play_url>http://v4.pstatp.com/6a55ed41cfbf3cf77be1214bcd037362/57166b2e/origin/15032/2512493670</play_url>
+    </video>
+    <video>
+        <name>测试视频2</name>
         <play_url>http://v7.pstatp.com/a6472abcfb707d4dfefaa2c4f1db83ec/56f57010/origin/11798/1401700743</play_url>
     </video>
     <video>
@@ -11,5 +15,9 @@
     <video>
         <name>央视新闻</name>
         <play_url>http://v4.pstatp.com/b3b5940f6e1ea61273ee1fabf6dc21c7/56f55852/origin/11933/6173776570</play_url>
+    </video>
+    <video>
+        <name>123456</name>
+        <play_url>http://192.168.90.49:7890/123456.ts</play_url>
     </video>
 </videos>

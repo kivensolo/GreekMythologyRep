@@ -8,8 +8,8 @@ import android.util.Log;
 /**
  * Created by KingZ.
  * Data: 2016 2016/2/13
- * Discription:
- *  IntentService是继承于Service并处理异步请求的一个类，
+ * Discription:  IntentService是继承于Service并处理异步请求的一个类
+ *
  *  1.内部有一个工作线线处理耗时的操作，启动方式和启动服务方式一样，
  *  2.任务执行完成后，intentSerivce会-----自动停止-----。
  *  3.可以启动多次，以工作队列的形式在onHandleIntent
