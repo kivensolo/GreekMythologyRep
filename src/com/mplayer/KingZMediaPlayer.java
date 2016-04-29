@@ -66,17 +66,16 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
     private ChanellListAdapter chanellListAdapter;
     private ArrayList<ChannelData> channelLists;
     private ChannelData channelData = new ChannelData();
-    RelativeLayout root;
 
     //测试播放串
-    private String play_url = "http://192.168.90.49:7890/nl.m3u8?id=gz_cctv2";
+    private String play_url = "http://182.138.101.49:5000/nn_vod/nn_x64/aWQ9MmI4NzQ3NDQ5Y2E3NmRkYTQxYmQzY2I5Y2UwNDU4NDkmdXJsX2MxPTU0NTY3MzY1NzI2OTY1NzMyZjY0NjE2Zjc4Njk2MTZjNjk3NTcyNjU2ZTJmNDIzMDM4NDUzNTM4NDU0NDM4NDM0NDQyMzE0NDM3MzEzODM2NDUzODM5MzkzMTQ1NDIzMzMyMzgzMDMyMzE0NDVmMzIzMDMxMzUzMTMyMzAzNzVmMzE1ZjMxNWYzMTMwMzMzMzJlNzQ3MzIwMDAmbm5fYWs9MDFlNzFkMTYzYzhjNmUxZTNmMmVhZjE1MjhkZmUwZDRhNiZudHRsPTMmbnBpcHM9NTIuOC4xODUuMTY4OjUxMDAmbmNtc2lkPTEwMDgwMDEmbmdzPTU3MjM0MjMxMDAwODMxZTRhMDU1NGIyOWIwMzhjM2MzJm5uZD1jbi56Z2R4LnNpY2h1YW4mbmZ0PXRzJm5uX3VzZXJfaWQ9Y250djAwMWFjYzE1NWM3YyZuZHQ9c3RiJm5kdj0xLjQuMC5DT00tQ0hJTkEtT1RULVNUQi4xLjBfRGVtbyZuYWw9MDEzMTQyMjM1NzA2MDc3N2VkNDM2M2RlZjQ5OGI1OGFkMWUxNTA5YWRjMWM5OA,,/2b8747449ca76dda41bd3cb9ce045849.ts";
+
+    //澳门风云“http://182.138.101.49:5000/nn_vod/nn_x64/aWQ9NTFjZDI3NTg4MjIwYjNlNDE4MWEwMWRhOTBkM2ZmZDgmdXJsX2MxPTZkNmY3NjY5NjUyZjYxNmY2ZDY1NmU2NjY1NmU2Nzc5NzU2ZTJmNjE2ZjZkNjU2ZTY2NjU2ZTY3Nzk3NTZlMmU3NDczMjAwMCZubl9haz0wMWNlODlkMGEyNjQ4MDRkZGQ0Mzg4ZGYyYTA3Y2IzYzJkJm50dGw9MyZucGlwcz01Mi44LjE4NS4xNjg6NTEwMCZuY21zaWQ9MTAwODAwMSZuZ3M9NTcyMzQ3MDQwMDBkNjhmNDIwZmM3YmVmNjRjNDJmNzYmbm5kPWNuLnpnZHguc2ljaHVhbiZuZnQ9dHMmbm5fdXNlcl9pZD1jbnR2MDAxYWNjMTU1YzdjJm5kdD1zdGImbmR2PTEuNC4wLkNPTS1DSElOQS1PVFQtU1RCLjEuMF9EZW1vJm5hbD0wMTA0NDcyMzU3MDYwNzRjMjNlMTFiZjcwMjljZDdkZTMxNWM1OTMzNTNmN2Vk/51cd27588220b3e4181a01da90d3ffd8.ts”
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.mplayer_layout);
-        root = new RelativeLayout(this);
-        setContentView(root);
+        setContentView(R.layout.mplayer_layout);
         //initVideoData();
         initViews();
         initMedia();
@@ -131,17 +130,17 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
      * 初始化视图
      */
     private void initViews() {
-        //mSurfaceView = (SurfaceView) findViewById(R.id.surface);
-        mSurfaceView = new SurfaceView(this);
-        root.addView(mSurfaceView, new RelativeLayout.LayoutParams(-1, -1));
+        mSurfaceView = (SurfaceView) findViewById(R.id.surface);
+        //mSurfaceView = new SurfaceView(this);
+        //root.addView(mSurfaceView, new RelativeLayout.LayoutParams(-1, -1));
         holder = mSurfaceView.getHolder();
         holder.setKeepScreenOn(true); //强制屏幕等待
         holder.addCallback(mSurfaceHolderCallback);
-        //leftListView = (ListView) findViewById(R.id.leftchanellView);
-        ////seekBar = (SeekBarView) findViewById(R.id.mplayer_progress);
-        //rightChangeBtn = (TextView) findViewById(R.id.changeSize_id);
-        //currentTimeView = (TextView) findViewById(R.id.leftTime);
-        //totalTimeView = (TextView) findViewById(R.id.rightTime);
+        leftListView = (ListView) findViewById(R.id.leftchanellView);
+        //seekBar = (SeekBarView) findViewById(R.id.mplayer_progress);
+        rightChangeBtn = (TextView) findViewById(R.id.changeSize_id);
+        currentTimeView = (TextView) findViewById(R.id.leftTime);
+        totalTimeView = (TextView) findViewById(R.id.rightTime);
 
         if (channelLists != null) {
             chanellListAdapter = new ChanellListAdapter(this, channelLists, R.layout.simple_listviewitem);
