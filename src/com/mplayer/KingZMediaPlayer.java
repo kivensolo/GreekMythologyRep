@@ -13,7 +13,6 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.datainfo.ChannelData;
@@ -26,7 +25,8 @@ import org.xmlpull.v1.XmlPullParserFactory;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.TimerTask;
+import java.util.Formatter;
+import java.util.Locale;
 
 /**
  * Created by KingZ on 2016/4/16.
@@ -41,34 +41,61 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
     private static final String TAG = "KingZMediaPlayer";
     public static final int AUTO_REFRESH_FLAG = 1;
 
+    private static final int PLAYER_SLOW_TIMER = 0x501;
+    private static final int SET_TOTAL_TIME = 0x502;
+     /**
+      * 检测播放进度任务周期ms
+      **/
+    public static final int PLAY_TIMER_INTERVAL = 499;
+     /**
+      * 线程运行开关
+      **/
+    private boolean threadExitFlag = false;
+
+    /**
+     * 播放器状态
+     */
     private enum MPstate {
         PREPARING,PREPARED,PLAYING, STOP, PAUSED, IDLE, End,ERROR,
     }
 
-    private MPstate currentMediaState = MPstate.IDLE;      //初始化播放器状态
+    /**
+     * 播放器当前装套
+     */
+    private MPstate currentMediaState = MPstate.IDLE;
 
     private SeekBarView seekBar;
     private MediaPlayer mPlayer;
     private SurfaceView mSurfaceView;
     private SurfaceHolder holder;
 
-    /**
-     * 影片参数
-     */
-    private String currentPlayTime;     //当前播放时间
-    private long duration;              //总持续时长
+    /** 播放参数 **/
+    private int currentPlayPostion;
+    private int duration;
+    private long currentPlayedTime;
     private int mVideoWidth;
     private int mVideoHeight;
+    private int minStepLen = 0;         //进度条的最小移动单位
     private ListView leftListView;
     private TextView rightChangeBtn;    //画面比例切换，暂未使用
-    private TextView totalTimeView;     //片长总时间，暂未使用
-    private TextView currentTimeView;   //当前播放时间，暂未使用
+    private TextView rightTextView;     //片长总时间，暂未使用
+    private TextView leftTimeView;      //当前播放时间，暂未使用
+    private String playedTime;
+    private String totalTime;
     private ChanellListAdapter chanellListAdapter;
     private ArrayList<ChannelData> channelLists;
     private ChannelData channelData = new ChannelData();
 
+    /** ------------------------------ 进度条相关参数 --------------------------------**/
+     /**播放总时长、进度显示格式**/
+    private StringBuilder mFormatBuilder;
+    private Formatter mFormatter;
+
+
     //测试播放串
-    private String play_url = "http://182.138.101.49:5000/nn_vod/nn_x64/aWQ9MmI4NzQ3NDQ5Y2E3NmRkYTQxYmQzY2I5Y2UwNDU4NDkmdXJsX2MxPTU0NTY3MzY1NzI2OTY1NzMyZjY0NjE2Zjc4Njk2MTZjNjk3NTcyNjU2ZTJmNDIzMDM4NDUzNTM4NDU0NDM4NDM0NDQyMzE0NDM3MzEzODM2NDUzODM5MzkzMTQ1NDIzMzMyMzgzMDMyMzE0NDVmMzIzMDMxMzUzMTMyMzAzNzVmMzE1ZjMxNWYzMTMwMzMzMzJlNzQ3MzIwMDAmbm5fYWs9MDFlNzFkMTYzYzhjNmUxZTNmMmVhZjE1MjhkZmUwZDRhNiZudHRsPTMmbnBpcHM9NTIuOC4xODUuMTY4OjUxMDAmbmNtc2lkPTEwMDgwMDEmbmdzPTU3MjM0MjMxMDAwODMxZTRhMDU1NGIyOWIwMzhjM2MzJm5uZD1jbi56Z2R4LnNpY2h1YW4mbmZ0PXRzJm5uX3VzZXJfaWQ9Y250djAwMWFjYzE1NWM3YyZuZHQ9c3RiJm5kdj0xLjQuMC5DT00tQ0hJTkEtT1RULVNUQi4xLjBfRGVtbyZuYWw9MDEzMTQyMjM1NzA2MDc3N2VkNDM2M2RlZjQ5OGI1OGFkMWUxNTA5YWRjMWM5OA,,/2b8747449ca76dda41bd3cb9ce045849.ts";
+//    private String play_url = "http://182.138.101.49:5000/nn_vod/nn_x64/aWQ9MmI4NzQ3NDQ5Y2E3NmRkYTQxYmQzY2I5Y2UwNDU4NDkmdXJsX2MxPTU0NTY3MzY1NzI2OTY1NzMyZjY0NjE2Zjc4Njk2MTZjNjk3NTcyNjU2ZTJmNDIzMDM4NDUzNTM4NDU0NDM4NDM0NDQyMzE0NDM3MzEzODM2NDUzODM5MzkzMTQ1NDIzMzMyMzgzMDMyMzE0NDVmMzIzMDMxMzUzMTMyMzAzNzVmMzE1ZjMxNWYzMTMwMzMzMzJlNzQ3MzIwMDAmbm5fYWs9MDFlNzFkMTYzYzhjNmUxZTNmMmVhZjE1MjhkZmUwZDRhNiZudHRsPTMmbnBpcHM9NTIuOC4xODUuMTY4OjUxMDAmbmNtc2lkPTEwMDgwMDEmbmdzPTU3MjM0MjMxMDAwODMxZTRhMDU1NGIyOWIwMzhjM2MzJm5uZD1jbi56Z2R4LnNpY2h1YW4mbmZ0PXRzJm5uX3VzZXJfaWQ9Y250djAwMWFjYzE1NWM3YyZuZHQ9c3RiJm5kdj0xLjQuMC5DT00tQ0hJTkEtT1RULVNUQi4xLjBfRGVtbyZuYWw9MDEzMTQyMjM1NzA2MDc3N2VkNDM2M2RlZjQ5OGI1OGFkMWUxNTA5YWRjMWM5OA,,/2b8747449ca76dda41bd3cb9ce045849.ts";
+    private String play_url = "";
+
 
     //澳门风云“http://182.138.101.49:5000/nn_vod/nn_x64/aWQ9NTFjZDI3NTg4MjIwYjNlNDE4MWEwMWRhOTBkM2ZmZDgmdXJsX2MxPTZkNmY3NjY5NjUyZjYxNmY2ZDY1NmU2NjY1NmU2Nzc5NzU2ZTJmNjE2ZjZkNjU2ZTY2NjU2ZTY3Nzk3NTZlMmU3NDczMjAwMCZubl9haz0wMWNlODlkMGEyNjQ4MDRkZGQ0Mzg4ZGYyYTA3Y2IzYzJkJm50dGw9MyZucGlwcz01Mi44LjE4NS4xNjg6NTEwMCZuY21zaWQ9MTAwODAwMSZuZ3M9NTcyMzQ3MDQwMDBkNjhmNDIwZmM3YmVmNjRjNDJmNzYmbm5kPWNuLnpnZHguc2ljaHVhbiZuZnQ9dHMmbm5fdXNlcl9pZD1jbnR2MDAxYWNjMTU1YzdjJm5kdD1zdGImbmR2PTEuNC4wLkNPTS1DSElOQS1PVFQtU1RCLjEuMF9EZW1vJm5hbD0wMTA0NDcyMzU3MDYwNzRjMjNlMTFiZjcwMjljZDdkZTMxNWM1OTMzNTNmN2Vk/51cd27588220b3e4181a01da90d3ffd8.ts”
 
@@ -76,7 +103,7 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mplayer_layout);
-        //initVideoData();
+        initVideoData();
         initViews();
         initMedia();
     }
@@ -130,17 +157,19 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
      * 初始化视图
      */
     private void initViews() {
+        mFormatBuilder = new StringBuilder();
+        mFormatter = new Formatter(mFormatBuilder, Locale.getDefault());
+
         mSurfaceView = (SurfaceView) findViewById(R.id.surface);
-        //mSurfaceView = new SurfaceView(this);
-        //root.addView(mSurfaceView, new RelativeLayout.LayoutParams(-1, -1));
         holder = mSurfaceView.getHolder();
         holder.setKeepScreenOn(true); //强制屏幕等待
         holder.addCallback(mSurfaceHolderCallback);
         leftListView = (ListView) findViewById(R.id.leftchanellView);
-        //seekBar = (SeekBarView) findViewById(R.id.mplayer_progress);
+        seekBar = (SeekBarView) findViewById(R.id.mplayer_progress);
+        seekBar.setVisibility(View.INVISIBLE);
         rightChangeBtn = (TextView) findViewById(R.id.changeSize_id);
-        currentTimeView = (TextView) findViewById(R.id.leftTime);
-        totalTimeView = (TextView) findViewById(R.id.rightTime);
+        leftTimeView = (TextView) findViewById(R.id.leftTime);
+        rightTextView = (TextView) findViewById(R.id.rightTime);
 
         if (channelLists != null) {
             chanellListAdapter = new ChanellListAdapter(this, channelLists, R.layout.simple_listviewitem);
@@ -151,48 +180,6 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
         }
     }
 
-
-    /*********** 通过定时器和Handler来更新进度条 ************/
-    TimerTask mTimerTask = new TimerTask() {
-        @Override public void run() {
-            if(mPlayer==null){
-                return;
-            }
-            if (mPlayer.isPlaying()) {
-                mHandler.sendEmptyMessage(AUTO_REFRESH_FLAG);
-            }
-        }
-    };
-
-    private Handler mHandler = new Handler(){
-		public void handleMessage(Message msg){
-			 switch (msg.what) {
-				 case AUTO_REFRESH_FLAG:
-					 //autoRefreshProgress();
-                     Log.i(TAG,"handleMessage RefreshProgress  +1");
-
-					 break;
-				 default:
-					 break;
-         	}
-		}
-	};
-
-    /**
-     * 刷新播放进度
-     */
-    public void startPlayerTimer() {
-		new Thread() {
-			@Override
-			public void run() {
-                //Message msg = Message.obtain();
-                //msg.what = AUTO_REFRESH_FLAG;
-                //mHandler.sendMessage(msg);
-                mHandler.sendEmptyMessage(AUTO_REFRESH_FLAG);
-			}
-		}.start();
-	}
-
     /**
      * 始化播放器
      **/
@@ -201,9 +188,9 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
     }
 
     private void openVieo() {
-        //if (channelLists.size() != 0) {
-        //    play_url = channelLists.get(0).playUrl;
-        //}
+        if (channelLists.size() != 0) {
+            play_url = channelLists.get(0).playUrl;
+        }
         Log.d(TAG, "openVieo() VideoFilePath:" + play_url);
         releaseMediaPlayer();
         mPlayer = new MediaPlayer();
@@ -267,12 +254,15 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
         public void onPrepared(MediaPlayer mp) {
             ToastTools.showMgtvWaringToast(KingZMediaPlayer.this, "onPrepared！");
             currentMediaState = MPstate.PREPARED;
-			//duration = mp.getDuration();
-			//rightTime = timeFormat(duration);
-			//totalTime.setText(rightTime);
+			duration = mp.getDuration();
+            if(duration > 0){
+                minStepLen = duration / seekBar.getMax();
+//              seekBar.setRightSideTime(formatTimeToHHMMSS(duration));
+                setRightSideTime(formatTimeToHHMMSS(duration));
+            }
             mVideoWidth = mPlayer.getVideoHeight();
             mVideoHeight = mPlayer.getVideoWidth();
-            Log.i(TAG,"mVideoWidth="+mVideoWidth+";mVideoHeight="+mVideoHeight);
+            Log.i(TAG,"mVideoWidth="+mVideoWidth+";mVideoHeight="+mVideoHeight+";   video duration = " + duration);
             //如果Video的宽高超出了当前屏幕的大小 就进行缩放
             if (mVideoWidth > getWindowManager().getDefaultDisplay().getWidth()
                     || mVideoHeight > getWindowManager().getDefaultDisplay().getHeight()) {
@@ -371,7 +361,9 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
         public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
             Log.i(TAG, "surfaceDestroyed()");
             holder = null;
-            //releaseMediaPlayer();
+            threadExitFlag = true;
+            seekBar.threadExitFlag = true;
+            releaseMediaPlayer();
         }
     };
 
@@ -384,12 +376,52 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
         }
     }
 
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case PLAYER_SLOW_TIMER:
+                    //反复执行线程检测
+                    if(threadExitFlag){
+                        return;
+                    }
+                    mHandler.sendEmptyMessageDelayed(PLAYER_SLOW_TIMER, PLAY_TIMER_INTERVAL);
+                    if(mPlayer.isPlaying()){
+                        currentPlayPostion = mPlayer.getCurrentPosition();
+                    }
+                    playedTime = formatTimeToHHMMSS(currentPlayPostion);
+                    leftTimeView.setText(playedTime);
+                    seekBar.setCurrentPlayPos(currentPlayPostion,duration);
+                    break;
+                case SET_TOTAL_TIME:
+                    rightTextView.setText(totalTime);
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
     private void startToPlay() {
         Log.i(TAG,"startToPlay()");
+        seekBar.setVisibility(View.VISIBLE);
         if(mPlayer != null){
             mPlayer.start();
             currentMediaState = MPstate.PLAYING;
         }
+        startPlayerTimer();
+        seekBar.initMplayer(mPlayer);
+//        seekBar.initMplayer(mPlayer,new MplayerSeekBarListener());
+    }
+
+
+    private boolean playerTimerIsRunning = false;
+    private void startPlayerTimer() {
+    	if(playerTimerIsRunning){
+    		return;
+    	}
+    	playerTimerIsRunning = true;
+        mHandler.sendEmptyMessage(PLAYER_SLOW_TIMER);
     }
 
     @Override
@@ -403,6 +435,8 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
             mPlayer.release(); //Idle----->End
         }
         currentMediaState = MPstate.End;
+        threadExitFlag = true;
+        seekBar.threadExitFlag = true;
         super.onDestroy();
     }
 
@@ -470,5 +504,81 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
         //    mPlayer.stop();
         //}
         super.onPause();
+    }
+
+    /**
+     * 设置进度条显示隐藏
+     * @param display
+     */
+    public void setSeekBarDisplay(int  display){
+        seekBar.setVisibility(display);
+    }
+
+
+     class MplayerSeekBarListener implements SeekBarView.IMplayerSeekBarListener{
+
+         @Override
+         public void onUserPauseOrStart() {
+//            doPauseOrStartVideo();
+         }
+
+         @Override
+         public void onUserSeekStart() {
+
+         }
+
+         @Override
+         public void onUserSeekEnd(long seekPos) {
+
+         }
+
+         @Override
+         public long uiProgress2PlayProgress(int uiProgress) {
+
+             return 0;
+         }
+
+         @Override
+         public int playProgress2uiProgress(long playProgress) {
+             return 0;
+         }
+
+         @Override
+         public String getPosDiscribByPlayPos(long pos) {
+             return null;
+         }
+
+         @Override
+         public void onPlayToPreNode() {
+
+         }
+     }
+
+      private void doPauseOrStartVideo() {
+//        if (mpCore.isPlaying()) {
+//            doPauseVideo();
+//        } else {
+//             doStartVideo();
+//        }
+     }
+
+
+    public String formatTimeToHHMMSS(int s)
+    {
+        s = s / 1000;
+        int seconds = s % 60;
+        int minutes = (s / 60) % 60;
+        int hours = s / 3600;
+
+        mFormatBuilder.setLength(0);
+        if (hours > 0) {
+            return mFormatter.format("%02d:%02d:%02d", hours, minutes, seconds).toString();
+        } else {
+            return mFormatter.format("00:%02d:%02d", minutes, seconds).toString();
+        }
+    }
+    public void setRightSideTime(String rightSideTime) {
+        totalTime = rightSideTime;
+        mHandler.sendEmptyMessage(SET_TOTAL_TIME);
     }
 }

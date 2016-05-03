@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <videos>
+    <video>
+        <name>东南卫视</name>
+        <play_url>http://video.chinanews.com/tvmining/News/MP4ZXW/DongNanTV/2016/04/29/DongNanTV_1500000_20160429_18866283_0_40.mp4</play_url>
+    </video>
+    <video>
+         <name>悟空</name>
+         <play_url>http://v7.pstatp.com/7c5e9c128c426d695596c487d72a724d/57245452/origin/15308/2765202516</play_url>
+     </video>
      <video>
-        <name>测试视频1</name>
-        <play_url>http://v4.pstatp.com/6a55ed41cfbf3cf77be1214bcd037362/57166b2e/origin/15032/2512493670</play_url>
+        <name>火影片段</name>
+        <play_url>http://v7.pstatp.com/dd5c462daee8345973af1ca5428cf070/57243b2a/origin/13472/7968068416</play_url>
     </video>
     <video>
-        <name>测试视频2</name>
-        <play_url>http://v7.pstatp.com/a6472abcfb707d4dfefaa2c4f1db83ec/56f57010/origin/11798/1401700743</play_url>
-    </video>
-    <video>
-        <name>CCTV5</name>
-        <play_url>http://182.138.101.48:57850/nn_live.ts?id=MGYY&amp;url_c1=2000&amp;nn_ak=01626a8d247dec670bc542614b6756e051&amp;npips=192.168.95.78:5100&amp;ncmsid=100001&amp;ngs=56f1427800080441628cb21aa78d6b71&amp;nn_user_id=wz&amp;ndt=stb&amp;nn_day=20160325&amp;nn_begin=223239&amp;ndv=4.2.24.0.0.SC-XJCBC-STB-QZ.0.0_Release&amp;nn_timezone=8</play_url>
-    </video>
-    <video>
-        <name>央视新闻</name>
-        <play_url>http://v4.pstatp.com/b3b5940f6e1ea61273ee1fabf6dc21c7/56f55852/origin/11933/6173776570</play_url>
-    </video>
-    <video>
-        <name>123456</name>
-        <play_url>http://192.168.90.49:7890/123456.ts</play_url>
+        <name>电视台直播片段</name>
+        <play_url>http://video.chinanews.com/tvmining/News/MP4ZXW/DongNanTV/2016/04/29/DongNanTV_1500000_20160429_18866283_0_40.mp4</play_url>
     </video>
 </videos>

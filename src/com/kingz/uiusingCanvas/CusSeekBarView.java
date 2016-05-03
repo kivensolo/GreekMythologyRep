@@ -11,7 +11,6 @@ import android.view.View;
 
 /**
  * @author: KingZ
- * @Data: 2015��10��3����� �6:38:19
  * @Description:自定义画笔
  */
 public class CusSeekBarView extends View implements View.OnTouchListener {

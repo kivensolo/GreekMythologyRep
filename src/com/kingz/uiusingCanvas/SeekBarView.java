@@ -10,11 +10,6 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-/**
- * @author: KingZ
- * @Data: 2015��10��3������6:38:19
- * @Description:�Զ����seekbar��ͼ
- */
 public class SeekBarView extends View implements View.OnTouchListener {
 
 	private static final int MSG_NUM = 1280;
