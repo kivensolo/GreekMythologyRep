@@ -81,7 +81,10 @@
         <activity android:name="com.kingz.uiusingLayout.LinearLayoutTest_Act"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
-        <activity android:name="com.kingz.uiusingLayout.FragmentBasicActivity"
+        <activity android:name="com.kingz.uiusingLayout.FragmentPageFromCode"
+                  android:theme="@android:style/Theme.Black.NoTitleBar"/>
+
+        <activity android:name="com.kingz.uiusingLayout.FragmentPageFromXml"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!--常用控件集合-->
