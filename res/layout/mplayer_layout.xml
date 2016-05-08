@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:weightSum="1">
+             android:orientation="vertical"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:weightSum="1">
     <SurfaceView android:id="@+id/surface"
                  android:layout_width="match_parent"
                  android:layout_height="match_parent"
@@ -21,25 +21,30 @@
     </ListView>
     <LinearLayout android:layout_width="wrap_content"
                   android:layout_height="30dp"
-                  android:layout_gravity="bottom|center_horizontal">
+                  android:layout_gravity="bottom|center_horizontal"
+                  android:layout_marginStart="20dp"
+                  android:layout_marginEnd="20dp">
         <TextView
                 android:id="@+id/leftTime"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:background="@color/magenta2"
+                android:background="@color/transparent"
                 android:textSize="16sp"
                 android:gravity="center_vertical"/>
         <com.mplayer.SeekBarView
                 android:id="@+id/mplayer_progress"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_width="0dp"
-                android:layout_height="35dp"
+                android:layout_height="15dp"
                 android:layout_weight="1"
                 android:background="@color/transparent"/>
         <TextView
                 android:id="@+id/rightTime"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:background="@color/magenta2"
+                android:background="@color/transparent"
                 android:textSize="16sp"
                 android:gravity="center_vertical"/>
     </LinearLayout>

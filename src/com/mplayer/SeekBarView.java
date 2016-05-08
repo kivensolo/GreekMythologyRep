@@ -7,7 +7,6 @@ import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,7 +14,8 @@ import com.kingz.uiusingListViews.R;
 
 /**
  * Created by KingZ on 2016/1/24.
- * Discription:KingZ播放器的进度条View
+ * Discription:
+ * KingZ播放器的进度条View
  */
 public class SeekBarView extends View implements View.OnTouchListener{
 
@@ -54,10 +54,11 @@ public class SeekBarView extends View implements View.OnTouchListener{
     private MediaPlayer mPlayer = null;
 
     public boolean isPlaying = true;
-    private int progressBarWidth = 0;   //进度条宽度
-    private int progressBarHeight = 0;  //进度条高度
-    private int currentPlayPos = 0;     //当前播放点
-    private String seekTime;
+    public static final int SEEK_PROGRESS_HEIGHT = 11; //进度条绘制高度
+    private int totalLength = 0;                         //进度条宽度
+    private int currentPlayPos = 0;                      //当前播放点
+    private int playLength = 0;                          //当前播放长度--UI
+    private String seekTime;                             //seek时间点
     private String rightSideTime;   //右侧显示时间
 
     private boolean isPlayerComplete = false;  //是否播放完成
@@ -79,8 +80,6 @@ public class SeekBarView extends View implements View.OnTouchListener{
     private Rect bgDstRect;
     private Rect playStatusRect;
     private Rect thumbRect;
-//    private Rect durationRect;
-//    private Rect durationRect;
 
     private Canvas canvas;
 
@@ -88,8 +87,9 @@ public class SeekBarView extends View implements View.OnTouchListener{
     private Paint playProgressPaint;
     private Paint remainProgressPaint;
     private Paint thumbPaint;
+    private Paint seekDotPaint;
     private Paint playStatusPaint;
-    private Paint borderPaint;
+    private Paint totalBarPaint;
     private Paint rightSideTextPaint;
     private Context context;
 
@@ -130,30 +130,36 @@ public class SeekBarView extends View implements View.OnTouchListener{
 //        rewindStatus = decodeResource(getResources(), R.drawable.mplayerv_state_rewind);
 //        playStatusRect = new Rect(0,0,0,0);
 
-        progressBarWidth = 720;
-        currentPlayPos = 0;
-        totalBarRect = new Rect(0,0,1190,50);
+        /** 总progress */
+        totalBarRect = new Rect(0,6, 1088,SEEK_PROGRESS_HEIGHT);
+        totalBarPaint = new Paint();
+        totalBarPaint.setColor(getResources().getColor(R.color.gray));
+        totalBarPaint.setStyle(Paint.Style.FILL);
+        totalBarPaint.setAntiAlias(true);
+//        totalBarPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
 
+        /** 播放进度参数 **/
+        durationRect = new Rect(0,6, playLength,SEEK_PROGRESS_HEIGHT);
         seekPaint = new Paint();
-        seekPaint.setColor(getResources().getColor(R.color.orange));
-//        seekPaint.setStrokeWidth(4);
+        seekPaint.setColor(getResources().getColor(R.color.dodgerblue));
+//      seekPaint.setStrokeWidth(4);
         seekPaint.setDither(true);
         seekPaint.setStyle(Paint.Style.FILL);
         seekPaint.setAntiAlias(true);
         seekPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
 
-        thumbPaint = new Paint();
-        thumbPaint.setAlpha(255);
-        thumb = decodeResource(getResources(), R.drawable.seekbar_thumb_img);
-        thumbRect = new Rect(0,0,0,0);
+        /** 图片型seek进度点 */
+//        thumbPaint = new Paint();
+//        thumbPaint.setAlpha(255);
+//        thumb = decodeResource(getResources(), R.drawable.seekbar_thumb_img);
+//        thumbRect = new Rect(0,0,0,0);
 
-        /** 总progress */
-        borderPaint = new Paint();
-        borderPaint.setColor(getResources().getColor(R.color.lightskyblue));
-        borderPaint.setStrokeWidth(4);
-        borderPaint.setStyle(Paint.Style.FILL);
-        borderPaint.setAntiAlias(true);
-
+        /** 圆点Thumb */
+        seekDotPaint = new Paint();
+        seekDotPaint.setColor(getResources().getColor(R.color.dodgerblue));
+        seekDotPaint.setStyle(Paint.Style.FILL);
+        seekDotPaint.setAntiAlias(true);
+        seekDotPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
 
         /** 文字画笔 **/
         Rect strRect = new Rect();
@@ -164,14 +170,7 @@ public class SeekBarView extends View implements View.OnTouchListener{
         rightSideTextPaint.getTextBounds(defaultRightTime, 0, defaultRightTime.length(), strRect);
         rightSideTextPaint.setTextSize(18);
         rightSideTextPaint.setStrokeWidth(0);
-
-
     }
-
-    public void show(){
-
-    }
-
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -179,31 +178,42 @@ public class SeekBarView extends View implements View.OnTouchListener{
         drawInVod(canvas);
     }
 
-    private void drawInVod(Canvas canvas) {
-        if(currentPlayPos >= 1100){
-            currentPlayPos = 1100;
-        }
-        Log.d(TAG,"drawInVod --------- currentPlayPos = "+ currentPlayPos);
-        durationRect = new Rect(0,0, currentPlayPos,50);
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        totalLength = MeasureSpec.getSize(widthMeasureSpec);
+//        Log.d(TAG,"进度条总长度："+ totalLength);
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    }
 
+    private void drawInVod(Canvas canvas) {
+        if(playLength >= totalLength){
+            playLength = totalLength;
+            threadExitFlag = true;
+        }
+//        Log.d(TAG,"drawInVod --------- currentPlayPos = "+ currentPlayPos);
+
+        //绘制总长度
         canvas.save();
         canvas.clipRect(totalBarRect);
-        canvas.drawRect(totalBarRect,borderPaint);
+        canvas.drawRect(totalBarRect, totalBarPaint);
         canvas.restore();
 
+        //绘制播放长度及thumb
         canvas.save();
         canvas.clipRect(durationRect);
         canvas.drawRect(durationRect,seekPaint);
         canvas.restore();
+        canvas.drawCircle(playLength,8,7,seekDotPaint);
 
+        //<editor-fold desc="备用代码">
         /**
          * 绘制Thumb图片
          **/
-        thumbRect.left = currentPlayPos - 14;
-        thumbRect.top = 10;
-        thumbRect.right = thumbRect.left + thumb.getWidth();
-        thumbRect.bottom = 50;
-        canvas.drawBitmap(thumb, null, thumbRect, thumbPaint);
+//        thumbRect.left = currentPlayPos - 14;
+//        thumbRect.top = 10;
+//        thumbRect.right = thumbRect.left + thumb.getWidth();
+//        thumbRect.bottom = 50;
+//        canvas.drawBitmap(thumb, null, thumbRect, thumbPaint);
 
         /**
          * 绘制总时间长度
@@ -213,6 +223,7 @@ public class SeekBarView extends View implements View.OnTouchListener{
 //            rightSideTextPaint.getTextBounds(defaultRightTime,0,defaultRightTime.length(),strRect);
 //            canvas.drawText(rightSideTime,900,10,rightSideTextPaint);
 //        }
+        //</editor-fold>
     }
 
     @Override
@@ -233,43 +244,30 @@ public class SeekBarView extends View implements View.OnTouchListener{
                             return;
                         }
                         currentPlayPos = mPlayer.getCurrentPosition();
-                        setCurrentPlayPos(currentPlayPos,mPlayer.getDuration());
+                        setCurrentPlayPos2UI(currentPlayPos,mPlayer.getDuration());
 					 break;
 				 default:
 					 break;
          	}
 		}
 	};
-     private boolean playerTimerIsRunning = false;
-     public void startPlayerTimer() {
-    	if(playerTimerIsRunning){
-    		return;
-    	}
-    	playerTimerIsRunning = true;
-        mHandler.sendEmptyMessage(TIMER_START_FLAG);
-    }
 
-    public void setCurrentPlayPos(long postion,long duration){
+    public void setCurrentPlayPos2UI(long currentPlayPostion, long duration){
         mHandler.sendEmptyMessage(TIMER_START_FLAG);
-        currentPlayPos = (int) (500 * postion/duration);
+        playLength = (int) (totalLength * currentPlayPostion/duration);
+        durationRect = new Rect(0,6, playLength,SEEK_PROGRESS_HEIGHT);
         this.invalidate();
     }
 
     public void initMplayer(MediaPlayer mPlayer){
         this.mPlayer = mPlayer;
-//        startPlayerTimer();
         playStatusFlag = PLAY_STATUS_NORMAL;
     }
-//    public void initMplayer(MediaPlayer mPlayer,IMplayerSeekBarListener lsnr){
-////        playerTimerSlowTask();
-//        if (null == lsnr) {
-//			return;
-//		}
-//        this.mPlayer = mPlayer;
-//        this.lsnr = lsnr;
-//        startPlayerTimer();
-//        playStatusFlag = PLAY_STATUS_NORMAL;
-//    }
+
+    public void releaseMplayer(){
+        this.mPlayer = null;
+    }
+
     public void unInit() {
 		isPlaying = false;
 	}

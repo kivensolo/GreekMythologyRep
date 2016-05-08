@@ -30,7 +30,7 @@ import java.util.Locale;
 
 /**
  * Created by KingZ on 2016/4/16.
- * Discription:播放器测试Demo
+ * Discription:播放器测试
  *       mPlayer.reset();               //----->Idle
  *       mPlayer.releaseMediaPlayer();  //Idle----->End
  *       setDataSource();               //Initialized
@@ -39,8 +39,6 @@ import java.util.Locale;
 public class KingZMediaPlayer extends Activity implements View.OnClickListener {
 
     private static final String TAG = "KingZMediaPlayer";
-    public static final int AUTO_REFRESH_FLAG = 1;
-
     private static final int PLAYER_SLOW_TIMER = 0x501;
     private static final int SET_TOTAL_TIME = 0x502;
      /**
@@ -59,11 +57,7 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
         PREPARING,PREPARED,PLAYING, STOP, PAUSED, IDLE, End,ERROR,
     }
 
-    /**
-     * 播放器当前装套
-     */
     private MPstate currentMediaState = MPstate.IDLE;
-
     private SeekBarView seekBar;
     private MediaPlayer mPlayer;
     private SurfaceView mSurfaceView;
@@ -169,7 +163,9 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
         seekBar.setVisibility(View.INVISIBLE);
         rightChangeBtn = (TextView) findViewById(R.id.changeSize_id);
         leftTimeView = (TextView) findViewById(R.id.leftTime);
+        leftTimeView.setTextColor(getResources().getColor(R.color.white));
         rightTextView = (TextView) findViewById(R.id.rightTime);
+        rightTextView.setTextColor(getResources().getColor(R.color.white));
 
         if (channelLists != null) {
             chanellListAdapter = new ChanellListAdapter(this, channelLists, R.layout.simple_listviewitem);
@@ -252,7 +248,7 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
     private MediaPlayer.OnPreparedListener mPreparedListener = new MediaPlayer.OnPreparedListener() {
         @Override
         public void onPrepared(MediaPlayer mp) {
-            ToastTools.showMgtvWaringToast(KingZMediaPlayer.this, "onPrepared！");
+            ToastTools.showMgtvWaringToast(KingZMediaPlayer.this, "开始播放");
             currentMediaState = MPstate.PREPARED;
 			duration = mp.getDuration();
             if(duration > 0){
@@ -332,9 +328,11 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
         @Override
         public void onCompletion(MediaPlayer mp) {
             Log.i(TAG, "OnCompletionListener.onCompletion()   finish");
-            Toast.makeText(KingZMediaPlayer.this, "播放完成", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(KingZMediaPlayer.this, "播放完成", Toast.LENGTH_SHORT).show();
+            threadExitFlag = true;
             mPlayer.stop();
             mPlayer.release();
+            seekBar.releaseMplayer();
         }
     };
 
@@ -383,6 +381,7 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
                 case PLAYER_SLOW_TIMER:
                     //反复执行线程检测
                     if(threadExitFlag){
+                        Log.d(TAG,"threadExitFlag == true");
                         return;
                     }
                     mHandler.sendEmptyMessageDelayed(PLAYER_SLOW_TIMER, PLAY_TIMER_INTERVAL);
@@ -391,7 +390,7 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
                     }
                     playedTime = formatTimeToHHMMSS(currentPlayPostion);
                     leftTimeView.setText(playedTime);
-                    seekBar.setCurrentPlayPos(currentPlayPostion,duration);
+                    seekBar.setCurrentPlayPos2UI(currentPlayPostion,duration);
                     break;
                 case SET_TOTAL_TIME:
                     rightTextView.setText(totalTime);

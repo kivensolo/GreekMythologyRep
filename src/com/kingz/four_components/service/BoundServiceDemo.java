@@ -9,6 +9,7 @@ import android.os.RemoteException;
  * Created by KingZ.
  * Data: 2016 2016/3/2
  * Discription: 服务端代码 aidl文件 + service文件
+ *    实现服务端对客户端的共享
  */
 public class BoundServiceDemo extends Service {
 
@@ -23,9 +24,9 @@ public class BoundServiceDemo extends Service {
     }
 
     /**e
-     * 返回了一个IBiner
+     * 当客户端绑定到这个服务的时候，回调此方法
      * @param intent
-     * @return
+     * @return IBiner
      */
     @Override
     public IBinder onBind(Intent intent) {
