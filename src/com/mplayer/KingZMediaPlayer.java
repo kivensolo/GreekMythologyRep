@@ -15,9 +15,16 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.baidu.apistore.sdk.ApiCallBack;
+import com.baidu.apistore.sdk.ApiStoreSDK;
+import com.baidu.apistore.sdk.network.Parameters;
 import com.datainfo.ChannelData;
+import com.google.gson.JsonObject;
 import com.kingz.uiusingListViews.R;
 import com.utils.ToastTools;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -97,7 +104,8 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mplayer_layout);
-        initVideoData();
+//        initVideoData();
+        getPlayUrlFromNet();
         initViews();
         initMedia();
     }
@@ -148,6 +156,42 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
     }
 
     /**
+     * 从网络获取播放串
+     */
+    private void getPlayUrlFromNet(){
+        Parameters para = new Parameters();
+        para.put("url", "http://tv.sohu.com/20150921/n421709205.shtml");
+
+        ApiStoreSDK.execute("http://apis.baidu.com/dmxy/truevideourl/truevideourl",
+                ApiStoreSDK.GET,
+                para,
+                new ApiCallBack(){
+                    @Override
+                    public void onSuccess(int i, String result) {
+                        Log.i(TAG, "getPlayUrlFromNet() onSuccess; result="+result);
+                        try {
+                            JSONObject jsonObject = new JSONObject(result);
+                            play_url =  jsonObject.getString("mp4");
+                             Log.i(TAG, "getPlayUrlFromNet() play_url="+play_url);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        openVieo();
+                    }
+                    @Override
+                    public void onError(int i, String s, Exception e) {
+                        Log.i(TAG, "onError, status: " + s);
+                        Log.i(TAG, "errMsg: " + (e == null ? "" : e.getMessage()));
+                    }
+                    @Override
+                    public void onComplete() {
+                        Log.i(TAG, "getPlayUrlFromNet() onComplete");
+
+                    }
+                });
+
+    }
+    /**
      * 初始化视图
      */
     private void initViews() {
@@ -184,10 +228,10 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
     }
 
     private void openVieo() {
-        if (channelLists.size() != 0) {
-            play_url = channelLists.get(0).playUrl;
-        }
-        Log.d(TAG, "openVieo() VideoFilePath:" + play_url);
+//        if (channelLists.size() != 0) {
+//            play_url = channelLists.get(0).playUrl;
+//        }
+//        Log.d(TAG, "openVieo() VideoFilePath:" + play_url);
         releaseMediaPlayer();
         mPlayer = new MediaPlayer();
         mPlayer.setOnVideoSizeChangedListener(mOnVideoSizeListener);
