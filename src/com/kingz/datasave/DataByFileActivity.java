@@ -10,10 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import com.kingz.uiusingListViews.R;
-import com.utils.ToastTools;
 
 import java.io.*;
+import java.util.HashMap;
 
 /**
  * Copyright(C) 2015, 北京视达科科技有限公司
@@ -40,14 +39,17 @@ public class DataByFileActivity extends Activity{
         Button btn = new Button(this);
         root.addView(btn);
         setContentView(root);
-        btn.setBackgroundColor(Color.GREEN);
         btn.setText("储存数据到文件");
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                ToastTools.showMgtvWaringToast(DataByFileActivity.this,"存储数据至文件");
                 Log.i("KingZ","存储数据至文件");
-                saveData("储存数据而已啦");
+                HashMap<String,String> map = new HashMap<String, String>();
+                map.put("四川","成都");
+                map.put("新疆","乌鲁木齐");
+                map.put("湖南","长沙");
+                saveData(map.toString());
             }
         });
     }
@@ -70,7 +72,7 @@ public class DataByFileActivity extends Activity{
         }
     }
 
-    private void readData(String fileName){
+    private String readData(String fileName){
         String line;
         try {
             fIn = openFileInput(fileName);
@@ -89,7 +91,6 @@ public class DataByFileActivity extends Activity{
                 }
             }
         }
-
+        return content.toString();
     }
-
 }
