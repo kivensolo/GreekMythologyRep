@@ -1,6 +1,7 @@
 package com.kingz.uiusingActivity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.kingz.datasave.DataByFileActivity;
 import com.kingz.uiusingListViews.R;
 
 import java.io.File;
@@ -22,25 +24,23 @@ public class FileAndPicTestACT extends Activity implements View.OnClickListener{
     private static final String TAG = FileAndPicTestACT.class.getSimpleName();
     private boolean isSdcardExist; //是否有SD卡挂载
     private String sdPath;      //SD卡路径
-
-    private TextView tv;
     private EditText infoEditText;
-    private Button scanSdbtn, defaultFileSbtn,saveDatabtn;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_file_pictures);
-        tv = (TextView) findViewById(R.id.show_text);
+        TextView tv = (TextView) findViewById(R.id.show_text);
         infoEditText = (EditText) findViewById(R.id.file_edittext);
-        scanSdbtn = (Button) findViewById(R.id.sd_button);
-        defaultFileSbtn = (Button) findViewById(R.id.default_filepath_btn);
-        saveDatabtn = (Button) findViewById(R.id.save_data);
+        Button scanSdbtn = (Button) findViewById(R.id.sd_button);
+        Button defaultFileSbtn = (Button) findViewById(R.id.default_filepath_btn);
+        Button saveDatabtn = (Button) findViewById(R.id.save_data);
+        Button intoFileSavePageBtn = (Button) findViewById(R.id.btn_intoFileSavePage);
 
         scanSdbtn.setOnClickListener(this);
         defaultFileSbtn.setOnClickListener(this);
         saveDatabtn.setOnClickListener(this);
+        intoFileSavePageBtn.setOnClickListener(this);
         getFileFloderPath();
         Log.i(TAG, "SD卡路径：" + sdPath);
 
@@ -110,6 +110,8 @@ public class FileAndPicTestACT extends Activity implements View.OnClickListener{
             case R.id.save_data:
                 saveDataToDisk();
                 break;
+            case R.id.btn_intoFileSavePage:
+                intoFileSavePage();
             default:
         }
     }
@@ -127,4 +129,10 @@ public class FileAndPicTestACT extends Activity implements View.OnClickListener{
 
         }
     }
+    private void intoFileSavePage(){
+        Intent intent = new Intent();
+        intent.setClass(this, DataByFileActivity.class);
+        startActivity(intent);
+    }
+
 }
