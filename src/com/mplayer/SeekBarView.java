@@ -254,7 +254,9 @@ public class SeekBarView extends View implements View.OnTouchListener{
 
     public void setCurrentPlayPos2UI(long currentPlayPostion, long duration){
         mHandler.sendEmptyMessage(TIMER_START_FLAG);
-        playLength = (int) (totalLength * currentPlayPostion/duration);
+        if((int) duration != 0){
+            playLength = (int) (totalLength * currentPlayPostion/duration);
+        }
         durationRect = new Rect(0,6, playLength,SEEK_PROGRESS_HEIGHT);
         this.invalidate();
     }
