@@ -3,6 +3,7 @@ package com.kingz.uiusingLayout;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.AttributeSet;
@@ -19,7 +20,7 @@ import com.kingz.uiusingListViews.R;
  *  ※※※  同一个FragmentTransaction进行多次fragment事务。
  *         当完成这些变化操作的时候，必须调用commit()方法。
  */
-public class FragmentPageFromCode extends FragmentActivity{
+public class FragmentPageFromCode extends FragmentActivity implements TitleFragment.OnArticleSelectedListener {
 
     // Create a new Fragment to be placed in the activity layout
     TitleFragment titltFragment;
@@ -36,25 +37,29 @@ public class FragmentPageFromCode extends FragmentActivity{
                 return;
             }
 
-            //通过FragmentManager来获取到相应的Fragment
-            //titltFragment = (TitleFragment) getFragmentManager().findFragmentById(R.id.title_fragment);
-            //contentFragment = (ContentFragment) getFragmentManager().findFragmentById(R.id.content_fragment);
-            ////防止这些片段是被一个特殊的intent启动起来的   设置参数先
-            //titltFragment.setArguments(getIntent().getExtras());
-            //contentFragment.setArguments(getIntent().getExtras());
-            // 把Fragment添加到容器FrameLayout中
-            //getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,titltFragment).commit();
-
             titltFragment = new TitleFragment();
+            contentFragment = new ContentFragment();
+            //防止这些片段是被一个特殊的intent启动起来的   设置参数先'
             titltFragment.setArguments(getIntent().getExtras());
+            contentFragment.setArguments(getIntent().getExtras());
 
             //您可以像下面这样从 Activity 获取一个 FragmentTransaction 实例
             FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             //然后，您可以使用 add() 方法添加一个片段，指定要添加的片段以及将其插入哪个视图。例如：
-            fragmentTransaction.add(R.id.fragment_container, titltFragment,"tag_title").commit();
-            //传递到 add() 的第一个参数是 ViewGroup，即应该放置片段的位置，由资源 ID 指定，
-            // 第二个参数是要添加的片段。一旦您通过 FragmentTransaction 做出了更改，就必须调用 commit() 以使更改生效。
+            fragmentTransaction.add(R.id.fragment_container, titltFragment,"tag_title");
+            fragmentTransaction.add(R.id.fragment_container, contentFragment,"tag_content");
+            fragmentTransaction.commit();
+            //------------传递到 add() 的第一个参数是 ViewGroup，即应该放置片段的位置，由资源 ID 指定，
+            //       ----|第二个参数是要添加的片段。一旦您通过 FragmentTransaction 做出了更改，就必须调用 commit() 以使更改生效。
+
+            /*********** 对于碎片管理  start*************/
+            //通过 findFragmentById()（对于在 Activity 布局中提供 UI 的片段）或 findFragmentByTag()
+            //     （对于提供或不提供 UI 的片段）获取 Activity 中存在的片段。
+            //通过 popBackStack()（模拟用户发出的 Back 命令）将片段从返回栈中弹出。
+            //通过 addOnBackStackChangedListener() 注册一个侦听返回栈变化的侦听器。
+            //通过  FragmentManager 打开一个 FragmentTransaction，通过它来执行某些事务，如添加和删除片段。
+            /*********** 对于碎片管理  end*************/
         }
     }
 
@@ -78,5 +83,12 @@ public class FragmentPageFromCode extends FragmentActivity{
     @Override
     protected void onPause() {
         super.onPause();
+    }
+
+
+    //when title view clicked
+    @Override
+    public void onArticleSelected(Uri articleUri) {
+
     }
 }

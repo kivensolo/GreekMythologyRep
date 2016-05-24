@@ -49,8 +49,7 @@
         <activity
             android:name="com.kingz.uiusingListViews.MainActivity"
             android:theme="@android:style/Theme.Black.NoTitleBar"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait">
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -86,7 +85,8 @@
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <activity android:name="com.kingz.uiusingLayout.FragmentPageFromCode"
-                  android:theme="@android:style/Theme.Black.NoTitleBar"/>
+                  android:theme="@android:style/Theme.Black.NoTitleBar"
+                  android:screenOrientation="landscape"/>
 
         <activity android:name="com.kingz.uiusingLayout.FragmentPageFromXml"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
