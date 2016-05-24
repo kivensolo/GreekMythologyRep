@@ -9,7 +9,7 @@ import com.kingz.uiusingListViews.R;
  * All rights reserved. <br>
  * author: King.Z <br>
  * date:  2016/5/6 17:59 <br>
- * description: 使用XML添加Fragment <br>
+ * description: 向 Activity 添加片段方法之一: 在 Activity 的布局文件内声明片段 <br>
  */
 public class FragmentPageFromXml extends FragmentActivity {
     @Override

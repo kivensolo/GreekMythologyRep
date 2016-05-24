@@ -1,20 +1,20 @@
 package com.kingz.uiusingLayout;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.AttributeSet;
+import android.view.View;
 import com.kingz.uiusingListViews.R;
 
 /**
  * Created by KingZ.
  * Data: 2016 2016/1/25
- * Discription: Fragment的创建以及使用
- *  |----创建Fragment类
- *       创建必须在onCreateView()回调方法中定义布局
- *
- *  |----添加Fragment
- *   ——1：静态加载，需要布局中存在fragment组件
- *       （每个组件绑定了各自使用的类,而类又绑定了相应的布局）
- *   ——2：动态添加Fragment
+ * Discription: 向 Activity 添加片段方法之二:通过编程方式将片段添加到某个现有 ViewGroup
+ * 您可以在 Activity 运行期间随时将片段添加到 Activity 布局中。您只需指定要将片段放入哪个 ViewGroup。
+ * 要想在您的 Activity 中执行片段事务（如添加、删除或替换片段），您必须使用 FragmentTransaction 中的 API。
  *
  *  ※※※  同一个FragmentTransaction进行多次fragment事务。
  *         当完成这些变化操作的时候，必须调用commit()方法。
@@ -35,10 +35,11 @@ public class FragmentPageFromCode extends FragmentActivity{
             if (savedInstanceState != null) {
                 return;
             }
+
             //通过FragmentManager来获取到相应的Fragment
             //titltFragment = (TitleFragment) getFragmentManager().findFragmentById(R.id.title_fragment);
             //contentFragment = (ContentFragment) getFragmentManager().findFragmentById(R.id.content_fragment);
-            ////防止这个activity是被一个特殊的intent启动起来的   设置参数先
+            ////防止这些片段是被一个特殊的intent启动起来的   设置参数先
             //titltFragment.setArguments(getIntent().getExtras());
             //contentFragment.setArguments(getIntent().getExtras());
             // 把Fragment添加到容器FrameLayout中
@@ -46,9 +47,36 @@ public class FragmentPageFromCode extends FragmentActivity{
 
             titltFragment = new TitleFragment();
             titltFragment.setArguments(getIntent().getExtras());
-            //动态添加一个Fragment到FragmentLayout中，（替换在Activity布局文件中用<fragment>元素定义的）
-            //Activity可以移除它，并用另一个Fragment替换它。
-            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, titltFragment).commit();//添加、删除、替换等等操作
+
+            //您可以像下面这样从 Activity 获取一个 FragmentTransaction 实例
+            FragmentManager fragmentManager = getFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            //然后，您可以使用 add() 方法添加一个片段，指定要添加的片段以及将其插入哪个视图。例如：
+            fragmentTransaction.add(R.id.fragment_container, titltFragment,"tag_title").commit();
+            //传递到 add() 的第一个参数是 ViewGroup，即应该放置片段的位置，由资源 ID 指定，
+            // 第二个参数是要添加的片段。一旦您通过 FragmentTransaction 做出了更改，就必须调用 commit() 以使更改生效。
         }
+    }
+
+    /**
+     * 系统会在片段首次绘制其用户界面时调用此方法。 要想为您的片段绘制 UI，
+     * 您从此方法中返回的 View 必须是片段布局的根视图。如果片段未提供 UI，您可以返回 null。
+     * @param name
+     * @param context
+     * @param attrs
+     * @return
+     */
+    @Override
+    public View onCreateView(String name, Context context, AttributeSet attrs) {
+        return super.onCreateView(name, context, attrs);
+    }
+
+    /**
+     * 系统将此方法作为用户离开片段的第一个信号（但并不总是意味着此片段会被销毁）进行调用。
+     * 您通常应该在此方法内确认在当前用户会话结束后仍然有效的任何更改（因为用户可能不会返回）。
+     */
+    @Override
+    protected void onPause() {
+        super.onPause();
     }
 }

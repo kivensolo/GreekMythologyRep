@@ -31,30 +31,30 @@ import java.util.Locale;
 /**
  * Created by KingZ on 2016/4/16.
  * Discription:播放器测试
- *       mPlayer.reset();               //----->Idle
- *       mPlayer.releaseMediaPlayer();  //Idle----->End
- *       setDataSource();               //Initialized
- *       prepare();                     //Prepared
+ * mPlayer.reset();               //----->Idle
+ * mPlayer.releaseMediaPlayer();  //Idle----->End
+ * setDataSource();               //Initialized
+ * prepare();                     //Prepared
  */
 public class KingZMediaPlayer extends Activity implements View.OnClickListener {
 
     private static final String TAG = "KingZMediaPlayer";
     private static final int PLAYER_SLOW_TIMER = 0x501;
     private static final int SET_TOTAL_TIME = 0x502;
-     /**
-      * 检测播放进度任务周期ms
-      **/
+    /**
+     * 检测播放进度任务周期ms
+     **/
     public static final int PLAY_TIMER_INTERVAL = 499;
-     /**
-      * 线程运行开关
-      **/
+    /**
+     * 线程运行开关
+     **/
     private boolean threadExitFlag = false;
 
     /**
      * 播放器状态
      */
     private enum MPstate {
-        PREPARING,PREPARED,PLAYING, STOP, PAUSED, IDLE, End,ERROR,
+        PREPARING, PREPARED, PLAYING, STOP, PAUSED, IDLE, End, ERROR,
     }
 
     private MPstate currentMediaState = MPstate.IDLE;
@@ -63,7 +63,9 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
     private SurfaceView mSurfaceView;
     private SurfaceHolder holder;
 
-    /** 播放参数 **/
+    /**
+     * 播放参数
+     **/
     private int currentPlayPostion;
     private int duration;
     private long currentPlayedTime;
@@ -81,7 +83,9 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
     private ChannelData channelData = new ChannelData();
 
     /** ------------------------------ 进度条相关参数 --------------------------------**/
-     /**播放总时长、进度显示格式**/
+    /**
+     * 播放总时长、进度显示格式
+     **/
     private StringBuilder mFormatBuilder;
     private Formatter mFormatter;
 
@@ -106,45 +110,45 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
      * 从本地xml文件获取一系列播放串
      */
     private void initVideoData() {
-          try {
-                InputStream ins = getResources().getAssets().open("videopath.xml");
-                //XmlPullParser xmlParser = Xml.newPullParser();
-                XmlPullParser xmlParser = XmlPullParserFactory.newInstance().newPullParser();
-                xmlParser.setInput(ins, "utf-8");
-                int evtType = xmlParser.getEventType();
-                channelLists = new ArrayList<>();
-                while (evtType != XmlPullParser.END_DOCUMENT) {
-                    switch (evtType) {
-                        case XmlPullParser.START_TAG:
-                            String attr = xmlParser.getName();
-                            //Log.d(TAG, "start Tag：" + attr);
-                            if ("video".equalsIgnoreCase(attr)) {
-                                channelData = new ChannelData();
-                            } else if (channelData != null) {
-                                if ("name".equalsIgnoreCase(attr)) {
-                                    channelData.channelName = xmlParser.nextText();
-                                } else if ("play_url".equalsIgnoreCase(attr)) {
-                                    channelData.playUrl = xmlParser.nextText();
-                                }
+        try {
+            InputStream ins = getResources().getAssets().open("videopath.xml");
+            //XmlPullParser xmlParser = Xml.newPullParser();
+            XmlPullParser xmlParser = XmlPullParserFactory.newInstance().newPullParser();
+            xmlParser.setInput(ins, "utf-8");
+            int evtType = xmlParser.getEventType();
+            channelLists = new ArrayList<>();
+            while (evtType != XmlPullParser.END_DOCUMENT) {
+                switch (evtType) {
+                    case XmlPullParser.START_TAG:
+                        String attr = xmlParser.getName();
+                        //Log.d(TAG, "start Tag：" + attr);
+                        if ("video".equalsIgnoreCase(attr)) {
+                            channelData = new ChannelData();
+                        } else if (channelData != null) {
+                            if ("name".equalsIgnoreCase(attr)) {
+                                channelData.channelName = xmlParser.nextText();
+                            } else if ("play_url".equalsIgnoreCase(attr)) {
+                                channelData.playUrl = xmlParser.nextText();
                             }
-                            break;
-                        case XmlPullParser.END_TAG:
-                            //Log.d(TAG, "end Tag：" + xmlParser.getName());
-                            if ("video".equals(xmlParser.getName()) && channelData != null) {
-                                channelLists.add(channelData);
-                                channelData = null;
-                            }
-                            break;
-                        default:
-                            break;
-                    }
-                    //获得下一个节点的信息
-                    evtType = xmlParser.next();
+                        }
+                        break;
+                    case XmlPullParser.END_TAG:
+                        //Log.d(TAG, "end Tag：" + xmlParser.getName());
+                        if ("video".equals(xmlParser.getName()) && channelData != null) {
+                            channelLists.add(channelData);
+                            channelData = null;
+                        }
+                        break;
+                    default:
+                        break;
                 }
-            } catch (IOException | XmlPullParserException e) {
-                e.printStackTrace();
+                //获得下一个节点的信息
+                evtType = xmlParser.next();
             }
-            Log.i(TAG, "共有" + channelLists.size() + "条数据");
+        } catch (IOException | XmlPullParserException e) {
+            e.printStackTrace();
+        }
+        Log.i(TAG, "共有" + channelLists.size() + "条数据");
     }
 
     /**
@@ -182,6 +186,7 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
 //                    }
 //                });
 //    }
+
     /**
      * 初始化视图
      */
@@ -255,6 +260,7 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
 
     /**
      * 点击频道列表播放
+     *
      * @param url
      */
     private void clickToPlay(String url) {
@@ -268,6 +274,7 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
             e.printStackTrace();
         }
     }
+
     @Override
     public void onClick(View v) {
 
@@ -278,22 +285,22 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
 
     /**
      * 播放器准备Listener
-     *  mPlayer.prepareAsync()后回调到此
+     * mPlayer.prepareAsync()后回调到此
      */
     private MediaPlayer.OnPreparedListener mPreparedListener = new MediaPlayer.OnPreparedListener() {
         @Override
         public void onPrepared(MediaPlayer mp) {
             ToastTools.showMgtvWaringToast(KingZMediaPlayer.this, "开始播放");
             currentMediaState = MPstate.PREPARED;
-			duration = mp.getDuration();
-            if(duration > 0){
+            duration = mp.getDuration();
+            if (duration > 0) {
                 minStepLen = duration / seekBar.getMax();
 //              seekBar.setRightSideTime(formatTimeToHHMMSS(duration));
                 setRightSideTime(formatTimeToHHMMSS(duration));
             }
             mVideoWidth = mPlayer.getVideoHeight();
             mVideoHeight = mPlayer.getVideoWidth();
-            Log.i(TAG,"mVideoWidth="+mVideoWidth+";mVideoHeight="+mVideoHeight+";   video duration = " + duration);
+            Log.i(TAG, "mVideoWidth=" + mVideoWidth + ";mVideoHeight=" + mVideoHeight + ";   video duration = " + duration);
             //如果Video的宽高超出了当前屏幕的大小 就进行缩放
             if (mVideoWidth > getWindowManager().getDefaultDisplay().getWidth()
                     || mVideoHeight > getWindowManager().getDefaultDisplay().getHeight()) {
@@ -340,7 +347,7 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
     private MediaPlayer.OnErrorListener mOErrorListener = new MediaPlayer.OnErrorListener() {
         @Override
         public boolean onError(MediaPlayer mp, int what, int extra) {
-            ToastTools.showMgtvWaringToast(KingZMediaPlayer.this, "播放出错！"+"what="+what+";extra="+extra);
+            ToastTools.showMgtvWaringToast(KingZMediaPlayer.this, "播放出错！" + "what=" + what + ";extra=" + extra);
             switch (what) {
                 case MediaPlayer.MEDIA_ERROR_SERVER_DIED:
                     Log.e("Play Error:::", "MEDIA_ERROR_SERVER_DIED" + ", extra:" + extra);
@@ -400,7 +407,9 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
         }
     };
 
-    /******************************* 各类监听器  End *********************************/
+    /*******************************
+     * 各类监听器  End
+     *********************************/
 
     private void doPuase() {
         if (mPlayer.isPlaying()) {
@@ -409,23 +418,23 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
         }
     }
 
-    private Handler mHandler = new Handler(){
+    private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            switch (msg.what){
+            switch (msg.what) {
                 case PLAYER_SLOW_TIMER:
                     //反复执行线程检测
-                    if(threadExitFlag){
-                        Log.d(TAG,"threadExitFlag == true");
+                    if (threadExitFlag) {
+                        Log.d(TAG, "threadExitFlag == true");
                         return;
                     }
                     mHandler.sendEmptyMessageDelayed(PLAYER_SLOW_TIMER, PLAY_TIMER_INTERVAL);
-                    if(mPlayer.isPlaying()){
+                    if (mPlayer.isPlaying()) {
                         currentPlayPostion = mPlayer.getCurrentPosition();
                     }
                     playedTime = formatTimeToHHMMSS(currentPlayPostion);
                     leftTimeView.setText(playedTime);
-                    seekBar.setCurrentPlayPos2UI(currentPlayPostion,duration);
+                    seekBar.setCurrentPlayPos2UI(currentPlayPostion, duration);
                     break;
                 case SET_TOTAL_TIME:
                     rightTextView.setText(totalTime);
@@ -437,9 +446,9 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
     };
 
     private void startToPlay() {
-        Log.i(TAG,"startToPlay()");
+        Log.i(TAG, "startToPlay()");
         seekBar.setVisibility(View.VISIBLE);
-        if(mPlayer != null){
+        if (mPlayer != null) {
             mPlayer.start();
             currentMediaState = MPstate.PLAYING;
         }
@@ -450,11 +459,12 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
 
 
     private boolean playerTimerIsRunning = false;
+
     private void startPlayerTimer() {
-    	if(playerTimerIsRunning){
-    		return;
-    	}
-    	playerTimerIsRunning = true;
+        if (playerTimerIsRunning) {
+            return;
+        }
+        playerTimerIsRunning = true;
         mHandler.sendEmptyMessage(PLAYER_SLOW_TIMER);
     }
 
@@ -481,7 +491,7 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
             showSeekBarView();
             showListView();
             if (currentMediaState == MPstate.PLAYING) {
-				//doPuase();
+                //doPuase();
                 return true;
             } else if (currentMediaState == MPstate.PAUSED) {
                 startToPlay();
@@ -490,7 +500,7 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
             }
         }
         if (event.getAction() == MotionEvent.ACTION_MOVE) {
-			//isSeekState = true;
+            //isSeekState = true;
             float y = event.getY();
             float x = event.getX();
             Log.i(TAG, "onTouchEvent   得到的X = " + x + ";得到的y:" + y);
@@ -515,16 +525,16 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
     /**
      * 释放播放器
      */
-     private void releaseMediaPlayer() {
-        Log.i(TAG,"releaseMediaPlayer()");
+    private void releaseMediaPlayer() {
+        Log.i(TAG, "releaseMediaPlayer()");
         if (mPlayer != null) {
             mPlayer.reset();    // ———> 【IDLE】通过 reset() 方法进入 idle 状态的话会触发 OnErrorListener.onError() ，
-                                // 并且 MediaPlayer 会进入 Error 状态；如果是新创建的 MediaPlayer 对象，
-                                // 则并不会触发 onError(), 也不会进入 Error 状态。
+            // 并且 MediaPlayer 会进入 Error 状态；如果是新创建的 MediaPlayer 对象，
+            // 则并不会触发 onError(), 也不会进入 Error 状态。
             mPlayer.release();  //通过 releaseMediaPlayer() 方法可以进入 End 状态，只要 MediaPlayer 对象不再被使用，
-                                // 就应当尽快将其通过 releaseMediaPlayer() 方法释放掉，以释放相关的软硬件组件资源，
-                                // 这其中有些资源是只有一份的（相当于临界资源）。
-                                // 如果 MediaPlayer 对象进入了 End 状态，则不会在进入任何其他状态了。
+            // 就应当尽快将其通过 releaseMediaPlayer() 方法释放掉，以释放相关的软硬件组件资源，
+            // 这其中有些资源是只有一份的（相当于临界资源）。
+            // 如果 MediaPlayer 对象进入了 End 状态，则不会在进入任何其他状态了。
             mPlayer = null;
             currentMediaState = MPstate.IDLE;
         }
@@ -542,63 +552,63 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
 
     /**
      * 设置进度条显示隐藏
+     *
      * @param display
      */
-    public void setSeekBarDisplay(int  display){
+    public void setSeekBarDisplay(int display) {
         seekBar.setVisibility(display);
     }
 
 
-     class MplayerSeekBarListener implements SeekBarView.IMplayerSeekBarListener{
+    class MplayerSeekBarListener implements SeekBarView.IMplayerSeekBarListener {
 
-         @Override
-         public void onUserPauseOrStart() {
+        @Override
+        public void onUserPauseOrStart() {
 //            doPauseOrStartVideo();
-         }
+        }
 
-         @Override
-         public void onUserSeekStart() {
+        @Override
+        public void onUserSeekStart() {
 
-         }
+        }
 
-         @Override
-         public void onUserSeekEnd(long seekPos) {
+        @Override
+        public void onUserSeekEnd(long seekPos) {
 
-         }
+        }
 
-         @Override
-         public long uiProgress2PlayProgress(int uiProgress) {
+        @Override
+        public long uiProgress2PlayProgress(int uiProgress) {
 
-             return 0;
-         }
+            return 0;
+        }
 
-         @Override
-         public int playProgress2uiProgress(long playProgress) {
-             return 0;
-         }
+        @Override
+        public int playProgress2uiProgress(long playProgress) {
+            return 0;
+        }
 
-         @Override
-         public String getPosDiscribByPlayPos(long pos) {
-             return null;
-         }
+        @Override
+        public String getPosDiscribByPlayPos(long pos) {
+            return null;
+        }
 
-         @Override
-         public void onPlayToPreNode() {
+        @Override
+        public void onPlayToPreNode() {
 
-         }
-     }
+        }
+    }
 
-      private void doPauseOrStartVideo() {
+    private void doPauseOrStartVideo() {
 //        if (mpCore.isPlaying()) {
 //            doPauseVideo();
 //        } else {
 //             doStartVideo();
 //        }
-     }
+    }
 
 
-    public String formatTimeToHHMMSS(int s)
-    {
+    public String formatTimeToHHMMSS(int s) {
         s = s / 1000;
         int seconds = s % 60;
         int minutes = (s / 60) % 60;
@@ -611,6 +621,7 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
             return mFormatter.format("00:%02d:%02d", minutes, seconds).toString();
         }
     }
+
     public void setRightSideTime(String rightSideTime) {
         totalTime = rightSideTime;
         mHandler.sendEmptyMessage(SET_TOTAL_TIME);
