@@ -1,7 +1,6 @@
 package com.app;
 
 import android.app.Application;
-import com.baidu.apistore.sdk.ApiStoreSDK;
 
 /**
  * Copyright(C) 2015, 北京视达科科技有限公司
@@ -15,7 +14,7 @@ public class KingZApplication extends Application{
     @Override
     public void onCreate() {
         // TODO 其他初始化流程
-        ApiStoreSDK.init(this, GlobalLogic.BDApiKey);
+//        ApiStoreSDK.init(this, GlobalLogic.BDApiKey);
         super.onCreate();
     }
 }

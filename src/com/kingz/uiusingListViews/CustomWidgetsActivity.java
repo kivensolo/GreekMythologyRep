@@ -13,6 +13,7 @@ import android.widget.ListView;
 import com.customview.CircleViewActivity;
 import com.customview.FingerBallActivity;
 import com.customview.NetworkSpeed.NetworkSpeedActivity;
+import com.customview.WaveLoadingActivity;
 import com.customview.listview.CustomListViewActivity;
 import com.customview.listview.SliderListViewActivity;
 import com.customview.slider.wzviewpager.OriginViewPagerActivity;
@@ -61,6 +62,7 @@ public class CustomWidgetsActivity extends  Activity implements OnItemClickListe
 		mAdapter.add(new ListBillData(this,"NetworkSpeed",new Intent(this,NetworkSpeedActivity.class)));
 		mAdapter.add(new ListBillData(this,"原生ViewPager",new Intent(this,OriginViewPagerActivity.class)));
 		mAdapter.add(new ListBillData(this,"WZViewPager",new Intent(this,WZViewPagerActicity.class)));
+		mAdapter.add(new ListBillData(this,"WaveLoading",new Intent(this,WaveLoadingActivity.class)));
 	}
 
 	@Override

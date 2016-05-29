@@ -161,6 +161,10 @@
          <!-- WZViewPagerActicity -->
         <activity android:name="com.customview.slider.wzviewpager.WZViewPagerActicity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
+         <!-- WaveLoadingActivity -->
+        <activity android:name="com.customview.WaveLoadingActivity"
+                  android:screenOrientation="portrait"
+                  android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
          <!-- OriginViewPagerActivity -->
         <activity android:name="com.customview.slider.wzviewpager.OriginViewPagerActivity"
