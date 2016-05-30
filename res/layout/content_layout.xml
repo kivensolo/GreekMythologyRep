@@ -6,6 +6,8 @@
               android:id="@+id/content_fragment"
               android:background="@android:color/holo_green_dark">
     <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-            android:id="@+id/content_news"/>
+              android:id="@+id/content_news"
+              android:text="草泥马"
+              android:textSize="56sp"/>
 
 </LinearLayout>

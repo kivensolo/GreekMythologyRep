@@ -3,15 +3,20 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:divider="@color/darkorchid"
+              android:dividerPadding="1dp"
               android:background="@android:color/holo_blue_dark"
               android:id="@+id/title_fragment">
-        <Button android:layout_width="match_parent" android:layout_height="wrap_content"
+        <Button android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:id="@+id/news_btn"
                 android:text="最新资讯"/>
-        <Button android:layout_width="match_parent" android:layout_height="wrap_content"
+        <Button android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:id="@+id/global"
                 android:text="国际新闻"/>
-        <Button android:layout_width="match_parent" android:layout_height="wrap_content"
+        <Button android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:id="@+id/china_news"
                 android:text="中国新闻"/>
 

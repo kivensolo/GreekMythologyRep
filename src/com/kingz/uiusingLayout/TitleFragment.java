@@ -156,7 +156,6 @@ public class TitleFragment extends ListFragment {
      * whole new activity in which it is displayed.
      */
     void showDetails(int index) {
-        mCurCheckPosition = index;
 
         if (mDualPane) {
             // We can display everything in-place with fragments, so update
@@ -164,12 +163,10 @@ public class TitleFragment extends ListFragment {
             getListView().setItemChecked(index, true);
 
             // Check what fragment is currently shown, replace if needed.
-            ContentFragment details = (ContentFragment)
-                    getFragmentManager().findFragmentById(R.id.content_fragment);
+            ContentFragment details = (ContentFragment)getFragmentManager().findFragmentById(R.id.content_fragment);
             if (details == null || details.getShownIndex() != index) {
                 // Make new fragment to show this selection.
                 details = ContentFragment.newInstance(index);
-
                 // Execute a transaction, replacing any existing fragment
                 // with this one inside the frame.
                 FragmentTransaction ft = getFragmentManager().beginTransaction();

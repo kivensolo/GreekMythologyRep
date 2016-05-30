@@ -23,44 +23,44 @@ import com.kingz.uiusingListViews.R;
 public class FragmentPageFromCode extends FragmentActivity implements TitleFragment.OnArticleSelectedListener {
 
     // Create a new Fragment to be placed in the activity layout
-    TitleFragment titltFragment;
-    ContentFragment contentFragment;
+    TitleFragment2 titltFragment;
+    ContentFragment2 contentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.srclayout_headline_layout);
 
-        if (findViewById(R.id.fragment_container) != null) {
-            //如果之前已经储存了状态，直接返回，否则覆盖之前的Fragment
-            if (savedInstanceState != null) {
-                return;
-            }
-
-            titltFragment = new TitleFragment();
-            contentFragment = new ContentFragment();
-            //防止这些片段是被一个特殊的intent启动起来的   设置参数先'
-            titltFragment.setArguments(getIntent().getExtras());
-            contentFragment.setArguments(getIntent().getExtras());
-
-            //您可以像下面这样从 Activity 获取一个 FragmentTransaction 实例
-            FragmentManager fragmentManager = getFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            //然后，您可以使用 add() 方法添加一个片段，指定要添加的片段以及将其插入哪个视图。例如：
-            fragmentTransaction.add(R.id.fragment_container, titltFragment,"tag_title");
-            fragmentTransaction.add(R.id.fragment_container, contentFragment,"tag_content");
-            fragmentTransaction.commit();
-            //------------传递到 add() 的第一个参数是 ViewGroup，即应该放置片段的位置，由资源 ID 指定，
-            //       ----|第二个参数是要添加的片段。一旦您通过 FragmentTransaction 做出了更改，就必须调用 commit() 以使更改生效。
-
-            /*********** 对于碎片管理  start*************/
-            //通过 findFragmentById()（对于在 Activity 布局中提供 UI 的片段）或 findFragmentByTag()
-            //     （对于提供或不提供 UI 的片段）获取 Activity 中存在的片段。
-            //通过 popBackStack()（模拟用户发出的 Back 命令）将片段从返回栈中弹出。
-            //通过 addOnBackStackChangedListener() 注册一个侦听返回栈变化的侦听器。
-            //通过  FragmentManager 打开一个 FragmentTransaction，通过它来执行某些事务，如添加和删除片段。
-            /*********** 对于碎片管理  end*************/
-        }
+//        if (findViewById(R.id.fragment_container) != null) {
+//            //如果之前已经储存了状态，直接返回，否则覆盖之前的Fragment
+//            if (savedInstanceState != null) {
+//                return;
+//            }
+//
+//            titltFragment = new TitleFragment2();
+//            contentFragment = new ContentFragment2();
+//            //防止这些片段是被一个特殊的intent启动起来的   设置参数先'
+//            titltFragment.setArguments(getIntent().getExtras());
+//            contentFragment.setArguments(getIntent().getExtras());
+//
+//            //您可以像下面这样从 Activity 获取一个 FragmentTransaction 实例
+//            FragmentManager fragmentManager = getFragmentManager();
+//            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//            //然后，您可以使用 add() 方法添加一个片段，指定要添加的片段以及将其插入哪个视图。例如：
+//            fragmentTransaction.add(R.id.fragment_container, titltFragment,"tag_title");
+//            fragmentTransaction.add(R.id.fragment_container, contentFragment,"tag_content");
+//            fragmentTransaction.commit();
+//            //------------传递到 add() 的第一个参数是 ViewGroup，即应该放置片段的位置，由资源 ID 指定，
+//            //       ----|第二个参数是要添加的片段。一旦您通过 FragmentTransaction 做出了更改，就必须调用 commit() 以使更改生效。
+//
+//            /*********** 对于碎片管理  start*************/
+//            //通过 findFragmentById()（对于在 Activity 布局中提供 UI 的片段）或 findFragmentByTag()
+//            //     （对于提供或不提供 UI 的片段）获取 Activity 中存在的片段。
+//            //通过 popBackStack()（模拟用户发出的 Back 命令）将片段从返回栈中弹出。
+//            //通过 addOnBackStackChangedListener() 注册一个侦听返回栈变化的侦听器。
+//            //通过  FragmentManager 打开一个 FragmentTransaction，通过它来执行某些事务，如添加和删除片段。
+//            /*********** 对于碎片管理  end*************/
+//        }
     }
 
     /**

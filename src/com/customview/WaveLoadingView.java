@@ -23,7 +23,7 @@ import com.kingz.uiusingListViews.R;
 public class WaveLoadingView extends View {
     private final Paint mSRCPaint;
 
-    private Paint mPaint;
+    private Paint mWavePaint;
     private Paint mTextPaint;
     private Canvas mCanvas;
     private Bitmap mBitmap;
@@ -49,15 +49,15 @@ public class WaveLoadingView extends View {
 
     public WaveLoadingView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        mPaint = new Paint();
+        mWavePaint = new Paint();
 
-        mPaint.setStrokeWidth(10);
+        mWavePaint.setStrokeWidth(10);
 
         //加载背景图
         bgBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.wing);
         mPath = new Path();
-        mPaint.setAntiAlias(true);
-        mPaint.setColor(Color.parseColor("#8800ff66"));
+        mWavePaint.setAntiAlias(true);
+        mWavePaint.setColor(Color.parseColor("#8800ff66"));
 
         mSRCPaint = new Paint();
         mSRCPaint.setAntiAlias(true);
@@ -89,6 +89,7 @@ public class WaveLoadingView extends View {
 //        if (y > -50) {
 //            y--;
 //        }
+        //采用三阶贝塞尔   不停地改变X 模拟水波效果
         if (x > 50) {
             isLeft = true;
         } else if (x < 0) {
@@ -106,24 +107,24 @@ public class WaveLoadingView extends View {
         mPath.moveTo(0, y);
         //画二阶贝塞尔曲线，前两个为辅助坐标点   第三个点为终点
         mPath.cubicTo(100 + x * 2, 50 + y, 100 + x * 2, y - 50, mWidth, y);
-        mPath.lineTo(mWidth, mHeight);
-        mPath.lineTo(0, mHeight);
+        mPath.lineTo(mWidth, mHeight);  //充满整个画布
+        mPath.lineTo(0, mHeight);       //充满整个画布
         mPath.close();
 
 
         //清除掉图像 不然path会重叠
         mBitmap.eraseColor(Color.parseColor("#00000000"));
         //dst
-        mCanvas.drawBitmap(bgBitmap,0,0,null);
-        mSRCPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
+//        mCanvas.drawBitmap(bgBitmap,0,0,null);
+//        mSRCPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
 
         mCanvas.drawCircle(mWidth / 2, mHeight / 2, mWidth / 2, mSRCPaint);
 
-        mPaint.setXfermode(mMode);
+        mWavePaint.setXfermode(mMode);
         //src
-        mCanvas.drawPath(mPath, mPaint);
-        mPaint.setXfermode(null);
-
+        mCanvas.drawPath(mPath, mWavePaint);
+        mWavePaint.setXfermode(null);
+        //清空mBitmap，不然path会重叠
         canvas.drawBitmap(mBitmap, 0, 0, null);
         String str = mPercent+"";
         mTextPaint.setTextSize(80);
