@@ -5,6 +5,7 @@ import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import com.kingz.uiusingListViews.R;
  * 注：如果片段是 ListFragment 的子类，则默认实现会从 onCreateView() 返回一个 ListView，因此无需实现它。
  */
 public class TitleFragment extends ListFragment {
+    private static final String TAG = TitleFragment.class.getSimpleName();
     boolean mDualPane;
     int mCurCheckPosition = 0;
     OnArticleSelectedListener mListener;
@@ -67,7 +69,7 @@ public class TitleFragment extends ListFragment {
      ***********************************************************/
 
 
-    private String[] TITLES = {"体育新闻","娱乐新闻","科技新闻","内涵段子"};
+    private String[] TITLES = {"体育新闻","娱乐新闻","科技新闻","内涵段子","娱乐新闻","社会新闻","我的收藏"};
     /**
      * 在 Activity 的 onCreate() 方法已返回时调用
      * @param savedInstanceState
@@ -82,12 +84,13 @@ public class TitleFragment extends ListFragment {
 
         // Check to see if we have a frame in which to embed the details
         // fragment directly in the containing UI.
-        View detailsFrame = getActivity().findViewById(R.id.content_fragment);
+        View detailsFrame = getActivity().findViewById(R.id.details);
         mDualPane = detailsFrame != null && detailsFrame.getVisibility() == View.VISIBLE;
 
         if (savedInstanceState != null) {
             // Restore last state for checked position.
             mCurCheckPosition = savedInstanceState.getInt("curChoice", 0);
+            Log.i(TAG,"mCurCheckPosition = "+mCurCheckPosition);
         }
 
         if (mDualPane) {
@@ -144,10 +147,7 @@ public class TitleFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-         // Append the clicked item's row ID with the content provider Uri
-        //Uri noteUri = ContentUris.withAppendedId(ArticleColumns.CONTENT_URI, id);
-        // Send the event and Uri to the host activity
-        //mListener.onArticleSelected(noteUri);
+       showDetails(position);
     }
 
      /**
@@ -163,18 +163,18 @@ public class TitleFragment extends ListFragment {
             getListView().setItemChecked(index, true);
 
             // Check what fragment is currently shown, replace if needed.
-            ContentFragment details = (ContentFragment)getFragmentManager().findFragmentById(R.id.content_fragment);
+            ContentFragment details = (ContentFragment)getFragmentManager().findFragmentById(R.id.details);
             if (details == null || details.getShownIndex() != index) {
                 // Make new fragment to show this selection.
                 details = ContentFragment.newInstance(index);
                 // Execute a transaction, replacing any existing fragment
                 // with this one inside the frame.
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                if (index == 0) {
-                    ft.replace(R.id.content_fragment, details);
-                } else {
-                    //ft.replace(R.id.a_item, details);
-                }
+                //if (index == 0) {
+                    ft.replace(R.id.details, details);
+                //} else {
+                //    ft.replace(R.id.details, details);
+                //}
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                 ft.commit();
             }

@@ -7,17 +7,20 @@
               android:dividerPadding="1dp"
               android:background="@android:color/holo_blue_dark"
               android:id="@+id/title_fragment">
-        <Button android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/news_btn"
-                android:text="最新资讯"/>
-        <Button android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/global"
-                android:text="国际新闻"/>
-        <Button android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/china_news"
-                android:text="中国新闻"/>
+
+    <ListView android:id="@id/android:list"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/cadetblue"
+              android:layout_weight="1"
+              android:divider="@drawable/listview_divider"
+              android:dividerHeight="2dp"
+              android:drawSelectorOnTop="false"/>
+
+    <TextView android:id="@id/android:empty"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#FF0000"
+              android:text="No data"/>
 
 </LinearLayout>

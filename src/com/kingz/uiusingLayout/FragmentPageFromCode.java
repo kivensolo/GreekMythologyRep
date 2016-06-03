@@ -1,7 +1,5 @@
 package com.kingz.uiusingLayout;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,13 +21,13 @@ import com.kingz.uiusingListViews.R;
 public class FragmentPageFromCode extends FragmentActivity implements TitleFragment.OnArticleSelectedListener {
 
     // Create a new Fragment to be placed in the activity layout
-    TitleFragment2 titltFragment;
-    ContentFragment2 contentFragment;
+    TitleFragment titltFragment;
+    ContentFragment contentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.srclayout_headline_layout);
+        setContentView(R.layout.srclayout_frame_layout);
 
 //        if (findViewById(R.id.fragment_container) != null) {
 //            //如果之前已经储存了状态，直接返回，否则覆盖之前的Fragment

@@ -15,6 +15,6 @@ public class FragmentPageFromXml extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.srclayout_headline_layout);
+        setContentView(R.layout.layout_frame);
     }
 }

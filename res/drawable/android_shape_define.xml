@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+<!--【【形状属性】】-->
+    <!-- 1.梯度 -->
+    <gradient
+            android:centerColor="#FF00FF00"
+            android:endColor="#FF0000FF"
+            android:startColor="#FFFF0000"
+            android:type="linear"/>
+    <size android:height="2dp"/>
+
+    <!--2.圆角 radius：弧度-->
+    <corners android:radius="20dp" />
+
+    <!-- 3.填充 -->
+    <solid android:color="#ff1284ff" />
+
+    <!-- 4.描边 -->
+    <stroke
+        android:width="2dp"
+        android:color="#ff19a2ff" />
+
+    <!-- 5.边距 -->
+     <padding
+        android:bottom="1dip"
+        android:left="1dip"
+        android:right="1dip"
+        android:top="1dip" />
+</shape>

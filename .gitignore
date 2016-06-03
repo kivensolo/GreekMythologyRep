@@ -50,3 +50,4 @@ Temporary Items
 *.apk
 bin/classes/com/kingz/four_components/IAnimal.aidl
 *.aidl
+gen/com/kingz/four_components/service/IAnimalRemoteService.java

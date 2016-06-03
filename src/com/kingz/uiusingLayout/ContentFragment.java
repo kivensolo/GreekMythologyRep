@@ -15,18 +15,16 @@ import android.widget.TextView;
  * Discription:内容Fragment
  */
 public class ContentFragment extends Fragment {
+    private NewsData newsData = new NewsData();
     /**
      * Create a new instance of DetailsFragment, initialized to
      * show the text at 'index'.
      */
     public static ContentFragment newInstance(int index) {
         ContentFragment f = new ContentFragment();
-
-        // Supply index input as an argument.
         Bundle args = new Bundle();
         args.putInt("index", index);
         f.setArguments(args);
-
         return f;
     }
 
@@ -54,8 +52,7 @@ public class ContentFragment extends Fragment {
                 4, getActivity().getResources().getDisplayMetrics());
         text.setPadding(padding, padding, padding, padding);
         scroller.addView(text);
-        text.setText("测试数据"+getShownIndex());
-        //text.setText(Shakespeare.DIALOGUE[getShownIndex()]);
+        text.setText(newsData.News[getShownIndex()]);
         return scroller;
     }
 
