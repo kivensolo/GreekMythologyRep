@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
@@ -23,9 +24,10 @@ public class BasicControlsActivity extends Activity implements View.OnClickListe
                                         ,CompoundButton.OnCheckedChangeListener
                                         ,RatingBar.OnRatingBarChangeListener
                                         ,AdapterView.OnItemSelectedListener{
+    public static final String TAG = "BasicControlsActivity";
     private ToastTools mToast;
     private RadioButton rbLeft,rbRight;
-    private Button disabledButton;
+    private Button disabledButton,customDialogFrament;
     private Button gridViewButton;
     private RatingBar mRratingBar;
     private Spinner mSpinner;
@@ -36,6 +38,7 @@ public class BasicControlsActivity extends Activity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.i(TAG,"BasicControlsActivity onCreate");
         setContentView(R.layout.basic_controls);
 
         initViews();
@@ -55,6 +58,7 @@ public class BasicControlsActivity extends Activity implements View.OnClickListe
         rbRight = (RadioButton) findViewById(R.id.radio2);
         mRratingBar = (RatingBar) findViewById(R.id.ratingBar);
         mGallery = (Gallery) findViewById(R.id.gallery_area);
+       customDialogFrament = (Button) findViewById(R.id.btn_dialog_frament_id);
 
         mSpinner = (Spinner) findViewById(R.id.spinner1);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, stringArray);
@@ -71,6 +75,7 @@ public class BasicControlsActivity extends Activity implements View.OnClickListe
         rbRight.setOnCheckedChangeListener(this);
         mRratingBar.setOnRatingBarChangeListener(this);
         gridViewButton.setOnClickListener(this);
+        customDialogFrament.setOnClickListener(this);
     }
 
     @Override
@@ -80,7 +85,12 @@ public class BasicControlsActivity extends Activity implements View.OnClickListe
                 Intent intent = new Intent(this,MyGridView.class);
                 startActivity(intent);
                 break;
-
+            case R.id.btn_dialog_frament_id:
+                AlertDialogFragment dialog = AlertDialogFragment.newInstance("测试标题",
+                        "这是个内容",
+                        true);
+                dialog.show(getFragmentManager(),"dialog");
+                break;
         }
     }
 
