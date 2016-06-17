@@ -50,4 +50,5 @@ public class ToastTools {
         mToast.setDuration(Toast.LENGTH_SHORT);
         mToast.show();
     }
+
 }
