@@ -9,7 +9,7 @@ import android.os.Debug;
  * date:  2016/4/12 15:36 <br>
  * description:  <br>
  */
-public class GeneralUtils {
+public class DevicesInfoUtils {
 
     public static long getFreeMemory() {
 		long l1 = Runtime.getRuntime().maxMemory();

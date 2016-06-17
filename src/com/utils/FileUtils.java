@@ -3,6 +3,7 @@ package com.utils;
 import android.text.TextUtils;
 
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * Created by KingZ on 2015/11/4.
@@ -24,34 +25,29 @@ public class FileUtils {
 
     	private static char hexDigits[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
 
-	public final synchronized static String MD5(String s) {
+	//Md5 加密法一
+	public final synchronized static String MD5(String src) {
 		try {
-			byte[] btInput = s.getBytes();
-			// 获得MD5摘要算法的 MessageDigest 对象
-			MessageDigest mdInst = MessageDigest.getInstance("MD5");
-			// 使用指定的字节更新摘要
-			mdInst.update(btInput);
-			// 获得密文
-			byte[] md = mdInst.digest();
-
+			byte[] btInput = src.getBytes();
+			MessageDigest mdInst = MessageDigest.getInstance("MD5");  // 获得MD5摘要算法的 MessageDigest 对象
+			mdInst.update(btInput);									  // 使用指定的字节更新摘要
+			byte[] md = mdInst.digest();  							  // 获得密文
 			return bytes2Hex(md);
-
-			// 把密文转换成十六进制的字符串形式
-//			int j = md.length;
-//			char str[] = new char[j * 2];
-//			int k = 0;
-//			for (int i = 0; i < j; i++) {
-//				byte byte0 = md[i];
-//				str[k++] = hexDigits[byte0 >>> 4 & 0xf];
-//				str[k++] = hexDigits[byte0 & 0xf];
-//			}
-//			return new String(str);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
 
+	//Md5 加密法二
+	 private static void createMD5(String szSrc) throws NoSuchAlgorithmException {
+        System.out.println("明文:" + szSrc);
+        MessageDigest md = MessageDigest.getInstance("md5");
+        byte[] md5 = md.digest(szSrc.getBytes());
+        System.out.println("md5:" + byte2hex(md5));
+    }
+
+	//转换成十六进制字符串  法一
 	private static String bytes2Hex(byte[] bts) {
         String des = "";
         String tmp = null;
@@ -65,6 +61,42 @@ public class FileUtils {
         }
         return des;
     }
+
+	//转换成十六进制字符串  法二
+    public static String byte2hex(byte[] b) {
+        String stmp = "";
+
+        for (int n = 0; n < b.length; n++) {
+            stmp += String.format("%02X",b[n]);
+        }
+        return stmp.toLowerCase();
+    }
+
+
+	/**
+	 * HexStr ————> Byte[]
+	 * @param hexstr
+	 * @return
+     */
+	public static byte[] hexString2Bytes(String hexstr) {
+		byte[] b = new byte[hexstr.length() / 2];
+		int j = 0;
+		for (int i = 0; i < b.length; i++) {
+			char c0 = hexstr.charAt(j++);
+			char c1 = hexstr.charAt(j++);
+			b[i] = (byte) ((parse(c0) << 4) | parse(c1));
+		}
+		return b;
+	}
+	private static int parse(char c) {
+		if (c >= 'a')
+			return (c - 'a' + 10) & 0x0f;
+		if (c >= 'A')
+			return (c - 'A' + 10) & 0x0f;
+		return (c - '0') & 0x0f;
+	}
+
+
 
 
 }
