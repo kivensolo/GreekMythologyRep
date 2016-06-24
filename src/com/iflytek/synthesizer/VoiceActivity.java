@@ -76,7 +76,7 @@ public class VoiceActivity extends Activity implements OnClickListener {
 	}
 
 	private void showTip(String info) {
-		ToastTools.showMgtvWaringToast(this,info);
+		ToastTools.getInstance().showMgtvWaringToast(this,info);
 	}
 
 	/**********合成监听器** 回调都发生在主线程（UI线程）中******** 合成回调接口 *****************/

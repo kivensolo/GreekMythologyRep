@@ -1,12 +1,10 @@
 package com.utils;
 
-import android.content.Context;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.MarginLayoutParams;
 import android.view.ViewParent;
-import android.widget.Toast;
 import com.utils.ui.ScreenTools;
 
 public class UITools {
@@ -98,93 +96,5 @@ public class UITools {
 		params.rightMargin = rightMargin;
 		params.bottomMargin = bottomMargin;
 	}
-
-
-
-	public final static void showToast(Context context, String str)
-	{
-		if (System.currentTimeMillis() - lastTosatTime > 1000 || System.currentTimeMillis() < lastTosatTime )
-		{
-			Toast.makeText(context, str, Toast.LENGTH_SHORT);
-			lastTosatTime = System.currentTimeMillis();
-		}
-	}
-	private static Toast toast;
-//	public final static void ShowCustomToast(Context context,String str){
-//		LinearLayout root=(LinearLayout) LayoutInflater.from(context).inflate(R.layout.custom_toast, null);
-//		root.setBackgroundResource(R.drawable.custom_toast_bgv4);
-//		ImageView mIcon=(ImageView) root.findViewById(R.id.iv_warning);
-//		LayoutParams mIconParams=(LayoutParams) mIcon.getLayoutParams();
-//		mIconParams.width = App.Operation(32);
-//		mIconParams.height = App.Operation(32);
-//		mIconParams.bottomMargin =App.Operation(5);
-//		mIconParams.topMargin =App.Operation(5);
-//		mIconParams.leftMargin =App.Operation(15);
-//
-//		mIcon.setLayoutParams(mIconParams);
-//
-//		TextView txtContent=(TextView) root.findViewById(android.R.id.message);
-//		txtContent.setTextSize(TypedValue.COMPLEX_UNIT_PX,App.Operation(24));
-//		txtContent.setMaxEms(15);
-//		txtContent.setShadowLayer(3, 1, 1, Color.BLACK);
-//		txtContent.setText(str);
-//		txtContent.setSingleLine();
-//		LayoutParams mtxtParams=(LayoutParams) txtContent.getLayoutParams();
-//		mtxtParams.rightMargin =App.Operation(15);
-//
-//		if(toast!=null){
-//			toast.setText(str);
-//		}else{
-//			toast = new Toast(context.getApplicationContext());
-//		}
-//        //设置Toast的位置
-//        toast.setGravity(Gravity.CENTER_VERTICAL, App.Operation(0), App.Operation(50));
-//        toast.setDuration(Toast.LENGTH_SHORT);
-//        //让Toast显示为我们自定义的样子
-//        toast.setView(root);
-//        toast.show();
-//	}
-
-//	public final static void ShowLongToast(Context context,String str){
-//		LinearLayout root=(LinearLayout) LayoutInflater.from(context).inflate(R.layout.custom_toast, null);
-//		root.setPadding(App.Operation(30), App.Operation(10), App.Operation(30),App.Operation(10));
-//		root.setBackgroundColor(0xCC000000);
-//		WindowManager.LayoutParams rootParams=new WindowManager.LayoutParams();
-//		rootParams.width=App.Operation(552);
-//		rootParams.height=App.Operation(50);
-//		root.setLayoutParams(rootParams);
-//		ImageView mIcon=(ImageView) root.findViewById(R.id.iv_warning);
-//		LayoutParams mIconParams=(LayoutParams) mIcon.getLayoutParams();
-//		mIconParams.width = App.Operation(32);
-//		mIconParams.height = App.Operation(32);
-//		mIconParams.bottomMargin =App.Operation(5);
-//		mIconParams.topMargin =App.Operation(5);
-//		mIconParams.leftMargin =App.Operation(15);
-//		mIcon.setLayoutParams(mIconParams);
-//
-//		TextView txtContent=(TextView) root.findViewById(android.R.id.message);
-//		txtContent.setTextSize(TypedValue.COMPLEX_UNIT_PX,App.Operation(28));
-//
-//		//params.width=App.Operation(360);
-//		txtContent.setMaxEms(15);
-//		txtContent.setGravity(Gravity.CENTER);
-//		txtContent.setShadowLayer(3, 1, 1, Color.BLACK);
-//		txtContent.setText(str);
-//		txtContent.setSingleLine();
-//		LayoutParams mtxtParams=(LayoutParams) txtContent.getLayoutParams();
-//		mtxtParams.rightMargin =App.Operation(15);
-//		if(toast!=null){
-//			toast.setText(str);
-//		}else{
-//			toast = new Toast(context.getApplicationContext());
-//		}
-//        //设置Toast的位置
-//        toast.setGravity(Gravity.CENTER_VERTICAL, 10, 0);
-//        toast.setDuration(Toast.LENGTH_LONG);
-//        //让Toast显示为我们自定义的样子
-//        toast.setView(root);
-//        toast.show();
-//	}
-
 
 }

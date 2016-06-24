@@ -290,7 +290,7 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
     private MediaPlayer.OnPreparedListener mPreparedListener = new MediaPlayer.OnPreparedListener() {
         @Override
         public void onPrepared(MediaPlayer mp) {
-            ToastTools.showMgtvWaringToast(KingZMediaPlayer.this, "开始播放");
+            ToastTools.getInstance().showMgtvWaringToast(KingZMediaPlayer.this, "开始播放");
             currentMediaState = MPstate.PREPARED;
             duration = mp.getDuration();
             if (duration > 0) {
@@ -347,7 +347,7 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
     private MediaPlayer.OnErrorListener mOErrorListener = new MediaPlayer.OnErrorListener() {
         @Override
         public boolean onError(MediaPlayer mp, int what, int extra) {
-            ToastTools.showMgtvWaringToast(KingZMediaPlayer.this, "播放出错！" + "what=" + what + ";extra=" + extra);
+            ToastTools.getInstance().showMgtvWaringToast(KingZMediaPlayer.this, "播放出错！" + "what=" + what + ";extra=" + extra);
             switch (what) {
                 case MediaPlayer.MEDIA_ERROR_SERVER_DIED:
                     Log.e("Play Error:::", "MEDIA_ERROR_SERVER_DIED" + ", extra:" + extra);

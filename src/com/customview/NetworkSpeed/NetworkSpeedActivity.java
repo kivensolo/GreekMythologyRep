@@ -64,9 +64,8 @@ public class NetworkSpeedActivity extends Activity{
 
     private void sendMsg2Ui() {
         if (!NetTools.isNetworkConnected(this)) {
-            ToastTools.showMgtvWaringToast(NetworkSpeedActivity.this,"网络连接超时，请检查网络后再试");
+            ToastTools.getInstance().showMgtvWaringToast(NetworkSpeedActivity.this,"网络连接超时，请检查网络后再试");
             Log.e(TAG,"网络连接超时，请检查网络后再试。");
-			return;
 		}
     }
 }
