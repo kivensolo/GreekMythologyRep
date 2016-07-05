@@ -22,6 +22,14 @@ public class App extends Application {
      */
     public static Context mContext;
 
+    /**
+     * 屏幕适配参数
+     */
+    public static int SCREEN_WIDTH = 1280;
+	public static int SCREEN_HEIGHT = 720;
+	public static final int DESIGN_WIDTH = 1280;
+	public static final int DESIGN_HEIGHT = 720;
+	public static float mainScale = 1.0f;
 
     @Override
     public void onCreate() {
@@ -32,10 +40,28 @@ public class App extends Application {
         application = this;
         mContext = this;
         Log.i(TAG, "app onCreate this:" + this);
+        initAPPScreenParms();
+    }
+
+    private void initAPPScreenParms(){
+        Log.i(TAG, "SCREEN_WIDTH = " + getResources().getDisplayMetrics().widthPixels
+			+ "   SCREEN_HEIGHT = " + getResources().getDisplayMetrics().heightPixels);
+        SCREEN_WIDTH = getResources().getDisplayMetrics().widthPixels;
+        SCREEN_HEIGHT = getResources().getDisplayMetrics().heightPixels;
+        mainScale = Math.min(SCREEN_HEIGHT / DESIGN_HEIGHT, SCREEN_WIDTH / DESIGN_WIDTH);
     }
 
     public static Context getAppContext() {
         return mContext;
     }
 
+    /**
+     * 屏幕适配
+     * @param Original
+     * @return
+     */
+    public static int ScreenAdjuest(float Original){
+        return (int) (Original * mainScale + 0.5f);
+        //return (int) (SCREEN_HEIGHT * (Original * 1.0f / DESIGN_HEIGHT) + 0.5f);
+    }
 }

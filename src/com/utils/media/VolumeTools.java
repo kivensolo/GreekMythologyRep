@@ -6,8 +6,6 @@ import android.util.Log;
 
 /**
  * 媒体播放音量的控制
- * @author czy
- *
  */
 public class VolumeTools
 {

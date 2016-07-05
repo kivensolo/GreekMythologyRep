@@ -38,6 +38,7 @@ public class BaseActivity extends Activity {
      * 获取资源
      */
     protected void findID() {
+
     }
 
     ///**

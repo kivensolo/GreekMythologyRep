@@ -22,8 +22,14 @@ import java.util.TimerTask;
  *  解除绑定，最后再用unbindService()绑定到服务。出发的生命周期为：
  *  onCreate()  ——> onStart() ——> onBind() ——> onUnbind()[重载后的方法需返回true]  ——> onRebind();
  */
-public class ComponentsOfService extends Service{
+public class MyComponentsOfService extends Service{
 
+	/**
+	 * 回调的Binder
+	 */
+	private IBinder echoServiceBinder = new LocalServiceBinder();
+
+	//onBind()将返回给客户端一个IBind接口实例，IBind允许客户端回调服务的方法
 	@Override
 	public IBinder onBind(Intent intent) {
 		// TODO Auto-generated method stub
@@ -65,20 +71,15 @@ public class ComponentsOfService extends Service{
 	}
 
 	/**
-	 * 回调的Binder
-	 */
-	private ComponentsOfServiceBinder echoServiceBinder = new ComponentsOfServiceBinder();
-
-	/**
 	 * @author: KingZ
 	 * @Data: 2015年10月7日下午11:17:20
 	 * @Description: 一个服务的继承器
 	 * 	 用来外部和Service通信的桥梁
 	 */
-	public class ComponentsOfServiceBinder extends Binder{
+	public class LocalServiceBinder extends Binder{
 		//得到当前服务的实例
-		public ComponentsOfService getService(){
-			return ComponentsOfService.this;
+		public MyComponentsOfService getService(){
+			return MyComponentsOfService.this;
 		}
 
 	}
@@ -104,9 +105,8 @@ public class ComponentsOfService extends Service{
 
 	@Override
 	public void onDestroy() {
-		// TODO Auto-generated method stub、
-		System.out.println("老子被杀了");
-		Toast.makeText(this,"Service onDestroy() more than once",Toast.LENGTH_SHORT).show();
+		System.out.println(".....服务被销毁");
+		Toast.makeText(this,"Service onDestroy()",Toast.LENGTH_SHORT).show();
 		stopTimer();
 		super.onDestroy();
 	}
