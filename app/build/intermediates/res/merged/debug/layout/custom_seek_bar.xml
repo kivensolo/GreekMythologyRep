@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/seekbar_info" />
+
+    <!-- 图片更改的方式  -->
+    <SeekBar
+        android:id="@+id/seekbar_self"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:progressDrawable="@drawable/seekbar_self_style"
+        android:thumb="@drawable/seekbar_thumb_img"/>
+
+    <!-- 颜色更改的方式  -->
+    <SeekBar
+        android:id="@+id/seekbar_self_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:progressDrawable="@drawable/seekbar_self_color_style"
+        android:thumb="@drawable/seekbar_thumb_img" />
+
+</LinearLayout>

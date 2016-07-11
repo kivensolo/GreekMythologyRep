@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set>
+    <alpha />       <!-- 渐变透明度变化效果 -->
+
+    <scale />       <!-- 渐变尺寸伸缩变化效果 -->
+
+    <translate />   <!-- 位置移动变化效果 -->
+
+    <rotate />      <!-- 位置旋转变化效果 -->
+
+   <!-- 在需要的控件或布局中使用的话，加入引用即可
+        android:layoutAnimation="@anim/testanim"-->
+
+<!--
+    SET属性
+    名称	                             属性	                  备注
+    android:shareInterpolator	是否共享插入器	        共享时，四个子节点都用一个插入器
+    android:interpolator	指定一个动画的插入器	        使用系统资源
+    android:fillEnabled	                                当设置为true时，fillAfter和fillBefroe将会都为true，
+                                                        此时会忽略fillBefore 和fillAfter两种属性
+    android:fillAfter	    该动画转化是否在动画结束后被应用	   boolean
+    android:fillBefore	    该动画转化是否在动画开始前被应用	   boolean
+    android:repeatMode	            重复模式	            "restart"  或者 "reverse"
+    android:repeatCount	            重复次数	            integer
+    android:duration	    动画持续时间	                    integer
+    android:startOffset	    动画时间间隔	                    long
+    android:zAdjustment	    定义动画z order的变换	        [normal] or [top] or [bottom]
+    android:detachWallpaper	        未知                      boolean
+-->
+
+
+</set>

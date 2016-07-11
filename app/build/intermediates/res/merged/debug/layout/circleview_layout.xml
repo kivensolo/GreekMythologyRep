@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:zhi="http://schemas.android.com/apk/res/com.kingz.uiusingListViews"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+<!--
+     <com.customview.CustomOnMeasureView
+            android:layout_width="440dp"
+            android:layout_height="330dp"
+            android:padding="50dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            zhi:myImage="@drawable/zy_smile"
+            zhi:imageWidth="100dp"
+            zhi:imageHeight="250dp"
+            zhi:imageScaleType="center"
+            zhi:titleColor="#00ff99"
+            zhi:titleText="至尊宝"
+            zhi:titleSize="40sp"/>
+            zhi:titleSize="40sp"/>-->
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_gravity="center_horizontal"
+                  android:orientation="horizontal"
+                  android:background="@color/chartreuse2">
+        <com.customview.CircleProgressView
+                android:id="@+id/view_circle_progress"
+                android:background="@color/peru"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                zhi:innerColor="#dd5656"
+                zhi:outerColor="#88ff22"
+                zhi:circleWidth="20dp"
+                zhi:speed="20"/>
+        <Button android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_radius_buttons"
+                android:text="启动圆环进度条"
+                android:focusable="true"
+                android:id="@+id/start_circle_progress"
+                android:layout_gravity="center_vertical"/>
+
+    </LinearLayout>
+    <com.customview.porterduffmode.DuffTestView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+</LinearLayout>

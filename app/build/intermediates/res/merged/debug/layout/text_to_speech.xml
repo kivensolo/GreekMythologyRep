@@ -1,0 +1,24 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.synthesizer.MainActivity"
+    tools:ignore="MergeRootFrame" >
+
+    <EditText
+        android:id="@+id/mResultText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="语音测试测试测试" />
+
+    <Button
+        android:id="@+id/tts_play"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/mResultText"
+        android:text="播放" />
+
+</RelativeLayout>
+

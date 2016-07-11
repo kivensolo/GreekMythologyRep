@@ -51,3 +51,5 @@ Temporary Items
 bin/classes/com/kingz/four_components/IAnimal.aidl
 *.aidl
 gen/com/kingz/four_components/service/IAnimalRemoteService.java
+out/production/UIUsingListVIew/com/AsuyncTaskJsonTest/AsynctaskBitmapMainActivity$GetInfoTask.class
+*.class
