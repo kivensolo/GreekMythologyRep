@@ -140,11 +140,11 @@
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!-- 自定义View -->
-        <activity android:name="com.customview.FingerBallActivity"
+        <activity android:name="com.customview.pages.FingerBallActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!-- CircleViewActivity -->
-        <activity android:name="com.customview.CircleViewActivity"
+        <activity android:name="com.customview.pages.CircleViewActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!--webAppActivity-->
@@ -162,7 +162,7 @@
         <activity android:name="com.customview.slider.wzviewpager.WZViewPagerActicity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
          <!-- WaveLoadingActivity -->
-        <activity android:name="com.customview.WaveLoadingActivity"
+        <activity android:name="com.customview.pages.WaveLoadingActivity"
                   android:screenOrientation="portrait"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 

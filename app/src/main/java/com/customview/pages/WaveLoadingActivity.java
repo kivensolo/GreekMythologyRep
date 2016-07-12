@@ -1,7 +1,9 @@
-package com.customview;
+package com.customview.pages;
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.SeekBar;
+
+import com.customview.views.WaveLoadingView;
 import com.kingz.uiusingListViews.R;
 
 /**

@@ -1,10 +1,12 @@
-package com.customview;
+package com.customview.pages;
 
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+
+import com.customview.views.DrawBallView;
 import com.kingz.uiusingListViews.R;
 
 /**

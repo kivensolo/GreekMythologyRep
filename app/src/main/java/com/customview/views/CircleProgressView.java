@@ -1,4 +1,4 @@
-package com.customview;
+package com.customview.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -89,7 +89,7 @@ public class CircleProgressView extends View {
     public void beginDrawCircle() {
         isDrawing = true;
         iCircleDrawStartListner.onStart();
-        
+
         // 绘图线程
         new Thread(){
             public void run(){
@@ -191,7 +191,7 @@ public class CircleProgressView extends View {
         this.iCircleDrawFinishedListner = iCircleDrawFinishedListner;
     }
 
-    interface ICircleDrawFinished{
+    public interface ICircleDrawFinished{
         void onFinished();
     }
 
@@ -199,7 +199,7 @@ public class CircleProgressView extends View {
         this.iCircleDrawStartListner = iCircleDrawStartListner;
     }
 
-    interface ICircleDrawStart{
+    public interface ICircleDrawStart{
         void onStart();
     }
 }
