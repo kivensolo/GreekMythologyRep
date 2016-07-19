@@ -1,4 +1,4 @@
-package com.kingz.controls;
+package com.nativeWidgets;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
-import com.kingz.uiusingListViews.R;
+import com.kingz.customDemo.R;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ import java.util.List;
  * Discription:
  *      用GridView显示系统Lanuher中icon图标
  */
-public class MyGridView extends Activity implements View.OnClickListener {
+public class AppsGridView extends Activity implements View.OnClickListener {
 
     private GridView mGridView;
     private List<ResolveInfo> mApps;
@@ -83,7 +83,7 @@ public class MyGridView extends Activity implements View.OnClickListener {
             if(convertView != null){
                  i = (ImageView)convertView;//获取缓存视图
             }else{
-                i  = new ImageView(MyGridView.this);
+                i  = new ImageView(AppsGridView.this);
                 i.setScaleType(ImageView.ScaleType.FIT_CENTER);
                 i.setLayoutParams(new GridView.LayoutParams(50, 50));
             }

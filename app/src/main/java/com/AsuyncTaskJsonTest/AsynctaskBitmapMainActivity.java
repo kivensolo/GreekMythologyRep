@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.ListView;
-import com.kingz.uiusingListViews.R;
+import com.kingz.customDemo.R;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

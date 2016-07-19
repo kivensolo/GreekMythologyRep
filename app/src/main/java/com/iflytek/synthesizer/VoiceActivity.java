@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import com.iflytek.cloud.*;
-import com.kingz.uiusingListViews.R;
+import com.kingz.customDemo.R;
 import com.utils.ToastTools;
 
 public class VoiceActivity extends Activity implements OnClickListener {

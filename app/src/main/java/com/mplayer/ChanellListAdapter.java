@@ -5,8 +5,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.provider.CommonAdapter;
 import com.provider.CommonViewHolder;
-import com.datainfo.ChannelData;
-import com.kingz.uiusingListViews.R;
+import com.provider.ChannelData;
+import com.kingz.customDemo.R;
 
 import java.util.List;
 

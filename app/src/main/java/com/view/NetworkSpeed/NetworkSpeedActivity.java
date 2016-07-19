@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import com.kingz.uiusingListViews.R;
+import com.kingz.customDemo.R;
 import com.utils.ScreenTools;
 import com.utils.ToastTools;
 import com.utils.NetTools;

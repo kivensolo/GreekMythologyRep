@@ -10,7 +10,7 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
-import com.kingz.uiusingListViews.R;
+import com.kingz.customDemo.R;
 
 /**
  * Created by KingZ on 2016/1/24.

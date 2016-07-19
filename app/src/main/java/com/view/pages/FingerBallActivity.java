@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.view.views.DrawBallView;
-import com.kingz.uiusingListViews.R;
+import com.kingz.customDemo.R;
 
 /**
  * Created by KingZ on 2015/11/23.

@@ -1,4 +1,4 @@
-package com.kingz.uiusingActivity;
+package com;
 
 import android.app.Activity;
 import android.content.Context;

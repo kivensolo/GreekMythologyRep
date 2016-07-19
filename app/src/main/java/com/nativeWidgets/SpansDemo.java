@@ -1,4 +1,4 @@
-package com.kingz.controls;
+package com.nativeWidgets;
 
 import android.app.Activity;
 import android.content.res.ColorStateList;
@@ -14,7 +14,7 @@ import android.text.style.TypefaceSpan;
 import android.text.style.URLSpan;
 import android.text.style.UnderlineSpan;
 import android.widget.TextView;
-import com.kingz.uiusingListViews.R;
+import com.kingz.customDemo.R;
 
 /**
  * Copyright(C) 2015, 北京视达科科技有限公司
@@ -32,7 +32,7 @@ import com.kingz.uiusingListViews.R;
             Spanned.SPAN_INCLUSIVE_EXCLUSIVE —— [a,b)
             Spanned.SPAN_INCLUSIVE_INCLUSIVE —— [a,b]
  */
-public class SpansActivity extends Activity{
+public class SpansDemo extends Activity{
 
     public static final String GO_TO_BAIDU = "Take you fly,Take you zhuangB";
     public static final String KEY_WORD = "Take";

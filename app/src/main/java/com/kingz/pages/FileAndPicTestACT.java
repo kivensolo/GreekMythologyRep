@@ -1,4 +1,4 @@
-package com.kingz.uiusingActivity;
+package com.kingz.pages;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,8 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.kingz.datasave.DataByFileActivity;
-import com.kingz.uiusingListViews.R;
+
+import com.kingz.customDemo.R;
 
 import java.io.File;
 
@@ -131,7 +131,7 @@ public class FileAndPicTestACT extends Activity implements View.OnClickListener{
     }
     private void intoFileSavePage(){
         Intent intent = new Intent();
-        intent.setClass(this, DataByFileActivity.class);
+        intent.setClass(this, SaveDataByFilePage.class);
         startActivity(intent);
     }
 

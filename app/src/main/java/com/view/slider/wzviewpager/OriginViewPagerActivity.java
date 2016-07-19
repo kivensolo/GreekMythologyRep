@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.view.slider.wzviewpager.wzcodepagger.DotsView;
-import com.kingz.uiusingListViews.R;
+import com.kingz.customDemo.R;
 
 import java.util.ArrayList;
 

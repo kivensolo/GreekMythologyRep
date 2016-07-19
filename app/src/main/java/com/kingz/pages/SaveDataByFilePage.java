@@ -1,4 +1,4 @@
-package com.kingz.datasave;
+package com.kingz.pages;
 
 import android.app.Activity;
 import android.content.Context;
@@ -21,7 +21,7 @@ import java.util.HashMap;
  * date:  2016/5/22 12:58
  * description：数据存储方式1：文件形式
  */
-public class DataByFileActivity extends Activity{
+public class SaveDataByFilePage extends Activity{
     public static final String FILE_NAME = "kingzFile";
     FileOutputStream fOut = null;
     FileInputStream fIn = null;
@@ -43,7 +43,7 @@ public class DataByFileActivity extends Activity{
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                ToastTools.showMgtvWaringToast(DataByFileActivity.this,"存储数据至文件");
+//                ToastTools.showMgtvWaringToast(SaveDataByFilePage.this,"存储数据至文件");
                 Log.i("KingZ","存储数据至文件");
                 HashMap<String,String> map = new HashMap<String, String>();
                 map.put("四川","成都");

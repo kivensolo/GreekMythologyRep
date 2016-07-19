@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import com.view.slider.wzviewpager.wzcodepagger.*;
-import com.kingz.uiusingListViews.R;
+import com.kingz.customDemo.R;
 
 /**
  * Copyright(C) 2016, 北京视达科科技有限公司

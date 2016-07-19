@@ -1,4 +1,4 @@
-package com.kingz.uiusingListViews;
+package com.provider;
 
 import java.io.Serializable;
 

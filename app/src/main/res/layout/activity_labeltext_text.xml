@@ -3,16 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
+
     <!-- 加载自定义的lableText -->
-    <com.kingz.uiusingWidgets.LabelEditText
+    <com.kingz.Widgets.CustomEditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         labelText="姓名："
         labelFontSize="12"
+        labelFontColor = "#7cd12e"
         labelPosition="left"/>
-    
-    <com.kingz.uiusingWidgets.LabelEditText
+
+    <com.kingz.Widgets.CustomEditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         labelText="我在上面："

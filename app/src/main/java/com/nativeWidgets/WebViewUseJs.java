@@ -1,4 +1,4 @@
-package com.kingz.uiusingWidgets;
+package com.nativeWidgets;
 
 import android.app.Activity;
 import android.content.Context;
@@ -8,15 +8,15 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.webkit.*;
 import android.widget.Toast;
-import com.kingz.uiusingListViews.R;
+import com.kingz.customDemo.R;
 
 /**
  * Created by KingZ on 2016/1/16.
  * Discription:
  */
-public class KingWebViewActivity extends Activity{
+public class WebViewUseJs extends Activity{
 
-    public static final String TAG = "KingWebViewActivity";
+    public static final String TAG = "WebViewUseJs";
     private Context context;
     private WebView mWebView;
     private WebAPPInterface webAPPInterface;

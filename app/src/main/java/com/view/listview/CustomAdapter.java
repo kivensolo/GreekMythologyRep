@@ -11,8 +11,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import com.kingz.uiusingListViews.R;
-import com.kingz.uiusingListViews.SpanInfoData;
+import com.kingz.customDemo.R;
+import com.provider.SpanInfoData;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.kingz.uiusingWidgets;
+package com.nativeWidgets;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -6,19 +6,15 @@ import android.os.Handler;
 import android.os.Message;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import com.kingz.uiusingListViews.R;
+import com.kingz.customDemo.R;
 
 /**
- * @author: KingZ
- * @Description:  原生seekBar
+ * 原生seekBar
  */
-public class SeekBarActivity extends Activity{
-
+public class NativeSeekBar extends Activity{
     private SeekBar mSeekBarDefault;
     private TextView tv_1;
     private TextView tv_2;
-
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

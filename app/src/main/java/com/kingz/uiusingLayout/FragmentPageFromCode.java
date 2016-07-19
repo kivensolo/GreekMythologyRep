@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.AttributeSet;
 import android.view.View;
-import com.kingz.uiusingListViews.R;
+import com.kingz.customDemo.R;
 
 /**
  * Created by KingZ.

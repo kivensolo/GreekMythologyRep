@@ -1,4 +1,4 @@
-package com.kingz.controls;
+package com.nativeWidgets;
 
 import android.app.Activity;
 import android.content.Context;
@@ -8,7 +8,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
-import com.kingz.uiusingListViews.R;
+
+import com.kingz.customDemo.R;
 import com.utils.ToastTools;
 
 /**
@@ -82,7 +83,7 @@ public class BasicControlsActivity extends Activity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_gridView:
-                Intent intent = new Intent(this,MyGridView.class);
+                Intent intent = new Intent(this,AppsGridView.class);
                 startActivity(intent);
                 break;
             case R.id.btn_dialog_frament_id:

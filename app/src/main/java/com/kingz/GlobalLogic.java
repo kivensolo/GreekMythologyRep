@@ -1,4 +1,4 @@
-package com.app;
+package com.kingz;
 
 /**
  * Copyright(C) 2015, 北京视达科科技有限公司

@@ -1,4 +1,4 @@
-package com.app;
+package com.apiDemo;
 
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -9,7 +9,7 @@ import android.os.SystemClock;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-import com.kingz.uiusingListViews.R;
+import com.kingz.customDemo.R;
 
 /**
  * Copyright(C) 2015, 北京视达科科技有限公司

@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.ViewParent;
 import android.widget.LinearLayout;
-import com.kingz.uiusingListViews.R;
+import com.kingz.customDemo.R;
 
 /**
  * @author: KingZ

@@ -1,4 +1,4 @@
-package com.kingz.uiusingWidgets;
+package com.nativeWidgets;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -8,13 +8,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import com.kingz.uiusingListViews.R;
+import com.kingz.customDemo.R;
 
-public class UsingProgressBarAct extends Activity implements OnClickListener{
+public class NativeProgressBar extends Activity implements OnClickListener{
 
 	private ProgressBar progress;
 	private TextView text;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -25,8 +24,6 @@ public class UsingProgressBarAct extends Activity implements OnClickListener{
 		int second = progress.getSecondaryProgress();//得到B进度
 		int max = progress.getMax();//获取seekBar最大值
 		text.setText("fiorstBar:"+(int)(first/(float)max*100)+"% ;Secondbar:"+(int)(second/(float)max*100)+"%");
-
-
 	}
 
 	/**
@@ -67,9 +64,9 @@ public class UsingProgressBarAct extends Activity implements OnClickListener{
 				break;
 			}
 			case R.id.alertdialog:{
-				AlertDialog.Builder dialog = new AlertDialog.Builder(UsingProgressBarAct.this);
+				AlertDialog.Builder dialog = new AlertDialog.Builder(NativeProgressBar.this);
 				dialog.setTitle("提示：");
-				dialog.setMessage("你妹的点击了哟");
+				dialog.setMessage("原生seekBar");
 				dialog.setCancelable(false);
 				dialog.setPositiveButton("确定",new DialogInterface.OnClickListener() {
 						@Override

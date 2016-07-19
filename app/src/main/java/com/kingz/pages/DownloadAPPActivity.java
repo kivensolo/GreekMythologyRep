@@ -1,4 +1,4 @@
-package com.kingz.uiusingActivity;
+package com.kingz.pages;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -15,7 +15,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.App;
-import com.kingz.uiusingListViews.R;
+import com.BaseActivity;
+import com.kingz.customDemo.R;
 import com.utils.FileDownloader;
 import com.utils.NetTools;
 import com.utils.ScreenTools;
@@ -34,18 +35,22 @@ import java.net.URL;
  * Created by KingZ on 2015/11/3.
  * Discription:图片/文件下载测试
  */
-public class DownloadTestActivity extends BaseActivity implements View.OnClickListener {
+public class DownloadAPPActivity extends BaseActivity implements View.OnClickListener {
 
-    public static final String TAG = "DownloadTestActivity";
+    public static final String TAG = "DownloadAPPActivity";
     public static final int TIMEOUT_MILLIS = 10 * 1000;
-    private Button btn_NetPic, btn_LocalPic, btn_downLoad;
+    public static final int PAGE_ID = R.layout.bitmap_demo_layout;
+    private Button btn_NetPic;
+    private Button btn_LocalPic;
+    private Button btn_downLoad;
     private ImageView imgNetPic, imgResPic;
     private FileDownloader _downloader;
     private Context context;
     /**
      * APP下载路径
      */
-    private String appUrlPath = "http://192.168.90.115/pub_apk/update-test/V4.6.0_XJCBC_IPTV_QUANZHI_Beta_MG_22773_181.apk";
+//    private String appUrlPath = "http://192.168.90.115/pub_apk/update-test/V4.6.0_XJCBC_IPTV_QUANZHI_Beta_MG_22773_181.apk";
+    private String appUrlPath = "http://www.apk3.com/uploads/soft/guiguangbao/com.xdsdfdvcswa20160630.apk";
     private HttpURLConnection urlConnection;
     private InputStream downloadIs = null;
     private OutputStream downloadOs = null;
@@ -57,7 +62,7 @@ public class DownloadTestActivity extends BaseActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = App.getAppContext();
-        setContentView(R.layout.bitmap_demo_layout);
+        setContentView(PAGE_ID);
         initviews();
     }
 
@@ -77,7 +82,7 @@ public class DownloadTestActivity extends BaseActivity implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_down_app:
-                ToastTools.getInstance().showToast(context, "开始下载");
+                ToastTools.getInstance().showMgtvWaringToast(context, "开始下载....");
                 initProgressView();
                 runOnUiThread(new Runnable() {
                     @Override
@@ -92,7 +97,7 @@ public class DownloadTestActivity extends BaseActivity implements View.OnClickLi
     }
 
     /**
-     *
+     * 进度条初始化
      */
     private void initProgressView() {
         mProgressBarView = new HorizontalProgressBarView(context);
@@ -103,11 +108,6 @@ public class DownloadTestActivity extends BaseActivity implements View.OnClickLi
             @Override
             public void onComplete() {
                 ToastTools.getInstance().showMgtvWaringToast(context, "Done!!");
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
                 mProgressBarView.setVisibility(View.INVISIBLE);
             }
         });
@@ -118,7 +118,7 @@ public class DownloadTestActivity extends BaseActivity implements View.OnClickLi
     }
 
     /**
-     * 开始下载文件
+     * 文件下载初始化
      */
     public void startDownLoadFile(String url) {
         url = url.trim();

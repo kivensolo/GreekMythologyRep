@@ -1,32 +1,34 @@
-package com.kingz.uiusingWidgets;
+package com.kingz.Widgets;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.kingz.uiusingListViews.R;
+import com.kingz.customDemo.R;
 
 /**
  * 自定义EditText
  */
-public class LabelEditText extends LinearLayout{
-
+public class CustomEditText extends LinearLayout{
 	private TextView textView;
 	private String labelPosition;
 	private String labelText;
 	private int labelFontSize;
+	private int labelFontColor;
 
-
-	public LabelEditText(Context context, AttributeSet attrs) {
+	public CustomEditText(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		getAttr(context, attrs);
 		initView();
 	}
 
 	private void initView() {
+		View editView = findViewById(R.id.edittext);
 		textView = (TextView) findViewById(R.id.lable_textview);
 		textView.setTextSize(labelFontSize);
+		textView.setTextColor(labelFontColor);
 		textView.setText(labelText);
 	}
 
@@ -49,9 +51,16 @@ public class LabelEditText extends LinearLayout{
 			labelFontSize = getResources().getInteger(resourceId);
 		}
 
-		resourceId = attrs.getAttributeResourceValue(null, "labelPosition", 0);
+		resourceId = attrs.getAttributeResourceValue(null, "labelFontColor",0);
 		if (resourceId == 0) {
-			labelPosition = attrs.getAttributeValue(null,"labelPosition");
+			labelFontColor = attrs.getAttributeIntValue(null,"labelFontColor",R.color.bright_green);
+		}else{
+			labelFontColor = getResources().getInteger(resourceId);
+		}
+
+		resourceId = attrs.getAttributeResourceValue(null, "editBkgColor", 0);
+		if (resourceId == 0) {
+			labelPosition = attrs.getAttributeValue(null,"editBkgColor");
 		}else{
 			labelPosition = getResources().getString(resourceId);
 		}

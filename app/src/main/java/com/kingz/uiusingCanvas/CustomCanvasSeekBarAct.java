@@ -11,7 +11,6 @@ import android.widget.RelativeLayout;
 
 /**
  * @author: KingZ
- * @Data: 2015��10��5������5:40:34
  * @Description:
  */
 public class CustomCanvasSeekBarAct extends Activity implements OnTouchListener {

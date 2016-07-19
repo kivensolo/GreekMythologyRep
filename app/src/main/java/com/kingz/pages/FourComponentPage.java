@@ -1,4 +1,4 @@
-package com.kingz.uiusingListViews;
+package com.kingz.pages;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
@@ -11,12 +11,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.ListBillData;
+import com.kingz.customDemo.R;
 import com.kingz.four_components.ObtainConnectPeopleActivity;
 import com.kingz.four_components.ServiceComponentsACT;
-import com.kingz.uiusingActivity.LableTextView_Act;
 import com.kingz.uiusingCanvas.CustomCanvasSeekBarAct;
 
-public class FourComponentListView extends  Activity implements OnItemClickListener{
+public class FourComponentPage extends  Activity implements OnItemClickListener{
 
 	private ListView listView;
 	private ArrayAdapter<ListBillData> mAdapter;
@@ -38,7 +38,7 @@ public class FourComponentListView extends  Activity implements OnItemClickListe
 	private void addData() {
 		mAdapter.add(new ListBillData(this,"服务",new Intent(this,ServiceComponentsACT.class)));
 		mAdapter.add(new ListBillData(this,"自定义seekBar",new Intent(this,CustomCanvasSeekBarAct.class)));
-		mAdapter.add(new ListBillData(this,"LableTextView_Act",new Intent(this,LableTextView_Act.class)));
+		mAdapter.add(new ListBillData(this,"LableTextViewPage",new Intent(this,LableTextViewPage.class)));
 		mAdapter.add(new ListBillData(this,"ContentProvider",new Intent(this,ObtainConnectPeopleActivity.class)));
 	}
 

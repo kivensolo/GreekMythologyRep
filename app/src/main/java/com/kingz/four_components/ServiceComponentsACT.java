@@ -10,8 +10,8 @@ import android.os.IBinder;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import com.kingz.four_components.MyComponentsOfService;
-import com.kingz.uiusingListViews.R;
+
+import com.kingz.customDemo.R;
 
 /**
  * description：四大组件之Service的用法

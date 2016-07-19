@@ -1,10 +1,10 @@
-package com.kingz.uiusingWidgets;
+package com.kingz.Widgets;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import com.kingz.uiusingListViews.R;
+import com.kingz.customDemo.R;
 
 /**
  * @author: KingZ

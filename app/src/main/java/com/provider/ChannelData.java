@@ -1,4 +1,4 @@
-package com.datainfo;
+package com.provider;
 
 import android.graphics.Bitmap;
 

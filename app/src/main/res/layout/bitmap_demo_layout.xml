@@ -1,44 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/black">
 
-
-    <ImageView
-            android:layout_width="wrap_content"  android:layout_height="wrap_content"
-            android:id="@+id/image_net"          android:background="@drawable/pic_default"
-            android:layout_alignParentTop="true" android:layout_alignLeft="@+id/image_local"/>
-    <ImageView
-            android:layout_width="wrap_content"  android:layout_height="wrap_content"
-            android:id="@+id/image_local"        android:background="@drawable/pic_default"
-            android:contentDescription="2dp"     android:layout_alignBottom="@+id/localpic_btn"
-            android:layout_toRightOf="@+id/localpic_btn"
-            android:layout_marginLeft="60dp"/>
-    <Button
-            android:layout_width="200dp"         android:layout_height="wrap_content"
-            android:text="获取网络图片"            android:id="@+id/loadpic_btn"
-            android:layout_alignParentTop="true" android:layout_alignParentLeft="true"/>
-    <Button
-            android:layout_width="200dp"          android:layout_height="wrap_content"
-            android:text="获取本地的资源图片"       android:id="@+id/localpic_btn"
-            android:layout_below="@+id/image_net" android:layout_alignParentLeft="true"
-            android:layout_marginTop="39dp"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/buttom_area"
-        android:layout_below="@+id/localpic_btn"
-        android:layout_alignParentStart="true">
+        android:layout_height="200dp"
+        android:id="@+id/area_img_id"
+        android:background="@color/suncolor">
 
-        <Button
+        <ImageView
+            android:id="@+id/image_local"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="下载APP"
-            android:id="@+id/btn_down_app"
+            android:background="@drawable/pic_default"
+            android:layout_centerHorizontal="true" />
+
+        <Button
+            android:id="@+id/loadpic_btn"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector_radius_buttons"
+            android:text="获取网络图片"
             android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true" />
+
+        <Button
+            android:id="@+id/localpic_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="49dp"/>
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="100dp"
+            android:background="@drawable/selector_radius_buttons"
+            android:text="获取本地图片" />
+        <ImageView
+            android:id="@+id/image_net"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/pic_default"
+            android:layout_below="@+id/image_local"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/buttom_area"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/area_img_id"
+        android:layout_marginTop="10dp"
+        android:background="@color/qianpurple">
+
+        <Button
+            android:id="@+id/btn_down_app"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector_radius_buttons"
+            android:text="下载APP"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true" />
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="120dp"
+            android:layout_marginTop="5dp"
+            android:layout_alignBottom="@+id/btn_down_app" />
+
+
     </RelativeLayout>
 </RelativeLayout>

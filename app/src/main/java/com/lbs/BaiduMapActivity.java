@@ -17,7 +17,7 @@ import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.*;
 import com.baidu.mapapi.model.LatLng;
-import com.kingz.uiusingListViews.R;
+import com.kingz.customDemo.R;
 import com.utils.NetTools;
 
 /**

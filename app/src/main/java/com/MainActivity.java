@@ -9,18 +9,17 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import com.AsuyncTaskJsonTest.AsynctaskBitmapMainActivity;
-import com.kingz.uiusingListViews.CustomWidgetsActivity;
-import com.kingz.uiusingListViews.FourComponentListView;
-import com.kingz.uiusingListViews.LayoutActivityListView;
-import com.kingz.uiusingListViews.R;
+import com.kingz.pages.CustomViewsPage;
+import com.kingz.pages.FourComponentPage;
+import com.kingz.pages.LayoutPage;
+import com.kingz.customDemo.R;
 import com.lbs.BaiduMapActivity;
 import com.iflytek.synthesizer.VoiceActivity;
-import com.kingz.controls.BasicControlsActivity;
+import com.nativeWidgets.BasicControlsActivity;
 import com.kingz.filemanager.FileManagerActivity;
-import com.kingz.uiusingActivity.DownloadTestActivity;
-import com.kingz.uiusingActivity.FileAndPicTestACT;
-import com.kingz.uiusingWidgets.SeekBarActivity;
-import com.kingz.uiusingWidgets.UsingProgressBarAct;
+import com.kingz.pages.DownloadAPPActivity;
+import com.kingz.pages.FileAndPicTestACT;
+import com.nativeWidgets.NativeProgressBar;
 import com.mplayer.KingZMediaPlayer;
 
 /**
@@ -54,15 +53,14 @@ public class MainActivity extends Activity implements OnItemClickListener{
 	}
 
 	private void addData() {
-		mAdapter.add(new ListBillData(this,"SrcLayoutTest",new Intent(this,LayoutActivityListView.class)));
+		mAdapter.add(new ListBillData(this,"SrcLayoutTest",new Intent(this,LayoutPage.class)));
 		mAdapter.add(new ListBillData(this,"BasicControls",new Intent(this,BasicControlsActivity.class)));
 		//mAdapter.add(new ListBillData(this,"SeniorControls",new Intent(this,SeniorControls.class)));
-		mAdapter.add(new ListBillData(this,"ProgressBar",new Intent(this,UsingProgressBarAct.class)));
-		mAdapter.add(new ListBillData(this,"SeekBar",new Intent(this,SeekBarActivity.class)));
-		mAdapter.add(new ListBillData(this,"Custom controls",new Intent(this,CustomWidgetsActivity.class)));
-		mAdapter.add(new ListBillData(this,"Four major components",new Intent(this,FourComponentListView.class)));
+		mAdapter.add(new ListBillData(this,"ProgressBar",new Intent(this,NativeProgressBar.class)));
+		mAdapter.add(new ListBillData(this,"Custom controls",new Intent(this,CustomViewsPage.class)));
+		mAdapter.add(new ListBillData(this,"Four major components",new Intent(this,FourComponentPage.class)));
 		mAdapter.add(new ListBillData(this,"File Test",new Intent(this,FileAndPicTestACT.class)));
-		mAdapter.add(new ListBillData(this,"Bitmap Test",new Intent(this,DownloadTestActivity.class)));
+		mAdapter.add(new ListBillData(this,"DownloadFile",new Intent(this,DownloadAPPActivity.class)));
 		mAdapter.add(new ListBillData(this,"JsonParseAndPicLru ",new Intent(this,AsynctaskBitmapMainActivity.class)));
 		mAdapter.add(new ListBillData(this,"BaiduMapTest",new Intent(this,BaiduMapActivity.class)));
 		mAdapter.add(new ListBillData(this,"Media",new Intent(this,KingZMediaPlayer.class)));

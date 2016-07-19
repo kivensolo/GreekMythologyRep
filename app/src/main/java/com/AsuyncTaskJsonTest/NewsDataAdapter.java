@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
-import com.kingz.uiusingListViews.R;
+import com.kingz.customDemo.R;
 
 import java.util.List;
 

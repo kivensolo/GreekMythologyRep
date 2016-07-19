@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- normal样式 -->
     <item android:state_pressed="false">
         <shape
             android:shape="rectangle">
-            <solid android:color="@color/lightseagreen" />  <!-- 填充的颜色 -->
-            <corners android:radius="6dip" />               <!-- 设置弧形的半径 -->
+            <solid android:color="@color/skygreen" />       <!-- 填充的颜色 -->
+            <corners android:radius="4dip" />               <!-- 设置弧形的半径 -->
             <!-- padding：Button里面的文字与Button边界的间隔 -->
             <padding
                android:left="10dp"
@@ -15,17 +16,19 @@
         </shape>
     </item>
 
+    <!-- 被按压样式 -->
      <item android:state_pressed="true">
         <shape
             android:shape="rectangle">
-            <solid android:color="#ff00ff" /> <!-- 填充的颜色 -->
+            <solid android:color="@color/qianpurple" /> <!-- 填充的颜色 -->
             <corners android:radius="6dip" /> <!-- 设置弧形的半径 -->
         </shape>
     </item>
 
+    <!-- 上焦点样式 -->
     <item android:state_focused="true">
         <shape android:shape="rectangle">
-            <solid android:color="@color/mediumseagreen"/>
+            <solid android:color="@color/fruitpurple"/>
             <corners android:radius="6dip" />
         </shape>
     </item>

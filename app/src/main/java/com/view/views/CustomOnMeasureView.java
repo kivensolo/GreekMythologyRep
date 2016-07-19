@@ -11,7 +11,7 @@ import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-import com.kingz.uiusingListViews.R;
+import com.kingz.customDemo.R;
 
 import java.util.HashSet;
 import java.util.Random;

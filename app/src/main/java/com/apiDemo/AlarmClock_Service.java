@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.app;
+package com.apiDemo;
 
 // Need the following import to get access to the app resources, since this
 // class is in a sub-package.
@@ -29,7 +29,7 @@ import android.os.IBinder;
 import android.os.Parcel;
 import android.os.RemoteException;
 import android.widget.Toast;
-import com.kingz.uiusingListViews.R;
+import com.kingz.customDemo.R;
 
 /**
  * This is an example of implementing an application service that will run in

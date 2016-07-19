@@ -1,4 +1,4 @@
-package com.kingz.controls;
+package com.nativeWidgets;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -8,10 +8,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.TextView;
-import com.kingz.uiusingListViews.R;
+import com.kingz.customDemo.R;
 
 /**
  * Copyright(C) 2016, 北京视达科科技有限公司

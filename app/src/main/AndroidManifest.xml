@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.kingz.uiusingListViews"
+    package="com.kingz.customDemo"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -58,11 +58,11 @@
         </activity>
 
         <!-- 原生SeekBar -->
-        <activity android:name="com.kingz.uiusingWidgets.SeekBarActivity"
+        <activity android:name="com.nativeWidgets.NativeSeekBar"
                   android:theme="@android:style/Theme.Black.NoTitleBar" />
 
         <!-- 自定义 SeekBar -->
-        <activity android:name="com.kingz.uiusingWidgets.UsingCustomSeekBar"
+        <activity android:name="com.kingz.Widgets.UsingCustomSeekBar"
                  android:theme="@android:style/Theme.Black.NoTitleBar"/>
         <!-- 绘画的方式画seekBar -->
         <activity
@@ -70,15 +70,12 @@
             android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!-- progressBar -->
-        <activity android:name="com.kingz.uiusingWidgets.UsingProgressBarAct"
-                android:theme="@android:style/Theme.Black.NoTitleBar"/>
-
-        <activity android:name="com.kingz.uiusingWidgets.ToastTestActivity"
+        <activity android:name="com.nativeWidgets.NativeProgressBar"
                 android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
 
         <!-- 布局测试的ListView -->
-        <activity android:name="com.kingz.uiusingListViews.LayoutActivityListView"
+        <activity android:name="com.kingz.pages.LayoutPage"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <activity android:name="com.kingz.uiusingLayout.LinearLayoutTest_Act"
@@ -92,20 +89,20 @@
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!--常用控件集合-->
-        <activity android:name="com.kingz.controls.BasicControlsActivity"
+        <activity android:name="com.nativeWidgets.BasicControlsActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
-        <activity android:name="com.kingz.controls.MyGridView"
+        <activity android:name="com.nativeWidgets.AppsGridView"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!-- 自定义控件的ListView-->
-        <activity android:name=".CustomWidgetsActivity"
+        <activity android:name="com.kingz.pages.CustomViewsPage"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
-        <activity android:name="com.kingz.uiusingActivity.LableTextView_Act"
+        <activity android:name="com.kingz.pages.LableTextViewPage"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!-- 四大组件的listview -->
-        <activity android:name="com.kingz.uiusingListViews.FourComponentListView"
+        <activity android:name="com.kingz.pages.FourComponentPage"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <activity android:name="com.kingz.four_components.ServiceComponentsACT"
@@ -115,15 +112,15 @@
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!--文件及bitmap操作的activity-->
-        <activity android:name="com.kingz.uiusingActivity.FileAndPicTestACT"
+        <activity android:name="com.kingz.pages.FileAndPicTestACT"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
-        <activity android:name="com.kingz.datasave.DataByFileActivity"
+        <activity android:name="com.kingz.pages.SaveDataByFilePage"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
 
         <!--BitmapDemo页面-->
-        <activity android:name="com.kingz.uiusingActivity.DownloadTestActivity"
+        <activity android:name="com.kingz.pages.DownloadAPPActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
          <!--图片缓存测试页面-->
@@ -148,14 +145,14 @@
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!--webAppActivity-->
-        <activity android:name="com.kingz.uiusingWidgets.KingWebViewActivity"
+        <activity android:name="com.nativeWidgets.WebViewUseJs"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!-- 自定义显示的listView -->
         <activity android:name="com.view.listview.CustomListViewActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
         <!-- 可左右滑动的ListView -->
-        <activity android:name="com.view.listview.SliderListViewActivity"
+        <activity android:name="com.view.scroll.SliderListViewActivity"
                   android:screenOrientation="portrait"/>
 
          <!-- WZViewPagerActicity -->
@@ -177,7 +174,7 @@
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
   	    <!-- Span页面 -->
-        <activity android:name="com.kingz.controls.SpansActivity"
+        <activity android:name="com.nativeWidgets.SpansDemo"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
   	    <!-- 讯飞语音页面 -->
@@ -195,7 +192,7 @@
 
         <!-- ************ API Demos 页面 ************ -->
 
-        <activity android:name="com.app.AlarmServiceActivity"
+        <activity android:name="com.apiDemo.AlarmServiceActivity"
                   android:theme="@android:style/Theme.Black"
                   android:screenOrientation="portrait"/>
 
@@ -203,7 +200,7 @@
 
 
         <!--服务 exported:外部是否可访问  process:为服务设置不同进程-->
-        <service android:name="com.kingz.four_components.ComponentsOfService"
+        <service android:name="com.kingz.four_components.MyComponentsOfService"
                  android:enabled="true"
                  android:exported="true"/>
 

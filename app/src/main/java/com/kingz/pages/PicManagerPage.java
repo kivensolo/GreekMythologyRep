@@ -1,4 +1,4 @@
-package com.kingz.uiusingListViews;
+package com.kingz.pages;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
@@ -10,11 +10,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.ListBillData;
+import com.kingz.customDemo.R;
+import com.kingz.pages.LayoutPage;
 
 /**
  * Created by KingZ on 2015/11/1.
  */
-public class PicManagerList extends Activity implements AdapterView.OnItemClickListener {
+public class PicManagerPage extends Activity implements AdapterView.OnItemClickListener {
 
 
     private ListView listView;
@@ -35,7 +37,7 @@ public class PicManagerList extends Activity implements AdapterView.OnItemClickL
     }
 
     private void addData() {
-		mAdapter.add(new ListBillData(this,"图片管理",new Intent(this,LayoutActivityListView.class)));
+		mAdapter.add(new ListBillData(this,"图片管理",new Intent(this,LayoutPage.class)));
 	}
 
     @Override

@@ -1,14 +1,14 @@
-package com.kingz.uiusingActivity;
+package com.kingz.pages;
 
 import android.app.Activity;
 import android.os.Bundle;
-import com.kingz.uiusingListViews.R;
+import com.kingz.customDemo.R;
 
 /**
  * @author: KingZ
  * @Description:自定义TextView
  */
-public class LableTextView_Act extends Activity{
+public class LableTextViewPage extends Activity{
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

@@ -37,7 +37,7 @@ public class HorizontalProgressBarView extends View {
      */
     private int progressLeft = ScreenTools.Operation(343);
     private int progressWidth = ScreenTools.Operation(600);
-    private int progressTop = ScreenTools.Operation(600);
+    private int progressTop = ScreenTools.Operation(450);
     private int progressHeight = ScreenTools.Operation(7);
     private int innerRectWidth = ScreenTools.Operation(0);
     private int totalWidth;

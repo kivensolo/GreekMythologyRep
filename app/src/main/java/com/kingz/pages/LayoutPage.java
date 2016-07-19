@@ -1,4 +1,4 @@
-package com.kingz.uiusingListViews;
+package com.kingz.pages;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
@@ -11,11 +11,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.ListBillData;
+import com.kingz.customDemo.R;
 import com.kingz.uiusingLayout.FragmentPageFromCode;
 import com.kingz.uiusingLayout.FragmentPageFromXml;
 import com.kingz.uiusingLayout.LinearLayoutTest_Act;
 
-public class LayoutActivityListView extends Activity implements OnItemClickListener{
+public class LayoutPage extends Activity implements OnItemClickListener{
 
 	private ListView listView;
 	private ArrayAdapter<ListBillData> mAdapter;
