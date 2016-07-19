@@ -6,13 +6,13 @@
     android:clipToPadding="true"
     tools:context="com.MainActivity">
 
-    <com.customview.slider.wzviewpager.wzcodepagger.SCViewPager
+    <com.view.slider.wzviewpager.wzcodepagger.SCViewPager
         android:id="@+id/viewpager_main_activity"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </com.customview.slider.wzviewpager.wzcodepagger.SCViewPager>
+    </com.view.slider.wzviewpager.wzcodepagger.SCViewPager>
 
-    <com.customview.slider.wzviewpager.wzcodepagger.DotsView
+    <com.view.slider.wzviewpager.wzcodepagger.DotsView
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -9,22 +9,26 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.App;
 import com.kingz.uiusingListViews.R;
 import com.utils.FileDownloader;
 import com.utils.NetTools;
+import com.utils.ScreenTools;
 import com.utils.ToastTools;
+import com.view.progress.HorizontalProgressBarView;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 
 /**
  * Created by KingZ on 2015/11/3.
@@ -33,6 +37,7 @@ import java.net.URLConnection;
 public class DownloadTestActivity extends BaseActivity implements View.OnClickListener {
 
     public static final String TAG = "DownloadTestActivity";
+    public static final int TIMEOUT_MILLIS = 10 * 1000;
     private Button btn_NetPic, btn_LocalPic, btn_downLoad;
     private ImageView imgNetPic, imgResPic;
     private FileDownloader _downloader;
@@ -41,10 +46,12 @@ public class DownloadTestActivity extends BaseActivity implements View.OnClickLi
      * APP下载路径
      */
     private String appUrlPath = "http://192.168.90.115/pub_apk/update-test/V4.6.0_XJCBC_IPTV_QUANZHI_Beta_MG_22773_181.apk";
-    private URLConnection urlConnection;
+    private HttpURLConnection urlConnection;
     private InputStream downloadIs = null;
     private OutputStream downloadOs = null;
     private File downloadFile;
+    private HorizontalProgressBarView mProgressBarView;
+    private float percent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,17 +77,44 @@ public class DownloadTestActivity extends BaseActivity implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_down_app:
-                ToastTools.getInstance().showToast(context,"开始下载");
-                new Thread(new Runnable() {
+                ToastTools.getInstance().showToast(context, "开始下载");
+                initProgressView();
+                runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         startDownLoadFile(appUrlPath);
                     }
-                }).start();
+                });
                 break;
             default:
                 break;
         }
+    }
+
+    /**
+     *
+     */
+    private void initProgressView() {
+        mProgressBarView = new HorizontalProgressBarView(context);
+        mProgressBarView.setTotalWidth(ScreenTools.Operation(600));
+        mProgressBarView.setInnerPaintColor(0xFF9dbaf2);
+        mProgressBarView.setOuterPaintColor(0x19ffffff);
+        mProgressBarView.setProgressCompleteListener(new HorizontalProgressBarView.ProgressCompleteListener() {
+            @Override
+            public void onComplete() {
+                ToastTools.getInstance().showMgtvWaringToast(context, "Done!!");
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                mProgressBarView.setVisibility(View.INVISIBLE);
+            }
+        });
+        RelativeLayout.LayoutParams lps = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT);
+        addContentView(mProgressBarView, lps);
+        mProgressBarView.beginDraw();
     }
 
     /**
@@ -90,41 +124,58 @@ public class DownloadTestActivity extends BaseActivity implements View.OnClickLi
         url = url.trim();
         if (TextUtils.isEmpty(url)) {
             Log.e(TAG, "url is empty!");
-            ToastTools.getInstance().showToast(context,"url is empty!");
+            ToastTools.getInstance().showToast(context, "url is empty!");
             return;
         }
         if (!NetTools.isNetworkConnected(context)) {
             Log.e(TAG, "网络未连接,无法进一步下载");
             return;
         }
-        //Java方式连接网络
-        connectByJava(url);
-        //确定文件保存路径
-        downloadFile = createFileDir();
+//        Java方式连接网络
+//        connectByJava(url);
 
+        downloadFile = createFileDir(); //确定文件保存路径
         _downloader = new FileDownloader();
         _downloader.start(url, downloadFile, true, new Handler(new Handler.Callback() {
             @Override
             public boolean handleMessage(Message msg) {
-//                onHttpMessage(msg);
-                Log.i(TAG, "msg.msg = " + msg.what);
+                Log.i(TAG, "msg.msg = " + msg.what +"; obj = " + msg.obj);
+                switch (msg.what){
+                    case 1:
+
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        percent = (float) msg.obj;
+                        if(percent >= 0.9){
+                            percent = (float) 1.0;
+                        }
+                        mProgressBarView.setWidth((int) (percent * 600));
+                        break;
+                    case 4:
+                        break;
+                    case 5:
+                        break;
+                    default:
+                        break;
+                }
                 return false;
             }
         }));
-
     }
 
     @NonNull
     private File createFileDir() {
-        String filePath = Environment.getExternalStorageDirectory()+ "/TempFile";
+        String filePath = Environment.getExternalStorageDirectory() + "/TempFile";
         File path = new File(filePath);
-        if(!path.exists()){
+        if (!path.exists()) {
             path.mkdir();
         }
         String apkName = "132131.apk";
         String apkSavePath = filePath + "/" + apkName;
         File downloadFile = new File(apkSavePath);
-        if(!downloadFile.exists()){
+        if (!downloadFile.exists()) {
             try {
                 downloadFile.createNewFile();
             } catch (IOException e) {
@@ -134,19 +185,24 @@ public class DownloadTestActivity extends BaseActivity implements View.OnClickLi
         return downloadFile;
     }
 
-    private void connectByJava(String urlPath) {
+    private InputStream connectByJava(String urlPath) {
         try {
             URL url = new URL(urlPath);
-            urlConnection = url.openConnection();
-            if(urlConnection.getReadTimeout() >= 5){
-                Log.i(TAG,"网络连接超时  不继续下载");
-                return;
+            if (url != null) {
+                urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setConnectTimeout(TIMEOUT_MILLIS);
+                urlConnection.setDoInput(true);
+                urlConnection.setRequestMethod("GET");
+                if (urlConnection.getResponseCode() == 200) {
+                    downloadIs = urlConnection.getInputStream();
+                }
             }
-            downloadIs = urlConnection.getInputStream();
+            return downloadIs;
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return null;
     }
 }

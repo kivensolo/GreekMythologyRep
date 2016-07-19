@@ -27,7 +27,7 @@
         android:background="@color/chartreuse2"
         android:orientation="vertical">
 
-        <com.customview.views.CircleProgressView
+        <com.view.views.CircleProgressView
             android:id="@+id/view_circle_progress"
             android:layout_width="200dp"
             android:layout_height="200dp"
@@ -49,7 +49,7 @@
 
     </LinearLayout>
 
-    <com.customview.porterduffmode.DuffTestView
+    <com.view.porterduffmode.DuffTestView
         android:layout_width="match_parent"
         android:layout_height="108dp"/>
 
@@ -59,7 +59,7 @@
         android:background="@color/darksalmon"
         android:orientation="vertical">
 
-        <com.customview.views.ColorTrackView
+        <com.view.views.ColorTrackView
             android:id="@+id/id_changeTextColorView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

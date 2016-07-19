@@ -131,7 +131,7 @@
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
          <!--图片缓存测试页面-->
-        <activity android:name="com.customview.NetworkSpeed.NetworkSpeedActivity"
+        <activity android:name="com.view.NetworkSpeed.NetworkSpeedActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"
                     android:screenOrientation="landscape"/>
 
@@ -140,11 +140,11 @@
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!-- 自定义View -->
-        <activity android:name="com.customview.pages.FingerBallActivity"
+        <activity android:name="com.view.pages.FingerBallActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!-- CircleViewActivity -->
-        <activity android:name="com.customview.pages.CircleViewActivity"
+        <activity android:name="com.view.pages.CircleViewActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!--webAppActivity-->
@@ -152,22 +152,22 @@
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!-- 自定义显示的listView -->
-        <activity android:name="com.customview.listview.CustomListViewActivity"
+        <activity android:name="com.view.listview.CustomListViewActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
         <!-- 可左右滑动的ListView -->
-        <activity android:name="com.customview.listview.SliderListViewActivity"
+        <activity android:name="com.view.listview.SliderListViewActivity"
                   android:screenOrientation="portrait"/>
 
          <!-- WZViewPagerActicity -->
-        <activity android:name="com.customview.slider.wzviewpager.WZViewPagerActicity"
+        <activity android:name="com.view.slider.wzviewpager.WZViewPagerActicity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
          <!-- WaveLoadingActivity -->
-        <activity android:name="com.customview.pages.WaveLoadingActivity"
+        <activity android:name="com.view.pages.WaveLoadingActivity"
                   android:screenOrientation="portrait"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
          <!-- OriginViewPagerActivity -->
-        <activity android:name="com.customview.slider.wzviewpager.OriginViewPagerActivity"
+        <activity android:name="com.view.slider.wzviewpager.OriginViewPagerActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
 

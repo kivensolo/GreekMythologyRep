@@ -2,6 +2,7 @@ package com.utils;
 
 import android.net.http.AndroidHttpClient;
 import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -18,7 +19,6 @@ import java.util.regex.Pattern;
 
 /**
  * 文件下载器
- *
  *
  * |---RandomAccessFile介绍：
  *      java的RandomAccessFile提供对文件的读写功能，与普通的输入输出流不一样的
@@ -137,10 +137,10 @@ public class FileDownloader implements Runnable {
 	}
 	// -----------------------------
 	public static final int MSG_STARTING = 1;
-	public static final int MSG_ERROR = 2;
-	public static final int MSG_FINISHED = 3;
-	public static final int MSG_RECIVING = 4;
-	public static final int MSG_PROGRESSING = 5;
+	public static final int MSG_RECIVING = 2;
+	public static final int MSG_PROGRESSING = 3;
+	public static final int MSG_ERROR = 4;
+	public static final int MSG_FINISHED = 5;
 
 	// ---------------状态机--------------
 	static final int ERR_NO_ERROR = 0x00;   					//正常
@@ -154,6 +154,15 @@ public class FileDownloader implements Runnable {
 		if (_handler != null) {
 			_handler.removeMessages(msg);
 			_handler.sendEmptyMessage(msg);
+		}
+	}
+	private void sendMessage(int what,Object obj) {
+		if (_handler != null) {
+			Message msg = Message.obtain();
+			msg.what = what;
+			msg.obj = obj;
+			_handler.removeMessages(what);
+			_handler.sendMessage(msg);
 		}
 	}
 
@@ -259,8 +268,9 @@ public class FileDownloader implements Runnable {
 				_file_write_pos = raFile.getFilePointer();
 				if(getProgress()-percentage>0.10f){
 					percentage=getProgress();
-					this.sendMessage(MSG_PROGRESSING);
+					this.sendMessage(MSG_PROGRESSING,percentage);
 				}
+
 			}
 			_file_write_pos = raFile.getFilePointer();
 			raFile.setLength(_file_write_pos);

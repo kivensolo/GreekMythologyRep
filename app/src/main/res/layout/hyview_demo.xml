@@ -23,7 +23,7 @@
             zhi:titleText="3333"
             zhi:titleSize="40sp" />-->
 
-    <com.customview.views.CustomOnMeasureView
+    <com.view.views.CustomOnMeasureView
             android:layout_width="440dp"
             android:layout_height="330dp"
             android:padding="50dp"
