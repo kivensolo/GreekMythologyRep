@@ -38,7 +38,7 @@
         android:supportsRtl="true"
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
-        android:name="com.app.App">
+        android:name="com.App">
         <!-- supportsRtl 支持从右到左布局,API17以上 -->
 
         <meta-data
@@ -47,7 +47,7 @@
 
         <!-- 主Activity -->
         <activity
-            android:name="com.kingz.uiusingListViews.MainActivity"
+            android:name="com.MainActivity"
             android:theme="@android:style/Theme.Black.NoTitleBar"
             android:label="@string/app_name">
             <intent-filter>
@@ -123,7 +123,7 @@
 
 
         <!--BitmapDemo页面-->
-        <activity android:name="com.kingz.uiusingActivity.BitmapActivity"
+        <activity android:name="com.kingz.uiusingActivity.DownloadTestActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
          <!--图片缓存测试页面-->
@@ -173,7 +173,7 @@
 
 
         <!-- 百度地图View -->
-        <activity android:name="com.baidudemo.BaiduMapActivity"
+        <activity android:name="com.lbs.BaiduMapActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
   	    <!-- Span页面 -->

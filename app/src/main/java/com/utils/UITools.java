@@ -5,7 +5,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.MarginLayoutParams;
 import android.view.ViewParent;
-import com.utils.ui.ScreenTools;
 
 public class UITools {
 	private final static String TAG = "UITools";

@@ -3,7 +3,7 @@ package com.utils;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import com.app.App;
+import com.App;
 
 import java.util.List;
 

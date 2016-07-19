@@ -24,4 +24,21 @@
             android:text="获取本地的资源图片"       android:id="@+id/localpic_btn"
             android:layout_below="@+id/image_net" android:layout_alignParentLeft="true"
             android:layout_marginTop="39dp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/buttom_area"
+        android:layout_below="@+id/localpic_btn"
+        android:layout_alignParentStart="true">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="下载APP"
+            android:id="@+id/btn_down_app"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="49dp"/>
+    </RelativeLayout>
 </RelativeLayout>

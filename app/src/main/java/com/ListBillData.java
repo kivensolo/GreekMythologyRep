@@ -1,4 +1,4 @@
-package com.kingz.uiusingListViews;
+package com;
 
 import android.app.ActivityOptions;
 import android.content.Context;

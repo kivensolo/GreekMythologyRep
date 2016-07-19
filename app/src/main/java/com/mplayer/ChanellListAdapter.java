@@ -3,8 +3,8 @@ package com.mplayer;
 import android.content.Context;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.adapter.CommonAdapter;
-import com.adapter.CommonViewHolder;
+import com.provider.CommonAdapter;
+import com.provider.CommonViewHolder;
 import com.datainfo.ChannelData;
 import com.kingz.uiusingListViews.R;
 

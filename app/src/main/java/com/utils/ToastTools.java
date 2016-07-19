@@ -14,10 +14,10 @@ import com.kingz.uiusingListViews.R;
 /**
  * Created by KingZ.
  * Data: 2016 2016/2/1
- * Discription:  公共工具类
+ * Discription:  Toast工具类
  */
 public class ToastTools {
-    private static ToastTools mToastTools = null;
+    private static ToastTools mToastTools = null; //单例
     private Toast mToast;
 
     public ToastTools() {

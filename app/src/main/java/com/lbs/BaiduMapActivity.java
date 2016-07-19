@@ -1,4 +1,4 @@
-package com.baidudemo;
+package com.lbs;
 
 import android.app.Activity;
 import android.content.Context;
@@ -18,7 +18,7 @@ import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.*;
 import com.baidu.mapapi.model.LatLng;
 import com.kingz.uiusingListViews.R;
-import com.utils.net.NetTools;
+import com.utils.NetTools;
 
 /**
  * Created by KingZ on 2016/1/7.

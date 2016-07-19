@@ -6,7 +6,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.*;
 import android.widget.Scroller;
-import com.app.App;
+import com.App;
 
 /**
  * Copyright(C) 2016, 北京视达科科技有限公司

@@ -22,8 +22,8 @@ import java.io.File;
 public class FileAndPicTestACT extends Activity implements View.OnClickListener{
 
     private static final String TAG = FileAndPicTestACT.class.getSimpleName();
-    private boolean isSdcardExist; //是否有SD卡挂载
-    private String sdPath;      //SD卡路径
+    private boolean isSdcardExist;          //是否有SD卡挂载
+    private String sdPath;                  //SD卡路径
     private EditText infoEditText;
 
     @Override

@@ -4,7 +4,7 @@
     android:layout_height="fill_parent"
     android:clipChildren="true"
     android:clipToPadding="true"
-    tools:context=".MainActivity">
+    tools:context="com.MainActivity">
 
     <com.customview.slider.wzviewpager.wzcodepagger.SCViewPager
         android:id="@+id/viewpager_main_activity"

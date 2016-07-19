@@ -1,4 +1,4 @@
-package com.app;
+package com;
 
 import android.app.Application;
 import android.content.Context;
@@ -9,9 +9,8 @@ import android.util.Log;
  * All rights reserved.
  * author: King.Z
  * date:  2016/5/10 23:25
- * description:
  */
-// 请在AndroidManifest.xml中application标签下android:name中指定该类
+//在AndroidManifest.xml中application标签下android:name中指定该类
 public class App extends Application {
 
     public final static String TAG = "Application";
@@ -39,7 +38,6 @@ public class App extends Application {
 
         application = this;
         mContext = this;
-        Log.i(TAG, "app onCreate this:" + this);
         initAPPScreenParms();
     }
 

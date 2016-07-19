@@ -1,4 +1,4 @@
-package com.kingz.uiusingListViews;
+package com;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,11 +9,15 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import com.AsuyncTaskJsonTest.AsynctaskBitmapMainActivity;
-import com.baidudemo.BaiduMapActivity;
+import com.kingz.uiusingListViews.CustomWidgetsActivity;
+import com.kingz.uiusingListViews.FourComponentListView;
+import com.kingz.uiusingListViews.LayoutActivityListView;
+import com.kingz.uiusingListViews.R;
+import com.lbs.BaiduMapActivity;
 import com.iflytek.synthesizer.VoiceActivity;
 import com.kingz.controls.BasicControlsActivity;
 import com.kingz.filemanager.FileManagerActivity;
-import com.kingz.uiusingActivity.BitmapActivity;
+import com.kingz.uiusingActivity.DownloadTestActivity;
 import com.kingz.uiusingActivity.FileAndPicTestACT;
 import com.kingz.uiusingWidgets.SeekBarActivity;
 import com.kingz.uiusingWidgets.UsingProgressBarAct;
@@ -58,7 +62,7 @@ public class MainActivity extends Activity implements OnItemClickListener{
 		mAdapter.add(new ListBillData(this,"Custom controls",new Intent(this,CustomWidgetsActivity.class)));
 		mAdapter.add(new ListBillData(this,"Four major components",new Intent(this,FourComponentListView.class)));
 		mAdapter.add(new ListBillData(this,"File Test",new Intent(this,FileAndPicTestACT.class)));
-		mAdapter.add(new ListBillData(this,"Bitmap Test",new Intent(this,BitmapActivity.class)));
+		mAdapter.add(new ListBillData(this,"Bitmap Test",new Intent(this,DownloadTestActivity.class)));
 		mAdapter.add(new ListBillData(this,"JsonParseAndPicLru ",new Intent(this,AsynctaskBitmapMainActivity.class)));
 		mAdapter.add(new ListBillData(this,"BaiduMapTest",new Intent(this,BaiduMapActivity.class)));
 		mAdapter.add(new ListBillData(this,"Media",new Intent(this,KingZMediaPlayer.class)));

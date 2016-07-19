@@ -1,4 +1,4 @@
-package com.utils.ui;
+package com.utils;
 
 /**
  * Created by KingZ on 2016/1/5.

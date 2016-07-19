@@ -1,4 +1,4 @@
-package com.utils.bitmap;
+package com.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;

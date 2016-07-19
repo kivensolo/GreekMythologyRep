@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.kingz.uiusingListViews.MainActivity" >
+    tools:context="com.MainActivity" >
 
     <!-- 百度地图的三个选项 -->
     <item

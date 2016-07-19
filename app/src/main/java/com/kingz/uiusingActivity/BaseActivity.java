@@ -31,14 +31,13 @@ public class BaseActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        findID();
     }
 
     /**
      * 获取资源
      */
     protected void findID() {
-
     }
 
     ///**

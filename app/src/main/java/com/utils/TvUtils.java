@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.utils.ui;
+package com.utils;
 
 import android.app.Activity;
 import android.content.Context;

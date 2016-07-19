@@ -8,7 +8,7 @@ import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import com.kingz.uiusingListViews.R;
-import com.utils.ui.ScreenTools;
+import com.utils.ScreenTools;
 
 /**
  * Created by KingZ on 2016/1/5.

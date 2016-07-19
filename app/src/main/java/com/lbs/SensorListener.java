@@ -1,4 +1,4 @@
-package com.baidudemo;
+package com.lbs;
 
 import android.content.Context;
 import android.hardware.Sensor;
