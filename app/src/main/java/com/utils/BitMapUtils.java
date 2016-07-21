@@ -14,29 +14,29 @@ import android.graphics.drawable.Drawable;
  * description: BitMap工具类
  */
 public class BitMapUtils {
-
-
     /**
 	 * 旋转图片
 	 *
-	 * @param angle
-	 * @param bitmap
-	 * @return Bitmap
+	 * @param angle     旋转角度
+	 * @param bitmap	目标图片
+	 * @return Bitmap	旋转后的图片
 	 */
 	public static Bitmap rotateImage(int angle, Bitmap bitmap) {
 		// 图片旋转矩阵
 		Matrix matrix = new Matrix();
 		matrix.postRotate(angle);
 		// 得到旋转后的图片
-		Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0,
-				bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+		Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0,bitmap.getWidth(), bitmap.getHeight(), matrix, true);
 		return resizedBitmap;
 	}
 
 	/**
-     * drawable转换为Bitmap
+	 * drawable转换为Bitmap
+	 * @param drawable  目标Drawable
+	 * @param width		要求宽度
+	 * @param height	要求的高度
+     * @return  转换后的BitMap
      */
-
     public static Bitmap drawable2Bitmap(Drawable drawable, int width, int height) {
         Bitmap bitmap = Bitmap.createBitmap(width,height,
 				drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888: Bitmap.Config.RGB_565);
