@@ -1,7 +1,11 @@
 package com.utils;
 
 import android.text.TextUtils;
+import android.util.Base64;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -11,44 +15,50 @@ import java.security.NoSuchAlgorithmException;
  */
 public class FileUtils {
 
+    private FileUtils() {
+        /* cannot be instantiated */
+        throw new UnsupportedOperationException("cannot be instantiated");
+    }
+
     /**
-	 * 转换首字母为大写
-	 * @param str
-	 * @return
-	 */
-	public final static String conversionFirstLetter(String str) {
-		if (!TextUtils.isEmpty(str)) {
-			return str.substring(0, 1).toUpperCase() + str.substring(1);
-		}
-		return str;
-	}
+     * 转换首字母为大写
+     *
+     * @param str
+     * @return
+     */
+    public final static String conversionFirstLetter(String str) {
+        if (!TextUtils.isEmpty(str)) {
+            return str.substring(0, 1).toUpperCase() + str.substring(1);
+        }
+        return str;
+    }
 
-    	private static char hexDigits[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
+    private static char hexDigits[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 
-	//Md5 加密法一
-	public final synchronized static String MD5(String src) {
-		try {
-			byte[] btInput = src.getBytes();
-			MessageDigest mdInst = MessageDigest.getInstance("MD5");  // 获得MD5摘要算法的 MessageDigest 对象
-			mdInst.update(btInput);									  // 使用指定的字节更新摘要
-			byte[] md = mdInst.digest();  							  // 获得密文
-			return bytes2Hex(md);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
+    //Md5 加密法一
+    public final synchronized static String MD5(String src) {
+        try {
+            byte[] btInput = src.getBytes();
+            MessageDigest mdInst = MessageDigest.getInstance("MD5");  // 获得MD5摘要算法的 MessageDigest 对象
+            mdInst.update(btInput);                                      // 使用指定的字节更新摘要
+            byte[] md = mdInst.digest();                              // 获得密文
+            return bytes2Hex(md);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
-	//Md5 加密法二
-	 private static void createMD5(String szSrc) throws NoSuchAlgorithmException {
+    //Md5 加密法二
+    private static void createMD5(String szSrc) throws NoSuchAlgorithmException {
         System.out.println("明文:" + szSrc);
         MessageDigest md = MessageDigest.getInstance("md5");
         byte[] md5 = md.digest(szSrc.getBytes());
         System.out.println("md5:" + byte2hex(md5));
     }
 
-	//转换成十六进制字符串  法一
-	private static String bytes2Hex(byte[] bts) {
+    //转换成十六进制字符串  法一
+    private static String bytes2Hex(byte[] bts) {
         String des = "";
         String tmp = null;
 
@@ -62,41 +72,57 @@ public class FileUtils {
         return des;
     }
 
-	//转换成十六进制字符串  法二
+    //转换成十六进制字符串  法二
     public static String byte2hex(byte[] b) {
         String stmp = "";
 
         for (int n = 0; n < b.length; n++) {
-            stmp += String.format("%02X",b[n]);
+            stmp += String.format("%02X", b[n]);
         }
         return stmp.toLowerCase();
     }
 
 
-	/**
-	 * HexStr ————> Byte[]
-	 * @param hexstr
-	 * @return
+    /**
+     * HexStr ————> Byte[]
+     *
+     * @param hexstr
+     * @return
      */
-	public static byte[] hexString2Bytes(String hexstr) {
-		byte[] b = new byte[hexstr.length() / 2];
-		int j = 0;
-		for (int i = 0; i < b.length; i++) {
-			char c0 = hexstr.charAt(j++);
-			char c1 = hexstr.charAt(j++);
-			b[i] = (byte) ((parse(c0) << 4) | parse(c1));
-		}
-		return b;
-	}
-	private static int parse(char c) {
-		if (c >= 'a')
-			return (c - 'a' + 10) & 0x0f;
-		if (c >= 'A')
-			return (c - 'A' + 10) & 0x0f;
-		return (c - '0') & 0x0f;
-	}
+    public static byte[] hexString2Bytes(String hexstr) {
+        byte[] b = new byte[hexstr.length() / 2];
+        int j = 0;
+        for (int i = 0; i < b.length; i++) {
+            char c0 = hexstr.charAt(j++);
+            char c1 = hexstr.charAt(j++);
+            b[i] = (byte) ((parse(c0) << 4) | parse(c1));
+        }
+        return b;
+    }
+
+    private static int parse(char c) {
+        if (c >= 'a')
+            return (c - 'a' + 10) & 0x0f;
+        if (c >= 'A')
+            return (c - 'A' + 10) & 0x0f;
+        return (c - '0') & 0x0f;
+    }
 
 
+    // 通过路径生成Base64文件
+    public static String getBase64FromPath(String path) {
+        String base64 = "";
+        try {
+            File file = new File(path);
+            byte[] buffer = new byte[(int) file.length() + 100];
+            @SuppressWarnings("resource")
+            int length = new FileInputStream(file).read(buffer);
+            base64 = Base64.encodeToString(buffer, 0, length, Base64.DEFAULT);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return base64;
+    }
 
 
 }

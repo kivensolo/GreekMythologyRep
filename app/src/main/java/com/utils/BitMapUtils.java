@@ -1,10 +1,14 @@
 package com.utils;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
+import android.util.Base64;
+
+import java.io.ByteArrayOutputStream;
 
 /**
  * Copyright(C) 2015, 北京视达科科技有限公司
@@ -14,6 +18,12 @@ import android.graphics.drawable.Drawable;
  * description: BitMap工具类
  */
 public class BitMapUtils {
+
+	private BitMapUtils() {
+        /* cannot be instantiated */
+        throw new UnsupportedOperationException("cannot be instantiated");
+    }
+
     /**
 	 * 旋转图片
 	 *
@@ -46,5 +56,38 @@ public class BitMapUtils {
         return bitmap;
     }
 
+	// 缩放/裁剪图片
+    public static Bitmap zoomImg(Bitmap bm, int newWidth, int newHeight) {
+        // 获得图片的宽高
+        int width = bm.getWidth();
+        int height = bm.getHeight();
+        // 计算缩放比例
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+        // 取得想要缩放的matrix参数
+        Matrix matrix = new Matrix();
+        matrix.postScale(scaleWidth, scaleHeight);
+        // 得到新的图片
+        Bitmap newbm = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, true);
+        return newbm;
+    }
+
+	//把bitmap转换成base64
+    public static String getBase64FromBitmap(Bitmap bitmap, int bitmapQuality) {
+        ByteArrayOutputStream bStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, bitmapQuality, bStream);
+        byte[] bytes = bStream.toByteArray();
+        return Base64.encodeToString(bytes, Base64.DEFAULT);
+    }
+	 //把base64转换成bitmap
+    public static Bitmap getBitmapFromBase64(String string) {
+        byte[] bitmapArray = null;
+        try {
+            bitmapArray = Base64.decode(string, Base64.DEFAULT);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return BitmapFactory.decodeByteArray(bitmapArray, 0, bitmapArray.length);
+    }
 
 }

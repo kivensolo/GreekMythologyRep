@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
+import com.utils.ZLog;
+
 /**
  * Copyright(C) 2015, 北京视达科科技有限公司
  * All rights reserved.
@@ -35,10 +37,14 @@ public class App extends Application {
         // TODO 其他初始化流程
 //        ApiStoreSDK.init(this, GlobalLogic.BDApiKey);
         super.onCreate();
-
+        initLog();
         application = this;
         mContext = this;
         initAPPScreenParms();
+    }
+
+    private void initLog() {
+        ZLog.isDebug = true;
     }
 
     private void initAPPScreenParms(){

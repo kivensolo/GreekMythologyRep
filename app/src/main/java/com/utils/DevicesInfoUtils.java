@@ -11,12 +11,21 @@ import android.os.Debug;
  */
 public class DevicesInfoUtils {
 
+	private DevicesInfoUtils() {
+        /* cannot be instantiated */
+        throw new UnsupportedOperationException("cannot be instantiated");
+    }
+
     public static long getFreeMemory() {
 		long l1 = Runtime.getRuntime().maxMemory();
 		long l2 = Debug.getNativeHeapAllocatedSize();
 		return l1 - l2;
 	}
 
+	/**
+	 * 获得剩余内存X_M
+	 * @return
+     */
 	public static float getFreeMemoryM() {
 		int free = (int) (getFreeMemory() >> 10);
 		int m = free >> 10;
@@ -38,7 +47,6 @@ public class DevicesInfoUtils {
 
     /**
 	 * 判断是否为4.0以上版本
-	 *
 	 * @return
 	 */
 	public static boolean isVersion4() {

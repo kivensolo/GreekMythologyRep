@@ -10,10 +10,6 @@ import android.widget.LinearLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Samuel on 2015-06-27.
- */
-
 public class DotsView extends LinearLayout {
 
     private List<ImageView> dots;

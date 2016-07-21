@@ -1,4 +1,4 @@
-package com.utils;
+package com.kingz;
 
 import android.net.http.AndroidHttpClient;
 import android.os.Handler;
