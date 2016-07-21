@@ -2,6 +2,7 @@ package com;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Handler;
 import android.util.Log;
 
 import com.utils.ZLog;
@@ -23,6 +24,8 @@ public class App extends Application {
      */
     public static Context mContext;
 
+    private static Handler _appMainHandler;
+
     /**
      * 屏幕适配参数
      */
@@ -32,14 +35,21 @@ public class App extends Application {
 	public static final int DESIGN_HEIGHT = 720;
 	public static float mainScale = 1.0f;
 
+    public static App getAppInstance() {
+		return application;
+	}
+
     @Override
     public void onCreate() {
         // TODO 其他初始化流程
 //        ApiStoreSDK.init(this, GlobalLogic.BDApiKey);
         super.onCreate();
-        initLog();
+
+        _appMainHandler = new Handler(getMainLooper());
         application = this;
         mContext = this;
+
+        initLog();
         initAPPScreenParms();
     }
 
@@ -68,4 +78,12 @@ public class App extends Application {
         return (int) (Original * mainScale + 0.5f);
         //return (int) (SCREEN_HEIGHT * (Original * 1.0f / DESIGN_HEIGHT) + 0.5f);
     }
+
+    public void postToMainLooper(Runnable runnable) {
+		_appMainHandler.post(runnable);
+	}
+
+	public void postDelayToMainLooper(Runnable runnable, long ms) {
+		_appMainHandler.postDelayed(runnable, ms);
+	}
 }

@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.PixelFormat;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Base64;
 
@@ -24,6 +25,7 @@ public class BitMapUtils {
         throw new UnsupportedOperationException("cannot be instantiated");
     }
 
+    /************************************ 图形变换 *****************************************/
     /**
 	 * 旋转图片
 	 *
@@ -48,12 +50,30 @@ public class BitMapUtils {
      * @return  转换后的BitMap
      */
     public static Bitmap drawable2Bitmap(Drawable drawable, int width, int height) {
+        if(drawable == null){
+            return null;
+        }
+         // 建立对应 bitmap
         Bitmap bitmap = Bitmap.createBitmap(width,height,
 				drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888: Bitmap.Config.RGB_565);
+         // 建立对应 bitmap 的画布
         Canvas canvas = new Canvas(bitmap);
         drawable.setBounds(0, 0, width,height);
+        // 把 drawable 内容画到画布中
         drawable.draw(canvas);
         return bitmap;
+    }
+    /**
+     * Bitmap 转 Drawable
+     */
+    @SuppressWarnings("deprecation")
+    public static Drawable bitmap2Drawable(Bitmap bm) {
+        if (bm == null) {
+            return null;
+        }
+        BitmapDrawable bd = new BitmapDrawable(bm);
+        bd.setTargetDensity(bm.getDensity());
+        return new BitmapDrawable(bm);
     }
 
 	// 缩放/裁剪图片
@@ -72,14 +92,26 @@ public class BitMapUtils {
         return newbm;
     }
 
-	//把bitmap转换成base64
+    /************************************ 图形变换 ************************************/
+
+
+    /************************************ BitMap转变 ************************************/
+
+    /**
+     * 把bitmap转换成base64
+     * @param bitmap 目标BitMap
+     * @param bitmapQuality
+     * @return
+     */
     public static String getBase64FromBitmap(Bitmap bitmap, int bitmapQuality) {
         ByteArrayOutputStream bStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, bitmapQuality, bStream);
         byte[] bytes = bStream.toByteArray();
         return Base64.encodeToString(bytes, Base64.DEFAULT);
     }
-	 //把base64转换成bitmap
+    /**
+     * 把base64转换成bitmap
+     */
     public static Bitmap getBitmapFromBase64(String string) {
         byte[] bitmapArray = null;
         try {
@@ -89,5 +121,26 @@ public class BitMapUtils {
         }
         return BitmapFactory.decodeByteArray(bitmapArray, 0, bitmapArray.length);
     }
+    /**
+     * Bitmap 转 byte[]
+     */
+    public static byte[] bitmap2Bytes(Bitmap bm) {
+        if (bm == null) {
+            return null;
+        }
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bm.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        return baos.toByteArray();
+    }
+     /**
+     * byte[] 转 Bitmap
+     */
+    public static Bitmap bytes2Bitmap(byte[] b) {
+        if (b.length == 0) {
+            return null;
+        }
+        return BitmapFactory.decodeByteArray(b, 0, b.length);
+    }
+
 
 }
