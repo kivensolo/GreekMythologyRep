@@ -21,6 +21,7 @@ import com.kingz.pages.DownloadAPPActivity;
 import com.kingz.pages.FileAndPicTestACT;
 import com.nativeWidgets.NativeProgressBar;
 import com.mplayer.KingZMediaPlayer;
+import com.photo.PhotosActivity;
 
 /**
  * @author: KingZ
@@ -54,6 +55,7 @@ public class MainActivity extends Activity implements OnItemClickListener{
 
 	private void addData() {
 		mAdapter.add(new ListBillData(this,"SrcLayoutTest",new Intent(this,LayoutPage.class)));
+		mAdapter.add(new ListBillData(this,"BitMapOverall",new Intent(this,PhotosActivity.class)));
 		mAdapter.add(new ListBillData(this,"BasicControls",new Intent(this,BasicControlsActivity.class)));
 		//mAdapter.add(new ListBillData(this,"SeniorControls",new Intent(this,SeniorControls.class)));
 		mAdapter.add(new ListBillData(this,"ProgressBar",new Intent(this,NativeProgressBar.class)));

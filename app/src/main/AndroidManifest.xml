@@ -132,6 +132,10 @@
                   android:theme="@android:style/Theme.Black.NoTitleBar"
                     android:screenOrientation="landscape"/>
 
+         <!--BitMap测试页面-->
+        <activity android:name="com.photo.PhotosActivity"
+                  android:theme="@android:style/Theme.Black.NoTitleBar"/>
+
          <!--文件管理页面-->
         <activity android:name="com.kingz.filemanager.FileManagerActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
