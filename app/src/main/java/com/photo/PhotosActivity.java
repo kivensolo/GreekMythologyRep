@@ -44,6 +44,7 @@ public class PhotosActivity extends BaseActivity {
     private ImageView img4;
     private ImageView img5;
     private ImageView img6;
+    private ImageView img7;
 
     private RecyclerView recyclerView;
     private DemoRecyclerAdapter mAdapter;
@@ -59,8 +60,9 @@ public class PhotosActivity extends BaseActivity {
         img2 = (ImageView) findViewById(R.id.translate_pic);
         img3 = (ImageView) findViewById(R.id.scale_pic);
         img4 = (ImageView) findViewById(R.id.rotate_pic);
-        img5 = (ImageView) findViewById(R.id.skew_pic);
+        img5 = (ImageView) findViewById(R.id.corner_pic);
         img6 = (ImageView) findViewById(R.id.circle_pic);
+        img7 = (ImageView) findViewById(R.id.skew_pic);
         setImageView();
     }
 
@@ -123,6 +125,9 @@ public class PhotosActivity extends BaseActivity {
 
         //圆形图片
         img6.setImageBitmap(BitMapUtils.setCircle(srcBitmap));
+
+        //X/Y轴倾斜图片
+        img7.setImageBitmap(BitMapUtils.setSkew(srcBitmap,-0.3f,0));
     }
 
     @Override

@@ -87,12 +87,34 @@ public class BitMapUtils {
      * @param skewY y轴倾斜度
      * @return
      */
-    public static Bitmap setSkew(Bitmap bm, int skewX, int skewY) {
+    public static Bitmap setSkew(Bitmap bm, float skewX, float skewY) {
         int width = bm.getWidth();
         int height = bm.getHeight();
         // 取得想要倾斜的matrix参数
         Matrix matrix = new Matrix();
         matrix.setSkew(skewX, skewY);
+        Bitmap newbm = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, true);
+        return newbm;
+
+    }
+
+    /**
+     * 控制Matrix以px和py为轴心进行倾斜。例如，创建一个Matrix对象，并将其以(100,100)为轴心在X轴和Y轴上均倾斜0.1
+     * Matrix m=new Matrix();
+     * m.setSkew(0.1f,0.1f,100,100);
+     * @param bm
+     * @param kx
+     * @param ky
+     * @param px
+     * @param py
+     * @return
+     */
+    public static Bitmap setSkew(Bitmap bm,float kx, float ky, float px, float py) {
+        int width = bm.getWidth();
+        int height = bm.getHeight();
+        // 取得想要倾斜的matrix参数
+        Matrix matrix = new Matrix();
+        matrix.setSkew( kx,ky,px,py);
         Bitmap newbm = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, true);
         return newbm;
     }
