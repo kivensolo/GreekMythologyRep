@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:zhi="http://schemas.android.com/apk/res/com.kingz.uiusingListViews"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
-<!--    <com.customview.views.CustomOnMeasureView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="50dp"
-            zhi:titleColor="#00ff99"
-            zhi:titleText="9527"
-            zhi:titleSize="40sp"/>
+              xmlns:zhi="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!--xmlns:zhi="http://schemas.android.com/apk/res/com.kingz.uiusingListViews"-->
+    <!--    <com.customview.views.CustomOnMeasureView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="50dp"
+                zhi:titleColor="#00ff99"
+                zhi:titleText="9527"
+                zhi:titleSize="40sp"/>
 
-    <com.customview.views.CustomOnMeasureView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="50dp"
-            android:layout_margin="10dp"
-            zhi:myImage="@drawable/zhuyin"
-            zhi:imageScaleType="center"
-            zhi:titleColor="#00ff99"
-            zhi:titleText="3333"
-            zhi:titleSize="40sp" />-->
+        <com.customview.views.CustomOnMeasureView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="50dp"
+                android:layout_margin="10dp"
+                zhi:myImage="@drawable/zhuyin"
+                zhi:imageScaleType="center"
+                zhi:titleColor="#00ff99"
+                zhi:titleText="3333"
+                zhi:titleSize="40sp" />-->
 
     <com.view.views.CustomOnMeasureView
             android:layout_width="440dp"

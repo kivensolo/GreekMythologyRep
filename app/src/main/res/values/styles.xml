@@ -11,9 +11,14 @@
         -->
     </style>
     <!-- Application theme. -->
+    <!--<style name="AppTheme" parent="AppBaseTheme">-->
+         <!--All customizations that are NOT specific to a particular API-level can go here. -->
+    <!--</style>-->
+
     <style name="AppTheme" parent="AppBaseTheme">
-        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <item name="android:listDivider">@drawable/divider_bg</item>
     </style>
+
     <style name="customstyle">
 4         <item name="android:background">@android:color/holo_red_light</item>
 5         [... or other style code...]
