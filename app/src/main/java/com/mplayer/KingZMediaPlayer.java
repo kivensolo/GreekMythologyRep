@@ -88,20 +88,14 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
      **/
     private StringBuilder mFormatBuilder;
     private Formatter mFormatter;
-
-
-    //测试播放串---公司网
-    private String play_url = "http://182.138.101.49:5000/nn_vod/nn_x64/aWQ9MmI4NzQ3NDQ5Y2E3NmRkYTQxYmQzY2I5Y2UwNDU4NDkmdXJsX2MxPTU0NTY3MzY1NzI2OTY1NzMyZjY0NjE2Zjc4Njk2MTZjNjk3NTcyNjU2ZTJmNDIzMDM4NDUzNTM4NDU0NDM4NDM0NDQyMzE0NDM3MzEzODM2NDUzODM5MzkzMTQ1NDIzMzMyMzgzMDMyMzE0NDVmMzIzMDMxMzUzMTMyMzAzNzVmMzE1ZjMxNWYzMTMwMzMzMzJlNzQ3MzIwMDAmbm5fYWs9MDFlNzFkMTYzYzhjNmUxZTNmMmVhZjE1MjhkZmUwZDRhNiZudHRsPTMmbnBpcHM9NTIuOC4xODUuMTY4OjUxMDAmbmNtc2lkPTEwMDgwMDEmbmdzPTU3MjM0MjMxMDAwODMxZTRhMDU1NGIyOWIwMzhjM2MzJm5uZD1jbi56Z2R4LnNpY2h1YW4mbmZ0PXRzJm5uX3VzZXJfaWQ9Y250djAwMWFjYzE1NWM3YyZuZHQ9c3RiJm5kdj0xLjQuMC5DT00tQ0hJTkEtT1RULVNUQi4xLjBfRGVtbyZuYWw9MDEzMTQyMjM1NzA2MDc3N2VkNDM2M2RlZjQ5OGI1OGFkMWUxNTA5YWRjMWM5OA,,/2b8747449ca76dda41bd3cb9ce045849.ts";
-    //测试播放串---公网
-    //private String play_url = "http://sohu.vodnew.lxdns.com/TmPAo6IsWBvHWh6lWTcWZp6lhJdCW2PIfaZtCJ9JkCytHrC.mp4?key=_IeUceekReruD8XPf4Wc902D6TW9PrLV&r=4ZJCXpbuTUJFjfwyjWIA5mE2oOXGgGcGNLXWqTW2ZVb2qF2OvmEAoO2XWDO&n=1&a=2001&cip=110.184.64.172&uid=14624510661781287295&pt=1&ch=tv&vid=2931951&prod=flash&pid=9107339&tvid=83185892&ch=tv&sz=1893_903&md=DGbcybLSl5KM0WWhreYBsBLw0fLqDk7/8Ubkpw==186&prod=flash&pt=1&uuid=e1c8e674-27a7-fe39-d246-d79cd37b7a5f";
-    //澳门风云“http://182.138.101.49:5000/nn_vod/nn_x64/aWQ9NTFjZDI3NTg4MjIwYjNlNDE4MWEwMWRhOTBkM2ZmZDgmdXJsX2MxPTZkNmY3NjY5NjUyZjYxNmY2ZDY1NmU2NjY1NmU2Nzc5NzU2ZTJmNjE2ZjZkNjU2ZTY2NjU2ZTY3Nzk3NTZlMmU3NDczMjAwMCZubl9haz0wMWNlODlkMGEyNjQ4MDRkZGQ0Mzg4ZGYyYTA3Y2IzYzJkJm50dGw9MyZucGlwcz01Mi44LjE4NS4xNjg6NTEwMCZuY21zaWQ9MTAwODAwMSZuZ3M9NTcyMzQ3MDQwMDBkNjhmNDIwZmM3YmVmNjRjNDJmNzYmbm5kPWNuLnpnZHguc2ljaHVhbiZuZnQ9dHMmbm5fdXNlcl9pZD1jbnR2MDAxYWNjMTU1YzdjJm5kdD1zdGImbmR2PTEuNC4wLkNPTS1DSElOQS1PVFQtU1RCLjEuMF9EZW1vJm5hbD0wMTA0NDcyMzU3MDYwNzRjMjNlMTFiZjcwMjljZDdkZTMxNWM1OTMzNTNmN2Vk/51cd27588220b3e4181a01da90d3ffd8.ts”
+    private String play_url = "";      //播放地址
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mplayer_layout);
-//        initVideoData();
-//        getPlayUrlFromNet();
+        initVideoData();
+//      getPlayUrlFromNet();
         initViews();
         initMedia();
     }
@@ -224,10 +218,10 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
     }
 
     private void openVieo() {
-//        if (channelLists.size() != 0) {
-//            play_url = channelLists.get(0).playUrl;
-//        }
-//        Log.d(TAG, "openVieo() VideoFilePath:" + play_url);
+        if (channelLists.size() != 0) {
+            play_url = channelLists.get(0).playUrl;
+        }
+        Log.d(TAG, "openVieo() VideoFilePath:" + play_url);
         releaseMediaPlayer();
         mPlayer = new MediaPlayer();
         mPlayer.setOnVideoSizeChangedListener(mOnVideoSizeListener);

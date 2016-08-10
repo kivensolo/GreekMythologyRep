@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <videos>
     <video>
-        <name>东南卫视</name>
-        <play_url>http://video.chinanews.com/tvmining/News/MP4ZXW/DongNanTV/2016/04/29/DongNanTV_1500000_20160429_18866283_0_40.mp4</play_url>
+        <name>测试视频1</name>
+        <play_url>http://ocs.maiziedu.com/android_app_sde_1.mp4</play_url>
     </video>
     <video>
-         <name>悟空</name>
-         <play_url>http://v7.pstatp.com/7c5e9c128c426d695596c487d72a724d/57245452/origin/15308/2765202516</play_url>
+         <name>测试视频2麦子学院</name>
+         <play_url>http://ocs.maiziedu.com/android_app_sde_2.mp4</play_url>
      </video>
      <video>
-        <name>火影片段</name>
-        <play_url>http://v7.pstatp.com/dd5c462daee8345973af1ca5428cf070/57243b2a/origin/13472/7968068416</play_url>
+        <name>测试视频3</name>
+        <play_url>http://ocs.maiziedu.com/android_app_sde_3.mp4</play_url>
     </video>
     <video>
         <name>电视台直播片段</name>

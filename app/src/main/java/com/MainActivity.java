@@ -1,56 +1,63 @@
 package com;
 
-import android.app.Activity;
+import android.app.ExpandableListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 import com.AsuyncTaskJsonTest.AsynctaskBitmapMainActivity;
-import com.kingz.pages.CustomViewsPage;
-import com.kingz.pages.FourComponentPage;
-import com.kingz.pages.LayoutPage;
-import com.kingz.customDemo.R;
-import com.lbs.BaiduMapActivity;
+import com.adapter.CommExpandableListAdapter;
 import com.iflytek.synthesizer.VoiceActivity;
-import com.nativeWidgets.BasicControlsActivity;
+import com.kingz.customDemo.R;
 import com.kingz.filemanager.FileManagerActivity;
-import com.kingz.pages.DownloadAPPActivity;
-import com.kingz.pages.FileAndPicTestACT;
-import com.nativeWidgets.NativeProgressBar;
+import com.kingz.pages.*;
+import com.lbs.BaiduMapActivity;
 import com.mplayer.KingZMediaPlayer;
+import com.nativeWidgets.BasicControlsActivity;
+import com.nativeWidgets.NativeProgressBar;
 import com.photo.PhotosActivity;
+import com.utils.UITools;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author: KingZ
  * @Data: 2015年10月4日下午11:40:26
  * @Description: Demo首页
  */
-public class MainActivity extends Activity implements OnItemClickListener{
+public class MainActivity extends ExpandableListActivity implements OnItemClickListener{
 
 	private static String TAG = MainActivity.class.getSimpleName();
 
 	private ListView listView;
+	private ExpandableListView expandableListView;
 	private ArrayAdapter<ListBillData> mAdapter;
+	private List<Map<String, String>> gruops  = new ArrayList<Map<String, String>>();
+	private List<Map<String, String>> childs  = new ArrayList<Map<String, String>>();
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
-		listView = (ListView) findViewById(R.id.list_view);
-
+		//图标设置在右边
+		getExpandableListView().setIndicatorBounds(UITools.SCREEN_WIDTH - 60,UITools.SCREEN_WIDTH - 30);
+		setListAdapter(new CommExpandableListAdapter(this));
+		//listView = (ListView) findViewById(R.id.list_view);
 		/****添加列表项***/
 		//原生
 		//mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
 		//自定义的
-		mAdapter = new ArrayAdapter<>(this, R.layout.list_bill);
-		listView.setAdapter(mAdapter);//设置数据适配器
-
-		addData();
-		listView.setOnItemClickListener(this);
+		//mAdapter = new ArrayAdapter<>(this, R.layout.list_bill);
+		//listView.setAdapter(mAdapter);//设置数据适配器
+		//addData();
+		//listView.setOnItemClickListener(this);
 	}
 
 	private void addData() {
