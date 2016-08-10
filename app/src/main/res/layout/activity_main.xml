@@ -13,13 +13,14 @@
 		android:background="@color/black"
 		android:listSelector="@color/mediumseagreen">
     </ListView>-->
-	<ExpandableListView android:layout_width="match_parent"
+	<com.widgets.AnimatedExpandableListView android:layout_width="match_parent"
 						android:layout_height="match_parent"
-						android:id="@id/android:list"
-						android:background="#f5f5f5"
-    					android:cacheColorHint="#f5f5f5"
-						android:groupIndicator="@drawable/down_arrow">
-
-	</ExpandableListView>
+						android:id="@android:id/list"
+						android:dividerHeight="1dp"
+						android:divider="@color/lightskyblue"
+						android:background="@color/black"
+    					android:cacheColorHint="@color/cornflowerblue"
+						android:groupIndicator="@null">
+	</com.widgets.AnimatedExpandableListView>
 
 </LinearLayout>

@@ -101,7 +101,7 @@ public class DownloadAPPActivity extends BaseActivity implements View.OnClickLis
      */
     private void initProgressView() {
         mProgressBarView = new HorizontalProgressBarView(context);
-        mProgressBarView.setTotalWidth(ScreenTools.Operation(600));
+        mProgressBarView.setTotalWidth(ScreenTools.SCREEN_WIDTH / 2);
         mProgressBarView.setInnerPaintColor(0xFF9dbaf2);
         mProgressBarView.setOuterPaintColor(0x19ffffff);
         mProgressBarView.setProgressCompleteListener(new HorizontalProgressBarView.ProgressCompleteListener() {

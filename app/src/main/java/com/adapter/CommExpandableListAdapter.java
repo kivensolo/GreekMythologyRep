@@ -2,11 +2,15 @@ package com.adapter;
 
 import android.content.Context;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.ListBillData;
+import com.kingz.customDemo.R;
+import com.widgets.AnimatedExpandableListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,52 +20,51 @@ import java.util.List;
  * All rights reserved. <br>
  * author: King.Z <br>
  * date:  2016/8/10 19:02 <br>
- * description: 公共的可收缩伸展列表事例 <br>
+ * description: 公共可收缩伸展列表适配器 <br>
  */
-public class CommExpandableListAdapter extends BaseExpandableListAdapter {
+public class CommExpandableListAdapter extends AnimatedExpandableListView.AnimatedExpandableListAdapter {
 
+    private static String TAG = CommExpandableListAdapter.class.getSimpleName();
     private Context mContext = null;
-    // 测试数据，开发时可能来自数据库，网络....
-    private String[] groups = {"家人", "朋友", "同事"};
-    private String[] familis = {"老爸", "老妈", "妹妹"};
-    private String[] friends = {"小李", "张三", "李四"};
-    private String[] colleagues = {"陈总", "李工", "李客户"};
-
     private List<String> groupList = null;
-    private List<List<String>> itemList = null;
+    private LayoutInflater mInflater;
+    private List<List<ListBillData>> itemList = null;
 
-    public CommExpandableListAdapter(Context context) {
-        this.mContext = context;
-        groupList = new ArrayList<String>();
-        itemList = new ArrayList<List<String>>();
-        initData();
+    public CommExpandableListAdapter(Context mContext) {
+        this.mContext = mContext;
+        mInflater = LayoutInflater.from(mContext);
+    }
+
+    public CommExpandableListAdapter(Context context, Object group, Object child) {
+        mContext = context;
+        mInflater = LayoutInflater.from(mContext);
+        initData(group, child);
+    }
+
+    private void initData(Object group, Object child) {
+        addGroupData(group);
+        addChildData(child);
+    }
+    /**
+     * 添加父级分类数据
+     * @param object
+     */
+    public void addGroupData(Object object){
+        groupList = new ArrayList<>();
+        if(object instanceof List){
+            groupList = (List<String>) object;
+        }
     }
 
     /**
-     * 初始化数据，将相关数据放到List中，方便处理
+     * 添加子分类数据
+     * @param object
      */
-    private void initData() {
-        for (int i = 0; i < groups.length; i++) {
-            groupList.add(groups[i]);
+    public void addChildData(Object object){
+        itemList = new ArrayList<>();
+        if(object instanceof List){
+            itemList = (List<List<ListBillData>>) object;
         }
-        List<String> item1 = new ArrayList<String>();
-        for (int i = 0; i < familis.length; i++) {
-            item1.add(familis[i]);
-        }
-
-        List<String> item2 = new ArrayList<String>();
-        for (int i = 0; i < friends.length; i++) {
-            item2.add(friends[i]);
-        }
-
-        List<String> item3 = new ArrayList<String>();
-        for (int i = 0; i < colleagues.length; i++) {
-            item3.add(colleagues[i]);
-        }
-
-        itemList.add(item1);
-        itemList.add(item2);
-        itemList.add(item3);
     }
 
     public boolean areAllItemsEnabled() {
@@ -69,27 +72,24 @@ public class CommExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     /**
-     * 收缩列表时要处理的东西都放这儿
+     * when group Collapsed.
      */
     public void onGroupCollapsed(int groupPosition) {
 
     }
-
     /**
-     * 展开列表时要处理的东西都放这儿
+     *when group Expanded
      */
     public void onGroupExpanded(int groupPosition) {
 
     }
 
-    /************************  获取Group相关属性 *******************/
+/************************  获取Group相关属性 *******************/
     @Override
     public int getGroupCount() {
         return groupList.size();
     }
-    /**
-     * 返回分组对象，用于一些数据传递，在事件处理时可直接取得和分组相关的数据
-     */
+
     @Override
     public Object getGroup(int groupPosition) {
         return groupList.get(groupPosition);
@@ -101,51 +101,75 @@ public class CommExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     /**
-     * 分组视图，这里暂时也是一个文本视图
+     * getGroupView
+     * @param groupPosition  groupPosition
+     * @param isExpanded     isExpanded
+     * @param convertView    convertView
+     * @param parent         parent
+     * @return Veiw
      */
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        TextView text = null;
-        if (convertView == null) {
-            text = new TextView(mContext);
-        } else {
-            text = (TextView) convertView;
+        GroupHolder viewHolder;
+        if(null == convertView){
+            viewHolder = new GroupHolder();
+            convertView = mInflater.inflate(R.layout.expand_group_layout,null,false);
+            viewHolder.itemText = (TextView) convertView.findViewById(R.id.parent_group);
+            viewHolder.indictorImg = (ImageView) convertView.findViewById(R.id.parent_group_img);
+            convertView.setTag(viewHolder);
+        }else{
+            viewHolder = (GroupHolder) convertView.getTag();
         }
-        String name = (String) groupList.get(groupPosition);
-        AbsListView.LayoutParams lp = new AbsListView.LayoutParams(
-                ViewGroup.LayoutParams.FILL_PARENT, 40);
-        text.setLayoutParams(lp);
-        text.setTextSize(18);
-        text.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
-        text.setPadding(36, 0, 0, 0);
-        text.setText(name);
-        return text;
+        viewHolder.itemText.setTextSize(20);
+        viewHolder.itemText.setGravity(Gravity.CENTER_VERTICAL | Gravity.START);
+        viewHolder.itemText.setText(groupList.get(groupPosition));
+        if(isExpanded){
+            convertView.setBackground(mContext.getResources().getDrawable(R.color.fruitpurple));
+            viewHolder.itemText.setTextColor(mContext.getResources().getColor(R.color.darkturquoise));
+            viewHolder.indictorImg.setBackground(mContext.getResources().getDrawable(R.drawable.down_arrow));
+        }else{
+            convertView.setBackground(mContext.getResources().getDrawable(R.color.transparent));
+            viewHolder.itemText.setTextColor(mContext.getResources().getColor(R.color.mediumaquamarine));
+            viewHolder.indictorImg.setBackground(mContext.getResources().getDrawable(R.drawable.right_arrow));
+        }
+        return convertView;
     }
 
 /************************  获取Child相关属性 *******************/
-    /**
-     * 字节点视图，这里我们显示一个文本对象
-     */
     @Override
-    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        TextView text = null;
-        if (convertView == null) {
-            text = new TextView(mContext);
-        } else {
-            text = (TextView) convertView;
+    public View getRealChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+        // 动画伸缩主要是在此进行处理的
+        // AnimatedExpandableListView 重写的方法  父类为：getChildView
+        ChildHolder viewHolder;
+        if(null == convertView){
+            viewHolder = new ChildHolder();
+            convertView = mInflater.inflate(R.layout.expand_child_layout,null,false);
+            viewHolder.itemText = (TextView) convertView.findViewById(R.id.child_group);
+            convertView.setTag(viewHolder);
+        }else{
+            viewHolder = (ChildHolder) convertView.getTag();
         }
-        // 获取子节点要显示的名称
-        String name = itemList.get(groupPosition).get(childPosition);
-        // 设置文本视图的相关属性
-        AbsListView.LayoutParams lp = new AbsListView.LayoutParams(
-                ViewGroup.LayoutParams.FILL_PARENT, 40);
-        text.setLayoutParams(lp);
-        text.setTextSize(18);
-        text.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
-        text.setPadding(45, 0, 0, 0);
-        text.setText(name);
-        return text;
+        viewHolder.itemText.setTextSize(20);
+        viewHolder.itemText.setGravity(Gravity.CENTER_VERTICAL | Gravity.START);
+        viewHolder.itemText.setText(itemList.get(groupPosition).get(childPosition).getUserName()) ;
+        return convertView;
     }
+
+    @Override
+    public int getRealChildrenCount(int groupPosition) {
+        if(groupPosition >= itemList.size()){
+            return 0;
+        }
+        return itemList.get(groupPosition).size();
+    }
+
+    /**
+     * 字节点视图
+     */
+//    @Override
+//    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+//
+//    }
     /**
      * 设置子节点对象，在事件处理时返回的对象，可存放一些数据
      */
@@ -157,10 +181,13 @@ public class CommExpandableListAdapter extends BaseExpandableListAdapter {
     /**
      * 返回当前分组的数据个数
      */
-    @Override
-    public int getChildrenCount(int groupPosition) {
-        return itemList.get(groupPosition).size();
-    }
+//    @Override
+//    public int getChildrenCount(int groupPosition) {
+//        if(groupPosition >= itemList.size()){
+//            return 0;
+//        }
+//        return itemList.get(groupPosition).size();
+//    }
 
     @Override
     public long getChildId(int groupPosition, int childPosition) {
@@ -195,5 +222,11 @@ public class CommExpandableListAdapter extends BaseExpandableListAdapter {
         return super.isEmpty();
     }
 
-
+    private static class ChildHolder{
+        public TextView itemText;
+    }
+    private static class GroupHolder{
+        public TextView itemText;
+        public ImageView indictorImg;
+    }
 }
