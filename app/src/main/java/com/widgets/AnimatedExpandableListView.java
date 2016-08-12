@@ -40,7 +40,7 @@ import java.util.List;
  * collapsing and expanding groups.
  */
 public class AnimatedExpandableListView extends ExpandableListView {
-    /*
+    /**
      * A detailed explanation for how this class works:
      *
      * Animating the ExpandableListView was no easy task. The way that this
@@ -391,7 +391,8 @@ public class AnimatedExpandableListView extends ExpandableListView {
                 dummyView.clearViews();
 
                 // Set the style of the divider
-                dummyView.setDivider(listView.getDivider(), parent.getMeasuredWidth(), listView.getDividerHeight());
+                //dummyView.setDivider(listView.getDivider(), parent.getMeasuredWidth(), listView.getDividerHeight());
+                dummyView.setDivider(null, parent.getMeasuredWidth(), listView.getDividerHeight());
 
                 // Make measure specs to measure child views
                 final int measureSpecW = MeasureSpec.makeMeasureSpec(parent.getWidth(), MeasureSpec.EXACTLY);
