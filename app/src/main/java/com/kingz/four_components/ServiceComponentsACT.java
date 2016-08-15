@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-import com.kingz.customDemo.R;
+import com.kingz.customdemo.R;
 
 /**
  * description：四大组件之Service的用法

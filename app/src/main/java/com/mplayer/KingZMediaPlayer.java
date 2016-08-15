@@ -15,9 +15,11 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.kingz.customdemo.R;
 import com.provider.ChannelData;
-import com.kingz.customDemo.R;
 import com.utils.ToastTools;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;

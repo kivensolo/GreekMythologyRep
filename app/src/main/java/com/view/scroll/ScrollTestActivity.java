@@ -7,8 +7,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Scroller;
+
 import com.BaseActivity;
-import com.kingz.customDemo.R;
+import com.kingz.customdemo.R;
 
 /**
  * Copyright(C) 2016, 北京视达科科技有限公司

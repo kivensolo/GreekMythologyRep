@@ -8,8 +8,15 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
-import com.iflytek.cloud.*;
-import com.kingz.customDemo.R;
+
+import com.iflytek.cloud.ErrorCode;
+import com.iflytek.cloud.InitListener;
+import com.iflytek.cloud.SpeechConstant;
+import com.iflytek.cloud.SpeechError;
+import com.iflytek.cloud.SpeechSynthesizer;
+import com.iflytek.cloud.SpeechUtility;
+import com.iflytek.cloud.SynthesizerListener;
+import com.kingz.customdemo.R;
 import com.utils.ToastTools;
 
 public class VoiceActivity extends Activity implements OnClickListener {

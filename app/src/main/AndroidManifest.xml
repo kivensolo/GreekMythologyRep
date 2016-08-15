@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.kingz.customDemo"
+    package="com.kingz.customdemo"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -44,6 +44,10 @@
         <meta-data
         android:name="com.baidu.lbsapi.API_KEY"
         android:value="XwMW9CR6w14VOWGG4AkGue8W" />
+
+        <provider
+            android:authorities="com.kingz.customdemo"
+            android:name=".KingZProvider"/>
 
         <!-- 主Activity -->
         <activity

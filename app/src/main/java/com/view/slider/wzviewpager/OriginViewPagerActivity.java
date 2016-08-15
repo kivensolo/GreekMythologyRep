@@ -9,8 +9,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.kingz.customdemo.R;
 import com.view.slider.wzviewpager.wzcodepagger.DotsView;
-import com.kingz.customDemo.R;
 
 import java.util.ArrayList;
 

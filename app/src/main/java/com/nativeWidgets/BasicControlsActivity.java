@@ -7,9 +7,18 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Gallery;
+import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RatingBar;
+import android.widget.Spinner;
 
-import com.kingz.customDemo.R;
+import com.kingz.customdemo.R;
 import com.utils.ToastTools;
 
 /**

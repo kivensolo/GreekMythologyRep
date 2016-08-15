@@ -16,8 +16,8 @@ import android.widget.RelativeLayout;
 
 import com.App;
 import com.BaseActivity;
-import com.kingz.customDemo.R;
 import com.kingz.FileDownloader;
+import com.kingz.customdemo.R;
 import com.utils.NetTools;
 import com.utils.ScreenTools;
 import com.utils.ToastTools;

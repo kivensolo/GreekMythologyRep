@@ -8,7 +8,8 @@ import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-import com.kingz.customDemo.R;
+
+import com.kingz.customdemo.R;
 
 /**
  * Created by KingZ on 2015/11/23.

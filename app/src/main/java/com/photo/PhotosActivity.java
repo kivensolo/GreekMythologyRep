@@ -6,7 +6,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.widget.ImageView;
 
 import com.BaseActivity;
-import com.kingz.customDemo.R;
+import com.kingz.customdemo.R;
 import com.utils.BitMapUtils;
 
 import java.util.ArrayList;

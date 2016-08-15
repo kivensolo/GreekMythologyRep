@@ -6,8 +6,8 @@ import android.os.Bundle;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.kingz.customdemo.R;
 import com.view.views.DrawBallView;
-import com.kingz.customDemo.R;
 
 /**
  * Created by KingZ on 2015/11/23.

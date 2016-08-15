@@ -12,20 +12,19 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.ListBillData;
-import com.kingz.customDemo.R;
+import com.kingz.Widgets.UsingCustomSeekBar;
+import com.kingz.customdemo.R;
+import com.kingz.uiusingCanvas.CustomCanvasSeekBarAct;
+import com.nativeWidgets.SpansDemo;
+import com.nativeWidgets.WebViewUseJs;
+import com.view.NetworkSpeed.NetworkSpeedActivity;
+import com.view.listview.CustomListViewActivity;
 import com.view.pages.CircleViewActivity;
 import com.view.pages.FingerBallActivity;
-import com.view.NetworkSpeed.NetworkSpeedActivity;
 import com.view.pages.WaveLoadingActivity;
-import com.view.listview.CustomListViewActivity;
-import com.view.scroll.SliderListViewActivity;
 import com.view.scroll.ScrollTestActivity;
-import com.view.slider.wzviewpager.OriginViewPagerActivity;
+import com.view.scroll.SliderListViewActivity;
 import com.view.slider.wzviewpager.WZViewPagerActicity;
-import com.nativeWidgets.SpansDemo;
-import com.kingz.uiusingCanvas.CustomCanvasSeekBarAct;
-import com.nativeWidgets.WebViewUseJs;
-import com.kingz.Widgets.UsingCustomSeekBar;
 
 /**
  * 自定义View汇总主界面

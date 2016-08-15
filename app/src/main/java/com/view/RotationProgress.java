@@ -7,7 +7,8 @@ import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
-import com.kingz.customDemo.R;
+
+import com.kingz.customdemo.R;
 import com.utils.ScreenTools;
 
 /**

@@ -5,7 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.kingz.customDemo.R;
+
+import com.kingz.customdemo.R;
 
 /**
  * Copyright(C) 2016, 北京视达科科技有限公司

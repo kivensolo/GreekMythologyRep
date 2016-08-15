@@ -6,7 +6,8 @@ import android.graphics.Rect;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.widget.Button;
-import com.kingz.customDemo.R;
+
+import com.kingz.customdemo.R;
 
 /**
  * 自定义高亮按钮

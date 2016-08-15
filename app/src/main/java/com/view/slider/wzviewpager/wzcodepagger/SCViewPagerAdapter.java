@@ -8,7 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import com.kingz.customDemo.R;
+
+import com.kingz.customdemo.R;
 
 import java.util.ArrayList;
 

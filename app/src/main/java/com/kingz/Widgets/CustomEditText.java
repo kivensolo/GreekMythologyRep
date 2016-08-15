@@ -6,7 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.kingz.customDemo.R;
+
+import com.kingz.customdemo.R;
 
 /**
  * 自定义EditText

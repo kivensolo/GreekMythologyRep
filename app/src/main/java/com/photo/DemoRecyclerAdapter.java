@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.kingz.customDemo.R;
+import com.kingz.customdemo.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

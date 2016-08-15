@@ -11,7 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.ListBillData;
-import com.kingz.customDemo.R;
+import com.kingz.customdemo.R;
 import com.kingz.uiusingLayout.FragmentPageFromCode;
 import com.kingz.uiusingLayout.FragmentPageFromXml;
 import com.kingz.uiusingLayout.LinearLayoutTest_Act;

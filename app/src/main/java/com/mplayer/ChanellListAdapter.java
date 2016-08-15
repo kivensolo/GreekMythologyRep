@@ -3,10 +3,11 @@ package com.mplayer;
 import android.content.Context;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.kingz.customdemo.R;
+import com.provider.ChannelData;
 import com.provider.CommonAdapter;
 import com.provider.CommonViewHolder;
-import com.provider.ChannelData;
-import com.kingz.customDemo.R;
 
 import java.util.List;
 

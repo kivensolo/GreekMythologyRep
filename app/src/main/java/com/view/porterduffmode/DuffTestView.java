@@ -1,10 +1,14 @@
 package com.view.porterduffmode;
 
 import android.content.Context;
-import android.graphics.*;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.util.AttributeSet;
 import android.view.View;
-import com.kingz.customDemo.R;
+
+import com.kingz.customdemo.R;
 
 /**
  * Copyright(C) 2016, 北京视达科科技有限公司

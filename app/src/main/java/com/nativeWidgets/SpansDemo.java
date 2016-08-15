@@ -14,7 +14,8 @@ import android.text.style.TypefaceSpan;
 import android.text.style.URLSpan;
 import android.text.style.UnderlineSpan;
 import android.widget.TextView;
-import com.kingz.customDemo.R;
+
+import com.kingz.customdemo.R;
 
 /**
  * Copyright(C) 2015, 北京视达科科技有限公司

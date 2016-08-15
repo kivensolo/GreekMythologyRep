@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.kingz.customDemo.R;
+import com.kingz.customdemo.R;
 
 import java.io.File;
 

@@ -10,7 +10,8 @@ import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.widget.TextView;
-import com.kingz.customDemo.R;
+
+import com.kingz.customdemo.R;
 
 public class HighLightTextView extends TextView {
 	@SuppressWarnings("unused")

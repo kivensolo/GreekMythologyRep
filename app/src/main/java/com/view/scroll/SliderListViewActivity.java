@@ -6,8 +6,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
+
+import com.kingz.customdemo.R;
 import com.view.listview.CustomSliderDeleteListView;
-import com.kingz.customDemo.R;
 
 import java.util.ArrayList;
 import java.util.List;

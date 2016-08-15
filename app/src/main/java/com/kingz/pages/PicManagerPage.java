@@ -10,8 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.ListBillData;
-import com.kingz.customDemo.R;
-import com.kingz.pages.LayoutPage;
+import com.kingz.customdemo.R;
 
 /**
  * Created by KingZ on 2015/11/1.

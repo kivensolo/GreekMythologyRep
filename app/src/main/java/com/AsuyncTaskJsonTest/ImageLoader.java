@@ -9,7 +9,8 @@ import android.util.Log;
 import android.util.LruCache;
 import android.widget.ImageView;
 import android.widget.ListView;
-import com.kingz.customDemo.R;
+
+import com.kingz.customdemo.R;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;

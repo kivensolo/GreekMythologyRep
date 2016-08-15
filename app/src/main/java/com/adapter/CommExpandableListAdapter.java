@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ListBillData;
-import com.kingz.customDemo.R;
+import com.kingz.customdemo.R;
 import com.widgets.AnimatedExpandableListView;
 
 import java.util.ArrayList;

@@ -11,10 +11,11 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import com.kingz.customDemo.R;
+
+import com.kingz.customdemo.R;
+import com.utils.NetTools;
 import com.utils.ScreenTools;
 import com.utils.ToastTools;
-import com.utils.NetTools;
 
 /**
  * Copyright(C) 2016, 北京视达科科技有限公司

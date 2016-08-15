@@ -1,6 +1,7 @@
 package com;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -18,6 +19,9 @@ public class BaseActivity extends Activity {
      */
     public static Context mContext;
 
+    /** 数据提供者 */
+    public ContentResolver baseResolver;
+
     private Toast mToast;
 
     public static Context getAppContext() {
@@ -32,6 +36,7 @@ public class BaseActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         findID();
+        baseResolver = getContentResolver();
     }
 
     /**

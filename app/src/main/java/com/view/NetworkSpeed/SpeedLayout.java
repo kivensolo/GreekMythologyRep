@@ -6,9 +6,10 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
-import com.view.HighLightButton;
+
+import com.kingz.customdemo.R;
 import com.kingz.interfaces.ServiceSelectBtnCallBack;
-import com.kingz.customDemo.R;
+import com.view.HighLightButton;
 
 /**
  *

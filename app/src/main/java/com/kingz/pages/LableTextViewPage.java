@@ -2,7 +2,8 @@ package com.kingz.pages;
 
 import android.app.Activity;
 import android.os.Bundle;
-import com.kingz.customDemo.R;
+
+import com.kingz.customdemo.R;
 
 /**
  * @author: KingZ

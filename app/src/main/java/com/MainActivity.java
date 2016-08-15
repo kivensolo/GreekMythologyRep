@@ -11,7 +11,7 @@ import android.widget.ExpandableListView;
 import com.AsuyncTaskJsonTest.AsynctaskBitmapMainActivity;
 import com.adapter.CommExpandableListAdapter;
 import com.iflytek.synthesizer.VoiceActivity;
-import com.kingz.customDemo.R;
+import com.kingz.customdemo.R;
 import com.kingz.filemanager.FileManagerActivity;
 import com.kingz.pages.CustomViewsPage;
 import com.kingz.pages.DownloadAPPActivity;

@@ -4,7 +4,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import com.kingz.customDemo.R;
+
+import com.kingz.customdemo.R;
 
 /**
  * @author: KingZ

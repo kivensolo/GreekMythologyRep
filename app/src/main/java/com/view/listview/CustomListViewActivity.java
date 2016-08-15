@@ -3,7 +3,8 @@ package com.view.listview;
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.ListView;
-import com.kingz.customDemo.R;
+
+import com.kingz.customdemo.R;
 import com.provider.SpanInfoData;
 
 import java.util.ArrayList;
