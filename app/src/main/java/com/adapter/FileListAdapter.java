@@ -1,4 +1,4 @@
-package com.kingz.filemanager;
+package com.adapter;
 
 import android.content.Context;
 import android.util.Log;
@@ -10,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.holder.FileManagerViewHolder;
 import com.kingz.customdemo.R;
 
 import java.io.File;
@@ -55,6 +56,10 @@ public class FileListAdapter extends BaseAdapter{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
+        FileManagerViewHolder fViewHolder = new FileManagerViewHolder(contex,convertView,parent);
+
+
         ViewHodler viewHolder ;
         if(convertView == null){
             viewHolder =  new ViewHodler();
