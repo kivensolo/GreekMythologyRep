@@ -123,6 +123,4 @@ public class FileUtils {
         }
         return base64;
     }
-
-
 }
