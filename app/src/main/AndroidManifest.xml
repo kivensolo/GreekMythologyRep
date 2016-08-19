@@ -170,6 +170,9 @@
         <activity android:name="com.view.pages.WaveLoadingActivity"
                   android:screenOrientation="portrait"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
+         <!-- WaveLoadingActivity -->
+        <activity android:name="com.view.scroll.ScrollTestActivity"
+                  android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
          <!-- OriginViewPagerActivity -->
         <activity android:name="com.view.slider.wzviewpager.OriginViewPagerActivity"

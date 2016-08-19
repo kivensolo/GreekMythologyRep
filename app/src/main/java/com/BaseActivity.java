@@ -23,7 +23,7 @@ public class BaseActivity extends Activity {
     private static final String TAG = BaseActivity.class.getSimpleName();
 
     /**
-     * 全局变量
+     * 全局Context
      */
     public static Context mContext;
 
@@ -114,6 +114,7 @@ public class BaseActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.i(TAG,"BaseActivity onCreate()");
         super.onCreate(savedInstanceState);
         findID();
         baseResolver = getContentResolver();

@@ -27,7 +27,7 @@ public class CustomSliderDeleteListView extends ListView{
     private static String TAG = CustomSliderDeleteListView.class.getSimpleName();
     private static final int THRESHOLD_VELOCITY = 600; //速度阀值
     private VelocityTracker velocityTracker;   //速度追踪者
-    private Scroller scroller;      //滑动类
+    private Scroller scroller;                //滑动类
     private View itemView;
     private int currentPosition;    //当前滑动的ListView的position
     private int startPoint_Y;       //手指按下Y的坐标

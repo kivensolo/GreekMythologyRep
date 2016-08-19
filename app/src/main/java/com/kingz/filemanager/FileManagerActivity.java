@@ -2,8 +2,6 @@ package com.kingz.filemanager;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.TextUtils;
@@ -12,8 +10,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.BaseActivity;
 import com.adapter.FileListAdapter;
 import com.kingz.customdemo.R;
@@ -30,8 +26,7 @@ import java.util.List;
  * date:  2016/2/26 13:50
  * description:文件管理器
  */
-public class FileManagerActivity extends BaseActivity implements
-        AdapterView.OnItemClickListener,View.OnLongClickListener{
+public class FileManagerActivity extends BaseActivity implements AdapterView.OnItemClickListener,View.OnLongClickListener{
 
     private static final String  TAG= "FileManagerActivity";
     private ListView fileListView;
@@ -40,7 +35,7 @@ public class FileManagerActivity extends BaseActivity implements
     private FileListAdapter fileAdapter;
     private List<String> filePathsList;             //目录路径
     private List<String> fileNamesList;             //文件名
-    private ArrayList<File> currentPageFilesList;              //文件名
+    private ArrayList<File> currentPageFilesList;   //文件名
     private boolean isRoot;
 
 //    private static final String ROOT_PATH = Environment.getExternalStorageDirectory().getPath();  //根目录

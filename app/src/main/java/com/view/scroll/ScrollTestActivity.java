@@ -1,13 +1,7 @@
 package com.view.scroll;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
-import android.view.View;
 import android.widget.Button;
-import android.widget.Scroller;
-
 import com.BaseActivity;
 import com.kingz.customdemo.R;
 
@@ -19,16 +13,14 @@ import com.kingz.customdemo.R;
  * description: 实现View滑动的几种方式 <br>
  * <p/>
  * A:实现滑动的最朴素直接的方式就是使用View类自带的
- *   scrollTo/scrollBy方法了。scrollBy方法是滑动指定的位移量，
- *   而scrollTo方法是滑动到指定位置.
+ * scrollTo/scrollBy方法了。scrollBy方法是滑动指定的位移量，
+ * 而scrollTo方法是滑动到指定位置.
  */
 public class ScrollTestActivity extends BaseActivity {
     private static final String TAG = ScrollTestActivity.class.getSimpleName();
 
     private Button scrollBtn;
-    private Scroller mScroller;
-    GestureDetector mGestureDetector = new GestureDetector(mContext,new GestureListenerImpl());
-
+    private FlingView filingView;
 
     @Override
     public void showLoadingDialog() {
@@ -39,34 +31,40 @@ public class ScrollTestActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scrolltest);
-        findID();
-    }
-
-    @Override
-    protected void findID() {
+        filingView = new FlingView(this);
         scrollBtn = (Button) findViewById(R.id.scrollto_btn);
-        final View linear = findViewById(R.id.horiz_linear);
-        scrollBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i(TAG,"坐标： x=" + scrollBtn.getScrollX() + "; y="+scrollBtn.getScrollY());
-                linear.scrollBy(-20,-10);
-            }
-        });
-    }
-
-    @Override
-    public void InData() {
-        super.InData();
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-         return mGestureDetector.onTouchEvent(event);
+        //final View linear = findViewById(R.id.horiz_linear);
+        //scrollBtn.setOnClickListener(new View.OnClickListener() {
+        //    @Override
+        //    public void onClick(View v) {
+        //        Log.i(TAG, "坐标： x=" + scrollBtn.getScrollX() + "; y=" + scrollBtn.getScrollY());
+        //        linear.scrollBy(-20, -10);
+        //    }
+        //});
     }
 
 
-    /****滑动效果处理***/
+    //
+    //private void flingTest() {
+    //    /**
+    //     * 手势滑动，滑动距离由初始速度决定
+    //     * startX：开始滑动的X坐标
+    //     * startY：开始滑动的Y坐标
+    //     * velocityX: X方向上的初始化滑行速度  像素/秒
+    //     * velocityY: Y方向上的初始化滑行速度  像素/秒
+    //     * minX:最小的X值，Scroll不会划过这个点
+    //     * minY:最小的Y值，Scroll不会划过这个点
+    //     * maxX:最大的X值，Scroll不会划过这个点
+    //     * maxY:最大的Y值，Scroll不会划过这个点
+    //     *
+    //     */
+    //    mScroller.fling(scrollBtn.getScrollX(), scrollBtn.getScrollY(), getscrollerVelocity_X(), getscrollerVelocity_Y(), 23, 23, 1920, 1920);
+    //}
+
+
+    /****
+     * 滑动效果处理
+     ***/
 
 
 }
