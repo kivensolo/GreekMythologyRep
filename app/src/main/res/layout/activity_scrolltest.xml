@@ -6,16 +6,10 @@
                 android:background="@color/mediumseagreen">
 
     <LinearLayout android:layout_width="match_parent"
-                  android:layout_height="200dp"
+                  android:layout_height="400dp"
                   android:background="@color/deepskyblue"
                   android:orientation="horizontal"
                   android:id="@+id/horiz_linear">
-        <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="New Button"
-                android:id="@+id/scrollto_btn"
-                android:layout_marginTop="3dp"/>
 
     </LinearLayout>
 </RelativeLayout>

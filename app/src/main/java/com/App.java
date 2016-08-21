@@ -47,7 +47,7 @@ public class App extends Application {
 
         _appMainHandler = new Handler(getMainLooper());
         application = this;
-        mContext = this;
+        mContext = getApplicationContext();
 
         initLog();
         initAPPScreenParms();

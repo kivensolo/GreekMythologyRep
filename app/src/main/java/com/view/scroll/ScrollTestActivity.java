@@ -1,7 +1,8 @@
 package com.view.scroll;
 
 import android.os.Bundle;
-import android.widget.Button;
+import android.view.ViewGroup;
+
 import com.BaseActivity;
 import com.kingz.customdemo.R;
 
@@ -18,8 +19,6 @@ import com.kingz.customdemo.R;
  */
 public class ScrollTestActivity extends BaseActivity {
     private static final String TAG = ScrollTestActivity.class.getSimpleName();
-
-    private Button scrollBtn;
     private FlingView filingView;
 
     @Override
@@ -32,15 +31,8 @@ public class ScrollTestActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scrolltest);
         filingView = new FlingView(this);
-        scrollBtn = (Button) findViewById(R.id.scrollto_btn);
-        //final View linear = findViewById(R.id.horiz_linear);
-        //scrollBtn.setOnClickListener(new View.OnClickListener() {
-        //    @Override
-        //    public void onClick(View v) {
-        //        Log.i(TAG, "坐标： x=" + scrollBtn.getScrollX() + "; y=" + scrollBtn.getScrollY());
-        //        linear.scrollBy(-20, -10);
-        //    }
-        //});
+        ViewGroup.LayoutParams lps = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        addContentView(filingView,lps);
     }
 
 
