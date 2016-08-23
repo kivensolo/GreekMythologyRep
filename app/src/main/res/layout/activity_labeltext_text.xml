@@ -5,7 +5,7 @@
     android:orientation="vertical" >
 
     <!-- 加载自定义的lableText -->
-    <com.kingz.Widgets.CustomEditText
+    <com.widgets.CustomEditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         labelText="姓名："
@@ -13,7 +13,7 @@
         labelFontColor = "#7cd12e"
         labelPosition="left"/>
 
-    <com.kingz.Widgets.CustomEditText
+    <com.widgets.CustomEditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         labelText="我在上面："

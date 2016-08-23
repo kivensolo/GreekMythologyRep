@@ -1,4 +1,4 @@
-package com.kingz.Widgets;
+package com.widgets;
 
 import android.content.Context;
 import android.util.AttributeSet;

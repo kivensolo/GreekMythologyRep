@@ -16,7 +16,8 @@ import com.kingz.customdemo.R;
  * All rights reserved.
  * author: King.Z
  * date:  2016/7/12 10:50
- * description: 实现染色效果的思路是，用clipRect将一行文字剪切成两部分，前半部分用一个颜色，后边部分用另一个颜色，根据进度的变化，改变这个剪切点的位置。
+ * description: 实现染色效果的思路是，用clipRect将一行文字剪切成两部分，
+ * 前半部分用一个颜色，后边部分用另一个颜色，根据进度的变化，改变这个剪切点的位置。
  */
 public class ColorTrackView extends View {
 

@@ -66,7 +66,7 @@
                   android:theme="@android:style/Theme.Black.NoTitleBar" />
 
         <!-- 自定义 SeekBar -->
-        <activity android:name="com.kingz.Widgets.UsingCustomSeekBar"
+        <activity android:name="com.view.pages.UsingCustomSeekBar"
                  android:theme="@android:style/Theme.Black.NoTitleBar"/>
         <!-- 绘画的方式画seekBar -->
         <activity
@@ -170,7 +170,6 @@
         <activity android:name="com.view.pages.WaveLoadingActivity"
                   android:screenOrientation="portrait"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
-         <!-- WaveLoadingActivity -->
         <activity android:name="com.view.scroll.ScrollTestActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 

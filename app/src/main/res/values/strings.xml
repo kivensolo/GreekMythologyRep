@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">UIUsingListView</string>
+    <string name="app_name">BiuBIuDemo</string>
     <string name="hello_world">Hello world!</string>
     <string name="seek_bar">SeekBar Src</string>
     <string name="action_settings">Settings</string>
@@ -37,5 +37,8 @@
         alarm that will initiate a long-lived operation through a service.</string>
     <string name="start_alarm_service">Start Alarm Service</string>
     <string name="stop_alarm_service">Stop Alarm Service</string>
+
+    <string name="popwin">弹出PopUp</string>
+
 
 </resources>

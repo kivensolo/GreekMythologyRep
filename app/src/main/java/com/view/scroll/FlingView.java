@@ -64,6 +64,8 @@ public class FlingView extends TextView {
         super(context, attrs);
         mScroller = new Scroller(context, new BounceInterpolator());
         mGestureDetector = new GestureDetector(context, new GestureListenerImpl());
+        //解决长按屏幕后无法拖动的现象
+        mGestureDetector.setIsLongpressEnabled(false);
         initViewConfiguaration(context);
         initPaints();
     }
@@ -122,6 +124,10 @@ public class FlingView extends TextView {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         Log.i(TAG,"onTouchEvent ： event = "+event.toString());
+        if (velocityTracker == null) {
+                velocityTracker = VelocityTracker.obtain();
+        }
+        velocityTracker.addMovement(event);
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 startX = event.getRawX();
@@ -131,11 +137,10 @@ public class FlingView extends TextView {
                 Log.i(TAG,"ACTION_DOWN :" + lastX + "-" + lastY);
                 return true;
             case MotionEvent.ACTION_MOVE:
-                //获取X/Y位移值
                 float disX = event.getRawX() - lastX;
                 float disY = event.getRawY() - lastY;
-                offsetLeftAndRight((int) disX);//水平方向偏移量
-                offsetTopAndBottom((int) disY);//垂直方向偏移量
+                offsetLeftAndRight((int) disX);
+                offsetTopAndBottom((int) disY);
                 flingTest();
                 lastX = event.getRawX();
                 lastY = event.getRawY();
@@ -146,8 +151,9 @@ public class FlingView extends TextView {
             case MotionEvent.ACTION_UP:
 //                mScroller.startScroll((int)getX(), (int)getY(), -(int)(getX() - lastX),-(int)(getY() - lastY));
                 mScroller.fling((int)lastX,(int)lastY,velocityX,velocityY, 0, 0, 400, 400);
-                invalidate();
-                return true;
+                //invalidate();
+                clearVelocityTracker();
+                break;
         }
         return super.onTouchEvent(event);
         //return mGestureDetector.onTouchEvent(event);//由手势监听类处理
@@ -205,6 +211,7 @@ public class FlingView extends TextView {
      */
     private void clearVelocityTracker() {
         if (velocityTracker != null) {
+            velocityTracker.clear();
             velocityTracker.recycle();
             velocityTracker = null;
         }

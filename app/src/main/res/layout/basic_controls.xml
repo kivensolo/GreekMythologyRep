@@ -151,29 +151,51 @@
                 android:layout_marginTop="5dip"
         />
 
+        <RelativeLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/black"
+                android:layout_marginTop="10dp"
+                android:padding="3dp">
+            <Button
+                    android:id="@+id/btn_gridView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="GridView"
+                    android:layout_marginStart="10dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:background="@drawable/selector_radius_buttons"/>
+            <Button
+                    android:id="@+id/btn_dialog_frament_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="自定义DialogFrament"
+                    android:background="@drawable/selector_radius_buttons"
+                    android:layout_alignTop="@+id/btn_gridView"
+                    android:layout_toEndOf="@+id/show_popup_window"/>
 
-        <Button
-                android:id="@+id/btn_gridView"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:text="GridView"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:background="@drawable/uiusing_app_btn_style"/>
+            <Button
+                    android:id="@+id/show_popup_window"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/btn_gridView"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginStart="10dp"
+                    android:onClick="showPopupWindow"
+                    android:text="@string/popwin"
+                    android:background="@drawable/selector_radius_buttons"/>
+
+        </RelativeLayout>
+
 
         <Gallery android:layout_width="match_parent"
                  android:layout_height="wrap_content"
                  android:id="@+id/gallery_area"
                  android:layout_marginTop="10dp">
         </Gallery>
-        <Button
-                android:id="@+id/btn_dialog_frament_id"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:textStyle="bold"
-                android:text="自定义DialogFrament"
-                android:background="@drawable/uiusing_app_btn_style"/>
-
 
         <TextView
                 android:layout_height="wrap_content"

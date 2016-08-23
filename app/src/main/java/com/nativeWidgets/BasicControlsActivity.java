@@ -5,19 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.Gallery;
-import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.RatingBar;
-import android.widget.Spinner;
-
+import android.widget.*;
+import com.App;
 import com.kingz.customdemo.R;
 import com.utils.ToastTools;
 
@@ -39,6 +32,7 @@ public class BasicControlsActivity extends Activity implements View.OnClickListe
     private RadioButton rbLeft,rbRight;
     private Button disabledButton,customDialogFrament;
     private Button gridViewButton;
+    private Button showPopBtn;
     private RatingBar mRratingBar;
     private Spinner mSpinner;
     private Gallery mGallery;
@@ -48,9 +42,8 @@ public class BasicControlsActivity extends Activity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.i(TAG,"BasicControlsActivity onCreate");
         setContentView(R.layout.basic_controls);
-
+        context = App.getAppContext();
         initViews();
         initListeners();
     }
@@ -61,9 +54,10 @@ public class BasicControlsActivity extends Activity implements View.OnClickListe
 
     private void initViews() {
         mToast = new ToastTools();
-        disabledButton = (Button) findViewById(R.id.button_disabled);
+        disabledButton = (Button)findViewById(R.id.button_disabled);
         disabledButton.setEnabled(false);
         gridViewButton  = (Button) findViewById(R.id.btn_gridView);
+        showPopBtn = (Button) findViewById(R.id.show_popup_window);
         rbLeft = (RadioButton) findViewById(R.id.radio1);
         rbRight = (RadioButton) findViewById(R.id.radio2);
         mRratingBar = (RatingBar) findViewById(R.id.ratingBar);
@@ -96,12 +90,17 @@ public class BasicControlsActivity extends Activity implements View.OnClickListe
                 startActivity(intent);
                 break;
             case R.id.btn_dialog_frament_id:
-                AlertDialogFragment dialog = AlertDialogFragment.newInstance("测试标题",
-                        "这是个内容",
-                        true);
-                dialog.show(getFragmentManager(),"dialog");
+                showAlertDialogFragment();
                 break;
         }
+    }
+
+    /**
+     * 显示FragmentDilaog
+     */
+    private void showAlertDialogFragment() {
+        AlertDialogFragment dialog = AlertDialogFragment.newInstance("测试标题","这是个内容",true);
+        dialog.show(getFragmentManager(),"dialog");
     }
 
     @Override
@@ -198,5 +197,33 @@ public class BasicControlsActivity extends Activity implements View.OnClickListe
             i.setImageResource(imagesArray[position]);
             return i;
         }
+    }
+
+
+    /**
+	 * 显示PopUpWindow
+	 * @param view
+     */
+	 public void showPopupWindow(View view) {
+		 View contentView =  ((LayoutInflater)getSystemService(this.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.simple_listviewitem,null);
+		 TextView textView = (TextView) contentView.findViewById(R.id.commonadapter_item_text);
+		 textView.setText("新疆电视台");
+		 PopupWindow popupWindow = new PopupWindow(contentView, LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT, true);
+		 popupWindow.setTouchable(true);
+		 popupWindow.setTouchInterceptor(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Log.i("mengdd", "onTouch : ");
+                return false;
+                // 这里如果返回true的话，touch事件将被拦截
+                // 拦截后 PopupWindow的onTouchEvent不被调用，这样点击外部区域无法dismiss
+            }
+        });
+		//如果不设置PopupWindow的背景，无论是点击外部区域还是Back键都无法dismiss弹框
+        // 我觉得这里是API的一个bug
+        popupWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.bg5));
+		// 设置好参数之后再show
+        popupWindow.showAsDropDown(view);
+
     }
 }

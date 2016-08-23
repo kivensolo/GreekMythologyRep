@@ -1,10 +1,9 @@
-package com.kingz.Widgets;
+package com.view.pages;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.SeekBar;
 import android.widget.TextView;
-
 import com.kingz.customdemo.R;
 
 /**
@@ -20,18 +19,16 @@ public class UsingCustomSeekBar extends Activity{
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.custom_seek_bar);
-
 		initView();
-		mSeekBarSelfPic.setOnSeekBarChangeListener(mSeekBarChangeListener);
 	}
 
 	private void initView() {
 		tv = (TextView) findViewById(R.id.textView1);
 		mSeekBarSelfPic = (SeekBar) findViewById(R.id.seekbar_self);
 		mSeekBarSelfColor = (SeekBar) findViewById(R.id.seekbar_self_2);
+		mSeekBarSelfPic.setOnSeekBarChangeListener(mSeekBarChangeListener);
 	}
 
 	/**
@@ -41,13 +38,11 @@ public class UsingCustomSeekBar extends Activity{
 
 		@Override
 		public void onStopTrackingTouch(SeekBar seekBar) {
-			// TODO Auto-generated method stub
 
 		}
 
 		@Override
 		public void onStartTrackingTouch(SeekBar seekBar) {
-			// TODO Auto-generated method stub
 
 		}
 
