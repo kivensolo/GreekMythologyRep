@@ -45,6 +45,8 @@ public class PhotosActivity extends BaseActivity {
     private ImageView img5;
     private ImageView img6;
     private ImageView img7;
+    private ImageView img8;
+    private ImageView img9;
 
     private RecyclerView recyclerView;
     private DemoRecyclerAdapter mAdapter;
@@ -63,6 +65,8 @@ public class PhotosActivity extends BaseActivity {
         img5 = (ImageView) findViewById(R.id.corner_pic);
         img6 = (ImageView) findViewById(R.id.circle_pic);
         img7 = (ImageView) findViewById(R.id.skew_pic);
+        img8 = (ImageView) findViewById(R.id.watermark_pic);
+        img9 = (ImageView) findViewById(R.id.watermark_text);
         setImageView();
     }
 
@@ -109,6 +113,7 @@ public class PhotosActivity extends BaseActivity {
 
     private void setImageView() {
         srcBitmap = BitMapUtils.drawable2Bitmap(getResources().getDrawable(R.drawable.wang), 320, 180);
+        Bitmap waterMark = BitMapUtils.drawable2Bitmap(getResources().getDrawable(R.drawable.m), 110,132);
         //加载原始图片
         img1.setImageDrawable(getResources().getDrawable(R.drawable.wang));
         //加载平移的图片
@@ -128,6 +133,13 @@ public class PhotosActivity extends BaseActivity {
 
         //X/Y轴倾斜图片
         img7.setImageBitmap(BitMapUtils.setSkew(srcBitmap,-0.3f,0));
+
+        //添加水印图片
+        img8.setImageBitmap(BitMapUtils.createWaterMarkBitmap(srcBitmap,waterMark,srcBitmap.getWidth() - waterMark.getWidth(),0));
+
+        //添加水印文字
+        img9.setImageBitmap(BitMapUtils.createWaterMarkText(srcBitmap,"测试水印",
+                srcBitmap.getWidth() - srcBitmap.getWidth()/2,srcBitmap.getHeight() - srcBitmap.getHeight()/2));
     }
 
     @Override

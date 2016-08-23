@@ -1,18 +1,10 @@
 package com.utils;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Matrix;
-import android.graphics.Paint;
-import android.graphics.PixelFormat;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
-import android.graphics.RectF;
+import android.graphics.*;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Base64;
+import com.kingz.customdemo.R;
 
 import java.io.ByteArrayOutputStream;
 
@@ -82,7 +74,8 @@ public class BitMapUtils {
 
     /**
      * 设置图片倾斜
-     * @param bm 源BitMap
+     *
+     * @param bm    源BitMap
      * @param skewX x轴倾斜度
      * @param skewY y轴倾斜度
      * @return
@@ -102,6 +95,7 @@ public class BitMapUtils {
      * 控制Matrix以px和py为轴心进行倾斜。例如，创建一个Matrix对象，并将其以(100,100)为轴心在X轴和Y轴上均倾斜0.1
      * Matrix m=new Matrix();
      * m.setSkew(0.1f,0.1f,100,100);
+     *
      * @param bm
      * @param kx
      * @param ky
@@ -109,63 +103,65 @@ public class BitMapUtils {
      * @param py
      * @return
      */
-    public static Bitmap setSkew(Bitmap bm,float kx, float ky, float px, float py) {
+    public static Bitmap setSkew(Bitmap bm, float kx, float ky, float px, float py) {
         int width = bm.getWidth();
         int height = bm.getHeight();
         // 取得想要倾斜的matrix参数
         Matrix matrix = new Matrix();
-        matrix.setSkew( kx,ky,px,py);
+        matrix.setSkew(kx, ky, px, py);
         Bitmap newbm = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, true);
         return newbm;
     }
 
     /**
      * 设置圆角
-     * @param bm 源BitMap
+     *
+     * @param bm     源BitMap
      * @param radius 圆角弧度
      * @return
      */
-    public static Bitmap setRoundCorner(Bitmap bm,int radius){
+    public static Bitmap setRoundCorner(Bitmap bm, int radius) {
         //初始化画笔
         Paint paint = new Paint();
         paint.setAntiAlias(true);
         //准备裁剪的矩阵
-        Rect rect = new Rect(0,0,bm.getWidth(),bm.getHeight());
-        RectF rectF= new RectF(0,0,bm.getWidth(),bm.getHeight());
+        Rect rect = new Rect(0, 0, bm.getWidth(), bm.getHeight());
+        RectF rectF = new RectF(0, 0, bm.getWidth(), bm.getHeight());
 
         // 建立对应 bitmap
         Bitmap roundBitmap = Bitmap.createBitmap(bm.getWidth(), bm.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(roundBitmap);
         //圆角矩形，radius为圆角大小
-        canvas.drawRoundRect(rectF,radius,radius,paint);
+        canvas.drawRoundRect(rectF, radius, radius, paint);
         //设置PorterDuffXfermode，把圆角矩阵套在原Bitmap上取交集得到圆角Bitmap。
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-        canvas.drawBitmap(bm,rect,rect,paint);
+        canvas.drawBitmap(bm, rect, rect, paint);
         return roundBitmap;
     }
 
     /**
      * 绘制圆形BitMap ---- 原理同绘制圆角矩形
      * 从圆角、圆形的处理上能看的出来绘制任意多边形都是可以的
+     *
      * @param bm 源BitMap
      * @return
      */
-    public static Bitmap setCircle(Bitmap bm){
-        int min = bm.getWidth() < bm.getHeight() ? bm.getWidth() :bm.getHeight();
+    public static Bitmap setCircle(Bitmap bm) {
+        int min = bm.getWidth() < bm.getHeight() ? bm.getWidth() : bm.getHeight();
 
         Paint paint = new Paint();
         paint.setAntiAlias(true);
-        Bitmap circleBitmap = Bitmap.createBitmap(min,min, Bitmap.Config.ARGB_8888);
+        Bitmap circleBitmap = Bitmap.createBitmap(min, min, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(circleBitmap);
         //绘制圆形
-        canvas.drawCircle(min/2,min/2,min/2,paint);
+        canvas.drawCircle(min / 2, min / 2, min / 2, paint);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
 
         //居中显示
         int left = -(bm.getWidth() - min) / 2;
         int top = -(bm.getHeight() - min) / 2;
 
-        canvas.drawBitmap(bm,left,top,paint);
+        canvas.drawBitmap(bm, left, top, paint);
         return circleBitmap;
     }
 
@@ -202,6 +198,91 @@ public class BitMapUtils {
         BitmapDrawable bd = new BitmapDrawable(bm);
         bd.setTargetDensity(bm.getDensity());
         return new BitmapDrawable(bm);
+    }
+
+    /**
+     * 生成水印图片
+     *
+     * @param photo     原图片
+     * @param watermark 水印图片
+     * @param mark_x    水印X坐标
+     * @param mark_y    水印Y坐标
+     * @return
+     */
+    public static Bitmap createWaterMarkBitmap(Bitmap photo, Bitmap watermark, int mark_x, int mark_y) {
+        //左上角 mark_x = 0；mark_y=0;
+        //右上角 mark_x = photo.getWidth() - watermark.getWidth()；mark_y=0;
+        //左下角 mark_x = 0；mark_y=photo.getHeight() - watermark.getHeight();
+        /*左上角 mark_x = photo.getWidth() - watermark.getWidth()；
+        /mark_y = photo.getHeight() - watermark.getHeight();*/
+        if (photo == null) {
+            return null;
+        }
+        int photoWidth = photo.getWidth();
+        int photoHeight = photo.getHeight();
+        int markWidth = watermark.getWidth();
+        int markHeight = watermark.getHeight();
+
+        // create the new blank bitmap
+        Bitmap newb = Bitmap.createBitmap(photoWidth, photoHeight, Bitmap.Config.ARGB_8888);
+        // 创建一个新的和SRC长度宽度一样的位图
+        Canvas cv = new Canvas(newb);
+
+        // draw src into
+        // 在 0，0坐标开始画入src
+        cv.drawBitmap(photo, 0, 0, null);
+        // draw watermark into
+        // 在src的右下角画入水印
+        cv.drawBitmap(watermark, mark_x, mark_y, null);
+        // save all clip
+        cv.save(Canvas.ALL_SAVE_FLAG);// 保存
+        // store
+        cv.restore();// 存储
+        return newb;
+    }
+
+    /**
+     * 生成水印文字
+     *
+     * @param photo     原图片
+     * @param str       水印文字
+     * @param mark_x    水印X坐标
+     * @param mark_y    水印Y坐标
+     * @return
+     */
+    public static Bitmap createWaterMarkText(Bitmap photo, String str, int mark_x, int mark_y) {
+        int width = photo.getWidth();
+        int hight = photo.getHeight();
+        //建立一个空的BItMap
+        Bitmap icon = Bitmap.createBitmap(width, hight, Bitmap.Config.ARGB_8888);
+        //初始化画布绘制的图像到icon上
+        Canvas canvas = new Canvas(icon);
+
+        Paint photoPaint = new Paint();     //建立画笔
+        photoPaint.setDither(true);         //获取跟清晰的图像采样
+        photoPaint.setFilterBitmap(true);   //过滤一些
+
+        //创建一个指定的新矩形的坐标
+        Rect src = new Rect(0, 0, photo.getWidth(), photo.getHeight());
+        //创建一个指定的新矩形的坐标
+        Rect dst = new Rect(0, 0, width, hight);
+        //将photo 缩放或则扩大到 dst使用的填充区photoPaint
+        canvas.drawBitmap(photo, src, dst, photoPaint);
+
+        //设置画笔
+        Paint textPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DEV_KERN_TEXT_FLAG);
+        textPaint.setTextSize(20.0f);//字体大小
+        //采用默认的宽度
+        textPaint.setTypeface(Typeface.DEFAULT_BOLD);
+        //采用的颜色
+        textPaint.setColor(Color.parseColor("#5FCDDA"));
+        //影音的设置
+        //textPaint.setShadowLayer(3f, 1, 1,this.getResources().getColor(android.R.color.background_dark));
+        //绘制上去字，开始未知x,y采用那只笔绘制
+        canvas.drawText(str, mark_x, mark_y, textPaint);
+        canvas.save(Canvas.ALL_SAVE_FLAG);
+        canvas.restore();
+        return icon;
     }
 
     /************************************ 图形变换 End************************************/
