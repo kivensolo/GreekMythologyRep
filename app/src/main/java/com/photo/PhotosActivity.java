@@ -141,7 +141,7 @@ public class PhotosActivity extends BaseActivity {
         //img9.setImageBitmap(BitMapUtils.createWaterMarkText(srcBitmap,"测试水印",
         //        srcBitmap.getWidth() - srcBitmap.getWidth()/2,srcBitmap.getHeight() - srcBitmap.getHeight()/2));
 
-        img9.setImageBitmap(BitMapUtils.setInvertedBitmap(srcBitmap));
+        img9.setImageBitmap(BitMapUtils.setInvertedBitmap(srcBitmap,srcBitmap.getHeight()/3));
     }
 
     @Override

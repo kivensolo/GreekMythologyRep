@@ -1,6 +1,19 @@
 package com.utils;
 
-import android.graphics.*;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.PixelFormat;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
+import android.graphics.Shader;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Base64;
@@ -30,6 +43,17 @@ import java.io.ByteArrayOutputStream;
  * ※ inScaled属性
  * 如果inScaled设置为false，则不进行缩放，解码后图片大小为720×720;
  * 如果inScaled设置为true或者不设置，则根据inDensity和inTargetDensity计算缩放系数。
+ *
+ * ※※※※※※※※ Matrix ※※※※※※※※
+ * 矩阵相关：
+ *       矩阵前乘  例如：变换矩阵为A，原始矩阵为B，pre方法的含义即是A*B：
+ *          pre系列方法：preScale，preTranslate，preRotate，preSkew，
+ *          set系列方法：setScale，setTranslate，setRotate，setSkew，
+ *       矩阵后乘  例如：变换矩阵为A，原始矩阵为B，post方法的含义即是B*A
+ *          post系列方法：postScale，postTranslate，postRotate，postSkew。
+ *
+ *          注意：后调用的pre操作先执行，而后调用的post操作则后执行。
+ *
  */
 public class BitMapUtils {
 
@@ -168,30 +192,42 @@ public class BitMapUtils {
         return circleBitmap;
     }
 
-    public static Bitmap setInvertedBitmap(Bitmap bm) {
+    /**
+     * 倒影效果
+     * @param bm                原图
+     * @param reflectHight      倒影图高度
+     * @return
+     */
+    public static Bitmap setInvertedBitmap(Bitmap bm, int reflectHight) {
+        //倒影图和原图之间的距离
         int reflectionGap = 4;
         int width = bm.getWidth();
         int height = bm.getHeight();
-         Matrix matrix = new Matrix();
-        matrix.preScale(1,-1);
-        //倒影图BitMap
-        Bitmap reflectBitmap = Bitmap.createBitmap(bm,0,height/2,width,height/2,matrix,true);
-        Bitmap bitmapWithReflection = Bitmap.createBitmap(width,height+height/2, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmapWithReflection);
-        canvas.drawBitmap(bm,0,0,null);
+        //创建单元矩阵
+        Matrix matrix = new Matrix();
+        //Scale不变，Y轴反转
+        matrix.preScale(1, -1);
+        //倒影图
+        Bitmap reflectBitmap = Bitmap.createBitmap(bm, 0, height - reflectHight, width, reflectHight, matrix, false);
+        //总长度的空BitMap
+        Bitmap totalBitMap = Bitmap.createBitmap(width, height + reflectHight, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(totalBitMap);
+        canvas.drawBitmap(bm, 0, 0, null);
+        Paint paint = new Paint();
+        canvas.drawRect(0, height, width, height + reflectionGap, paint); //两图间间隔
+        canvas.drawBitmap(reflectBitmap, 0, height + reflectionGap, null); //绘制倒影图
 
-        Paint drawPaint = new Paint();
-        //画倒影图
-        canvas.drawRect(0,height,width,height+reflectionGap,drawPaint);
-        canvas.drawBitmap(reflectBitmap,0,height+reflectionGap,null);
-
+        //画渐变蒙城
         //线性梯度渐变
-        LinearGradient shader = new LinearGradient(0,bm.getHeight(),0,bitmapWithReflection.getHeight()+reflectionGap,0x70ffffff,0x00ffffff, Shader.TileMode.CLAMP);
-        drawPaint.setShader(shader);
-        drawPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-        //画渐变矩形
-        canvas.drawRect(0,height,width,bitmapWithReflection.getHeight()+reflectionGap,drawPaint);
-        return bitmapWithReflection;
+        paint = new Paint();
+        LinearGradient shader = new LinearGradient(0,
+                bm.getHeight()+reflectionGap, 0,
+                totalBitMap.getHeight() + reflectionGap,
+                0x50000000,0x90000000,Shader.TileMode.CLAMP);
+        paint.setShader(shader);
+//        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN)); //倒影遮罩效果 取交集显示下面
+        canvas.drawRect(0, height, width, totalBitMap.getHeight() + reflectionGap, paint);
+        return totalBitMap;
     }
 
     /**
