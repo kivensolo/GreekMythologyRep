@@ -120,16 +120,16 @@ public class PhotosActivity extends BaseActivity {
         img2.setImageBitmap(srcBitmap);
 
         //加载剪切的图片
-        img3.setImageBitmap(BitMapUtils.zoomImg(srcBitmap,160,90));
+        img3.setImageBitmap(BitMapUtils.setZoomImg(srcBitmap,160,90));
 
         //旋转(顺时针)
-        img4.setImageBitmap(BitMapUtils.rotateImage(180, srcBitmap));
+        img4.setImageBitmap(BitMapUtils.setRotateImage(180, srcBitmap));
 
         //圆角矩形
         img5.setImageBitmap(BitMapUtils.setRoundCorner(srcBitmap,45));
 
         //圆形图片
-        img6.setImageBitmap(BitMapUtils.setCircle(srcBitmap));
+        img6.setImageBitmap(BitMapUtils.setBitmapCircle(srcBitmap));
 
         //X/Y轴倾斜图片
         img7.setImageBitmap(BitMapUtils.setSkew(srcBitmap,-0.3f,0));
@@ -138,8 +138,10 @@ public class PhotosActivity extends BaseActivity {
         img8.setImageBitmap(BitMapUtils.createWaterMarkBitmap(srcBitmap,waterMark,srcBitmap.getWidth() - waterMark.getWidth(),0));
 
         //添加水印文字
-        img9.setImageBitmap(BitMapUtils.createWaterMarkText(srcBitmap,"测试水印",
-                srcBitmap.getWidth() - srcBitmap.getWidth()/2,srcBitmap.getHeight() - srcBitmap.getHeight()/2));
+        //img9.setImageBitmap(BitMapUtils.createWaterMarkText(srcBitmap,"测试水印",
+        //        srcBitmap.getWidth() - srcBitmap.getWidth()/2,srcBitmap.getHeight() - srcBitmap.getHeight()/2));
+
+        img9.setImageBitmap(BitMapUtils.setInvertedBitmap(srcBitmap));
     }
 
     @Override

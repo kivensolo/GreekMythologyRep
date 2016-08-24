@@ -4,7 +4,6 @@ import android.graphics.*;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Base64;
-import com.kingz.customdemo.R;
 
 import java.io.ByteArrayOutputStream;
 
@@ -14,8 +13,11 @@ import java.io.ByteArrayOutputStream;
  * author: King.Z
  * date: 2016 2016/3/27 18:36
  * description: BitMap工具类
- * <p/>
+ * <p>
  * 知识点：
+ * <p>
+ * Android图像处理之Bitmap类:http://www.open-open.com/lib/view/open1333418945202.html
+ * <p>
  * http://mp.weixin.qq.com/s?__biz=MzI3MDE0NzYwNA==&mid=2651433713&idx=1&sn=d152b053221c4c0bf1baa684b2a51e9c&scene=23&srcid=0805emSJb7dH8hdYfIcQiChP#rd
  * 1、decodeResource()和decodeFile()
  * decodeFile()用于读取SD卡上的图，得到的是图片的原始尺寸
@@ -24,7 +26,7 @@ import java.io.ByteArrayOutputStream;
  * public boolean inScaled  //默认True
  * public int inDensity;       //无dip的文件夹下默认160
  * public int inTargetDensity; //取决具体屏幕
- * <p/>
+ * <p>
  * ※ inScaled属性
  * 如果inScaled设置为false，则不进行缩放，解码后图片大小为720×720;
  * 如果inScaled设置为true或者不设置，则根据inDensity和inTargetDensity计算缩放系数。
@@ -44,7 +46,7 @@ public class BitMapUtils {
      * @param bitmap 目标图片
      * @return Bitmap    旋转后的图片
      */
-    public static Bitmap rotateImage(int angle, Bitmap bitmap) {
+    public static Bitmap setRotateImage(int angle, Bitmap bitmap) {
         // 图片旋转矩阵
         Matrix matrix = new Matrix(); // 每一种变化都包括set，pre，post三种，分别为设置、矩阵先乘、矩阵后乘。
         matrix.postRotate(angle);
@@ -57,7 +59,7 @@ public class BitMapUtils {
      * 按比例缩放/裁剪图片
      * 通过矩阵方式
      */
-    public static Bitmap zoomImg(Bitmap bm, int newWidth, int newHeight) {
+    public static Bitmap setZoomImg(Bitmap bm, int newWidth, int newHeight) {
         // 获得图片的宽高
         int width = bm.getWidth();
         int height = bm.getHeight();
@@ -92,7 +94,8 @@ public class BitMapUtils {
     }
 
     /**
-     * 控制Matrix以px和py为轴心进行倾斜。例如，创建一个Matrix对象，并将其以(100,100)为轴心在X轴和Y轴上均倾斜0.1
+     * 控制Matrix以px和py为轴心进行倾斜。
+     * 例如，创建一个Matrix对象，并将其以(100,100)为轴心在X轴和Y轴上均倾斜0.1
      * Matrix m=new Matrix();
      * m.setSkew(0.1f,0.1f,100,100);
      *
@@ -125,15 +128,15 @@ public class BitMapUtils {
         Paint paint = new Paint();
         paint.setAntiAlias(true);
         //准备裁剪的矩阵
-        Rect rect = new Rect(0, 0, bm.getWidth(), bm.getHeight());
-        RectF rectF = new RectF(0, 0, bm.getWidth(), bm.getHeight());
+        Rect rect = new Rect(0, 0, bm.getWidth(), bm.getHeight());   //Src
+        RectF rectF = new RectF(0, 0, bm.getWidth(), bm.getHeight());  //Dst
 
-        // 建立对应 bitmap
+        //新建一个新的输出图片
         Bitmap roundBitmap = Bitmap.createBitmap(bm.getWidth(), bm.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(roundBitmap);
-        //圆角矩形，radius为圆角大小
+        //圆角矩形(Dst)，radius为圆角大小
         canvas.drawRoundRect(rectF, radius, radius, paint);
-        //设置PorterDuffXfermode，把圆角矩阵套在原Bitmap上取交集得到圆角Bitmap。
+        //设置PorterDuffXfermode，把圆角矩形(Dst)套在原Bitmap(Src)上取交集得到圆角Bitmap。
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
         canvas.drawBitmap(bm, rect, rect, paint);
         return roundBitmap;
@@ -146,7 +149,7 @@ public class BitMapUtils {
      * @param bm 源BitMap
      * @return
      */
-    public static Bitmap setCircle(Bitmap bm) {
+    public static Bitmap setBitmapCircle(Bitmap bm) {
         int min = bm.getWidth() < bm.getHeight() ? bm.getWidth() : bm.getHeight();
 
         Paint paint = new Paint();
@@ -165,39 +168,30 @@ public class BitMapUtils {
         return circleBitmap;
     }
 
-    /**
-     * drawable转换为Bitmap
-     *
-     * @param drawable 目标Drawable
-     * @param width    要求宽度
-     * @param height   要求的高度
-     * @return 转换后的BitMap
-     */
-    public static Bitmap drawable2Bitmap(Drawable drawable, int width, int height) {
-        if (drawable == null) {
-            return null;
-        }
-        // 建立对应 bitmap
-        Bitmap bitmap = Bitmap.createBitmap(width, height, drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888 : Bitmap.Config.RGB_565);
-        // 建立对应 bitmap 的画布
-        Canvas canvas = new Canvas(bitmap);
-        drawable.setBounds(0, 0, width, height);
-        // 把 drawable 内容画到画布中
-        drawable.draw(canvas);
-        return bitmap;
-    }
+    public static Bitmap setInvertedBitmap(Bitmap bm) {
+        int reflectionGap = 4;
+        int width = bm.getWidth();
+        int height = bm.getHeight();
+         Matrix matrix = new Matrix();
+        matrix.preScale(1,-1);
+        //倒影图BitMap
+        Bitmap reflectBitmap = Bitmap.createBitmap(bm,0,height/2,width,height/2,matrix,true);
+        Bitmap bitmapWithReflection = Bitmap.createBitmap(width,height+height/2, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmapWithReflection);
+        canvas.drawBitmap(bm,0,0,null);
 
-    /**
-     * Bitmap 转 Drawable
-     */
-    @SuppressWarnings("deprecation")
-    public static Drawable bitmap2Drawable(Bitmap bm) {
-        if (bm == null) {
-            return null;
-        }
-        BitmapDrawable bd = new BitmapDrawable(bm);
-        bd.setTargetDensity(bm.getDensity());
-        return new BitmapDrawable(bm);
+        Paint drawPaint = new Paint();
+        //画倒影图
+        canvas.drawRect(0,height,width,height+reflectionGap,drawPaint);
+        canvas.drawBitmap(reflectBitmap,0,height+reflectionGap,null);
+
+        //线性梯度渐变
+        LinearGradient shader = new LinearGradient(0,bm.getHeight(),0,bitmapWithReflection.getHeight()+reflectionGap,0x70ffffff,0x00ffffff, Shader.TileMode.CLAMP);
+        drawPaint.setShader(shader);
+        drawPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        //画渐变矩形
+        canvas.drawRect(0,height,width,bitmapWithReflection.getHeight()+reflectionGap,drawPaint);
+        return bitmapWithReflection;
     }
 
     /**
@@ -244,10 +238,10 @@ public class BitMapUtils {
     /**
      * 生成水印文字
      *
-     * @param photo     原图片
-     * @param str       水印文字
-     * @param mark_x    水印X坐标
-     * @param mark_y    水印Y坐标
+     * @param photo  原图片
+     * @param str    水印文字
+     * @param mark_x 水印X坐标
+     * @param mark_y 水印Y坐标
      * @return
      */
     public static Bitmap createWaterMarkText(Bitmap photo, String str, int mark_x, int mark_y) {
@@ -289,6 +283,42 @@ public class BitMapUtils {
 
 
     /************************************ BitMap转变 ************************************/
+
+
+    /**
+     * drawable转换为Bitmap
+     *
+     * @param drawable 目标Drawable
+     * @param width    要求宽度
+     * @param height   要求的高度
+     * @return 转换后的BitMap
+     */
+    public static Bitmap drawable2Bitmap(Drawable drawable, int width, int height) {
+        if (drawable == null) {
+            return null;
+        }
+        // 建立对应 bitmap
+        Bitmap bitmap = Bitmap.createBitmap(width, height, drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888 : Bitmap.Config.RGB_565);
+        // 建立对应 bitmap 的画布
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, width, height);
+        // 把 drawable 内容画到画布中
+        drawable.draw(canvas);
+        return bitmap;
+    }
+
+    /**
+     * Bitmap 转 Drawable
+     */
+    @SuppressWarnings("deprecation")
+    public static Drawable bitmap2Drawable(Bitmap bm) {
+        if (bm == null) {
+            return null;
+        }
+        BitmapDrawable bd = new BitmapDrawable(bm);
+        bd.setTargetDensity(bm.getDensity());
+        return new BitmapDrawable(bm);
+    }
 
     /**
      * 把bitmap转换成base64

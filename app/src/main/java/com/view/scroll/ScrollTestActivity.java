@@ -34,29 +34,4 @@ public class ScrollTestActivity extends BaseActivity {
         ViewGroup.LayoutParams lps = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
         addContentView(filingView,lps);
     }
-
-
-    //
-    //private void flingTest() {
-    //    /**
-    //     * 手势滑动，滑动距离由初始速度决定
-    //     * startX：开始滑动的X坐标
-    //     * startY：开始滑动的Y坐标
-    //     * velocityX: X方向上的初始化滑行速度  像素/秒
-    //     * velocityY: Y方向上的初始化滑行速度  像素/秒
-    //     * minX:最小的X值，Scroll不会划过这个点
-    //     * minY:最小的Y值，Scroll不会划过这个点
-    //     * maxX:最大的X值，Scroll不会划过这个点
-    //     * maxY:最大的Y值，Scroll不会划过这个点
-    //     *
-    //     */
-    //    mScroller.fling(scrollBtn.getScrollX(), scrollBtn.getScrollY(), getscrollerVelocity_X(), getscrollerVelocity_Y(), 23, 23, 1920, 1920);
-    //}
-
-
-    /****
-     * 滑动效果处理
-     ***/
-
-
 }

@@ -35,6 +35,23 @@ public class AppInfoUtils {
         List<ResolveInfo> resolveInfoList = pkgMgr.queryIntentActivities(intent, 0); //本机所有具有Launcher属性的APK信息
         return resolveInfoList;
     }
+     /**
+     * [根据包名判断一个应用是否已经被安装]
+     * @param packageName 应用包名
+     * @return
+     */
+    public static boolean isAppInstalled(String packageName){
+        PackageManager pm = App.getAppContext().getPackageManager();
+        boolean installed;
+        try{
+            pm.getPackageInfo(packageName,PackageManager.GET_ACTIVITIES);
+            installed =true;
+        }catch(PackageManager.NameNotFoundException e){
+            installed =false;
+        }
+        return installed;
+    }
+
 
     /**
      * 【获取应用程序名称】
