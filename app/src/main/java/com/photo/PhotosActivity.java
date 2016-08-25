@@ -3,15 +3,17 @@ package com.photo;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
-
+import android.widget.ListView;
 import com.BaseActivity;
+import com.adapter.BitmapPageAdapter;
 import com.kingz.customdemo.R;
 import com.utils.BitMapUtils;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.*;
 
 /**
  * Copyright(C) 2015, 北京视达科科技有限公司
@@ -33,23 +35,21 @@ import java.util.Date;
  *
  *
  */
-public class PhotosActivity extends BaseActivity {
+public class PhotosActivity extends BaseActivity implements AdapterView.OnItemClickListener{
 
     public static final String TAG = "PhotosActivity";
 
     private Bitmap srcBitmap;
+    private ListView listView;
+    private BitmapPageAdapter bitmapAdapter;
     private ImageView img1;
-    private ImageView img2;
-    private ImageView img3;
-    private ImageView img4;
-    private ImageView img5;
-    private ImageView img6;
-    private ImageView img7;
-    private ImageView img8;
-    private ImageView img9;
 
     private RecyclerView recyclerView;
     private DemoRecyclerAdapter mAdapter;
+
+    String[] strs = {"平移图片", "放大/缩小图片", "旋转图片","圆角图片","圆形图片",
+            "斜切图片","水印---图片","水印---文字","倒影",};
+    List<String> datas = Arrays.asList(strs);
 
     @Override
     protected void findID() {
@@ -57,16 +57,11 @@ public class PhotosActivity extends BaseActivity {
         setContentView(R.layout.photos_activity);
 //        recyclerView = (RecyclerView) findViewById(R.id.test_recycler_view);
 //        initRecyclerView(recyclerView);
-
+        bitmapAdapter = new BitmapPageAdapter(this,datas);
+        listView = (ListView) findViewById(R.id.type_change_id);
+        listView.setAdapter(bitmapAdapter);
+        listView.setOnItemClickListener(this);
         img1 = (ImageView) findViewById(R.id.normal_pic);
-        img2 = (ImageView) findViewById(R.id.translate_pic);
-        img3 = (ImageView) findViewById(R.id.scale_pic);
-        img4 = (ImageView) findViewById(R.id.rotate_pic);
-        img5 = (ImageView) findViewById(R.id.corner_pic);
-        img6 = (ImageView) findViewById(R.id.circle_pic);
-        img7 = (ImageView) findViewById(R.id.skew_pic);
-        img8 = (ImageView) findViewById(R.id.watermark_pic);
-        img9 = (ImageView) findViewById(R.id.watermark_text);
         setImageView();
     }
 
@@ -111,37 +106,38 @@ public class PhotosActivity extends BaseActivity {
     }
 
 
+    Bitmap waterMark;
     private void setImageView() {
-        srcBitmap = BitMapUtils.drawable2Bitmap(getResources().getDrawable(R.drawable.wang), 320, 180);
-        Bitmap waterMark = BitMapUtils.drawable2Bitmap(getResources().getDrawable(R.drawable.m), 110,132);
+        srcBitmap = BitMapUtils.drawable2Bitmap(getResources().getDrawable(R.drawable.sunyanzi_1), 680, 420);
+        waterMark = BitMapUtils.drawable2Bitmap(getResources().getDrawable(R.drawable.m), 110,132);
         //加载原始图片
-        img1.setImageDrawable(getResources().getDrawable(R.drawable.wang));
-        //加载平移的图片
-        img2.setImageBitmap(srcBitmap);
-
-        //加载剪切的图片
-        img3.setImageBitmap(BitMapUtils.setZoomImg(srcBitmap,160,90));
-
-        //旋转(顺时针)
-        img4.setImageBitmap(BitMapUtils.setRotateImage(180, srcBitmap));
-
-        //圆角矩形
-        img5.setImageBitmap(BitMapUtils.setRoundCorner(srcBitmap,45));
-
-        //圆形图片
-        img6.setImageBitmap(BitMapUtils.setBitmapCircle(srcBitmap));
-
-        //X/Y轴倾斜图片
-        img7.setImageBitmap(BitMapUtils.setSkew(srcBitmap,-0.3f,0));
-
-        //添加水印图片
-        img8.setImageBitmap(BitMapUtils.createWaterMarkBitmap(srcBitmap,waterMark,srcBitmap.getWidth() - waterMark.getWidth(),0));
-
-        //添加水印文字
-        //img9.setImageBitmap(BitMapUtils.createWaterMarkText(srcBitmap,"测试水印",
-        //        srcBitmap.getWidth() - srcBitmap.getWidth()/2,srcBitmap.getHeight() - srcBitmap.getHeight()/2));
-
-        img9.setImageBitmap(BitMapUtils.setInvertedBitmap(srcBitmap,srcBitmap.getHeight()/3));
+        img1.setImageBitmap(srcBitmap);
+        ////加载平移的图片
+        //img2.setImageBitmap(srcBitmap);
+        //
+        ////加载剪切的图片
+        //img3.setImageBitmap(BitMapUtils.setZoomImg(srcBitmap,160,90));
+        //
+        ////旋转(顺时针)
+        //img4.setImageBitmap(BitMapUtils.setRotateImage(180, srcBitmap));
+        //
+        ////圆角矩形
+        //img5.setImageBitmap(BitMapUtils.setRoundCorner(srcBitmap,45));
+        //
+        ////圆形图片
+        //img6.setImageBitmap(BitMapUtils.setBitmapCircle(srcBitmap));
+        //
+        ////X/Y轴倾斜图片
+        //img7.setImageBitmap(BitMapUtils.setSkew(srcBitmap,-0.3f,0));
+        //
+        ////添加水印图片
+        //img8.setImageBitmap(BitMapUtils.createWaterMarkBitmap(srcBitmap,waterMark,srcBitmap.getWidth() - waterMark.getWidth(),0));
+        //
+        ////添加水印文字
+        ////img9.setImageBitmap(BitMapUtils.createWaterMarkText(srcBitmap,"测试水印",
+        ////        srcBitmap.getWidth() - srcBitmap.getWidth()/2,srcBitmap.getHeight() - srcBitmap.getHeight()/2));
+        //
+        //img9.setImageBitmap(BitMapUtils.setInvertedBitmap(srcBitmap,srcBitmap.getHeight()/3));
     }
 
     @Override
@@ -191,4 +187,51 @@ public class PhotosActivity extends BaseActivity {
     }
 
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        String clickedtype = (String) bitmapAdapter.getItem(position);
+        Log.i(TAG,"onItemClick： chooseTpye = " + clickedtype);
+        switch (position){
+            case 0:
+                setShowBitMap(srcBitmap);
+                break;
+            case 1:
+                setShowBitMap(BitMapUtils.setZoomImg(srcBitmap,160,90));
+                break;
+            case 2:
+                setShowBitMap(BitMapUtils.setRotateImage(180, srcBitmap));
+                break;
+            case 3:
+                setShowBitMap(BitMapUtils.setRoundCorner(srcBitmap,45));
+                break;
+            case 4:
+                setShowBitMap(BitMapUtils.setBitmapCircle(srcBitmap));
+                break;
+            case 5:
+                setShowBitMap(BitMapUtils.setSkew(srcBitmap,-0.3f,0));
+                break;
+            case 6:
+                setShowBitMap(BitMapUtils.createWaterMarkBitmap(srcBitmap,waterMark,srcBitmap.getWidth() - waterMark.getWidth(),0));
+                break;
+            case 7:
+                setShowBitMap(BitMapUtils.createWaterMarkText(srcBitmap,"测试水印",
+                srcBitmap.getWidth() - srcBitmap.getWidth()/2,srcBitmap.getHeight() - srcBitmap.getHeight()/2));
+                break;
+            case 8:
+                setShowBitMap(BitMapUtils.setInvertedBitmap(srcBitmap,srcBitmap.getHeight()/3));
+                break;
+            default:
+                Log.i(TAG,"未匹配");
+                break;
+        }
+    }
+
+    private void setShowBitMap(final Bitmap bitmap) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                img1.setImageBitmap(bitmap);
+            }
+        });
+    }
 }

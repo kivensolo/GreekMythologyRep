@@ -2,79 +2,45 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/qianpurple"
+    android:padding="@dimen/activity_vertical_margin">
     <!--   <android.support.v7.widget.RecyclerView
         android:id="@+id/test_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>-->
 
-    <ScrollView
+ <!--   <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"
         android:paddingEnd="15dp"
         android:scrollbarStyle="insideOverlay">
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@color/qianpurple"
             android:orientation="vertical"
-            android:padding="@dimen/activity_vertical_margin">
+            android:padding="@dimen/activity_vertical_margin">-->
 
             <ImageView
                 android:id="@+id/normal_pic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="8dp"/>
+                android:layout_marginTop="1dp"/>
 
-            <ImageView
-                android:id="@+id/translate_pic"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_vertical_margin"/>
+            <ListView
+                    android:layout_marginTop="1dp"
+                    android:id="@+id/type_change_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="508dp"
+                    android:background="@drawable/sunyanzi_2">
+            </ListView>
 
-            <ImageView
-                android:id="@+id/scale_pic"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_vertical_margin"/>
-
-            <ImageView
-                android:id="@+id/rotate_pic"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_vertical_margin"/>
-            <ImageView
-                android:id="@+id/corner_pic"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_vertical_margin"/>
-            <ImageView
-                android:id="@+id/circle_pic"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_vertical_margin"/>
-            <ImageView
-                android:id="@+id/skew_pic"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_vertical_margin"/>
-            <ImageView
-                android:id="@+id/watermark_pic"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_vertical_margin"/>
-
-            <ImageView
-                android:id="@+id/watermark_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_vertical_margin"/>
-
-        </LinearLayout>
+ <!--       </FrameLayout>
 
 
     </ScrollView>
-
+-->
 </LinearLayout>
