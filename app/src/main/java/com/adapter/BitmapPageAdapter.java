@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.holder.CommViewHodler;
 import com.kingz.customdemo.R;
 
+import java.util.HashSet;
 import java.util.List;
 
 /**

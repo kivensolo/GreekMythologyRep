@@ -1,46 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/qianpurple"
-    android:padding="@dimen/activity_vertical_margin">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="horizontal"
+              android:background="@color/qianpurple">
     <!--   <android.support.v7.widget.RecyclerView
         android:id="@+id/test_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>-->
 
- <!--   <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical"
-        android:paddingEnd="15dp"
-        android:scrollbarStyle="insideOverlay">
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/qianpurple"
-            android:orientation="vertical"
-            android:padding="@dimen/activity_vertical_margin">-->
+    <!--   <ScrollView
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:scrollbars="vertical"
+           android:paddingEnd="15dp"
+           android:scrollbarStyle="insideOverlay">
+           <FrameLayout
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:background="@color/qianpurple"
+               android:orientation="vertical"
+               android:padding="@dimen/activity_vertical_margin">-->
+    <!--       </FrameLayout>
 
-            <ImageView
+       </ScrollView>
+   -->
+
+    <ListView
+            android:id="@+id/type_change_id"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/ironman_1"
+            android:scrollbarStyle="insideInset"
+            android:layout_weight="2">
+    </ListView>
+    <LinearLayout android:layout_width="0dp"
+                  android:layout_height="match_parent"
+                  android:gravity="center"
+                  android:layout_weight="3">
+        <ImageView
                 android:id="@+id/normal_pic"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="1dp"/>
+                android:layout_height="wrap_content"/>
 
-            <ListView
-                    android:layout_marginTop="1dp"
-                    android:id="@+id/type_change_id"
-                    android:layout_width="match_parent"
-                    android:layout_height="508dp"
-                    android:background="@drawable/sunyanzi_2">
-            </ListView>
+    </LinearLayout>
 
- <!--       </FrameLayout>
-
-
-    </ScrollView>
--->
 </LinearLayout>

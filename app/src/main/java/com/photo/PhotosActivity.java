@@ -46,6 +46,7 @@ public class PhotosActivity extends BaseActivity implements AdapterView.OnItemCl
 
     private RecyclerView recyclerView;
     private DemoRecyclerAdapter mAdapter;
+    private View mMultiSelectActionBarView;
 
     String[] strs = {"平移图片", "放大/缩小图片", "旋转图片","圆角图片","圆形图片",
             "斜切图片","水印---图片","水印---文字","倒影",};
@@ -60,8 +61,10 @@ public class PhotosActivity extends BaseActivity implements AdapterView.OnItemCl
         bitmapAdapter = new BitmapPageAdapter(this,datas);
         listView = (ListView) findViewById(R.id.type_change_id);
         listView.setAdapter(bitmapAdapter);
+        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         listView.setOnItemClickListener(this);
         img1 = (ImageView) findViewById(R.id.normal_pic);
+
         setImageView();
     }
 
@@ -189,6 +192,9 @@ public class PhotosActivity extends BaseActivity implements AdapterView.OnItemCl
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        bitmapAdapter.notifyDataSetChanged();
+
+
         String clickedtype = (String) bitmapAdapter.getItem(position);
         Log.i(TAG,"onItemClick： chooseTpye = " + clickedtype);
         switch (position){
