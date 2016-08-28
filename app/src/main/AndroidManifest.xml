@@ -137,7 +137,7 @@
                     android:screenOrientation="landscape"/>
 
          <!--BitMap测试页面-->
-        <activity android:name="com.photo.PhotosActivity"
+        <activity android:name="com.photo.BitmapPhotosActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
          <!--文件管理页面-->

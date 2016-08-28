@@ -6,4 +6,5 @@
     <item android:drawable="@drawable/text_focused_bg" android:state_focused="true"/>
     <item android:drawable="@drawable/text_selected_bg_shape" android:state_selected="true"/>
     <item android:drawable="@drawable/text_selected_bg_shape" android:state_pressed="true"/>
+    <item android:drawable="@color/fruitpurple" android:state_checked="true"/>
 </selector>

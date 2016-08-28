@@ -13,9 +13,10 @@
           android:state_focused="true"/>
 
     <!-- 非触摸模式下获得焦点并单击时的字体颜色 -->
-    <item android:drawable="@color/darkslateblue"
+    <item android:drawable="@color/deepskyblue"
           android:state_pressed="true"
-          android:state_focused="true"/>
+          android:state_focused="true"
+          android:state_checked="true"/>
 
 
 </selector>

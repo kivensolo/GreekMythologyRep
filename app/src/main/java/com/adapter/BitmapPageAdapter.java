@@ -4,10 +4,10 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.holder.CommViewHodler;
 import com.kingz.customdemo.R;
 
-import java.util.HashSet;
 import java.util.List;
 
 /**

@@ -22,7 +22,7 @@ import com.lbs.BaiduMapActivity;
 import com.mplayer.KingZMediaPlayer;
 import com.nativeWidgets.BasicControlsActivity;
 import com.nativeWidgets.NativeProgressBar;
-import com.photo.PhotosActivity;
+import com.photo.BitmapPhotosActivity;
 import com.view.slider.wzviewpager.OriginViewPagerActivity;
 import com.widgets.AnimatedExpandableListView;
 
@@ -97,7 +97,7 @@ public class MainActivity extends ExpandableListActivity implements OnItemClickL
 
 		//Bimap
 		ArrayList<ListBillData> item2 = new ArrayList<>();
-		item2.add(new ListBillData(this,"BitMapOverall",new Intent(this,PhotosActivity.class)));
+		item2.add(new ListBillData(this,"BitMapOverall",new Intent(this,BitmapPhotosActivity.class)));
 		childs.add(item2);
 
 		//自定义控件

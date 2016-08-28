@@ -1,6 +1,7 @@
 package com.photo;
 
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
@@ -8,21 +9,28 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
+
 import com.BaseActivity;
 import com.adapter.BitmapPageAdapter;
 import com.kingz.customdemo.R;
 import com.utils.BitMapUtils;
+import com.utils.ToastTools;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Copyright(C) 2015, 北京视达科科技有限公司
  * All rights reserved.
  * author: King.Z
  * date:  2016/8/6 23:05
- * description:
+ * description: Listview显示的页面
  *
- *   一个采用recycleView的布局页面来显示图片特效（还未完成）.
+ *   (已废弃)：一个采用recycleView的布局页面来显示图片特效（还未完成）.
  *       LayoutManager: 管理RecyclerView的结构.
          Adapter: 处理每个Item的显示.
          ItemDecoration: 添加每个Item的装饰.
@@ -31,22 +39,22 @@ import java.util.*;
         LayoutManager\Adapter是必须, ItemDecoration\ItemAnimator是可选.
  *
  *
- *   tips:8月7号-----打算用GridView来显示。  或者listView  点击后变换图片
- *
- *
  */
-public class PhotosActivity extends BaseActivity implements AdapterView.OnItemClickListener{
+public class BitmapPhotosActivity extends BaseActivity implements AdapterView.OnItemClickListener{
 
-    public static final String TAG = "PhotosActivity";
+    public static final String TAG = "BitmapPhotosActivity";
 
-    private Bitmap srcBitmap;
-    private ListView listView;
     private BitmapPageAdapter bitmapAdapter;
+    private ListView mListView;
+    private TextView mTextView;
+    private Bitmap srcBitmap;
+    private Bitmap waterMark;
+    private int backgroundId;
     private ImageView img1;
 
     private RecyclerView recyclerView;
-    private DemoRecyclerAdapter mAdapter;
     private View mMultiSelectActionBarView;
+    private DemoRecyclerAdapter mAdapter;
 
     String[] strs = {"平移图片", "放大/缩小图片", "旋转图片","圆角图片","圆形图片",
             "斜切图片","水印---图片","水印---文字","倒影",};
@@ -56,16 +64,19 @@ public class PhotosActivity extends BaseActivity implements AdapterView.OnItemCl
     protected void findID() {
         super.findID();
         setContentView(R.layout.photos_activity);
+        initViews();
+        setImageView();
+    }
+
+    private void initViews() {
 //        recyclerView = (RecyclerView) findViewById(R.id.test_recycler_view);
 //        initRecyclerView(recyclerView);
         bitmapAdapter = new BitmapPageAdapter(this,datas);
-        listView = (ListView) findViewById(R.id.type_change_id);
-        listView.setAdapter(bitmapAdapter);
-        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        listView.setOnItemClickListener(this);
+        mListView = (ListView) findViewById(R.id.type_change_id);
+        mListView.setAdapter(bitmapAdapter);
+        mListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        mListView.setOnItemClickListener(this);
         img1 = (ImageView) findViewById(R.id.normal_pic);
-
-        setImageView();
     }
 
     /**
@@ -108,39 +119,11 @@ public class PhotosActivity extends BaseActivity implements AdapterView.OnItemCl
         recyclerView.addItemDecoration(new MyItemDecoration(this));
     }
 
-
-    Bitmap waterMark;
     private void setImageView() {
         srcBitmap = BitMapUtils.drawable2Bitmap(getResources().getDrawable(R.drawable.sunyanzi_1), 680, 420);
         waterMark = BitMapUtils.drawable2Bitmap(getResources().getDrawable(R.drawable.m), 110,132);
         //加载原始图片
         img1.setImageBitmap(srcBitmap);
-        ////加载平移的图片
-        //img2.setImageBitmap(srcBitmap);
-        //
-        ////加载剪切的图片
-        //img3.setImageBitmap(BitMapUtils.setZoomImg(srcBitmap,160,90));
-        //
-        ////旋转(顺时针)
-        //img4.setImageBitmap(BitMapUtils.setRotateImage(180, srcBitmap));
-        //
-        ////圆角矩形
-        //img5.setImageBitmap(BitMapUtils.setRoundCorner(srcBitmap,45));
-        //
-        ////圆形图片
-        //img6.setImageBitmap(BitMapUtils.setBitmapCircle(srcBitmap));
-        //
-        ////X/Y轴倾斜图片
-        //img7.setImageBitmap(BitMapUtils.setSkew(srcBitmap,-0.3f,0));
-        //
-        ////添加水印图片
-        //img8.setImageBitmap(BitMapUtils.createWaterMarkBitmap(srcBitmap,waterMark,srcBitmap.getWidth() - waterMark.getWidth(),0));
-        //
-        ////添加水印文字
-        ////img9.setImageBitmap(BitMapUtils.createWaterMarkText(srcBitmap,"测试水印",
-        ////        srcBitmap.getWidth() - srcBitmap.getWidth()/2,srcBitmap.getHeight() - srcBitmap.getHeight()/2));
-        //
-        //img9.setImageBitmap(BitMapUtils.setInvertedBitmap(srcBitmap,srcBitmap.getHeight()/3));
     }
 
     @Override
@@ -193,7 +176,7 @@ public class PhotosActivity extends BaseActivity implements AdapterView.OnItemCl
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         bitmapAdapter.notifyDataSetChanged();
-
+        setItemState(view, position);
 
         String clickedtype = (String) bitmapAdapter.getItem(position);
         Log.i(TAG,"onItemClick： chooseTpye = " + clickedtype);
@@ -227,9 +210,22 @@ public class PhotosActivity extends BaseActivity implements AdapterView.OnItemCl
                 setShowBitMap(BitMapUtils.setInvertedBitmap(srcBitmap,srcBitmap.getHeight()/3));
                 break;
             default:
-                Log.i(TAG,"未匹配");
+                ToastTools.getInstance().showMgtvWaringToast(this,"未匹配");
                 break;
         }
+    }
+
+    private void setItemState(View view, int position) {
+        mTextView = (TextView) view.findViewById(R.id.list_item);
+        if (mListView.isItemChecked(position)) {
+            backgroundId = R.color.deepskyblue;
+            mTextView.setTextColor(getResources().getColor(R.color.suncolor));
+        } else {
+            backgroundId = R.drawable.listview_unchecked;
+            mTextView.setTextColor(getResources().getColor(R.color.lightskyblue));
+        }
+        Drawable background = this.getResources().getDrawable(backgroundId);
+        view.setBackground(background);
     }
 
     private void setShowBitMap(final Bitmap bitmap) {
@@ -241,3 +237,4 @@ public class PhotosActivity extends BaseActivity implements AdapterView.OnItemCl
         });
     }
 }
+
