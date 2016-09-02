@@ -43,7 +43,7 @@
 
         <meta-data
         android:name="com.baidu.lbsapi.API_KEY"
-        android:value="XwMW9CR6w14VOWGG4AkGue8W" />
+        android:value="XwMW9CR6w14VOWGG4AkGue8W|GlideModule"/>
 
         <provider
             android:authorities="com.kingz.customdemo"

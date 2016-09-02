@@ -1,21 +1,10 @@
 package com.utils;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.LinearGradient;
-import android.graphics.Matrix;
-import android.graphics.Paint;
-import android.graphics.PixelFormat;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
-import android.graphics.RectF;
-import android.graphics.Shader;
-import android.graphics.Typeface;
+import android.annotation.TargetApi;
+import android.graphics.*;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.util.Base64;
 
 import java.io.ByteArrayOutputStream;
@@ -403,6 +392,56 @@ public class BitMapUtils {
             return null;
         }
         return BitmapFactory.decodeByteArray(b, 0, b.length);
+    }
+
+
+    /**
+     * Returns the in memory size of the given {@link Bitmap} in bytes.
+     */
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    public static int getBitmapByteSize(Bitmap bitmap) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            // Workaround for KitKat initial release NPE in Bitmap, fixed in MR1. See issue #148.
+            try {
+                return bitmap.getAllocationByteCount();
+            } catch (NullPointerException e) {
+                // Do nothing.
+            }
+        }
+        return bitmap.getHeight() * bitmap.getRowBytes();
+    }
+
+    /**
+     * 根据指定编码格式获取Bitmap大小
+     * @param width
+     * @param height
+     * @param config
+     * @return
+     */
+    public static int getBitmapByteSize(int width, int height, Bitmap.Config config) {
+        return width * height * getBytesPerPixel(config);
+    }
+
+    private static int getBytesPerPixel(Bitmap.Config config) {
+        // A bitmap by decoding a gif has null "config" in certain environments.
+        if (config == null) {
+            config = Bitmap.Config.ARGB_8888;
+        }
+
+        int bytesPerPixel;
+        switch (config) {
+            case ALPHA_8:
+                bytesPerPixel = 1;
+                break;
+            case RGB_565:
+            case ARGB_4444:
+                bytesPerPixel = 2;
+                break;
+            case ARGB_8888:
+            default:
+                bytesPerPixel = 4;
+        }
+        return bytesPerPixel;
     }
 
 

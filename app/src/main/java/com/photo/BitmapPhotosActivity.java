@@ -1,18 +1,12 @@
 package com.photo;
 
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
-
-import com.BaseActivity;
-import com.adapter.BitmapPageAdapter;
+import com.bumptech.glide.Glide;
 import com.kingz.customdemo.R;
 import com.utils.BitMapUtils;
 import com.utils.ToastTools;
@@ -21,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Copyright(C) 2015, 北京视达科科技有限公司
@@ -31,52 +24,26 @@ import java.util.List;
  * description: Listview显示的页面
  *
  *   (已废弃)：一个采用recycleView的布局页面来显示图片特效（还未完成）.
- *       LayoutManager: 管理RecyclerView的结构.
-         Adapter: 处理每个Item的显示.
-         ItemDecoration: 添加每个Item的装饰.
-         ItemAnimator: 负责添加\移除\重排序时的动画效果.
-
+ *      LayoutManager: 管理RecyclerView的结构.
+        Adapter: 处理每个Item的显示.
+        ItemDecoration: 添加每个Item的装饰.
+        ItemAnimator: 负责添加\移除\重排序时的动画效果.
         LayoutManager\Adapter是必须, ItemDecoration\ItemAnimator是可选.
- *
- *
  */
-public class BitmapPhotosActivity extends BaseActivity implements AdapterView.OnItemClickListener{
+public class BitmapPhotosActivity extends PhotosActivity{
 
     public static final String TAG = "BitmapPhotosActivity";
 
-    private BitmapPageAdapter bitmapAdapter;
-    private ListView mListView;
-    private TextView mTextView;
-    private Bitmap srcBitmap;
-    private Bitmap waterMark;
-    private int backgroundId;
-    private ImageView img1;
-
-    private RecyclerView recyclerView;
-    private View mMultiSelectActionBarView;
     private DemoRecyclerAdapter mAdapter;
 
     String[] strs = {"平移图片", "放大/缩小图片", "旋转图片","圆角图片","圆形图片",
-            "斜切图片","水印---图片","水印---文字","倒影",};
-    List<String> datas = Arrays.asList(strs);
+            "斜切图片","水印---图片","水印---文字","倒影","Glide加载图片"};
 
     @Override
     protected void findID() {
+        datas = Arrays.asList(strs);
         super.findID();
-        setContentView(R.layout.photos_activity);
-        initViews();
         setImageView();
-    }
-
-    private void initViews() {
-//        recyclerView = (RecyclerView) findViewById(R.id.test_recycler_view);
-//        initRecyclerView(recyclerView);
-        bitmapAdapter = new BitmapPageAdapter(this,datas);
-        mListView = (ListView) findViewById(R.id.type_change_id);
-        mListView.setAdapter(bitmapAdapter);
-        mListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        mListView.setOnItemClickListener(this);
-        img1 = (ImageView) findViewById(R.id.normal_pic);
     }
 
     /**
@@ -175,9 +142,7 @@ public class BitmapPhotosActivity extends BaseActivity implements AdapterView.On
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        bitmapAdapter.notifyDataSetChanged();
-        setItemState(view, position);
-
+        super.onItemClick(parent, view,position,id);
         String clickedtype = (String) bitmapAdapter.getItem(position);
         Log.i(TAG,"onItemClick： chooseTpye = " + clickedtype);
         switch (position){
@@ -209,23 +174,18 @@ public class BitmapPhotosActivity extends BaseActivity implements AdapterView.On
             case 8:
                 setShowBitMap(BitMapUtils.setInvertedBitmap(srcBitmap,srcBitmap.getHeight()/3));
                 break;
+            case 9:
+                Glide.with(this)
+                    .load("http://nuuneoi.com/uploads/source/playstore/cover.jpg")
+                    .error(R.mipmap.sample_2)
+                    .fitCenter() //图片比ImageView大的时候，就会按照比例对图片进行缩放，并将图片居中显示。如果这张图片比ImageView小，那么就会根据比例对图片进行扩大，然后将其居中显示
+                    .centerCrop()
+                    .into(img1);
+                break;
             default:
                 ToastTools.getInstance().showMgtvWaringToast(this,"未匹配");
                 break;
         }
-    }
-
-    private void setItemState(View view, int position) {
-        mTextView = (TextView) view.findViewById(R.id.list_item);
-        if (mListView.isItemChecked(position)) {
-            backgroundId = R.color.deepskyblue;
-            mTextView.setTextColor(getResources().getColor(R.color.suncolor));
-        } else {
-            backgroundId = R.drawable.listview_unchecked;
-            mTextView.setTextColor(getResources().getColor(R.color.lightskyblue));
-        }
-        Drawable background = this.getResources().getDrawable(backgroundId);
-        view.setBackground(background);
     }
 
     private void setShowBitMap(final Bitmap bitmap) {

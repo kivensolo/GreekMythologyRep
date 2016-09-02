@@ -3,6 +3,8 @@ package com.utils;
 
 import android.util.Base64;
 
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.security.KeyFactory;
@@ -14,12 +16,16 @@ import java.security.spec.X509EncodedKeySpec;
 import java.util.Arrays;
 import java.util.Random;
 
-import javax.crypto.Cipher;
-import javax.crypto.spec.SecretKeySpec;
-
 public class EncryptTools {
+
 	static final String RSA_TRANSFORMATION = "RSA/ECB/PKCS1Padding";
 	static final String AES_TRANSFORMATION = "AES/ECB/NoPadding"; //"AES/CBC/NoPadding";
+
+	private static final char[] HEX_CHAR_ARRAY = "0123456789abcdef".toCharArray();
+    // 32 bytes from sha-256 -> 64 hex chars.
+    private static final char[] SHA_256_CHARS = new char[64];
+    // 20 bytes from sha-1 -> 40 chars.
+    private static final char[] SHA_1_CHARS = new char[40];
 
 	private static final String TAG = "EncryptLogic";
 
@@ -173,4 +179,29 @@ public class EncryptTools {
 		}
 	}
 
+	/**
+     * Returns the hex string of the given byte array representing a SHA256 hash.
+     */
+    public static String sha256BytesToHex(byte[] bytes) {
+        return bytesToHex(bytes, SHA_256_CHARS);
+    }
+
+    /**
+     * Returns the hex string of the given byte array representing a SHA1 hash.
+     */
+    public static String sha1BytesToHex(byte[] bytes) {
+        return bytesToHex(bytes, SHA_1_CHARS);
+    }
+
+    // Taken from:
+    // http://stackoverflow.com/questions/9655181/convert-from-byte-array-to-hex-string-in-java/9655275#9655275
+    private static String bytesToHex(byte[] bytes, char[] hexChars) {
+        int v;
+        for (int j = 0; j < bytes.length; j++) {
+            v = bytes[j] & 0xFF;
+            hexChars[j * 2] = HEX_CHAR_ARRAY[v >>> 4];
+            hexChars[j * 2 + 1] = HEX_CHAR_ARRAY[v & 0x0F];
+        }
+        return new String(hexChars);
+    }
 }
