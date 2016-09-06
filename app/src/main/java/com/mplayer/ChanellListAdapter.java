@@ -1,7 +1,11 @@
 package com.mplayer;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
+import android.view.SurfaceView;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.kingz.customdemo.R;
@@ -19,6 +23,18 @@ import java.util.List;
  * description:
  */
 public class ChanellListAdapter extends CommonAdapter{
+
+    class VideoViewHolder extends RecyclerView.ViewHolder {
+        public VideoViewHolder(View itemView) {
+            super(itemView);
+        }
+
+        SurfaceView surfaceView;
+        ImageView imvPreview;
+        ImageView imvPlay;
+        ProgressBar pbWaiting;
+        ProgressBar pbProgressBar;
+    }
 
     public ChanellListAdapter(Context context, List listDatas, int layoutId) {
         super(context, listDatas, layoutId);

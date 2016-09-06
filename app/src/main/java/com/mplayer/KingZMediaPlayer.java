@@ -1,15 +1,13 @@
 package com.mplayer;
 
 import android.app.Activity;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.view.SurfaceHolder;
+import android.view.Surface;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.ListView;
@@ -18,7 +16,7 @@ import android.widget.Toast;
 
 import com.kingz.customdemo.R;
 import com.provider.ChannelData;
-import com.utils.ToastTools;
+import com.utils.ZLog;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -38,42 +36,13 @@ import java.util.Locale;
  * setDataSource();               //Initialized
  * prepare();                     //Prepared
  */
-public class KingZMediaPlayer extends Activity implements View.OnClickListener {
+public class KingZMediaPlayer extends Activity {
 
     private static final String TAG = "KingZMediaPlayer";
-    private static final int PLAYER_SLOW_TIMER = 0x501;
-    private static final int SET_TOTAL_TIME = 0x502;
-    /**
-     * 检测播放进度任务周期ms
-     **/
-    public static final int PLAY_TIMER_INTERVAL = 499;
-    /**
-     * 线程运行开关
-     **/
-    private boolean threadExitFlag = false;
-
-    /**
-     * 播放器状态
-     */
-    private enum MPstate {
-        PREPARING, PREPARED, PLAYING, STOP, PAUSED, IDLE, End, ERROR,
-    }
-
-    private MPstate currentMediaState = MPstate.IDLE;
     private SeekBarView seekBar;
-    private MediaPlayer mPlayer;
-    private SurfaceView mSurfaceView;
-    private SurfaceHolder holder;
+    private MediaPlayerKernel mPlayer;
 
-    /**
-     * 播放参数
-     **/
-    private int currentPlayPostion;
-    private int duration;
-    private long currentPlayedTime;
-    private int mVideoWidth;
-    private int mVideoHeight;
-    private int minStepLen = 0;         //进度条的最小移动单位
+    private SurfaceView surfaceView;
     private ListView leftListView;
     private TextView rightChangeBtn;    //画面比例切换，暂未使用
     private TextView rightTextView;     //片长总时间，暂未使用
@@ -84,22 +53,22 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
     private ArrayList<ChannelData> channelLists;
     private ChannelData channelData = new ChannelData();
 
-    /** ------------------------------ 进度条相关参数 --------------------------------**/
-    /**
-     * 播放总时长、进度显示格式
-     **/
     private StringBuilder mFormatBuilder;
     private Formatter mFormatter;
     private String play_url = "";      //播放地址
+    private MediaPlayerKernel.OnStateChangeListener mOnStateChangeListener;
+     private int duration;
+     private int minStepLen;
+    private int mVideoWidth;
+    private int mVideoHeight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mplayer_layout);
         initVideoData();
-//      getPlayUrlFromNet();
         initViews();
-        initMedia();
+//      getPlayUrlFromNet();
     }
 
     /**
@@ -187,13 +156,11 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
      * 初始化视图
      */
     private void initViews() {
+        surfaceView = (SurfaceView) findViewById(R.id.surface);
+        mPlayer = new MediaPlayerKernel(this, surfaceView);
+        initListner();
         mFormatBuilder = new StringBuilder();
         mFormatter = new Formatter(mFormatBuilder, Locale.getDefault());
-
-        mSurfaceView = (SurfaceView) findViewById(R.id.surface);
-        holder = mSurfaceView.getHolder();
-        holder.setKeepScreenOn(true); //强制屏幕等待
-        holder.addCallback(mSurfaceHolderCallback);
         leftListView = (ListView) findViewById(R.id.leftchanellView);
         seekBar = (SeekBarView) findViewById(R.id.mplayer_progress);
         seekBar.setVisibility(View.INVISIBLE);
@@ -212,247 +179,77 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
         }
     }
 
-    /**
-     * 始化播放器
-     **/
-    private void initMedia() {
-        //mPlayer.setLooping(true);
-    }
+    private void initListner() {
+        mPlayer.setOnStateChangeListener(new MediaPlayerKernel.OnStateChangeListener() {
+            @Override
+            public void onSurfaceViewDestroyed(Surface surface) {
 
-    private void openVieo() {
-        if (channelLists.size() != 0) {
-            play_url = channelLists.get(0).playUrl;
-        }
-        Log.d(TAG, "openVieo() VideoFilePath:" + play_url);
-        releaseMediaPlayer();
-        mPlayer = new MediaPlayer();
-        mPlayer.setOnVideoSizeChangedListener(mOnVideoSizeListener);
-        mPlayer.setOnSeekCompleteListener(onSeekCompleteListener);
-        mPlayer.setOnCompletionListener(mOnCompletionListener);
-        mPlayer.setOnPreparedListener(mPreparedListener);
-        mPlayer.setOnErrorListener(mOErrorListener);
-        mPlayer.setOnInfoListener(mOnInfoListener);
-        mPlayer.setDisplay(holder);
-        try {
-            if (!TextUtils.isEmpty(play_url)) {
-                mPlayer.setDataSource(play_url);                            //Idle ———> Initialized
-                mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);     //设置多媒体流类型
-                mPlayer.setVolume(1.0f, 1.0f);
-
-                //Initialized ———>Preparing  异步准备
-                mPlayer.prepareAsync();
-                currentMediaState = MPstate.PREPARING;
-                // 监听缓冲完成后回调onPrepared()  Preparing ———> Prepared
-                // prepare() 或 prepareAsync() 方法，这两个方法一个是同步的一个是异步的，
-                // 只有进入 Prepared 状态，才表明 MediaPlayer 到目前为止都没有错误，可以进行文件播放.
-                // 如果异步准备完成，会触发 OnPreparedListener.onPrepared() ，进而进入 Prepared 状态。
-            } else {
-                Toast.makeText(this, "play_url is empty ！！", Toast.LENGTH_SHORT).show();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
-    /**
-     * 点击频道列表播放
-     *
-     * @param url
-     */
-    private void clickToPlay(String url) {
-        mPlayer.stop();
-        mPlayer.reset();
-        try {
-            mPlayer.setDataSource(url);
-            mPlayer.prepare();
-            mPlayer.start();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+            @Override
+            public void onBuffering(MediaPlayer mp) {
 
-    @Override
-    public void onClick(View v) {
-
-    }
-
-    /*******************************   各类监听器  start   *********************************/
-
-
-    /**
-     * 播放器准备Listener
-     * mPlayer.prepareAsync()后回调到此
-     */
-    private MediaPlayer.OnPreparedListener mPreparedListener = new MediaPlayer.OnPreparedListener() {
-        @Override
-        public void onPrepared(MediaPlayer mp) {
-            ToastTools.getInstance().showMgtvWaringToast(KingZMediaPlayer.this, "开始播放");
-            currentMediaState = MPstate.PREPARED;
-            duration = mp.getDuration();
-            if (duration > 0) {
-                minStepLen = duration / seekBar.getMax();
-//              seekBar.setRightSideTime(formatTimeToHHMMSS(duration));
-                setRightSideTime(formatTimeToHHMMSS(duration));
             }
-            mVideoWidth = mPlayer.getVideoHeight();
-            mVideoHeight = mPlayer.getVideoWidth();
-            Log.i(TAG, "mVideoWidth=" + mVideoWidth + ";mVideoHeight=" + mVideoHeight + ";   video duration = " + duration);
-            //如果Video的宽高超出了当前屏幕的大小 就进行缩放
-            if (mVideoWidth > getWindowManager().getDefaultDisplay().getWidth()
-                    || mVideoHeight > getWindowManager().getDefaultDisplay().getHeight()) {
+
+            @Override
+            public void onPlaying(MediaPlayer mp) {
+
             }
-            if (mVideoWidth != 0 && mVideoHeight != 0) {
-                startToPlay();
+
+            @Override
+            public void onSeek(MediaPlayer mp, int max, int progress) {
+
             }
-        }
-    };
 
-    private MediaPlayer.OnInfoListener mOnInfoListener = new MediaPlayer.OnInfoListener() {
-        @Override
-        public boolean onInfo(MediaPlayer mp, int what, int extra) {
-            Log.i(TAG, "OnInfo：" + "waht = " + what + "---extra = " + extra);
-            switch (what) {
-                case MediaPlayer.MEDIA_INFO_BAD_INTERLEAVING:
-                    break;
-                case MediaPlayer.MEDIA_INFO_METADATA_UPDATE:
-                    break;
-                case MediaPlayer.MEDIA_INFO_VIDEO_TRACK_LAGGING:
-                    break;
-                case MediaPlayer.MEDIA_INFO_NOT_SEEKABLE:
-                    break;
+            @Override
+            public void onStop(MediaPlayer mp) {
+
             }
-            return false;
-        }
-    };
 
-    /**
-     * onSeekComplete Listener
-     */
-    private MediaPlayer.OnSeekCompleteListener onSeekCompleteListener = new MediaPlayer.OnSeekCompleteListener() {
+            @Override
+            public void onPause(MediaPlayer mp) {
 
-        @Override
-        public void onSeekComplete(MediaPlayer mp) {
-            Toast.makeText(KingZMediaPlayer.this, "UserSeekComplete", Toast.LENGTH_SHORT).show();
-            Log.i(TAG, "UserSeekComplete");
-        }
-    };
-
-    /**
-     * 播放错误Listener
-     */
-    private MediaPlayer.OnErrorListener mOErrorListener = new MediaPlayer.OnErrorListener() {
-        @Override
-        public boolean onError(MediaPlayer mp, int what, int extra) {
-            ToastTools.getInstance().showMgtvWaringToast(KingZMediaPlayer.this, "播放出错！" + "what=" + what + ";extra=" + extra);
-            switch (what) {
-                case MediaPlayer.MEDIA_ERROR_SERVER_DIED:
-                    Log.e("Play Error:::", "MEDIA_ERROR_SERVER_DIED" + ", extra:" + extra);
-                    break;
-                case MediaPlayer.MEDIA_ERROR_UNKNOWN:
-                    Log.e("Play Error:::", "MEDIA_ERROR_UNKNOWN" + ", extra:" + extra);
-                    break;
-                default:
-                    break;
             }
-            mPlayer.release();
-            finish();
-            return false;
-        }
-    };
-    /**
-     * 播放完成Listener
-     */
-    private MediaPlayer.OnCompletionListener mOnCompletionListener = new MediaPlayer.OnCompletionListener() {
-        @Override
-        public void onCompletion(MediaPlayer mp) {
-            Log.i(TAG, "OnCompletionListener.onCompletion()   finish");
-//            Toast.makeText(KingZMediaPlayer.this, "播放完成", Toast.LENGTH_SHORT).show();
-            threadExitFlag = true;
-            mPlayer.stop();
-            mPlayer.release();
-            seekBar.releaseMplayer();
-        }
-    };
 
-    private MediaPlayer.OnVideoSizeChangedListener mOnVideoSizeListener = new MediaPlayer.OnVideoSizeChangedListener() {
-        @Override
-        public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
+            @Override
+            public void playFinish(MediaPlayer mp) {
 
-        }
-    };
+            }
 
-    private SurfaceHolder.Callback mSurfaceHolderCallback = new SurfaceHolder.Callback() {
-        @Override
-        public void surfaceCreated(SurfaceHolder holder) {
-            Log.i(TAG, "surfaceCreated()");
-            openVieo();
-        }
-
-        @Override
-        public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-            Log.i(TAG, "surfaceChanged()");
-        }
-
-        @Override
-        public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-            Log.i(TAG, "surfaceDestroyed()");
-            holder = null;
-            threadExitFlag = true;
-            seekBar.threadExitFlag = true;
-            releaseMediaPlayer();
-        }
-    };
-
-    /*******************************
-     * 各类监听器  End
-     *********************************/
-
-    private void doPuase() {
-        if (mPlayer.isPlaying()) {
-            mPlayer.pause();
-            currentMediaState = MPstate.PAUSED;
-        }
-    }
-
-    private Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case PLAYER_SLOW_TIMER:
-                    //反复执行线程检测
-                    if (threadExitFlag) {
-                        Log.d(TAG, "threadExitFlag == true");
-                        return;
+            @Override
+            public void onPrepare(MediaPlayer mp) {
+                duration = mp.getDuration();
+                if (duration > 0) {
+                    minStepLen = duration / seekBar.getMax();
+                    seekBar.setRightSideTime(formatTimeToHHMMSS(duration));
+                    setRightSideTime(formatTimeToHHMMSS(duration));
+                }
+                mVideoWidth = mp.getVideoHeight();
+                mVideoHeight = mp.getVideoWidth();
+                Log.i(TAG, "mVideoWidth=" + mVideoWidth + ";mVideoHeight=" + mVideoHeight + ";   video duration = " + duration);
+                //如果Video的宽高超出了当前屏幕的大小 就进行缩放
+                if (mVideoWidth > getWindowManager().getDefaultDisplay().getWidth()
+                        || mVideoHeight > getWindowManager().getDefaultDisplay().getHeight()) {
+                }
+                if (mVideoWidth != 0 && mVideoHeight != 0) {
+                    if (mPlayer != null) {
+                        mPlayer.start();
                     }
-                    mHandler.sendEmptyMessageDelayed(PLAYER_SLOW_TIMER, PLAY_TIMER_INTERVAL);
-                    if (mPlayer.isPlaying()) {
-                        currentPlayPostion = mPlayer.getCurrentPosition();
-                    }
-                    playedTime = formatTimeToHHMMSS(currentPlayPostion);
-                    leftTimeView.setText(playedTime);
-                    seekBar.setCurrentPlayPos2UI(currentPlayPostion, duration);
-                    break;
-                case SET_TOTAL_TIME:
-                    rightTextView.setText(totalTime);
-                    break;
-                default:
-                    break;
+                }
             }
-        }
-    };
+        });
+    }
 
     private void startToPlay() {
         Log.i(TAG, "startToPlay()");
         seekBar.setVisibility(View.VISIBLE);
         if (mPlayer != null) {
             mPlayer.start();
-            currentMediaState = MPstate.PLAYING;
         }
-        startPlayerTimer();
-        seekBar.initMplayer(mPlayer);
+//        startPlayerTimer();
+//        seekBar.initMplayer(mPlayer);
 //        seekBar.initMplayer(mPlayer,new MplayerSeekBarListener());
     }
-
 
     private boolean playerTimerIsRunning = false;
 
@@ -461,7 +258,7 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
             return;
         }
         playerTimerIsRunning = true;
-        mHandler.sendEmptyMessage(PLAYER_SLOW_TIMER);
+//        mHandler.sendEmptyMessage(PLAYER_SLOW_TIMER);
     }
 
     @Override
@@ -472,67 +269,59 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
 
     protected void onDestroy() {
         if (mPlayer != null) {
-            mPlayer.release(); //Idle----->End
+            mPlayer.release();
         }
-        currentMediaState = MPstate.End;
-        threadExitFlag = true;
         seekBar.threadExitFlag = true;
         super.onDestroy();
     }
 
-
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            showSeekBarView();
-            showListView();
-            if (currentMediaState == MPstate.PLAYING) {
-                //doPuase();
-                return true;
-            } else if (currentMediaState == MPstate.PAUSED) {
-                startToPlay();
-                seekBar.setVisibility(View.VISIBLE);
-                return true;
-            }
-        }
-        if (event.getAction() == MotionEvent.ACTION_MOVE) {
-            //isSeekState = true;
-            float y = event.getY();
-            float x = event.getX();
-            Log.i(TAG, "onTouchEvent   得到的X = " + x + ";得到的y:" + y);
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                ZLog.i(TAG, "当前播放器状态：" + mPlayer.getState());
+                if (mPlayer.getState() == MediaPlayerKernel.MediaState.IDLE) {
+                    if (channelLists.isEmpty() || TextUtils.isEmpty(channelLists.get(0).playUrl)) {
+                        Toast.makeText(this, "视频地址不能为空", Toast.LENGTH_LONG).show();
+                    }
+                    ZLog.i(TAG, "播放的视频地址：" + channelLists.get(0).playUrl);
+                    mPlayer.setVideoURI(Uri.parse(channelLists.get(0).playUrl));
+                    return true;
+                } else if (mPlayer.getState() == MediaPlayerKernel.MediaState.PLAYING) {
+                    mPlayer.pause();
+                    return true;
+                } else if (mPlayer.getState() == MediaPlayerKernel.MediaState.PAUSED) {
+                    mPlayer.start();
+                    return true;
+                }
+
+            case MotionEvent.ACTION_MOVE:
+                //isSeekState = true;
+                float y = event.getY();
+                float x = event.getX();
+                Log.i(TAG, "onTouchEvent   得到的X = " + x + ";得到的y:" + y);
+                break;
+            case MotionEvent.ACTION_UP:
+                changeSeekBarView();
+                changeShowListView();
+                break;
         }
         return super.onTouchEvent(event);
     }
 
-    private void showSeekBarView() {
+    private void changeSeekBarView() {
         if (!seekBar.isShown()) {
             seekBar.setVisibility(View.VISIBLE);
+        } else {
+            seekBar.setVisibility(View.INVISIBLE);
         }
     }
 
-    private void showListView() {
+    private void changeShowListView() {
         if (!leftListView.isShown()) {
             leftListView.setVisibility(View.VISIBLE);
         } else {
             leftListView.setVisibility(View.INVISIBLE);
-        }
-    }
-
-    /**
-     * 释放播放器
-     */
-    private void releaseMediaPlayer() {
-        Log.i(TAG, "releaseMediaPlayer()");
-        if (mPlayer != null) {
-            mPlayer.reset();    // ———> 【IDLE】通过 reset() 方法进入 idle 状态的话会触发 OnErrorListener.onError() ，
-            // 并且 MediaPlayer 会进入 Error 状态；如果是新创建的 MediaPlayer 对象，
-            // 则并不会触发 onError(), 也不会进入 Error 状态。
-            mPlayer.release();  //通过 releaseMediaPlayer() 方法可以进入 End 状态，只要 MediaPlayer 对象不再被使用，
-            // 就应当尽快将其通过 releaseMediaPlayer() 方法释放掉，以释放相关的软硬件组件资源，
-            // 这其中有些资源是只有一份的（相当于临界资源）。
-            // 如果 MediaPlayer 对象进入了 End 状态，则不会在进入任何其他状态了。
-            mPlayer = null;
-            currentMediaState = MPstate.IDLE;
         }
     }
 
@@ -595,15 +384,6 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
         }
     }
 
-    private void doPauseOrStartVideo() {
-//        if (mpCore.isPlaying()) {
-//            doPauseVideo();
-//        } else {
-//             doStartVideo();
-//        }
-    }
-
-
     public String formatTimeToHHMMSS(int s) {
         s = s / 1000;
         int seconds = s % 60;
@@ -620,6 +400,6 @@ public class KingZMediaPlayer extends Activity implements View.OnClickListener {
 
     public void setRightSideTime(String rightSideTime) {
         totalTime = rightSideTime;
-        mHandler.sendEmptyMessage(SET_TOTAL_TIME);
+//        mHandler.sendEmptyMessage(SET_TOTAL_TIME);
     }
 }

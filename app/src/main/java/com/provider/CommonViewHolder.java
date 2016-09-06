@@ -43,8 +43,7 @@ public class CommonViewHolder {
 	 * @param position
 	 * @return
 	 */
-	public static CommonViewHolder getViewHolder(Context context, View convertView,
-			ViewGroup parent, int layoutId,int position) {
+	public static CommonViewHolder getViewHolder(Context context, View convertView,ViewGroup parent, int layoutId,int position) {
 		if (convertView == null){
 			return new CommonViewHolder(context, parent, layoutId);
         }
