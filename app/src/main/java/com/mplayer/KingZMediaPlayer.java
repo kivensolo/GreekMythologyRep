@@ -8,16 +8,13 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.Surface;
-import android.view.SurfaceView;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.kingz.customdemo.R;
 import com.provider.ChannelData;
+import com.utils.ToastTools;
 import com.utils.ZLog;
-
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -42,7 +39,6 @@ public class KingZMediaPlayer extends Activity {
     private SeekBarView seekBar;
     private MediaPlayerKernel mPlayer;
 
-    private SurfaceView surfaceView;
     private ListView leftListView;
     private TextView rightChangeBtn;    //画面比例切换，暂未使用
     private TextView rightTextView;     //片长总时间，暂未使用
@@ -156,14 +152,12 @@ public class KingZMediaPlayer extends Activity {
      * 初始化视图
      */
     private void initViews() {
-        surfaceView = (SurfaceView) findViewById(R.id.surface);
-        mPlayer = new MediaPlayerKernel(this, surfaceView);
+        mPlayer = (MediaPlayerKernel) findViewById(R.id.mplayercore);
         initListner();
         mFormatBuilder = new StringBuilder();
         mFormatter = new Formatter(mFormatBuilder, Locale.getDefault());
         leftListView = (ListView) findViewById(R.id.leftchanellView);
         seekBar = (SeekBarView) findViewById(R.id.mplayer_progress);
-        seekBar.setVisibility(View.INVISIBLE);
         rightChangeBtn = (TextView) findViewById(R.id.changeSize_id);
         leftTimeView = (TextView) findViewById(R.id.leftTime);
         leftTimeView.setTextColor(getResources().getColor(R.color.white));
@@ -217,38 +211,27 @@ public class KingZMediaPlayer extends Activity {
             }
 
             @Override
-            public void onPrepare(MediaPlayer mp) {
-                duration = mp.getDuration();
+            public void onPrepare() {
+                duration =  mPlayer.getMediaPlayer().getDuration();
                 if (duration > 0) {
                     minStepLen = duration / seekBar.getMax();
                     seekBar.setRightSideTime(formatTimeToHHMMSS(duration));
                     setRightSideTime(formatTimeToHHMMSS(duration));
                 }
-                mVideoWidth = mp.getVideoHeight();
-                mVideoHeight = mp.getVideoWidth();
+                mVideoWidth = mPlayer.getMediaPlayer().getVideoHeight();
+                mVideoHeight = mPlayer.getMediaPlayer().getVideoWidth();
                 Log.i(TAG, "mVideoWidth=" + mVideoWidth + ";mVideoHeight=" + mVideoHeight + ";   video duration = " + duration);
-                //如果Video的宽高超出了当前屏幕的大小 就进行缩放
-                if (mVideoWidth > getWindowManager().getDefaultDisplay().getWidth()
-                        || mVideoHeight > getWindowManager().getDefaultDisplay().getHeight()) {
+                if (mVideoWidth > getWindowManager().getDefaultDisplay().getWidth() || mVideoHeight > getWindowManager().getDefaultDisplay().getHeight()) {
                 }
                 if (mVideoWidth != 0 && mVideoHeight != 0) {
                     if (mPlayer != null) {
                         mPlayer.start();
+                        mPlayer.setState(MediaPlayerKernel.MediaState.PLAYING);
+                        ZLog.i(TAG,"onPrepare() setPlayeState is Playing");
                     }
                 }
             }
         });
-    }
-
-    private void startToPlay() {
-        Log.i(TAG, "startToPlay()");
-        seekBar.setVisibility(View.VISIBLE);
-        if (mPlayer != null) {
-            mPlayer.start();
-        }
-//        startPlayerTimer();
-//        seekBar.initMplayer(mPlayer);
-//        seekBar.initMplayer(mPlayer,new MplayerSeekBarListener());
     }
 
     private boolean playerTimerIsRunning = false;
@@ -279,10 +262,10 @@ public class KingZMediaPlayer extends Activity {
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                ZLog.i(TAG, "当前播放器状态：" + mPlayer.getState());
+                ZLog.i(TAG, "getCurrentPlayerState：" + mPlayer.getState());
                 if (mPlayer.getState() == MediaPlayerKernel.MediaState.IDLE) {
                     if (channelLists.isEmpty() || TextUtils.isEmpty(channelLists.get(0).playUrl)) {
-                        Toast.makeText(this, "视频地址不能为空", Toast.LENGTH_LONG).show();
+                        ToastTools.getInstance().showMgtvWaringToast(this, "视频地址不能为空");
                     }
                     ZLog.i(TAG, "播放的视频地址：" + channelLists.get(0).playUrl);
                     mPlayer.setVideoURI(Uri.parse(channelLists.get(0).playUrl));

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
 
+import com.core.logic.GlobalCacheCenter;
 import com.utils.ZLog;
 
 /**
@@ -51,6 +52,11 @@ public class App extends Application {
 
         initLog();
         initAPPScreenParms();
+        initCacheCenter();
+    }
+
+    private void initCacheCenter() {
+        GlobalCacheCenter.getInstance().init(mContext);  //缓存初始化
     }
 
     private void initLog() {

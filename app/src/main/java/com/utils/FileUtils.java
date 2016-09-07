@@ -15,6 +15,8 @@ import java.security.NoSuchAlgorithmException;
  */
 public class FileUtils {
 
+	private final static String TAG = "FileUtils";
+
     private FileUtils() {
         /* cannot be instantiated */
         throw new UnsupportedOperationException("cannot be instantiated");
@@ -123,4 +125,57 @@ public class FileUtils {
         }
         return base64;
     }
+
+    /**
+     * 删除指定目录文件夹下面的文件，如果文件超过指定时间未修改
+     * @param path
+     * @param limitTime
+     * @return
+     */
+    public static boolean dealPathFilesWithOldDate(String path,long limitTime){
+        if(TextUtils.isEmpty(path)){
+            return false;
+        }
+        File file = new File(path);
+        File[] fl = file.listFiles();
+        if(fl ==null){
+            return true;
+        }
+        ZLog.i(TAG, "deletePathFilesOldFile path:" + path + ", count:" + fl.length);
+        for(File curFile : fl){
+            if(curFile != null && (curFile.lastModified() < limitTime)){
+                curFile.delete();
+            }
+        }
+        return true;
+    }
+    /**
+     * 删除指定文件夹下的全部文件，如果文件超过某个数量
+     * @param path
+     * @param count
+     * @return
+     */
+    public static boolean dealPathFilesOverCount(String path,long count){
+        if(TextUtils.isEmpty(path)){
+            return false;
+        }
+        File file = new File(path);
+        File[] fl = file.listFiles();
+        if(fl ==null){
+            return true;
+        }
+        if(fl.length < count){
+            return true;
+        }
+        ZLog.i(TAG, "deletePathFilesOldFile path:" + path + ", count:" + fl.length);
+        for(File curFile : fl){
+            if(curFile != null){
+                curFile.delete();
+            }
+        }
+        return true;
+    }
+
+
+
 }

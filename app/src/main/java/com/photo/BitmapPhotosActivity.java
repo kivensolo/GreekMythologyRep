@@ -42,8 +42,8 @@ public class BitmapPhotosActivity extends PhotosActivity{
     @Override
     protected void findID() {
         datas = Arrays.asList(strs);
-        super.findID();
         setImageView();
+        super.findID();
     }
 
     /**
