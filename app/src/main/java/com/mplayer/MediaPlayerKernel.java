@@ -30,7 +30,6 @@ public class MediaPlayerKernel extends SurfaceView {
     private static final String TAG = "MediaPlayerKernel";
     boolean playFinished = false;//是否播放完毕,在onCompletion中值修改为true，表示播放完毕，不在调用onSeek
     private MediaPlayer mPlayer;
-    private MediaState mediaState;
     private SurfaceHolder mSurfaceHolder;
     private MediaPlayerListeners mListenners;
     private static final int PLAYER_SLOW_TIMER = 0x501;
@@ -153,7 +152,6 @@ public class MediaPlayerKernel extends SurfaceView {
         public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
             Log.i(TAG, "surfaceChanged() w:" + width + ", h:" + height);
             mSurfaceHolder = holder;
-            openVideo();
         }
 
         @Override
@@ -169,7 +167,7 @@ public class MediaPlayerKernel extends SurfaceView {
 
     };
 
-
+    private MediaState mediaState;
     /**
      * 播放器状态
      */
@@ -212,6 +210,7 @@ public class MediaPlayerKernel extends SurfaceView {
     }
 
     public void setVideoScreenScale(int width, int height) {
+
         ZLog.i(TAG,"setVideoScreenScale()  width:"+width+"----height:"+height);
         FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,FrameLayout.LayoutParams.MATCH_PARENT);
         int videoWidth = getVideoWidth();

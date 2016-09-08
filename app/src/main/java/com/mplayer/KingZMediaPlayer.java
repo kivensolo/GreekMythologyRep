@@ -10,11 +10,14 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.SeekBar;
 import android.widget.TextView;
+
 import com.kingz.customdemo.R;
 import com.provider.ChannelData;
 import com.utils.ToastTools;
 import com.utils.ZLog;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -27,22 +30,31 @@ import java.util.Locale;
 
 /**
  * Created by KingZ on 2016/4/16.
- * Discription:播放器测试
+ * Discription:播放器页面
  * mPlayer.reset();               //----->Idle
  * mPlayer.releaseMediaPlayer();  //Idle----->End
  * setDataSource();               //Initialized
  * prepare();                     //Prepared
+ *
+ *
+ *  还需完成的代码：
+ *  1：进度条
+ *  2：加载圈
+ *  3：滑动快进
+ *  4：浮层的出入动画
+ *  5:频道列表
  */
 public class KingZMediaPlayer extends Activity {
 
     private static final String TAG = "KingZMediaPlayer";
-    private SeekBarView seekBar;
+    //    private SeekBarView seekBar;
+    private SeekBar seekBar;
     private MediaPlayerKernel mPlayer;
 
     private ListView leftListView;
-    private TextView rightChangeBtn;    //画面比例切换，暂未使用
-    private TextView rightTextView;     //片长总时间，暂未使用
-    private TextView leftTimeView;      //当前播放时间，暂未使用
+    private TextView rightChangeBtn;
+    private TextView rightTextView;
+    private TextView leftTimeView;
     private String playedTime;
     private String totalTime;
     private ChanellListAdapter chanellListAdapter;
@@ -52,11 +64,30 @@ public class KingZMediaPlayer extends Activity {
     private StringBuilder mFormatBuilder;
     private Formatter mFormatter;
     private String play_url = "";      //播放地址
-    private MediaPlayerKernel.OnStateChangeListener mOnStateChangeListener;
-     private int duration;
-     private int minStepLen;
+    private int duration;
+    private int minStepLen;
     private int mVideoWidth;
     private int mVideoHeight;
+
+
+    //画面比例
+    private ScreenScaletype videoScreenMode = ScreenScaletype.SCREENTYPE_TOW;
+
+    enum ScreenScaletype {
+        SCREENTYPE_ONE("4:3"), SCREENTYPE_TOW("16:9");
+
+        private String mode;
+
+        ScreenScaletype(String mode) {
+            this.mode = mode;
+        }
+
+        @Override
+        public String toString() {
+            return mode;
+        }
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,9 +188,10 @@ public class KingZMediaPlayer extends Activity {
         mFormatBuilder = new StringBuilder();
         mFormatter = new Formatter(mFormatBuilder, Locale.getDefault());
         leftListView = (ListView) findViewById(R.id.leftchanellView);
-        seekBar = (SeekBarView) findViewById(R.id.mplayer_progress);
+        seekBar = (SeekBar) findViewById(R.id.media_seekbar);
         rightChangeBtn = (TextView) findViewById(R.id.changeSize_id);
         rightChangeBtn.setOnClickListener(ItemClickedListenner);
+
         leftTimeView = (TextView) findViewById(R.id.leftTime);
         leftTimeView.setTextColor(getResources().getColor(R.color.white));
         rightTextView = (TextView) findViewById(R.id.rightTime);
@@ -213,13 +245,13 @@ public class KingZMediaPlayer extends Activity {
 
             @Override
             public void onPrepare() {
-                duration =  mPlayer.getMediaPlayer().getDuration();
+                duration = mPlayer.getMediaPlayer().getDuration();
                 if (duration > 0) {
                     minStepLen = duration / seekBar.getMax();
-                    seekBar.setRightSideTime(formatTimeToHHMMSS(duration));
+//                    seekBar.setRightSideTime(formatTimeToHHMMSS(duration));
                     setRightSideTime(formatTimeToHHMMSS(duration));
                 }
-                mVideoHeight= mPlayer.getMediaPlayer().getVideoHeight();
+                mVideoHeight = mPlayer.getMediaPlayer().getVideoHeight();
                 mVideoWidth = mPlayer.getMediaPlayer().getVideoWidth();
                 Log.i(TAG, "mVideoWidth=" + mVideoWidth + ";mVideoHeight=" + mVideoHeight + ";   video duration = " + duration);
                 if (mVideoWidth > getWindowManager().getDefaultDisplay().getWidth() || mVideoHeight > getWindowManager().getDefaultDisplay().getHeight()) {
@@ -228,7 +260,7 @@ public class KingZMediaPlayer extends Activity {
                     if (mPlayer != null) {
                         mPlayer.start();
                         mPlayer.setState(MediaPlayerKernel.MediaState.PLAYING);
-                        ZLog.i(TAG,"onPrepare() setPlayeState is Playing");
+                        ZLog.i(TAG, "onPrepare() setPlayeState is Playing");
                     }
                 }
             }
@@ -262,13 +294,14 @@ public class KingZMediaPlayer extends Activity {
                     ZLog.i(TAG, "播放的视频地址：" + channelLists.get(0).playUrl);
                     mPlayer.setVideoURI(Uri.parse(channelLists.get(0).playUrl));
                     return true;
-                } else if (mPlayer.getState() == MediaPlayerKernel.MediaState.PLAYING) {
-                    mPlayer.pause();
-                    return true;
-                } else if (mPlayer.getState() == MediaPlayerKernel.MediaState.PAUSED) {
-                    mPlayer.start();
-                    return true;
                 }
+//                else if (mPlayer.getState() == MediaPlayerKernel.MediaState.PLAYING) {
+//                    mPlayer.pause();
+//                    return true;
+//                } else if (mPlayer.getState() == MediaPlayerKernel.MediaState.PAUSED) {
+//                    mPlayer.start();
+//                    return true;
+//                }
 
             case MotionEvent.ACTION_MOVE:
                 //isSeekState = true;
@@ -333,7 +366,7 @@ public class KingZMediaPlayer extends Activity {
         if (mPlayer != null) {
             mPlayer.release();
         }
-        seekBar.threadExitFlag = true;
+//        seekBar.threadExitFlag = true;
         super.onDestroy();
     }
 
@@ -353,18 +386,46 @@ public class KingZMediaPlayer extends Activity {
 
     public void setRightSideTime(String rightSideTime) {
         totalTime = rightSideTime;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                rightTextView.setText(totalTime);
+            }
+        });
     }
 
     View.OnClickListener ItemClickedListenner = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            switch (v.getId()){
+            switch (v.getId()) {
                 case R.id.changeSize_id:
-                    mVideoWidth = mVideoWidth * 3/4;
-                    ZLog.i(TAG,"onClick() changePlayerScale");
-                    mPlayer.setVideoScreenScale(mVideoWidth,mVideoHeight);
+                    changeVideoScale();
                     break;
             }
         }
     };
+
+    public void changeVideoScale() {
+        if (videoScreenMode == ScreenScaletype.SCREENTYPE_ONE) {
+            mVideoWidth = mVideoWidth * 3 / 4;
+            videoScreenMode = ScreenScaletype.SCREENTYPE_TOW;
+            changeInUIThread(ScreenScaletype.SCREENTYPE_ONE.toString());
+        } else if (videoScreenMode == ScreenScaletype.SCREENTYPE_TOW) {
+            mVideoWidth = mVideoWidth * 4 / 3;
+            videoScreenMode = ScreenScaletype.SCREENTYPE_ONE;
+            changeInUIThread(ScreenScaletype.SCREENTYPE_TOW.toString());
+
+        }
+        ZLog.i(TAG, "onClick() changePlayerScale mVideoWidth=" + mVideoWidth);
+        mPlayer.setVideoScreenScale(mVideoWidth, mVideoHeight);
+    }
+
+    public void changeInUIThread(final String str) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                rightChangeBtn.setText(str);
+            }
+        });
+    }
 }

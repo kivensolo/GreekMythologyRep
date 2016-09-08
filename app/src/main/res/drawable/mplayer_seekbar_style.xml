@@ -11,10 +11,10 @@
              <corners android:radius="10dip" />
              <gradient
                  android:angle="270"
-                 android:centerColor="#55000000"
+                 android:centerColor="#ff808A87"
                  android:centerY="0.45"
                  android:endColor="#ff808A87"
-                 android:startColor="#ff808088" />
+                 android:startColor="#ff808A87" />
          </shape>
      </item>
      		 <!-- 进度条已走的进度 -->
@@ -29,8 +29,8 @@
                      android:angle="270"
                      android:centerColor="#FF00bfff"
                      android:centerY="0.45"
-                     android:endColor="#7000bfff"
-                     android:startColor="#7000bfff" />
+                     android:endColor="#FF00bfff"
+                     android:startColor="#FF00bfff" />
              </shape>
          </clip>
      </item>
