@@ -12,6 +12,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.FrameLayout;
 import android.widget.Toast;
+
 import com.utils.ToastTools;
 import com.utils.ZLog;
 
@@ -36,6 +37,8 @@ public class MediaPlayerKernel extends SurfaceView {
     private static final int SET_TOTAL_TIME = 0x502;
     private static final int PLAY_TIMER_INTERVAL = 499;
     private boolean threadExitFlag = false;
+    private int mAudioSession;
+
     private Uri playUrl = null; // 播放地址
     private Context mContext;
     OnStateChangeListener onStateChangeListener;
@@ -159,7 +162,7 @@ public class MediaPlayerKernel extends SurfaceView {
             Log.i(TAG, "surfaceDestroyed()");
             mSurfaceHolder = null;
             threadExitFlag = true;
-            if(null != onStateChangeListener){
+            if (null != onStateChangeListener) {
                 onStateChangeListener.onSurfaceViewDestroyed(surfaceHolder);
             }
             release();
@@ -168,6 +171,7 @@ public class MediaPlayerKernel extends SurfaceView {
     };
 
     private MediaState mediaState;
+
     /**
      * 播放器状态
      */
@@ -211,10 +215,10 @@ public class MediaPlayerKernel extends SurfaceView {
 
     public void setVideoScreenScale(int width, int height) {
 
-        ZLog.i(TAG,"setVideoScreenScale()  width:"+width+"----height:"+height);
-        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,FrameLayout.LayoutParams.MATCH_PARENT);
+        ZLog.i(TAG, "setVideoScreenScale()  width:" + width + "----height:" + height);
+        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
         int videoWidth = getVideoWidth();
-        lp.setMargins((Math.max(videoWidth,width) - Math.min(videoWidth,width))/2, 0, (Math.max(videoWidth,width) - Math.min(videoWidth,width))/2, 0);
+        lp.setMargins((Math.max(videoWidth, width) - Math.min(videoWidth, width)) / 2, 0, (Math.max(videoWidth, width) - Math.min(videoWidth, width)) / 2, 0);
         setLayoutParams(lp);
     }
 
@@ -301,52 +305,58 @@ public class MediaPlayerKernel extends SurfaceView {
      */
     public void release() {
         if (null == mPlayer) {
-            ZLog.i(TAG, "releaseAsync() mediaPlayer is null");
             return;
         }
-        if (mPlayer.isPlaying()) {
-            //兼容代码
+        if (mPlayer.isPlaying()) {//兼容代码
             playFinished = false;
             mPlayer.stop();
         }
         mPlayer.reset();
+        mPlayer.release();
         // ———> 【IDLE】通过 reset() 方法进入 idle 状态的话会触发 OnErrorListener.onError() ，
         // 并且 MediaPlayer 会进入 Error 状态；如果是新创建的 MediaPlayer 对象，
         // 则并不会触发 onError(), 也不会进入 Error 状态。
-        mPlayer.release();
         ZLog.i(TAG, "release()...");
         //通过 release() 方法可以进入 End 状态，只要 MediaPlayer 对象不再被使用，
         // 就应当尽快将其通过 release() 方法释放掉，以释放相关的软硬件组件资源，
         // 这其中有些资源是只有一份的（相当于临界资源）。
         // 如果 MediaPlayer 对象进入了 End 状态，则不会在进入任何其他状态了。
         mPlayer = null;
-        mediaState = MediaState.END;
-        //mediaState = MediaState.IDLE;
+        mediaState = MediaState.IDLE;
     }
 
 
     private void openVideo() {
-        if (null == playUrl) {
+        if (null == playUrl || null == mSurfaceHolder) {
+            ZLog.e(TAG, "openVideo() playUrl/mSurfaceHolder is null");
             return;
         }
-        if (null == mSurfaceHolder) {
-            ZLog.e(TAG, "openVideo() mSurfaceHolder is null");
-            return;
-        }
+        AudioManager am = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
+        am.requestAudioFocus(null, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
+
+        // we shouldn't clear the target state, because somebody might have
+        // called start() previously
         release();
-        mPlayer = new MediaPlayer();
-        mPlayer.setOnSeekCompleteListener(mListenners);
-        mPlayer.setOnCompletionListener(mListenners);
-        mPlayer.setOnPreparedListener(mListenners);
-        mPlayer.setOnErrorListener(mListenners);
-        mPlayer.setOnInfoListener(mListenners);
+
         try {
+            mPlayer = new MediaPlayer();
+            if (mAudioSession != 0) {
+                mPlayer.setAudioSessionId(mAudioSession);
+            } else {
+                mAudioSession = mPlayer.getAudioSessionId();
+            }
+            mPlayer.setOnPreparedListener(mListenners);
+            mPlayer.setOnCompletionListener(mListenners);
+            mPlayer.setOnErrorListener(mListenners);
+            mPlayer.setOnSeekCompleteListener(mListenners);
+            mPlayer.setOnInfoListener(mListenners);
+//mMediaPlayer.setOnBufferingUpdateListener(mBufferingUpdateListener);
             mPlayer.setDataSource(mContext, playUrl); //进入Initialized状态
             mPlayer.setDisplay(mSurfaceHolder);
             mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mPlayer.setScreenOnWhilePlaying(true);
-            mediaState = MediaState.INIT;
             mPlayer.prepareAsync(); //异步准备  onPrepared回调至Prepared状态 ————> start() 至Started状态
+            mediaState = MediaState.INIT;
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -363,5 +373,13 @@ public class MediaPlayerKernel extends SurfaceView {
     @Override
     public void setKeepScreenOn(boolean screenOn) {
 
+    }
+
+    public void suspend() {
+        release();
+    }
+
+    public void resume() {
+        openVideo();
     }
 }
