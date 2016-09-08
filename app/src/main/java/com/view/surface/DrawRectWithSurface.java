@@ -71,6 +71,11 @@ public class DrawRectWithSurface extends ViewsActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
     static class DrawThread extends Thread {
         private final SurfaceHolder holder;
         public boolean isRun;
@@ -104,7 +109,11 @@ public class DrawRectWithSurface extends ViewsActivity {
                         holder.unlockCanvasAndPost(canvas);//结束锁定画图，并提交改变
                     }
                 }
+                if(count==6){
+                    isRun = false;
+                }
             }
         }
     }
+
 }
