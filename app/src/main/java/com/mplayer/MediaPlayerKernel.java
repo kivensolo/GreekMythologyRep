@@ -8,11 +8,10 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.FrameLayout;
 import android.widget.Toast;
-
 import com.utils.ToastTools;
 import com.utils.ZLog;
 
@@ -33,6 +32,7 @@ public class MediaPlayerKernel extends SurfaceView {
     private MediaPlayer mPlayer;
     private MediaState mediaState;
     private SurfaceHolder mSurfaceHolder;
+    private MediaPlayerListeners mListenners;
     private static final int PLAYER_SLOW_TIMER = 0x501;
     private static final int SET_TOTAL_TIME = 0x502;
     private static final int PLAY_TIMER_INTERVAL = 499;
@@ -61,15 +61,15 @@ public class MediaPlayerKernel extends SurfaceView {
 
     //初始化播放器
     private void initVideoView() {
+        initListeners();
         mPlayer = new MediaPlayer();
-        mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);     //设置多媒体流类型
+        mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         mPlayer.setVolume(1.0f, 1.0f);
-        mPlayer.setOnVideoSizeChangedListener(mOnVideoSizeListener);
-        mPlayer.setOnSeekCompleteListener(onSeekCompleteListener);
-        mPlayer.setOnCompletionListener(mOnCompletionListener);
-        mPlayer.setOnPreparedListener(mPreparedListener);
-        mPlayer.setOnErrorListener(mOErrorListener);
-        mPlayer.setOnInfoListener(mOnInfoListener);
+        mPlayer.setOnSeekCompleteListener(mListenners);
+        mPlayer.setOnCompletionListener(mListenners);
+        mPlayer.setOnPreparedListener(mListenners);
+        mPlayer.setOnErrorListener(mListenners);
+        mPlayer.setOnInfoListener(mListenners);
         mPlayer.setScreenOnWhilePlaying(true);
         mediaState = MediaState.PREPARING;
 
@@ -79,6 +79,66 @@ public class MediaPlayerKernel extends SurfaceView {
         mSurfaceHolder.setKeepScreenOn(true); //强制屏幕等待
         Log.i(TAG, "initVideoView()  hodler:" + mSurfaceHolder);
         mediaState = MediaState.IDLE;
+    }
+
+    private void initListeners() {
+        mListenners = new MediaPlayerListeners() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                Log.i(TAG, "OnCompletionListener.onCompletion()   finish");
+                threadExitFlag = true;
+                mp.stop();
+                mp.release();
+            }
+
+            @Override
+            public boolean onError(MediaPlayer mp, int what, int extra) {
+                ToastTools.getInstance().showMgtvWaringToast(mContext, "播放出错！" + "what=" + what + ";extra=" + extra);
+                switch (what) {
+                    case MediaPlayer.MEDIA_ERROR_SERVER_DIED:
+                        Log.e("Play Error:::", "MEDIA_ERROR_SERVER_DIED" + ", extra:" + extra);
+                        break;
+                    case MediaPlayer.MEDIA_ERROR_UNKNOWN:
+                        Log.e("Play Error:::", "MEDIA_ERROR_UNKNOWN" + ", extra:" + extra);
+                        break;
+                    default:
+                        break;
+                }
+                mp.release();
+                return false;
+            }
+
+            @Override
+            public boolean onInfo(MediaPlayer mp, int what, int extra) {
+                Log.i(TAG, "OnInfo：" + "waht = " + what + "---extra = " + extra);
+                switch (what) {
+                    case MediaPlayer.MEDIA_INFO_BAD_INTERLEAVING:
+                        break;
+                    case MediaPlayer.MEDIA_INFO_METADATA_UPDATE:
+                        break;
+                    case MediaPlayer.MEDIA_INFO_VIDEO_TRACK_LAGGING:
+                        break;
+                    case MediaPlayer.MEDIA_INFO_NOT_SEEKABLE:
+                        break;
+                }
+                return false;
+            }
+
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mPlayer = mp;
+                if (null != onStateChangeListener) {
+                    onStateChangeListener.onPrepare();
+                }
+                ToastTools.getInstance().showMgtvWaringToast(mContext, "开始播放");
+            }
+
+            @Override
+            public void onSeekComplete(MediaPlayer mp) {
+                Toast.makeText(mContext, "SeekComplete", Toast.LENGTH_SHORT).show();
+                Log.i(TAG, "UserSeekComplete");
+            }
+        };
     }
 
     private SurfaceHolder.Callback mSurfaceHolderCallback = new SurfaceHolder.Callback() {
@@ -101,9 +161,12 @@ public class MediaPlayerKernel extends SurfaceView {
             Log.i(TAG, "surfaceDestroyed()");
             mSurfaceHolder = null;
             threadExitFlag = true;
-//            seekBar.threadExitFlag = true;
+            if(null != onStateChangeListener){
+                onStateChangeListener.onSurfaceViewDestroyed(surfaceHolder);
+            }
             release();
         }
+
     };
 
 
@@ -129,8 +192,7 @@ public class MediaPlayerKernel extends SurfaceView {
 
         public void playFinish(MediaPlayer mp);
 
-        public void onSurfaceViewDestroyed(Surface surface);
-
+        public void onSurfaceViewDestroyed(SurfaceHolder surface);
     }
 
     public void setOnStateChangeListener(OnStateChangeListener onStateChangeListener) {
@@ -147,6 +209,14 @@ public class MediaPlayerKernel extends SurfaceView {
 
     public void setState(MediaState mediaState) {
         this.mediaState = mediaState;
+    }
+
+    public void setVideoScreenScale(int width, int height) {
+        ZLog.i(TAG,"setVideoScreenScale()  width:"+width+"----height:"+height);
+        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,FrameLayout.LayoutParams.MATCH_PARENT);
+        int videoWidth = getVideoWidth();
+        lp.setMargins((Math.max(videoWidth,width) - Math.min(videoWidth,width))/2, 0, (Math.max(videoWidth,width) - Math.min(videoWidth,width))/2, 0);
+        setLayoutParams(lp);
     }
 
     private final int START = 0x0001;
@@ -185,26 +255,6 @@ public class MediaPlayerKernel extends SurfaceView {
             }
         }
     };
-
-    public void play(String url) {
-//        mPlayer.stop();
-//        mPlayer.reset();
-        if (mPlayer == null) {
-            mPlayer = new MediaPlayer();
-        }
-//       mPlayer.setLooping(true);
-        try {
-            mPlayer.setDataSource(url);
-            mPlayer.prepare();
-//            mPlayer.prepareAsync();
-            mPlayer.start();
-            mediaState = MediaState.PREPARING;
-        } catch (IOException e) {
-            e.printStackTrace();
-            mPlayer.reset();
-            mediaState = MediaState.INIT;
-        }
-    }
 
     public void pause() {
         if (mPlayer.isPlaying()) {
@@ -286,12 +336,11 @@ public class MediaPlayerKernel extends SurfaceView {
         }
         release();
         mPlayer = new MediaPlayer();
-        mPlayer.setOnVideoSizeChangedListener(mOnVideoSizeListener);
-        mPlayer.setOnSeekCompleteListener(onSeekCompleteListener);
-        mPlayer.setOnCompletionListener(mOnCompletionListener);
-        mPlayer.setOnPreparedListener(mPreparedListener);
-        mPlayer.setOnErrorListener(mOErrorListener);
-        mPlayer.setOnInfoListener(mOnInfoListener);
+        mPlayer.setOnSeekCompleteListener(mListenners);
+        mPlayer.setOnCompletionListener(mListenners);
+        mPlayer.setOnPreparedListener(mListenners);
+        mPlayer.setOnErrorListener(mListenners);
+        mPlayer.setOnInfoListener(mListenners);
         try {
             mPlayer.setDataSource(mContext, playUrl); //进入Initialized状态
             mPlayer.setDisplay(mSurfaceHolder);
@@ -316,90 +365,4 @@ public class MediaPlayerKernel extends SurfaceView {
     public void setKeepScreenOn(boolean screenOn) {
 
     }
-
-    /*******************************  各类监听器  start *********************************/
-    private MediaPlayer.OnPreparedListener mPreparedListener = new MediaPlayer.OnPreparedListener() {
-        @Override
-        public void onPrepared(MediaPlayer mp) {
-            mPlayer = mp;
-            if (null != onStateChangeListener) {
-                onStateChangeListener.onPrepare();
-            }
-            ToastTools.getInstance().showMgtvWaringToast(mContext, "开始播放");
-        }
-    };
-
-    private MediaPlayer.OnInfoListener mOnInfoListener = new MediaPlayer.OnInfoListener() {
-        @Override
-        public boolean onInfo(MediaPlayer mp, int what, int extra) {
-            Log.i(TAG, "OnInfo：" + "waht = " + what + "---extra = " + extra);
-            switch (what) {
-                case MediaPlayer.MEDIA_INFO_BAD_INTERLEAVING:
-                    break;
-                case MediaPlayer.MEDIA_INFO_METADATA_UPDATE:
-                    break;
-                case MediaPlayer.MEDIA_INFO_VIDEO_TRACK_LAGGING:
-                    break;
-                case MediaPlayer.MEDIA_INFO_NOT_SEEKABLE:
-                    break;
-            }
-            return false;
-        }
-    };
-
-    private MediaPlayer.OnSeekCompleteListener onSeekCompleteListener = new MediaPlayer.OnSeekCompleteListener() {
-
-        @Override
-        public void onSeekComplete(MediaPlayer mp) {
-            Toast.makeText(mContext, "SeekComplete", Toast.LENGTH_SHORT).show();
-            Log.i(TAG, "UserSeekComplete");
-        }
-    };
-
-    private MediaPlayer.OnErrorListener mOErrorListener = new MediaPlayer.OnErrorListener() {
-        @Override
-        public boolean onError(MediaPlayer mp, int what, int extra) {
-            ToastTools.getInstance().showMgtvWaringToast(mContext, "播放出错！" + "what=" + what + ";extra=" + extra);
-            switch (what) {
-                case MediaPlayer.MEDIA_ERROR_SERVER_DIED:
-                    Log.e("Play Error:::", "MEDIA_ERROR_SERVER_DIED" + ", extra:" + extra);
-                    break;
-                case MediaPlayer.MEDIA_ERROR_UNKNOWN:
-                    Log.e("Play Error:::", "MEDIA_ERROR_UNKNOWN" + ", extra:" + extra);
-                    break;
-                default:
-                    break;
-            }
-            mPlayer.release();
-            return false;
-        }
-    };
-
-    private MediaPlayer.OnCompletionListener mOnCompletionListener = new MediaPlayer.OnCompletionListener() {
-        @Override
-        public void onCompletion(MediaPlayer mp) {
-            Log.i(TAG, "OnCompletionListener.onCompletion()   finish");
-//            Toast.makeText(KingZMediaPlayer.this, "播放完成", Toast.LENGTH_SHORT).show();
-            threadExitFlag = true;
-            mPlayer.stop();
-            mPlayer.release();
-        }
-    };
-
-    private MediaPlayer.OnVideoSizeChangedListener mOnVideoSizeListener = new MediaPlayer.OnVideoSizeChangedListener() {
-        @Override
-        public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
-
-        }
-    };
-
-    /******************************* 各类监听器  End  *********************************/
-
-    public interface IMediaplerInterface extends MediaPlayer.OnVideoSizeChangedListener,
-            MediaPlayer.OnCompletionListener, MediaPlayer.OnErrorListener,
-            MediaPlayer.OnSeekCompleteListener, MediaPlayer.OnInfoListener,
-            MediaPlayer.OnPreparedListener {
-
-    }
-
 }

@@ -73,6 +73,9 @@
             android:name="com.kingz.uiusingCanvas.CustomCanvasSeekBarAct"
             android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
+        <activity android:name="com.view.surface.DrawRectWithSurface"
+                  android:theme="@android:style/Theme.Black.NoTitleBar"/>
+
         <!-- progressBar -->
         <activity android:name="com.nativeWidgets.NativeProgressBar"
                 android:theme="@android:style/Theme.Black.NoTitleBar"/>

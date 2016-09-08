@@ -2,6 +2,7 @@ package com.photo;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -33,10 +34,11 @@ public class PhotosActivity extends BaseActivity implements AdapterView.OnItemCl
 
 
     @Override
-    protected void findID() {
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.photos_activity);
         initViews();
-        super.findID();
+
     }
 
     private void initViews() {

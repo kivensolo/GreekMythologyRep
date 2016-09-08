@@ -10,11 +10,11 @@
             android:layout_height="match_parent"
             android:layout_gravity="center">
     </com.mplayer.MediaPlayerKernel>
-    <ListView android:layout_width="200dp"
+    <ListView android:layout_width="150dp"
               android:layout_height="match_parent"
               android:id="@+id/leftchanellView"
               android:layout_gravity="start|top"
-              android:background="@color/transparent"
+              android:background="@color/transparent_ban"
               android:divider="@color/lightskyblue"
               android:dividerHeight="1dp"
               android:listSelector="@color/mediumseagreen"
@@ -49,12 +49,14 @@
                 android:textSize="16sp"
                 android:gravity="center_vertical"/>
     </LinearLayout>
-    <TextView android:layout_width="32dp"
-              android:layout_height="27dp"
-              android:id="@+id/changeSize_id"
-              android:text="4:3"
+    <TextView
+            android:id="@+id/changeSize_id"
+            android:layout_width="50dp"
+              android:layout_height="70dp"
+              android:text="16:9"
               android:textSize="22sp"
-              android:background="@color/green"
+              android:textColor="@color/cornflowerblue"
+              android:background="@color/transparent_ban"
               android:gravity="center_vertical|center_horizontal"
               android:layout_gravity="end|center_vertical"/>
 </FrameLayout>

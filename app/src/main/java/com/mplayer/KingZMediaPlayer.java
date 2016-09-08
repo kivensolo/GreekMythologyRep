@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.view.Surface;
+import android.view.SurfaceHolder;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -159,6 +159,7 @@ public class KingZMediaPlayer extends Activity {
         leftListView = (ListView) findViewById(R.id.leftchanellView);
         seekBar = (SeekBarView) findViewById(R.id.mplayer_progress);
         rightChangeBtn = (TextView) findViewById(R.id.changeSize_id);
+        rightChangeBtn.setOnClickListener(ItemClickedListenner);
         leftTimeView = (TextView) findViewById(R.id.leftTime);
         leftTimeView.setTextColor(getResources().getColor(R.color.white));
         rightTextView = (TextView) findViewById(R.id.rightTime);
@@ -176,7 +177,7 @@ public class KingZMediaPlayer extends Activity {
     private void initListner() {
         mPlayer.setOnStateChangeListener(new MediaPlayerKernel.OnStateChangeListener() {
             @Override
-            public void onSurfaceViewDestroyed(Surface surface) {
+            public void onSurfaceViewDestroyed(SurfaceHolder surface) {
 
             }
 
@@ -218,8 +219,8 @@ public class KingZMediaPlayer extends Activity {
                     seekBar.setRightSideTime(formatTimeToHHMMSS(duration));
                     setRightSideTime(formatTimeToHHMMSS(duration));
                 }
-                mVideoWidth = mPlayer.getMediaPlayer().getVideoHeight();
-                mVideoHeight = mPlayer.getMediaPlayer().getVideoWidth();
+                mVideoHeight= mPlayer.getMediaPlayer().getVideoHeight();
+                mVideoWidth = mPlayer.getMediaPlayer().getVideoWidth();
                 Log.i(TAG, "mVideoWidth=" + mVideoWidth + ";mVideoHeight=" + mVideoHeight + ";   video duration = " + duration);
                 if (mVideoWidth > getWindowManager().getDefaultDisplay().getWidth() || mVideoHeight > getWindowManager().getDefaultDisplay().getHeight()) {
                 }
@@ -245,17 +246,8 @@ public class KingZMediaPlayer extends Activity {
     }
 
     @Override
-    protected void onRestart() {
-        mPlayer.start();
-        super.onRestart();
-    }
-
-    protected void onDestroy() {
-        if (mPlayer != null) {
-            mPlayer.release();
-        }
-        seekBar.threadExitFlag = true;
-        super.onDestroy();
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        return super.dispatchTouchEvent(ev);
     }
 
     @Override
@@ -285,11 +277,16 @@ public class KingZMediaPlayer extends Activity {
                 Log.i(TAG, "onTouchEvent   得到的X = " + x + ";得到的y:" + y);
                 break;
             case MotionEvent.ACTION_UP:
-                changeSeekBarView();
-                changeShowListView();
+                changeAllViews();
                 break;
         }
         return super.onTouchEvent(event);
+    }
+
+    private void changeAllViews() {
+        changeSeekBarView();
+        changeShowListView();
+        changeScaleBtnView();
     }
 
     private void changeSeekBarView() {
@@ -308,63 +305,36 @@ public class KingZMediaPlayer extends Activity {
         }
     }
 
+    private void changeScaleBtnView() {
+        if (!rightChangeBtn.isShown()) {
+            rightChangeBtn.setVisibility(View.VISIBLE);
+        } else {
+            rightChangeBtn.setVisibility(View.INVISIBLE);
+        }
+    }
+
 
     @Override
     protected void onPause() {
-        //if (mPlayer.isPlaying()) {
+        //if (mPlayer) {
         //    int position = mPlayer.getCurrentPosition();
         //    mPlayer.stop();
         //}
         super.onPause();
     }
 
-    /**
-     * 设置进度条显示隐藏
-     *
-     * @param display
-     */
-    public void setSeekBarDisplay(int display) {
-        seekBar.setVisibility(display);
+    @Override
+    protected void onRestart() {
+        mPlayer.start();
+        super.onRestart();
     }
 
-
-    class MplayerSeekBarListener implements SeekBarView.IMplayerSeekBarListener {
-
-        @Override
-        public void onUserPauseOrStart() {
-//            doPauseOrStartVideo();
+    protected void onDestroy() {
+        if (mPlayer != null) {
+            mPlayer.release();
         }
-
-        @Override
-        public void onUserSeekStart() {
-
-        }
-
-        @Override
-        public void onUserSeekEnd(long seekPos) {
-
-        }
-
-        @Override
-        public long uiProgress2PlayProgress(int uiProgress) {
-
-            return 0;
-        }
-
-        @Override
-        public int playProgress2uiProgress(long playProgress) {
-            return 0;
-        }
-
-        @Override
-        public String getPosDiscribByPlayPos(long pos) {
-            return null;
-        }
-
-        @Override
-        public void onPlayToPreNode() {
-
-        }
+        seekBar.threadExitFlag = true;
+        super.onDestroy();
     }
 
     public String formatTimeToHHMMSS(int s) {
@@ -383,6 +353,18 @@ public class KingZMediaPlayer extends Activity {
 
     public void setRightSideTime(String rightSideTime) {
         totalTime = rightSideTime;
-//        mHandler.sendEmptyMessage(SET_TOTAL_TIME);
     }
+
+    View.OnClickListener ItemClickedListenner = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.changeSize_id:
+                    mVideoWidth = mVideoWidth * 3/4;
+                    ZLog.i(TAG,"onClick() changePlayerScale");
+                    mPlayer.setVideoScreenScale(mVideoWidth,mVideoHeight);
+                    break;
+            }
+        }
+    };
 }

@@ -7,23 +7,19 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ExpandableListView;
-
 import com.AsuyncTaskJsonTest.AsynctaskBitmapMainActivity;
 import com.adapter.CommExpandableListAdapter;
 import com.iflytek.synthesizer.VoiceActivity;
 import com.kingz.customdemo.R;
 import com.kingz.filemanager.FileManagerActivity;
-import com.kingz.pages.CustomViewsPage;
-import com.kingz.pages.DownloadAPPActivity;
-import com.kingz.pages.FileAndPicTestACT;
-import com.kingz.pages.FourComponentPage;
-import com.kingz.pages.LayoutPage;
+import com.kingz.pages.*;
 import com.lbs.BaiduMapActivity;
 import com.mplayer.KingZMediaPlayer;
 import com.nativeWidgets.BasicControlsActivity;
 import com.nativeWidgets.NativeProgressBar;
 import com.photo.BitmapPhotosActivity;
 import com.view.slider.wzviewpager.OriginViewPagerActivity;
+import com.view.surface.DrawRectWithSurface;
 import com.widgets.AnimatedExpandableListView;
 
 import java.util.ArrayList;
@@ -93,6 +89,7 @@ public class MainActivity extends ExpandableListActivity implements OnItemClickL
 		item1.add(new ListBillData(this,"SrcLayoutTest",new Intent(this,LayoutPage.class)));
 		item1.add(new ListBillData(this,"Four major components",new Intent(this,FourComponentPage.class)));
 		item1.add(new ListBillData(this,"ViewPager",new Intent(this,OriginViewPagerActivity.class)));
+		item1.add(new ListBillData(this,"SurfaceDraw",new Intent(this,DrawRectWithSurface.class)));
 		childs.add(item1);
 
 		//Bimap
