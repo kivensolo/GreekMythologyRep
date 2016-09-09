@@ -10,6 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.kingz.customdemo.R;
+import com.mplayer.ApolloSeekBar;
 
 
 public class NativeProgressBar extends Activity implements OnClickListener{
@@ -33,6 +34,7 @@ public class NativeProgressBar extends Activity implements OnClickListener{
 	 */
 	private void  initlayout() {
 		progress = (ProgressBar) findViewById(R.id.horiz);
+		ApolloSeekBar seekBar = (ApolloSeekBar) findViewById(R.id.mediaplayer_seekbar);
 		findViewById(R.id.add).setOnClickListener(this);
 		findViewById(R.id.reduce).setOnClickListener(this);
 		findViewById(R.id.reset).setOnClickListener(this);
@@ -40,6 +42,7 @@ public class NativeProgressBar extends Activity implements OnClickListener{
 		findViewById(R.id.alertdialog).setOnClickListener(this);
 		text = (TextView)findViewById(R.id.text);
 
+		seekBar.invalidate();
 	}
 
 	@Override

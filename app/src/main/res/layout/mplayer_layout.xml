@@ -25,40 +25,23 @@
                   android:layout_gravity="bottom|center_horizontal"
                   android:layout_marginStart="20dp"
                   android:layout_marginEnd="20dp"
-        android:weightSum="1"
-        android:orientation="horizontal">
-        <TextView
-                android:id="@+id/leftTime"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:background="@color/transparent"
-                android:textSize="16sp"
-                android:gravity="center_vertical"/>
-       <!-- <com.mplayer.SeekBarView
-                android:id="@+id/mplayer_progress"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginTop="10dp"
+                  android:weightSum="1"
+                  android:orientation="horizontal">
+        <com.mplayer.ApolloSeekBar
+                android:id="@+id/mediaplayer_seekbar"
                 android:layout_width="0dp"
                 android:layout_height="15dp"
                 android:layout_weight="1"
-                android:background="@color/transparent"/>-->
-        <SeekBar
-            android:id="@+id/media_seekbar"
-            android:layout_marginStart="25dp"
-            android:layout_marginEnd="25dp"
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="15dp"
-            android:progressDrawable="@drawable/mplayer_seekbar_style"
-            android:thumb="@drawable/mediaplayer_thumb" />
-        <TextView
-                android:id="@+id/rightTime"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:background="@color/transparent"
-                android:textSize="16sp"
-                android:gravity="center_vertical"/>
+                android:background="@color/transparent"/>
+        <!--<SeekBar-->
+            <!--android:id="@+id/media_seekbar"-->
+            <!--android:layout_marginStart="25dp"-->
+            <!--android:layout_marginEnd="25dp"-->
+            <!--android:layout_marginTop="5dp"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="15dp"-->
+            <!--android:progressDrawable="@drawable/mplayer_seekbar_style"-->
+            <!--android:thumb="@drawable/mediaplayer_thumb" />-->
     </LinearLayout>
     <TextView
             android:id="@+id/changeSize_id"

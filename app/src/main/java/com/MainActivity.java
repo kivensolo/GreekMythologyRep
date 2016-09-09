@@ -14,7 +14,7 @@ import com.kingz.customdemo.R;
 import com.kingz.filemanager.FileManagerActivity;
 import com.kingz.pages.*;
 import com.lbs.BaiduMapActivity;
-import com.mplayer.KingZMediaPlayer;
+import com.mplayer.ApolloMediaPlayer;
 import com.nativeWidgets.BasicControlsActivity;
 import com.nativeWidgets.NativeProgressBar;
 import com.photo.BitmapPhotosActivity;
@@ -116,7 +116,7 @@ public class MainActivity extends ExpandableListActivity implements OnItemClickL
 
 		//Mediaplayer
 		ArrayList<ListBillData> item6 = new ArrayList<>();
-		item6.add(new ListBillData(this,"Media",new Intent(this,KingZMediaPlayer.class)));
+		item6.add(new ListBillData(this,"Media",new Intent(this,ApolloMediaPlayer.class)));
 		childs.add(item6);
 
 		//Other

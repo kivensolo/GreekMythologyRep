@@ -10,14 +10,11 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.SeekBar;
 import android.widget.TextView;
-
 import com.kingz.customdemo.R;
 import com.provider.ChannelData;
 import com.utils.ToastTools;
 import com.utils.ZLog;
-
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -44,17 +41,14 @@ import java.util.Locale;
  *  4：浮层的出入动画
  *  5:频道列表
  */
-public class KingZMediaPlayer extends Activity {
+public class ApolloMediaPlayer extends Activity {
 
-    private static final String TAG = "KingZMediaPlayer";
-    //    private SeekBarView seekBar;
-    private SeekBar seekBar;
+    private static final String TAG = "ApolloMediaPlayer";
+        private ApolloSeekBar seekBar;
     private MediaPlayerKernel mPlayer;
 
     private ListView leftListView;
     private TextView rightChangeBtn;
-    private TextView rightTextView;
-    private TextView leftTimeView;
     private String playedTime;
     private String totalTime;
     private ChanellListAdapter chanellListAdapter;
@@ -188,14 +182,9 @@ public class KingZMediaPlayer extends Activity {
         mFormatBuilder = new StringBuilder();
         mFormatter = new Formatter(mFormatBuilder, Locale.getDefault());
         leftListView = (ListView) findViewById(R.id.leftchanellView);
-        seekBar = (SeekBar) findViewById(R.id.media_seekbar);
+        seekBar = (ApolloSeekBar) findViewById(R.id.mediaplayer_seekbar);
         rightChangeBtn = (TextView) findViewById(R.id.changeSize_id);
         rightChangeBtn.setOnClickListener(ItemClickedListenner);
-
-        leftTimeView = (TextView) findViewById(R.id.leftTime);
-        leftTimeView.setTextColor(getResources().getColor(R.color.white));
-        rightTextView = (TextView) findViewById(R.id.rightTime);
-        rightTextView.setTextColor(getResources().getColor(R.color.white));
 
         if (channelLists != null) {
             chanellListAdapter = new ChanellListAdapter(this, channelLists, R.layout.simple_listviewitem);
@@ -247,7 +236,7 @@ public class KingZMediaPlayer extends Activity {
             public void onPrepare() {
                 duration = mPlayer.getMediaPlayer().getDuration();
                 if (duration > 0) {
-                    minStepLen = duration / seekBar.getMax();
+                    //minStepLen = duration / seekBar.getMax();
 //                    seekBar.setRightSideTime(formatTimeToHHMMSS(duration));
                     setRightSideTime(formatTimeToHHMMSS(duration));
                 }
@@ -386,12 +375,6 @@ public class KingZMediaPlayer extends Activity {
 
     public void setRightSideTime(String rightSideTime) {
         totalTime = rightSideTime;
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                rightTextView.setText(totalTime);
-            }
-        });
     }
 
     View.OnClickListener ItemClickedListenner = new View.OnClickListener() {

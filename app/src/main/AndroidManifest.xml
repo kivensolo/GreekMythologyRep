@@ -197,7 +197,7 @@
 
 
         <!-- ************ 媒体 *********** -->
-        <activity android:name="com.mplayer.KingZMediaPlayer"
+        <activity android:name="com.mplayer.ApolloMediaPlayer"
                   android:theme="@android:style/Theme.Black.NoTitleBar"
                   android:screenOrientation="landscape"/>
 

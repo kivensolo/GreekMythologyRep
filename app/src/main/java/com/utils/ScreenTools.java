@@ -46,8 +46,7 @@ public class ScreenTools {
 
 
     /**
-     * 获得屏幕高度
-     *
+     *获得屏幕宽度
      * @param context
      * @return
      */
@@ -59,8 +58,7 @@ public class ScreenTools {
     }
 
     /**
-     * 获得屏幕宽度
-     *
+     * 获得屏幕高度
      * @param context
      * @return
      */

@@ -292,6 +292,10 @@ public class MediaPlayerKernel extends SurfaceView {
         return mPlayer.getDuration();
     }
 
+    public int getCurrentPosition() {
+        return mPlayer.getCurrentPosition();
+    }
+
     public int getVideoHeight() {
         return mPlayer.getVideoHeight();
     }
