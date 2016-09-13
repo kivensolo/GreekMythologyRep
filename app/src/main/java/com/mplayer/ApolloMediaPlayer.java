@@ -179,10 +179,30 @@ public class ApolloMediaPlayer extends Activity {
     private void initViews() {
         mPlayer = (MediaPlayerKernel) findViewById(R.id.mplayercore);
         initListner();
+
         mFormatBuilder = new StringBuilder();
         mFormatter = new Formatter(mFormatBuilder, Locale.getDefault());
+
         leftListView = (ListView) findViewById(R.id.leftchanellView);
+
         seekBar = (ApolloSeekBar) findViewById(R.id.mediaplayer_seekbar);
+        seekBar.setApolloSeekBarChangeListener(new ApolloSeekBar.IOnApolloSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(ApolloSeekBar seekBar, int progress, boolean fromUser) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(ApolloSeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(ApolloSeekBar seekBar) {
+
+            }
+        });
+
         rightChangeBtn = (TextView) findViewById(R.id.changeSize_id);
         rightChangeBtn.setOnClickListener(ItemClickedListenner);
 

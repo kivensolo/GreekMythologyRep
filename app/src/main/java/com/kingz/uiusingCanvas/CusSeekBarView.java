@@ -16,6 +16,8 @@ import android.view.View;
 /**
  * @author: KingZ
  * @Description:自定义画笔
+ *
+ * //需要重写此页面
  */
 public class CusSeekBarView extends View implements View.OnTouchListener {
 
@@ -71,7 +73,6 @@ public class CusSeekBarView extends View implements View.OnTouchListener {
 	 */
 	private void initViews() {
 		Log.i(TAG,"initViews");
-		FLAG = true;
 		InnerBarWidth = 0;
 		innerPaint = new Paint();
 		outerPaint = new Paint();

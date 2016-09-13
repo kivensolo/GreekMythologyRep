@@ -1,6 +1,5 @@
 package com.kingz.uiusingCanvas;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -8,12 +7,13 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import com.BaseActivity;
 
 /**
  * @author: KingZ
  * @Description:
  */
-public class CustomCanvasSeekBarAct extends Activity implements OnTouchListener {
+public class CustomCanvasSeekBarAct extends BaseActivity implements OnTouchListener {
 
 	private static String TAG = CustomCanvasSeekBarAct.class.getSimpleName();
 

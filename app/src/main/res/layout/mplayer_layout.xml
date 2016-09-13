@@ -1,56 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
              android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:weightSum="1">
+             android:layout_height="match_parent">
     <com.mplayer.MediaPlayerKernel
             android:id="@+id/mplayercore"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center">
     </com.mplayer.MediaPlayerKernel>
-    <ListView android:layout_width="150dp"
-              android:layout_height="match_parent"
+
+    <ListView android:layout_width="170dp"
+              android:layout_height="380dip"
               android:id="@+id/leftchanellView"
-              android:layout_gravity="start|top"
               android:background="@color/transparent_ban"
               android:divider="@color/lightskyblue"
               android:dividerHeight="1dp"
               android:listSelector="@color/mediumseagreen"
+              android:layout_alignParentLeft="true"
+              android:layout_centerVertical="true"
               android:scrollbars="none">
     </ListView>
-    <LinearLayout android:layout_width="506dp"
-                  android:layout_height="30dp"
-                  android:layout_gravity="bottom|center_horizontal"
-                  android:layout_marginStart="20dp"
-                  android:layout_marginEnd="20dp"
-                  android:weightSum="1"
-                  android:orientation="horizontal">
-        <com.mplayer.ApolloSeekBar
-                android:id="@+id/mediaplayer_seekbar"
-                android:layout_width="0dp"
-                android:layout_height="15dp"
-                android:layout_weight="1"
-                android:background="@color/transparent"/>
-        <!--<SeekBar-->
-            <!--android:id="@+id/media_seekbar"-->
-            <!--android:layout_marginStart="25dp"-->
-            <!--android:layout_marginEnd="25dp"-->
-            <!--android:layout_marginTop="5dp"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="15dp"-->
-            <!--android:progressDrawable="@drawable/mplayer_seekbar_style"-->
-            <!--android:thumb="@drawable/mediaplayer_thumb" />-->
-    </LinearLayout>
+
+    <com.mplayer.ApolloSeekBar
+            android:id="@+id/mediaplayer_seekbar"
+            android:layout_width="500dip"
+            android:layout_height="50dip"
+            android:background="@color/cardview_dark_background"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:paddingBottom="50dp"/>
+
     <TextView
             android:id="@+id/changeSize_id"
             android:layout_width="50dp"
-              android:layout_height="70dp"
-              android:text="4:3"
-              android:textSize="22sp"
-              android:textColor="@color/cornflowerblue"
-              android:background="@color/transparent_ban"
-              android:gravity="center_vertical|center_horizontal"
-              android:layout_gravity="end|center_vertical"/>
-</FrameLayout>
+            android:layout_height="70dp"
+            android:text="4:3"
+            android:textSize="22sp"
+            android:textColor="@color/cornflowerblue"
+            android:background="@color/transparent_ban"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_gravity="end|center_vertical" android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"/>
+</RelativeLayout>

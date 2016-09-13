@@ -1,11 +1,13 @@
 package com.utils;
 
 import android.annotation.TargetApi;
+import android.content.res.Resources;
 import android.graphics.*;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.Base64;
+import android.util.TypedValue;
 
 import java.io.ByteArrayOutputStream;
 
@@ -442,6 +444,20 @@ public class BitMapUtils {
                 bytesPerPixel = 4;
         }
         return bytesPerPixel;
+    }
+     /**
+     * 获取Resource 图片资源
+     *
+     * @param resources
+     * @param id
+     * @return
+     */
+    public static Bitmap decodeResource(Resources resources, int id) {
+        TypedValue value = new TypedValue();
+        resources.openRawResource(id, value);
+        BitmapFactory.Options opts = new BitmapFactory.Options();
+        opts.inTargetDensity = value.density;
+        return BitmapFactory.decodeResource(resources, id, opts);
     }
 
 

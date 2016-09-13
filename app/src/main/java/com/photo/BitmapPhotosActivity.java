@@ -1,6 +1,7 @@
 package com.photo;
 
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
@@ -40,10 +41,10 @@ public class BitmapPhotosActivity extends PhotosActivity{
             "斜切图片","水印---图片","水印---文字","倒影","Glide加载图片"};
 
     @Override
-    protected void findID() {
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         datas = Arrays.asList(strs);
         setImageView();
-        super.findID();
     }
 
     /**

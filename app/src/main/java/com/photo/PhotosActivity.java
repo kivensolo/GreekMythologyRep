@@ -38,7 +38,6 @@ public class PhotosActivity extends BaseActivity implements AdapterView.OnItemCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.photos_activity);
         initViews();
-
     }
 
     private void initViews() {

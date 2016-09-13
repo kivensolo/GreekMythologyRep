@@ -9,8 +9,7 @@
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:weightSum="1">
+            android:orientation="vertical">
 
         <ProgressBar
             android:id="@+id/horiz"
@@ -46,27 +45,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TextView"
-            android:textColor="#00F00F" />
+            android:textColor="#00F00F"/>
 
 
         <Button
             android:id="@+id/clear"
-            android:layout_width="wrap_content"
+            android:layout_width="224dp"
             android:layout_height="wrap_content"
             android:text="@string/clear" />
 
         <Button
             android:id="@+id/alertdialog"
-            android:layout_width="wrap_content"
+            android:layout_width="229dp"
             android:layout_height="wrap_content"
             android:text="弹出对话框" />
-
-       <com.mplayer.ApolloSeekBar
-               android:id="@+id/mediaplayer_seekbar"
-               android:background="@color/khaki"
-               android:layout_width="match_parent"
-               android:layout_height="0dp"
-               android:layout_weight="0.4"/>
 
     </LinearLayout>
 

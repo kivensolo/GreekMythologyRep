@@ -1,63 +1,30 @@
 package com.mplayer;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.*;
-import android.os.Handler;
-import android.os.Message;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import com.kingz.customdemo.R;
-import com.utils.ScreenTools;
-import com.utils.ZLog;
 
 /**
  * Created by KingZ on 2016/1/24.
  * Discription:
- * KingZ播放器的进度条View
+ * Apollo播放器的进度条View
  */
-public class ApolloSeekBar extends View implements View.OnTouchListener{
+public class ApolloSeekBar extends View {
 
     private static String TAG = "ApolloSeekBar";
 
     public static final int TIMER_START_FLAG = 0x100;
-    public static final int MAX_PROGRESS_RANG = 10000;  //最大范围，即10000个进度点
-
-    private static final int PLAYER_SLOW_TIMER = 0x501;
-     /**
-      * 检测播放进度任务周期ms
-      **/
-    public static final int PLAY_TIMER_INTERVAL = 499;
-     /**
-      * 线程运行开关
-      **/
-    public boolean threadExitFlag = false;
-
-    /*-----------seek方向-------------*/
-	private static final int MOVING_DIRECTION_INVALID = 0; // 无效
-	private static final int MOVING_DIRECTION_FRONT = 1; // 前进
-	private static final int MOVING_DIRECTION_BACK = 2; // 后退
-
-    /*-----------seek命令------------*/
-	private static final int MOVING_CMD_INVALID = 0; // 无效
-	private static final int MOVING_CMD_GO = 1; // 开始
-	private static final int MOVING_CMD_STOP = 2; // 停止
-
-     /*-----------播放状态------------*/
-    private int playStatusFlag = 0;
-    public static final int PLAY_STATUS_NORMAL = 1;   // 正常播放
-    public static final int PLAY_STATUS_PAUSE = 2;    // 暂停
-    public static final int PLAY_STATUS_FFORWARD = 3; // 快进
-    public static final int PLAY_STATUS_REWIND= 4;    // 快退
-
+    private Context context;
     private MediaPlayerKernel mPlayer = null;
-
     public boolean isPlaying = true;
     public static final int SEEK_PROGRESS_HEIGHT = 11; //进度条绘制高度
     private int totalLength = 0;                         //进度条宽度
-    private int currentPlayPos = 0;                      //当前播放点
     private int playLength = 0;                          //当前播放长度--UI
     private String seekTime;                             //seek时间点
     private String rightSideTime;   //右侧显示时间
@@ -67,57 +34,65 @@ public class ApolloSeekBar extends View implements View.OnTouchListener{
 
     private static final String defaultRightTime = "00:00:00";
 
-    /** 播放图标**/
-    private Bitmap thumb;
-    private Bitmap playStatus;
-    private Bitmap pauseStatus;
-    private Bitmap fforwordStatus;
-    private Bitmap rewindStatus;
-    /** 播放图标**/
+    private static final int PADDING_LEFT = 15;
+    private static final int PROGRESS_HEIGHT = 15;
 
-    private Rect durationRect;
-    private Rect bkgRect;
-    private Rect totalBarRect;
-    private Rect bgSrcRect;
-    private Rect bgDstRect;
-    private Rect playStatusRect;
-    private Rect thumbRect;
+    private int mBarWidth;
+    private int mBarHeight;
 
-    private Canvas canvas;
+    private RectF areaRect = new RectF();
+    private RectF totalRect = new RectF();
+    private RectF playedRect = new RectF(totalRect);
+    private Paint playedPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private Paint totalPaint = new Paint();
+    private Paint timeInfoPaint = new Paint();
+    private Paint defaultPaint = new Paint();
 
-    private Paint seekPaint;
-    private Paint playProgressPaint;
-    private Paint remainProgressPaint;
-    private Paint thumbPaint;
-    private Paint seekDotPaint;
-    private Paint playStatusPaint;
-    private Paint bkgPaint;
-    private Paint totalBarPaint;
-    private Paint rightSideTextPaint;
-    private Context context;
+    public int maxProgress = 100;
+    private long currentPlayPos = 0;
+    private boolean mIsDragging;
 
+    private IOnApolloSeekBarChangeListener mApolloSeekBarChangeListener;
 
-    IMplayerSeekBarListener lsnr = null;
+    public interface IOnApolloSeekBarChangeListener {
+        void onProgressChanged(ApolloSeekBar seekBar, int progress, boolean fromUser);
 
-    public interface IMplayerSeekBarListener {
-        public void onUserPauseOrStart();
-        public void onUserSeekStart();
-        public void onUserSeekEnd(long seekPos);
+        void onStartTrackingTouch(ApolloSeekBar seekBar);
 
-        public long uiProgress2PlayProgress(int uiProgress);
-        public int playProgress2uiProgress(long playProgress);
+        void onStopTrackingTouch(ApolloSeekBar seekBar);
+    }
 
-        public String getPosDiscribByPlayPos(long pos);
+    public void setApolloSeekBarChangeListener(IOnApolloSeekBarChangeListener lsr) {
+        mApolloSeekBarChangeListener = lsr;
+    }
 
-        public void onPlayToPreNode();
+    void onProgressRefresh(float scale, boolean fromUser) {
+        //super.onProgressRefresh(scale, fromUser);
+        if (mApolloSeekBarChangeListener != null) {
+            mApolloSeekBarChangeListener.onProgressChanged(this, (int) getProgress(), fromUser);
+        }
+    }
+
+    void onStartTrackingTouch() {
+        mIsDragging = true;
+        if (mApolloSeekBarChangeListener != null) {
+            mApolloSeekBarChangeListener.onStartTrackingTouch(this);
+        }
+    }
+
+    void onStopTrackingTouch() {
+        mIsDragging = false;
+        if (mApolloSeekBarChangeListener != null) {
+            mApolloSeekBarChangeListener.onStopTrackingTouch(this);
+        }
     }
 
     public ApolloSeekBar(Context context) {
-        this(context,null);
+        this(context, null);
     }
 
     public ApolloSeekBar(Context context, AttributeSet attrs) {
-        this(context, attrs,0);
+        this(context, attrs, 0);
     }
 
     public ApolloSeekBar(Context context, AttributeSet attrs, int defStyle) {
@@ -127,194 +102,145 @@ public class ApolloSeekBar extends View implements View.OnTouchListener{
     }
 
     private void initView() {
-        initBkgRect();
+        setFocusableInTouchMode(true);
+        totalPaint.setDither(true);
+        totalPaint.setAntiAlias(true);
+        totalPaint.setStyle(Paint.Style.FILL);
+        totalPaint.setColor(getResources().getColor(R.color.qianpurple));
+
         initStateImg();
-        initSeekTotal();
-        initSeekPlayed();
-        initThumb();
-        initTimeText();
-        /** 图片型seek进度点 */
-//        thumbPaint = new Paint();
-//        thumbPaint.setAlpha(255);
-//        thumb = decodeResource(getResources(), R.drawable.seekbar_thumb_img);
-//        thumbRect = new Rect(0,0,0,0);
-    }
 
-    private void initTimeText() {
-        /** 文字画笔 **/
+        defaultPaint.setColor(getResources().getColor(R.color.transparent_ban));
+        defaultPaint.setStyle(Paint.Style.FILL);
+        defaultPaint.setAntiAlias(true);
+
+        playedPaint.setColor(getResources().getColor(R.color.dodgerblue));
+        playedPaint.setStyle(Paint.Style.FILL);
+        playedPaint.setAntiAlias(true);
+        playedPaint.setDither(true);
+        //playedPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
+        //initThumb();
+
         Rect strRect = new Rect();
-        rightSideTextPaint = new Paint();
-        rightSideTextPaint.setColor(getResources().getColor(android.R.color.holo_purple));
-        rightSideTextPaint.setStyle(Paint.Style.FILL);
-        rightSideTextPaint.setAntiAlias(true);
-        rightSideTextPaint.getTextBounds(defaultRightTime, 0, defaultRightTime.length(), strRect);
-        rightSideTextPaint.setTextSize(18);
-        rightSideTextPaint.setStrokeWidth(0);
+        timeInfoPaint = new Paint();
+        timeInfoPaint.setColor(getResources().getColor(android.R.color.holo_purple));
+        timeInfoPaint.setStyle(Paint.Style.FILL);
+        timeInfoPaint.setAntiAlias(true);
+        timeInfoPaint.getTextBounds(defaultRightTime, 0, defaultRightTime.length(), strRect);
+        timeInfoPaint.setTextSize(18);
+        timeInfoPaint.setStrokeWidth(0);
+
     }
 
-    private void initThumb() {
-        /** 圆点Thumb */
-        seekDotPaint = new Paint();
-        seekDotPaint.setColor(getResources().getColor(R.color.suncolor));
-        seekDotPaint.setStyle(Paint.Style.FILL);
-        seekDotPaint.setAntiAlias(true);
-        seekDotPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
-    }
-
-    private void initSeekPlayed() {
-        /** 播放进度参数 **/
-        durationRect = new Rect(0,6, playLength,SEEK_PROGRESS_HEIGHT);
-        seekPaint = new Paint();
-        seekPaint.setColor(getResources().getColor(R.color.dodgerblue));
-//      seekPaint.setStrokeWidth(4);
-        seekPaint.setDither(true);
-        seekPaint.setStyle(Paint.Style.FILL);
-        seekPaint.setAntiAlias(true);
-        seekPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
-    }
-
-    private void initSeekTotal() {
-        /** 总progress */
-        totalBarRect = new Rect(0,6, (ScreenTools.getScreenWidth(context) * 2)/3,SEEK_PROGRESS_HEIGHT);
-        totalBarPaint = new Paint();
-        totalBarPaint.setColor(getResources().getColor(R.color.skygreen));
-        totalBarPaint.setStyle(Paint.Style.FILL);
-        totalBarPaint.setAntiAlias(true);
-        //totalBarPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
-    }
-
-    private void initBkgRect() {
-        bkgPaint = new Paint();
-        bkgPaint.setAntiAlias(true);
-        bkgPaint.setStyle(Paint.Style.FILL);
-        bkgPaint.setStrokeWidth(5);
-        bkgPaint.setTextSize(30);
-        bkgPaint.setColor(getResources().getColor(R.color.qianpurple));
-        bkgRect = new Rect(0,0,(ScreenTools.getScreenWidth(context) * 2)/3,25);
-    }
 
     private void initStateImg() {
-        playStatus = decodeResource(getResources(), R.drawable.mplayerv_state_play);
-        pauseStatus = decodeResource(getResources(), R.drawable.mplayerv_state_pause);
-        fforwordStatus = decodeResource(getResources(), R.drawable.mplayerv_state_fforward);
-        rewindStatus = decodeResource(getResources(), R.drawable.mplayerv_state_rewind);
-        playStatusRect = new Rect(0,0,0,0);
+        //playStatus = decodeResource(getResources(), R.drawable.mplayerv_state_play);
+        //pauseStatus = decodeResource(getResources(), R.drawable.mplayerv_state_pause);
+        //fforwordStatus = decodeResource(getResources(), R.drawable.mplayerv_state_fforward);
+        //rewindStatus = decodeResource(getResources(), R.drawable.mplayerv_state_rewind);
+        //playStatusRect = new Rect(0,0,0,0);
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-        drawInVod(canvas);
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        totalLength = MeasureSpec.getSize(widthMeasureSpec);
-        widthMeasureSpec = (ScreenTools.getScreenWidth(context)*2)/3;
-        ZLog.d(TAG,"控件长度："+ widthMeasureSpec);
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
+        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
+        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+
+        if (widthMode == MeasureSpec.EXACTLY) {
+            mBarWidth = widthSize;
+        } else {
+            mBarWidth = widthSize;
+        }
+
+        if (heightMode == MeasureSpec.EXACTLY) {
+            mBarHeight = heightSize;
+        } else {
+            mBarHeight = heightSize;
+        }
+        setMeasuredDimension(mBarWidth, mBarHeight);
+        int left = PADDING_LEFT;
+        int top = (mBarHeight - PROGRESS_HEIGHT) / 2;
+        totalRect.set(left, top, mBarWidth - PADDING_LEFT, top + PROGRESS_HEIGHT);
+        areaRect.set(0, 0, mBarWidth, mBarHeight);
     }
 
-    private void drawInVod(Canvas canvas) {
-        ZLog.i(TAG,"绘制背景");
-        canvas.save();
-        canvas.drawRect(bkgRect,bkgPaint);
-        canvas.drawText("怎么会么大大",0,0,bkgPaint);
-        canvas.restore();
-        ////绘制总长度
-        //canvas.save();
-        //canvas.clipRect(totalBarRect);
-        //canvas.drawRect(totalBarRect, totalBarPaint);
-        //canvas.restore();
-        //
-        ////绘制播放长度及thumb
-        //canvas.save();
-        //canvas.clipRect(durationRect);
-        //canvas.drawRect(durationRect,seekPaint);
-        //canvas.restore();
-        //canvas.drawCircle(playLength,8,7,seekDotPaint);
 
-        //<editor-fold desc="备用代码">
-        /**
-         * 绘制Thumb图片
-         **/
-//        thumbRect.left = currentPlayPos - 14;
-//        thumbRect.top = 10;
-//        thumbRect.right = thumbRect.left + thumb.getWidth();
-//        thumbRect.bottom = 50;
-//        canvas.drawBitmap(thumb, null, thumbRect, thumbPaint);
-
-        /**
-         * 绘制总时间长度
-         */
-//         Rect strRect = new Rect();
-//        if(rightSideTime != null){
-//            rightSideTextPaint.getTextBounds(defaultRightTime,0,defaultRightTime.length(),strRect);
-//            canvas.drawText(rightSideTime,900,10,rightSideTextPaint);
-//        }
-        //</editor-fold>
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        canvas.drawRoundRect(areaRect,25,25,defaultPaint);
+        canvas.drawRect(totalRect,totalPaint);
+        playedRect.right = totalRect.left + getCurrentUIProgress();
+        canvas.drawRoundRect(playedRect, 5, 5, playedPaint);
     }
 
     @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        switch (event.getAction()){
-//            case :
-//            break;
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        super.dispatchTouchEvent(event);
+        float off_dx;
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                if (mApolloSeekBarChangeListener != null) {
+                    mApolloSeekBarChangeListener.onStartTrackingTouch(this);
+                }
+                break;
+            case MotionEvent.ACTION_MOVE:
+                off_dx = event.getX() - totalRect.left;
+                float pos = off_dx/getWidth() * maxProgress;
+                setProgressInternal((int) pos, true);
+                return true;
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
+                if (mApolloSeekBarChangeListener != null) {
+                    mApolloSeekBarChangeListener.onStopTrackingTouch(this);
+                    mApolloSeekBarChangeListener.onProgressChanged(this, (int)currentPlayPos,true);
+                }
+                return true;
         }
         return false;
     }
 
-    private Handler mHandler = new Handler(){
-		public void handleMessage(Message msg){
-			 switch (msg.what) {
-				 case TIMER_START_FLAG:
-                       //反复执行线程检测
-                        if(threadExitFlag){
-                            return;
-                        }
-                        currentPlayPos = mPlayer.getCurrentPosition();
-                        setCurrentPlayPos2UI(currentPlayPos,mPlayer.getDuration());
-					 break;
-				 default:
-					 break;
-         	}
-		}
-	};
-
-    public void setCurrentPlayPos2UI(long currentPlayPostion, long duration){
-        mHandler.sendEmptyMessage(TIMER_START_FLAG);
-        if((int) duration != 0){
-            playLength = (int) (totalLength * currentPlayPostion/duration);
-        }
-        durationRect = new Rect(0,6, playLength,SEEK_PROGRESS_HEIGHT);
-        this.invalidate();
-    }
-
-    public void initMplayer(MediaPlayerKernel mPlayer){
-        this.mPlayer = mPlayer;
-        playStatusFlag = PLAY_STATUS_NORMAL;
-    }
-
     public int getMax() {
-        return MAX_PROGRESS_RANG;
+        return maxProgress;
+    }
+
+    public void setMax(int value) {
+        maxProgress = value;
+    }
+
+    public long getProgress() {
+        return currentPlayPos;
+    }
+    public void setProgress(int pos) {
+        setProgressInternal(pos,false);
+    }
+
+     private void setProgressInternal(int pos, boolean fromUser) {
+        if (pos > maxProgress) {
+            pos = maxProgress;
+        } else if (pos < 0) {
+            pos = 0;
+        }
+        currentPlayPos = pos;
+        invalidate();
     }
 
     public void setRightSideTime(String rightSideTime) {
         this.rightSideTime = rightSideTime;
     }
 
-      /**
-     * 获取Resource 图片资源
-     * @param resources
-     * @param id
-     * @return
-     */
-     private Bitmap decodeResource(Resources resources, int id) {
-    	TypedValue value = new TypedValue();
-    	resources.openRawResource(id, value);
-    	BitmapFactory.Options opts = new BitmapFactory.Options();
-    	opts.inTargetDensity = value.density;
-    	return BitmapFactory.decodeResource(resources, id, opts);
+    public long getCurrentUIProgress() {
+        return currentPlayPos * getWidth() / maxProgress;
     }
 
+     private int getViewWidth() {
+        return (int) totalRect.width();
+    }
 }
