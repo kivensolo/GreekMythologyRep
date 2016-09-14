@@ -17,38 +17,24 @@ import com.kingz.customdemo.R;
  */
 public class ApolloSeekBar extends View {
 
-    private static String TAG = "ApolloSeekBar";
-
-    public static final int TIMER_START_FLAG = 0x100;
+    private static final String TAG = "ApolloSeekBar";
     private Context context;
-    private MediaPlayerKernel mPlayer = null;
-    public boolean isPlaying = true;
-    public static final int SEEK_PROGRESS_HEIGHT = 11; //进度条绘制高度
-    private int totalLength = 0;                         //进度条宽度
-    private int playLength = 0;                          //当前播放长度--UI
-    private String seekTime;                             //seek时间点
-    private String rightSideTime;   //右侧显示时间
-
-    private boolean isPlayerComplete = false;  //是否播放完成
-    private boolean isPlayerSucceed = false;   //是否已经成功播放，以进度条时间是否有变化为基准
-
-    private static final String defaultRightTime = "00:00:00";
-
-    private static final int PADDING_LEFT = 15;
-    private static final int PROGRESS_HEIGHT = 15;
-
     private int mBarWidth;
     private int mBarHeight;
 
+    private static final int PADDING_LEFT = 10;
+    private static final int PROGRESS_HEIGHT = 10;
+    private static final String defaultRightTime = "00:00:00";
+
     private RectF areaRect = new RectF();
     private RectF totalRect = new RectF();
-    private RectF playedRect = new RectF(totalRect);
-    private Paint playedPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private RectF playedRect = new RectF();
     private Paint totalPaint = new Paint();
     private Paint timeInfoPaint = new Paint();
-    private Paint defaultPaint = new Paint();
+    private Paint areaBkgPaint = new Paint();
+    private Paint playedPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
-    public int maxProgress = 100;
+    private int maxProgress = 100;
     private long currentPlayPos = 0;
     private boolean mIsDragging;
 
@@ -66,10 +52,10 @@ public class ApolloSeekBar extends View {
         mApolloSeekBarChangeListener = lsr;
     }
 
-    void onProgressRefresh(float scale, boolean fromUser) {
+    void onProgressChanged(ApolloSeekBar seekBar, int progress, boolean fromUser) {
         //super.onProgressRefresh(scale, fromUser);
         if (mApolloSeekBarChangeListener != null) {
-            mApolloSeekBarChangeListener.onProgressChanged(this, (int) getProgress(), fromUser);
+            mApolloSeekBarChangeListener.onProgressChanged(seekBar, progress, fromUser);
         }
     }
 
@@ -106,20 +92,18 @@ public class ApolloSeekBar extends View {
         totalPaint.setDither(true);
         totalPaint.setAntiAlias(true);
         totalPaint.setStyle(Paint.Style.FILL);
-        totalPaint.setColor(getResources().getColor(R.color.qianpurple));
+        totalPaint.setColor(getResources().getColor(R.color.black));
 
         initStateImg();
 
-        defaultPaint.setColor(getResources().getColor(R.color.transparent_ban));
-        defaultPaint.setStyle(Paint.Style.FILL);
-        defaultPaint.setAntiAlias(true);
+        areaBkgPaint.setColor(getResources().getColor(R.color.transparent_ban));
+        areaBkgPaint.setStyle(Paint.Style.FILL);
+        areaBkgPaint.setAntiAlias(true);
 
-        playedPaint.setColor(getResources().getColor(R.color.dodgerblue));
+        playedPaint.setColor(getResources().getColor(R.color.darkorange));
         playedPaint.setStyle(Paint.Style.FILL);
         playedPaint.setAntiAlias(true);
         playedPaint.setDither(true);
-        //playedPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));
-        //initThumb();
 
         Rect strRect = new Rect();
         timeInfoPaint = new Paint();
@@ -129,9 +113,7 @@ public class ApolloSeekBar extends View {
         timeInfoPaint.getTextBounds(defaultRightTime, 0, defaultRightTime.length(), strRect);
         timeInfoPaint.setTextSize(18);
         timeInfoPaint.setStrokeWidth(0);
-
     }
-
 
     private void initStateImg() {
         //playStatus = decodeResource(getResources(), R.drawable.mplayerv_state_play);
@@ -168,17 +150,18 @@ public class ApolloSeekBar extends View {
         int left = PADDING_LEFT;
         int top = (mBarHeight - PROGRESS_HEIGHT) / 2;
         totalRect.set(left, top, mBarWidth - PADDING_LEFT, top + PROGRESS_HEIGHT);
-        areaRect.set(0, 0, mBarWidth, mBarHeight);
+        //areaRect.set(0, 0, mBarWidth, mBarHeight); // 当前View的区域
     }
 
 
     @Override
     protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-        canvas.drawRoundRect(areaRect,25,25,defaultPaint);
-        canvas.drawRect(totalRect,totalPaint);
+        canvas.drawRoundRect(areaRect,35,35, areaBkgPaint);
+        canvas.drawRoundRect(totalRect,8,8,totalPaint);
+        playedRect.set(totalRect);
         playedRect.right = totalRect.left + getCurrentUIProgress();
-        canvas.drawRoundRect(playedRect, 5, 5, playedPaint);
+        canvas.drawRoundRect(playedRect,8,8, playedPaint);
+
     }
 
     @Override
@@ -187,10 +170,8 @@ public class ApolloSeekBar extends View {
         float off_dx;
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                if (mApolloSeekBarChangeListener != null) {
-                    mApolloSeekBarChangeListener.onStartTrackingTouch(this);
-                }
-                break;
+                onStartTrackingTouch();
+                return true;
             case MotionEvent.ACTION_MOVE:
                 off_dx = event.getX() - totalRect.left;
                 float pos = off_dx/getWidth() * maxProgress;
@@ -198,10 +179,9 @@ public class ApolloSeekBar extends View {
                 return true;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
-                if (mApolloSeekBarChangeListener != null) {
-                    mApolloSeekBarChangeListener.onStopTrackingTouch(this);
-                    mApolloSeekBarChangeListener.onProgressChanged(this, (int)currentPlayPos,true);
-                }
+                onProgressChanged(this, (int)currentPlayPos,true);
+                onStopTrackingTouch();
+                invalidate();
                 return true;
         }
         return false;
@@ -233,7 +213,6 @@ public class ApolloSeekBar extends View {
     }
 
     public void setRightSideTime(String rightSideTime) {
-        this.rightSideTime = rightSideTime;
     }
 
     public long getCurrentUIProgress() {

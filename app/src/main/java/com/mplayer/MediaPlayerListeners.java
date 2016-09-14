@@ -7,7 +7,7 @@ import android.media.MediaPlayer;
  * All rights reserved. <br>
  * author: King.Z <br>
  * date:  2016/9/8 16:38 <br>
- * description: 播放器各种监听接口 <br>
+ * description: 播放器监听接口 <br>
  */
 public abstract class MediaPlayerListeners implements MediaPlayer.OnPreparedListener,
         MediaPlayer.OnInfoListener,MediaPlayer.OnErrorListener,MediaPlayer.OnCompletionListener,

@@ -10,7 +10,7 @@
     </com.mplayer.MediaPlayerKernel>
 
     <ListView android:layout_width="170dp"
-              android:layout_height="380dip"
+              android:layout_height="300dip"
               android:id="@+id/leftchanellView"
               android:background="@color/transparent_ban"
               android:divider="@color/lightskyblue"
@@ -24,11 +24,11 @@
     <com.mplayer.ApolloSeekBar
             android:id="@+id/mediaplayer_seekbar"
             android:layout_width="500dip"
-            android:layout_height="50dip"
-            android:background="@color/cardview_dark_background"
+            android:layout_height="30dip"
+            android:background="@color/transparent_ban"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:paddingBottom="50dp"/>
+            android:paddingBottom="30dip"/>
 
     <TextView
             android:id="@+id/changeSize_id"

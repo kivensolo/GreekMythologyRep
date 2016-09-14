@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -32,19 +34,19 @@ import java.util.Locale;
  * mPlayer.releaseMediaPlayer();  //Idle----->End
  * setDataSource();               //Initialized
  * prepare();                     //Prepared
- *
- *
- *  还需完成的代码：
- *  1：进度条
- *  2：加载圈
- *  3：滑动快进
- *  4：浮层的出入动画
- *  5:频道列表
+ * <p/>
+ * <p/>
+ * 还需完成的代码：
+ * 1：进度条
+ * 2：加载圈
+ * 3：滑动快进
+ * 4：浮层的出入动画
+ * 5:频道列表
  */
 public class ApolloMediaPlayer extends Activity {
 
     private static final String TAG = "ApolloMediaPlayer";
-        private ApolloSeekBar seekBar;
+    private ApolloSeekBar seekBar;
     private MediaPlayerKernel mPlayer;
 
     private ListView leftListView;
@@ -54,6 +56,7 @@ public class ApolloMediaPlayer extends Activity {
     private ChanellListAdapter chanellListAdapter;
     private ArrayList<ChannelData> channelLists;
     private ChannelData channelData = new ChannelData();
+    public static final int TIMER_FLAG = 0x0001;
 
     private StringBuilder mFormatBuilder;
     private Formatter mFormatter;
@@ -62,6 +65,7 @@ public class ApolloMediaPlayer extends Activity {
     private int minStepLen;
     private int mVideoWidth;
     private int mVideoHeight;
+    private int currentPosition;
 
 
     //画面比例
@@ -172,40 +176,8 @@ public class ApolloMediaPlayer extends Activity {
 //                    }
 //                });
 //    }
-
-    /**
-     * 初始化视图
-     */
     private void initViews() {
-        mPlayer = (MediaPlayerKernel) findViewById(R.id.mplayercore);
-        initListner();
-
-        mFormatBuilder = new StringBuilder();
-        mFormatter = new Formatter(mFormatBuilder, Locale.getDefault());
-
         leftListView = (ListView) findViewById(R.id.leftchanellView);
-
-        seekBar = (ApolloSeekBar) findViewById(R.id.mediaplayer_seekbar);
-        seekBar.setApolloSeekBarChangeListener(new ApolloSeekBar.IOnApolloSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(ApolloSeekBar seekBar, int progress, boolean fromUser) {
-
-            }
-
-            @Override
-            public void onStartTrackingTouch(ApolloSeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(ApolloSeekBar seekBar) {
-
-            }
-        });
-
-        rightChangeBtn = (TextView) findViewById(R.id.changeSize_id);
-        rightChangeBtn.setOnClickListener(ItemClickedListenner);
-
         if (channelLists != null) {
             chanellListAdapter = new ChanellListAdapter(this, channelLists, R.layout.simple_listviewitem);
             leftListView.setAdapter(chanellListAdapter);
@@ -213,52 +185,63 @@ public class ApolloMediaPlayer extends Activity {
         } else {
             Log.e(TAG, "本地数据源为空！！");
         }
+
+        mPlayer = (MediaPlayerKernel) findViewById(R.id.mplayercore);
+        initMPlayerListner();
+
+        mFormatBuilder = new StringBuilder();
+        mFormatter = new Formatter(mFormatBuilder, Locale.getDefault());
+
+        seekBar = (ApolloSeekBar) findViewById(R.id.mediaplayer_seekbar);
+        seekBar.setApolloSeekBarChangeListener(new ApolloSeekBar.IOnApolloSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(ApolloSeekBar seekBar, int progress, boolean fromUser) {
+            }
+
+            @Override
+            public void onStartTrackingTouch(ApolloSeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(ApolloSeekBar seekBar) {
+            }
+        });
+
+        rightChangeBtn = (TextView) findViewById(R.id.changeSize_id);
+        rightChangeBtn.setOnClickListener(ItemClickedListenner);
     }
 
-    private void initListner() {
+    private void initMPlayerListner() {
         mPlayer.setOnStateChangeListener(new MediaPlayerKernel.OnStateChangeListener() {
             @Override
             public void onSurfaceViewDestroyed(SurfaceHolder surface) {
-
+                playerTimerIsRunning = false;
             }
 
             @Override
-            public void onBuffering(MediaPlayer mp) {
-
-            }
+            public void onBuffering(MediaPlayer mp) {}
 
             @Override
-            public void onPlaying(MediaPlayer mp) {
-
-            }
+            public void onPlaying(MediaPlayer mp) {}
 
             @Override
-            public void onSeek(MediaPlayer mp, int max, int progress) {
-
-            }
+            public void onSeek(MediaPlayer mp, int max, int progress) {}
 
             @Override
-            public void onStop(MediaPlayer mp) {
-
-            }
+            public void onStop(MediaPlayer mp) {}
 
             @Override
-            public void onPause(MediaPlayer mp) {
-
-            }
+            public void onPause(MediaPlayer mp) {}
 
             @Override
-            public void playFinish(MediaPlayer mp) {
-
-            }
+            public void playFinish(MediaPlayer mp) {}
 
             @Override
             public void onPrepare() {
                 duration = mPlayer.getMediaPlayer().getDuration();
                 if (duration > 0) {
-                    //minStepLen = duration / seekBar.getMax();
-//                    seekBar.setRightSideTime(formatTimeToHHMMSS(duration));
                     setRightSideTime(formatTimeToHHMMSS(duration));
+                    seekBar.setMax(duration);
                 }
                 mVideoHeight = mPlayer.getMediaPlayer().getVideoHeight();
                 mVideoWidth = mPlayer.getMediaPlayer().getVideoWidth();
@@ -278,23 +261,40 @@ public class ApolloMediaPlayer extends Activity {
 
     private boolean playerTimerIsRunning = false;
 
-    private void startPlayerTimer() {
-        if (playerTimerIsRunning) {
-            return;
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case TIMER_FLAG:
+                    if (seekBar.getVisibility() == View.VISIBLE) {
+                        seekBar.setProgress(mPlayer.getCurrentPosition());
+                    }
+                    break;
+            }
         }
-        playerTimerIsRunning = true;
-//        mHandler.sendEmptyMessage(PLAYER_SLOW_TIMER);
+    };
+
+    private void startPlayerTimer() {
+        new Thread() {
+            @Override
+            public void run() {
+                while (playerTimerIsRunning) {
+                    try {
+                        mHandler.sendEmptyMessage(TIMER_FLAG);
+                        Thread.sleep(400);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }.start();
     }
 
     @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        return super.dispatchTouchEvent(ev);
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
+    public boolean dispatchTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
+                //点击播放
                 ZLog.i(TAG, "getCurrentPlayerState：" + mPlayer.getState());
                 if (mPlayer.getState() == MediaPlayerKernel.MediaState.IDLE) {
                     if (channelLists.isEmpty() || TextUtils.isEmpty(channelLists.get(0).playUrl)) {
@@ -302,27 +302,28 @@ public class ApolloMediaPlayer extends Activity {
                     }
                     ZLog.i(TAG, "播放的视频地址：" + channelLists.get(0).playUrl);
                     mPlayer.setVideoURI(Uri.parse(channelLists.get(0).playUrl));
+                    playerTimerIsRunning = true;
+                    startPlayerTimer();
                     return true;
                 }
-//                else if (mPlayer.getState() == MediaPlayerKernel.MediaState.PLAYING) {
-//                    mPlayer.pause();
-//                    return true;
-//                } else if (mPlayer.getState() == MediaPlayerKernel.MediaState.PAUSED) {
-//                    mPlayer.start();
-//                    return true;
-//                }
-
+                break;
             case MotionEvent.ACTION_MOVE:
                 //isSeekState = true;
+                //通过滑动改变进度条，有个滑动因子
                 float y = event.getY();
                 float x = event.getX();
                 Log.i(TAG, "onTouchEvent   得到的X = " + x + ";得到的y:" + y);
-                break;
+                return true;
             case MotionEvent.ACTION_UP:
-                changeAllViews();
-                break;
+            case MotionEvent.ACTION_CANCEL:
+                Log.i(TAG, "ACTION_UP");
+                //changeAllViews();
+                return true;
         }
-        return super.onTouchEvent(event);
+        //super.dispatchTouchEvent(ev)，事件向下分发
+        //onInterceptTouchEvent是ViewGroup提供的方法，默认返回false，返回true表示拦截。
+        //onTouchEvent是View中提供的方法，ViewGroup也有这个方法，view中不提供onInterceptTouchEvent。view中默认返回true，表示消费了这个事件。
+        return false;
     }
 
     private void changeAllViews() {
@@ -332,7 +333,8 @@ public class ApolloMediaPlayer extends Activity {
     }
 
     private void changeSeekBarView() {
-        if (!seekBar.isShown()) {
+        if (seekBar.getVisibility() != View.VISIBLE) {
+            ZLog.i(TAG, "changeSeekBarView() show seekBar");
             seekBar.setVisibility(View.VISIBLE);
         } else {
             seekBar.setVisibility(View.INVISIBLE);
@@ -340,7 +342,7 @@ public class ApolloMediaPlayer extends Activity {
     }
 
     private void changeShowListView() {
-        if (!leftListView.isShown()) {
+        if (leftListView.getVisibility() != View.VISIBLE) {
             leftListView.setVisibility(View.VISIBLE);
         } else {
             leftListView.setVisibility(View.INVISIBLE);
@@ -348,13 +350,12 @@ public class ApolloMediaPlayer extends Activity {
     }
 
     private void changeScaleBtnView() {
-        if (!rightChangeBtn.isShown()) {
+        if (rightChangeBtn.getVisibility() != View.VISIBLE) {
             rightChangeBtn.setVisibility(View.VISIBLE);
         } else {
             rightChangeBtn.setVisibility(View.INVISIBLE);
         }
     }
-
 
     @Override
     protected void onPause() {
@@ -375,7 +376,6 @@ public class ApolloMediaPlayer extends Activity {
         if (mPlayer != null) {
             mPlayer.release();
         }
-//        seekBar.threadExitFlag = true;
         super.onDestroy();
     }
 
@@ -397,6 +397,7 @@ public class ApolloMediaPlayer extends Activity {
         totalTime = rightSideTime;
     }
 
+    //TODO 把比例变换修改
     View.OnClickListener ItemClickedListenner = new View.OnClickListener() {
         @Override
         public void onClick(View v) {

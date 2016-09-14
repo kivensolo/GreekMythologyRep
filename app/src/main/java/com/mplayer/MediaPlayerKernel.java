@@ -63,7 +63,6 @@ public class MediaPlayerKernel extends SurfaceView {
 
     //初始化播放器
     private void initVideoView() {
-        initListeners();
         mPlayer = new MediaPlayer();
         mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         mPlayer.setVolume(1.0f, 1.0f);
@@ -74,6 +73,7 @@ public class MediaPlayerKernel extends SurfaceView {
         mPlayer.setOnInfoListener(mListenners);
         mPlayer.setScreenOnWhilePlaying(true);
         mediaState = MediaState.PREPARING;
+        initListeners();
 
         //getSurfaceHolder and setCallback
         mSurfaceHolder = this.getHolder();
@@ -148,7 +148,7 @@ public class MediaPlayerKernel extends SurfaceView {
         public void surfaceCreated(SurfaceHolder holder) {
             Log.i(TAG, "surfaceCreated()  hodler:" + holder);
             mSurfaceHolder = holder;
-            openVideo();
+            //openVideo();
         }
 
         @Override
@@ -172,9 +172,6 @@ public class MediaPlayerKernel extends SurfaceView {
 
     private MediaState mediaState;
 
-    /**
-     * 播放器状态
-     */
     public enum MediaState {
         INIT, PREPARING, PLAYING, STOP, PAUSED, IDLE, END, ERROR, RELEASE;
     }
@@ -371,7 +368,6 @@ public class MediaPlayerKernel extends SurfaceView {
         ZLog.i(TAG, "setVideoURI() uri:" + uri);
         openVideo();
         requestLayout();
-        invalidate();
     }
 
     @Override
