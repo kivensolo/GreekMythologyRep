@@ -24,7 +24,6 @@ import java.io.IOException;
  * author: King.Z
  * date:  2016/9/5 21:40
  * description:播放器核心类
- * 提供播放、暂停、释放等方法
  */
 public class MediaPlayerKernel extends SurfaceView {
 

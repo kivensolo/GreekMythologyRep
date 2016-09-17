@@ -7,12 +7,18 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ExpandableListView;
+
 import com.AsuyncTaskJsonTest.AsynctaskBitmapMainActivity;
 import com.adapter.CommExpandableListAdapter;
+import com.animation.property.PropertyAnimationsActivity;
 import com.iflytek.synthesizer.VoiceActivity;
 import com.kingz.customdemo.R;
 import com.kingz.filemanager.FileManagerActivity;
-import com.kingz.pages.*;
+import com.kingz.pages.CustomViewsPage;
+import com.kingz.pages.DownloadAPPActivity;
+import com.kingz.pages.FileAndPicTestACT;
+import com.kingz.pages.FourComponentPage;
+import com.kingz.pages.LayoutPage;
 import com.lbs.BaiduMapActivity;
 import com.mplayer.ApolloMediaPlayer;
 import com.nativeWidgets.BasicControlsActivity;
@@ -73,6 +79,7 @@ public class MainActivity extends ExpandableListActivity implements OnItemClickL
 	}
 
 	private void initGroupData(){
+		gruops.add("Animation");
 		gruops.add("Original");
 		gruops.add("Bimap");
 		gruops.add("Custom controls");
@@ -82,6 +89,10 @@ public class MainActivity extends ExpandableListActivity implements OnItemClickL
 		gruops.add("Other");
 	}
 	private void initChlidData(){
+		ArrayList<ListBillData> item = new ArrayList<>();
+		item.add(new ListBillData(this,"PropertyAnimation",new Intent(this,PropertyAnimationsActivity.class)));
+		childs.add(item);
+
 		//原生基本控件
 		ArrayList<ListBillData> item1 = new ArrayList<>();
 		item1.add(new ListBillData(this,"BasicControls",new Intent(this,BasicControlsActivity.class)));
