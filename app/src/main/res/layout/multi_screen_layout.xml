@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/qianpurple"
+    android:orientation="horizontal">
+
+    <ListView
+        android:id="@+id/anmations_list_id"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:background="@drawable/ironman_1"
+        android:divider="@drawable/listview_divider"
+        android:dividerHeight="1dp"
+        android:scrollbarStyle="insideInset" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/animation_show_text_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Property Animation"
+            android:textColor="@color/suncolor"
+            android:textSize="32sp" />
+
+    </LinearLayout>
+</LinearLayout>

@@ -41,8 +41,6 @@ public class PhotosActivity extends BaseActivity implements AdapterView.OnItemCl
     }
 
     private void initViews() {
-//        recyclerView = (RecyclerView) findViewById(R.id.test_recycler_view);
-//        initRecyclerView(recyclerView);
         bitmapAdapter = new BitmapPageAdapter(this, datas);
         mListView = (ListView) findViewById(R.id.type_change_id);
         mListView.setAdapter(bitmapAdapter);
