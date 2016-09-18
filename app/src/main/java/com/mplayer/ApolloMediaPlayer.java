@@ -200,10 +200,14 @@ public class ApolloMediaPlayer extends Activity {
 
             @Override
             public void onStartTrackingTouch(ApolloSeekBar seekBar) {
+                anthorFlag = false;
             }
 
             @Override
             public void onStopTrackingTouch(ApolloSeekBar seekBar) {
+                anthorFlag = true;
+                long onStopP0stion = seekBar.getProgress();
+                mPlayer.seekTo((int) onStopP0stion);
             }
         });
 
@@ -215,29 +219,41 @@ public class ApolloMediaPlayer extends Activity {
         mPlayer.setOnStateChangeListener(new MediaPlayerKernel.OnStateChangeListener() {
             @Override
             public void onSurfaceViewDestroyed(SurfaceHolder surface) {
-                playerTimerIsRunning = false;
+                anthorFlag = false;
             }
 
             @Override
-            public void onBuffering(MediaPlayer mp) {}
+            public void onBuffering(MediaPlayer mp) {
+            }
 
             @Override
-            public void onPlaying(MediaPlayer mp) {}
+            public void onPlaying(MediaPlayer mp) {
+            }
 
             @Override
-            public void onSeek(MediaPlayer mp, int max, int progress) {}
+            public void onSeek(MediaPlayer mp, int max, int progress) {
+            }
 
             @Override
-            public void onStop(MediaPlayer mp) {}
+            public void onStop(MediaPlayer mp) {
+            }
 
             @Override
-            public void onPause(MediaPlayer mp) {}
+            public void onPause(MediaPlayer mp) {
+            }
 
             @Override
-            public void playFinish(MediaPlayer mp) {}
+            public void onError() {
+            }
+
+            @Override
+            public void onComplete() {
+                ZLog.i(TAG, "UserSeekComplete");
+            }
 
             @Override
             public void onPrepare() {
+                ToastTools.getInstance().showMgtvWaringToast(ApolloMediaPlayer.this, "开始播放");
                 duration = mPlayer.getMediaPlayer().getDuration();
                 if (duration > 0) {
                     setRightSideTime(formatTimeToHHMMSS(duration));
@@ -259,7 +275,7 @@ public class ApolloMediaPlayer extends Activity {
         });
     }
 
-    private boolean playerTimerIsRunning = false;
+    private boolean anthorFlag = false;
 
     private Handler mHandler = new Handler() {
         @Override
@@ -274,16 +290,18 @@ public class ApolloMediaPlayer extends Activity {
         }
     };
 
-    private void startPlayerTimer() {
+    private void startSeekBarTimer() {
         new Thread() {
             @Override
             public void run() {
-                while (playerTimerIsRunning) {
-                    try {
-                        mHandler.sendEmptyMessage(TIMER_FLAG);
-                        Thread.sleep(400);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                while (true) {
+                    if (!seekBar.mIsDragging) {
+                        try {
+                            mHandler.sendEmptyMessage(TIMER_FLAG);
+                            Thread.sleep(400);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
@@ -292,6 +310,7 @@ public class ApolloMediaPlayer extends Activity {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
+        super.dispatchTouchEvent(event);
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 //点击播放
@@ -302,23 +321,22 @@ public class ApolloMediaPlayer extends Activity {
                     }
                     ZLog.i(TAG, "播放的视频地址：" + channelLists.get(0).playUrl);
                     mPlayer.setVideoURI(Uri.parse(channelLists.get(0).playUrl));
-                    playerTimerIsRunning = true;
-                    startPlayerTimer();
+                    anthorFlag = true;
+                    startSeekBarTimer();
                     return true;
                 }
-                break;
+                return false;
             case MotionEvent.ACTION_MOVE:
                 //isSeekState = true;
                 //通过滑动改变进度条，有个滑动因子
-                float y = event.getY();
-                float x = event.getX();
-                Log.i(TAG, "onTouchEvent   得到的X = " + x + ";得到的y:" + y);
-                return true;
+                //float y = event.getY();
+                //float x = event.getX();
+                return false;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
                 Log.i(TAG, "ACTION_UP");
                 //changeAllViews();
-                return true;
+                return false;
         }
         //super.dispatchTouchEvent(ev)，事件向下分发
         //onInterceptTouchEvent是ViewGroup提供的方法，默认返回false，返回true表示拦截。

@@ -9,6 +9,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import com.kingz.customdemo.R;
+import com.utils.ZLog;
 
 /**
  * Created by KingZ on 2016/1/24.
@@ -32,11 +33,12 @@ public class ApolloSeekBar extends View {
     private Paint totalPaint = new Paint();
     private Paint timeInfoPaint = new Paint();
     private Paint areaBkgPaint = new Paint();
+    private Paint thumbPaint = new Paint();
     private Paint playedPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     private int maxProgress = 100;
     private long currentPlayPos = 0;
-    private boolean mIsDragging;
+    public boolean mIsDragging;
 
     private IOnApolloSeekBarChangeListener mApolloSeekBarChangeListener;
 
@@ -105,6 +107,11 @@ public class ApolloSeekBar extends View {
         playedPaint.setAntiAlias(true);
         playedPaint.setDither(true);
 
+        thumbPaint.setColor(getResources().getColor(R.color.darkorange));
+        thumbPaint.setStyle(Paint.Style.FILL);
+        thumbPaint.setAntiAlias(true);
+        thumbPaint.setDither(true);
+
         Rect strRect = new Rect();
         timeInfoPaint = new Paint();
         timeInfoPaint.setColor(getResources().getColor(android.R.color.holo_purple));
@@ -151,17 +158,19 @@ public class ApolloSeekBar extends View {
         int top = (mBarHeight - PROGRESS_HEIGHT) / 2;
         totalRect.set(left, top, mBarWidth - PADDING_LEFT, top + PROGRESS_HEIGHT);
         //areaRect.set(0, 0, mBarWidth, mBarHeight); // 当前View的区域
+
     }
 
 
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.drawRoundRect(areaRect,35,35, areaBkgPaint);
-        canvas.drawRoundRect(totalRect,8,8,totalPaint);
+        canvas.drawRoundRect(totalRect,4,4,totalPaint);
         playedRect.set(totalRect);
         playedRect.right = totalRect.left + getCurrentUIProgress();
-        canvas.drawRoundRect(playedRect,8,8, playedPaint);
+        canvas.drawRoundRect(playedRect,4,4, playedPaint);
 
+        canvas.drawCircle(playedRect.right,mBarHeight/2,PADDING_LEFT,thumbPaint);
     }
 
     @Override
@@ -170,12 +179,17 @@ public class ApolloSeekBar extends View {
         float off_dx;
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
+                off_dx = event.getX() - totalRect.left;
+                float pos = off_dx/getWidth() * maxProgress;
+                ZLog.i(TAG,"ACTION_DOWN  pos="+pos);
+                setProgressInternal((int) pos, true);
                 onStartTrackingTouch();
                 return true;
             case MotionEvent.ACTION_MOVE:
                 off_dx = event.getX() - totalRect.left;
-                float pos = off_dx/getWidth() * maxProgress;
-                setProgressInternal((int) pos, true);
+                float pos2 = off_dx/getWidth() * maxProgress;
+                ZLog.i(TAG,"ACTION_MOVE  pos2="+pos2);
+                setProgressInternal((int) pos2, true);
                 return true;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
