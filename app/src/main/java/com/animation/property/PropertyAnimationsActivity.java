@@ -1,19 +1,21 @@
 package com.animation.property;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import com.BaseActivity;
 import com.adapter.BitmapPageAdapter;
 import com.kingz.customdemo.R;
 import com.utils.ZLog;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -24,15 +26,29 @@ import java.util.List;
  * date:  2016/9/17 20:59
  * description: 属性动画
  * http://mp.weixin.qq.com/s?__biz=MzA5MzI3NjE2MA==&mid=2650237082&idx=1&sn=73d02232c981d1565bcb2dbe5b10a681&scene=23&srcid=0917SscEyH3EiTM2RASAGJis#rd
- * ----ValueAnimator：是整个属性动画机制当中最核心的一个类，属性动画的运行机制是通过不断地对值进行操作来实现的，
+ * ----【ValueAnimator】：是整个属性动画机制当中最核心的一个类，属性动画的运行机制是通过不断地对值进行操作来实现的，
  * 而初始值和结束值之间的动画过渡就是由ValueAnimator这个类来负责计算的。它的内
  * 部使用一种时间循环的机制来计算值与值之间的动画过渡，我们只需要将初始值和结束
  * 值提供给ValueAnimator，并且告诉它动画所需运行的时长，那么ValueAnimator就会
  * 自动帮我们完成从初始值平滑地过渡到结束值这样的效果。除此之外，ValueAnimator
  * 还负责管理动画的播放次数、播放模式、以及对动画设置监听器等
- * ---ObjectAnimator：可以直接对任意对象的任意属性进行动画操作的，比如说View的alpha属性
+ * ----【ObjectAnimator】：可以直接对任意对象的任意属性进行动画操作的，比如说View的alpha属性
+ * <p/>
+ * ----【AnimatorSet】 这个类提供了一个play()方法，如果我们向这个方法中传入一个Animator对象
+ * (ValueAnimator或ObjectAnimator)将会返回一个AnimatorSet.Builder的实例，
+ * AnimatorSet.Builder中包括以下四个方法：
+ * after(Animator anim) 将现有动画插入到传入的动画之后执行
+ * after(long delay) 将现有动画延迟指定毫秒后执行
+ * before(Animator anim) 将现有动画插入到传入的动画之前执行
+ * with(Animator anim) 将现有动画和传入的动画同时执行
+ * <p/>
+ * ----【AnimatorListener】：在很多时候，我们希望可以监听到动画的各种事件，比如动画何时开始，何时结束，
+ * 然后在开始或者结束的时候去执行一些逻辑处理。这个功能是完全可以实现的，
+ * Animator类当中提供了一个addListener()方法，这个方法接收一个AnimatorListener，
+ * 我们只需要去实现这个AnimatorListener就可以监听动画的各种事件了。
  */
 public class PropertyAnimationsActivity extends BaseActivity implements AdapterView.OnItemClickListener {
+
     public static final String TAG = "PropertyAnimationsActivity";
     protected BitmapPageAdapter bitmapAdapter;
     protected ListView mListView;
@@ -40,6 +56,14 @@ public class PropertyAnimationsActivity extends BaseActivity implements AdapterV
     protected TextView mRightText;
     protected int backgroundId;
     List<String> datas;
+
+    AnimatorSet animatorSet;
+    ObjectAnimator animatorAlpha = new ObjectAnimator();
+    ObjectAnimator animatorRotation = new ObjectAnimator();
+    ObjectAnimator animatorX = new ObjectAnimator();
+    ObjectAnimator animatorScaleY = new ObjectAnimator();
+    ObjectAnimator animatorColor = new ObjectAnimator();
+    List<Animator> animatorList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,58 +80,116 @@ public class PropertyAnimationsActivity extends BaseActivity implements AdapterV
         mListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         mListView.setOnItemClickListener(this);
         mRightText = (TextView) findViewById(R.id.animation_show_text_id);
+        initAnimator();
+    }
+
+    private void initAnimator() {
+        animatorSet = new AnimatorSet();
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         bitmapAdapter.notifyDataSetChanged();
-        startAnimation(view, position);
+        changeAnimation(view, position);
     }
 
+    private static final int RED = 0xffFF8080;
+    private static final int BLUE = 0xff8080FF;
+    private static final int CYAN = 0xff80ffff;
+    private static final int GREEN = 0xff80ff80;
 
-    String[] strs = {"透明度变换", "旋转", "X-平移", "Y-缩放", "Y轴拉伸", "Z轴拉伸", "翻转"};
-    private void startAnimation(View view, int position) {
+    String[] strs = {"透明度变换", "旋转", "X-平移", "Y-缩放", "颜色变换", "xxx", "翻转"};
+    private void changeAnimation(View view, int position) {
         mTextView = (TextView) view.findViewById(R.id.list_item);
-        if (mListView.isItemChecked(position)) {
-            backgroundId = R.color.deepskyblue;
-            mTextView.setTextColor(getResources().getColor(R.color.suncolor));
-        } else {
-            backgroundId = R.drawable.listview_unchecked;
-            mTextView.setTextColor(getResources().getColor(R.color.lightskyblue));
+        changeListItemStyle(view, position);
+
+        //String clickedtype = (String) bitmapAdapter.getItem(position);
+        //ZLog.i(TAG, "onItemClick： chooseTpye = " + clickedtype);
+        if (animatorSet.isRunning()) {
+            animatorSet.end();
         }
-        Drawable background = this.getResources().getDrawable(backgroundId);
-        view.setBackground(background);
-
-        String clickedtype = (String) bitmapAdapter.getItem(position);
-        ZLog.i(TAG, "onItemClick： chooseTpye = " + clickedtype);
-
-        ObjectAnimator animator = new ObjectAnimator();
-        animator.setTarget(mRightText);
-        animator.setDuration(5000);
-        animator.setRepeatCount(-1);
+        animatorSet = new AnimatorSet();
         switch (position) {
             case 0:
-                animator.setPropertyName("alpha");
-                animator.setFloatValues(1f,0f,1f);
+                detalFloatAction(position, animatorAlpha, "alpha", 1f, 0f, 1f);
                 break;
             case 1:
-                animator.setPropertyName("rotation");
-                animator.setFloatValues(0f,360f);
+                detalFloatAction(position, animatorRotation, "rotation", 0f, 360f);
                 break;
             case 2:
                 float x = mRightText.getTranslationX();
-                animator.setPropertyName("translationX");
-                animator.setFloatValues(x,-500f,x);
+                detalFloatAction(position, animatorX, "translationX", x, 500f, x);
+                //detalFloatAction(position, animatorX, "translationY", x, -500f, x);
                 break;
             case 3:
-                animator.setPropertyName("scaleY");
-                animator.setFloatValues(1f,4f,1f);
+                detalFloatAction(position, animatorScaleY, "scaleY", 1f, 4f, 1f);
+                break;
+            case 5:
+                animatorColor.setEvaluator(new ArgbEvaluator());
+                detalIntAction(position, animatorColor, "backgroundColor", CYAN, BLUE, RED);
                 break;
             default:
                 break;
         }
-        if(!TextUtils.isEmpty(animator.getPropertyName())){
-            animator.start();
+        if (animatorList.size() > 0) {
+            animatorSet.playTogether(animatorList);
+            animatorSet.start();
+        } else {
+            animatorSet.end();
+        }
+    }
+
+    private void changeListItemStyle(View view, int position) {
+        if (mListView.isItemChecked(position)) {
+            setListItemStyle(view, R.color.deepskyblue, R.color.suncolor);
+        } else {
+            setListItemStyle(view, R.drawable.listview_unchecked, R.color.lightskyblue);
+        }
+    }
+
+    private void setListItemStyle(View view, int backgroundId, int textColor) {
+        this.backgroundId = backgroundId;
+        mTextView.setTextColor(getResources().getColor(textColor));
+        Drawable background = this.getResources().getDrawable(backgroundId);
+        view.setBackground(background);
+    }
+
+    public void setFloatAnimation(ObjectAnimator animator, String name, int setRepeatCount, float... values) {
+        animatorList.add(animator);
+        animator.setTarget(mRightText);
+        animator.setPropertyName(name);
+        animator.setDuration(5000);
+        animator.setRepeatCount(setRepeatCount);
+        animator.setFloatValues(values);
+    }
+    public void setIntAnimation(ObjectAnimator animator, String name, int setRepeatCount, int... values) {
+        animatorList.add(animator);
+        animator.setTarget(mRightText);
+        animator.setPropertyName(name);
+        animator.setDuration(5000);
+        animator.setRepeatCount(setRepeatCount);
+        animator.setIntValues(values);
+    }
+
+    public void removeAnimation(ObjectAnimator animator) {
+        ZLog.i(TAG, "removeAnimation() ---> " + animator.getPropertyName());
+        animator.cancel();
+        animatorList.remove(animator);
+    }
+
+    public void detalFloatAction(int position, ObjectAnimator animator, String animatorName, float... values) {
+        if (!mListView.isItemChecked(position)) {
+            removeAnimation(animator);
+        } else {
+            setFloatAnimation(animator, animatorName, 100, values);
+        }
+    }
+
+    public void detalIntAction(int position, ObjectAnimator animator, String animatorName, int... values) {
+        if (!mListView.isItemChecked(position)) {
+            removeAnimation(animator);
+        } else {
+            setIntAnimation(animator, animatorName, 100, values);
         }
     }
 }
