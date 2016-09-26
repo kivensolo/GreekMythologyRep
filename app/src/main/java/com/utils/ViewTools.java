@@ -16,7 +16,7 @@ import android.widget.TextView;
  * description: View相关的工具类
  */
 public class ViewTools {
-    
+
     // 修改整个界面所有控件的字体
     public static void changeFonts(ViewGroup root, String path, Activity act) {
         //path是字体路径
@@ -39,12 +39,12 @@ public class ViewTools {
     public static void changeTextSize(ViewGroup root, int size, Activity act) {
         for (int i = 0; i < root.getChildCount(); i++) {
             View v = root.getChildAt(i);
-            if (v instanceof TextView) {
-                ((TextView) v).setTextSize(size);
-            } else if (v instanceof Button) {
+            if (v instanceof Button) {
                 ((Button) v).setTextSize(size);
             } else if (v instanceof EditText) {
                 ((EditText) v).setTextSize(size);
+            } else if (v instanceof TextView) {
+                ((TextView) v).setTextSize(size);
             } else if (v instanceof ViewGroup) {
                 changeTextSize((ViewGroup) v, size, act);
             }
