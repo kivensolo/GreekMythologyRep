@@ -61,8 +61,13 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.animation.property.PropertyAnimationsActivity"
+        <!---->
+        <activity android:name="com.animation.PropertyAnimationsActivity"
             android:screenOrientation="landscape"/>
+        <activity android:name="com.animation.ShakeAnimation"
+            android:screenOrientation="portrait"/>
+        <activity android:name="com.animation.ViewFlipperAnimation"
+            android:screenOrientation="portrait"/>
 
         <!-- 原生SeekBar -->
         <activity android:name="com.nativeWidgets.NativeSeekBar"
@@ -74,6 +79,9 @@
         <!-- 绘画的方式画seekBar -->
         <activity
             android:name="com.kingz.uiusingCanvas.CustomCanvasSeekBarAct"
+            android:theme="@android:style/Theme.Black.NoTitleBar"/>
+        <activity
+            android:name="com.view.shape.ShapeDraw1"
             android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <activity android:name="com.view.surface.DrawRectWithSurface"
@@ -159,7 +167,7 @@
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!--webAppActivity-->
-        <activity android:name="com.nativeWidgets.WebViewUseJs"
+        <activity android:name="com.view.webview.WebViewWithJs"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!-- 自定义显示的listView -->

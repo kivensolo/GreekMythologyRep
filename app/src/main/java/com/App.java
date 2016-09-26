@@ -4,8 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
-
 import com.core.logic.GlobalCacheCenter;
+import com.kingz.customdemo.BuildConfig;
 import com.utils.ZLog;
 
 /**
@@ -49,7 +49,6 @@ public class App extends Application {
         _appMainHandler = new Handler(getMainLooper());
         application = this;
         mContext = getApplicationContext();
-
         initLog();
         initAPPScreenParms();
         initCacheCenter();
@@ -60,7 +59,9 @@ public class App extends Application {
     }
 
     private void initLog() {
-        ZLog.isDebug = true;
+        if(BuildConfig.DEBUG){
+            ZLog.isDebug = true;
+        }
     }
 
     private void initAPPScreenParms(){
