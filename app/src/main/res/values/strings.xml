@@ -46,4 +46,15 @@
     <string name="popwin">弹出PopUp</string>
 
 
+
+    <!-- animation_viewfliper -->
+    <string name="animationviewfliper_text1">有一个古老的故事</string>
+    <string name="animationviewfliper_text2">----从前有个庙</string>
+    <string name="animationviewfliper_text3">庙里有个老和尚和一个小和尚</string>
+    <string name="animationviewfliper_text4">他们没老婆!!</string>
+    <string name="animationviewfliper_text5">Interpolators</string>
+    <string name="animationviewfliper_tips">选择一个动画</string>
+
+
+
 </resources>

@@ -1,4 +1,4 @@
-package com.animation.property;
+package com.animation;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;
@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import com.BaseActivity;
 import com.adapter.BitmapPageAdapter;
 import com.kingz.customdemo.R;
@@ -49,12 +48,12 @@ import java.util.List;
  *                 PropertyValuesHolder pvhX = PropertyValuesHolder.ofFloat("rotationX", 0f, 360f);
  *                 PropertyValuesHolder pvhY = PropertyValuesHolder.ofFloat("scaleX", 1f, 0f, 1f);
  *                 PropertyValuesHolder pvhZ = PropertyValuesHolder.ofFloat("scaleY", 1f, 0f, 1f);
- *                 ObjectAnimator holderAnim = ObjectAnimator.ofPropertyValuesHolder(view, pvhX, pvhY, pvhZ);
+ *                 ObjectAnimator holderAnim = {@link ObjectAnimator}ObjectAnimator.ofPropertyValuesHolder(view, pvhX, pvhY, pvhZ);
  *                 holderAnim.setDuration(5000);
  *                 holderAnim.setRepeatCount(100);
  *                 holderAnim.start();
  * addUpdateListener ------->
- *                 ObjectAnimator anim = ObjectAnimator.ofFloat(mTextView, strs[position], 1.0F, 0.0F);//自定义属性名
+ *                 ObjectAnimator anim = ObjectAnimator.ofFloat(mTextView, "kingz", 1.0F, 0.0F);//自定义属性名
  *                 anim.setDuration(5000);
  *                 anim.setRepeatCount(100);
  *                 anim.start();

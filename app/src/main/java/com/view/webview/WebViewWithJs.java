@@ -1,40 +1,41 @@
-package com.nativeWidgets;
+package com.view.webview;
 
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.webkit.JavascriptInterface;
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
+import android.webkit.*;
 import android.widget.Toast;
-
 import com.kingz.customdemo.R;
+import com.utils.ToastTools;
+import com.utils.ZLog;
 
 /**
  * Created by KingZ on 2016/1/16.
  * Discription:
  */
-public class WebViewUseJs extends Activity{
+public class WebViewWithJs extends Activity{
 
-    public static final String TAG = "WebViewUseJs";
+    public static final String TAG = "WebViewWithJs";
     private Context context;
     private WebView mWebView;
     private WebAPPInterface webAPPInterface;
+    private Handler viewHandler = new Handler();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        webAPPInterface = new WebAPPInterface(this);
-
         intView();
     }
 
     private void intView() {
         mWebView = new WebView(this);
+        webAPPInterface = new WebAPPInterface(this);
+        final Activity activity = this;
+
         WebSettings webSetting = mWebView.getSettings();
         webSetting.setJavaScriptEnabled(true);              //Enabling JavaScript
         webSetting.setLoadWithOverviewMode(true);
@@ -47,7 +48,6 @@ public class WebViewUseJs extends Activity{
         mWebView.addJavascriptInterface(webAPPInterface,"KingZWebAPP");  //Binding JavaScript code to Android code
         mWebView.setBackgroundColor(getResources().getColor(R.color.chartreuse));
         //影响浏览器的用户界面发生变化时
-        final Activity activity = this;
         mWebView.setWebChromeClient(new WebChromeClient(){
             public void onProgressChanged(WebView view, int progress) {
                  // Activities and WebViews measure progress with different scales.
@@ -88,19 +88,39 @@ public class WebViewUseJs extends Activity{
         setContentView(mWebView);
     }
 
-    public class WebAPPInterface{
+    protected class WebAPPInterface{
+		public static final String TAG = "WebAPPInterface";
         private Context context;
-
         public WebAPPInterface(Context context) {
             this.context = context;
         }
+
+        @JavascriptInterface
+        public void log(String tag, String info) {
+			Log.i(tag, info);
+		}
         /** Show a toast from the web page */
         // If set targetSdkVersion to 17 or higher,
         // Must add the @JavascriptInterface annotation.
         @JavascriptInterface
-        public void showToast(String msg){
-            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+        public void showToastByJs(String msg){
+            ZLog.i(TAG,"showToastByJs() msg=" + msg);
+            ToastTools.getInstance().showMgtvWaringToast(context, msg);
         }
+
+        // 获取焦点
+		// webview获取焦点后，所有按键事件都将转发给页面处理
+        @JavascriptInterface
+		public void requestFocus() {
+			viewHandler.post(new Runnable() {
+				@Override
+				public void run() {
+					mWebView.setFocusable(true);
+					mWebView.requestFocus();
+				}
+			});
+		}
+
     }
 
     @Override
