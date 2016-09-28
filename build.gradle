@@ -1,13 +1,18 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+//整个工程目录下的build.gradle文件，这个文件跟模块下的build.gradle文件名字相同，
+//但是是负责整个工程所有模块的构建的（一个工程有可能包含多个模块，比如你的项目中还可能有一个Library）；
 buildscript {
     repositories {
-        jcenter()
+        jcenter() //Gradle工具要从哪个maven仓库下载-----jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.1.2'
     }
 }
 
+//工程里边所有模块的通用配置，这里只规定所有模块中要用到的jar包也都从jcenter这个maven仓库中获取 ，
+// 在allprojects标签下配置的好处是你不需要再在每个模块下的build.gradle中单独配置了，
+// 如果你想在每个模块下单独指定用哪个maven仓库，那么你在这个全局的build.gradle中也可以不写；
 allprojects {
     repositories {
         jcenter()
