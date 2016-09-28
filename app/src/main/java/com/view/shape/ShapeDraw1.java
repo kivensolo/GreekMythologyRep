@@ -1,5 +1,8 @@
 package com.view.shape;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -10,26 +13,52 @@ import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.BounceInterpolator;
+import android.widget.Button;
 import android.widget.LinearLayout;
+
 import com.BaseActivity;
+import com.utils.ZLog;
 
 public class ShapeDraw1 extends BaseActivity {
 
+    public static final String TAG = "ShapeDraw1";
+
     private static final float BALL_SIZE = 300f;
+    public static final int DURATION = 3000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LinearLayout.LayoutParams lps = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        LinearLayout.LayoutParams lps = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT);
         LinearLayout root = new LinearLayout(this);
         root.setLayoutParams(lps);
         setContentView(root);
-        addContentView(new MyShapeView(this),lps);
 
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        Button startBtn = new Button(this);
+        final MyShapeView shapeView = new MyShapeView(this);
+        addContentView(shapeView,lp);
+        startBtn.setX(50);
+        startBtn.setY(20);
+        startBtn.setWidth(200);
+        startBtn.setHeight(150);
+        addContentView(startBtn,lp);
+        startBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shapeView.startAnimation();
+            }
+        });
     }
 
     public class MyShapeView extends View {
+
         ShapeHolder gitem = null;
+        ValueAnimator bounceAnim = null;
+
 
         public MyShapeView(Context context) {
             super(context);
@@ -61,6 +90,54 @@ public class ShapeDraw1 extends BaseActivity {
             canvas.translate(gitem.getX(),gitem.getY()); //前乘矩阵
             gitem.getShape().draw(canvas);
             super.onDraw(canvas);
+        }
+
+        private void createAnimation(){
+            if(null == bounceAnim){
+                bounceAnim = ObjectAnimator.ofFloat(gitem,"y",gitem.getY(),getHeight()-BALL_SIZE).setDuration(DURATION);
+                bounceAnim.setInterpolator(new BounceInterpolator());
+                bounceAnim.addUpdateListener(new LocalAnimatorUpdateListener());
+                bounceAnim.addListener(new LocalAnimatorListener());
+            }
+        }
+
+        private void startAnimation(){
+            createAnimation();
+            bounceAnim.start();
+        }
+
+        class LocalAnimatorUpdateListener implements ValueAnimator.AnimatorUpdateListener{
+
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                invalidate();
+            }
+        }
+
+
+        class LocalAnimatorListener implements Animator.AnimatorListener{
+
+            @Override
+            public void onAnimationStart(Animator animation) {
+                ZLog.i(TAG,"onAnimationStart()...");
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                ZLog.i(TAG,"onAnimationEnd()...");
+
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+                ZLog.i(TAG,"onAnimationCancel()...");
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+                ZLog.i(TAG,"onAnimationRepeat()...");
+
+            }
         }
     }
 }
