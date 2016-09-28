@@ -167,7 +167,7 @@
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!--webAppActivity-->
-        <activity android:name="com.view.webview.WebViewWithJs"
+        <activity android:name="com.view.webview.WebViewActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!-- 自定义显示的listView -->

@@ -24,7 +24,7 @@ import com.view.scroll.ScrollTestActivity;
 import com.view.scroll.SliderListViewActivity;
 import com.view.shape.ShapeDraw1;
 import com.view.slider.wzviewpager.WZViewPagerActicity;
-import com.view.webview.WebViewWithJs;
+import com.view.webview.WebViewActivity;
 import com.widgets.CustomPopupWindow;
 
 /**
@@ -64,7 +64,7 @@ public class CustomViewsPage extends  Activity implements OnItemClickListener{
 		mAdapter.add(new ListBillData(this,"滚动View_3",new Intent(this,ScrollTestActivity.class)));
 		mAdapter.add(new ListBillData(this,"滚动View_4",new Intent(this,ScrollTestActivity.class)));
 		mAdapter.add(new ListBillData(this,"SpanLable",new Intent(this,SpansDemo.class)));
-		mAdapter.add(new ListBillData(this,"WebAPP",new Intent(this,WebViewWithJs.class)));
+		mAdapter.add(new ListBillData(this,"WebAPP",new Intent(this,WebViewActivity.class)));
 		mAdapter.add(new ListBillData(this,"NetworkSpeed",new Intent(this,NetworkSpeedActivity.class)));
 		mAdapter.add(new ListBillData(this,"WZViewPager",new Intent(this,WZViewPagerActicity.class)));
 		mAdapter.add(new ListBillData(this,"WaveLoading",new Intent(this,WaveLoadingActivity.class)));
