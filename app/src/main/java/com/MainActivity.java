@@ -7,25 +7,21 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ExpandableListView;
-
 import com.AsuyncTaskJsonTest.AsynctaskBitmapMainActivity;
 import com.adapter.CommExpandableListAdapter;
-import com.animation.PropertyAnimationsActivity;
-import com.animation.ShakeAnimation;
-import com.animation.ViewFlipperAnimation;
 import com.iflytek.synthesizer.VoiceActivity;
 import com.kingz.customdemo.R;
 import com.kingz.filemanager.FileManagerActivity;
-import com.kingz.pages.CustomViewsPage;
-import com.kingz.pages.DownloadAPPActivity;
-import com.kingz.pages.FileAndPicTestACT;
-import com.kingz.pages.FourComponentPage;
-import com.kingz.pages.LayoutPage;
+import com.kingz.pages.*;
 import com.lbs.BaiduMapActivity;
 import com.mplayer.ApolloMediaPlayer;
 import com.nativeWidgets.BasicControlsActivity;
 import com.nativeWidgets.NativeProgressBar;
 import com.photo.BitmapPhotosActivity;
+import com.view.animation.InterpolatorAnimation;
+import com.view.animation.PropertyAnimationsActivity;
+import com.view.animation.ShakeAnimation;
+import com.view.animation.ViewFlipperAnimation;
 import com.view.slider.wzviewpager.OriginViewPagerActivity;
 import com.view.surface.DrawRectWithSurface;
 import com.widgets.AnimatedExpandableListView;
@@ -94,10 +90,12 @@ public class MainActivity extends ExpandableListActivity implements OnItemClickL
     }
 
     private void initChlidData() {
+        //ViewAimation
         ArrayList<ListBillData> item = new ArrayList<>();
         item.add(new ListBillData(this, "PropertyAnimation", new Intent(this, PropertyAnimationsActivity.class)));
         item.add(new ListBillData(this, "ShakeAnimation", new Intent(this, ShakeAnimation.class)));
         item.add(new ListBillData(this, "ViewFlipperAnimation", new Intent(this, ViewFlipperAnimation.class)));
+        item.add(new ListBillData(this, "InterpolatorAnimation", new Intent(this, InterpolatorAnimation.class)));
         childs.add(item);
 
         //原生基本控件
