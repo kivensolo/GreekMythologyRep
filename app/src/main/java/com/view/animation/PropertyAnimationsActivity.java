@@ -1,4 +1,4 @@
-package com.animation;
+package com.view.animation;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;
