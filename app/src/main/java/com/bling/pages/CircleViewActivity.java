@@ -1,4 +1,4 @@
-package com.view.pages;
+package com.bling.pages;
 
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
@@ -12,6 +12,7 @@ import android.widget.Button;
 import com.kingz.customdemo.R;
 import com.view.views.CircleProgressView;
 import com.view.views.ColorTrackView;
+import com.widgets.Win10LoaddingView;
 
 /**
  * Copyright(C) 2015, 北京视达科科技有限公司
@@ -23,15 +24,28 @@ import com.view.views.ColorTrackView;
 public class CircleViewActivity extends Activity {
 
     private CircleProgressView circleProgressView;
+    private Win10LoaddingView win10LoaddingView;
     private ColorTrackView colorTrackView;
     private Button btn_start;
+    private Button btn_Dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.circleview_layout);
         initCircleProgress();
+        initWin10Loadding();
         initColorTrack();
+    }
+
+    private void initWin10Loadding(){
+        btn_Dialog = (Button) findViewById(R.id.win10loadding_btn);
+        win10LoaddingView = (Win10LoaddingView) findViewById(R.id.win10loadding);
+        btn_Dialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
     }
 
     private void initColorTrack() {

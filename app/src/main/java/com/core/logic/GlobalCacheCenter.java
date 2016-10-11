@@ -15,6 +15,7 @@ import java.io.File;
  */
 public class GlobalCacheCenter {
     private static final String TAG = "GlobalCacheCenter";
+    private static final int LIMIT_TIME = 3 * 24 * 3600 * 1000; //过期时间：三天
     private static volatile GlobalCacheCenter cacheCenter = null;
 
 	private Context appContext = null;
@@ -54,7 +55,7 @@ public class GlobalCacheCenter {
 		ZLog.i(TAG, "picCachePath:" + picCachePath);
         configPath = this.appContext.getDir("config",Context.MODE_PRIVATE).toString() + File.separator;
 		ZLog.i(TAG, "configPath:" + configPath);
-        clearPicOldCache(3*24*3600*1000);
+        clearPicOldCache(LIMIT_TIME);
         return;
     }
 

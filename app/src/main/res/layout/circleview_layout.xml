@@ -21,79 +21,108 @@
                 zhi:titleSize="40sp"/>-->
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:background="@color/chartreuse2"
-        android:orientation="vertical">
-
-        <com.view.views.CircleProgressView
-            android:id="@+id/view_circle_progress"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_gravity="start"
-            android:background="@color/peru"
-            zhi:circleWidth="20dp"
-            zhi:innerColor="#dd5656"
-            zhi:outerColor="#88ff22"
-            zhi:speed="20"/>
-
-        <Button
-            android:id="@+id/start_circle_progress"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/selector_radius_buttons"
-            android:focusable="true"
-            android:text="Start"/>
+            android:layout_gravity="start"
+            android:background="@color/chartreuse2"
+            android:orientation="vertical">
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="horizontal">
+            <com.view.views.CircleProgressView
+                    android:id="@+id/view_circle_progress"
+                    android:layout_width="0dip"
+                    android:layout_height="200dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="start"
+                    android:background="@color/peru"
+                    zhi:circleWidth="20dp"
+                    zhi:innerColor="#dd5656"
+                    zhi:outerColor="#88ff22"
+                    zhi:speed="20"/>
+            <com.widgets.Win10LoaddingView
+                    android:id="@+id/win10loadding"
+                    android:layout_width="0dip"
+                    android:layout_height="200dp"
+                    android:layout_weight="1"
+                    android:background="@color/green"/>
+
+        </LinearLayout>
+
+        <RelativeLayout android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+            <Button
+                    android:id="@+id/start_circle_progress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/selector_radius_buttons"
+                    android:focusable="true"
+                    android:text="Start"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="64dp"/>
+            <Button
+                    android:id="@+id/win10loadding_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/selector_radius_buttons"
+                    android:focusable="true"
+                    android:text="Dialog"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="60dp"/>
+        </RelativeLayout>
 
     </LinearLayout>
 
     <com.view.porterduffmode.DuffTestView
-        android:layout_width="match_parent"
-        android:layout_height="108dp"/>
+            android:layout_width="match_parent"
+            android:layout_height="108dp"/>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/darksalmon"
-        android:orientation="vertical">
-
-        <com.view.views.ColorTrackView
-            android:id="@+id/id_changeTextColorView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/darksalmon"
-            android:padding="10dp"
-            zhi:progress="0"
-            zhi:text="国产和微软"
-            zhi:text_change_color="#33aaee"
-            zhi:text_origin_color="#88ff22"
-            zhi:text_size="32sp"/>
-
-        <LinearLayout
-            xmlns:zhi="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:background="@color/darksalmon"
+            android:orientation="vertical">
+
+        <com.view.views.ColorTrackView
+                android:id="@+id/id_changeTextColorView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/darksalmon"
+                android:padding="10dp"
+                zhi:progress="0"
+                zhi:text="国产和微软"
+                zhi:text_change_color="#33aaee"
+                zhi:text_origin_color="#88ff22"
+                zhi:text_size="32sp"/>
+
+        <LinearLayout
+                xmlns:zhi="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
 
             <Button
-                android:id="@+id/id_left"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/selector_radius_buttons"
-                android:onClick="startLeftChange"
-                android:text="StartLeft"/>
+                    android:id="@+id/id_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/selector_radius_buttons"
+                    android:onClick="startLeftChange"
+                    android:text="StartLeft"/>
 
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_toRightOf="@id/id_left"
-                android:background="@drawable/selector_radius_buttons"
-                android:onClick="startRightChange"
-                android:text="StartRight"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@id/id_left"
+                    android:background="@drawable/selector_radius_buttons"
+                    android:onClick="startRightChange"
+                    android:text="StartRight"/>
         </LinearLayout>
 
     </LinearLayout>

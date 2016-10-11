@@ -1,4 +1,4 @@
-package com.view.pages;
+package com.bling.pages;
 
 import android.app.Activity;
 import android.os.Bundle;

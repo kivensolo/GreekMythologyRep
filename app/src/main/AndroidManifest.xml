@@ -83,7 +83,7 @@
                   android:theme="@android:style/Theme.Black.NoTitleBar" />
 
         <!-- 自定义 SeekBar -->
-        <activity android:name="com.view.pages.UsingCustomSeekBar"
+        <activity android:name="com.bling.pages.UsingCustomSeekBar"
                  android:theme="@android:style/Theme.Black.NoTitleBar"/>
         <!-- 绘画的方式画seekBar -->
         <activity
@@ -139,7 +139,9 @@
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!--文件及bitmap操作的activity-->
-        <activity android:name="com.kingz.pages.FileAndPicTestACT"
+        <activity android:name="com.io.file.FileAndPicTestACT"
+                  android:theme="@android:style/Theme.Black.NoTitleBar"/>
+        <activity android:name="com.content.ExternalStorage"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <activity android:name="com.kingz.pages.SaveDataByFilePage"
@@ -147,7 +149,7 @@
 
 
         <!--BitmapDemo页面-->
-        <activity android:name="com.kingz.pages.DownloadAPPActivity"
+        <activity android:name="com.io.file.DownloadAPPActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
          <!--图片缓存测试页面-->
@@ -168,11 +170,11 @@
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!-- 自定义View -->
-        <activity android:name="com.view.pages.FingerBallActivity"
+        <activity android:name="com.bling.pages.FingerBallActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!-- CircleViewActivity -->
-        <activity android:name="com.view.pages.CircleViewActivity"
+        <activity android:name="com.bling.pages.CircleViewActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!--webAppActivity-->
@@ -190,7 +192,7 @@
         <activity android:name="com.view.slider.wzviewpager.WZViewPagerActicity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
          <!-- WaveLoadingActivity -->
-        <activity android:name="com.view.pages.WaveLoadingActivity"
+        <activity android:name="com.bling.pages.WaveLoadingActivity"
                   android:screenOrientation="portrait"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
         <activity android:name="com.view.scroll.ScrollTestActivity"

@@ -1,4 +1,4 @@
-package com.view.pages;
+package com.bling.pages;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -12,7 +12,7 @@ import com.view.views.WaveLoadingView;
  * All rights reserved.
  * author: King.Z
  * date:  2016/5/29 14:46
- * description:
+ * description: 水波Loading页面
  */
 
 public class WaveLoadingActivity extends Activity {

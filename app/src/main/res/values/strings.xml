@@ -64,6 +64,9 @@
     <string name="animationviewfliper_text5">Interpolators</string>
     <string name="animationviewfliper_tips">选择一个动画</string>
 
+    <string name="create">create</string>
+    <string name="delete">delete</string>
+
 
 
 </resources>

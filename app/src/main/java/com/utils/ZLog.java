@@ -30,6 +30,11 @@ public class ZLog {
             Log.v(TAG, msg);
     }
 
+    public static void w(String msg) {
+        if (isDebug)
+            Log.w(TAG, msg);
+    }
+
     // 下面是传入自定义tag的函数
     public static void i(String tag, String msg) {
         if (isDebug)
@@ -50,6 +55,10 @@ public class ZLog {
         if (isDebug)
             Log.v(tag, msg);
     }
+    public static void w(String tag, String msg) {
+        if (isDebug)
+            Log.w(tag, msg);
+    }
     public static void i(String tag, String msg,Throwable tr) {
         if (isDebug)
             Log.i(tag, msg,tr);
@@ -68,5 +77,9 @@ public class ZLog {
     public static void v(String tag, String msg,Throwable tr) {
         if (isDebug)
             Log.v(tag, msg,tr);
+    }
+    public static void w(String tag, String msg,Throwable tr) {
+        if (isDebug)
+            Log.w(tag, msg,tr);
     }
 }

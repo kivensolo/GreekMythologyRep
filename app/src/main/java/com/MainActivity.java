@@ -9,10 +9,15 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ExpandableListView;
 import com.AsuyncTaskJsonTest.AsynctaskBitmapMainActivity;
 import com.adapter.CommExpandableListAdapter;
+import com.content.ExternalStorage;
 import com.iflytek.synthesizer.VoiceActivity;
+import com.io.file.DownloadAPPActivity;
+import com.io.file.FileAndPicTestACT;
 import com.kingz.customdemo.R;
 import com.kingz.filemanager.FileManagerActivity;
-import com.kingz.pages.*;
+import com.kingz.pages.CustomViewsPage;
+import com.kingz.pages.FourComponentPage;
+import com.kingz.pages.LayoutPage;
 import com.lbs.BaiduMapActivity;
 import com.mplayer.ApolloMediaPlayer;
 import com.nativeWidgets.BasicControlsActivity;
@@ -122,6 +127,7 @@ public class MainActivity extends ExpandableListActivity implements OnItemClickL
         ArrayList<ListBillData> item4 = new ArrayList<>();
         item4.add(new ListBillData(this, "File Test", new Intent(this, FileAndPicTestACT.class)));
         item4.add(new ListBillData(this, "DownloadFile", new Intent(this, DownloadAPPActivity.class)));
+        item4.add(new ListBillData(this, "ExternalStorage", new Intent(this, ExternalStorage.class)));
         childs.add(item4);
 
         //Net

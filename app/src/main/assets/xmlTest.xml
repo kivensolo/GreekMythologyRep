@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<university name="pku">
+    <!-- university 就是所谓的Tag节点 -->
+    <college name="cuit" addr="成都">
+        <class name="class1">
+            <student name="stu1" sex='male' age="21"/>
+            <student name="stu2" sex='female' age="12"/>
+            <student name="stu3" sex='female' age="13"/>
+        </class>
+        <class name="class2" addr="北京">
+            <student name="stu4" sex='male' age="14"/>
+            <student name="stu5" sex='female' age="25"/>
+            <student name="stu6" sex='female' age="26"/>
+        </class>
+    </college>
+
+    <college name="ctcc" addr="深圳">
+        <class name="class3">
+            <student name="stu7" sex='male' age="17"/>
+        </class>
+    </college>
+
+    <college name="cmcc">
+    </college>
+</university>

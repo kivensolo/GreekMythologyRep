@@ -1,4 +1,4 @@
-package com.kingz.pages;
+package com.io.file;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -167,7 +167,6 @@ public class DownloadAPPActivity extends BaseActivity implements View.OnClickLis
         }));
     }
 
-    @NonNull
     private File createFileDir() {
         String filePath = Environment.getExternalStorageDirectory() + "/TempFile";
         File path = new File(filePath);
