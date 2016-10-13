@@ -22,6 +22,7 @@ import com.lbs.BaiduMapActivity;
 import com.mplayer.ApolloMediaPlayer;
 import com.nativeWidgets.BasicControlsActivity;
 import com.nativeWidgets.NativeProgressBar;
+import com.nativeWidgets.SpansDemo;
 import com.photo.BitmapPhotosActivity;
 import com.view.animation.InterpolatorAnimation;
 import com.view.animation.PropertyAnimationsActivity;
@@ -111,6 +112,7 @@ public class MainActivity extends ExpandableListActivity implements OnItemClickL
         item1.add(new ListBillData(this, "Four major components", new Intent(this, FourComponentPage.class)));
         item1.add(new ListBillData(this, "ViewPager", new Intent(this, OriginViewPagerActivity.class)));
         item1.add(new ListBillData(this, "SurfaceDraw", new Intent(this, DrawRectWithSurface.class)));
+        item1.add(new ListBillData(this,"SpanLable",new Intent(this,SpansDemo.class)));
         childs.add(item1);
 
         //Bimap

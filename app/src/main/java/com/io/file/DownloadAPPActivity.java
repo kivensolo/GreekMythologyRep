@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -15,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.App;
-import com.BaseActivity;
+import com.base.BaseActivity;
 import com.kingz.FileDownloader;
 import com.kingz.customdemo.R;
 import com.utils.NetTools;

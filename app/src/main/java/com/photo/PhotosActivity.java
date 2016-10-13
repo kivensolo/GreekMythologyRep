@@ -8,7 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import com.BaseActivity;
+import com.base.BaseActivity;
 import com.adapter.BitmapPageAdapter;
 import com.kingz.customdemo.R;
 

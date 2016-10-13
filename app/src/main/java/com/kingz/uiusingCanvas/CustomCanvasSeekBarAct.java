@@ -7,7 +7,7 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
-import com.BaseActivity;
+import com.base.BaseActivity;
 
 /**
  * @author: KingZ

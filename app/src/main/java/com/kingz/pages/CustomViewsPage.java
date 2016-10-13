@@ -63,7 +63,6 @@ public class CustomViewsPage extends  Activity implements OnItemClickListener{
 		mAdapter.add(new ListBillData(this,"PopupWindow",new Intent(this,CustomPopupWindow.class)));
 		mAdapter.add(new ListBillData(this,"滚动View_3",new Intent(this,ScrollTestActivity.class)));
 		mAdapter.add(new ListBillData(this,"滚动View_4",new Intent(this,ScrollTestActivity.class)));
-		mAdapter.add(new ListBillData(this,"SpanLable",new Intent(this,SpansDemo.class)));
 		mAdapter.add(new ListBillData(this,"WebAPP",new Intent(this,WebViewActivity.class)));
 		mAdapter.add(new ListBillData(this,"NetworkSpeed",new Intent(this,NetworkSpeedActivity.class)));
 		mAdapter.add(new ListBillData(this,"WZViewPager",new Intent(this,WZViewPagerActicity.class)));
