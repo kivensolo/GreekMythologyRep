@@ -3,8 +3,10 @@ package com.widgets;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.*;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
+
 import com.utils.ZLog;
 
 /**
@@ -16,6 +18,7 @@ import com.utils.ZLog;
  */
 
 public class Win10LoaddingView extends View {
+
     private static final String TAG = Win10LoaddingView.class.getSimpleName();
     private Paint mPaint;
     private Path mPath;
@@ -23,8 +26,11 @@ public class Win10LoaddingView extends View {
     private PathMeasure mPathMeasure;   //截取Path中的一部分并显示
     private ValueAnimator valueAnimator;
     private int mWidth, mHeight;
-    //用这个来接受ValueAnimator的返回值，代表整个动画的进度
-    private float precent;
+    private float precent; //接受ValueAnimator的返回值，代表整个动画的进度
+    private int dotNum;
+    private float pathTotalLength;
+    private float x;
+    private float y;
 
     public Win10LoaddingView(Context context) {
         this(context, null);
@@ -71,6 +77,7 @@ public class Win10LoaddingView extends View {
         int widthSize = MeasureSpec.getSize(widthMeasureSpec);
         int heightMode = MeasureSpec.getMode(heightMeasureSpec);
         int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+        dotNum = (int) (precent / 0.05);
 
         if (widthMode == MeasureSpec.EXACTLY) {
             mWidth = widthSize;
@@ -94,16 +101,56 @@ public class Win10LoaddingView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-       canvas.translate(mWidth / 2, mHeight / 2);  //画布原点移动至中心
-        ZLog.d(TAG,"mPathMeasure.getLength() * precent="+mPathMeasure.getLength() * precent);
+        canvas.translate(mWidth / 2, mHeight / 2);  //画布原点移动至中心
+        ZLog.d(TAG, "mPathMeasure.getLength() * precent=" + mPathMeasure.getLength() * precent);
         dstPath.reset();
-        dstPath.lineTo(0,0); // android.os.Build.VERSION_CODES#KITKAT 更早  硬件加速的bug
+        if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT){
+            // android.os.Build.VERSION_CODES#KITKAT 更早  硬件加速的bug
+            dstPath.lineTo(0, 0);
+        }
+        //进度百分比每变化5%就画一个点
+        dotNum = (int) (precent / 0.05);
+        pathTotalLength = mPathMeasure.getLength(); //路径总长度
+        switch (dotNum) {
+            case 0:
+                //0%时 第一个点
+                getSegmentWithPath(0f);
+            case 1:
+                //5%时 第二个点
+                getSegmentWithPath(0.05f);
+
+            case 2:
+                //10%时 第三个点
+                getSegmentWithPath(0.1f);
+            case 3:
+                //15%时 第四个点
+                getSegmentWithPath(0.15f);
+            default:
+                break;
+        }
+
         //截取一部分存入dst中
-        mPathMeasure.getSegment(mPathMeasure.getLength() * precent,
-                                mPathMeasure.getLength() * precent + 7,
-                                dstPath,
-                                true);
-        dstPath.lineTo(50,0);
+//        mPathMeasure.getSegment(mPathMeasure.getLength() * precent,
+//                mPathMeasure.getLength() * precent + 1,
+//                dstPath,
+//                true);
+//        dstPath.lineTo(50,0);
         canvas.drawPath(dstPath, mPaint);                //绘制dst
+        //每次转动一圈聚成一个点后都会闪一下，这是因为重新开始动画刷新视图的原因，这里的补救方法就是我们在动画快结束的时候手动画一个点
+        if (precent >= 0.95) {
+            canvas.drawPoint(0, -150, mPaint);
+        }
+    }
+
+    /**
+     * 计算截取位置
+     *
+     * @param dfloat 百分比
+     */
+    private void getSegmentWithPath(float dfloat) {
+        x = precent - dfloat * (1 - precent);  //间距由0.05线性平滑到0
+//        y = pathTotalLength * x;           //点与点间距不变
+        y = -pathTotalLength * (x * x - 2 * x);
+        mPathMeasure.getSegment(y, y + 1, dstPath, true);
     }
 }
