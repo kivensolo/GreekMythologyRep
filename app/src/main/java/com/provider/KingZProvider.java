@@ -1,4 +1,4 @@
-package com.kingz.customdemo;
+package com.provider;
 
 import android.content.ContentValues;
 import android.database.Cursor;

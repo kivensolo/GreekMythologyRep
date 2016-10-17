@@ -1,56 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.kingz.customdemo"
-    android:versionCode="1"
-    android:versionName="1.0" >
+          package="com.kingz.customdemo"
+          android:versionCode="1"
+          android:versionName="1.0">
 
     <uses-sdk
-        android:minSdkVersion="17"
-        android:targetSdkVersion="19"/>
+            android:minSdkVersion="17"
+            android:targetSdkVersion="19"/>
 
     <!-- Demo所需权限 -->
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-	<uses-permission android:name="android.permission.USE_CREDENTIALS" />
-	<uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
-	<uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-	<uses-permission android:name="android.permission.INTERNET" />
-	<uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
-	<uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-	<uses-permission android:name="android.permission.READ_PHONE_STATE" />
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-	<uses-permission android:name="android.permission.BROADCAST_STICKY" />
-	<uses-permission android:name="android.permission.WRITE_SETTINGS" />
-	<uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.BROADCAST_STICKY"/>
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
     <application
-        android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
-        android:supportsRtl="true"
-        android:label="@string/app_name"
-        android:theme="@style/AppTheme"
-        android:name="com.App">
+            android:allowBackup="true"
+            android:icon="@drawable/ic_launcher"
+            android:supportsRtl="true"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme"
+            android:name="com.App">
         <!-- supportsRtl 支持从右到左布局,API17以上 -->
 
         <meta-data
-        android:name="com.baidu.lbsapi.API_KEY"
-        android:value="XwMW9CR6w14VOWGG4AkGue8W|GlideModule"/>
+                android:name="com.baidu.lbsapi.API_KEY"
+                android:value="XwMW9CR6w14VOWGG4AkGue8W|GlideModule"/>
 
         <provider
-            android:authorities="com.kingz.customdemo"
-            android:name=".KingZProvider"/>
+                android:authorities="com.kingz.customdemo"
+                android:name="com.provider.KingZProvider"/>
 
         <activity
-            android:name="com.SplashActivity"
-            android:theme="@android:style/Theme.Black.NoTitleBar">
+                android:name="com.SplashActivity"
+                android:theme="@android:style/Theme.Black.NoTitleBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
                 <category android:name="android.intent.category.HOME"/>
             </intent-filter>
@@ -58,47 +58,47 @@
 
         <!-- 主Activity -->
         <activity
-            android:name="com.MainActivity"
-            android:theme="@android:style/Theme.Black.NoTitleBar"
-            android:screenOrientation="portrait">
+                android:name="com.MainActivity"
+                android:theme="@android:style/Theme.Black.NoTitleBar"
+                android:screenOrientation="portrait">
             <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-                <!--<category android:name="android.intent.category.LAUNCHER"/>-->
-                <!--<category android:name="android.intent.category.HOME"/>-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
+            <!--<category android:name="android.intent.category.LAUNCHER"/>-->
+            <!--<category android:name="android.intent.category.HOME"/>-->
             <!--</intent-filter>-->
         </activity>
 
         <!---->
         <activity android:name="com.view.animation.PropertyAnimationsActivity"
-            android:screenOrientation="landscape"/>
+                  android:screenOrientation="landscape"/>
         <activity android:name="com.view.animation.ShakeAnimation"
-            android:screenOrientation="portrait"/>
+                  android:screenOrientation="portrait"/>
         <activity android:name="com.view.animation.ViewFlipperAnimation"
-            android:screenOrientation="portrait"/>
+                  android:screenOrientation="portrait"/>
         <activity android:name="com.view.animation.InterpolatorAnimation"
-            android:screenOrientation="portrait"/>
+                  android:screenOrientation="portrait"/>
 
         <!-- 原生SeekBar -->
         <activity android:name="com.nativeWidgets.NativeSeekBar"
-                  android:theme="@android:style/Theme.Black.NoTitleBar" />
+                  android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!-- 自定义 SeekBar -->
         <activity android:name="com.bling.pages.UsingCustomSeekBar"
-                 android:theme="@android:style/Theme.Black.NoTitleBar"/>
+                  android:theme="@android:style/Theme.Black.NoTitleBar"/>
         <!-- 绘画的方式画seekBar -->
         <activity
-            android:name="com.kingz.uiusingCanvas.CustomCanvasSeekBarAct"
-            android:theme="@android:style/Theme.Black.NoTitleBar"/>
+                android:name="com.kingz.uiusingCanvas.CustomCanvasSeekBarAct"
+                android:theme="@android:style/Theme.Black.NoTitleBar"/>
         <activity
-            android:name="com.view.shape.ShapeDraw1"
-            android:theme="@android:style/Theme.Black.NoTitleBar"/>
+                android:name="com.view.shape.ShapeDraw1"
+                android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <activity android:name="com.view.surface.DrawRectWithSurface"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!-- progressBar -->
         <activity android:name="com.nativeWidgets.NativeProgressBar"
-                android:theme="@android:style/Theme.Black.NoTitleBar"/>
+                  android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
 
         <!-- 布局测试的ListView -->
@@ -152,20 +152,20 @@
         <activity android:name="com.io.file.DownloadAPPActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
-         <!--图片缓存测试页面-->
+        <!--图片缓存测试页面-->
         <activity android:name="com.AsuyncTaskJsonTest.AsynctaskBitmapMainActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
-         <!--图片缓存测试页面-->
+        <!--图片缓存测试页面-->
         <activity android:name="com.view.NetworkSpeed.NetworkSpeedActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"
-                    android:screenOrientation="landscape"/>
+                  android:screenOrientation="landscape"/>
 
-         <!--BitMap测试页面-->
+        <!--BitMap测试页面-->
         <activity android:name="com.photo.BitmapPhotosActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
-         <!--文件管理页面-->
+        <!--文件管理页面-->
         <activity android:name="com.kingz.filemanager.FileManagerActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
@@ -188,41 +188,38 @@
         <activity android:name="com.view.scroll.SliderListViewActivity"
                   android:screenOrientation="portrait"/>
 
-         <!-- WZViewPagerActicity -->
+        <!-- WZViewPagerActicity -->
         <activity android:name="com.view.slider.wzviewpager.WZViewPagerActicity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
-         <!-- WaveLoadingActivity -->
+        <!-- WaveLoadingActivity -->
         <activity android:name="com.bling.pages.WaveLoadingActivity"
                   android:screenOrientation="portrait"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
         <activity android:name="com.view.scroll.ScrollTestActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
-         <!-- OriginViewPagerActivity -->
+        <!-- OriginViewPagerActivity -->
         <activity android:name="com.view.slider.wzviewpager.OriginViewPagerActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
-
 
 
         <!-- 百度地图View -->
         <activity android:name="com.lbs.BaiduMapActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
-  	    <!-- Span页面 -->
+        <!-- Span页面 -->
         <activity android:name="com.nativeWidgets.SpansDemo"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
-  	    <!-- 讯飞语音页面 -->
+        <!-- 讯飞语音页面 -->
         <activity android:name="com.iflytek.synthesizer.VoiceActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
-
 
 
         <!-- ************ 媒体 *********** -->
         <activity android:name="com.mplayer.ApolloMediaPlayer"
                   android:theme="@android:style/Theme.Black.NoTitleBar"
                   android:screenOrientation="landscape"/>
-
 
 
         <!-- ************ API Demos 页面 ************ -->
@@ -232,16 +229,25 @@
                   android:screenOrientation="portrait"/>
 
 
-
-
         <!--服务 exported:外部是否可访问  process:为服务设置不同进程-->
         <service android:name="com.kingz.four_components.MyComponentsOfService"
                  android:enabled="true"
                  android:exported="true"/>
 
-        <!-- aidl测试 -->
+        <!-- aidl测试 start -->
         <service android:name="com.kingz.four_components.service.BoundServiceDemo">
         </service>
+
+        <service
+                android:name="com.kingz.ipcdemo.AIDLService"
+                android:exported="true">
+            <intent-filter>
+                <action android:name="com.kingz.aidl"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </service>
+        <!-- aidl测试 End -->
+
 
         <service android:name="com.kingz.four_components.IntentServicDemo"
                  android:exported="false">
@@ -249,11 +255,11 @@
 
 
         <service
-            android:name="com.baidu.location.f"
-            android:enabled="true"
-            android:process=":remote" >
+                android:name="com.baidu.location.f"
+                android:enabled="true"
+                android:process=":remote">
             <intent-filter>
-                <action android:name="com.baidu.location.service_v2.2" >
+                <action android:name="com.baidu.location.service_v2.2">
                 </action>
             </intent-filter>
         </service>
