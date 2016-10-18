@@ -134,7 +134,7 @@ public class CircleProgressView extends View {
                     break;
                 case R.styleable.circleView_circleWidth:
                     mCircleWidth = (int) typedArray.getDimension(attr,
-                        TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX,20,getResources().getDisplayMetrics())
+                        TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,20,getResources().getDisplayMetrics())
                     );
                     break;
                 case R.styleable.circleView_speed:
@@ -166,16 +166,11 @@ public class CircleProgressView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        int centre = getWidth() / 2;                // 获取圆心的x坐标
+        int centre = Math.min(getWidth(),getHeight()) / 2;                // 获取圆心的x坐标
         int radius = centre - mCircleWidth / 2 - 10;     // 半径(防止切View的边缘)
 
         //设置一个弧的矩形区域(圆的直径长度)
-        RectF oval = new RectF(centre - radius,
-                centre - radius,
-                centre + radius,
-                centre + radius);
-        // 用于定义的圆弧的形状和大小的界限
-
+        RectF oval = new RectF(centre - radius,centre - radius,centre + radius,centre + radius);
         canvas.drawCircle(centre,centre,radius,mFirstPaint);
         if(mSweepAngle != 0 &&  mSweepAngle % 360 == 0){
             canvas.drawCircle(centre,centre,radius,mSecondPaint);
