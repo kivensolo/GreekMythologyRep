@@ -10,23 +10,23 @@ import android.os.IBinder;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.kingz.customdemo.R;
+import com.utils.ZLog;
 
 /**
  * description：四大组件之Service的用法
  */
-public class ServiceComponentsACT extends Activity
-                            implements OnClickListener {
+public class ServiceComponentsACT extends Activity implements OnClickListener {
 
     private Intent seviceIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.acitivty_service_test);
-        seviceIntent = new Intent(this, MyComponentsOfService.class);
+        seviceIntent = new Intent(this, MyComponentsOfService.class); //目标服务intent
         initViews();
     }
 
@@ -60,7 +60,7 @@ public class ServiceComponentsACT extends Activity
                 break;
             case R.id.btn_getCurrentNum:
                 if (echoService != null) {
-                    System.out.println("getCurrentNum：" + echoService.getCurrentNum());
+                    ZLog.i("ServiceComponentsACT", "getCurrentNum：" + echoService.getCurrentNum());
                 }
                 break;
             default:
@@ -75,13 +75,16 @@ public class ServiceComponentsACT extends Activity
     ServiceConnection conn = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            echoService = ((MyComponentsOfService.LocalServiceBinder)service).getService();
-            System.out.println("onServiceConnected");
+            echoService = ((MyComponentsOfService.LocalServiceBinder) service).getService();
+            ZLog.i("ServiceComponentsACT", "onServiceConnected");
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-            System.out.println("onServiceDisconnected");
+            ZLog.i("ServiceComponentsACT", "onServiceDisconnected");
+            if (echoService != null) {
+                Toast.makeText(ServiceComponentsACT.this, "本地服务断开  获取的数字：" + echoService.getCurrentNum(), Toast.LENGTH_SHORT).show();
+            }
         }
     };
 }

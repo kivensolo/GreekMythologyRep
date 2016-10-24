@@ -228,6 +228,11 @@
                   android:theme="@android:style/Theme.Black"
                   android:screenOrientation="portrait"/>
 
+        <!-- ************ AIDL 测试页面 ************ -->
+        <activity android:name="com.kingz.ipcdemo.AIDLActivity"
+                  android:theme="@android:style/Theme.Black"
+                  android:screenOrientation="portrait"/>
+
 
         <!--服务 exported:外部是否可访问  process:为服务设置不同进程-->
         <service android:name="com.kingz.four_components.MyComponentsOfService"

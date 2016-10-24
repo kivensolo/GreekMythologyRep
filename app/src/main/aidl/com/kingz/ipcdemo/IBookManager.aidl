@@ -13,7 +13,6 @@ interface IBookManager {
 
      //所有的返回值前都不需要加任何东西，不管是什么数据类型
     List<Book> getBooks();
-    Book getBook();
     int getBookCount();
 
     //传参时除了Java基本类型以及String，CharSequence之外的类型

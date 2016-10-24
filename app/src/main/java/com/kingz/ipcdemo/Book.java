@@ -51,7 +51,6 @@ public class Book implements Parcelable{
     }
 
     private String name;
-
     private int price;
 
     public Book() {

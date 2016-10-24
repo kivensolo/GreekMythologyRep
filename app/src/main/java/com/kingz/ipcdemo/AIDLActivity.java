@@ -10,6 +10,8 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.view.View;
 import android.widget.Toast;
+
+import com.kingz.customdemo.R;
 import com.utils.ZLog;
 
 import java.util.List;
@@ -20,7 +22,7 @@ import java.util.List;
  * description: AIDL的客户端 <br>
  */
 public class AIDLActivity extends Activity {
-    public static final String TAG = AIDLActivity.class.getClass().getSimpleName();
+    public static final String TAG = AIDLActivity.class.getSimpleName();
 
     //由AIDL文件生成的Java类
     private IBookManager mBookManager = null;
@@ -32,7 +34,7 @@ public class AIDLActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_aidl);
+        setContentView(R.layout.activity_aidl);
     }
     /**
      * 添加书籍
@@ -46,14 +48,34 @@ public class AIDLActivity extends Activity {
             Toast.makeText(this, "当前与服务端处于未连接状态，正在尝试重连，请稍后再试", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (mBookManager == null) return;
+        if (mBookManager == null) {
+            return;
+        }
 
         Book book = new Book();
         book.setName("APP研发录In");
         book.setPrice(30);
         try {
             mBookManager.addBook(book);
-            ZLog.d(TAG, book.toString());
+            ZLog.d(TAG, "addBook() "+mBooks.toString());
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void getBooks(View view) {
+        //如果与服务端的连接处于未连接状态，则尝试连接
+        if (!mBound) {
+            attemptToBindService();
+            Toast.makeText(this, "当前与服务端处于未连接状态，正在尝试重连，请稍后再试", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (mBookManager == null) {
+            return;
+        }
+        try {
+            mBooks = mBookManager.getBooks();
+            ZLog.d(TAG, "getBooks() "+mBooks.toString());
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -63,9 +85,9 @@ public class AIDLActivity extends Activity {
      * 尝试与服务端建立连接
      */
     private void attemptToBindService() {
-        Intent intent = new Intent();
-        intent.setAction("ccom.kingz.aidl");
-        intent.setPackage("com.kingz.ipcdemo");
+        Intent intent = new Intent(this,AIDLService.class);
+//        intent.setAction("com.kingz.aidl");
+//        intent.setPackage("com.kingz.ipcdemo");
         bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE);
     }
 
@@ -93,6 +115,7 @@ public class AIDLActivity extends Activity {
             //获取服务器对象
             mBookManager = IBookManager.Stub.asInterface(service);
             mBound = true;
+            Toast.makeText(AIDLActivity.this, "服务器已连接！", Toast.LENGTH_SHORT).show();
             if (mBookManager != null) {
                 try {
                     mBooks = mBookManager.getBooks();

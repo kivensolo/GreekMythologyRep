@@ -6,6 +6,8 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.widget.Toast;
 
+import com.utils.ZLog;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -32,15 +34,15 @@ public class MyComponentsOfService extends Service{
 	//onBind()将返回给客户端一个IBind接口实例，IBind允许客户端回调服务的方法
 	@Override
 	public IBinder onBind(Intent intent) {
-		// TODO Auto-generated method stub
-		Toast.makeText(this, "onBind() success", Toast.LENGTH_SHORT).show();
-		System.out.println("绑定成功");
+		Toast.makeText(this, "本地服务 onBind", Toast.LENGTH_SHORT).show();
+		ZLog.i("MyComponentsOfService","本地服务 onBind");
 		return echoServiceBinder;
 	}
 
 	@Override
 	public boolean onUnbind(Intent intent) {
-		Toast.makeText(this, "onUnbind() success", Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, "本地服务 onUnbind", Toast.LENGTH_SHORT).show();
+		ZLog.i("MyComponentsOfService","本地服务 onUnbind");
 		return super.onUnbind(intent);
 	}
 
@@ -49,13 +51,14 @@ public class MyComponentsOfService extends Service{
 	private TimerTask task = null;
 
 	public void startTimer(){
+		ZLog.i("MyComponentsOfService","启动计时器");
 		if(timer == null){
 			timer = new Timer();
 			task = new  TimerTask() {
 				@Override
 				public void run() {
 					i++;
-					System.out.println("定时器中i为：" + i);
+					ZLog.i("MyComponentsOfService","计时器中i为："+i);
 				}
 			};
 			timer.schedule(task, 1000,1000);
@@ -90,23 +93,22 @@ public class MyComponentsOfService extends Service{
 
 	@Override
 	public void onCreate() {
-		// TODO Auto-generated method stub
-		System.out.println("老子被创建了");
-		Toast.makeText(this,"Service onCreate() only once",Toast.LENGTH_SHORT).show();
+		ZLog.i("MyComponentsOfService","onCreate");
 		startTimer();
 		super.onCreate();
 	}
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
+		ZLog.i("MyComponentsOfService","onStartCommand.....");
 		Toast.makeText(this,"Service onStartCommand() more than once",Toast.LENGTH_SHORT).show();
+		i = 0;
 		return super.onStartCommand(intent, flags, startId);
 	}
 
 	@Override
 	public void onDestroy() {
-		System.out.println(".....服务被销毁");
-		Toast.makeText(this,"Service onDestroy()",Toast.LENGTH_SHORT).show();
+		ZLog.i("MyComponentsOfService","onDestroy.....停止计时器");
 		stopTimer();
 		super.onDestroy();
 	}

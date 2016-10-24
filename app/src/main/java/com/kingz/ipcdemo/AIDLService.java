@@ -16,9 +16,8 @@ import java.util.List;
  * date:  2016/10/17 17:07 <br>
  * description: 服务端 <br>
  */
-
 public class AIDLService extends Service {
-    public final String TAG = this.getClass().getSimpleName();
+    public static final String TAG = AIDLService.class.getSimpleName();
 
     //包含Book对象的list
     private List<Book> mBooks = new ArrayList<>();
@@ -36,13 +35,13 @@ public class AIDLService extends Service {
     private final IBookManager.Stub mBookManager = new IBookManager.Stub() {
 
         @Override
-        public Book getBook() throws RemoteException {
-            return null;
+        public void basicTypes(int anInt, long aLong, boolean aBoolean, float aFloat, double aDouble, String aString) throws RemoteException {
+
         }
 
         @Override
         public int getBookCount() throws RemoteException {
-            return 0;
+            return getBooks().size();
         }
 
         @Override
@@ -67,11 +66,6 @@ public class AIDLService extends Service {
 
         @Override
         public void addBookInout(Book book) throws RemoteException {
-
-        }
-
-        @Override
-        public void basicTypes(int anInt, long aLong, boolean aBoolean, float aFloat, double aDouble, String aString) throws RemoteException {
 
         }
 

@@ -22,7 +22,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="得到当前数字"/>
-
     </LinearLayout>
 
 
@@ -42,7 +41,7 @@
                 android:id="@+id/bind_service"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="AIDL绑定服务"/>
+                android:text="AIDL绑定本地服务"/>
         <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

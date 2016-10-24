@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="往服务器添加数据"
+        android:id="@+id/addBook"
+        android:onClick="addBook"
+        android:background="@drawable/uiusing_app_btn_style"
+        android:layout_below="@+id/getBooks"
+        android:layout_alignEnd="@+id/getBooks"
+        android:layout_marginTop="35dp" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="获取服务器数据"
+        android:id="@+id/getBooks"
+        android:onClick="getBooks"
+        android:background="@drawable/uiusing_app_btn_style"
+        android:layout_marginStart="60dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="28dp" />
+</RelativeLayout>

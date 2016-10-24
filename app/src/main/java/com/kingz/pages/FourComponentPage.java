@@ -14,6 +14,7 @@ import com.ListBillData;
 import com.kingz.customdemo.R;
 import com.kingz.four_components.ObtainConnectPeopleActivity;
 import com.kingz.four_components.ServiceComponentsACT;
+import com.kingz.ipcdemo.AIDLActivity;
 import com.kingz.uiusingCanvas.CustomCanvasSeekBarAct;
 
 public class FourComponentPage extends  Activity implements OnItemClickListener{
@@ -40,6 +41,7 @@ public class FourComponentPage extends  Activity implements OnItemClickListener{
 		mAdapter.add(new ListBillData(this,"自定义seekBar",new Intent(this,CustomCanvasSeekBarAct.class)));
 		mAdapter.add(new ListBillData(this,"LableTextViewPage",new Intent(this,LableTextViewPage.class)));
 		mAdapter.add(new ListBillData(this,"ContentProvider",new Intent(this,ObtainConnectPeopleActivity.class)));
+		mAdapter.add(new ListBillData(this,"AIDL",new Intent(this,AIDLActivity.class)));
 	}
 
 	/**
