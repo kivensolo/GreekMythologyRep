@@ -7,9 +7,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ExpandableListView;
+
 import com.AsuyncTaskJsonTest.AsynctaskBitmapMainActivity;
 import com.adapter.CommExpandableListAdapter;
 import com.content.ExternalStorage;
+import com.graphics.Arcs;
+import com.graphics.PathEffects;
 import com.iflytek.synthesizer.VoiceActivity;
 import com.io.file.DownloadAPPActivity;
 import com.io.file.FileAndPicTestACT;
@@ -87,7 +90,7 @@ public class MainActivity extends ExpandableListActivity implements OnItemClickL
     private void initGroupData() {
         gruops.add("Animation");
         gruops.add("Original");
-        gruops.add("Bimap");
+        gruops.add("Graphics");
         gruops.add("Custom controls");
         gruops.add("File");
         gruops.add("Net");
@@ -118,6 +121,8 @@ public class MainActivity extends ExpandableListActivity implements OnItemClickL
         //Bimap
         ArrayList<ListBillData> item2 = new ArrayList<>();
         item2.add(new ListBillData(this, "BitMapOverall", new Intent(this, BitmapPhotosActivity.class)));
+        item2.add(new ListBillData(this, "Arcs", new Intent(this, Arcs.class)));
+        item2.add(new ListBillData(this, "PathEffects", new Intent(this, PathEffects.class)));
         childs.add(item2);
 
         //自定义控件

@@ -42,8 +42,8 @@ public class BitmapPhotosActivity extends PhotosActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         datas = Arrays.asList(strs);
+        super.onCreate(savedInstanceState);
         setImageView();
     }
 

@@ -233,6 +233,18 @@
                   android:theme="@android:style/Theme.Black"
                   android:screenOrientation="portrait"/>
 
+        <!--  ************ 图形方面  Start ************ -->
+        <activity android:name="com.graphics.Arcs"
+            android:theme="@android:style/Theme.Holo.Light"/>
+        <activity android:name="com.graphics.PathEffects"
+            android:theme="@android:style/Theme.Holo.Light"/>
+
+
+
+
+        <!--  ************ 图形方面  End ************ -->
+
+
 
         <!--服务 exported:外部是否可访问  process:为服务设置不同进程-->
         <service android:name="com.kingz.four_components.MyComponentsOfService"
