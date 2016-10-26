@@ -95,7 +95,7 @@
                 android:background="@color/darksalmon"
                 android:padding="10dp"
                 zhi:progress="0"
-                zhi:text="国产和微软"
+                zhi:text="竹齋眠聽雨 夢裡長青苔"
                 zhi:text_change_color="#33aaee"
                 zhi:text_origin_color="#88ff22"
                 zhi:text_size="32sp"/>

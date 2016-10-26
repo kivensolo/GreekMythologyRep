@@ -1,4 +1,4 @@
-package com.io.file;
+package com.kingz.file;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.App;
-import com.base.BaseActivity;
+import com.kingz.base.BaseActivity;
 import com.kingz.FileDownloader;
 import com.kingz.customdemo.R;
 import com.utils.NetTools;

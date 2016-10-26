@@ -1,4 +1,4 @@
-package com.graphics;
+package com.kingz.graphics;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import com.base.BaseActivity;
+import com.kingz.base.BaseActivity;
 
 /**
  * Copyright(C) 2016, 北京视达科科技有限公司

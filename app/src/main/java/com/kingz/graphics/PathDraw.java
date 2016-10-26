@@ -1,6 +1,6 @@
-package com.graphics;
+package com.kingz.graphics;
 
-import com.base.BaseActivity;
+import com.kingz.base.BaseActivity;
 
 /**
  * Copyright(C) 2016, 北京视达科科技有限公司

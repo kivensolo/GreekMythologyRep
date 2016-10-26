@@ -110,6 +110,10 @@ public class SplashActivity extends Activity implements View.OnClickListener {
             @Override
             public void onAnimationEnd(Animator animation) {
                 appName.setVisibility(View.INVISIBLE);
+                Intent intent = new Intent(SplashActivity.this,MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+                startActivity(intent);
+                finish();
             }
         });
     }

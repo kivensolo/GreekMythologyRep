@@ -1,4 +1,4 @@
-package com.adapter;
+package com.kingz.adapter;
 
 import android.content.Context;
 import android.util.Log;
@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.holder.CommViewHodler;
+import com.kingz.holder.CommViewHodler;
 import com.kingz.customdemo.R;
 
 import java.io.File;

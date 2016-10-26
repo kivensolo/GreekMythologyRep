@@ -17,7 +17,7 @@ import android.view.animation.BounceInterpolator;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-import com.base.BaseActivity;
+import com.kingz.base.BaseActivity;
 import com.utils.ZLog;
 
 public class ShapeDraw1 extends BaseActivity {

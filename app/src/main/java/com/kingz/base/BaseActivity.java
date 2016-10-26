@@ -1,4 +1,4 @@
-package com.base;
+package com.kingz.base;
 
 import android.app.Activity;
 import android.content.ContentResolver;

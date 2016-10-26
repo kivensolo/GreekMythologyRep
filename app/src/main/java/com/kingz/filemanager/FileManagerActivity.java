@@ -10,8 +10,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import com.base.BaseActivity;
-import com.adapter.FileListAdapter;
+import com.kingz.base.BaseActivity;
+import com.kingz.adapter.FileListAdapter;
 import com.kingz.customdemo.R;
 
 import java.io.DataOutputStream;

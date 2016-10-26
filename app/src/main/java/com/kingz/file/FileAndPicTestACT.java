@@ -1,4 +1,4 @@
-package com.io.file;
+package com.kingz.file;
 
 import android.app.Activity;
 import android.content.Intent;

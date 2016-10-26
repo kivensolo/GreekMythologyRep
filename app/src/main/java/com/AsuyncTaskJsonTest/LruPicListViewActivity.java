@@ -25,9 +25,9 @@ import java.util.List;
  * Description：
  *      该类主要是AsyncTask的使用和对Json数据的解析，字节流转字符流
  */
-public class AsynctaskBitmapMainActivity extends Activity {
+public class LruPicListViewActivity extends Activity {
 
-    private static final String TAG = AsynctaskBitmapMainActivity.class.getSimpleName();
+    private static final String TAG = LruPicListViewActivity.class.getSimpleName();
     private static String URL = "http://www.imooc.com/api/teacher?type=4&num=30";
     private GetInfoTask getInfoTask;        //获取数据的异步Task
     private ListView mListView;
@@ -58,7 +58,7 @@ public class AsynctaskBitmapMainActivity extends Activity {
         @Override
         protected void onPostExecute(List<NewsBean> newsBeans) {
             super.onPostExecute(newsBeans);
-            NewsDataAdapter newsAdapter = new NewsDataAdapter(AsynctaskBitmapMainActivity.this,newsBeans,mListView);
+            NewsDataAdapter newsAdapter = new NewsDataAdapter(LruPicListViewActivity.this,newsBeans,mListView);
             mListView.setAdapter(newsAdapter);
         }
     }

@@ -7,17 +7,16 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ExpandableListView;
-
-import com.AsuyncTaskJsonTest.AsynctaskBitmapMainActivity;
-import com.adapter.CommExpandableListAdapter;
+import com.AsuyncTaskJsonTest.LruPicListViewActivity;
 import com.content.ExternalStorage;
-import com.graphics.Arcs;
-import com.graphics.PathEffects;
 import com.iflytek.synthesizer.VoiceActivity;
-import com.io.file.DownloadAPPActivity;
-import com.io.file.FileAndPicTestACT;
+import com.kingz.adapter.CommExpandableListAdapter;
 import com.kingz.customdemo.R;
+import com.kingz.file.DownloadAPPActivity;
+import com.kingz.file.FileAndPicTestACT;
 import com.kingz.filemanager.FileManagerActivity;
+import com.kingz.graphics.Arcs;
+import com.kingz.graphics.PathEffects;
 import com.kingz.pages.CustomViewsPage;
 import com.kingz.pages.FourComponentPage;
 import com.kingz.pages.LayoutPage;
@@ -27,6 +26,7 @@ import com.nativeWidgets.BasicControlsActivity;
 import com.nativeWidgets.NativeProgressBar;
 import com.nativeWidgets.SpansDemo;
 import com.photo.BitmapPhotosActivity;
+import com.photo.FilmsListActivity;
 import com.view.animation.InterpolatorAnimation;
 import com.view.animation.PropertyAnimationsActivity;
 import com.view.animation.ShakeAnimation;
@@ -139,8 +139,9 @@ public class MainActivity extends ExpandableListActivity implements OnItemClickL
 
         //Net
         ArrayList<ListBillData> item5 = new ArrayList<>();
-        item5.add(new ListBillData(this, "JsonParseAndPicLru ", new Intent(this, AsynctaskBitmapMainActivity.class)));
+        item5.add(new ListBillData(this, "JsonParseAndPicLru ", new Intent(this, LruPicListViewActivity.class)));
         item5.add(new ListBillData(this, "BaiduMapTest", new Intent(this, BaiduMapActivity.class)));
+        item5.add(new ListBillData(this, "FilmsList", new Intent(this, FilmsListActivity.class)));
         childs.add(item5);
 
         //Mediaplayer

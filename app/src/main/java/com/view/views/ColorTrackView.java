@@ -16,36 +16,47 @@ import com.kingz.customdemo.R;
  * All rights reserved.
  * author: King.Z
  * date:  2016/7/12 10:50
- * description: 实现染色效果的思路是，用clipRect将一行文字剪切成两部分，
+ * description:
+ * 实现染色效果的思路：用clipRect将一行文字剪切成两部分，
  * 前半部分用一个颜色，后边部分用另一个颜色，根据进度的变化，改变这个剪切点的位置。
+ * <p>
+ * 主要是对Text绘制的边界做处理
  */
 public class ColorTrackView extends View {
 
     private static final String TAG = "ColorTrackView";
 
-    private int mTextStartX;
+    private int mTextStartX;        //文字起始x位置
+    private int mOldStyleTextLeft;  //原始文字左边缘
+    private int mOldStyleTextRight; //原始文字右边缘
+    private int mNewStyleTextLeft;  //新文字左边缘
+    private int mNewStyleTextRight; //新文字右边缘
 
-    public enum Direction {
-        LEFT, RIGHT;
-    }
+    private int mDirection = LEFT2RIGHT;
+    public static final int LEFT2RIGHT = 0;
+    public static final int RIGHT2LEFT = 1;
+    public static final int TOP2BUTTPM = 2;
+    public static final int BUTTOM2TOP = 3;
 
-    private int mDirection = DIRECTION_LEFT;
-    private static final int DIRECTION_LEFT = 0;
-    private static final int DIRECTION_RIGHT = 1;
-    private static final int DIRECTION_TOP = 2;
-    private static final int DIRECTION_BUTTOM = 3;
-
-    private String mText = "默认的文字";
-    private Paint mPaint;
+    //default value
+    private String mText = "Default TextDesc";
     private int mTextSize = 30;
-
-    private int mTextOriginColor = 0xff00ff99;
-    private int mTextChangeColor = 0xffffff00;
-
-    private Rect mTextBound = new Rect();
     private int mTextWidth;
     private int mRealWidth;
     private float mProgress;
+
+    private Paint mPaint;
+
+    /**
+     * 文字原始颜色
+     */
+    private int mTextOriginColor = 0xff00ff99;
+    /**
+     * 改变后的颜色
+     */
+    private int mTextChangeColor = 0xffffff00;
+
+    private Rect mTextBound = new Rect();
 
     public void setDirection(int direction) {
         mDirection = direction;
@@ -76,6 +87,9 @@ public class ColorTrackView extends View {
         measureText();
     }
 
+    /**
+     * 测量Text  获取文本宽度
+     */
     private void measureText() {
         mTextWidth = (int) mPaint.measureText(mText);
         mPaint.getTextBounds(mText, 0, mText.length(), mTextBound);
@@ -133,45 +147,41 @@ public class ColorTrackView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        int r = (int) (mProgress * mTextWidth + mTextStartX);
+        int r = (int) (mProgress * mTextWidth + mTextStartX); //文本右侧位置
         Log.i(TAG, "onDraw() r = " + r);
-        if (mDirection == DIRECTION_LEFT) {
-            drawChangeLeft(canvas, r);
-            drawOriginLeft(canvas, r);
+        if (mDirection == LEFT2RIGHT) {
+            mNewStyleTextLeft = mTextStartX;
+            mNewStyleTextRight = (int) (mTextStartX + mProgress * mTextWidth);
+            mOldStyleTextLeft = mNewStyleTextRight;
+            mOldStyleTextRight = mTextStartX + mTextWidth;
+            drawText(canvas, mTextChangeColor, mNewStyleTextLeft, mNewStyleTextRight);
+            drawText(canvas, mTextOriginColor, mOldStyleTextLeft, mOldStyleTextRight);
         } else {
-            drawOriginRight(canvas, r);
-            drawChangeRight(canvas, r);
+            mNewStyleTextRight = mTextStartX + mTextWidth;
+            mNewStyleTextLeft = (int) (mTextStartX + (1 - mProgress) * mTextWidth);
+            mOldStyleTextLeft = mTextStartX;
+            mOldStyleTextRight = mNewStyleTextLeft;
+            drawText(canvas, mTextChangeColor, mNewStyleTextLeft, mNewStyleTextRight);
+            drawText(canvas, mTextOriginColor, mOldStyleTextLeft, mOldStyleTextRight);
         }
-
     }
 
-    private void drawChangeRight(Canvas canvas, int r) {
-        drawText(canvas, mTextChangeColor, (int) (mTextStartX + (1 - mProgress) * mTextWidth), mTextStartX + mTextWidth);
-    }
-
-    private void drawOriginRight(Canvas canvas, int r) {
-        drawText(canvas, mTextOriginColor, mTextStartX, (int) (mTextStartX + (1 - mProgress) * mTextWidth));
-    }
-
-    private void drawChangeLeft(Canvas canvas, int r) {
-        drawText(canvas, mTextChangeColor, mTextStartX, (int) (mTextStartX + mProgress * mTextWidth));
-    }
-
-    private void drawOriginLeft(Canvas canvas, int r) {
-        drawText(canvas, mTextOriginColor, (int) (mTextStartX + mProgress * mTextWidth), mTextStartX + mTextWidth);
-    }
-
-    //利用mProgress和方向去计算应该clip的范围
+    /**
+     * 利用mProgress和方向去计算应该clip的范围
+     *
+     * @param canvas 当前画布
+     * @param color  颜色
+     * @param startX 起始位置
+     * @param endX   结束为止
+     */
     private void drawText(Canvas canvas, int color, int startX, int endX) {
         mPaint.setColor(color);
         canvas.save(Canvas.CLIP_SAVE_FLAG);
         canvas.clipRect(startX, 0, endX, getMeasuredHeight());
-        canvas.drawText(mText,
-                mTextStartX,
-                getMeasuredHeight() / 2 + mTextBound.height() / 2,
-                mPaint);
+        canvas.drawText(mText, mTextStartX, getMeasuredHeight() / 2 + mTextBound.height() / 2, mPaint);
         canvas.restore();
     }
+
     public void setProgress(float progress) {
         mProgress = progress;
         invalidate();

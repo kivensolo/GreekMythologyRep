@@ -100,15 +100,13 @@ public class CircleViewActivity extends Activity {
 
     @SuppressLint("NewApi")
     public void startLeftChange(View view) {
-        colorTrackView.setDirection(0);
-        ObjectAnimator.ofFloat(colorTrackView, "progress", 0, 1).setDuration(2000)
-                .start();
+        colorTrackView.setDirection(ColorTrackView.LEFT2RIGHT);
+        ObjectAnimator.ofFloat(colorTrackView, "progress", 0, 1).setDuration(2000).start();
     }
 
     @SuppressLint("NewApi")
     public void startRightChange(View view) {
-        colorTrackView.setDirection(1);
-        ObjectAnimator.ofFloat(colorTrackView, "progress", 0, 1).setDuration(2000)
-                .start();
+        colorTrackView.setDirection(ColorTrackView.RIGHT2LEFT);
+        ObjectAnimator.ofFloat(colorTrackView, "progress", 0, 1).setDuration(2000).start();
     }
 }

@@ -139,7 +139,7 @@
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!--文件及bitmap操作的activity-->
-        <activity android:name="com.io.file.FileAndPicTestACT"
+        <activity android:name="com.kingz.file.FileAndPicTestACT"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
         <activity android:name="com.content.ExternalStorage"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
@@ -149,11 +149,11 @@
 
 
         <!--BitmapDemo页面-->
-        <activity android:name="com.io.file.DownloadAPPActivity"
+        <activity android:name="com.kingz.file.DownloadAPPActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!--图片缓存测试页面-->
-        <activity android:name="com.AsuyncTaskJsonTest.AsynctaskBitmapMainActivity"
+        <activity android:name="com.AsuyncTaskJsonTest.LruPicListViewActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!--图片缓存测试页面-->
@@ -206,6 +206,9 @@
         <!-- 百度地图View -->
         <activity android:name="com.lbs.BaiduMapActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
+        <!-- 百度地图View -->
+        <activity android:name="com.photo.FilmsListActivity"
+                  android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!-- Span页面 -->
         <activity android:name="com.nativeWidgets.SpansDemo"
@@ -234,9 +237,9 @@
                   android:screenOrientation="portrait"/>
 
         <!--  ************ 图形方面  Start ************ -->
-        <activity android:name="com.graphics.Arcs"
+        <activity android:name="com.kingz.graphics.Arcs"
             android:theme="@android:style/Theme.Holo.Light"/>
-        <activity android:name="com.graphics.PathEffects"
+        <activity android:name="com.kingz.graphics.PathEffects"
             android:theme="@android:style/Theme.Holo.Light"/>
 
 

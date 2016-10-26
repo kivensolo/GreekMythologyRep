@@ -1,4 +1,4 @@
-package com.posterfilmlist;
+package com.kingz.databean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -8,13 +8,13 @@ import java.util.ArrayList;
  * All rights reserved.
  * author: King.Z
  * date: 2016 2016/4/2 17:06
- * description:
+ * description:  海报分组信息
  */
 public class PosterGroupInfo implements Serializable {
 
 
-    public String id;
-    public String title;
+    public String id="";
+    public String title="";
     public ArrayList<Poster> poster;
 
     @Override
@@ -27,8 +27,8 @@ public class PosterGroupInfo implements Serializable {
     }
 
     public class Poster implements Serializable {
-        public String poster_ur;
-        public String title; //海报标题
+        public String poster_ur="";
+        public String title=""; //海报标题
 
         @Override
         public String toString() {

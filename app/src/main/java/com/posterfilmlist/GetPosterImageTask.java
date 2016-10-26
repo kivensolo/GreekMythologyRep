@@ -23,8 +23,6 @@ public class GetPosterImageTask extends AsyncTask<String,Void,List<PosterInfo>> 
     protected void onPostExecute(List<PosterInfo> posterInfos) {
         super.onPostExecute(posterInfos);
         //TODO 为GridView设置图片
-
-
     }
 
     private List<PosterInfo> getLocalUrl(String url) {

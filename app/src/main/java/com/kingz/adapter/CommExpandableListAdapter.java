@@ -1,4 +1,4 @@
-package com.adapter;
+package com.kingz.adapter;
 
 import android.content.Context;
 import android.view.Gravity;

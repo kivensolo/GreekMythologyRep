@@ -10,6 +10,7 @@ import android.util.Base64;
 import android.util.TypedValue;
 
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 
 /**
  * Copyright(C) 2015, 北京视达科科技有限公司
@@ -458,6 +459,12 @@ public class BitMapUtils {
         BitmapFactory.Options opts = new BitmapFactory.Options();
         opts.inTargetDensity = value.density;
         return BitmapFactory.decodeResource(resources, id, opts);
+    }
+    public static Bitmap decodeStream(InputStream inputStream) {
+        TypedValue value = new TypedValue();
+        BitmapFactory.Options opts = new BitmapFactory.Options();
+        opts.inTargetDensity = value.density;
+        return BitmapFactory.decodeStream(inputStream,null, opts);
     }
 
 

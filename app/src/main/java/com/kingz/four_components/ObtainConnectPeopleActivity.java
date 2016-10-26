@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import com.base.BaseActivity;
+import com.kingz.base.BaseActivity;
 import com.utils.ScreenTools;
 import com.utils.ToastTools;
 
