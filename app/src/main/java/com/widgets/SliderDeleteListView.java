@@ -1,4 +1,4 @@
-package com.view.listview;
+package com.widgets;
 
 import android.content.Context;
 import android.graphics.Point;
@@ -22,9 +22,9 @@ import android.widget.Scroller;
         2：手指在屏幕中滑动利用scrollBy()来使该item跟随手指一起滑动
         3: 手指放开的时候，判断手指拖动的距离来判断item到底是滑出屏幕还是回到开始位置
  */
-public class CustomSliderDeleteListView extends ListView{
+public class SliderDeleteListView extends ListView{
 
-    private static String TAG = CustomSliderDeleteListView.class.getSimpleName();
+    private static String TAG = SliderDeleteListView.class.getSimpleName();
     private static final int THRESHOLD_VELOCITY = 600; //速度阀值
     private VelocityTracker velocityTracker;   //速度追踪者
     private Scroller scroller;                //滑动类
@@ -56,12 +56,12 @@ public class CustomSliderDeleteListView extends ListView{
     }
 
     //代码创建view时调用
-    public CustomSliderDeleteListView(Context context) {
+    public SliderDeleteListView(Context context) {
         this(context, null);
     }
 
     //xml创建view时调用
-    public CustomSliderDeleteListView(Context context, AttributeSet attrs) {
+    public SliderDeleteListView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
@@ -78,7 +78,7 @@ public class CustomSliderDeleteListView extends ListView{
      * @param defStyle 用来指定view的默认style的，如果是0，那么将不会应用任何默认（或者叫缺省）的style。
      *                 也可以是一个属性指定的style引用，也可以直接是一个显式的style资源。
      */
-    public CustomSliderDeleteListView(Context context, AttributeSet attrs, int defStyle) {
+    public SliderDeleteListView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         //获取频幕宽度
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);

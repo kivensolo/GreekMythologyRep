@@ -17,12 +17,12 @@ import android.view.animation.BounceInterpolator;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-import com.kingz.base.BaseActivity;
+import com.base.BaseActivity;
 import com.utils.ZLog;
 
-public class ShapeDraw1 extends BaseActivity {
+public class ShapeDrawOval extends BaseActivity {
 
-    public static final String TAG = "ShapeDraw1";
+    public static final String TAG = "ShapeDrawOval";
 
     private static final float BALL_SIZE = 300f;
     public static final int DURATION = 3000;

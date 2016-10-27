@@ -27,6 +27,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import com.kingz.customdemo.R;
 
+/**
+ * 各种速度差值器效果
+ */
 public class InterpolatorAnimation extends Activity implements AdapterView.OnItemSelectedListener {
 
     private static final String[] INTERPOLATORS = {

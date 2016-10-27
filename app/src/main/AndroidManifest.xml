@@ -90,7 +90,7 @@
                 android:name="com.kingz.uiusingCanvas.CustomCanvasSeekBarAct"
                 android:theme="@android:style/Theme.Black.NoTitleBar"/>
         <activity
-                android:name="com.view.shape.ShapeDraw1"
+                android:name="com.view.shape.ShapeDrawOval"
                 android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <activity android:name="com.view.surface.DrawRectWithSurface"
@@ -198,8 +198,8 @@
         <activity android:name="com.view.scroll.ScrollTestActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
-        <!-- OriginViewPagerActivity -->
-        <activity android:name="com.view.slider.wzviewpager.OriginViewPagerActivity"
+        <!-- OriginViewPager -->
+        <activity android:name="com.nativeWidgets.OriginViewPager"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
 

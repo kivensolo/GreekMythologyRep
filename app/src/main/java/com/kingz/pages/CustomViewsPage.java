@@ -21,7 +21,7 @@ import com.view.NetworkSpeed.NetworkSpeedActivity;
 import com.view.listview.CustomListViewActivity;
 import com.view.scroll.ScrollTestActivity;
 import com.view.scroll.SliderListViewActivity;
-import com.view.shape.ShapeDraw1;
+import com.view.shape.ShapeDrawOval;
 import com.view.slider.wzviewpager.WZViewPagerActicity;
 import com.view.webview.WebViewActivity;
 import com.widgets.CustomPopupWindow;
@@ -50,7 +50,7 @@ public class CustomViewsPage extends  Activity implements OnItemClickListener{
 	}
 
 	private void addData() {
-		mAdapter.add(new ListBillData(this,"ShapeDraw1",new Intent(this,ShapeDraw1.class)));
+		mAdapter.add(new ListBillData(this,"ShapeDrawOval",new Intent(this,ShapeDrawOval.class)));
 		mAdapter.add(new ListBillData(this,"Customer TitleView",new Intent(this,CircleViewActivity.class)));
 		mAdapter.add(new ListBillData(this,"Customer SeekBar",new Intent(this,UsingCustomSeekBar.class)));
 		mAdapter.add(new ListBillData(this,"Canvas SeekBar",new Intent(this,CustomCanvasSeekBarAct.class)));

@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import com.kingz.base.BaseActivity;
+import com.base.BaseActivity;
 import com.kingz.adapter.BitmapPageAdapter;
 import com.kingz.customdemo.R;
 

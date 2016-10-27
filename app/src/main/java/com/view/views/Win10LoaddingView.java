@@ -1,15 +1,12 @@
-package com.widgets;
+package com.view.views;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.*;
 import android.util.AttributeSet;
 import android.view.View;
-import com.utils.ZLog;
 
 /**
- * Copyright(C) 2016, 北京视达科科技有限公司
- * All rights reserved. <br>
  * author: King.Z <br>
  * date:  2016/10/11 18:57 <br>
  * description: 仿win10加载圈 <br>
@@ -17,13 +14,19 @@ import com.utils.ZLog;
 public class Win10LoaddingView extends View {
 
     private static final String TAG = Win10LoaddingView.class.getSimpleName();
-    private static final int DURATION = 3 * 1000;
+    private PathMeasure mPathMeasure;       //截取Path中的一部分并显示
+    private ValueAnimator valueAnimator;
     private Paint mPaint;
     private Path mPath;
     private Path dstPath;
+    /**
+     * 每一圈的绘制时间
+     */
+    private static final int DURATION = 3 * 1000;
+    /**
+     * 弧形的BoundsRect
+     */
     private RectF rect;
-    private PathMeasure mPathMeasure;   //截取Path中的一部分并显示
-    private ValueAnimator valueAnimator;
     /**
      * 加载圈宽高
      */
@@ -72,6 +75,7 @@ public class Win10LoaddingView extends View {
         mLength = mPathMeasure.getLength();
 
         valueAnimator = ValueAnimator.ofFloat(0f, 1f).setDuration(DURATION);
+        //valueAnimator.setInterpolator(new BounceInterpolator());
         valueAnimator.setRepeatCount(-1);
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -116,21 +120,23 @@ public class Win10LoaddingView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         canvas.translate(mWidth / 2, mHeight / 2);  //画布原点移动至中心
-        ZLog.d(TAG, "mPathMeasure.getLength() * precent=" + mPathMeasure.getLength() * precent);
+        //ZLog.d(TAG, "mPathMeasure.getLength() * precent=" + mPathMeasure.getLength() * precent);
 
         drawHelpLine(canvas);
 
         dstPath.reset();
         dstPath.rLineTo(0, 0);        // 硬件加速的BUG
+        /* 多种绘制效果 */
         //------ 进度百分比每变化5%就画一个点
-        drawDotsOnPath();
+        //drawDotsOnPath();
+       //------ 画一个点
+       // getDotOnPath();
+        //------ 画实际的轨迹
+        getRellaryPath();
 
         mPaint.setStrokeWidth(15);
         mPaint.setColor(Color.WHITE);
-        //------ 画一个点
-        //getDotOnPath();
-        //------ 画实际的轨迹
-        //getRellaryPath();
+
         canvas.drawPath(dstPath, mPaint);                //绘制dst
         //每次转动一圈聚成一个点后都会闪一下，这是因为重新开始动画刷新视图的原因，这里的补救方法就是我们在动画快结束的时候手动画一个点
         if (0.997 <= precent  && precent <=1) {
@@ -206,7 +212,7 @@ public class Win10LoaddingView extends View {
      */
     private void getSegmentWithPath(float dfloat) {
         x = precent - dfloat * (1 - precent);   //间距由0.05线性平滑到0
-        //y = mLength * x;                //点与点间距不变
+        //y = mLength * x;                      //点与点间距不变
         y = -mLength * (x * x - 2 * x);
         mPathMeasure.getSegment(y, y + 1, dstPath, true);
     }

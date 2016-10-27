@@ -41,7 +41,7 @@
                     zhi:innerColor="#dd5656"
                     zhi:outerColor="#88ff22"
                     zhi:speed="20"/>
-            <com.widgets.Win10LoaddingView
+            <com.view.views.Win10LoaddingView
                     android:id="@+id/win10loadding"
                     android:layout_width="0dip"
                     android:layout_height="300dp"

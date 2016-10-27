@@ -14,13 +14,13 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.App;
-import com.kingz.base.BaseActivity;
+import com.base.BaseActivity;
 import com.kingz.FileDownloader;
 import com.kingz.customdemo.R;
 import com.utils.NetTools;
 import com.utils.ScreenTools;
 import com.utils.ToastTools;
-import com.view.progress.HorizontalProgressBarView;
+import com.view.views.HorizontalProgressBarView;
 
 import java.io.File;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package com.view.slider.wzviewpager;
+package com.nativeWidgets;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -30,9 +30,9 @@ import java.util.ArrayList;
  *      FragmentPagerAdapter和FragmentStatePagerAdapter类供
  *      Fragment中的ViewPager使用。
  */
-public class OriginViewPagerActivity extends Activity{
+public class OriginViewPager extends Activity{
 
-    public static final String TAG = "OriginViewPagerActivity";
+    public static final String TAG = "OriginViewPager";
     public static final int PAGE_NUMBER = 4;
     private ViewPager pager = null;
     private PagerTabStrip tabStrip = null;

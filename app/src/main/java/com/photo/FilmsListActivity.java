@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import com.kingz.adapter.FilmListGridViewAdapter;
-import com.kingz.base.BaseActivity;
+import com.base.BaseActivity;
 import com.kingz.databean.PosterGroupInfo;
 import com.posterfilmlist.GetPosterImageTask;
 import org.xmlpull.v1.XmlPullParser;

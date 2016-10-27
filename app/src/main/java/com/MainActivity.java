@@ -24,6 +24,7 @@ import com.lbs.BaiduMapActivity;
 import com.mplayer.ApolloMediaPlayer;
 import com.nativeWidgets.BasicControlsActivity;
 import com.nativeWidgets.NativeProgressBar;
+import com.nativeWidgets.OriginViewPager;
 import com.nativeWidgets.SpansDemo;
 import com.photo.BitmapPhotosActivity;
 import com.photo.FilmsListActivity;
@@ -31,7 +32,6 @@ import com.view.animation.InterpolatorAnimation;
 import com.view.animation.PropertyAnimationsActivity;
 import com.view.animation.ShakeAnimation;
 import com.view.animation.ViewFlipperAnimation;
-import com.view.slider.wzviewpager.OriginViewPagerActivity;
 import com.view.surface.DrawRectWithSurface;
 import com.widgets.AnimatedExpandableListView;
 
@@ -113,7 +113,7 @@ public class MainActivity extends ExpandableListActivity implements OnItemClickL
         item1.add(new ListBillData(this, "ProgressBar", new Intent(this, NativeProgressBar.class)));
         item1.add(new ListBillData(this, "SrcLayoutTest", new Intent(this, LayoutPage.class)));
         item1.add(new ListBillData(this, "Four major components", new Intent(this, FourComponentPage.class)));
-        item1.add(new ListBillData(this, "ViewPager", new Intent(this, OriginViewPagerActivity.class)));
+        item1.add(new ListBillData(this, "ViewPager", new Intent(this, OriginViewPager.class)));
         item1.add(new ListBillData(this, "SurfaceDraw", new Intent(this, DrawRectWithSurface.class)));
         item1.add(new ListBillData(this,"SpanLable",new Intent(this,SpansDemo.class)));
         childs.add(item1);

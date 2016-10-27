@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import com.kingz.base.BaseActivity;
+import com.base.BaseActivity;
 
 /**
  * Copyright(C) 2016, 北京视达科科技有限公司

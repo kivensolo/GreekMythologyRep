@@ -5,10 +5,10 @@ import android.view.animation.Interpolator;
 /**
  * author: King.Z <br>
  * date:  2016/9/29 16:50 <br>
- * description: 二次曲线的差值器 <br>
+ * description: 自定义的二次曲线的差值器 <br>
  */
-public class TwoCurvesInterpolator implements Interpolator {
-    public TwoCurvesInterpolator() {
+class TwoCurvesInterpolator implements Interpolator {
+    TwoCurvesInterpolator() {
     }
 
     @Override

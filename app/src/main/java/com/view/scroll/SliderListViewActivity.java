@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.kingz.customdemo.R;
-import com.view.listview.CustomSliderDeleteListView;
+import com.widgets.SliderDeleteListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +17,9 @@ import java.util.List;
  * Created by KingZ on 2015/12/30.
  * Discription: 展示自定义滑动和删除的listView的页面
  */
-public class SliderListViewActivity extends Activity implements CustomSliderDeleteListView.RemovedListener {
+public class SliderListViewActivity extends Activity implements SliderDeleteListView.RemovedListener {
 
-    private CustomSliderDeleteListView sliderListView;
+    private SliderDeleteListView sliderListView;
     private ArrayAdapter<String> adapter;
     private List<String> dataSourceList = new ArrayList<String>();
 
@@ -32,7 +32,7 @@ public class SliderListViewActivity extends Activity implements CustomSliderDele
     }
 
     private void iniView() {
-        sliderListView = (CustomSliderDeleteListView) findViewById(R.id.sliderCustomListView);
+        sliderListView = (SliderDeleteListView) findViewById(R.id.sliderCustomListView);
         sliderListView.setRemoveListener(this);
 
         for(int i=0; i<20; i++){
@@ -51,7 +51,7 @@ public class SliderListViewActivity extends Activity implements CustomSliderDele
     }
 
     @Override
-    public void removeItem(CustomSliderDeleteListView.RemoveDirection direction, int position) {
+    public void removeItem(SliderDeleteListView.RemoveDirection direction, int position) {
         adapter.remove(adapter.getItem(position)); //移除掉指定的一个
 
        switch (direction){

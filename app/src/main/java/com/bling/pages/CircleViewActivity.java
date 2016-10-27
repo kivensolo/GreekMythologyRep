@@ -12,7 +12,7 @@ import android.widget.Button;
 import com.kingz.customdemo.R;
 import com.view.views.CircleProgressView;
 import com.view.views.ColorTrackView;
-import com.widgets.Win10LoaddingView;
+import com.view.views.Win10LoaddingView;
 
 /**
  * Copyright(C) 2015, 北京视达科科技有限公司
