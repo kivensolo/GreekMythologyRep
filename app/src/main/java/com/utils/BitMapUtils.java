@@ -24,17 +24,35 @@ import java.io.InputStream;
  * Android图像处理之Bitmap类:http://www.open-open.com/lib/view/open1333418945202.html
  * <p>
  * http://mp.weixin.qq.com/s?__biz=MzI3MDE0NzYwNA==&mid=2651433713&idx=1&sn=d152b053221c4c0bf1baa684b2a51e9c&scene=23&srcid=0805emSJb7dH8hdYfIcQiChP#rd
- * 1、decodeResource()和decodeFile()
- * decodeFile()用于读取SD卡上的图，得到的是图片的原始尺寸
- * decodeResource()用于读取Res、Raw等资源，得到的是图片的原始尺寸 * 缩放系数，
- * 缩放系数依赖于屏幕密度，参数可以通过BitMapFactory.Option的几个参数调整。
- * public boolean inScaled  //默认True
- * public int inDensity;       //无dip的文件夹下默认160
- * public int inTargetDensity; //取决具体屏幕
+ *
+ * ※※※※※※※※ decodeResource()和decodeFile()  ※※※※※※※※
+ *  decodeFile()用于读取SD卡上的图，得到的是图片的原始尺寸
+ *  decodeResource()用于读取Res、Raw等资源，得到的是图片的原始尺寸 * 缩放系数，
+ *
+ *  缩放系数依赖于屏幕密度，参数可以通过BitMapFactory.Option的几个参数调整。
+ *  public boolean inScaled    //默认True
+ *  public int inDensity;       //无dip的文件夹下默认160
+ *  public int inTargetDensity; //取决具体屏幕
+ *  |---------> 缩放系数 = inTargetDensity / inDensity;
  * <p>
- * ※ inScaled属性
- * 如果inScaled设置为false，则不进行缩放，解码后图片大小为720×720;
- * 如果inScaled设置为true或者不设置，则根据inDensity和inTargetDensity计算缩放系数。
+ *
+ * 现在有一张720×720的图片:
+ * ||------> inScaled属性
+ *  如果inScaled设置为false，则不进行缩放，解码后图片大小为720×720;
+ *  如果inScaled设置为true或者不设置，则根据inDensity和inTargetDensity计算缩放系数。
+ *      ※ 【默认情况】
+ *      把这张图片放到drawable目录下, 默认：
+            以720p的红米3为例子，
+            缩放系数 = inTargetDensity(具体320 / inDensity（默认160）= 2 = density，
+            解码后图片大小为1440×1440。
+            以1080p的MX4为例子，
+            缩放系数 = inTargetDensity(具体480 / inDensity（默认160）= 3 = density,
+            解码后图片大小为2160×2160。
+ *      ※ 【dpi文件夹的影响】
+ *          把图片放到drawable或者raw这样不带dpi的文件夹，会按照上面的算法计算。
+ *          如果放到xhdpi会怎样呢？ 在MX4上，放到xhdpi，解码后图片大小为1080 x 1080。
+ *          因为放到有dpi的文件夹，会影响到inDensity的默认值，放到xhdpi为160 x 2 = 320;
+ *          所以缩放系数 = 480（屏幕） / 320 （xhdpi） = 1.5; 所以得到的图片大小为1080 x 1080。
  *
  * ※※※※※※※※ Matrix ※※※※※※※※
  * 矩阵相关：
@@ -448,7 +466,6 @@ public class BitMapUtils {
     }
      /**
      * 获取Resource 图片资源
-     *
      * @param resources
      * @param id
      * @return
@@ -460,10 +477,24 @@ public class BitMapUtils {
         opts.inTargetDensity = value.density;
         return BitmapFactory.decodeResource(resources, id, opts);
     }
+
     public static Bitmap decodeStream(InputStream inputStream) {
+        BitmapFactory.Options opts = new BitmapFactory.Options();
+        return BitmapFactory.decodeStream(inputStream,null, opts);
+    }
+    /**
+     * 手动设置缩放系数
+     * TestCode
+     * @param inputStream
+     * @return
+     */
+    public static Bitmap decodeStreamCustomOpts(InputStream inputStream) {
         TypedValue value = new TypedValue();
         BitmapFactory.Options opts = new BitmapFactory.Options();
-        opts.inTargetDensity = value.density;
+        opts.inJustDecodeBounds = false;
+        opts.inSampleSize = 1;
+        opts.inDensity = 160;
+        opts.inTargetDensity = 160;
         return BitmapFactory.decodeStream(inputStream,null, opts);
     }
 

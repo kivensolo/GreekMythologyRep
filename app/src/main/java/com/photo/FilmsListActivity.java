@@ -4,10 +4,9 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.ViewGroup;
 import android.widget.GridView;
-import com.kingz.adapter.FilmListGridViewAdapter;
 import com.base.BaseActivity;
+import com.kingz.adapter.FilmListGridViewAdapter;
 import com.kingz.databean.PosterGroupInfo;
-import com.posterfilmlist.GetPosterImageTask;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -27,17 +26,10 @@ import java.util.ArrayList;
 public class FilmsListActivity extends BaseActivity {
 
     public static final String TAG = "FilmsListActivity";
-
-    private GetPosterImageTask getPosterImageTask;
     private ArrayList<PosterGroupInfo> posterInfoList;
     private PosterGroupInfo posterGroupInfo;
     private ArrayList<PosterGroupInfo.Poster> posterList = new ArrayList<>();
     private PosterGroupInfo.Poster posterInfo;
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,11 +47,7 @@ public class FilmsListActivity extends BaseActivity {
         rootView.setBackgroundColor(Color.WHITE);
         rootView.setAdapter(new FilmListGridViewAdapter(this, posterList));
         setContentView(rootView);
-        //获取url的图片
-        //getPosterImageTask = new GetPosterImageTask();
-        //getPosterImageTask.execute(posterList.get(0).poster_ur);
     }
-
     /**
      * 获取本地海报xml数据
      */
