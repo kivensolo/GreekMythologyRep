@@ -1,4 +1,4 @@
-package com.photo;
+package com.kingz.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.kingz.customdemo.R;
+import com.photo.DemoViewHolder;
+import com.photo.KingZTestDataModel;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

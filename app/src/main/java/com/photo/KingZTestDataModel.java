@@ -9,7 +9,7 @@ import java.util.Date;
  * date:  2016/8/7 22:48
  * description: Bean数据
  */
-public class PhotoDataModel {
+public class KingZTestDataModel {
     private String mLabel;
     private Date mDateTime;
 

@@ -18,7 +18,7 @@ import android.view.View;
  */
 public class MyItemDecoration extends RecyclerView.ItemDecoration {
 
-    private static final int[] ATTRS = new int[]{android.R.attr.listDivider};
+    private static final int[] ATTRS = new int[]{android.R.attr.listViewStyle};
     private Drawable mDivider;
 
     public MyItemDecoration(Context context) {
@@ -37,8 +37,7 @@ public class MyItemDecoration extends RecyclerView.ItemDecoration {
     public void drawHorizontal(Canvas c, RecyclerView parent) {
 
         final int childCount = parent.getChildCount();
-
-        // 在每一个子控件的底部画线
+        //在每一个子控件的底部画线
         for (int i = 0; i < childCount; i++) {
             final View child = parent.getChildAt(i);
 
