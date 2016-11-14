@@ -4,21 +4,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.kingz.customdemo.R;
 import com.photo.DemoViewHolder;
 import com.photo.KingZTestDataModel;
+import com.utils.ZLog;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.Random;
+import java.util.*;
 
 /**
- * Copyright(C) 2015, 北京视达科科技有限公司
+ * Copyright(C) 2016, 北京视达科科技有限公司
  * All rights reserved.
  * author: King.Z
  * date:  2016/8/7 22:41
@@ -27,8 +22,19 @@ import java.util.Random;
  */
 public class DemoRecyclerAdapter extends RecyclerView.Adapter<DemoViewHolder> {
 
+    private static final String TAG="DemoRecyclerAdapter";
     private List<KingZTestDataModel> mDataModels;
     private List<Integer> mHeights;
+    private OnItemClickLitener mOnItemClickLitener;
+
+    public interface OnItemClickLitener {
+        void onItemClick(View view, int position);
+        void onItemLongClick(View view, int position);
+    }
+
+    public void setOnItemClickLitener(OnItemClickLitener mOnItemClickLitener) {
+        this.mOnItemClickLitener = mOnItemClickLitener;
+    }
 
     public DemoRecyclerAdapter(List<KingZTestDataModel> dataModels){
         if(dataModels == null){
@@ -38,14 +44,9 @@ public class DemoRecyclerAdapter extends RecyclerView.Adapter<DemoViewHolder> {
         mHeights = new ArrayList<>();
     }
 
-    /**
-     * 创建ViewHolder
-     * @param parent
-     * @param viewType
-     * @return
-     */
     @Override
     public DemoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        ZLog.i(TAG,"onBindViewHolder()");
         //创建item的view
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.photoitem_recycler_view, parent, false);
         return new DemoViewHolder(itemView);
@@ -57,22 +58,41 @@ public class DemoRecyclerAdapter extends RecyclerView.Adapter<DemoViewHolder> {
      * @param position
      */
     @Override
-    public void onBindViewHolder(DemoViewHolder holder, int position) {
-         KingZTestDataModel dataModel = mDataModels.get(position);
-
+    public void onBindViewHolder(final DemoViewHolder holder, int position) {
+        ZLog.i(TAG,"onBindViewHolder() holder="+holder+"---position:"+position);
+        KingZTestDataModel dataModel = mDataModels.get(position);
         // 随机高度, 模拟瀑布效果.
         if (mHeights.size() <= position) {
-            mHeights.add((int) (100 + Math.random() * 300));
+            mHeights.add((int) (50 + Math.random() * 200));
         }
 
         ViewGroup.LayoutParams lp = holder.getTvLabel().getLayoutParams();
         lp.height = mHeights.get(position);
-
         holder.getTvLabel().setLayoutParams(lp);
 
         holder.getTvLabel().setText(dataModel.getLabel());
-        holder.getTvDateTime().setText(new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                .format(dataModel.getDateTime()));
+        holder.getTvDateTime()
+               .setText(new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+               .format(dataModel.getDateTime()));
+
+        if (mOnItemClickLitener != null) {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int pos = holder.getLayoutPosition();
+                    mOnItemClickLitener.onItemClick(holder.itemView, pos);
+                }
+            });
+
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    int pos = holder.getLayoutPosition();
+                    mOnItemClickLitener.onItemLongClick(holder.itemView, pos);
+                    return false;
+                }
+            });
+        }
     }
 
     @Override
@@ -83,10 +103,9 @@ public class DemoRecyclerAdapter extends RecyclerView.Adapter<DemoViewHolder> {
     public void addData(int position) {
         KingZTestDataModel model = new KingZTestDataModel();
         model.setDateTime(getBeforeDay(new Date(), position));
-        model.setLabel("No. " + (int) (new Random().nextDouble() * 20.0f));
+        model.setLabel("New Item");
 
         mDataModels.add(position, model);
-        //通知插入--更新
         notifyItemInserted(position);
     }
 
@@ -95,13 +114,6 @@ public class DemoRecyclerAdapter extends RecyclerView.Adapter<DemoViewHolder> {
         notifyItemRemoved(position);
     }
 
-    /**
-     * 获取日期的前一天
-     *
-     * @param date 日期
-     * @param i    偏离
-     * @return 新的日期
-     */
     private static Date getBeforeDay(Date date, int i) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);

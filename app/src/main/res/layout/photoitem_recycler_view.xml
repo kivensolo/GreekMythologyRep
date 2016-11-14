@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#AE30A4F7">
 
     <TextView
         android:layout_width="wrap_content"
@@ -11,8 +13,10 @@
         android:id="@+id/item_text" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="8月6"
         android:id="@+id/item_date" />

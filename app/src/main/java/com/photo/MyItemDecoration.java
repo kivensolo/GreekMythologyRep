@@ -1,12 +1,14 @@
 package com.photo;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import com.kingz.customdemo.R;
+import com.utils.ZLog;
 
 /**
  * Copyright(C) 2015, 北京视达科科技有限公司
@@ -18,23 +20,54 @@ import android.view.View;
  */
 public class MyItemDecoration extends RecyclerView.ItemDecoration {
 
-    private static final int[] ATTRS = new int[]{android.R.attr.listViewStyle};
+    private static final int[] ATTRS = new int[]{android.R.attr.activatedBackgroundIndicator};
     private Drawable mDivider;
+    public static final int HORIZONTAL_LIST = LinearLayoutManager.HORIZONTAL;
+    public static final int VERTICAL_LIST = LinearLayoutManager.VERTICAL;
+    private int mOrientation;
 
-    public MyItemDecoration(Context context) {
-        final TypedArray array = context.obtainStyledAttributes(ATTRS);
-        mDivider = array.getDrawable(0);
-        array.recycle();
+    public MyItemDecoration(Context context,int orientation) {
+        //final TypedArray array = context.obtainStyledAttributes(ATTRS);
+        //mDivider = array.getDrawable(0);
+        //array.recycle();
+        mDivider = context.getResources().getDrawable(R.drawable.listview_divider);
+        setOrientation(orientation);
+    }
+    private void setOrientation(int orientation) {
+        if (orientation != HORIZONTAL_LIST && orientation != VERTICAL_LIST) {
+            //throw new IllegalArgumentException("invalid orientation");
+        }
+        mOrientation = orientation;
     }
 
     @Override
     public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
-        drawHorizontal(c, parent);
-        drawVertical(c, parent);
+        ZLog.i("recyclerview - itemdecoration", "onDraw() +1");
+        if (mOrientation == VERTICAL_LIST) {
+            drawVertical(c, parent);
+        } else if(mOrientation == HORIZONTAL_LIST) {
+            drawHorizontal(c, parent);
+        }else{
+            drawHorizontal(c, parent);
+            drawVertical(c, parent);
+        }
+    }
+
+    // Item之间的留白
+    @Override
+    public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+        //设置绘制范围
+        if (mOrientation == VERTICAL_LIST) {
+            outRect.set(0, 0, 0, mDivider.getIntrinsicHeight());
+        } else if(mOrientation == HORIZONTAL_LIST){
+            outRect.set(0, 0, mDivider.getIntrinsicWidth(), 0);
+        }else{
+            outRect.set(0, 0, mDivider.getIntrinsicWidth(), mDivider.getIntrinsicHeight());
+        }
     }
 
     // 水平线
-    public void drawHorizontal(Canvas c, RecyclerView parent) {
+    private void drawHorizontal(Canvas c, RecyclerView parent) {
 
         final int childCount = parent.getChildCount();
         //在每一个子控件的底部画线
@@ -51,7 +84,7 @@ public class MyItemDecoration extends RecyclerView.ItemDecoration {
     }
 
     // 竖直线
-    public void drawVertical(Canvas c, RecyclerView parent) {
+    private void drawVertical(Canvas c, RecyclerView parent) {
 
         final int childCount = parent.getChildCount();
 
@@ -68,9 +101,4 @@ public class MyItemDecoration extends RecyclerView.ItemDecoration {
         }
     }
 
-    // Item之间的留白
-    @Override
-    public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-        outRect.set(0, 0, mDivider.getIntrinsicWidth(), mDivider.getIntrinsicHeight());
-    }
 }

@@ -123,6 +123,7 @@
 
         <!-- 自定义控件的ListView-->
         <activity android:name="com.kingz.pages.CustomViewsPage"
+                  android:screenOrientation="portrait"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <activity android:name="com.kingz.pages.LableTextViewPage"
@@ -183,7 +184,11 @@
 
         <!-- 自定义显示的listView -->
         <activity android:name="com.view.listview.CustomListViewActivity"
+                  android:screenOrientation="portrait"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
+        <activity android:name="com.view.listview.RecyclerviewDemo"
+                  android:screenOrientation="portrait"/>
+
         <!-- 可左右滑动的ListView -->
         <activity android:name="com.view.scroll.SliderListViewActivity"
                   android:screenOrientation="portrait"/>

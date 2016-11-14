@@ -19,6 +19,7 @@ import com.kingz.customdemo.R;
 import com.kingz.uiusingCanvas.CustomCanvasSeekBarAct;
 import com.view.NetworkSpeed.NetworkSpeedActivity;
 import com.view.listview.CustomListViewActivity;
+import com.view.listview.RecyclerviewDemo;
 import com.view.scroll.ScrollTestActivity;
 import com.view.scroll.SliderListViewActivity;
 import com.view.shape.ShapeDrawOval;
@@ -53,19 +54,20 @@ public class CustomViewsPage extends  Activity implements OnItemClickListener{
 		mAdapter.add(new ListBillData(this,"ShapeDrawOval",new Intent(this,ShapeDrawOval.class)));
 		mAdapter.add(new ListBillData(this,"Customer TitleView",new Intent(this,CircleViewActivity.class)));
 		mAdapter.add(new ListBillData(this,"Customer SeekBar",new Intent(this,UsingCustomSeekBar.class)));
-		mAdapter.add(new ListBillData(this,"Canvas SeekBar",new Intent(this,CustomCanvasSeekBarAct.class)));
-		mAdapter.add(new ListBillData(this,"CustomTextView",new Intent(this,LableTextViewPage.class)));
-		mAdapter.add(new ListBillData(this,"TrackBall",new Intent(this,FingerBallActivity.class)));
-		mAdapter.add(new ListBillData(this,"CustomListView",new Intent(this,CustomListViewActivity.class)));
-		mAdapter.add(new ListBillData(this,"左右滑动删除的ListView",new Intent(this,SliderListViewActivity.class)));
-		mAdapter.add(new ListBillData(this,"FlingView",new Intent(this,ScrollTestActivity.class)));
+		mAdapter.add(new ListBillData(this,"画布绘制进度条",new Intent(this,CustomCanvasSeekBarAct.class)));
+		mAdapter.add(new ListBillData(this,"自定义TextView",new Intent(this,LableTextViewPage.class)));
+		mAdapter.add(new ListBillData(this,"手势追踪球",new Intent(this,FingerBallActivity.class)));
+		mAdapter.add(new ListBillData(this,"自定义ListView",new Intent(this,CustomListViewActivity.class)));
+		mAdapter.add(new ListBillData(this,"Recyclerview例子",new Intent(this,RecyclerviewDemo.class)));
+		mAdapter.add(new ListBillData(this,"ListView-----左右滑动删除",new Intent(this,SliderListViewActivity.class)));
+		mAdapter.add(new ListBillData(this,"View的Fling效果",new Intent(this,ScrollTestActivity.class)));
 		mAdapter.add(new ListBillData(this,"PopupWindow",new Intent(this,CustomPopupWindow.class)));
 		mAdapter.add(new ListBillData(this,"滚动View_3",new Intent(this,ScrollTestActivity.class)));
 		mAdapter.add(new ListBillData(this,"滚动View_4",new Intent(this,ScrollTestActivity.class)));
-		mAdapter.add(new ListBillData(this,"WebAPP",new Intent(this,WebViewActivity.class)));
+		mAdapter.add(new ListBillData(this,"WebAPP测试",new Intent(this,WebViewActivity.class)));
 		mAdapter.add(new ListBillData(this,"NetworkSpeed",new Intent(this,NetworkSpeedActivity.class)));
 		mAdapter.add(new ListBillData(this,"WZViewPager",new Intent(this,WZViewPagerActicity.class)));
-		mAdapter.add(new ListBillData(this,"WaveLoading",new Intent(this,WaveLoadingActivity.class)));
+		mAdapter.add(new ListBillData(this,"贝塞尔水波曲线",new Intent(this,WaveLoadingActivity.class)));
 	}
 
 	@Override
