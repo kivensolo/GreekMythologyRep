@@ -1,8 +1,22 @@
 package com.utils;
 
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.*;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.PixelFormat;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
+import android.graphics.Shader;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -209,8 +223,7 @@ public class BitMapUtils {
      * @return
      */
     public static Bitmap setInvertedBitmap(Bitmap bm, int reflectHight) {
-        //倒影图和原图之间的距离
-        int reflectionGap = 4;
+        int reflectionGap = 4; //倒影图和原图之间的距离
         int width = bm.getWidth();
         int height = bm.getHeight();
         //创建单元矩阵
@@ -237,6 +250,41 @@ public class BitMapUtils {
         paint.setShader(shader);
 //        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN)); //倒影遮罩效果 取交集显示下面
         canvas.drawRect(0, height, width, totalBitMap.getHeight() + reflectionGap, paint);
+        return totalBitMap;
+    }
+
+    public static Bitmap setInvertedBitmapById(Context context,int resId, int reflectHight) {
+        Bitmap bm= BitmapFactory.decodeResource(context.getResources(),resId);
+        int reflectionGap = 30; //倒影图和原图之间的距离
+        int width = bm.getWidth();
+        int height = bm.getHeight();
+        if(reflectHight == 0){
+            reflectHight = height/3;
+        }
+        //创建单元矩阵
+        Matrix matrix = new Matrix();
+        //Scale不变，Y轴反转
+        matrix.preScale(1, -1);
+        //倒影图
+        Bitmap reflectBitmap = Bitmap.createBitmap(bm, 0, height - reflectHight, width, reflectHight, matrix, false);
+        //总长度的空BitMap
+        Bitmap totalBitMap = Bitmap.createBitmap(width, height + reflectHight, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(totalBitMap);
+        canvas.drawBitmap(bm, 0, 0, null);
+        Paint paint = new Paint();
+        canvas.drawRect(0, height, width, height + reflectionGap, paint); //两图间间隔
+        canvas.drawBitmap(reflectBitmap, 0, height + reflectionGap, null); //绘制倒影图
+
+        //画渐变蒙城
+        //线性梯度渐变
+        paint = new Paint();
+        LinearGradient shader = new LinearGradient(0,
+                bm.getHeight()+reflectionGap, 0,
+                totalBitMap.getHeight() + reflectionGap,
+                Color.BLACK,Color.TRANSPARENT,Shader.TileMode.CLAMP);
+        paint.setShader(shader);
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN)); //倒影遮罩效果 取交集显示下面
+        canvas.drawRect(0, height+reflectionGap, width, totalBitMap.getHeight() + reflectionGap, paint);
         return totalBitMap;
     }
 

@@ -1,9 +1,11 @@
 package com.utils;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
+import android.os.Build;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
@@ -131,4 +133,37 @@ public class ScreenTools {
         view.destroyDrawingCache();
         return bp;
     }
+
+    /**
+     * 设置全屏,隐藏状态栏和ActionBar
+     */
+    public static void setFullScreen(Activity activity){
+        View decorView = activity.getWindow().getDecorView();
+        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
+        ActionBar actionBar = activity.getActionBar();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
+    }
+
+    /**
+     * 设置状态栏透明
+     * @param activity
+     */
+    public static void setStatusBarTransparent(Activity activity) {
+        if (Build.VERSION.SDK_INT >= 21) {
+            View decorView = activity.getWindow().getDecorView();
+            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+            decorView.setSystemUiVisibility(option);
+//            activity.getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
+        ActionBar actionBar = activity.getActionBar();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
+    }
+
+
+
 }
