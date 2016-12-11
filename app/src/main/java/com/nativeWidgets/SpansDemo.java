@@ -153,30 +153,4 @@ public class SpansDemo extends Activity{
         ssb.setSpan(new UnderlineSpan(), 0, "UnderLine".length() , Spanned.SPAN_INCLUSIVE_INCLUSIVE);
         underLineSpanText.setText(ssb);
     }
-
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
 }

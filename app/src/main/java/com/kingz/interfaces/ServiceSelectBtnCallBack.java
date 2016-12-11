@@ -1,7 +1,7 @@
 package com.kingz.interfaces;
 
 
-import com.view.HighLightButton;
+import com.widgets.HighLightButton;
 
 public interface ServiceSelectBtnCallBack
 {

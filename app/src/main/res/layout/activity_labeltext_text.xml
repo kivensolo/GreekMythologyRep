@@ -2,23 +2,49 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
-    <!-- 加载自定义的lableText -->
-    <com.widgets.CustomEditText
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        labelText="姓名："
-        labelFontSize="12"
-        labelFontColor = "#7cd12e"
-        labelPosition="left"/>
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <com.widgets.CustomEditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        labelText="我在上面："
-        labelFontSize="26"
-        labelPosition="top"
-        android:layout_marginTop="20dp"/>
+            <!-- 加载自定义的lableText -->
+            <com.widgets.CustomEditText
+                labelFontColor="#7cd12e"
+                labelFontSize="16"
+                labelPosition="top"
+                labelText="靠上："
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
+            <com.widgets.CustomEditText
+                labelFontColor="#7cd12e"
+                labelFontSize="16"
+                labelPosition="left"
+                labelText="靠左："
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.widgets.HighLightButton
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:layout_marginTop="10dp" />
+
+            <com.widgets.HighLightButton
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:layout_marginTop="10dp" />
+
+            <com.widgets.HighLightButton
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:layout_marginTop="10dp" />
+
+        </LinearLayout>
+
+    </ScrollView>
 </LinearLayout>

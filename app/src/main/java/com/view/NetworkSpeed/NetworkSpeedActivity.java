@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -46,7 +45,6 @@ public class NetworkSpeedActivity extends Activity{
 
     private void initView() {
         speedLayout = new SpeedLayout(mContext);
-        ((LinearLayout.LayoutParams)speedLayout.getLayoutParams()).gravity = Gravity.CENTER_VERTICAL;
         mSeekBar = (SeekBar) speedLayout.findViewById(R.id.service_seekbar);
 		View mSeekBarLayout = speedLayout.findViewById(R.id.service_seekbar_bg);
         mSeekBarLayout.getLayoutParams().width = ScreenTools.OperationWidth(799);
@@ -55,9 +53,9 @@ public class NetworkSpeedActivity extends Activity{
 		ViewGroup.LayoutParams seek_lp = mSeekBar.getLayoutParams();
 		seek_lp.width = ScreenTools.OperationWidth(757);
 		seek_lp.height = ScreenTools.OperationHeight(36);
-		tvProgress = (TextView) findViewById(R.id.service_tv_progress);
+		tvProgress = (TextView) speedLayout.findViewById(R.id.id_service_tv_progress);
 		tvProgress.setTextSize(TypedValue.COMPLEX_UNIT_PX,22);
-		tvInfo = (TextView) findViewById(R.id.service_tv_info);
+		tvInfo = (TextView) speedLayout.findViewById(R.id.service_tv_info);
 		tvInfo.setTextSize(TypedValue.COMPLEX_UNIT_PX,22);
         tvInfo.setVisibility(View.VISIBLE);
         tvInfo.requestFocus();
