@@ -9,19 +9,22 @@ import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import com.kingz.customdemo.R;
 import com.utils.ToastTools;
 import com.utils.ZLog;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
  * description: Demonstration of styled text resources. <br>
@@ -221,7 +224,7 @@ public class ExternalStorage extends Activity {
         try {
             //创建此抽象路径名指定的目录，包括所有必需但不存在的父目录,注意，此操作失败时也可能已经成功地创建了一部分必需的父目录。
             publicPicFile.mkdirs();
-            InputStream ins = getResources().openRawResource(R.drawable.bg4);
+            InputStream ins = getResources().openRawResource(R.raw.bg4);
             byte[] buffer = new byte[ins.available()];
             ins.read(buffer);
             //------将数据放入文件中-------
@@ -245,7 +248,7 @@ public class ExternalStorage extends Activity {
 
         File file = new File(path, PUBLIC_PICTURE_NAME);
         try {
-            InputStream ins = getResources().openRawResource(R.drawable.bg1);
+            InputStream ins = getResources().openRawResource(R.raw.bg1);
             OutputStream os = new FileOutputStream(file);
             byte[] data = new byte[ins.available()];
             ins.read(data);
@@ -263,7 +266,7 @@ public class ExternalStorage extends Activity {
         //为空就保存在文件目录的根目录
         File file = new File(getExternalFilesDir(null), PUBLIC_PICTURE_NAME);
         try {
-            InputStream ins = getResources().openRawResource(R.drawable.bg3);
+            InputStream ins = getResources().openRawResource(R.raw.bg3);
             OutputStream os = new FileOutputStream(file);
             byte[] data = new byte[ins.available()];
             ins.read(data);
