@@ -56,6 +56,33 @@
             </intent-filter>
         </activity>
 
+        <!-- activity-alias这个属性可以用于创建多个不同的入口 -->
+        <activity-alias
+                android:targetActivity="com.SplashActivity"
+                android:name=".TestKingZ"
+                android:enabled="true"
+                android:icon="@drawable/m"
+                android:label="很多集合啊">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+
+        </activity-alias>
+
+        <activity-alias
+            android:targetActivity="com.SplashActivity"
+            android:name=".Test12"
+            android:enabled="true"
+            android:icon="@drawable/raspberry_pi_logo"
+            android:label="双12">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity-alias>
+
+
         <!-- 主Activity -->
         <activity
                 android:name="com.MainActivity"
