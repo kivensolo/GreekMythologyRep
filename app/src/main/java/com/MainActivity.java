@@ -28,10 +28,7 @@ import com.nativeWidgets.OriginViewPager;
 import com.nativeWidgets.SpansDemo;
 import com.photo.BitmapPhotosActivity;
 import com.photo.FilmsListActivity;
-import com.view.animation.InterpolatorAnimation;
-import com.view.animation.PropertyAnimationsActivity;
-import com.view.animation.ShakeAnimation;
-import com.view.animation.ViewFlipperAnimation;
+import com.view.animation.*;
 import com.view.surface.DrawRectWithSurface;
 import com.widgets.AnimatedExpandableListView;
 
@@ -105,6 +102,7 @@ public class MainActivity extends ExpandableListActivity implements OnItemClickL
         item.add(new ListBillData(this, "ShakeAnimation", new Intent(this, ShakeAnimation.class)));
         item.add(new ListBillData(this, "ViewFlipperAnimation", new Intent(this, ViewFlipperAnimation.class)));
         item.add(new ListBillData(this, "InterpolatorAnimation", new Intent(this, InterpolatorAnimation.class)));
+        item.add(new ListBillData(this, "Crossfading Two Views", new Intent(this, CrossfadeActivity.class)));
         childs.add(item);
 
         //原生基本控件
