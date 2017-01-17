@@ -1,5 +1,7 @@
 package com.utils;
 
+import android.app.ActivityManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -9,6 +11,9 @@ import android.content.pm.ResolveInfo;
 import com.App;
 
 import java.util.List;
+import java.util.Set;
+
+import static android.content.Context.ACTIVITY_SERVICE;
 
 /**
  * Copyright(C) 2016, 北京视达科科技有限公司
@@ -25,16 +30,20 @@ public class AppInfoUtils {
         throw new UnsupportedOperationException("cannot be instantiated");
     }
 
+
     /**
-     * 【获取第三方带Lanucher属性APP】
+     * 获得全部应用
      */
-    public static List getThirdApp() {
+    public static List getThirdAppWithLauncher() {
         PackageManager pkgMgr = App.getAppContext().getPackageManager();
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
-        List<ResolveInfo> resolveInfoList = pkgMgr.queryIntentActivities(intent, 0); //本机所有具有Launcher属性的APK信息
+        List<ResolveInfo> resolveInfoList = pkgMgr.queryIntentActivities(intent,0); //本机所有具有Launcher属性的APK信息
         return resolveInfoList;
     }
+
+
+
      /**
      * [根据包名判断一个应用是否已经被安装]
      * @param packageName 应用包名
@@ -84,5 +93,38 @@ public class AppInfoUtils {
         }
         return null;
     }
+
+    /**
+     * 当前activity是否处于顶层
+     * @return
+     */
+    public static boolean isTopActivity(){
+        //先拿到所有的activity
+        ActivityManager activityManager = (ActivityManager) App.getAppContext().getSystemService(ACTIVITY_SERVICE);
+         List<ActivityManager.RunningTaskInfo> tasksInfo  = activityManager.getRunningTasks(1);
+         if (tasksInfo.size() > 0) {
+        ZLog.d("top Activity = "  + tasksInfo.get(0).topActivity.getPackageName());
+        // 应用程序位于堆栈的顶层
+        if (App.getAppContext().getPackageName().equals(tasksInfo.get(0).topActivity.getPackageName())) {
+            return true;
+        }
+    }
+        return false;
+    }
+
+    public static String getIntentContentToStr(Intent intent) {
+        ComponentName component = intent.getComponent();
+        String action = intent.getAction();
+        String dataStr = intent.getDataString();
+        String dataType = intent.getType();
+        String packageName = intent.getPackage();
+        String scheme = intent.getScheme();
+        Set<String> categories = intent.getCategories();
+        return "[Intent = ]: component=" + component + " ;action=" + action + " ;dataStr=" + dataStr + " ;packageName=" + packageName +
+                " ;scheme=" + scheme + " ;dataType=" + dataType + " ;categories=" + categories;
+
+    }
+
+
 
 }

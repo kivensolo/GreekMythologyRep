@@ -48,7 +48,7 @@
         android:id="@+id/appName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="WANGZHI"
+        android:text="GreekMyth"
         android:textSize="64sp"
         android:layout_centerInParent="true"
         android:textColor="@android:color/white"/>

@@ -340,6 +340,21 @@
                   android:exported="true">
         </provider>
 
+
+        <receiver android:name="com.kingz.receiver.OtherAppInstalledOrRemoveReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED"/>
+                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
+                 <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name="com.kingz.receiver.OtherAppReplacedReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REPLACED"/>
+                 <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
