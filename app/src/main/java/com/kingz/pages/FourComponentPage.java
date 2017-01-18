@@ -38,12 +38,16 @@ public class FourComponentPage extends  Activity implements OnItemClickListener{
 	}
 
 	private void addData() {
-		mAdapter.add(new ListBillData(this,"服务",new Intent(this,ServiceComponentsACT.class)));
-		mAdapter.add(new ListBillData(this,"自定义seekBar",new Intent(this,CustomCanvasSeekBarAct.class)));
-		mAdapter.add(new ListBillData(this,"LableTextViewPage",new Intent(this,LableTextViewPage.class)));
-		mAdapter.add(new ListBillData(this,"ContentProvider",new Intent(this,ObtainConnectPeopleActivity.class)));
-		mAdapter.add(new ListBillData(this,"AIDL",new Intent(this,AIDLActivity.class)));
-		mAdapter.add(new ListBillData(this,"Activity-Alias",new Intent(this,AttrOfAliasAct.class)));
+		addItem("服务",ServiceComponentsACT.class);
+		addItem("自定义seekBar",CustomCanvasSeekBarAct.class);
+		addItem("LableTextViewPage",LableTextViewPage.class);
+		addItem("ContentProvider",ObtainConnectPeopleActivity.class);
+		addItem("AIDL",AIDLActivity.class);
+		addItem("Activity-Alias",AttrOfAliasAct.class);
+	}
+
+	private void addItem(String  name,Class<?> pageName) {
+		mAdapter.add(new ListBillData(this,name, new Intent(this, pageName)));
 	}
 
 	/**

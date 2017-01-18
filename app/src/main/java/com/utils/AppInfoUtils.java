@@ -96,19 +96,21 @@ public class AppInfoUtils {
 
     /**
      * 当前activity是否处于顶层
-     * @return
+     * @return true/false
      */
     public static boolean isTopActivity(){
         //先拿到所有的activity
         ActivityManager activityManager = (ActivityManager) App.getAppContext().getSystemService(ACTIVITY_SERVICE);
          List<ActivityManager.RunningTaskInfo> tasksInfo  = activityManager.getRunningTasks(1);
          if (tasksInfo.size() > 0) {
-        ZLog.d("top Activity = "  + tasksInfo.get(0).topActivity.getPackageName());
-        // 应用程序位于堆栈的顶层
-        if (App.getAppContext().getPackageName().equals(tasksInfo.get(0).topActivity.getPackageName())) {
-            return true;
+            ComponentName topActivity = tasksInfo.get(0).topActivity;
+            String pkgName = topActivity.getPackageName();
+            String shortClassName = topActivity.getShortClassName();
+            String clsName = shortClassName.substring(1, shortClassName.length());
+            if (pkgName.equals(App.getAppContext().getPackageName()) && clsName.equals(pkgName)) {
+                return true;
+            }
         }
-    }
         return false;
     }
 

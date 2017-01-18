@@ -1,6 +1,7 @@
 package com;
 
 import android.app.ExpandableListActivity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -43,11 +44,9 @@ import java.util.List;
 public class MainActivity extends ExpandableListActivity implements OnItemClickListener {
 
     private static String TAG = MainActivity.class.getSimpleName();
-
     private CommExpandableListAdapter comExpandAdapter;
-    private List<String> gruops = new ArrayList<>();
-    private List<List<ListBillData>> childs = new ArrayList<>();
     private AnimatedExpandableListView listView;
+    private ListBillDataManager billDataManager = new ListBillDataManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +55,7 @@ public class MainActivity extends ExpandableListActivity implements OnItemClickL
         listView = (AnimatedExpandableListView) findViewById(android.R.id.list);
 //		getExpandableListView().setIndicatorBounds(UITools.SCREEN_WIDTH - 60, UITools.SCREEN_WIDTH - 27);
         initAdapterData();
-        comExpandAdapter = new CommExpandableListAdapter(this, gruops, childs);
+        comExpandAdapter = new CommExpandableListAdapter(this, getGroupData(), getSubTitleData());
         listView.setAdapter(comExpandAdapter);
         // In order to show animations, we need to use a custom click handler
         // for our ExpandableListView.
@@ -80,78 +79,79 @@ public class MainActivity extends ExpandableListActivity implements OnItemClickL
     }
 
     private void initAdapterData() {
-        initGroupData();
-        initChlidData();
+        initData();
     }
 
-    private void initGroupData() {
-        gruops.add("Animation");
-        gruops.add("Original");
-        gruops.add("Graphics");
-        gruops.add("Custom controls");
-        gruops.add("File");
-        gruops.add("Net");
-        gruops.add("Mediaplayer");
-        gruops.add("Other");
-    }
-
-    private void initChlidData() {
+    private void initData() {
         //ViewAimation
-        ArrayList<ListBillData> item = new ArrayList<>();
-        item.add(new ListBillData(this, "PropertyAnimation", new Intent(this, PropertyAnimationsActivity.class)));
-        item.add(new ListBillData(this, "ShakeAnimation", new Intent(this, ShakeAnimation.class)));
-        item.add(new ListBillData(this, "ViewFlipperAnimation", new Intent(this, ViewFlipperAnimation.class)));
-        item.add(new ListBillData(this, "InterpolatorAnimation", new Intent(this, InterpolatorAnimation.class)));
-        item.add(new ListBillData(this, "Crossfading Two Views", new Intent(this, CrossfadeActivity.class)));
-        childs.add(item);
+        billDataManager.addGroup("Animation");
+        addChildData("PropertyAnimation", PropertyAnimationsActivity.class);
+        addChildData("ShakeAnimation", ShakeAnimation.class);
+        addChildData("ViewFlipperAnimation", ViewFlipperAnimation.class);
+        addChildData("InterpolatorAnimation", InterpolatorAnimation.class);
+        addChildData("Crossfading Two Views", CrossfadeActivity.class);
+        billDataManager.pushChilds();
 
         //原生基本控件
-        ArrayList<ListBillData> item1 = new ArrayList<>();
-        item1.add(new ListBillData(this, "BasicControls", new Intent(this, BasicControlsActivity.class)));
-        item1.add(new ListBillData(this, "ProgressBar", new Intent(this, NativeProgressBar.class)));
-        item1.add(new ListBillData(this, "SrcLayoutTest", new Intent(this, LayoutPage.class)));
-        item1.add(new ListBillData(this, "Four major components", new Intent(this, FourComponentPage.class)));
-        item1.add(new ListBillData(this, "ViewPager", new Intent(this, OriginViewPager.class)));
-        item1.add(new ListBillData(this, "SurfaceDraw", new Intent(this, DrawRectWithSurface.class)));
-        item1.add(new ListBillData(this,"SpanLable",new Intent(this,SpansDemo.class)));
-        childs.add(item1);
+        billDataManager.addGroup("Original");
+        addChildData("BasicControls", BasicControlsActivity.class);
+        addChildData("ProgressBar", NativeProgressBar.class);
+        addChildData("SrcLayoutTest", LayoutPage.class);
+        addChildData("Four major components", FourComponentPage.class);
+        addChildData("ViewPager", OriginViewPager.class);
+        addChildData("SurfaceDraw", DrawRectWithSurface.class);
+        addChildData("SpanLable", SpansDemo.class);
+        billDataManager.pushChilds();
 
         //Bimap
-        ArrayList<ListBillData> item2 = new ArrayList<>();
-        item2.add(new ListBillData(this, "BitMapOverall", new Intent(this, BitmapPhotosActivity.class)));
-        item2.add(new ListBillData(this, "Arcs", new Intent(this, Arcs.class)));
-        item2.add(new ListBillData(this, "PathEffects", new Intent(this, PathEffects.class)));
-        childs.add(item2);
+        billDataManager.addGroup("Graphics");
+        addChildData("BitMapOverall", BitmapPhotosActivity.class);
+        addChildData("Arcs", Arcs.class);
+        addChildData("PathEffects", PathEffects.class);
+        billDataManager.pushChilds();
 
         //自定义控件
-        ArrayList<ListBillData> item3 = new ArrayList<>();
-        item3.add(new ListBillData(this, "Custom controls", new Intent(this, CustomViewsPage.class)));
-        childs.add(item3);
+        billDataManager.addGroup("Custom controls");
+        addChildData("Custom controls", CustomViewsPage.class);
+        billDataManager.pushChilds();
 
         //File
-        ArrayList<ListBillData> item4 = new ArrayList<>();
-        item4.add(new ListBillData(this, "File Test", new Intent(this, FileAndPicTestACT.class)));
-        item4.add(new ListBillData(this, "DownloadFile", new Intent(this, DownloadAPPActivity.class)));
-        item4.add(new ListBillData(this, "ExternalStorage", new Intent(this, ExternalStorage.class)));
-        childs.add(item4);
+        billDataManager.addGroup("File");
+        addChildData("File Test", FileAndPicTestACT.class);
+        addChildData("DownloadFile", DownloadAPPActivity.class);
+        addChildData("ExternalStorage", ExternalStorage.class);
+        billDataManager.pushChilds();
+
 
         //Net
-        ArrayList<ListBillData> item5 = new ArrayList<>();
-        item5.add(new ListBillData(this, "JsonParseAndPicLru ", new Intent(this, LruPicListViewActivity.class)));
-        item5.add(new ListBillData(this, "BaiduMapTest", new Intent(this, BaiduMapActivity.class)));
-        item5.add(new ListBillData(this, "FilmsList", new Intent(this, FilmsListActivity.class)));
-        childs.add(item5);
+        billDataManager.addGroup("Net");
+        addChildData("JsonParseAndPicLru", LruPicListViewActivity.class);
+        addChildData("BaiduMapTest", BaiduMapActivity.class);
+        addChildData("FilmsList", FilmsListActivity.class);
+        billDataManager.pushChilds();
 
         //Mediaplayer
-        ArrayList<ListBillData> item6 = new ArrayList<>();
-        item6.add(new ListBillData(this, "Media", new Intent(this, ApolloMediaPlayer.class)));
-        childs.add(item6);
+        billDataManager.addGroup("Mediaplayer");
+        addChildData("Media", ApolloMediaPlayer.class);
+        billDataManager.pushChilds();
 
         //Other
-        ArrayList<ListBillData> item7 = new ArrayList<>();
-        item7.add(new ListBillData(this, "FileManager ", new Intent(this, FileManagerActivity.class)));
-        item7.add(new ListBillData(this, "Iflytek", new Intent(this, VoiceActivity.class)));
-        childs.add(item7);
+        billDataManager.addGroup("Other");
+        addChildData("FileManager", FileManagerActivity.class);
+        addChildData("Iflytek", VoiceActivity.class);
+        billDataManager.pushChilds();
+    }
+
+    private void addChildData(String subTitle, Class<?> pageClass) {
+        billDataManager.buildChilds(this, subTitle, pageClass);
+    }
+
+    private List<String> getGroupData() {
+        return billDataManager.getGroups();
+    }
+
+    private List<List<ListBillData>> getSubTitleData() {
+        return billDataManager.getChildrens();
     }
 
     @Override
@@ -173,5 +173,39 @@ public class MainActivity extends ExpandableListActivity implements OnItemClickL
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+    }
+
+    class ListBillDataManager {
+        private List<String> gruops = new ArrayList<>();
+        private List<List<ListBillData>> childs = new ArrayList<>();
+        private ArrayList<ListBillData> item = new ArrayList<>();
+
+        private void addGroup(String parentTitle) {
+            gruops.add(parentTitle);
+        }
+
+        private void buildChilds(Context ctx, String subTitle, Class<?> pageClass) {
+            if (item == null) {
+                item = new ArrayList<>();
+            }
+            item.add(new ListBillData(ctx, subTitle, new Intent(ctx, pageClass)));
+        }
+
+        private void pushChilds() {
+            if (item != null) {
+                childs.add(item);
+                item = null;
+            } else {
+                throw new NullPointerException("pushChilds() 失败,参数为空");
+            }
+        }
+
+        private List<String> getGroups() {
+            return gruops;
+        }
+
+        private List<List<ListBillData>> getChildrens() {
+            return childs;
+        }
     }
 }
