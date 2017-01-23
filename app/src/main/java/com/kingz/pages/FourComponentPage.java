@@ -25,14 +25,11 @@ public class FourComponentPage extends  Activity implements OnItemClickListener{
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_four_component_list);
-
 		listView = (ListView) findViewById(R.id.four_component_list_view);
 		mAdapter = new ArrayAdapter<ListBillData>(this, R.layout.list_bill);
-		listView.setAdapter(mAdapter);//设置数据适配器
-
+		listView.setAdapter(mAdapter);
 		addData();
 		listView.setOnItemClickListener(this);
 	}
