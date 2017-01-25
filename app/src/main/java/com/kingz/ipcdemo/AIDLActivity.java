@@ -24,10 +24,10 @@ import java.util.List;
 public class AIDLActivity extends Activity {
     public static final String TAG = AIDLActivity.class.getSimpleName();
 
-    //由AIDL文件生成的Java类
-    private IBookManager mBookManager = null;
     //标志当前与服务端连接状况的布尔值，false为未连接，true为连接中
     private boolean mBound = false;
+    //由AIDL文件生成的Java类
+    private IBookManager mBookManager = null;
     //包含Book对象的list
     private List<Book> mBooks;
 
@@ -114,6 +114,16 @@ public class AIDLActivity extends Activity {
             ZLog.d(getLocalClassName(), "service connected");
             //获取服务器对象
             mBookManager = IBookManager.Stub.asInterface(service);
+            try {
+                service.linkToDeath(new IBinder.DeathRecipient() {
+                    @Override
+                    public void binderDied() {
+
+                    }
+                },0);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
             mBound = true;
             Toast.makeText(AIDLActivity.this, "服务器已连接！", Toast.LENGTH_SHORT).show();
             if (mBookManager != null) {

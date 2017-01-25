@@ -156,12 +156,11 @@ public class MainActivity extends ExpandableListActivity implements OnItemClickL
 
     @Override
     public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-//		TODO Activity切换的动画
 //		ActivityOptions opts = ActivityOptions.makeCustomAnimation(this,R.anim.fade,R.anim.hold);
 //		ActivityOptions opts = ActivityOptions.makeScaleUpAnimation(view, 0, 0, view.getWidth(), view.getHeight());
         ListBillData data = (ListBillData) comExpandAdapter.getChild(groupPosition, childPosition);
         data.startActivity(null);
-//		overridePendingTransition(R.anim.zoom_enter, R.anim.zoom_exit);
+		//overridePendingTransition(R.anim.zoom_enter, R.anim.zoom_exit);
         return true;
     }
 

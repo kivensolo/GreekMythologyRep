@@ -31,7 +31,8 @@ public class CrossfadeActivity extends Activity {
         // Initially hide the content view.
         mContentView.setVisibility(View.GONE);
         // Retrieve and cache the system's default "short" animation time.
-        mShortAnimationDuration = getResources().getInteger(android.R.integer.config_longAnimTime);
+        //mShortAnimationDuration = getResources().getInteger(android.R.integer.config_longAnimTime);
+        mShortAnimationDuration = 1200;
         crossfade();
     }
 

@@ -8,6 +8,12 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
+import com.App;
+import com.kingz.customdemo.R;
+import com.utils.ScreenTools;
+import com.utils.ZLog;
+import com.widgets.text.LogTextBox;
 
 /**
  * author: King.Z
@@ -15,10 +21,32 @@ import android.view.View;
  * description: 弧形的使用
  */
 public class Arcs extends Activity {
+    private LogTextBox logView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(new SampleView(this));
+        logView = new LogTextBox(this);
+        logView.setBackground(getResources().getDrawable(R.drawable.logbox));
+        logView.setX(ScreenTools.OperationHeight(400));
+        LinearLayout.LayoutParams lps = new LinearLayout.LayoutParams(ScreenTools.OperationHeight(600), ScreenTools.OperationHeight(600));
+        logView.setLayoutParams(lps);
+        logView.setOverScrollMode(View.OVER_SCROLL_ALWAYS);
+
+        SampleView rootview = new SampleView(this);
+        rootview.setLsr(new SampleView.IInvalidateLis() {
+            @Override
+            public void onInvalidate(float mSweep) {
+                 logView.append("curretn sweep:"+mSweep+"\n");
+                int totalH = logView.getLineCount() * logView.getLineHeight();
+                if (totalH > (logView.getHeight() - logView.getLineHeight())) {
+                    logView.scrollTo(0, totalH - logView.getHeight() + logView.getLineHeight());
+                }
+            }
+        });
+        setContentView(rootview);
+        addContentView(logView,lps);
+
+
     }
     private static class SampleView extends View {
         private Paint[] mPaints;
@@ -30,13 +58,21 @@ public class Arcs extends Activity {
         private float mSweep;
         private int mBigIndex;
 
+
         private static final float SWEEP_INC = 2;
         private static final float START_INC = 15;
         private static final int NUM_PAINT = 4;
 
-
+        IInvalidateLis lsr;
+        public interface IInvalidateLis{
+            public void onInvalidate(float sweep);
+        }
+        public void setLsr(IInvalidateLis lsr){
+            this.lsr = lsr;
+        }
         public SampleView(Context context) {
             super(context);
+            setBackgroundColor(context.getResources().getColor(R.color.fruitpurple));
 
             mPaints = new Paint[NUM_PAINT];
             mUseCenters = new boolean[NUM_PAINT];
@@ -82,6 +118,15 @@ public class Arcs extends Activity {
         }
 
         @Override
+        protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+            int width = ScreenTools.Operation(ScreenTools.getScreenWidth(App.getAppContext()));
+            int height = ScreenTools.Operation(ScreenTools.getScreenHeight(App.getAppContext()));
+            setMeasuredDimension(width,height);
+            ZLog.d("onMeasure kingz","width="+width+";height="+height);
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        }
+
+        @Override
         protected void onDraw(Canvas canvas) {
             canvas.drawColor(Color.WHITE);
 
@@ -101,6 +146,9 @@ public class Arcs extends Activity {
                 mBigIndex = (mBigIndex + 1) % mOvals.length;
             }
             invalidate();
+            if(lsr != null){
+                lsr.onInvalidate(mSweep);
+            }
         }
     }
 }
