@@ -13,8 +13,8 @@ import android.view.ViewConfiguration;
 import android.view.animation.BounceInterpolator;
 import android.widget.Scroller;
 import android.widget.TextView;
-
 import com.kingz.customdemo.R;
+import com.utils.ZLog;
 
 /**
  * Copyright(C) 2016, 北京视达科科技有限公司
@@ -30,12 +30,12 @@ public class FlingView extends TextView {
     private Paint borderPaint;
     private Paint textPaint;
     private Paint imagePaint;
-    private int velocityX;
-    private int velocityY;
+    private int velocityX;  //当前X方向上的速度
+    private int velocityY;  //当前Y方向上的速度
 
 
     //手势监听类
-    GestureDetector mGestureDetector; //可以代替很多onTouchEvent()中自己处理手势的东西
+    GestureDetector mGestureDetector; //可以代替很多onTouchEvent()中自己处理手势
     //速度追踪器
     VelocityTracker velocityTracker = VelocityTracker.obtain();
 
@@ -74,6 +74,15 @@ public class FlingView extends TextView {
         borderPaint = new Paint();
         textPaint = new Paint();
         imagePaint = new Paint();
+
+        borderPaint.setStyle(Paint.Style.STROKE);
+        borderPaint.setStrokeWidth(8);
+        borderPaint.setColor(Color.CYAN);
+
+        textPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        textPaint.setTextSize(26);
+        textPaint.setColor(Color.YELLOW);
+
     }
 
     @Override
@@ -90,12 +99,14 @@ public class FlingView extends TextView {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        borderPaint.setStyle(Paint.Style.STROKE);
-        borderPaint.setStrokeWidth(8);
-        borderPaint.setColor(Color.CYAN);
+
         //绘制矩形的宽高通过 getMeasuredXXXX()获取
         canvas.drawRect(0, 0, getMeasuredWidth(), getMeasuredHeight(), borderPaint);
-        setBackground(getResources().getDrawable(R.drawable.bkg2));
+        setBackground(getResources().getDrawable(R.drawable.floder_img));
+
+        //直接setText会导致触摸失效
+        //setText("我是文本");
+        canvas.drawText("我是TextView",35,25,textPaint);
     }
 
     /**
@@ -134,32 +145,37 @@ public class FlingView extends TextView {
                 startY = event.getRawY();
                 lastX = startX;
                 lastY = startY;
-                Log.i(TAG,"ACTION_DOWN :" + lastX + "-" + lastY);
+                //scrollBy(200,100);
+                int scrollX = getScrollX();
+                int scrollY = getScrollY();
+                ZLog.i(TAG, "ACTION_DOWN : scrollX = " + scrollX +";scrollY = " + scrollY);
                 return true;
             case MotionEvent.ACTION_MOVE:
                 float disX = event.getRawX() - lastX;
                 float disY = event.getRawY() - lastY;
                 offsetLeftAndRight((int) disX);
                 offsetTopAndBottom((int) disY);
-                flingTest();
+                //flingTest();
                 lastX = event.getRawX();
                 lastY = event.getRawY();
-                Log.i(TAG,"ACTION_MOVE :" + lastX + "-" + lastY);
-                velocityX = getscrollerVelocity_X();
-                velocityY = getscrollerVelocity_Y();
+                ZLog.i(TAG,"ACTION_MOVE :" + lastX + "-" + lastY);
                 return true;
             case MotionEvent.ACTION_UP:
-//                mScroller.startScroll((int)getX(), (int)getY(), -(int)(getX() - lastX),-(int)(getY() - lastY));
-                mScroller.fling((int)lastX,(int)lastY,velocityX,velocityY, 0, 0, 400, 400);
-                //invalidate();
-                clearVelocityTracker();
+                velocityX = getscrollerVelocity_X();
+                velocityY = getscrollerVelocity_Y();
+                ZLog.i(TAG,"ACTION_UP : velocityX=" + velocityX + "; --- velocityY" + velocityY);
+                if((lastX != startX) && (lastY != startY)){
+                    itemFling();
+                    clearVelocityTracker();
+                }
                 break;
         }
-        return super.onTouchEvent(event);
-        //return mGestureDetector.onTouchEvent(event);//由手势监听类处理
+        //return super.onTouchEvent(event);
+        return mGestureDetector.onTouchEvent(event);//由手势监听类处理
     }
 
-        private void flingTest() {
+    private void itemFling() {
+        //mScroller.startScroll((int)getX(), (int)getY(), -(int)(getX() - lastX),-(int)(getY() - lastY));
         /**
          * 手势滑动，滑动距离由初始速度决定
          * startX：开始滑动的X坐标
@@ -167,12 +183,12 @@ public class FlingView extends TextView {
          * velocityX: X方向上的初始化滑行速度  像素/秒
          * velocityY: Y方向上的初始化滑行速度  像素/秒
          * minX:最小的X值，Scroll不会划过这个点
-         * minY:最小的Y值，Scroll不会划过这个点
          * maxX:最大的X值，Scroll不会划过这个点
+         * minY:最小的Y值，Scroll不会划过这个点
          * maxY:最大的Y值，Scroll不会划过这个点
          *
          */
-//        mScroller.fling(getScrollX(),getScrollY(), getscrollerVelocity_X(), getscrollerVelocity_Y(), 23, 23, 1920, 1920);
+        mScroller.fling((int)lastX,(int)lastY,velocityX,velocityY, 0, 1080, 0, 720);
     }
 
     @Override
