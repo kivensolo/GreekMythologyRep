@@ -75,24 +75,24 @@ public class DemoRecyclerAdapter extends RecyclerView.Adapter<DemoViewHolder> {
                .setText(new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
                .format(dataModel.getDateTime()));
 
-        if (mOnItemClickLitener != null) {
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int pos = holder.getLayoutPosition();
-                    mOnItemClickLitener.onItemClick(holder.itemView, pos);
-                }
-            });
-
-            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    int pos = holder.getLayoutPosition();
-                    mOnItemClickLitener.onItemLongClick(holder.itemView, pos);
-                    return false;
-                }
-            });
-        }
+//        if (mOnItemClickLitener != null) {
+//            holder.itemView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    int pos = holder.getLayoutPosition();
+//                    mOnItemClickLitener.onItemClick(holder.itemView, pos);
+//                }
+//            });
+//
+//            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+//                @Override
+//                public boolean onLongClick(View v) {
+//                    int pos = holder.getLayoutPosition();
+//                    mOnItemClickLitener.onItemLongClick(holder.itemView, pos);
+//                    return false;
+//                }
+//            });
+//        }
     }
 
     @Override

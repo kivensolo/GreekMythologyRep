@@ -252,8 +252,10 @@
         <!-- 百度地图View -->
         <activity android:name="com.lbs.BaiduMapActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
-        <!-- 百度地图View -->
+
+        <!-- FilmList -->
         <activity android:name="com.photo.FilmsListActivity"
+                  android:screenOrientation="landscape"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!-- Span页面 -->

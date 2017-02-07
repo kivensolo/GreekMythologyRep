@@ -10,12 +10,7 @@ import com.utils.OkHttpClientManager;
 
 import java.util.List;
 
-/**
- * Copyright(C) 2016, 北京视达科科技有限公司
- * All rights reserved. <br>
- * author: King.Z <br>
- * date:  2016/10/26 17:43 <br>
- */
+@Deprecated
 public class FilmListGridViewAdapter extends CommonAdapter {
     private ImageView i;
     private List<PosterGroupInfo.Poster> posterList;
