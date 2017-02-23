@@ -12,14 +12,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-
 import com.App;
 import com.base.BaseActivity;
+import com.core.logic.GlobalCacheCenter;
 import com.kingz.FileDownloader;
 import com.kingz.customdemo.R;
-import com.utils.NetTools;
-import com.utils.ScreenTools;
-import com.utils.ToastTools;
+import com.utils.*;
 import com.view.views.HorizontalProgressBarView;
 
 import java.io.File;
@@ -73,6 +71,15 @@ public class DownloadAPPActivity extends BaseActivity implements View.OnClickLis
         btn_NetPic.setOnClickListener(this);
         btn_LocalPic.setOnClickListener(this);
         btn_downLoad.setOnClickListener(this);
+
+        String configPathPrx = GlobalCacheCenter.getInstance().getAppConfigPath();
+        String configPath = configPathPrx + "kingz" + File.separator + "mytest.dat";
+        ZLog.d(TAG,"获取到的configPath:" + configPath);
+        File file = new File(configPath);
+        if(!file.exists() && !file.isDirectory()){
+            //不存在就创建多级目录及文件
+            file.mkdirs();
+        }
     }
 
     @Override

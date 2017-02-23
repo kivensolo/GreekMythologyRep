@@ -15,22 +15,23 @@ import java.io.File;
  */
 public class GlobalCacheCenter {
     private static final String TAG = "GlobalCacheCenter";
-    private static final int LIMIT_TIME = 3 * 24 * 3600 * 1000; //过期时间：三天
+    private static final long LIMIT_TIME = 3 * 24 * 3600 * 1000; //过期时间：三天
     private static volatile GlobalCacheCenter cacheCenter = null;
 
-	private Context appContext = null;
+    private Context appContext = null;
     private String logPath;
-	private String tempPath;
-	private String picCachePath;
-	private String configPath;
+    private String tempPath;
+    private String picCachePath;
+    private String configPath;
 
-    public GlobalCacheCenter() {
+    private GlobalCacheCenter() {
 
     }
-    public static GlobalCacheCenter getInstance(){
-        if(null == cacheCenter){
-            synchronized (GlobalCacheCenter.class){
-                if(null == cacheCenter){
+
+    public static GlobalCacheCenter getInstance() {
+        if (null == cacheCenter) {
+            synchronized (GlobalCacheCenter.class) {
+                if (null == cacheCenter) {
                     cacheCenter = new GlobalCacheCenter();
                 }
             }
@@ -40,27 +41,43 @@ public class GlobalCacheCenter {
 
     /**
      * 初始化
+     *
      * @param context
      * @return
      */
-    public void init(Context context){
-        ZLog.i(TAG,"inti appContext:"+context);
-        appContext = context;
-
-        logPath = this.appContext.getDir("log",Context.MODE_PRIVATE).toString() + File.separator;
-        ZLog.i(TAG,"logCache Path is:"+logPath);
-        tempPath = this.appContext.getDir("temp",Context.MODE_PRIVATE).toString() + File.separator;
-		ZLog.i(TAG, "tempPath:" + tempPath);
-        picCachePath = this.appContext.getDir("pic",Context.MODE_PRIVATE).toString() + File.separator;
-		ZLog.i(TAG, "picCachePath:" + picCachePath);
-        configPath = this.appContext.getDir("config",Context.MODE_PRIVATE).toString() + File.separator;
-		ZLog.i(TAG, "configPath:" + configPath);
+    public void init(Context context) {
+        this.appContext = context;
+        logPath = this.appContext.getDir("log", Context.MODE_PRIVATE).toString() + File.separator;
+        ZLog.i(TAG, "init() logCache Path is:" + logPath);
+        tempPath = this.appContext.getDir("temp", Context.MODE_PRIVATE).toString() + File.separator;
+        ZLog.i(TAG, "init() tempPath:" + tempPath);
+        picCachePath = this.appContext.getDir("pic", Context.MODE_PRIVATE).toString() + File.separator;
+        ZLog.i(TAG, "init() picCachePath:" + picCachePath);
+        configPath = this.appContext.getDir("config", Context.MODE_PRIVATE).toString() + File.separator;
+        ZLog.i(TAG, "init() configPath:" + configPath);
         clearPicOldCache(LIMIT_TIME);
-        return;
     }
 
-    /** 清除旧的图片缓存 */
+    /**
+     * 清除旧的图片缓存
+     */
     public void clearPicOldCache(long limitTime) {
-        FileUtils.dealPathFilesWithOldDate(picCachePath,System.currentTimeMillis() - limitTime);
+        FileUtils.dealPathFilesWithOldDate(picCachePath, System.currentTimeMillis() - limitTime);
+    }
+
+    public String getAppLogPathPath() {
+        return logPath;
+    }
+
+    public String getAppTempPathPath() {
+        return tempPath;
+    }
+
+    public String getAppPicCachePath() {
+        return picCachePath;
+    }
+
+    public String getAppConfigPath() {
+        return configPath;
     }
 }
