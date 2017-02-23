@@ -7,8 +7,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.util.LruCache;
+import android.view.View;
 import android.widget.ImageView;
-import android.widget.ListView;
 
 import com.kingz.customdemo.R;
 
@@ -33,7 +33,7 @@ public class ImageLoader {
     public String mUrl;         //pic的url
     private LruCache<String,Bitmap> picCache;       //图片缓存管理变量
     public Set<GetNetImageTask> taskCollection;     //所有Task的集合
-    private ListView mListView;
+    private View view;
 
 
     private Handler mHandler = new Handler(){
@@ -46,8 +46,8 @@ public class ImageLoader {
         }
     };
 
-    public ImageLoader(ListView listView) {
-        mListView = listView;
+    public ImageLoader(View view) {
+        this.view = view;
         taskCollection = new HashSet<GetNetImageTask>();
 
         int maxMemory = (int) Runtime.getRuntime().maxMemory();  //获取程序最大可用内存
@@ -179,7 +179,7 @@ public class ImageLoader {
         protected void onPostExecute(Bitmap bitmap) {
             super.onPostExecute(bitmap);
             //当bitmap数据取回来后，在onPostExecute里面执行图片设置
-            imageView = (ImageView) mListView.findViewWithTag(url);
+            imageView = (ImageView) view.findViewWithTag(url);
             if(imageView != null && bitmap != null){
                 imageView.setImageBitmap(bitmap);
             }
@@ -200,7 +200,7 @@ public class ImageLoader {
         }
     }
 
-        /**
+    /**
      * 给ImageView设置图片。首先从LruCache中取出图片的缓存，设置到ImageView上。如果LruCache中没有该图片的缓存，
      * 就给ImageView设置一张默认图片。
      *
@@ -253,7 +253,7 @@ public class ImageLoader {
                 }else{
                    //根据Tag获取到相应的imageVeiw
                     Log.i(TAG,"从缓存中得到了图片数据,直接设置");
-                    imageView = (ImageView) mListView.findViewWithTag(urlOfUrls);
+                    imageView = (ImageView) view.findViewWithTag(urlOfUrls);
                     imageView.setImageBitmap(bitmap);
                 }
             }

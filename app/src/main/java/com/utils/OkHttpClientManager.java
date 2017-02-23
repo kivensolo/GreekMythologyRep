@@ -4,6 +4,8 @@ import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Looper;
 import android.widget.ImageView;
+
+import com.App;
 import com.google.gson.Gson;
 import com.google.gson.internal.$Gson$Types;
 import com.squareup.okhttp.*;
@@ -150,6 +152,13 @@ public class OkHttpClientManager {
                     //ops.inSampleSize = inSampleSize;
                     //final Bitmap bm = BitmapFactory.decodeStream(is, null, ops);
                     final Bitmap bm = BitMapUtils.decodeStreamCustomOpts(is);
+
+                    FileUtils.saveBitmapWithPath(new File(new File(App.getAppContext().getCacheDir().getPath(),"FilmPageDir"),FileUtils.MD5(url)),
+                                                bm,
+                                                Bitmap.CompressFormat.PNG,
+                                                90);
+//                    FileUtils.dealPathFilesWithOldDate(new File(App.getAppContext().getCacheDir().getPath(),"FilmPageDir").toString(),System.currentTimeMillis() - 3 * 24 * 3600 * 1000);
+
                     mDelivery.post(new Runnable() {
                         @Override
                         public void run() {
