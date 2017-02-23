@@ -38,32 +38,48 @@ public class AppInfoUtils {
         PackageManager pkgMgr = App.getAppContext().getPackageManager();
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
-        List<ResolveInfo> resolveInfoList = pkgMgr.queryIntentActivities(intent,0); //本机所有具有Launcher属性的APK信息
+        List<ResolveInfo> resolveInfoList = pkgMgr.queryIntentActivities(intent, 0); //本机所有具有Launcher属性的APK信息
         return resolveInfoList;
     }
 
+    /**
+     * 是否是顶层应用
+     */
+    public static boolean isHomeApp(Context pcontext) {
+        PackageManager packageManager = pcontext.getPackageManager();
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+
+        List<ResolveInfo> resolveInfo = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+        for (ResolveInfo ri : resolveInfo) {
+            if (pcontext.getPackageName().equals(ri.activityInfo.packageName)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 
-     /**
+    /**
      * [根据包名判断一个应用是否已经被安装]
+     *
      * @param packageName 应用包名
      * @return
      */
-    public static boolean isAppInstalled(String packageName){
+    public static boolean isAppInstalled(String packageName) {
         PackageManager pm = App.getAppContext().getPackageManager();
         boolean installed;
-        try{
-            pm.getPackageInfo(packageName,PackageManager.GET_ACTIVITIES);
-            installed =true;
-        }catch(PackageManager.NameNotFoundException e){
-            installed =false;
+        try {
+            pm.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES);
+            installed = true;
+        } catch (PackageManager.NameNotFoundException e) {
+            installed = false;
         }
         return installed;
     }
 
 
     /**
-     * 【获取应用程序名称】
+     * [获取应用程序名称]
      */
     public static String getAppName(Context context) {
         try {
@@ -79,6 +95,7 @@ public class AppInfoUtils {
 
     /**
      * [获取应用程序版本名称信息]
+     *
      * @param context
      * @return 当前应用的版本名称
      */
@@ -96,13 +113,14 @@ public class AppInfoUtils {
 
     /**
      * 当前activity是否处于顶层
+     *
      * @return true/false
      */
-    public static boolean isTopActivity(){
+    public static boolean isTopActivity() {
         //先拿到所有的activity
         ActivityManager activityManager = (ActivityManager) App.getAppContext().getSystemService(ACTIVITY_SERVICE);
-         List<ActivityManager.RunningTaskInfo> tasksInfo  = activityManager.getRunningTasks(1);
-         if (tasksInfo.size() > 0) {
+        List<ActivityManager.RunningTaskInfo> tasksInfo = activityManager.getRunningTasks(1);
+        if (tasksInfo.size() > 0) {
             ComponentName topActivity = tasksInfo.get(0).topActivity;
             String pkgName = topActivity.getPackageName();
             String shortClassName = topActivity.getShortClassName();
@@ -126,7 +144,5 @@ public class AppInfoUtils {
                 " ;scheme=" + scheme + " ;dataType=" + dataType + " ;categories=" + categories;
 
     }
-
-
 
 }

@@ -1,11 +1,15 @@
 package com.utils;
 
+import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.util.Base64;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -165,7 +169,7 @@ public class FileUtils {
             return true;
         }
         if(fl.length < count){
-            return true;
+            return false;
         }
         ZLog.i(TAG, "deletePathFilesOldFile path:" + path + ", count:" + fl.length);
         for(File curFile : fl){
@@ -174,6 +178,69 @@ public class FileUtils {
             }
         }
         return true;
+    }
+
+       /**
+     *
+     * 储存bitMap的指定格式至指定目录
+     * @param filePath 储存路径
+     * @param bitmap    储存的bitmap
+     * @param format     储存的格式
+     * @param quality     储存的质量
+     */
+    public static void saveBitmapWithPath(File filePath, Bitmap bitmap, Bitmap.CompressFormat format, int quality) {
+        try {
+            FileOutputStream out = new FileOutputStream(filePath);
+            if (filePath.canWrite()) {
+                bitmap.compress(format, quality, out);
+                out.flush();
+                out.close();
+            } else {
+                throw new IOException("The filePath is can not Write!");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * 储存文件至指定目录
+     */
+    public static void saveObjectWithPath(Object obj, File filePath) {
+        try {
+            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filePath));
+            if (filePath.canWrite()) {
+                out.writeObject(obj);
+                out.close();
+            } else {
+                throw new IOException("The filePath is can not Write!");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 读取指定目录的文件
+     */
+    public static Object readObjectWithPath(File filePath) {
+        try {
+            ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(filePath));
+            if (filePath.canWrite()) {
+                Object obj = inputStream.readObject();
+                inputStream.close();
+                return obj;
+            } else {
+                throw new IOException("The filePath is can not Write!");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 
