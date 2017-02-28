@@ -73,7 +73,7 @@ public class DownloadAPPActivity extends BaseActivity implements View.OnClickLis
         btn_downLoad.setOnClickListener(this);
 
         String configPathPrx = GlobalCacheCenter.getInstance().getAppConfigPath();
-        String configPath = configPathPrx + "kingz" + File.separator + "mytest.dat";
+        String configPath = configPathPrx + File.separator + "kingz" + File.separator + "mytest.dat";
         ZLog.d(TAG,"获取到的configPath:" + configPath);
         File file = new File(configPath);
         if(!file.exists() && !file.isDirectory()){
