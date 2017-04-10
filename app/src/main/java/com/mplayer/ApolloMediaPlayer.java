@@ -145,37 +145,8 @@ public class ApolloMediaPlayer extends Activity {
      * 从网络获取播放串
      */
 //    private void getPlayUrlFromNet(){
-//        Parameters para = new Parameters();
-//        para.put("url", "http://tv.sohu.com/20150921/n421709205.shtml");
-//
-//        ApiStoreSDK.execute("http://apis.baidu.com/dmxy/truevideourl/truevideourl",
-//                ApiStoreSDK.GET,
-//                para,
-//                new ApiCallBack(){
-//                    @Override
-//                    public void onSuccess(int i, String result) {
-//                        Log.i(TAG, "getPlayUrlFromNet() onSuccess; result="+result);
-//                        try {
-//                            JSONObject jsonObject = new JSONObject(result);
-//                            play_url =  jsonObject.getString("mp4");
-//                             Log.i(TAG, "getPlayUrlFromNet() play_url="+play_url);
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                        openVieo();
-//                    }
-//                    @Override
-//                    public void onError(int i, String s, Exception e) {
-//                        Log.i(TAG, "onError, status: " + s);
-//                        Log.i(TAG, "errMsg: " + (e == null ? "" : e.getMessage()));
-//                    }
-//                    @Override
-//                    public void onComplete() {
-//                        Log.i(TAG, "getPlayUrlFromNet() onComplete");
-//
-//                    }
-//                });
 //    }
+
     private void initViews() {
         leftListView = (ListView) findViewById(R.id.leftchanellView);
         if (channelLists != null) {
