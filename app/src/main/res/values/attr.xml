@@ -15,6 +15,13 @@
         <attr name="imageScaleType"/>
     </declare-styleable>
 
+    <declare-styleable name="RainView">
+	    <attr name="rainNum" format="integer"/>
+	    <attr name="randColor" format="boolean"/>
+	     <attr name="size" format="integer"/>
+	      <attr name="rainColor" format="integer"/>
+	</declare-styleable>
+
     <!-- 圆形进度条自定义属性 -->
     <declare-styleable name="circleView">
         <attr name="innerColor" format="color"/>
