@@ -42,10 +42,7 @@ public class App extends Application {
 
     @Override
     public void onCreate() {
-        // TODO 其他初始化流程
-//        ApiStoreSDK.init(this, GlobalLogic.BDApiKey);
         super.onCreate();
-
         _appMainHandler = new Handler(getMainLooper());
         application = this;
         mContext = getApplicationContext();
