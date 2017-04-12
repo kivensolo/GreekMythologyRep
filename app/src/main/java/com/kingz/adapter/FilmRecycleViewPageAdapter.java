@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.App;
-import com.kingz.databean.PosterGroupInfo;
+import com.kingz.mode.PosterGroupInfo;
 import com.photo.FilmListRecyclerViewHolder;
 import com.utils.FileUtils;
 import com.utils.OkHttpClientManager;

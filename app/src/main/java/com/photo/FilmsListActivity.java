@@ -14,7 +14,7 @@ import android.widget.Toast;
 import com.base.BaseActivity;
 import com.kingz.adapter.FilmRecycleViewPageAdapter;
 import com.kingz.customdemo.R;
-import com.kingz.databean.PosterGroupInfo;
+import com.kingz.mode.PosterGroupInfo;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;

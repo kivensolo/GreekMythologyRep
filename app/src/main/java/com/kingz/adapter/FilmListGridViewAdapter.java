@@ -5,7 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import com.kingz.customdemo.R;
-import com.kingz.databean.PosterGroupInfo;
+import com.kingz.mode.PosterGroupInfo;
 import com.utils.OkHttpClientManager;
 
 import java.util.List;
