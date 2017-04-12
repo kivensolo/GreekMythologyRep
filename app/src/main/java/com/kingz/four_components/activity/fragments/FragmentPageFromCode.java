@@ -1,4 +1,4 @@
-package com.kingz.uiusingLayout;
+package com.kingz.four_components.activity.fragments;
 
 import android.content.Context;
 import android.net.Uri;
@@ -23,7 +23,7 @@ public class FragmentPageFromCode extends FragmentActivity implements TitleFragm
 
     // Create a new Fragment to be placed in the activity layout
     TitleFragment titltFragment;
-    ContentFragment contentFragment;
+    ContentFragmentFromCode contentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +37,7 @@ public class FragmentPageFromCode extends FragmentActivity implements TitleFragm
 //            }
 //
 //            titltFragment = new TitleFragment2();
-//            contentFragment = new ContentFragment2();
+//            contentFragment = new ContentFragmentFromXml();
 //            //防止这些片段是被一个特殊的intent启动起来的   设置参数先'
 //            titltFragment.setArguments(getIntent().getExtras());
 //            contentFragment.setArguments(getIntent().getExtras());

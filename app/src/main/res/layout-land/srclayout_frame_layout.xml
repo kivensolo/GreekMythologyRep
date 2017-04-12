@@ -8,14 +8,14 @@
     <!-- tools:layout告诉ide，Fragment在程序预览的时候该显示成什么样,开发使用 -->
     <!-- <fragment> 中的 android:name 属性指定要在布局中实例化的 Fragment 类。 -->
     <fragment
-            android:name="com.kingz.uiusingLayout.TitleFragment"
+            android:name="com.kingz.four_components.activity.fragments.TitleFragment"
             android:id="@+id/title_fragment"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"/>
     <!--   <fragment
                     android:id="@+id/content_fragment"
-                    android:name="com.kingz.uiusingLayout.ContentFragment"
+                    android:name="com.kingz.four_components.activity.fragments.DynamicContentFragmentragment"
                     android:layout_width="0dp"
                     android:layout_weight="3"
                     android:layout_height="match_parent"/>-->

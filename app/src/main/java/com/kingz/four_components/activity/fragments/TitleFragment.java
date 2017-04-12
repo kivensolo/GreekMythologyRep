@@ -1,4 +1,4 @@
-package com.kingz.uiusingLayout;
+package com.kingz.four_components.activity.fragments;
 
 import android.app.Activity;
 import android.app.FragmentTransaction;
@@ -27,17 +27,11 @@ public class TitleFragment extends ListFragment {
     private static final String TAG = TitleFragment.class.getSimpleName();
     boolean mDualPane;
     int mCurCheckPosition = 0;
+    private static String[] TITLES = {"体育新闻","娱乐新闻","科技新闻","内涵段子","娱乐新闻","社会新闻","我的收藏"};
     OnArticleSelectedListener mListener;
 
-    // Container Activity must implement this interface
-    public interface OnArticleSelectedListener {
-        public void onArticleSelected(Uri articleUri);
-    }
-
-    //-------------Created  (Start)
     @Override
     public void onAttach(Activity activity) {
-        //在片段已与 Activity 关联时调用（Activity 传递到此方法内）
         super.onAttach(activity);
         try {
             mListener = (OnArticleSelectedListener) activity;
@@ -51,12 +45,6 @@ public class TitleFragment extends ListFragment {
         super.onCreate(savedInstanceState);
     }
 
-     /**
-     * @param inflater
-     * @param container  片段布局将插入到的父ViewGroup（来自 Activity 的布局）
-     * @param savedInstanceState savedInstanceState 参数是在恢复片段时，提供上一片段实例相关数据的 Bundle（处理片段生命周期部分对恢复状态做了详细阐述）。
-     * @return View
-     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -70,18 +58,16 @@ public class TitleFragment extends ListFragment {
      ***********************************************************/
 
 
-    private String[] TITLES = {"体育新闻","娱乐新闻","科技新闻","内涵段子","娱乐新闻","社会新闻","我的收藏"};
     /**
      * 在 Activity 的 onCreate() 方法已返回时调用
-     * @param savedInstanceState
+     * @param savedInstanceState  异常下保存的数据
      */
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        // Populate list with our static array of titles.
-        setListAdapter(new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_list_item_activated_1, TITLES));
+        // Populate list with our static array of titles.  ListFragment 自带的ListAdapter
+        setListAdapter(new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_activated_1, TITLES));
 
         // Check to see if we have a frame in which to embed the details
         // fragment directly in the containing UI.
@@ -101,86 +87,36 @@ public class TitleFragment extends ListFragment {
         }
 
     }
-    //-------------Created  (End)
-
-    //-------------Started
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
-
-    //-------------Resumed
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    //-------------Paused
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-    //-------------Stopped
-    @Override
-    public void onStop() {
-        super.onStop();
-    }
-
-    //-------------Destroyed (Start)
-    @Override
-    public void onDestroyView() {
-        //在删除与片段关联的视图层次结构时调用。
-        super.onDestroyView();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    public void onDetach() {
-        //在取消片段与 Activity 的关联时调用
-        super.onDetach();
-    }
-   //-------------Destroyed (End)
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
        showDetails(position);
     }
 
-     /**
-     * Helper function to show the details of a selected item, either by
-     * displaying a fragment in-place in the current UI, or starting a
-     * whole new activity in which it is displayed.
-     */
-    void showDetails(int index) {
-
+    private void showDetails(int index) {
         if (mDualPane) {
             // We can display everything in-place with fragments, so update
             // the list to highlight the selected item and show the data.
             getListView().setItemChecked(index, true);
-
             // Check what fragment is currently shown, replace if needed.
-            ContentFragment details = (ContentFragment)getFragmentManager().findFragmentById(R.id.details);
+            ContentFragmentFromCode details = (ContentFragmentFromCode)getFragmentManager().findFragmentById(R.id.details);
             if (details == null || details.getShownIndex() != index) {
                 // Make new fragment to show this selection.
-                details = ContentFragment.newInstance(index);
+                details = ContentFragmentFromCode.newInstance(index);
                 // Execute a transaction, replacing any existing fragment
                 // with this one inside the frame.
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 //if (index == 0) {
-                    ft.replace(R.id.details, details);
+                    transaction.replace(R.id.details, details);
                 //} else {
                 //    ft.replace(R.id.details, details);
                 //}
-                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                ft.commit();
+                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                transaction.commit();
             }
 
         } else {
+            //TODO 解决单屏幕的显示问题
             // Otherwise we need to launch a new activity to display
             // the dialog fragment with selected text.
             //Intent intent = new Intent();
@@ -188,5 +124,8 @@ public class TitleFragment extends ListFragment {
             //intent.putExtra("index", index);
             //startActivity(intent);
         }
+    }
+    interface OnArticleSelectedListener {
+        public void onArticleSelected(Uri articleUri);
     }
 }

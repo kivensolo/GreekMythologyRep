@@ -1,4 +1,4 @@
-package com.kingz.uiusingLayout;
+package com.kingz.four_components.activity.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;

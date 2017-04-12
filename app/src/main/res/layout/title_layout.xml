@@ -20,7 +20,7 @@
     <TextView android:id="@id/android:empty"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="#FF0000"
+              android:background="#00bc99"
               android:text="No data"/>
 
 </LinearLayout>

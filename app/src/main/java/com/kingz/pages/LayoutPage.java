@@ -12,9 +12,8 @@ import android.widget.ListView;
 
 import com.ListBillData;
 import com.kingz.customdemo.R;
-import com.kingz.uiusingLayout.FragmentPageFromCode;
-import com.kingz.uiusingLayout.FragmentPageFromXml;
-import com.kingz.uiusingLayout.LinearLayoutTest_Act;
+import com.kingz.four_components.activity.fragments.FragmentPageFromCode;
+import com.kingz.four_components.activity.fragments.FragmentPageFromXml;
 
 public class LayoutPage extends Activity implements OnItemClickListener{
 
@@ -36,7 +35,6 @@ public class LayoutPage extends Activity implements OnItemClickListener{
 	}
 
 	private void addData() {
-		mAdapter.add(new ListBillData(this,"LinnerLayout",new Intent(this,LinearLayoutTest_Act.class)));
 		mAdapter.add(new ListBillData(this,"FragmentByXml",new Intent(this,FragmentPageFromXml.class)));
 		mAdapter.add(new ListBillData(this,"FragmentByCode",new Intent(this,FragmentPageFromCode.class)));
 	}

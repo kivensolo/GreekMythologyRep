@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-                android:layout_height="match_parent" tools:context="com.kingz.uiusingLayout.RelativeLayoutPage">
+                android:layout_height="match_parent" tools:context="com.kingz.four_components.activity.RelativeLayoutPage">
     <!--
         Layout above:选择ID A，则该控件在A控件的上方，
         Layout below、Layout to left of。。。。等同样用法。

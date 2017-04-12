@@ -146,15 +146,13 @@
         <activity android:name="com.kingz.pages.LayoutPage"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
-        <activity android:name="com.kingz.uiusingLayout.LinearLayoutTest_Act"
-                  android:theme="@android:style/Theme.Black.NoTitleBar"/>
-
-        <activity android:name="com.kingz.uiusingLayout.FragmentPageFromCode"
+        <activity android:name="com.kingz.four_components.activity.fragments.FragmentPageFromCode"
                   android:theme="@android:style/Theme.Black.NoTitleBar"
                   android:screenOrientation="landscape"/>
 
-        <activity android:name="com.kingz.uiusingLayout.FragmentPageFromXml"
-                  android:theme="@android:style/Theme.Black.NoTitleBar"/>
+        <activity android:name="com.kingz.four_components.activity.fragments.FragmentPageFromXml"
+                  android:theme="@android:style/Theme.Black.NoTitleBar"
+                   android:screenOrientation="landscape"/>
 
         <!--常用控件集合-->
         <activity android:name="com.nativeWidgets.BasicControlsActivity"

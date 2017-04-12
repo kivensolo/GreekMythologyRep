@@ -1,4 +1,4 @@
-package com.kingz.uiusingLayout;
+package com.kingz.four_components.activity;
 
 import android.app.Activity;
 import android.os.Bundle;

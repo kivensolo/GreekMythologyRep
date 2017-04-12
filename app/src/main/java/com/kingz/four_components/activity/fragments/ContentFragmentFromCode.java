@@ -1,4 +1,4 @@
-package com.kingz.uiusingLayout;
+package com.kingz.four_components.activity.fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -8,20 +8,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import com.kingz.mode.NewsData;
 
 /**
  * Created by KingZ.
  * Data: 2016 2016/1/31
  * Discription:内容Fragment
  */
-public class ContentFragment extends Fragment {
+public class ContentFragmentFromCode extends Fragment {
     private NewsData newsData = new NewsData();
-    /**
-     * Create a new instance of DetailsFragment, initialized to
-     * show the text at 'index'.
-     */
-    public static ContentFragment newInstance(int index) {
-        ContentFragment f = new ContentFragment();
+
+    public static ContentFragmentFromCode newInstance(int index) {
+        ContentFragmentFromCode f = new ContentFragmentFromCode();
         Bundle args = new Bundle();
         args.putInt("index", index);
         f.setArguments(args);

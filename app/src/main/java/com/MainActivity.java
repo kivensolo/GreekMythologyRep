@@ -96,7 +96,7 @@ public class MainActivity extends ExpandableListActivity implements OnItemClickL
         billDataManager.addGroup("Original");
         addChildData("BasicControls", BasicControlsActivity.class);
         addChildData("ProgressBar", NativeProgressBar.class);
-        addChildData("SrcLayoutTest", LayoutPage.class);
+        addChildData("SrcLayout", LayoutPage.class);
         addChildData("Four major components", FourComponentPage.class);
         addChildData("ViewPager", OriginViewPager.class);
         addChildData("SurfaceDraw", DrawRectWithSurface.class);
