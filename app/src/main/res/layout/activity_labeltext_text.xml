@@ -13,7 +13,7 @@
             android:orientation="vertical">
 
             <!-- 加载自定义的lableText -->
-            <com.widgets.CustomEditText
+            <com.kingz.widgets.CustomEditText
                 labelFontColor="#7cd12e"
                 labelFontSize="16"
                 labelPosition="top"
@@ -21,7 +21,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <com.widgets.CustomEditText
+            <com.kingz.widgets.CustomEditText
                 labelFontColor="#7cd12e"
                 labelFontSize="16"
                 labelPosition="left"
@@ -29,17 +29,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <com.widgets.HighLightButton
+            <com.kingz.widgets.HighLightButton
                 android:layout_width="match_parent"
                 android:layout_height="32dp"
                 android:layout_marginTop="10dp" />
 
-            <com.widgets.HighLightButton
+            <com.kingz.widgets.HighLightButton
                 android:layout_width="match_parent"
                 android:layout_height="32dp"
                 android:layout_marginTop="10dp" />
 
-            <com.widgets.HighLightButton
+            <com.kingz.widgets.HighLightButton
                 android:layout_width="match_parent"
                 android:layout_height="32dp"
                 android:layout_marginTop="10dp" />

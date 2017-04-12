@@ -5,8 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.kingz.customdemo.R;
-import com.photo.DemoViewHolder;
-import com.photo.KingZTestDataModel;
+import com.kingz.pages.photo.DemoViewHolder;
+import com.kingz.mode.RecycleDataInfo;
 import com.utils.ZLog;
 
 import java.text.SimpleDateFormat;
@@ -23,7 +23,7 @@ import java.util.*;
 public class DemoRecyclerAdapter extends RecyclerView.Adapter<DemoViewHolder> {
 
     private static final String TAG="DemoRecyclerAdapter";
-    private List<KingZTestDataModel> mDataModels;
+    private List<RecycleDataInfo> mDataModels;
     private List<Integer> mHeights;
     private OnItemClickLitener mOnItemClickLitener;
 
@@ -36,7 +36,7 @@ public class DemoRecyclerAdapter extends RecyclerView.Adapter<DemoViewHolder> {
         this.mOnItemClickLitener = mOnItemClickLitener;
     }
 
-    public DemoRecyclerAdapter(List<KingZTestDataModel> dataModels){
+    public DemoRecyclerAdapter(List<RecycleDataInfo> dataModels){
         if(dataModels == null){
             throw new IllegalArgumentException("DataModel must not be null");
         }
@@ -60,7 +60,7 @@ public class DemoRecyclerAdapter extends RecyclerView.Adapter<DemoViewHolder> {
     @Override
     public void onBindViewHolder(final DemoViewHolder holder, int position) {
         ZLog.i(TAG,"onBindViewHolder() holder="+holder+"---position:"+position);
-        KingZTestDataModel dataModel = mDataModels.get(position);
+        RecycleDataInfo dataModel = mDataModels.get(position);
         // 随机高度, 模拟瀑布效果.
         if (mHeights.size() <= position) {
             mHeights.add((int) (50 + Math.random() * 200));
@@ -101,7 +101,7 @@ public class DemoRecyclerAdapter extends RecyclerView.Adapter<DemoViewHolder> {
     }
 
     public void addData(int position) {
-        KingZTestDataModel model = new KingZTestDataModel();
+        RecycleDataInfo model = new RecycleDataInfo();
         model.setDateTime(getBeforeDay(new Date(), position));
         model.setLabel("New Item");
 

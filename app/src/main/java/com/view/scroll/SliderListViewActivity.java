@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.kingz.customdemo.R;
-import com.widgets.SliderDeleteListView;
+import com.kingz.widgets.SliderDeleteListView;
 
 import java.util.ArrayList;
 import java.util.List;

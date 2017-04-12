@@ -8,9 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ListBillData;
+import com.kingz.mode.ListBillData;
 import com.kingz.customdemo.R;
-import com.widgets.AnimatedExpandableListView;
+import com.kingz.widgets.AnimatedExpandableListView;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -10,13 +10,12 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import com.ListBillData;
+import com.kingz.mode.ListBillData;
 import com.bling.pages.CircleViewActivity;
 import com.bling.pages.FingerBallActivity;
 import com.bling.pages.UsingCustomSeekBar;
 import com.bling.pages.WaveLoadingActivity;
 import com.kingz.customdemo.R;
-import com.kingz.uiusingCanvas.CustomCanvasSeekBarAct;
 import com.view.NetworkSpeed.NetworkSpeedActivity;
 import com.view.listview.CustomListViewActivity;
 import com.view.listview.RecyclerviewDemo;
@@ -25,7 +24,7 @@ import com.view.scroll.SliderListViewActivity;
 import com.view.shape.ShapeDrawOval;
 import com.view.slider.wzviewpager.WZViewPagerActicity;
 import com.view.webview.WebViewActivity;
-import com.widgets.CustomPopupWindow;
+import com.kingz.widgets.CustomPopupWindow;
 
 /**
  * 自定义View汇总主界面

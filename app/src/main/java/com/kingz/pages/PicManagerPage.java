@@ -9,7 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.ListBillData;
+import com.kingz.mode.ListBillData;
 import com.kingz.customdemo.R;
 
 /**

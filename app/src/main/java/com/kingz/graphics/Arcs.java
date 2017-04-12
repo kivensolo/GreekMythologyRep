@@ -13,7 +13,7 @@ import com.App;
 import com.kingz.customdemo.R;
 import com.utils.ScreenTools;
 import com.utils.ZLog;
-import com.widgets.text.LogTextBox;
+import com.kingz.widgets.text.LogTextBox;
 
 /**
  * author: King.Z

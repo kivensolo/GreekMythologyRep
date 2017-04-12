@@ -10,13 +10,12 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.ListBillData;
+import com.kingz.mode.ListBillData;
 import com.kingz.customdemo.R;
 import com.kingz.four_components.ObtainConnectPeopleActivity;
 import com.kingz.four_components.ServiceComponentsACT;
 import com.kingz.four_components.activity.AttrOfAliasAct;
 import com.kingz.ipcdemo.AIDLActivity;
-import com.kingz.uiusingCanvas.CustomCanvasSeekBarAct;
 
 public class FourComponentPage extends  Activity implements OnItemClickListener{
 

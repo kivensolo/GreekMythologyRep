@@ -15,8 +15,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 import com.kingz.customdemo.R;
 import com.kingz.adapter.DemoRecyclerAdapter;
-import com.photo.KingZTestDataModel;
-import com.photo.MyItemDecoration;
+import com.kingz.mode.RecycleDataInfo;
+import com.kingz.pages.photo.MyItemDecoration;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -106,11 +106,11 @@ public class RecyclerviewDemo extends Activity {
         recyclerView.setAnimation(deleteAnimation);
     }
 
-    private ArrayList<KingZTestDataModel> getData() {
+    private ArrayList<RecycleDataInfo> getData() {
         int count = 40;
-        ArrayList<KingZTestDataModel> data = new ArrayList<>();
+        ArrayList<RecycleDataInfo> data = new ArrayList<>();
         for (int i = 0; i < count; i++) {
-            KingZTestDataModel model = new KingZTestDataModel();
+            RecycleDataInfo model = new RecycleDataInfo();
             model.setDateTime(getBeforeDay(new Date(), i));
             model.setLabel("No. " + i);
             data.add(model);

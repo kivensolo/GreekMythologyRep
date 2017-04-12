@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import com.App;
-import com.base.BaseActivity;
+import com.BaseActivity;
 import com.core.logic.GlobalCacheCenter;
 import com.kingz.FileDownloader;
 import com.kingz.customdemo.R;

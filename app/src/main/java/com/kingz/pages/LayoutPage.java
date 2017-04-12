@@ -10,7 +10,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.ListBillData;
+import com.kingz.mode.ListBillData;
 import com.kingz.customdemo.R;
 import com.kingz.four_components.activity.fragments.FragmentPageFromCode;
 import com.kingz.four_components.activity.fragments.FragmentPageFromXml;

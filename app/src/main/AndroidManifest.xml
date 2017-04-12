@@ -61,7 +61,7 @@
 
         <!-- activity-alias这个属性可以用于创建多个不同的入口 -->
         <activity-alias
-                android:name="com.Test11"
+                android:name="com.kingz.pages.Test11"
                 android:enabled="true"
                 android:icon="@drawable/m"
                 android:theme="@android:style/Theme.Black.NoTitleBar"
@@ -105,7 +105,7 @@
         <!---->
 
 
-        <activity android:name="com.Test11"
+        <activity android:name="com.kingz.pages.Test11"
                   android:screenOrientation="landscape"/>
 
         <activity android:name="com.view.animation.PropertyAnimationsActivity"
@@ -128,7 +128,7 @@
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
         <!-- 绘画的方式画seekBar -->
         <activity
-                android:name="com.kingz.uiusingCanvas.CustomCanvasSeekBarAct"
+                android:name="com.kingz.pages.CustomCanvasSeekBarAct"
                 android:theme="@android:style/Theme.Black.NoTitleBar"/>
         <activity
                 android:name="com.view.shape.ShapeDrawOval"
@@ -202,7 +202,7 @@
                   android:screenOrientation="landscape"/>
 
         <!--BitMap测试页面-->
-        <activity android:name="com.photo.BitmapPhotosActivity"
+        <activity android:name="com.kingz.pages.photo.BitmapPhotosActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!--文件管理页面-->
@@ -252,7 +252,7 @@
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!-- FilmList -->
-        <activity android:name="com.photo.FilmsListActivity"
+        <activity android:name="com.kingz.pages.photo.FilmsListActivity"
                   android:screenOrientation="landscape"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
@@ -341,7 +341,7 @@
         </provider>
 
 
-        <receiver android:name="com.kingz.receiver.OtherAppInstalledOrRemoveReceiver">
+        <receiver android:name="com.kingz.four_components.receiver.OtherAppInstalledOrRemoveReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_ADDED"/>
                 <action android:name="android.intent.action.PACKAGE_REMOVED"/>
@@ -349,7 +349,7 @@
             </intent-filter>
         </receiver>
 
-        <receiver android:name="com.kingz.receiver.OtherAppReplacedReceiver">
+        <receiver android:name="com.kingz.four_components.receiver.OtherAppReplacedReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_REPLACED"/>
                  <data android:scheme="package" />

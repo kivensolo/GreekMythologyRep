@@ -6,8 +6,8 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 
 import com.kingz.customdemo.R;
-import com.kingz.interfaces.ServiceSelectBtnCallBack;
-import com.widgets.HighLightButton;
+import com.kingz.callback.ServiceSelectBtnCallBack;
+import com.kingz.widgets.HighLightButton;
 
 /**
  * @author minglu.jiang

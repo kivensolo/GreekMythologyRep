@@ -7,7 +7,7 @@ import android.widget.ImageView;
 
 import com.App;
 import com.kingz.mode.PosterGroupInfo;
-import com.photo.FilmListRecyclerViewHolder;
+import com.kingz.pages.photo.FilmListRecyclerViewHolder;
 import com.utils.FileUtils;
 import com.utils.OkHttpClientManager;
 import com.utils.ZLog;
