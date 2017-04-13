@@ -13,6 +13,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.kingz.customdemo.R;
+import com.utils.ZLog;
+
+import static android.view.View.Z;
 
 /**
  * Created by KingZ.
@@ -57,7 +60,6 @@ public class TitleFragment extends ListFragment {
           （在本例中，其值为 false，因为系统已经将扩展布局插入container—传递true值会在最终布局中创建一个多余的视图组。）
      ***********************************************************/
 
-
     /**
      * 在 Activity 的 onCreate() 方法已返回时调用
      * @param savedInstanceState  异常下保存的数据
@@ -66,7 +68,6 @@ public class TitleFragment extends ListFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        // Populate list with our static array of titles.  ListFragment 自带的ListAdapter
         setListAdapter(new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_activated_1, TITLES));
 
         // Check to see if we have a frame in which to embed the details
@@ -100,21 +101,14 @@ public class TitleFragment extends ListFragment {
             getListView().setItemChecked(index, true);
             // Check what fragment is currently shown, replace if needed.
             ContentFragmentFromCode details = (ContentFragmentFromCode)getFragmentManager().findFragmentById(R.id.details);
+            ZLog.d(TAG,"showDetails() details=" + details);
             if (details == null || details.getShownIndex() != index) {
-                // Make new fragment to show this selection.
                 details = ContentFragmentFromCode.newInstance(index);
-                // Execute a transaction, replacing any existing fragment
-                // with this one inside the frame.
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                //if (index == 0) {
-                    transaction.replace(R.id.details, details);
-                //} else {
-                //    ft.replace(R.id.details, details);
-                //}
+                transaction.replace(R.id.details, details);
                 transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                 transaction.commit();
             }
-
         } else {
             //TODO 解决单屏幕的显示问题
             // Otherwise we need to launch a new activity to display

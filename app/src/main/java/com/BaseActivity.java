@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
+import com.utils.ZLog;
 
 import java.io.File;
 
@@ -108,10 +109,6 @@ public class BaseActivity extends Activity {
         return mContext;
     }
 
-    public void showLoadingDialog() {
-
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.i(TAG,"BaseActivity onCreate()");
@@ -200,6 +197,29 @@ public class BaseActivity extends Activity {
             }
         }
         return type;
+    }
+
+    public boolean isLoadding =false;
+
+    public void showLoadingDialog() {
+        if (!isFinishing()) {
+            ZLog.i(TAG, "showLoadingDialog");
+            if (isLoadding) {
+                return;
+            }
+            isLoadding = true;
+            isLoadding = showDialog(5, null);
+        }
+    }
+
+    public void dismissLoadingDialog() {
+        if (!isFinishing()) {
+            if (isLoadding) {
+                ZLog.i(TAG, "dismissLoadingDialog");
+                dismissDialog(5);
+            }
+            isLoadding = false;
+        }
     }
 
 }

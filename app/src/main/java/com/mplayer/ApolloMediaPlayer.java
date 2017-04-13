@@ -1,6 +1,5 @@
 package com.mplayer;
 
-import android.app.Activity;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,6 +12,7 @@ import android.view.SurfaceHolder;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
+import com.BaseActivity;
 import com.kingz.customdemo.R;
 import com.provider.ChannelData;
 import com.utils.ToastTools;
@@ -43,7 +43,7 @@ import java.util.Locale;
  * 4：浮层的出入动画
  * 5:频道列表
  */
-public class ApolloMediaPlayer extends Activity {
+public class ApolloMediaPlayer extends BaseActivity {
 
     private static final String TAG = "ApolloMediaPlayer";
     private ApolloSeekBar seekBar;
@@ -67,11 +67,12 @@ public class ApolloMediaPlayer extends Activity {
     private int mVideoHeight;
     private int currentPosition;
 
-
-    //画面比例
+    /**
+     *     画面比例
+     */
     private ScreenScaletype videoScreenMode = ScreenScaletype.SCREENTYPE_TOW;
 
-    enum ScreenScaletype {
+    private enum ScreenScaletype {
         SCREENTYPE_ONE("4:3"), SCREENTYPE_TOW("16:9");
 
         private String mode;
@@ -91,6 +92,7 @@ public class ApolloMediaPlayer extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mplayer_layout);
+        showLoadingDialog();
         initVideoData();
         initViews();
 //      getPlayUrlFromNet();
@@ -138,7 +140,7 @@ public class ApolloMediaPlayer extends Activity {
         } catch (IOException | XmlPullParserException e) {
             e.printStackTrace();
         }
-        Log.i(TAG, "共有" + channelLists.size() + "条数据");
+        ZLog.i(TAG, "共有" + channelLists.size() + "条数据");
     }
 
     /**
@@ -224,6 +226,7 @@ public class ApolloMediaPlayer extends Activity {
 
             @Override
             public void onPrepare() {
+                dismissLoadingDialog();
                 ToastTools.getInstance().showMgtvWaringToast(ApolloMediaPlayer.this, "开始播放");
                 duration = mPlayer.getMediaPlayer().getDuration();
                 if (duration > 0) {
@@ -386,7 +389,6 @@ public class ApolloMediaPlayer extends Activity {
         totalTime = rightSideTime;
     }
 
-    //TODO 把比例变换修改
     View.OnClickListener ItemClickedListenner = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
