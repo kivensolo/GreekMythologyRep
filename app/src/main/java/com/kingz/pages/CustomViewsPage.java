@@ -16,7 +16,7 @@ import com.bling.pages.FingerBallActivity;
 import com.bling.pages.UsingCustomSeekBar;
 import com.bling.pages.WaveLoadingActivity;
 import com.kingz.customdemo.R;
-import com.view.NetworkSpeed.NetworkSpeedActivity;
+import com.view.NetworkSpeed.TextViewOfLanguages;
 import com.view.listview.CustomListViewActivity;
 import com.view.listview.RecyclerviewDemo;
 import com.view.scroll.ScrollTestActivity;
@@ -64,7 +64,6 @@ public class CustomViewsPage extends  Activity implements OnItemClickListener{
 		mAdapter.add(new ListBillData(this,"滚动View_3",new Intent(this,ScrollTestActivity.class)));
 		mAdapter.add(new ListBillData(this,"滚动View_4",new Intent(this,ScrollTestActivity.class)));
 		mAdapter.add(new ListBillData(this,"WebAPP测试",new Intent(this,WebViewActivity.class)));
-		mAdapter.add(new ListBillData(this,"NetworkSpeed",new Intent(this,NetworkSpeedActivity.class)));
 		mAdapter.add(new ListBillData(this,"WZViewPager",new Intent(this,WZViewPagerActicity.class)));
 		mAdapter.add(new ListBillData(this,"贝塞尔水波曲线",new Intent(this,WaveLoadingActivity.class)));
 	}

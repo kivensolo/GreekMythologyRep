@@ -22,17 +22,18 @@ import com.kingz.mode.ListBillData;
 import com.kingz.pages.CustomViewsPage;
 import com.kingz.pages.FourComponentPage;
 import com.kingz.pages.LayoutPage;
+import com.kingz.pages.photo.BitmapPhotosActivity;
+import com.kingz.pages.photo.FilmsListActivity;
+import com.kingz.widgets.AnimatedExpandableListView;
 import com.lbs.BaiduMapActivity;
 import com.mplayer.ApolloMediaPlayer;
 import com.nativeWidgets.BasicControlsActivity;
 import com.nativeWidgets.NativeProgressBar;
 import com.nativeWidgets.OriginViewPager;
 import com.nativeWidgets.SpansDemo;
-import com.kingz.pages.photo.BitmapPhotosActivity;
-import com.kingz.pages.photo.FilmsListActivity;
+import com.view.NetworkSpeed.TextViewOfLanguages;
 import com.view.animation.*;
 import com.view.surface.DrawRectWithSurface;
-import com.kingz.widgets.AnimatedExpandableListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -102,6 +103,7 @@ public class MainActivity extends ExpandableListActivity implements OnItemClickL
         addChildData("ViewPager", OriginViewPager.class);
         addChildData("SurfaceDraw", DrawRectWithSurface.class);
         addChildData("SpanLable", SpansDemo.class);
+        addChildData("TextViewOfLanguages",TextViewOfLanguages.class);
         billDataManager.pushChilds();
 
         //Bimap

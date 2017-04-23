@@ -1,11 +1,14 @@
 package com.kingz.widgets.text;
 
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.text.Editable;
 import android.text.method.MovementMethod;
 import android.text.method.ScrollingMovementMethod;
 import android.util.AttributeSet;
 import android.widget.TextView;
+import com.utils.ViewTools;
 
 /**
  * Copyright(C) 2016, 北京视达科科技有限公司
@@ -16,6 +19,8 @@ import android.widget.TextView;
  */
 
 public class LogTextBox extends TextView {
+    private boolean borderFlag = false;
+    private Paint  borderPaint = new Paint();
     public LogTextBox(Context context) {
         this(context, null);
     }
@@ -41,5 +46,17 @@ public class LogTextBox extends TextView {
     @Override
     public void setText(CharSequence text, BufferType type) {
         super.setText(text, BufferType.EDITABLE);
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        if(borderFlag){
+            ViewTools.setViewBorder(this,canvas,borderPaint);
+        }
+    }
+
+    public void setBorder(boolean isUseBorder){
+        borderFlag = isUseBorder;
     }
 }

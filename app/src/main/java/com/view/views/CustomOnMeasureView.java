@@ -19,6 +19,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.kingz.customdemo.R;
+import com.utils.ViewTools;
 
 import java.util.HashSet;
 import java.util.Random;
@@ -243,8 +244,7 @@ public class CustomOnMeasureView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        drawBorder(canvas);
-
+        ViewTools.setViewBorder(this,canvas,borderPaint);
         drawImageMatchRect();
 
         setShadowLayer();
@@ -415,17 +415,4 @@ public class CustomOnMeasureView extends View {
         Log.i(TAG,"drawImageMatchRect() Left:"+imageRect.left+"; Right:"+imageRect.right
         +"Top："+imageRect.top+"Buttom:"+imageRect.bottom);
     }
-
-    /**
-     * 绘制View边框
-     */
-    private void drawBorder(Canvas canvas) {
-        borderPaint.setStyle(Paint.Style.STROKE);
-        borderPaint.setStrokeWidth(8);
-        borderPaint.setColor(Color.CYAN);
-        //绘制矩形的宽高通过 getMeasuredXXXX()获取
-        canvas.drawRect(0, 0, getMeasuredWidth(), getMeasuredHeight(), borderPaint);
-    }
-
-
 }

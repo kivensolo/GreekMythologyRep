@@ -1,6 +1,9 @@
 package com.utils;
 
 import android.app.Activity;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,4 +61,18 @@ public class ViewTools {
         params.height = H;
         v.setLayoutParams(params);
     }
+
+    public static void setViewBorder(View v, Canvas canvas, Paint borderPaint) {
+        setViewBorder(v,canvas,1,Color.CYAN,borderPaint);
+    }
+
+    public static void setViewBorder(View v, Canvas canvas, int width, int color, Paint borderPaint) {
+        borderPaint.setStyle(Paint.Style.STROKE);
+        borderPaint.setStrokeWidth(width);
+        borderPaint.setColor(color);
+        canvas.drawRect(1, 1, v.getMeasuredWidth(), v.getMeasuredHeight(), borderPaint);
+    }
+
+
+
 }

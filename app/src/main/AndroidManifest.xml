@@ -197,9 +197,8 @@
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!--图片缓存测试页面-->
-        <activity android:name="com.view.NetworkSpeed.NetworkSpeedActivity"
-                  android:theme="@android:style/Theme.Black.NoTitleBar"
-                  android:screenOrientation="landscape"/>
+        <activity android:name="com.view.NetworkSpeed.TextViewOfLanguages"
+                  android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!--BitMap测试页面-->
         <activity android:name="com.kingz.pages.photo.BitmapPhotosActivity"
