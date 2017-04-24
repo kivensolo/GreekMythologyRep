@@ -24,6 +24,9 @@ import com.kingz.pages.FourComponentPage;
 import com.kingz.pages.LayoutPage;
 import com.kingz.pages.photo.BitmapPhotosActivity;
 import com.kingz.pages.photo.FilmsListActivity;
+import com.kingz.text.FontMetricsDemoActivity;
+import com.kingz.text.LableTextViewPage;
+import com.kingz.text.TextViewOfLanguages;
 import com.kingz.widgets.AnimatedExpandableListView;
 import com.lbs.BaiduMapActivity;
 import com.mplayer.ApolloMediaPlayer;
@@ -31,7 +34,6 @@ import com.nativeWidgets.BasicControlsActivity;
 import com.nativeWidgets.NativeProgressBar;
 import com.nativeWidgets.OriginViewPager;
 import com.nativeWidgets.SpansDemo;
-import com.view.NetworkSpeed.TextViewOfLanguages;
 import com.view.animation.*;
 import com.view.surface.DrawRectWithSurface;
 
@@ -94,6 +96,14 @@ public class MainActivity extends ExpandableListActivity implements OnItemClickL
         addChildData("Crossfading Two Views", CrossfadeActivity.class);
         billDataManager.pushChilds();
 
+        //AboutText
+        billDataManager.addGroup("AboutText");
+        addChildData("FontMetrics",FontMetricsDemoActivity.class);
+        addChildData("TextViewOfLanguages",TextViewOfLanguages.class);
+        addChildData("LableText",LableTextViewPage.class);
+        addChildData("SpanLable", SpansDemo.class);
+        billDataManager.pushChilds();
+
         //原生基本控件
         billDataManager.addGroup("Original");
         addChildData("BasicControls", BasicControlsActivity.class);
@@ -102,8 +112,6 @@ public class MainActivity extends ExpandableListActivity implements OnItemClickL
         addChildData("Four major components", FourComponentPage.class);
         addChildData("ViewPager", OriginViewPager.class);
         addChildData("SurfaceDraw", DrawRectWithSurface.class);
-        addChildData("SpanLable", SpansDemo.class);
-        addChildData("TextViewOfLanguages",TextViewOfLanguages.class);
         billDataManager.pushChilds();
 
         //Bimap

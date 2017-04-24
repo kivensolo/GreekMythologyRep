@@ -16,6 +16,7 @@ import com.kingz.four_components.ObtainConnectPeopleActivity;
 import com.kingz.four_components.ServiceComponentsACT;
 import com.kingz.four_components.activity.AttrOfAliasAct;
 import com.kingz.ipcdemo.AIDLActivity;
+import com.kingz.text.LableTextViewPage;
 
 public class FourComponentPage extends  Activity implements OnItemClickListener{
 

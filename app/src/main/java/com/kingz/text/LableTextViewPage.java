@@ -1,4 +1,4 @@
-package com.kingz.pages;
+package com.kingz.text;
 
 import android.app.Activity;
 import android.os.Bundle;

@@ -70,7 +70,7 @@ public class ViewTools {
         borderPaint.setStyle(Paint.Style.STROKE);
         borderPaint.setStrokeWidth(width);
         borderPaint.setColor(color);
-        canvas.drawRect(1, 1, v.getMeasuredWidth(), v.getMeasuredHeight(), borderPaint);
+        canvas.drawRect(1, 1, v.getMeasuredWidth(), v.getMeasuredHeight() - 1, borderPaint);
     }
 
 

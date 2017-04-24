@@ -16,7 +16,7 @@ import com.bling.pages.FingerBallActivity;
 import com.bling.pages.UsingCustomSeekBar;
 import com.bling.pages.WaveLoadingActivity;
 import com.kingz.customdemo.R;
-import com.view.NetworkSpeed.TextViewOfLanguages;
+import com.kingz.text.LableTextViewPage;
 import com.view.listview.CustomListViewActivity;
 import com.view.listview.RecyclerviewDemo;
 import com.view.scroll.ScrollTestActivity;
@@ -54,7 +54,6 @@ public class CustomViewsPage extends  Activity implements OnItemClickListener{
 		mAdapter.add(new ListBillData(this,"Customer TitleView",new Intent(this,CircleViewActivity.class)));
 		mAdapter.add(new ListBillData(this,"Customer SeekBar",new Intent(this,UsingCustomSeekBar.class)));
 		mAdapter.add(new ListBillData(this,"画布绘制进度条",new Intent(this,CustomCanvasSeekBarAct.class)));
-		mAdapter.add(new ListBillData(this,"自定义基础控件View",new Intent(this,LableTextViewPage.class)));
 		mAdapter.add(new ListBillData(this,"手势追踪球",new Intent(this,FingerBallActivity.class)));
 		mAdapter.add(new ListBillData(this,"自定义ListView",new Intent(this,CustomListViewActivity.class)));
 		mAdapter.add(new ListBillData(this,"Recyclerview例子",new Intent(this,RecyclerviewDemo.class)));

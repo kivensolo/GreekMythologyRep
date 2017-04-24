@@ -1,4 +1,4 @@
-package com.view.NetworkSpeed;
+package com.kingz.text;
 
 import android.app.Activity;
 import android.content.Context;
@@ -42,7 +42,7 @@ public class TextViewOfLanguages extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_network);
+        setContentView(R.layout.activity_languages);
         mContext = this;
         initView();
         sendMsg2Ui();
