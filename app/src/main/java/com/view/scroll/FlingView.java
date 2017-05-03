@@ -30,31 +30,25 @@ public class FlingView extends TextView {
     private Paint borderPaint;
     private Paint textPaint;
     private Paint imagePaint;
+    private float lastX;    //初始坐标X
+    private float lastY;    //初始坐标Y
+    private float startX;   //手势起点X坐标
+    private float startY;   //手势起点Y坐标
     private int velocityX;  //当前X方向上的速度
     private int velocityY;  //当前Y方向上的速度
-
 
     //手势监听类
     GestureDetector mGestureDetector; //可以代替很多onTouchEvent()中自己处理手势
     //速度追踪器
     VelocityTracker velocityTracker = VelocityTracker.obtain();
 
-    ViewConfiguration viewConfiguration;
-
-    /** 系统所能识别出的被认为是滑动的最小距离 */
+    /** 系统所能识别出的被认为是滑动的最小像素距离 */
     private int touchSlop;
     /** 获取Fling速度的最小值和最大值 */
     private int minimumVelocity;
     private int maximumVelocity;
     /** 是否有物理按键 */
     private boolean isHavePermanentMenuKey;
-
-
-    private float lastX;    //初始坐标X
-    private float lastY;    //初始坐标Y
-    private float startX;
-    private float startY;
-
 
     public FlingView(Context context) {
         this(context, null);
@@ -65,6 +59,7 @@ public class FlingView extends TextView {
         mScroller = new Scroller(context, new BounceInterpolator());
         mGestureDetector = new GestureDetector(context, new GestureListenerImpl());
         //解决长按屏幕后无法拖动的现象
+        //禁用后，用户可以按住然后按下移动他们的手指，会得到滚动事件
         mGestureDetector.setIsLongpressEnabled(false);
         initViewConfiguaration(context);
         initPaints();
@@ -114,17 +109,17 @@ public class FlingView extends TextView {
      * @param context
      */
     private void initViewConfiguaration(Context context) {
-        viewConfiguration = ViewConfiguration.get(context);
-        touchSlop = viewConfiguration.getScaledTouchSlop();
-        minimumVelocity = viewConfiguration.getScaledMinimumFlingVelocity();
-        maximumVelocity = viewConfiguration.getScaledMaximumFlingVelocity();
-        isHavePermanentMenuKey = viewConfiguration.hasPermanentMenuKey();
+        final ViewConfiguration vc  = ViewConfiguration.get(context);
+        touchSlop = vc.getScaledTouchSlop();
+        minimumVelocity = vc.getScaledMinimumFlingVelocity();
+        maximumVelocity = vc.getScaledMaximumFlingVelocity();
+        isHavePermanentMenuKey = vc.hasPermanentMenuKey();
         //双击间隔时间.在该时间内是双击，否则是单击
-        //int doubleTapTimeout=ViewConfiguration.getDoubleTapTimeout();
+        //int doubleTapTimeout=vc.getDoubleTapTimeout();
         ////按住状态转变为长按状态需要的时间
-        //int longPressTimeout=ViewConfiguration.getLongPressTimeout();
+        //int longPressTimeout=vc.getLongPressTimeout();
         ////重复按键的时间
-        //int keyRepeatTimeout=ViewConfiguration.getKeyRepeatTimeout();
+        //int keyRepeatTimeout=vc.getKeyRepeatTimeout();
     }
 
     public FlingView(Context context, AttributeSet attrs, int defStyle) {

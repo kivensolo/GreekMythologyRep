@@ -13,8 +13,8 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Toast;
-import com.kingz.customdemo.R;
 import com.kingz.adapter.DemoRecyclerAdapter;
+import com.kingz.customdemo.R;
 import com.kingz.mode.RecycleDataInfo;
 import com.kingz.pages.photo.MyItemDecoration;
 
@@ -71,7 +71,7 @@ public class RecyclerviewDemo extends Activity {
     }
 
     private void initRecyclerView(RecyclerView recyclerView) {
-        recyclerView.setHasFixedSize(true);         // 设置固定大小
+        recyclerView.setHasFixedSize(true);         // 设置固定大小  适配器更改不能影响RecyclerView的大小
         initRecyclerLayoutManager(recyclerView);    // 初始化布局
         initRecyclerAdapter(recyclerView);          // 初始化适配器
         initItemDecoration(recyclerView);           // 初始化装饰
