@@ -5,12 +5,16 @@
         <play_url>http://video.chinanews.com/tvmining/News/MP4ZXW/DongNanTV/2016/04/29/DongNanTV_1500000_20160429_18866283_0_40.mp4</play_url>
     </video>
     <video>
-        <name>测试视频1</name>
-        <play_url>http://ocs.maiziedu.com/android_app_sde_1.mp4</play_url>
+        <name>一带一路</name>
+        <play_url>http://recordcdn.quklive.com/broadcast/activity/1494722646897930/20170514/105902_0.ts</play_url>
     </video>
     <video>
-         <name>Video_1</name>
-         <play_url>http://yydy.file.alimmdn.com/source/7C444665-8CB2-4729-9302-E55E64268B40_V</play_url>
+        <name>山西卫视</name>
+        <play_url>http://v3.365yg.com/9deee448da1662c204655efd93f1d69f/5917edd3/video/m/220ab4f21d667ff44808698e7352e0f91b11146c060000445d6b704c83/</play_url>
+    </video>
+    <video>
+         <name>新闻片段_1</name>
+         <play_url>http://video.chinanews.com/tvmining/News/MP4ZXW/CCTVNEWS/2017/05/14/CCTVNEWS_1500000_20170514_24602898_0_40.mp4</play_url>
      </video>
      <video>
         <name>Video_2</name>

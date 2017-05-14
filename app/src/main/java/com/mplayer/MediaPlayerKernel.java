@@ -28,7 +28,8 @@ public class MediaPlayerKernel extends SurfaceView {
     private int mAudioSession;
     private Uri playUrl = null;
     private MediaPlayer mPlayer;
-    boolean playFinished = false;  //是否播放完毕,在onCompletion中值修改为true，表示播放完毕，不在调用onSeek
+    //是否正常播放完毕
+    boolean playFinished = false;
     private SurfaceHolder mSurfaceHolder;
     private MediaPlayerListeners mListenners;
     OnStateChangeListener onStateChangeListener;
@@ -80,15 +81,17 @@ public class MediaPlayerKernel extends SurfaceView {
         mListenners = new MediaPlayerListeners() {
             @Override
             public void onCompletion(MediaPlayer mp) {
+                playFinished = true;
+                ZLog.d(TAG,"mp is onCompletion() ");
                 if (null != onStateChangeListener) {
                     onStateChangeListener.onComplete();
                 }
-                mp.stop();
-                mp.release();
+                stop();
             }
 
             @Override
             public boolean onError(MediaPlayer mp, int what, int extra) {
+                ZLog.d(TAG,"mp is onError() ");
                 ToastTools.getInstance().showMgtvWaringToast(mContext, "播放出错！" + "what=" + what + ";extra=" + extra);
                 if (null != onStateChangeListener) {
                     onStateChangeListener.onError();
@@ -103,8 +106,10 @@ public class MediaPlayerKernel extends SurfaceView {
                     default:
                         break;
                 }
-                mp.release();
-                return false;
+                mp.reset();//重用Error状态的MediaPlayer对象
+                ZLog.d(TAG,"----- mp.reset()");
+                mediaState = MediaState.IDLE;
+                return true;
             }
 
             @Override
@@ -145,6 +150,9 @@ public class MediaPlayerKernel extends SurfaceView {
         public void surfaceCreated(SurfaceHolder holder) {
             ZLog.i(TAG, "surfaceCreated()  hodler:" + holder);
             mSurfaceHolder = holder;
+             if (null != onStateChangeListener) {
+                onStateChangeListener.onSurfaceViewCreated(mSurfaceHolder);
+            }
         }
 
         @Override
@@ -183,6 +191,8 @@ public class MediaPlayerKernel extends SurfaceView {
         public void onError();
 
         public void onSurfaceViewDestroyed(SurfaceHolder surface);
+
+        public void onSurfaceViewCreated(SurfaceHolder surface);
     }
 
     public void setOnStateChangeListener(OnStateChangeListener onStateChangeListener) {
@@ -229,17 +239,27 @@ public class MediaPlayerKernel extends SurfaceView {
         //onStateChangeListener.onSeek();
     }
 
-    public void stop() {
+    public void stop(){
+        ZLog.d(TAG,"stop()");
         mPlayer.stop();
-        mPlayer.reset();
+        invalidate();
         mediaState = MediaState.STOP;
-        playFinished = true;
         if (onStateChangeListener != null) {
             onStateChangeListener.onStop(mPlayer);
         }
     }
 
+
+    public void releasePlayer() {
+        ZLog.d(TAG,"releasePlayer()");
+        mPlayer.stop();
+        mPlayer.reset();
+        mPlayer.release();
+        mediaState = MediaState.END;
+    }
+
     public void start() {
+        ZLog.d(TAG,"start()");
         mPlayer.start();
         mediaState = MediaState.PLAYING;
         playFinished = false;
@@ -264,6 +284,17 @@ public class MediaPlayerKernel extends SurfaceView {
         return mPlayer.getVideoWidth();
     }
 
+     /**
+     * reset the media player in any state
+     */
+    public void reset(){
+        if (null == mPlayer) {
+            return;
+        }
+        mPlayer.reset();
+        mediaState = MediaState.IDLE    ;
+    }
+
     /**
      * release the media player in any state
      */
@@ -271,7 +302,7 @@ public class MediaPlayerKernel extends SurfaceView {
         if (null == mPlayer) {
             return;
         }
-        if (mPlayer.isPlaying()) {//兼容代码
+        if (mediaState == MediaState.PLAYING) {
             playFinished = false;
             mPlayer.stop();
         }
@@ -286,7 +317,7 @@ public class MediaPlayerKernel extends SurfaceView {
         // 这其中有些资源是只有一份的（相当于临界资源）。
         // 如果 MediaPlayer 对象进入了 End 状态，则不会在进入任何其他状态了。
         mPlayer = null;
-        mediaState = MediaState.IDLE;
+        mediaState = MediaState.RELEASE;
     }
 
 
@@ -295,7 +326,23 @@ public class MediaPlayerKernel extends SurfaceView {
         ZLog.i(TAG, "setVideoURI() uri:" + uri);
         openVideo();
         requestLayout();
+        invalidate();
     }
+
+    public void openVideo(Uri uri){
+        playUrl = uri;
+          if (null == playUrl || null == mSurfaceHolder) {
+            ZLog.e(TAG, "openVideo() playUrl/mSurfaceHolder is null");
+            return;
+        }
+        try {
+            mPlayer.setDataSource(mContext, playUrl); //进入Initialized状态
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        mPlayer.prepareAsync(); //异步准备  onPrepared回调至Prepared状态 ————> start() 至Started状态
+    }
+
 
     private void openVideo() {
         if (null == playUrl || null == mSurfaceHolder) {
@@ -304,11 +351,6 @@ public class MediaPlayerKernel extends SurfaceView {
         }
         AudioManager am = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
         am.requestAudioFocus(null, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
-
-        // we shouldn't clear the target state, because somebody might have
-        // called start() previously
-        release();
-
         try {
             mPlayer = new MediaPlayer();
             if (mAudioSession != 0) {
@@ -323,11 +365,13 @@ public class MediaPlayerKernel extends SurfaceView {
             mPlayer.setOnInfoListener(mListenners);
             //mMediaPlayer.setOnBufferingUpdateListener(mBufferingUpdateListener);
             mPlayer.setDataSource(mContext, playUrl); //进入Initialized状态
+            mediaState = MediaState.INIT;
+
             mPlayer.setDisplay(mSurfaceHolder);
             mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mPlayer.setScreenOnWhilePlaying(true);
             mPlayer.prepareAsync(); //异步准备  onPrepared回调至Prepared状态 ————> start() 至Started状态
-            mediaState = MediaState.INIT;
+            mediaState = MediaState.PREPARING;
         } catch (IOException e) {
             e.printStackTrace();
         }

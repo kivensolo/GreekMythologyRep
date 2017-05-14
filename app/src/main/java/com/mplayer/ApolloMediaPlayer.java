@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.BaseActivity;
@@ -68,7 +69,7 @@ public class ApolloMediaPlayer extends BaseActivity {
     private int currentPosition;
 
     /**
-     *     画面比例
+     * 画面比例
      */
     private ScreenScaletype videoScreenMode = ScreenScaletype.SCREENTYPE_TOW;
 
@@ -93,8 +94,10 @@ public class ApolloMediaPlayer extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mplayer_layout);
         showLoadingDialog();
+        mFormatBuilder = new StringBuilder();
+        mFormatter = new Formatter(mFormatBuilder, Locale.getDefault());
         initVideoData();
-        initViews();
+        init();
 //      getPlayUrlFromNet();
     }
 
@@ -149,22 +152,46 @@ public class ApolloMediaPlayer extends BaseActivity {
 //    private void getPlayUrlFromNet(){
 //    }
 
-    private void initViews() {
+    private void init() {
+        initChannelListView();
+        initMPlayer();
+        initSeekBar();
+    }
+
+    private void initChannelListView() {
         leftListView = (ListView) findViewById(R.id.leftchanellView);
         if (channelLists != null) {
             chanellListAdapter = new ChanellListAdapter(this, channelLists, R.layout.simple_listviewitem);
             leftListView.setAdapter(chanellListAdapter);
-            //leftListView.setOnClickListener();
+            leftListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    ZLog.i(TAG, "onItemClick() getCurrentPlayerState：" + mPlayer.getState());
+                    stopSeekBarTimer();
+                    if (mPlayer.getState() == MediaPlayerKernel.MediaState.PLAYING) {
+                        mPlayer.stop();
+                    }
+                    if(mPlayer.getState() != MediaPlayerKernel.MediaState.IDLE){
+                        //IDLE状态去reset会抛出非法的状态异常
+                        mPlayer.reset();
+                    }
+                    if (channelLists.isEmpty() || TextUtils.isEmpty(channelLists.get(position).playUrl)) {
+                        ToastTools.getInstance().showMgtvWaringToast(ApolloMediaPlayer.this, "视频地址不能为空");
+                        return;
+                    }
+                    String url = channelLists.get(position).playUrl;
+                    Uri uri = Uri.parse(url);
+                    mPlayer.openVideo(uri);
+                    ZLog.i(TAG, "播放的视频地址：" + url);
+                    anthorFlag = true;
+                }
+            });
         } else {
             Log.e(TAG, "本地数据源为空！！");
         }
+    }
 
-        mPlayer = (MediaPlayerKernel) findViewById(R.id.mplayercore);
-        initMPlayerListner();
-
-        mFormatBuilder = new StringBuilder();
-        mFormatter = new Formatter(mFormatBuilder, Locale.getDefault());
-
+    private void initSeekBar() {
         seekBar = (ApolloSeekBar) findViewById(R.id.mediaplayer_seekbar);
         seekBar.setApolloSeekBarChangeListener(new ApolloSeekBar.IOnApolloSeekBarChangeListener() {
             @Override
@@ -183,16 +210,22 @@ public class ApolloMediaPlayer extends BaseActivity {
                 mPlayer.seekTo((int) onStopP0stion);
             }
         });
-
         rightChangeBtn = (TextView) findViewById(R.id.changeSize_id);
         rightChangeBtn.setOnClickListener(ItemClickedListenner);
     }
 
-    private void initMPlayerListner() {
+    private void initMPlayer() {
+        mPlayer = (MediaPlayerKernel) findViewById(R.id.mplayercore);
         mPlayer.setOnStateChangeListener(new MediaPlayerKernel.OnStateChangeListener() {
             @Override
             public void onSurfaceViewDestroyed(SurfaceHolder surface) {
                 anthorFlag = false;
+            }
+
+            @Override
+            public void onSurfaceViewCreated(SurfaceHolder surface) {
+                ZLog.d(TAG,"ApolloMpalayer onSurfaceViewCreated. Auto play first Video.");
+                mPlayer.setVideoURI(Uri.parse(channelLists.get(0).playUrl));
             }
 
             @Override
@@ -201,14 +234,18 @@ public class ApolloMediaPlayer extends BaseActivity {
 
             @Override
             public void onPlaying(MediaPlayer mp) {
+                ZLog.d(TAG,"ApolloMpalayer onPlaying.");
+
             }
 
             @Override
             public void onSeek(MediaPlayer mp, int max, int progress) {
+                ZLog.d(TAG,"ApolloMpalayer onSeek.  progress = " + progress + "; max = " + max);
             }
 
             @Override
             public void onStop(MediaPlayer mp) {
+                ZLog.d(TAG,"ApolloMpalayer onStop.");
             }
 
             @Override
@@ -217,16 +254,20 @@ public class ApolloMediaPlayer extends BaseActivity {
 
             @Override
             public void onError() {
+                stopSeekBarTimer();
+                ZLog.i(TAG, "ApolloMpalayer onError");
             }
 
             @Override
             public void onComplete() {
+                stopSeekBarTimer();
                 ZLog.i(TAG, "UserSeekComplete");
             }
 
             @Override
             public void onPrepare() {
                 dismissLoadingDialog();
+                startSeekBarTimer();
                 ToastTools.getInstance().showMgtvWaringToast(ApolloMediaPlayer.this, "开始播放");
                 duration = mPlayer.getMediaPlayer().getDuration();
                 if (duration > 0) {
@@ -264,11 +305,13 @@ public class ApolloMediaPlayer extends BaseActivity {
         }
     };
 
+    private boolean isSeekTimerStart = false;
     private void startSeekBarTimer() {
+        isSeekTimerStart = true;
         new Thread() {
             @Override
             public void run() {
-                while (true) {
+                while (isSeekTimerStart) {
                     if (!seekBar.mIsDragging) {
                         try {
                             mHandler.sendEmptyMessage(TIMER_FLAG);
@@ -282,23 +325,16 @@ public class ApolloMediaPlayer extends BaseActivity {
         }.start();
     }
 
+    private void stopSeekBarTimer(){
+        isSeekTimerStart = false;
+    }
+
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         super.dispatchTouchEvent(event);
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                //点击播放
-                ZLog.i(TAG, "getCurrentPlayerState：" + mPlayer.getState());
-                if (mPlayer.getState() == MediaPlayerKernel.MediaState.IDLE) {
-                    if (channelLists.isEmpty() || TextUtils.isEmpty(channelLists.get(0).playUrl)) {
-                        ToastTools.getInstance().showMgtvWaringToast(this, "视频地址不能为空");
-                    }
-                    ZLog.i(TAG, "播放的视频地址：" + channelLists.get(0).playUrl);
-                    mPlayer.setVideoURI(Uri.parse(channelLists.get(0).playUrl));
-                    anthorFlag = true;
-                    startSeekBarTimer();
-                    return true;
-                }
+
                 return false;
             case MotionEvent.ACTION_MOVE:
                 //isSeekState = true;
@@ -353,7 +389,7 @@ public class ApolloMediaPlayer extends BaseActivity {
     protected void onPause() {
         //if (mPlayer) {
         //    int position = mPlayer.getCurrentPosition();
-        //    mPlayer.stop();
+        //    mPlayer.releasePlayer();
         //}
         super.onPause();
     }
@@ -365,6 +401,7 @@ public class ApolloMediaPlayer extends BaseActivity {
     }
 
     protected void onDestroy() {
+        stopSeekBarTimer();
         if (mPlayer != null) {
             mPlayer.release();
         }
@@ -422,5 +459,13 @@ public class ApolloMediaPlayer extends BaseActivity {
                 rightChangeBtn.setText(str);
             }
         });
+    }
+
+    private void releasePlayer(){
+        mPlayer.releasePlayer();
+    }
+
+    private MediaPlayerKernel.MediaState getMplayerState(){
+        return mPlayer.getState();
     }
 }
