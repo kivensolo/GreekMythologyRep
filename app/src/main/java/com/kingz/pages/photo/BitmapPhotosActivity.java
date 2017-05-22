@@ -1,6 +1,7 @@
 package com.kingz.pages.photo;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -24,7 +25,7 @@ public class BitmapPhotosActivity extends PhotosActivity{
 
     public static final String TAG = "BitmapPhotosActivity";
 
-    String[] strs = {"平移图片", "放大/缩小图片", "旋转图片","圆角图片","圆形图片",
+    String[] strs = {"平移图片", "放大/缩小图片", "旋转图片---水平","旋转图片---Y轴","圆角图片","圆形图片",
             "斜切图片","水印---图片","水印---文字","倒影","Glide加载图片"};
 
     @Override
@@ -76,25 +77,28 @@ public class BitmapPhotosActivity extends PhotosActivity{
                 setShowBitMap(BitMapUtils.setRotateImage(180, srcBitmap));
                 break;
             case 3:
-                setShowBitMap(BitMapUtils.setRoundCorner(srcBitmap,45));
+                setShowBitMap(BitMapUtils.setRotateImage_XYZ(0f,20f,0f,srcBitmap));
                 break;
             case 4:
-                setShowBitMap(BitMapUtils.setBitmapCircle(srcBitmap));
+                setShowBitMap(BitMapUtils.setRoundCorner(srcBitmap,45));
                 break;
             case 5:
-                setShowBitMap(BitMapUtils.setSkew(srcBitmap,-0.3f,0));
+                setShowBitMap(BitMapUtils.setBitmapCircle(srcBitmap));
                 break;
             case 6:
-                setShowBitMap(BitMapUtils.createWaterMarkBitmap(srcBitmap,waterMark,srcBitmap.getWidth() - waterMark.getWidth(),0));
+                setShowBitMap(BitMapUtils.setSkew(srcBitmap,-0.3f,0));
                 break;
             case 7:
+                setShowBitMap(BitMapUtils.createWaterMarkBitmap(srcBitmap,waterMark,srcBitmap.getWidth() - waterMark.getWidth(),0));
+                break;
+            case 8:
                 setShowBitMap(BitMapUtils.createWaterMarkText(srcBitmap,"测试水印",
                 srcBitmap.getWidth() - srcBitmap.getWidth()/2,srcBitmap.getHeight() - srcBitmap.getHeight()/2));
                 break;
-            case 8:
+            case 9:
                 setShowBitMap(BitMapUtils.setInvertedBitmap(srcBitmap,srcBitmap.getHeight()/3));
                 break;
-            case 9:
+            case 10:
                 Glide.with(this)
                     .load("http://nuuneoi.com/uploads/source/playstore/cover.jpg")
                     .error(R.mipmap.sample_2)
@@ -112,6 +116,7 @@ public class BitmapPhotosActivity extends PhotosActivity{
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                img1.setBackgroundColor(Color.TRANSPARENT);
                 img1.setImageBitmap(bitmap);
             }
         });

@@ -3,20 +3,7 @@ package com.utils;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.LinearGradient;
-import android.graphics.Matrix;
-import android.graphics.Paint;
-import android.graphics.PixelFormat;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
-import android.graphics.RectF;
-import android.graphics.Shader;
-import android.graphics.Typeface;
+import android.graphics.*;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -44,7 +31,7 @@ import java.io.InputStream;
  *  decodeResource()用于读取Res、Raw等资源，得到的是图片的原始尺寸 * 缩放系数，
  *
  *  缩放系数依赖于屏幕密度，参数可以通过BitMapFactory.Option的几个参数调整。
- *  public boolean inScaled    //默认True
+ *  public boolean inScaled     //默认True
  *  public int inDensity;       //无dip的文件夹下默认160
  *  public int inTargetDensity; //取决具体屏幕
  *  |---------> 缩放系数 = inTargetDensity / inDensity;
@@ -70,14 +57,33 @@ import java.io.InputStream;
  *
  * ※※※※※※※※ Matrix ※※※※※※※※
  * 矩阵相关：
+ * Android的位置3*3矩阵:
+ *  MSCALE_X    MSKEW_X     MTRANS_X
+ *  MSKEW_Y     MSCALE_Y    MTRANS_Y
+ *  MPERSP_0    MPERSP_1    MPERSP_2
+ *  MSCALE_X & MSCALE_Y ------- 控制比例
+ *  MSCALE_X & MSKEW_X & MSKEW_Y & MSCALE_Y ------- 控制旋转
+ *  MTRANS_X & MTRANS_Y ------- 控制平移
+ *  MPERSP_0 & MPERSP_1 & MPERSP_2 官方未明确介绍，似乎是控制透视的效果
+ *
+ *  Matrix matrix = new Matrix(); 生成的是单位矩阵：  |1 0 0|
+ *                                                   |0 1 0|
+ *                                                   |0 0 1|
  *       矩阵前乘  例如：变换矩阵为A，原始矩阵为B，pre方法的含义即是A*B：
  *          pre系列方法：preScale，preTranslate，preRotate，preSkew，
  *          set系列方法：setScale，setTranslate，setRotate，setSkew，
+ *
  *       矩阵后乘  例如：变换矩阵为A，原始矩阵为B，post方法的含义即是B*A
  *          post系列方法：postScale，postTranslate，postRotate，postSkew。
  *
  *          注意：后调用的pre操作先执行，而后调用的post操作则后执行。
  *
+ *  //图片的默认矩阵
+ *  //      float[] values = {
+ *  //              1.0f, 0f, 0f,
+ *  //              0f, 1.0f, 0f,
+ *  //              0f, 0f, 1.0f
+ *  //      };
  */
 public class BitMapUtils {
 
@@ -89,7 +95,7 @@ public class BitMapUtils {
     /************************************ 图形变换  Start*****************************************/
     /**
      * 旋转图片
-     *
+     * 效果是围绕Z轴
      * @param angle  旋转角度
      * @param bitmap 目标图片
      * @return Bitmap    旋转后的图片
@@ -99,6 +105,28 @@ public class BitMapUtils {
         Matrix matrix = new Matrix(); // 每一种变化都包括set，pre，post三种，分别为设置、矩阵先乘、矩阵后乘。
         matrix.postRotate(angle);
         // 得到旋转后的图片
+        Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+        return resizedBitmap;
+    }
+
+    /**
+     * 旋转图片 ---- 围绕指定轴线
+     *
+     * @param bitmap 目标图片
+     * @return Bitmap    旋转后的图片
+     */
+    public static Bitmap setRotateImage_XYZ(float rotate_x,float rotate_y,float rotate_z,Bitmap bitmap) {
+        Camera camera = new Camera();
+        Matrix matrix = new Matrix();
+        //Canvas canvas = new Canvas(bitmap);
+        camera.save();
+        //canvas.save();
+        camera.rotate(rotate_x,rotate_y,rotate_z);
+        camera.getMatrix(matrix); //将单元矩阵应用于camera
+        camera.restore();
+        matrix.preTranslate(-bitmap.getWidth()/2,-bitmap.getHeight()/2);
+        matrix.postTranslate(bitmap.getWidth()/2,bitmap.getHeight()/2);
+        //canvas.concat(matrix);
         Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
         return resizedBitmap;
     }
@@ -163,6 +191,20 @@ public class BitMapUtils {
         Bitmap newbm = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, true);
         return newbm;
     }
+
+    /**
+     * 水平对称--图片关于X轴对称
+     */
+	private Bitmap testSymmetryX(Bitmap bm) {
+		Matrix matrix = new Matrix();
+		int height =bm.getHeight();
+		int width =bm.getWidth();
+		float matrixValues[] = { 1f, 0f, 0f, 0f, -1f, 0f, 0f, 0f, 1f };
+		matrix.setValues(matrixValues);
+		//若是matrix.postTranslate(0, height);//表示将图片上下倒置
+		matrix.postTranslate(0, height*2);
+        return Bitmap.createBitmap(bm, 0, 0, width, height, matrix, true);
+	}
 
     /**
      * 设置圆角
