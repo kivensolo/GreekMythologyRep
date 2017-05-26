@@ -29,6 +29,8 @@ import java.io.InputStream;
  * ※※※※※※※※ decodeResource()和decodeFile()  ※※※※※※※※
  *  decodeFile()用于读取SD卡上的图，得到的是图片的原始尺寸
  *  decodeResource()用于读取Res、Raw等资源，得到的是图片的原始尺寸 * 缩放系数
+ *  decodeStream()   //从输入流读取
+ *  decodeByteArray()   //从字节数组读取
  *
  *  缩放系数scale依赖于屏幕密度density，参数可以通过BitMapFactory.Option的几个参数调整。
  *  public boolean inScaled     //默认True

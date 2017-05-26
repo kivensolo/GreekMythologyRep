@@ -5,8 +5,8 @@
           android:versionName="1.0">
 
     <uses-sdk
-            android:minSdkVersion="17"
-            android:targetSdkVersion="19"/>
+            android:minSdkVersion="19"
+            android:targetSdkVersion="22"/>
 
     <!-- Demo所需权限 -->
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
@@ -207,6 +207,10 @@
         <!--BitMap测试页面-->
         <activity android:name="com.kingz.pages.photo.BitmapPhotosActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
+
+        <!--ColorMatrix-->
+        <activity android:name="com.kingz.pages.photo.ColorMatrixDemo"
+                  android:theme="@android:style/Theme.Material.NoActionBar"/>
 
         <!--文件管理页面-->
         <activity android:name="com.kingz.filemanager.FileManagerActivity"
