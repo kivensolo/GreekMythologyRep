@@ -28,9 +28,9 @@ import java.io.InputStream;
  *
  * ※※※※※※※※ decodeResource()和decodeFile()  ※※※※※※※※
  *  decodeFile()用于读取SD卡上的图，得到的是图片的原始尺寸
- *  decodeResource()用于读取Res、Raw等资源，得到的是图片的原始尺寸 * 缩放系数，
+ *  decodeResource()用于读取Res、Raw等资源，得到的是图片的原始尺寸 * 缩放系数
  *
- *  缩放系数依赖于屏幕密度，参数可以通过BitMapFactory.Option的几个参数调整。
+ *  缩放系数scale依赖于屏幕密度density，参数可以通过BitMapFactory.Option的几个参数调整。
  *  public boolean inScaled     //默认True
  *  public int inDensity;       //无dip的文件夹下默认160
  *  public int inTargetDensity; //取决具体屏幕
@@ -54,6 +54,21 @@ import java.io.InputStream;
  *          如果放到xhdpi会怎样呢？ 在MX4上，放到xhdpi，解码后图片大小为1080 x 1080。
  *          因为放到有dpi的文件夹，会影响到inDensity的默认值，放到xhdpi为160 x 2 = 320;
  *          所以缩放系数 = 480（屏幕） / 320 （xhdpi） = 1.5; 所以得到的图片大小为1080 x 1080。
+ *
+ * ||------> inBitmap属性 [Bitmap优化的一个方法]
+ * 该属性表示重用该Bitmap的内存区域，避免多次重复向dvm申请开辟新的内存区域。
+ * 可以一次性申请多个模板的内存，解码时候匹配使用申请的内存.如565模板、4444模板、8888模板。
+ * 使用内存模板的方法，即使是上千张的图片，也只会仅仅只需要占用屏幕所能够显示的图片数量的内存大小。
+ * 起作用的条件：
+ * Bitmap:isMutable = true;
+ * BitmapFactory.Options:  inSampleSize = 1;
+ *  The sample size is the number of pixels in either dimension that correspond to a single pixel in the decoded bitmap
+ *  样本大小是在任一维度对应的解码位图的一个像素点的像素数。
+ *  所以如果inSampleSize == 4 则说明原来一个像素点大小的位置要放四个像素点，
+ *  所以图像的宽高将会变成原来的1/4，像素量会变成1/16.
+ *  注意：解码器使用基于2的幂的最终值，任何其他值将舍入到最接近的2的幂。
+ *
+ *
  *
  * ※※※※※※※※ Matrix ※※※※※※※※
  * 矩阵相关：
@@ -587,6 +602,28 @@ public class BitMapUtils {
         opts.inTargetDensity = 160;
         return BitmapFactory.decodeStream(inputStream,null, opts);
     }
+
+    public static Bitmap replaceBitmapColor(Bitmap oldBitmap,int oldColor,int newColor){
+        return replaceBitmapColor(oldBitmap,oldColor,newColor,Bitmap.Config.ARGB_8888);
+    }
+
+    public static Bitmap replaceBitmapColor(Bitmap oldBitmap, int oldColor, int newColor, Bitmap.Config config){
+        Bitmap mBitmap = oldBitmap.copy(config,true);
+        int mWidth = mBitmap.getWidth();
+        int mHeight = mBitmap.getHeight();
+        int mArrayColorLength = mWidth * mHeight;
+        int currentPixelColor = 0;
+        for(int i=0; i < mHeight;i++){
+            for(int j=0;j < mWidth;j++){
+                currentPixelColor = mBitmap.getPixel(j,i);
+                if(currentPixelColor == oldColor){
+                    mBitmap.setPixel(j,i,newColor);
+                }
+            }
+        }
+        return mBitmap;
+    }
+
 
 
 }
