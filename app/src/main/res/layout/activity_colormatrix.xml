@@ -6,28 +6,5 @@
         <com.view.views.ColorMartixImageView
                 android:id="@+id/corlormartix_view"
                 android:layout_width="match_parent"
-                android:layout_height="337dp"/>
-        <SeekBar
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:max="100"
-                android:progress="100"
-                android:id="@+id/seekBar_alpha"/>
-        <SeekBar
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:max="100"
-                android:id="@+id/seekBar_red" android:progress="100"
-        />
-        <SeekBar
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:max="100"
-                android:id="@+id/seekBar_green" android:progress="100"/>
-        <SeekBar
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:max="100"
-                android:id="@+id/seekBar_blue" android:progress="100"/>
-
+                android:layout_height="500dp"/>
 </LinearLayout>

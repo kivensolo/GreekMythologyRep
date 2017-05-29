@@ -41,7 +41,6 @@ public class GlobalCacheCenter {
 
     /**
      * 初始化
-     *
      * @param context
      * @return
      */
@@ -74,6 +73,7 @@ public class GlobalCacheCenter {
     }
 
     public String getAppPicCachePath() {
+        ///data/data/packageName/app_pic/
         return picCachePath;
     }
 
