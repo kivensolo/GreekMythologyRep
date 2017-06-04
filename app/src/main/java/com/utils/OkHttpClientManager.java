@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Looper;
 import android.widget.ImageView;
-
 import com.App;
 import com.google.gson.Gson;
 import com.google.gson.internal.$Gson$Types;
@@ -22,11 +21,13 @@ import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 /**
  * author: King.Z <br>
  * date:  2016/10/27 17:49 <br>
- * description: OkHttp工具类 <br>
+ * description: OkHttp工具类
+ *  基于OKHttp 2.0 <br>
  */
 public class OkHttpClientManager {
     private static final String TAG = "OkHttpClientManager";
@@ -55,8 +56,14 @@ public class OkHttpClientManager {
         return mInstance;
     }
 
+    private void _initTimeOut(int connectTimeOut,int readTimeOut,int writeTimeOut){
+        mOkHttpClient.setConnectTimeout(connectTimeOut, TimeUnit.MINUTES);
+        mOkHttpClient.setReadTimeout(readTimeOut, TimeUnit.MINUTES);
+        mOkHttpClient.setWriteTimeout(writeTimeOut, TimeUnit.MINUTES);
+    }
+
     /**************************
-     * 同步的Get请求  start
+     * 同步的Get请求  start  用Call.execute()
      **************************/
     private Response _getAsyn(String url) throws IOException {
         final Request request = new Request.Builder()
@@ -87,7 +94,7 @@ public class OkHttpClientManager {
     }
 
     /**************************
-     * 异步的Get请求  start
+     * 异步的Get请求  start   用Call.enqueue()
      **************************/
     private void _getAsyn(String url, final ResultCallback callback) {
         final Request request = new Request.Builder()
@@ -188,11 +195,13 @@ public class OkHttpClientManager {
     }
     //*************对外公布的方法************
 
+    public static void initTimeOut(int connectTimeOut,int readTimeOut,int writeTimeOut){
+        getInstance()._initTimeOut(connectTimeOut,readTimeOut,writeTimeOut);
+    }
 
     public static Response getAsyn(String url) throws IOException {
         return getInstance()._getAsyn(url);
     }
-
 
     public static String getAsString(String url) throws IOException {
         return getInstance()._getAsString(url);
@@ -336,15 +345,15 @@ public class OkHttpClientManager {
             @Override
             public void onResponse(final Response response) {
                 try {
-                    final String string = response.body().string();
+                    final String string = response.body().string();//获得返回的字符串
+                    //final byte[] mBytes= response.body().bytes();//通过二进制字节数组,可以转换为BItmap图片资源
+                    //获得返回的inputStream,则调用response.body().byteStream() ;这里支持大文件下载,有inputStream可以通过IO的方式写文件。
                     if (callback.mType == String.class) {
                         sendSuccessResultCallback(string, callback);
                     } else {
                         Object o = mGson.fromJson(string, callback.mType);
                         sendSuccessResultCallback(o, callback);
                     }
-
-
                 } catch (IOException e) {
                     sendFailedStringCallback(response.request(), e, callback);
                 } catch (com.google.gson.JsonParseException e)//Json解析的错误
