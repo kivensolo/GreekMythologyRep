@@ -31,6 +31,12 @@
 
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
+     <!--Target Package为单元测试的包名-->
+    <instrumentation
+            android:name="android.test.InstrumentationTestRunner"
+            android:targetPackage="com.kingz"
+            android:label="Tests for GeekMythologyRep"/>
+
     <application
             android:allowBackup="true"
             android:icon="@drawable/bg3"
@@ -40,6 +46,8 @@
             android:enabled="true"
             android:name="com.App">
         <!-- supportsRtl 支持从右到左布局,API17以上 -->
+
+        <!--<uses-library android:name="android.test.AndroidTestRunner"/>-->
 
         <meta-data
                 android:name="com.baidu.lbsapi.API_KEY"
