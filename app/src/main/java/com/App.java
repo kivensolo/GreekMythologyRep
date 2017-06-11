@@ -7,6 +7,7 @@ import android.util.Log;
 import com.core.logic.GlobalCacheCenter;
 import com.kingz.customdemo.BuildConfig;
 import com.utils.ZLog;
+import jp.wasabeef.takt.Takt;
 
 /**
  * Copyright(C) 2015, 北京视达科科技有限公司
@@ -49,8 +50,14 @@ public class App extends Application {
         initLog();
         initAPPScreenParms();
         initCacheCenter();
+        Takt.stock(this).size(20f).play();
     }
 
+    @Override
+    public void onTerminate() {
+        Takt.finish();
+        super.onTerminate();
+    }
     private void initCacheCenter() {
         GlobalCacheCenter.getInstance().init(mContext);  //缓存初始化
     }
@@ -60,6 +67,7 @@ public class App extends Application {
             ZLog.isDebug = true;
         }
     }
+
 
     private void initAPPScreenParms(){
         Log.i(TAG, "SCREEN_WIDTH = " + getResources().getDisplayMetrics().widthPixels
