@@ -7,7 +7,12 @@ import android.graphics.*;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.renderscript.Allocation;
+import android.renderscript.Element;
+import android.renderscript.RenderScript;
+import android.renderscript.ScriptIntrinsicBlur;
 import android.util.Base64;
+import android.util.Log;
 import android.util.TypedValue;
 
 import java.io.ByteArrayOutputStream;
@@ -62,7 +67,7 @@ import java.io.InputStream;
  * 可以一次性申请多个模板的内存，解码时候匹配使用申请的内存.如565模板、4444模板、8888模板。
  * 使用内存模板的方法，即使是上千张的图片，也只会仅仅只需要占用屏幕所能够显示的图片数量的内存大小。
  * 起作用的条件：
- * Bitmap:isMutable = true;
+ * Bitmap:isMutable = true; //可变的
  * BitmapFactory.Options:  inSampleSize = 1;
  *  The sample size is the number of pixels in either dimension that correspond to a single pixel in the decoded bitmap
  *  样本大小是在任一维度对应的解码位图的一个像素点的像素数。
@@ -103,6 +108,9 @@ import java.io.InputStream;
  *  //      };
  */
 public class BitMapUtils {
+
+	public static final String TAG_RECYCLER = "BMP Recycler";
+	public static final boolean DEBUG = false;
 
     private BitMapUtils() {
         /* cannot be instantiated */
@@ -626,6 +634,76 @@ public class BitMapUtils {
         return mBitmap;
     }
 
+    public static int calBitmapPixelsCount(Bitmap bmp) {
+		return bmp.getWidth() * bmp.getHeight();
+	}
+
+    /**
+     *
+     * @param bitmap
+     * @param context
+     * @param radius 模糊度 max:25.f
+     * @return
+     */
+	public static Bitmap guassBlur(Bitmap bitmap, Context context,float radius) {
+        // 用需要创建高斯模糊bitmap创建一个空的bitmap
+        Bitmap outBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+
+        // 初始化Renderscript，该类提供了RenderScript context，创建其他RS类之前必须先创建这个类，其控制RenderScript的初始化，资源管理及释放
+        RenderScript rs = RenderScript.create(context);
+        // 创建高斯模糊对象
+        ScriptIntrinsicBlur blurScript = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs));
+
+        // 创建Allocations，此类是将数据传递给RenderScript内核的主要方法，并制定一个后备类型存储给定类型
+        Allocation allIn = Allocation.createFromBitmap(rs, bitmap);
+        Allocation allOut = Allocation.createFromBitmap(rs, outBitmap);
+
+        //设定模糊度(注：Radius最大只能设置25.f)
+        blurScript.setRadius(clamp(radius,0f,25.0f));
+
+        // Perform the Renderscript
+        blurScript.setInput(allIn);
+        blurScript.forEach(allOut);
+
+        // Copy the final bitmap created by the out Allocation to the outBitmap
+        allOut.copyTo(outBitmap);
+        // recycle the original bitmap
+        bitmap.recycle();
+        // After finishing everything, we destroy the Renderscript.
+        rs.destroy();
+        return outBitmap;
+    }
+
+    public static float clamp(float values, float min, float max){
+        return Math.min(Math.max(values,min),max);
+    }
+
+    public static void recycleBitmap(Bitmap bmp) {
+		if (bmp == null) {
+			return;
+		}
+		if (!bmp.isMutable()) {
+            if (DEBUG) {
+                Log.e(TAG_RECYCLER, "bitmap immutable!!!");
+            }
+			return;
+		}
+		if (bmp.isRecycled()) {
+			if (DEBUG) {
+				Log.e(TAG_RECYCLER, "bitmap recycled!!!");
+			}
+			return;
+		}
+		int byteCount = calBitmapPixelsCount(bmp);
+        if (byteCount <= 0) {
+			if (DEBUG) {
+				Log.e(TAG_RECYCLER, "invalid bitmap bytecount! " + byteCount);
+			}
+			return;
+		}
+
+
+    }
 
 
 }
