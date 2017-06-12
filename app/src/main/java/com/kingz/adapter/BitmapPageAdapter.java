@@ -4,9 +4,9 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import com.kingz.holder.CommViewHodler;
 import com.kingz.customdemo.R;
+import com.kingz.holder.CommViewHodler;
+import com.kingz.pages.photo.BitmapPhotosActivity;
 
 import java.util.List;
 
@@ -29,7 +29,7 @@ public class BitmapPageAdapter extends CommonAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         commonViewHolder = CommViewHodler.getHolder(mContex,convertView,parent, R.layout.simplelist_every_item,position);
         nameItem = commonViewHolder.getView(R.id.list_item);
-        nameItem.setText((String)mDatas.get(position));
+        nameItem.setText(((BitmapPhotosActivity.ItemInfo)(mDatas.get(position))).getName());
         return commonViewHolder.getmConvertView();
     }
 }

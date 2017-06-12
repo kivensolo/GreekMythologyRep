@@ -30,7 +30,7 @@ public class PhotosActivity extends BaseActivity implements AdapterView.OnItemCl
     protected Bitmap waterMark;
     protected int backgroundId;
     protected ImageView img1;
-    List<String> datas;
+    List<BitmapPhotosActivity.ItemInfo> datas;
 
 
     @Override
