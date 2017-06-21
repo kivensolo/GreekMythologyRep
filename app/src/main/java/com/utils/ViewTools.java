@@ -12,15 +12,26 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 /**
- * Copyright(C) 2015, 北京视达科科技有限公司
- * All rights reserved.
  * author: King.Z
  * date:  2016/7/21 15:38
  * description: View相关的工具类
  */
 public class ViewTools {
 
-    // 修改整个界面所有控件的字体
+     /**
+     * 测量View的宽高
+     *
+     * @param view View
+     */
+    public static void measureWidthAndHeight(View view) {
+        int w = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        int h = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        view.measure(w, h);
+    }
+
+    /**
+     *  修改整个界面所有控件的字体
+     */
     public static void changeFonts(ViewGroup root, String path, Activity act) {
         //path是字体路径
         Typeface tf = Typeface.createFromAsset(act.getAssets(), path);
