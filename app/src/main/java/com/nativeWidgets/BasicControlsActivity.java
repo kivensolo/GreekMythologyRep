@@ -221,7 +221,8 @@ public class BasicControlsActivity extends Activity implements View.OnClickListe
 		 View contentView =  ((LayoutInflater)getSystemService(this.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.simple_listviewitem,null);
 		 TextView textView = (TextView) contentView.findViewById(R.id.commonadapter_item_text);
 		 textView.setText("新疆电视台");
-		 PopupWindow popupWindow = new PopupWindow(contentView, LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT, true);
+		 PopupWindow popupWindow = new PopupWindow(contentView,
+                 LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT, true);
 		 popupWindow.setTouchable(true);
 		 popupWindow.setTouchInterceptor(new View.OnTouchListener() {
             @Override
@@ -232,10 +233,12 @@ public class BasicControlsActivity extends Activity implements View.OnClickListe
                 // 拦截后 PopupWindow的onTouchEvent不被调用，这样点击外部区域无法dismiss
             }
         });
+         //是否允许PopupWindow的范围超过屏幕范围
+         popupWindow.setClippingEnabled(true);
 		//如果不设置PopupWindow的背景，无论是点击外部区域还是Back键都无法dismiss弹框
         // 我觉得这里是API的一个bug
         popupWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.bg5));
-		// 设置好参数之后再show
+		// 设置好参数之后再show   popupWindow从view下方弹起
         popupWindow.showAsDropDown(view);
 
     }

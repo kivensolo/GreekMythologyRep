@@ -16,7 +16,6 @@ import com.bling.pages.FingerBallActivity;
 import com.bling.pages.UsingCustomSeekBar;
 import com.bling.pages.WaveLoadingActivity;
 import com.kingz.customdemo.R;
-import com.kingz.text.LableTextViewPage;
 import com.view.listview.CustomListViewActivity;
 import com.view.listview.RecyclerviewDemo;
 import com.view.scroll.ScrollTestActivity;
@@ -24,7 +23,7 @@ import com.view.scroll.SliderListViewActivity;
 import com.view.shape.ShapeDrawOval;
 import com.view.slider.wzviewpager.WZViewPagerActicity;
 import com.view.webview.WebViewActivity;
-import com.kingz.widgets.CustomPopupWindow;
+import com.kingz.popwindow.CommonPopupWindow;
 
 /**
  * 自定义View汇总主界面
@@ -59,7 +58,7 @@ public class CustomViewsPage extends  Activity implements OnItemClickListener{
 		mAdapter.add(new ListBillData(this,"Recyclerview例子",new Intent(this,RecyclerviewDemo.class)));
 		mAdapter.add(new ListBillData(this,"ListView-----左右滑动删除",new Intent(this,SliderListViewActivity.class)));
 		mAdapter.add(new ListBillData(this,"View的Fling效果",new Intent(this,ScrollTestActivity.class)));
-		mAdapter.add(new ListBillData(this,"PopupWindow(未完成)",new Intent(this,CustomPopupWindow.class)));
+		mAdapter.add(new ListBillData(this,"PopupWindow",new Intent(this,CommonPopupWindow.class)));
 		mAdapter.add(new ListBillData(this,"滚动View_3",new Intent(this,ScrollTestActivity.class)));
 		mAdapter.add(new ListBillData(this,"滚动View_4",new Intent(this,ScrollTestActivity.class)));
 		mAdapter.add(new ListBillData(this,"WebAPP测试",new Intent(this,WebViewActivity.class)));
