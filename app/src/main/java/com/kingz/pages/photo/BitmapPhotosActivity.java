@@ -1,7 +1,6 @@
 package com.kingz.pages.photo;
 
-import android.graphics.Bitmap;
-import android.graphics.Color;
+import android.graphics.*;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -44,6 +43,8 @@ public class BitmapPhotosActivity extends PhotosActivity {
                                             srcBitmap.getHeight() - srcBitmap.getHeight() / 2)));
         datas.add(new ItemInfo("倒影", BitMapUtils.setInvertedBitmap(srcBitmap, srcBitmap.getHeight() / 3)));
 
+        datas.add(new ItemInfo("加投影",srcBitmap));
+
         //datas.add("高斯模糊",BitMapUtils.guassBlur(srcBitmap,this,15.5f));
         super.onCreate(savedInstanceState);
         setImageView();
@@ -73,6 +74,16 @@ public class BitmapPhotosActivity extends PhotosActivity {
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         super.onItemClick(parent, view, position, id);
         setShowBitMap(datas.get(position).dstBitmap);
+        if(datas.get(position).name.equals("加投影")){
+            Paint paint = new Paint();
+            paint.setFlags(Paint.ANTI_ALIAS_FLAG | Paint.HINTING_ON | Paint.FILTER_BITMAP_FLAG);
+            paint.setStyle(Paint.Style.FILL);
+            paint.setAntiAlias(true);
+            paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DARKEN));
+            paint.setColor(0xFF00ff00);
+            BitMapUtils.addShadow(new Canvas(datas.get(position).dstBitmap),20,0x00FF00,50,50,datas.get(position).dstBitmap,paint);
+        }
+
         //Glide.with(this)
         //    .load("http://nuuneoi.com/uploads/source/playstore/cover.jpg")
         //    .error(R.mipmap.sample_2)
