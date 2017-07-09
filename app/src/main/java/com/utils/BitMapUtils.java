@@ -243,18 +243,18 @@ public class BitMapUtils {
         Paint paint = new Paint();
         paint.setAntiAlias(true);
         //准备裁剪的矩阵
-        Rect rect = new Rect(0, 0, bm.getWidth(), bm.getHeight());   //Src
-        RectF rectF = new RectF(0, 0, bm.getWidth(), bm.getHeight());  //Dst
+        Rect srcRect = new Rect(0, 0, bm.getWidth(), bm.getHeight());     //Src
+        RectF dstRect = new RectF(0, 0, bm.getWidth(), bm.getHeight());   //Dst
 
-        //新建一个新的输出图片
-        Bitmap roundBitmap = Bitmap.createBitmap(bm.getWidth(), bm.getHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(roundBitmap);
+        //新建一个新位图
+        Bitmap newBitmap = Bitmap.createBitmap(bm.getWidth(), bm.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(newBitmap);
         //圆角矩形(Dst)，radius为圆角大小
-        canvas.drawRoundRect(rectF, radius, radius, paint);
-        //设置PorterDuffXfermode，把圆角矩形(Dst)套在原Bitmap(Src)上取交集得到圆角Bitmap。
+        canvas.drawRoundRect(dstRect, radius, radius, paint);
+        //设置PorterDuffXfermode为SRC_IN --- 在Src上绘制两者的交集部分
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-        canvas.drawBitmap(bm, rect, rect, paint);
-        return roundBitmap;
+        canvas.drawBitmap(bm, srcRect, srcRect, paint);
+        return newBitmap;
     }
 
     /**
@@ -638,6 +638,27 @@ public class BitMapUtils {
 		return bmp.getWidth() * bmp.getHeight();
 	}
 
+	public static void addShadow(Canvas canvas,int shadowSize, int shadowColor,
+                                 int offsetX,int offsetY,
+                                 Bitmap srcBitmap,Paint paintShadow){
+        //绘制阴影，param1：模糊半径；param2：x轴大小：param3：y轴大小；param4：阴影颜色
+
+        Rect rectSrc = new Rect(0, 0, srcBitmap.getWidth(), srcBitmap.getHeight());
+		Rect rectDst = new Rect(rectSrc);
+        canvas.saveLayer(0, 0, srcBitmap.getWidth(), srcBitmap.getHeight(), paintShadow,Canvas.HAS_ALPHA_LAYER_SAVE_FLAG);
+        DrawUtils.offsetRect(rectDst,offsetX,offsetY);
+        RectF rectF = new RectF(rectDst);
+        paintShadow.setShadowLayer(shadowSize,0,0,shadowColor);
+
+        canvas.drawRoundRect(rectF, 20f, 20f, paintShadow);
+        canvas.restore();
+        //
+        //BlurMaskFilter blurFilter = new BlurMaskFilter(1,BlurMaskFilter.Blur.NORMAL);
+        //Bitmap shadowBitmap = srcBitmap.extractAlpha(paintShadow,offsetXY);
+        //Bitmap copy = shadowBitmap.copy(Bitmap.Config.ARGB_8888, true);
+
+    }
+
     /**
      *
      * @param bitmap
@@ -701,8 +722,6 @@ public class BitMapUtils {
 			}
 			return;
 		}
-
-
     }
 
 
