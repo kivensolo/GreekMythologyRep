@@ -224,6 +224,10 @@
         <activity android:name="com.kingz.filemanager.FileManagerActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
+        <!--文件管理页面-->
+        <activity android:name="com.kingz.communicat.HandlerAllOverActuivity"
+                  android:theme="@android:style/Theme.Black.NoTitleBar"/>
+
         <!-- 自定义View -->
         <activity android:name="com.bling.pages.FingerBallActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
