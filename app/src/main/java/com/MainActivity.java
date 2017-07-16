@@ -12,7 +12,7 @@ import com.AsuyncTaskJsonTest.LruPicListViewActivity;
 import com.content.ExternalStorage;
 import com.iflytek.synthesizer.VoiceActivity;
 import com.kingz.adapter.CommExpandableListAdapter;
-import com.kingz.communicat.HandlerAllOverActuivity;
+import com.kingz.communicat.HMLActuivity;
 import com.kingz.customdemo.R;
 import com.kingz.file.DownloadAPPActivity;
 import com.kingz.file.FileAndPicTestACT;
@@ -155,9 +155,9 @@ public class MainActivity extends ExpandableListActivity implements OnItemClickL
         addChildData("Iflytek", VoiceActivity.class);
         billDataManager.pushChilds();
 
-        //Other
+        //通信
         billDataManager.addGroup("Communication");
-        addChildData("Handler--Message--Looper--Deep", HandlerAllOverActuivity.class);
+        addChildData("HML_Deep", HMLActuivity.class);
         billDataManager.pushChilds();
     }
 

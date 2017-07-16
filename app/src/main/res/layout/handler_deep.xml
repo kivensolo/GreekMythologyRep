@@ -3,66 +3,72 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-    <Button
-            android:text="循环发送Add消息"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:layout_below="@+id/delay_send"
-            android:layout_alignStart="@+id/delay_send"
-            android:layout_marginTop="37dp" android:id="@+id/button11"/>
     <TextView
             android:text="TextView"
             android:layout_width="200dp"
             android:layout_height="100dp"
             android:textSize="26dp"
-            android:textColor="@color/chartreuse"
+            android:textColor="@color/red"
             android:gravity="center"
             android:id="@+id/numshowview"
-            android:background="@color/palegoldenrod"
-            android:layout_alignParentTop="true" android:layout_centerHorizontal="true"/>
+            android:background="@color/khaki"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"/>
     <Button
-            android:text="+1立刻 Msg"
+            android:text="+1 Now Msg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="22dp" android:id="@+id/directly_send"
-            android:layout_marginStart="29dp" android:layout_below="@+id/numshowview"
-            android:layout_alignParentStart="true"/>
+            android:layout_marginTop="20dp" android:id="@+id/directly_send"
+            android:layout_below="@+id/numshowview" android:layout_alignParentStart="true"/>
     <Button
-            android:text="+1延迟3s Msg"
+            android:text="+1 Delay 3s Msg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/delay_send"
-            android:layout_below="@+id/directly_send" android:layout_alignStart="@+id/directly_send"/>
+            android:layout_below="@+id/directly_send" android:layout_alignParentStart="true"/>
     <Button
-            android:text="-1立刻 Runnable"
+            android:text="-1 Now Runnable"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/directy_dec"
-            android:layout_alignBaseline="@+id/directly_send" android:layout_alignBottom="@+id/directly_send"
-            android:layout_toEndOf="@+id/delay_send" android:layout_marginStart="27dp"/>
+            android:layout_above="@+id/delay_dec" android:layout_toEndOf="@+id/loop_dec"/>
     <Button
-            android:text="-1延迟3s Runnable"
+            android:text="-1 Delay 3s Runnable"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/delay_dec"
-            android:layout_alignBaseline="@+id/delay_send" android:layout_alignBottom="@+id/delay_send"
-            android:layout_alignStart="@+id/directy_dec"/>
+            android:onClick="delayDec"
+            android:layout_above="@+id/loop_dec" android:layout_alignParentEnd="true"/>
     <Button
-            android:text="停止循环发送"
+            android:text="Stop Loop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="21dp"
+            android:onClick="stopLoop"
             android:id="@+id/loop_stop"
-            android:layout_below="@+id/button11"
-            android:layout_alignEnd="@+id/delay_send"/>
-      <Button
-              android:text="循环发送Dec消息"
+            android:layout_below="@+id/button11"/>
+    <Button
+            android:text="Stop Dec Loop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="stopDecLoop"
+            android:id="@+id/button6"
+            android:layout_below="@+id/loop_dec" android:layout_alignStart="@+id/loop_dec"/>
+    <Button
+              android:text="Loop Dec"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:id="@+id/loop_dec"
               android:onClick="loopDec"
-              android:layout_alignBaseline="@+id/button11"
-              android:layout_alignBottom="@+id/button11"
-              android:layout_alignStart="@+id/delay_dec"/>
+              android:layout_below="@+id/delay_send" android:layout_toEndOf="@+id/directly_send"/>
+       <Button
+            android:text="Loop Add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="loopAdd"
+            android:id="@+id/button11"
+            android:layout_below="@+id/delay_send"
+            android:layout_alignParentStart="true"/>
+
 
 
 </RelativeLayout>

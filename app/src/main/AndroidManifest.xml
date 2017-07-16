@@ -225,7 +225,7 @@
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!--文件管理页面-->
-        <activity android:name="com.kingz.communicat.HandlerAllOverActuivity"
+        <activity android:name="com.kingz.communicat.HMLActuivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!-- 自定义View -->

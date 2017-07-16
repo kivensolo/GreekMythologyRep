@@ -31,7 +31,7 @@ public class ScreenShotUtils {
      * @param view
      * @return
      */
-    public static final Bitmap screenShot(View view) {
+    public static Bitmap screenShot(View view) {
         if (null == view) {
             throw new IllegalArgumentException("parameter can't be null.");
         }
