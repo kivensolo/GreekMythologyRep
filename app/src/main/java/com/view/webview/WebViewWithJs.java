@@ -5,15 +5,16 @@ import android.graphics.Rect;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.widget.Toast;
-
 import com.kingz.customdemo.R;
+import com.mplayer.ExtMplayer;
+import com.utils.ScreenTools;
 import com.utils.ToastTools;
 import com.utils.ZLog;
-
 import org.json.JSONObject;
 
 /**
@@ -30,7 +31,7 @@ public abstract class WebViewWithJs extends WebView {
     private JsExtObject mJsExtObject = new JsExtObject();
 
     private Handler viewHandler = new Handler();
-
+    private ExtMplayer extMplayer;
 
     public WebViewWithJs(Context context) {
         super(context);
@@ -204,7 +205,83 @@ public abstract class WebViewWithJs extends WebView {
             getGlobalVisibleRect(rectInScreen);
             return String.format("%d,%d,%d,%d", rectInScreen.left, rectInScreen.top, rectInScreen.width(), rectInScreen.height());
         }
+
+        @JavascriptInterface
+		public String createPlayer(final String x, final String y,final String width, final String height){
+            ZLog.i(TAG, "createPlayer() createPlayer  width = " + width);
+			viewHandler.post(new Runnable() {
+				@Override
+				public void run() {
+					extMplayer = new ExtMplayer(mContext);
+					extMplayer.createPlayer(x,y,width,height);
+                    ViewGroup.LayoutParams lps = new ViewGroup.LayoutParams(ScreenTools.OperationWidth(Integer.valueOf(width)),
+							ScreenTools.OperationWidth(Integer.valueOf(height)));
+					extMplayer.setX(ScreenTools.OperationWidth(Integer.valueOf(x)));
+					extMplayer.setY(ScreenTools.OperationWidth(Integer.valueOf(y)));
+					addView(extMplayer,lps);
+				}
+			});
+            if(extMplayer != null){
+				return String.valueOf(extMplayer.getLatestPlayerId());
+			}
+			return "-1";
+		}
+
+
+        @JavascriptInterface
+		public void playVideoByUrl(final String playerId, final String playUrl,final String position){
+            ZLog.i(TAG, "playVideoByUrl() playerId = " + playerId + ";playUrl = " + playUrl + ";position=" + position);
+			viewHandler.post(new Runnable() {
+				@Override
+				public void run() {
+                    if(extMplayer != null){
+                        extMplayer.playVideoByUrl(playerId,playUrl,position);
+                    }
+				}
+			});
+		}
+
+        @JavascriptInterface
+		public void playVideoByUrl(final String playerId,final String position){
+            ZLog.i(TAG, "playVideoByUrl() playerId = " + ";position=" + position);
+			viewHandler.post(new Runnable() {
+				@Override
+				public void run() {
+                    if(extMplayer != null){
+                        //extMplayer.playVideoByUrl(playerId,"rtsp://222.83.47.212:554/vod/00000050280004173152.mpg?userid=91494124504&stbip=182.138.101.47&clienttype=1&ifcharge=1&time=20170717181940+08&life=172800&vcdnid=001&boid=001&srcboid=001&backupagent=222.83.47.212:554&ctype=50&playtype=0&Drm=0&programid=00000050280004173152&contname=&fathercont=&authid=0&tscnt=0&tstm=0&tsflow=0&ifpricereqsnd=1&stbid=3C-DA-2A-B1-49-B7&nodelevel=3&terminalflag=1&distype=0",position);
+                        extMplayer.playVideoByUrl(playerId,"http://video.chinanews.com/tvmining/News/MP4ZXW/DongNanTV/2016/04/29/DongNanTV_1500000_20160429_18866283_0_40.mp4",position);
+                    }
+				}
+			});
+		}
+        @JavascriptInterface
+		public void play(final String playerId){
+            ZLog.i(TAG, "playVideoByUrl() playerId = " + playerId);
+			viewHandler.post(new Runnable() {
+				@Override
+				public void run() {
+                    if (extMplayer != null) {
+                        extMplayer.play(playerId);
+                    }
+                }
+			});
+		}
+        @JavascriptInterface
+		public void pause(final String playerId){
+            ZLog.i(TAG, "playVideoByUrl() playerId = " + playerId );
+			viewHandler.post(new Runnable() {
+				@Override
+				public void run() {
+					  if (extMplayer != null) {
+                        extMplayer.pause(playerId);
+                    }
+				}
+			});
+		}
+
     }
+
+
 
     private void _internalOnReceiveMessage(String msg, Object info) {
         this.onReceiveMessage(msg, info);
