@@ -25,7 +25,7 @@ import java.util.List;
  */
 public class ObtainConnectPeopleActivity extends BaseActivity {
 
-    public static final String CONTENT_URI_USER_INFO = "content://com.starcor.system.provider.userinfo";
+    public static final String CONTENT_URI_USER_INFO = "content://com.starcor.system.provider.userinfo/query";
     private ArrayAdapter<String> adapter = null;
     private List<String> contactaList;
 
@@ -62,7 +62,7 @@ public class ObtainConnectPeopleActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Uri uri =  Uri.parse(CONTENT_URI_USER_INFO);
-                uri.withAppendedPath(uri, "query");
+                //uri.withAppendedPath(uri, "");
                 Cursor mCursor = baseResolver.query(uri, null, null, null, null);
                 if (mCursor != null) {
                     while (mCursor.moveToNext()) {
@@ -117,11 +117,12 @@ public class ObtainConnectPeopleActivity extends BaseActivity {
                 baseResolver = getContentResolver();
             }
             cursor = baseResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null);
-            while (null != cursor) {
-                String personName = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
-                String personNum = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                contactaList.add(personName + "\n" + personNum);
-            }
+            //while (null != cursor) {
+                //String personName = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+                //String personNum = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                //contactaList.add(personName + "\n" + personNum);
+                contactaList.add("Test" + "\n" + "Fire");
+            //}
             if (null == cursor) {
                 ToastTools.getInstance().showToast(this, "未找到联系人");
             }
