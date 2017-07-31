@@ -1,18 +1,20 @@
 package com.kingz.four_components;
 
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-
 import com.BaseActivity;
 import com.utils.ScreenTools;
 import com.utils.ToastTools;
+import com.utils.ZLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +23,9 @@ import java.util.List;
  * Created by KingZ on 2016/1/13.
  * Discription:获取系统的内容提供数据
  */
-public class ObtainConnectPeopleActivity extends BaseActivity{
+public class ObtainConnectPeopleActivity extends BaseActivity {
 
+    public static final String CONTENT_URI_USER_INFO = "content://com.starcor.system.provider.userinfo";
     private ArrayAdapter<String> adapter = null;
     private List<String> contactaList;
 
@@ -45,7 +48,7 @@ public class ObtainConnectPeopleActivity extends BaseActivity{
     private void initViews() {
         LinearLayout root = new LinearLayout(this);
         root.setGravity(Gravity.FILL_VERTICAL);
-        ViewGroup.LayoutParams lps = new ViewGroup.LayoutParams(-1,-1);
+        ViewGroup.LayoutParams lps = new ViewGroup.LayoutParams(-1, -1);
         root.setLayoutParams(lps);
         setContentView(root);
 
@@ -55,6 +58,23 @@ public class ObtainConnectPeopleActivity extends BaseActivity{
         queryBtn.setX(5);
         queryBtn.setY(5);
         queryBtn.setText("查询");
+        queryBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri uri =  Uri.parse(CONTENT_URI_USER_INFO);
+                uri.withAppendedPath(uri, "query");
+                Cursor mCursor = baseResolver.query(uri, null, null, null, null);
+                if (mCursor != null) {
+                    while (mCursor.moveToNext()) {
+                        String name = mCursor.getString(mCursor.getColumnIndex("userName"));
+                        String pwd = mCursor.getString(mCursor.getColumnIndex("password"));
+                        ZLog.d("KingZ Provider","name = " + name + ";pwd = "+pwd);
+                    }
+                    mCursor.close();
+                }else{
+                }
+            }
+        });
 
         deleteBtn = new Button(this);
         deleteBtn.setWidth(ScreenTools.Operation(150));
@@ -79,7 +99,7 @@ public class ObtainConnectPeopleActivity extends BaseActivity{
 
 
         ListView contactsView = new ListView(this);
-        adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,contactaList);
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, contactaList);
         contactsView.setAdapter(adapter);
         root.addView(queryBtn);
         root.addView(deleteBtn);
@@ -93,22 +113,22 @@ public class ObtainConnectPeopleActivity extends BaseActivity{
      */
     private void readContacts() {
         try {
-            if(baseResolver == null){
+            if (baseResolver == null) {
                 baseResolver = getContentResolver();
             }
-            cursor = baseResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null,null,null,null);
-            while( null != cursor){
+            cursor = baseResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null);
+            while (null != cursor) {
                 String personName = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
                 String personNum = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                contactaList.add(personName+"\n"+personNum);
+                contactaList.add(personName + "\n" + personNum);
             }
-            if(null == cursor){
-                ToastTools.getInstance().showToast(this,"未找到联系人");
+            if (null == cursor) {
+                ToastTools.getInstance().showToast(this, "未找到联系人");
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if(cursor != null){
+            if (cursor != null) {
                 cursor.close();
             }
         }

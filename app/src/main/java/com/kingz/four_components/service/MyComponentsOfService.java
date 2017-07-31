@@ -1,4 +1,4 @@
-package com.kingz.four_components;
+package com.kingz.four_components.service;
 
 import android.app.Service;
 import android.content.Intent;

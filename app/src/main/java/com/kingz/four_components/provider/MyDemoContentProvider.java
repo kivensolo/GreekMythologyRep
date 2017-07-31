@@ -1,4 +1,4 @@
-package com.kingz.four_components;
+package com.kingz.four_components.provider;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
@@ -25,6 +25,7 @@ public class MyDemoContentProvider extends ContentProvider{
     private static final int TABLE2_DIR = 2;
     private static final int TABLE2_ITEM = 3;
 
+    //TODO dir 和item真正的用途
     private static UriMatcher uriMatcher;
     static {
         uriMatcher = new UriMatcher(uriMatcher.NO_MATCH);
@@ -42,12 +43,12 @@ public class MyDemoContentProvider extends ContentProvider{
      */
     @Override
     public boolean onCreate() {
-        return false;
+        return true;
     }
 
     /**
      * 从内容提供器中查询数据
-     * @param uri               确定查询那张表
+     * @param uri               确定查询哪张表
      * @param projection        查询列数
      * @param selection         查询哪些行
      * @param selectionArgs     查询哪些行
@@ -77,10 +78,12 @@ public class MyDemoContentProvider extends ContentProvider{
     }
 
     /**
+     * 返回当前Url所代表数据的MIME类型
      * @param uri
      * @return  与参数相对应的MIME字符串  MIME：三部分组成
-     *          a:必须以vnd开头 b:如果内容URI以路径结尾，则后接android.cursor.dir/，如果内容URI以id结尾
-     *                          则接android.cursor.item/
+     *          a:必须以vnd开头
+     *          b:如果内容URI以路径结尾，则后接android.cursor.dir/    要操作的数据属于集合类型数据
+     *            如果内容URI以id结尾则接android.cursor.item/         要操作的数据属于非集合类型数据
      *          c:最后接上vnd.<authority>.<path>
      */
     @Override
@@ -126,12 +129,5 @@ public class MyDemoContentProvider extends ContentProvider{
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
         return 0;
     }
-
-//  如果操作的数据属于集合类型，那么MIME类型字符串应该以vnd.android.cursor.dir/开头。
-//  例如：要得到所有person记录的Uri为content://contacts/person，
-//  那么返回的MIME类型字符串为"vnd.android.cursor.dir/person"。
-//  如果要操作的数据属于非集合类型数据，那么MIME类型字符串应该以vnd.android.cursor.item/开头。
-
-
 
 }

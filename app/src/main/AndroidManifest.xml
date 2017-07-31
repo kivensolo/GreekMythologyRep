@@ -28,14 +28,16 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES"/>
 
+    <uses-permission android:name="com.starcor.hunan.ReadUserinfo"/>
+
 
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
      <!--Target Package为单元测试的包名-->
-    <instrumentation
+  <!--  <instrumentation
             android:name="android.test.InstrumentationTestRunner"
             android:targetPackage="com.kingz"
-            android:label="Tests for GeekMythologyRep"/>
+            android:label="Tests for GeekMythologyRep"/>-->
 
     <application
             android:allowBackup="true"
@@ -319,7 +321,7 @@
 
 
         <!--服务 exported:外部是否可访问  process:为服务设置不同进程-->
-        <service android:name="com.kingz.four_components.MyComponentsOfService"
+        <service android:name="com.kingz.four_components.service.MyComponentsOfService"
                  android:enabled="true"
                  android:exported="true"/>
 
@@ -354,7 +356,7 @@
         </service>
 
         <!--内容提供者-->
-        <provider android:name="com.kingz.four_components.MyDemoContentProvider"
+        <provider android:name="com.kingz.four_components.provider.MyDemoContentProvider"
                   android:authorities="com.kingz.four_components.myprovider"
                   android:exported="true">
         </provider>
