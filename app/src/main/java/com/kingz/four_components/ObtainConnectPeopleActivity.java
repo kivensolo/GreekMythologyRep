@@ -82,11 +82,10 @@ public class ObtainConnectPeopleActivity extends BaseActivity {
                         String appName = c2.getString(c2.getColumnIndex("app_name"));
                         String version = c2.getString(c2.getColumnIndex("app_version"));
                         String mac = c2.getString(c2.getColumnIndex("device_mac"));
-                        ZLog.d("KingZ Provider", "appName = " + appName + ";version = " + version + ";mac=" + mac);
+                        ZLog.d("KingZ Provider", "appName=" + appName + ";  version=" + version + ";  mac=" + mac);
                     }
                     c2.close();
                 }
-
             }
         });
 

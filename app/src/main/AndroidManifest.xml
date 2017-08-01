@@ -358,7 +358,7 @@
         </service>
 
         <!--内容提供者-->
-        <provider android:name="com.kingz.four_components.provider.MyDemoContentProvider"
+        <provider android:name="com.kingz.four_components.provider.ThetisProvider"
                   android:authorities="com.kingz.four_components.myprovider"
                   android:exported="true">
         </provider>
