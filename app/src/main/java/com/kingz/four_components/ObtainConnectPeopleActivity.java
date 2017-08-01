@@ -1,5 +1,6 @@
 package com.kingz.four_components;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,7 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import com.BaseActivity;
 import com.utils.ScreenTools;
-import com.utils.ToastTools;
 import com.utils.ZLog;
 
 import java.util.ArrayList;
@@ -25,7 +25,8 @@ import java.util.List;
  */
 public class ObtainConnectPeopleActivity extends BaseActivity {
 
-    public static final String CONTENT_URI_USER_INFO = "content://com.starcor.system.provider.userinfo/query";
+    public static final String CONTENT_URI_USER_INFO = "content://com.starcor.system.provider.kork.userinfo/query";
+    public static final String CONTENT_URI_COMMON_INFO = "content://com.starcor.system.provider.kork.commonprovider/query";
     private ArrayAdapter<String> adapter = null;
     private List<String> contactaList;
 
@@ -65,14 +66,27 @@ public class ObtainConnectPeopleActivity extends BaseActivity {
                 //uri.withAppendedPath(uri, "");
                 Cursor mCursor = baseResolver.query(uri, null, null, null, null);
                 if (mCursor != null) {
-                    while (mCursor.moveToNext()) {
-                        String name = mCursor.getString(mCursor.getColumnIndex("userName"));
-                        String pwd = mCursor.getString(mCursor.getColumnIndex("password"));
-                        ZLog.d("KingZ Provider","name = " + name + ";pwd = "+pwd);
+                    if(mCursor.moveToFirst()) {
+                        String name = mCursor.getString(mCursor.getColumnIndex("user_name"));
+                        String id = mCursor.getString(mCursor.getColumnIndex("user_id"));
+                        String token = mCursor.getString(mCursor.getColumnIndex("user_webtoken"));
+                        ZLog.d("KingZ Provider","name = " + name + ";id="+id+ ";token = "+token);
                     }
                     mCursor.close();
-                }else{
                 }
+                Uri ur2 =  Uri.parse(CONTENT_URI_COMMON_INFO);
+                //uri.withAppendedPath(uri, "");
+                Cursor c2 = baseResolver.query(ur2, null, null, null, null);
+                if (c2 != null) {
+                    if (c2.moveToFirst()) {
+                        String appName = c2.getString(c2.getColumnIndex("app_name"));
+                        String version = c2.getString(c2.getColumnIndex("app_version"));
+                        String mac = c2.getString(c2.getColumnIndex("device_mac"));
+                        ZLog.d("KingZ Provider", "appName = " + appName + ";version = " + version + ";mac=" + mac);
+                    }
+                    c2.close();
+                }
+
             }
         });
 
@@ -81,7 +95,17 @@ public class ObtainConnectPeopleActivity extends BaseActivity {
         deleteBtn.setHeight(ScreenTools.Operation(10));
         deleteBtn.setX(20);
         deleteBtn.setY(5);
-        deleteBtn.setText("删除One");
+        deleteBtn.setText("订购");
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClassName("com.starcor.hunan","com.starcor.hunan.VipPackageDetailsActivity");
+                intent.putExtra("cmd_ex", "show_product_purchase");//String类参数
+                intent.putExtra("xj_singleFilmProducts", "10002004");
+                startActivityForResult(intent,0);
+            }
+        });
 
         insertBtn = new Button(this);
         insertBtn.setWidth(ScreenTools.Operation(150));
@@ -123,9 +147,9 @@ public class ObtainConnectPeopleActivity extends BaseActivity {
                 //contactaList.add(personName + "\n" + personNum);
                 contactaList.add("Test" + "\n" + "Fire");
             //}
-            if (null == cursor) {
-                ToastTools.getInstance().showToast(this, "未找到联系人");
-            }
+            //if (null == cursor) {
+            //    ToastTools.getInstance().showToast(this, "未找到联系人");
+            //}
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
