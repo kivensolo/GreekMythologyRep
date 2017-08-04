@@ -3,6 +3,7 @@ package com;
 import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
+import android.os.StrictMode;
 import android.util.Log;
 import com.core.logic.GlobalCacheCenter;
 import com.kingz.customdemo.BuildConfig;
@@ -21,6 +22,8 @@ public class App extends Application {
     public final static String TAG = "Application";
 
     private static App application;
+
+    private static final boolean STRICT_MODE = true;
     /**
      * 全局变量
      */
@@ -51,6 +54,25 @@ public class App extends Application {
         initAPPScreenParms();
         initCacheCenter();
         Takt.stock(this).size(20f).play();
+        initStrictListenner();
+    }
+
+    private void initStrictListenner() {
+        if(STRICT_MODE){
+            //设置StrictMode监听那些潜在问题，出现问题时可以对屏幕闪红色，也可以输出错误日志
+            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                    .detectDiskReads()
+                    .detectDiskWrites()
+                    .detectNetwork()   // or .detectAll() for all detectable problems
+                    .penaltyLog()
+                    .build());
+            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+                    .detectLeakedSqlLiteObjects()
+                    .detectLeakedClosableObjects()
+                    .penaltyLog()
+                    .penaltyDeath()
+                    .build());
+        }
     }
 
     @Override
