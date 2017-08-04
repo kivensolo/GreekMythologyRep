@@ -4,10 +4,12 @@ import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-
+import android.graphics.drawable.Drawable;
+import android.text.TextUtils;
 import com.App;
 
 import java.util.List;
@@ -16,11 +18,19 @@ import java.util.Set;
 import static android.content.Context.ACTIVITY_SERVICE;
 
 /**
- * Copyright(C) 2016, 北京视达科科技有限公司
- * All rights reserved. <br>
  * author: King.Z <br>
  * date:  2016/6/17 10:54 <br>
  * description: APP相关信息工具类 <br>
+ *     @see #isHomeApp(Context)
+ *     @see #isTopActivity()
+ *     @see #isAppInstalled(String)
+ *     @see #getThirdAppsWithLauncher()
+ *     @see #getAppName(Context,String)
+ *     @see #getAppIcon(Context,String)
+ *     @see #getVersionName(Context,String)
+ *     @see #getVersionCode(Context,String)
+ *     @see #getIntentContentToStr(Intent)
+ *     @see #getAppSignature(Context,String)
  */
 public class AppInfoUtils {
     private static final String TAG = AppInfoUtils.class.getSimpleName();
@@ -30,11 +40,10 @@ public class AppInfoUtils {
         throw new UnsupportedOperationException("cannot be instantiated");
     }
 
-
     /**
      * 获得全部应用
      */
-    public static List getThirdAppWithLauncher() {
+    public static List getThirdAppsWithLauncher() {
         PackageManager pkgMgr = App.getAppContext().getPackageManager();
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
@@ -58,7 +67,6 @@ public class AppInfoUtils {
         return false;
     }
 
-
     /**
      * [根据包名判断一个应用是否已经被安装]
      *
@@ -77,16 +85,40 @@ public class AppInfoUtils {
         return installed;
     }
 
-
     /**
      * [获取应用程序名称]
      */
-    public static String getAppName(Context context) {
+    public static String getAppName(Context context,String packname){
+        String name = packname;
         try {
-            PackageManager packageManager = context.getPackageManager();
-            PackageInfo packageInfo = packageManager.getPackageInfo(context.getPackageName(), 0);
+            PackageManager pm = context.getPackageManager();
+            if(TextUtils.isEmpty(packname)){
+                name = context.getPackageName();
+            }
+            PackageInfo packageInfo = pm.getPackageInfo(name, 0);
             int labelRes = packageInfo.applicationInfo.labelRes;
             return context.getResources().getString(labelRes);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 获取指定应用的Icon
+     * @param context  context
+     * @param packname 应用包名
+     * @return  Drawable
+     */
+    public static Drawable getAppIcon(Context context,String packname) {
+        String name = packname;
+        try {
+            PackageManager pm = context.getPackageManager();
+            if(TextUtils.isEmpty(packname)){
+                name = context.getPackageName();
+            }
+            ApplicationInfo info  = pm.getApplicationInfo(name, 0);
+            return info.loadIcon(pm);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
@@ -99,16 +131,43 @@ public class AppInfoUtils {
      * @param context
      * @return 当前应用的版本名称
      */
-    public static String getVersionName(Context context) {
+    public static String getVersionName(Context context, String packageName) {
         try {
+            String name = packageName;
+            if (TextUtils.isEmpty(name)) {
+                name = context.getPackageName();
+            }
             PackageManager packageManager = context.getPackageManager();
-            PackageInfo packageInfo = packageManager.getPackageInfo(context.getPackageName(), 0);
+            PackageInfo packageInfo = packageManager.getPackageInfo(name, 0);
             return packageInfo.versionName;
 
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * [获取应用程序版本号]
+     * @param context
+     * @return 当前应用的版本号
+     */
+    public static int getVersionCode(Context context, String packageName) {
+        int verCode = -1;
+        String name = packageName;
+        try {
+            if (TextUtils.isEmpty(name)) {
+                name = context.getPackageName();
+            }
+            PackageManager packageManager = context.getPackageManager();
+            PackageInfo packageInfo = packageManager.getPackageInfo(name, 0);
+            verCode = packageInfo.versionCode;
+            return verCode;
+
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return verCode;
     }
 
     /**
@@ -145,4 +204,18 @@ public class AppInfoUtils {
 
     }
 
+     /**
+     * 获取程序的签名
+     */
+    public static String getAppSignature(Context context, String packname) {
+         try {
+             PackageManager pm = context.getPackageManager();
+             PackageInfo packinfo = pm.getPackageInfo(packname, PackageManager.GET_SIGNATURES);
+             //获取到所有的权限
+             return packinfo.signatures[0].toCharsString();
+         } catch (PackageManager.NameNotFoundException e) {
+             e.printStackTrace();
+         }
+         return "";
+     }
 }
