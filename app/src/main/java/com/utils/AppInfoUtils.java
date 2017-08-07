@@ -22,15 +22,17 @@ import static android.content.Context.ACTIVITY_SERVICE;
  * date:  2016/6/17 10:54 <br>
  * description: APP相关信息工具类 <br>
  *     @see #isHomeApp(Context)
- *     @see #isTopActivity()
- *     @see #isAppInstalled(String)
- *     @see #getThirdAppsWithLauncher()
+ *     @see #isTopActivity(Context)
+ *     @see #isAppInstalled(Context,String)
+ *     @see #getThirdAppsWithLauncher(Context)
  *     @see #getAppName(Context,String)
  *     @see #getAppIcon(Context,String)
  *     @see #getVersionName(Context,String)
  *     @see #getVersionCode(Context,String)
  *     @see #getIntentContentToStr(Intent)
  *     @see #getAppSignature(Context,String)
+ *
+ *     @see #getPackageInfoByName(Context, String, int)
  */
 public class AppInfoUtils {
     private static final String TAG = AppInfoUtils.class.getSimpleName();
@@ -43,8 +45,8 @@ public class AppInfoUtils {
     /**
      * 获得全部应用
      */
-    public static List getThirdAppsWithLauncher() {
-        PackageManager pkgMgr = App.getAppContext().getPackageManager();
+    public static List getThirdAppsWithLauncher(Context context) {
+        PackageManager pkgMgr = context.getPackageManager();
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
         List<ResolveInfo> resolveInfoList = pkgMgr.queryIntentActivities(intent, 0); //本机所有具有Launcher属性的APK信息
@@ -73,8 +75,8 @@ public class AppInfoUtils {
      * @param packageName 应用包名
      * @return
      */
-    public static boolean isAppInstalled(String packageName) {
-        PackageManager pm = App.getAppContext().getPackageManager();
+    public static boolean isAppInstalled(Context context,String packageName) {
+        PackageManager pm = context.getPackageManager();
         boolean installed;
         try {
             pm.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES);
@@ -89,19 +91,13 @@ public class AppInfoUtils {
      * [获取应用程序名称]
      */
     public static String getAppName(Context context,String packname){
-        String name = packname;
-        try {
-            PackageManager pm = context.getPackageManager();
-            if(TextUtils.isEmpty(packname)){
-                name = context.getPackageName();
-            }
-            PackageInfo packageInfo = pm.getPackageInfo(name, 0);
+        PackageInfo packageInfo = getPackageInfoByName(context,packname,0);
+        if(packageInfo != null){
             int labelRes = packageInfo.applicationInfo.labelRes;
             return context.getResources().getString(labelRes);
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
+        }else{
+            return "";
         }
-        return null;
     }
 
     /**
@@ -154,18 +150,9 @@ public class AppInfoUtils {
      */
     public static int getVersionCode(Context context, String packageName) {
         int verCode = -1;
-        String name = packageName;
-        try {
-            if (TextUtils.isEmpty(name)) {
-                name = context.getPackageName();
-            }
-            PackageManager packageManager = context.getPackageManager();
-            PackageInfo packageInfo = packageManager.getPackageInfo(name, 0);
+        PackageInfo packageInfo = getPackageInfoByName(context,packageName,0);
+        if(packageInfo != null){
             verCode = packageInfo.versionCode;
-            return verCode;
-
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
         }
         return verCode;
     }
@@ -175,9 +162,9 @@ public class AppInfoUtils {
      *
      * @return true/false
      */
-    public static boolean isTopActivity() {
+    public static boolean isTopActivity(Context context) {
         //先拿到所有的activity
-        ActivityManager activityManager = (ActivityManager) App.getAppContext().getSystemService(ACTIVITY_SERVICE);
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
         List<ActivityManager.RunningTaskInfo> tasksInfo = activityManager.getRunningTasks(1);
         if (tasksInfo.size() > 0) {
             ComponentName topActivity = tasksInfo.get(0).topActivity;
@@ -208,14 +195,35 @@ public class AppInfoUtils {
      * 获取程序的签名
      */
     public static String getAppSignature(Context context, String packname) {
-         try {
-             PackageManager pm = context.getPackageManager();
-             PackageInfo packinfo = pm.getPackageInfo(packname, PackageManager.GET_SIGNATURES);
-             //获取到所有的权限
-             return packinfo.signatures[0].toCharsString();
-         } catch (PackageManager.NameNotFoundException e) {
-             e.printStackTrace();
-         }
-         return "";
+        PackageInfo packinfo = getPackageInfoByName(context, packname, PackageManager.GET_SIGNATURES);
+        if (packinfo != null) {
+            return packinfo.signatures[0].toCharsString();
+        } else {
+            return "";
+        }
      }
+
+    /**
+     * 获取指定apk的PackageInfo信息
+     * @param context   context
+     * @param packname  指定包名
+     * @param flags     flags
+     *                  Flag = GET_ACTIVITIES
+     *                  Flag = GET_SERVICES
+     *                  .....
+     *                  .....
+     * @return
+     */
+    public static PackageInfo getPackageInfoByName(Context context, String packname, int flags) {
+        String name = packname;
+        try {
+            PackageManager pm = context.getPackageManager();
+            if (TextUtils.isEmpty(packname)) {
+                name = context.getPackageName();
+            }
+            return pm.getPackageInfo(name, flags);
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }
