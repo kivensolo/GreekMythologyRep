@@ -45,14 +45,6 @@ android {
     compileSdkVersion 22
 }
 dependencies {
-//    compile 'com.android.support:recyclerview-v7:22.1.0'
-//    compile 'com.android.support:support-v4:22.2.1'
-//    compile 'com.android.support:cardview-v7:22.2.1'
-//    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-//        exclude group: 'com.android.support', module: 'support-annotations'
-//    })
-//    testCompile 'junit:junit:4.12'
-//    androidTestCompile 'junit:junit:4.12'
     debugCompile(["jp.wasabeef:takt:1.0.1"])
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.google.code.gson:gson:2.7'
@@ -61,7 +53,20 @@ dependencies {
     compile 'com.squareup.okio:okio:1.5.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'org.testng:testng:6.9.6'
-
     // 编译extras目录下的ShimmerAndroid模块
     //compile project(':extras:ShimmerAndroid') //引用Library模块 project后面括号中的内容要与前面所说的settings.gradle文件中写的模块名称一致，也是以冒号开头，并且用单引号括起来。
 }
+
+//task makeLoggerJar(dependsOn: ['compileReleaseJavaWithJavac'], type: Jar) {
+////    delete 'build/libs/starcor_logger_sdk.jar'//删除存在的
+//    archiveName = 'my_firstjar.jar'// jar命名
+//    from('build/intermediates/classes/release/')// 代码来源
+////    from(project.zipTree("libs/ZipFileWithPwd.jar"))// 打第三方的包
+//    destinationDir = file('build/libs')
+//    exclude('**/R.class')
+//    exclude('**/R\$*.class')
+//    exclude('**/BuildConfig.class')
+//    include('com/starcor/tianwei/sdk/**/*.class')
+////    include('nochump/util/extend/**/*.class')
+////    include('nochump/util/zip/**/*.class')
+//}
