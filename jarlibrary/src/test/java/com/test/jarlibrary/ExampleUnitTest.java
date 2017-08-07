@@ -1,4 +1,4 @@
-package com.example.aslibrary;
+package com.test.jarlibrary;
 
 import org.junit.Test;
 

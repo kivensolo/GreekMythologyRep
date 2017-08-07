@@ -1,4 +1,4 @@
-package com.utils;
+package com.test.jarlibrary;
 
 import android.app.ActivityManager;
 import android.content.ComponentName;
@@ -10,7 +10,6 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
-import com.App;
 
 import java.util.List;
 import java.util.Set;
@@ -34,10 +33,10 @@ import static android.content.Context.ACTIVITY_SERVICE;
  *
  *     @see #getPackageInfoByName(Context, String, int)
  */
-public class AppInfoUtils {
-    private static final String TAG = AppInfoUtils.class.getSimpleName();
+public class AppUtils {
+    private static final String TAG = AppUtils.class.getSimpleName();
 
-    private AppInfoUtils() {
+    private AppUtils() {
         /* cannot be instantiated */
         throw new UnsupportedOperationException("cannot be instantiated");
     }

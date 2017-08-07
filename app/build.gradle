@@ -13,6 +13,7 @@ def releaseTime() {
 }
 
 android {
+    compileSdkVersion 22
     buildToolsVersion '25.0.0'
     defaultConfig {
         applicationId "com.kingz.customdemo"
@@ -42,8 +43,8 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
     }
-    compileSdkVersion 22
 }
+
 dependencies {
     debugCompile(["jp.wasabeef:takt:1.0.1"])
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -55,9 +56,11 @@ dependencies {
     compile 'org.testng:testng:6.9.6'
     // 编译extras目录下的ShimmerAndroid模块
     //compile project(':extras:ShimmerAndroid') //引用Library模块 project后面括号中的内容要与前面所说的settings.gradle文件中写的模块名称一致，也是以冒号开头，并且用单引号括起来。
+    compile project(':jarlibrary')
+    compile files('libs/TestSdk_V1.0.jar')
 }
 
-//task makeLoggerJar(dependsOn: ['compileReleaseJavaWithJavac'], type: Jar) {
+//task makeJar(dependsOn: ['compileReleaseJavaWithJavac'], type: Jar) {
 ////    delete 'build/libs/starcor_logger_sdk.jar'//删除存在的
 //    archiveName = 'my_firstjar.jar'// jar命名
 //    from('build/intermediates/classes/release/')// 代码来源
