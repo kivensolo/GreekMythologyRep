@@ -26,18 +26,20 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-//    compile 'com.android.support:appcompat-v7:22.0.1'
+// compile 'com.android.support:appcompat-v7:22.0.1'
     testCompile 'junit:junit:4.12'
 }
 
 def SDK_BASENAME = "TestSdk";
-def SDK_VERSION = "_V1.0";
+def SDK_VERSION = "_V1.1";
+def SDK_FULLNAME = "${SDK_BASENAME}${SDK_VERSION}.jar"; //模板式字符串
+
 def sdkDestinationPath = "build/outputs/jar/";
-def jarUrl = sdkDestinationPath + SDK_BASENAME + SDK_VERSION + ".jar";
+def jarUrl = "${sdkDestinationPath}${SDK_BASENAME}${SDK_VERSION}.jar";
 def code_From = "build/intermediates/classes/release/";
 
 task deleteBuild(type: Delete) {
-    delete sdkDestinationPath + SDK_BASENAME + SDK_VERSION + ".jar"
+    delete jarUrl;
 }
 
 task makeTestJar(dependsOn: ['compileReleaseJavaWithJavac'], type: Jar){
@@ -47,7 +49,7 @@ task makeTestJar(dependsOn: ['compileReleaseJavaWithJavac'], type: Jar){
     exclude('**/R\$*.class')
     exclude('**/BuildConfig.class')
     include('com/test/jarlibrary/**/*.class')
-    archiveName = SDK_BASENAME + SDK_VERSION + ".jar"
+    archiveName = SDK_FULLNAME;
     destinationDir = file(sdkDestinationPath)
 //    outjars jarUrl
 //    configuration 'proguard-rules.pro'// 混淆配置文件
