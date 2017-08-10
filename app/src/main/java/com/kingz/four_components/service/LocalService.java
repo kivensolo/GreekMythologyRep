@@ -1,5 +1,6 @@
 package com.kingz.four_components.service;
 
+import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
@@ -17,6 +18,7 @@ import java.util.Random;
  *     例如，客户端可调用服务中的 getRandomNumber():
  */
 
+@SuppressLint("Registered")
 public class LocalService extends Service {
     // Binder given to clients
     private final IBinder mBinder = new LocalBinder();

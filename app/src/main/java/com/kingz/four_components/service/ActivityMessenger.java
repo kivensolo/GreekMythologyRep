@@ -1,5 +1,6 @@
 package com.kingz.four_components.service;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
@@ -23,6 +24,7 @@ import com.kingz.customdemo.R;
  *     用Messenger来进行IPC的话整体的流程是非常清晰的，Message在其中起到了一个信使的作用，
  *     通过它客户端与服务端的信息得以互通。
  */
+@SuppressLint("Registered")
 public class ActivityMessenger extends Activity {
 
     static final int MSG_SAY_HELLO = 1;

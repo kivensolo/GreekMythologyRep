@@ -1,4 +1,4 @@
-package com.AsuyncTaskJsonTest;
+package com.asuynctask_jsontest;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

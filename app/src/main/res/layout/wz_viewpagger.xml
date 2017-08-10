@@ -23,121 +23,123 @@
     />
 
     <ImageView
-        android:id="@+id/imageview_main_activity_name_tag"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="40dp"
-        android:paddingRight="50dp"
-        android:layout_alignParentTop="true"
-        android:rotation="-10"
-        android:src="@drawable/name_tag"/>
+            android:id="@+id/imageview_main_activity_name_tag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="40dp"
+            android:paddingRight="50dp"
+            android:layout_alignParentTop="true"
+            android:rotation="-10"
+            android:src="@drawable/name_tag"
+            tools:ignore="ContentDescription"/>
 
     <ImageView
-        android:id="@+id/imageview_main_activity_currently_work"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="225dp"
-        android:src="@drawable/currently_work"/>
+            android:id="@+id/imageview_main_activity_currently_work"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="225dp"
+            android:src="@drawable/currently_work"
+            tools:ignore="ContentDescription"/>
 
     <ImageView
-        android:id="@+id/imageview_main_activity_at_skex"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="450dp"
-        android:src="@drawable/at_skex_2"/>
-
-
-
-    <ImageView
-        android:id="@+id/imageview_main_activity_commonly"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="95dp"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/commonly"/>
+            android:id="@+id/imageview_main_activity_at_skex"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="450dp"
+            android:src="@drawable/at_skex_2"
+            tools:ignore="ContentDescription"/>
 
     <ImageView
-        android:id="@+id/imageview_main_activity_django_python"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="75dp"
-        android:layout_marginTop="400dp"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/django_python"/>
+            android:id="@+id/imageview_main_activity_commonly"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="95dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/commonly"
+            tools:ignore="ContentDescription"/>
 
     <ImageView
-        android:id="@+id/imageview_main_activity_mobile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="180dp"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/mobile"/>
+            android:id="@+id/imageview_main_activity_django_python"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="75dp"
+            android:layout_marginTop="400dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/django_python" tools:ignore="ContentDescription"/>
 
     <ImageView
-        android:id="@+id/imageview_main_activity_but"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/but"/>
+            android:id="@+id/imageview_main_activity_mobile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="180dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/mobile" tools:ignore="ContentDescription"/>
 
     <ImageView
-        android:id="@+id/imageview_main_activity_diploma"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="250dp"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/diploma"/>
+            android:id="@+id/imageview_main_activity_but"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/but" tools:ignore="ContentDescription"/>
 
     <ImageView
-        android:id="@+id/imageview_main_activity_why"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/why"/>
+            android:id="@+id/imageview_main_activity_diploma"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="250dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/diploma" tools:ignore="ContentDescription"/>
+
+    <ImageView
+            android:id="@+id/imageview_main_activity_why"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/why" tools:ignore="ContentDescription"/>
 
    <ImageView
-       android:id="@+id/imageview_main_future"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:layout_centerHorizontal="true"
-       android:src="@drawable/future"/>
+           android:id="@+id/imageview_main_future"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_centerHorizontal="true"
+           android:src="@drawable/future" tools:ignore="ContentDescription"/>
 
     <ImageView
-        android:id="@+id/imageview_main_arduino"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/imageview_main_future"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="50dp"
-        android:src="@drawable/arduino"/>
+            android:id="@+id/imageview_main_arduino"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imageview_main_future"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="50dp"
+            android:src="@drawable/arduino" tools:ignore="ContentDescription"/>
 
     <ImageView
-        android:id="@+id/imageview_main_raspberry_pi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/imageview_main_arduino"
-        android:layout_marginTop="40dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="50dp"
-        android:src="@drawable/raspberry_pi_logo"/>
+            android:id="@+id/imageview_main_raspberry_pi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imageview_main_arduino"
+            android:layout_marginTop="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="50dp"
+            android:src="@drawable/raspberry_pi_logo" tools:ignore="ContentDescription"/>
 
     <ImageView
-        android:id="@+id/imageview_main_connected_device"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="75dp"
-        android:layout_marginLeft="50dp"
-        android:src="@drawable/connect_device"/>
+            android:id="@+id/imageview_main_connected_device"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="75dp"
+            android:layout_marginLeft="50dp"
+            android:src="@drawable/connect_device" tools:ignore="ContentDescription"/>
 
     <ImageView
-        android:id="@+id/imageview_main_check_out"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/check_out"/>
+            android:id="@+id/imageview_main_check_out"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/check_out" tools:ignore="ContentDescription"/>
 
     <TextView
         android:id="@+id/textview_main_github_link"

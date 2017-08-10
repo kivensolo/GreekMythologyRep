@@ -107,9 +107,7 @@ public class EncryptTools {
 				byte[] padData = new byte[blockSize];
 				Arrays.fill(padData, (byte) 0);
 
-				for (int offset = i; offset < dataBytes.length; ++offset) {
-					padData[offset - i] = dataBytes[offset];
-				}
+				System.arraycopy(dataBytes, i, padData, 0, dataBytes.length - i);
 				data = cipher.doFinal(padData);
 			} else {
 				data = cipher.update(dataBytes, i, blockSize);

@@ -1,8 +1,10 @@
 package com.view;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 
+@SuppressLint("Registered")
 public class ViewsActivity extends Activity {
 
     @Override

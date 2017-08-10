@@ -1,5 +1,6 @@
 package com.kingz.pages.photo;
 
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import java.util.List;
  * date:  2016/9/2 17:21 <br>
  * description: PhotosActivity <br>
  */
+@SuppressLint("Registered")
 public class PhotosActivity extends BaseActivity implements AdapterView.OnItemClickListener {
 
     protected BitmapPageAdapter bitmapAdapter;

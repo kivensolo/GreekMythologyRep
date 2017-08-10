@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.kingz.customdemo"
+          xmlns:tools="http://schemas.android.com/tools" package="com.kingz.customdemo"
           android:versionCode="1"
           android:versionName="1.0">
 
@@ -211,7 +211,7 @@
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!--图片缓存测试页面-->
-        <activity android:name="com.AsuyncTaskJsonTest.LruPicListViewActivity"
+        <activity android:name="com.asuynctask_jsontest.LruPicListViewActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!--图片缓存测试页面-->
@@ -222,7 +222,8 @@
 
         <!--ColorMatrix-->
         <activity android:name="com.kingz.pages.photo.ColorMatrixDemo"
-                  android:theme="@android:style/Theme.Material.NoActionBar"/>
+                  android:theme="@android:style/Theme.Material.NoActionBar"
+                  tools:targetApi="lollipop"/>
 
         <!--文件管理页面-->
         <activity android:name="com.kingz.filemanager.FileManagerActivity"

@@ -1,5 +1,6 @@
 package com;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -19,6 +20,7 @@ import java.io.File;
  * author: King.Z
  * date: 2016 2016/3/27 18:26
  */
+@SuppressLint("Registered")
 public class BaseActivity extends Activity {
 
     private static final String TAG = BaseActivity.class.getSimpleName();

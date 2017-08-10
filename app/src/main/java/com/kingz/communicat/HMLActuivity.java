@@ -9,8 +9,6 @@ import android.widget.TextView;
 import com.kingz.customdemo.R;
 import com.utils.ZLog;
 
-import static android.R.attr.value;
-
 /**
  * author: King.Z <br>
  * date:  2017/7/12 21:14 <br>

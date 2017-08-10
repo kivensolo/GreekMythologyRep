@@ -23,7 +23,7 @@
         <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
                   android:layout_toRightOf="@+id/address_id" android:textStyle="bold"
                   android:textColor="@android:color/holo_red_light"
-                  android:id="@+id/eidt_address_id" android:singleLine="true"/>
+                  android:id="@+id/eidt_address_id" android:singleLine="true" tools:ignore="LabelFor"/>
 
         <View   android:id="@+id/vHDivider_a" android:background="@color/magenta"
                 android:layout_width="match_parent" android:layout_height="1.0dip"
@@ -37,11 +37,11 @@
                     android:layout_alignBaseline="@+id/edit_account_id"/>
 
         <EditText android:layout_width="match_parent" android:layout_height="wrap_content"
-                   android:id="@+id/edit_account_id" android:textStyle="bold"
-                   android:textColor="@android:color/holo_red_light"
-                   android:layout_toRightOf="@+id/account_info_id"
-                   android:layout_below="@+id/eidt_address_id" android:typeface="serif"
-                   android:password="true" android:singleLine="true"/>
+                  android:id="@+id/edit_account_id" android:textStyle="bold"
+                  android:textColor="@android:color/holo_red_light"
+                  android:layout_toRightOf="@+id/account_info_id"
+                  android:layout_below="@+id/eidt_address_id" android:typeface="serif"
+                  android:password="true" android:singleLine="true" tools:ignore="LabelFor"/>
     </RelativeLayout>
 
     <RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent"

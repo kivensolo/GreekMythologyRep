@@ -88,10 +88,10 @@ public class BaiduMapActivity extends Activity {
 				// 判断当前网络状态是否为连接状态
 				if (networkInfo[i].getState() == NetworkInfo.State.CONNECTED){
 					Toast.makeText(this,"当前网络正常",Toast.LENGTH_SHORT).show();
-					if(networkInfo[i].getType() == cm.TYPE_WIFI){
+					if(networkInfo[i].getType() == ConnectivityManager.TYPE_WIFI){
 						String wifiName = NetTools.getWifiName(context);
 						Toast.makeText(this,"当前为wifi网络,所连接的网络为：" + wifiName,Toast.LENGTH_SHORT).show();
-					}else if(networkInfo[i].getType() == cm.TYPE_MOBILE){
+					}else if(networkInfo[i].getType() == ConnectivityManager.TYPE_MOBILE){
 						Toast.makeText(this,"当前为移动网络",Toast.LENGTH_SHORT).show();
 					}
 				}else if(networkInfo[i].getState() == NetworkInfo.State.DISCONNECTED){

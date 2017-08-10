@@ -1,5 +1,6 @@
 package com.kingz.four_components.service;
 
+import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Handler;
@@ -29,6 +30,7 @@ import android.widget.Toast;
         </service>
  *
  */
+@SuppressLint("Registered")
 public class MessengerServiceDemo extends Service {
 
     static final int MSG_SAY_HELLO = 1;

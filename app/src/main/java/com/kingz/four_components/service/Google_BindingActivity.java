@@ -1,5 +1,6 @@
 package com.kingz.four_components.service;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
@@ -16,6 +17,7 @@ import android.widget.Toast;
  * description: GooGle Code Demo <br>
  *     Client
  */
+@SuppressLint("Registered")
 public class Google_BindingActivity extends Activity {
     LocalService mService;
     boolean mBound = false;

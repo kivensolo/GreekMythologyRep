@@ -1,5 +1,6 @@
 package com.view.slider.wzviewpager.wzcodepagger;
 
+import android.annotation.SuppressLint;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ public class SCViewAnimation {
     private View view;
     private HashMap<Integer, ArrayList<SCPageAnimation>> pageAnimationMap;
 
+    @SuppressLint("UseSparseArrays")
     public SCViewAnimation(View inView) {
         this.view = inView;
         this.pageAnimationMap = new HashMap<Integer, ArrayList<SCPageAnimation>>();

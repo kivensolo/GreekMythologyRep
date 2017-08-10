@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import com.kingz.customdemo.R;
 import com.utils.BitMapUtils;
+import com.utils.ScreenShotUtils;
 
 import java.util.ArrayList;
 
@@ -44,6 +45,7 @@ public class BitmapPhotosActivity extends PhotosActivity {
         datas.add(new ItemInfo("倒影", BitMapUtils.setInvertedBitmap(srcBitmap, srcBitmap.getHeight() / 3)));
 
         datas.add(new ItemInfo("加投影",srcBitmap));
+        datas.add(new ItemInfo("截屏", srcBitmap));
 
         //datas.add("高斯模糊",BitMapUtils.guassBlur(srcBitmap,this,15.5f));
         super.onCreate(savedInstanceState);
@@ -82,6 +84,8 @@ public class BitmapPhotosActivity extends PhotosActivity {
             paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DARKEN));
             paint.setColor(0xFF00ff00);
             BitMapUtils.addShadow(new Canvas(datas.get(position).dstBitmap),20,0x00FF00,50,50,datas.get(position).dstBitmap,paint);
+        }else if(datas.get(position).name.equals("截屏")){
+            setShowBitMap(ScreenShotUtils.screenShot(getWindow().getDecorView()));
         }
 
         //Glide.with(this)

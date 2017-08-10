@@ -1,5 +1,6 @@
 package com.kingz.pages;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
@@ -15,6 +16,7 @@ import com.kingz.customdemo.R;
 /**
  * Created by KingZ on 2015/11/1.
  */
+@SuppressLint("Registered")
 public class PicManagerPage extends Activity implements AdapterView.OnItemClickListener {
 
 

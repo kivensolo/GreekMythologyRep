@@ -218,7 +218,7 @@ public class BasicControlsActivity extends Activity implements View.OnClickListe
 	 * @param view
      */
 	 public void showPopupWindow(View view) {
-		 View contentView =  ((LayoutInflater)getSystemService(this.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.simple_listviewitem,null);
+		 View contentView =  ((LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R.layout.simple_listviewitem,null);
 		 TextView textView = (TextView) contentView.findViewById(R.id.commonadapter_item_text);
 		 textView.setText("新疆电视台");
 		 PopupWindow popupWindow = new PopupWindow(contentView,

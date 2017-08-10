@@ -1,5 +1,6 @@
 package com.provider;
 
+import android.annotation.SuppressLint;
 import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -25,6 +26,7 @@ import android.support.annotation.Nullable;
 
         第三部分是路径名，用来表示将要操作的数据。可以看作网址中细分的内容路径
  */
+@SuppressLint("Registered")
 public class BaseProvider extends ContentProvider{
 
     @Override

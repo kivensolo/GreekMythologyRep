@@ -20,7 +20,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/pic_default"
-                    android:layout_centerHorizontal="true"/>
+                    android:layout_centerHorizontal="true"
+                    android:contentDescription="@string/touch_voice"/>
 
             <Button
                     android:id="@+id/loadpic_btn"
@@ -49,7 +50,8 @@
                     android:background="@drawable/pic_default"
                     android:layout_below="@+id/image_local"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="20dp"/>
+                    android:layout_marginTop="20dp"
+                    android:contentDescription="@string/touch_voice"/>
         </RelativeLayout>
 
         <RelativeLayout

@@ -53,8 +53,8 @@ public class JsonParser{
 							ret.append("没有匹配结果.");
 							return ret.toString();
 						}
-						ret.append("【结果】" + obj.getString("w"));
-						ret.append("【置信度】" + obj.getInt("sc"));
+						ret.append("【结果】").append(obj.getString("w"));
+						ret.append("【置信度】").append(obj.getInt("sc"));
 						ret.append("\n");
 					}
 				}
@@ -88,7 +88,7 @@ public class JsonParser{
 						ret.append(obj.getString("w"));
 					}
 				}
-				ret.append("【置信度】" + joResult.getInt("sc"));
+				ret.append("【置信度】").append(joResult.getInt("sc"));
 				ret.append("\n");
 			}
 
@@ -116,8 +116,8 @@ public class JsonParser{
 						ret.append("没有匹配结果.");
 						return ret.toString();
 					}
-					ret.append("【结果】" + obj.getString("w"));
-					ret.append("【置信度】" + obj.getInt("sc"));
+					ret.append("【结果】" ).append(obj.getString("w"));
+					ret.append("【置信度】").append(obj.getInt("sc"));
 					ret.append("\n");
 				}
 			}

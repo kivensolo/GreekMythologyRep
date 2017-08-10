@@ -91,9 +91,9 @@ public class SpansDemo extends Activity{
         //TextAppearanceSpan(Context context, int appearance)
         //TextAppearanceSpan(Context context, int appearance, int colorList)
         //TextAppearanceSpan(String family, int style, int size,ColorStateList color, ColorStateList linkColor)
-                    //family:monospace/serif/sans-serif
-                    //style: Typeface.NORMAL  Typeface.BOLD  Typeface.ITALIC  Typeface.BOLD_ITALIC
-                    //size字体大小（单位px）
+            //family:monospace/serif/sans-serif
+            //style: Typeface.NORMAL  Typeface.BOLD  Typeface.ITALIC  Typeface.BOLD_ITALIC
+            //size字体大小（单位px）
         SpannableStringBuilder ssb = new SpannableStringBuilder(GO_TO_BAIDU);
         ColorStateList colorStateList = null;
         Resources resource = getBaseContext().getResources();

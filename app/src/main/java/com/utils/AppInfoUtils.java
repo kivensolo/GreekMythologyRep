@@ -10,7 +10,6 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
-import com.App;
 
 import java.util.List;
 import java.util.Set;

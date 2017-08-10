@@ -17,6 +17,8 @@ import com.utils.ToastTools;
 import com.utils.ZLog;
 import org.json.JSONObject;
 
+import java.util.Locale;
+
 /**
  * Copyright(C) 2015, 北京视达科科技有限公司
  * All rights reserved.
@@ -203,7 +205,7 @@ public abstract class WebViewWithJs extends WebView {
         public String getBrowserPosition() {
             Rect rectInScreen = new Rect();
             getGlobalVisibleRect(rectInScreen);
-            return String.format("%d,%d,%d,%d", rectInScreen.left, rectInScreen.top, rectInScreen.width(), rectInScreen.height());
+            return String.format(Locale.getDefault(),"%d,%d,%d,%d", rectInScreen.left, rectInScreen.top, rectInScreen.width(), rectInScreen.height());
         }
 
         @JavascriptInterface

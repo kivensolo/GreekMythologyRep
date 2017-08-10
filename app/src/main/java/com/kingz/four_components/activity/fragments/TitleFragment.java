@@ -15,8 +15,6 @@ import android.widget.ListView;
 import com.kingz.customdemo.R;
 import com.utils.ZLog;
 
-import static android.view.View.Z;
-
 /**
  * Created by KingZ.
  * Data: 2016 2016/1/25
