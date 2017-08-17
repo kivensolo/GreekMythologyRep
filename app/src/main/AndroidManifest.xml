@@ -30,11 +30,10 @@
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
     <uses-permission android:name="android.permission.WRITE_CONTACTS"/>
 
-    <uses-permission android:name="com.starcor.hunan.ReadUserinfo"/>
-
-
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
+
+    <uses-permission android:name="com.starcor.xinjiang.ReadUserinfo"/>
      <!--Target Package为单元测试的包名-->
   <!--  <instrumentation
             android:name="android.test.InstrumentationTestRunner"
