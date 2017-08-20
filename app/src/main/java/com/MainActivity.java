@@ -24,8 +24,9 @@ import com.kingz.pages.CustomViewsPage;
 import com.kingz.pages.FourComponentPage;
 import com.kingz.pages.LayoutPage;
 import com.kingz.pages.photo.BitmapPhotosActivity;
-import com.kingz.pages.photo.ColorMatrixDemo;
-import com.kingz.pages.photo.FilmsListActivity;
+import com.kingz.pages.photo.colormatrix.ColorMatrixDemo;
+import com.kingz.pages.photo.filmlist.FilmsListActivity;
+import com.kingz.pages.photo.memory.MemoryCheck;
 import com.kingz.text.FontMetricsDemoActivity;
 import com.kingz.text.LableTextViewPage;
 import com.kingz.text.TextViewOfLanguages;
@@ -122,6 +123,7 @@ public class MainActivity extends ExpandableListActivity implements OnItemClickL
         addChildData("ColorMatrix", ColorMatrixDemo.class);
         addChildData("Arcs", Arcs.class);
         addChildData("PathEffects", PathEffects.class);
+        addChildData("MemoryCheck", MemoryCheck.class);
         billDataManager.pushChilds();
 
         //自定义控件

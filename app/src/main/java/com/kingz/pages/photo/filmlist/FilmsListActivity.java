@@ -1,5 +1,5 @@
 
-package com.kingz.pages.photo;
+package com.kingz.pages.photo.filmlist;
 
 import android.animation.ValueAnimator;
 import android.os.Bundle;

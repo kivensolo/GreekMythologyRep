@@ -19,6 +19,7 @@ package com.apiDemo;
 // Need the following import to get access to the app resources, since this
 // class is in a sub-package.
 
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -40,6 +41,7 @@ import com.kingz.customdemo.R;
  * @see AlarmServiceActivity
  * @see AlarmClock_Service
  */
+@SuppressLint("Registered")
 public class AlarmClock_Service extends Service {
     NotificationManager mNM;
 

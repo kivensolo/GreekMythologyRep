@@ -15,8 +15,11 @@ import android.util.Base64;
 import android.util.Log;
 import android.util.TypedValue;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+
+import static android.graphics.Bitmap.Config.ARGB_8888;
 
 /**
  * Copyright(C) 2015, 北京视达科科技有限公司
@@ -30,40 +33,9 @@ import java.io.InputStream;
  * Android图像处理之Bitmap类:http://www.open-open.com/lib/view/open1333418945202.html
  * <p>
  * http://mp.weixin.qq.com/s?__biz=MzI3MDE0NzYwNA==&mid=2651433713&idx=1&sn=d152b053221c4c0bf1baa684b2a51e9c&scene=23&srcid=0805emSJb7dH8hdYfIcQiChP#rd
- *
- * ※※※※※※※※ decodeResource()和decodeFile()  ※※※※※※※※
- *  decodeFile()用于读取SD卡上的图，得到的是图片的原始尺寸
- *  decodeResource()用于读取Res、Raw等资源，得到的是图片的原始尺寸 * 缩放系数
- *  decodeStream()   //从输入流读取
- *  decodeByteArray()   //从字节数组读取
- *
- *  缩放系数scale依赖于屏幕密度density，参数可以通过BitMapFactory.Option的几个参数调整。
- *  public boolean inScaled     //默认True
- *  public int inDensity;       //无dip的文件夹下默认160
- *  public int inTargetDensity; //取决具体屏幕
- *  |---------> 缩放系数 = inTargetDensity / inDensity;
- * <p>
- *
- * 现在有一张720×720的图片:
- * ||------> inScaled属性
- *  如果inScaled设置为false，则不进行缩放，解码后图片大小为720×720;
- *  如果inScaled设置为true或者不设置，则根据inDensity和inTargetDensity计算缩放系数。
- *      ※ 【默认情况】
- *      把这张图片放到drawable目录下, 默认：
-            以720p的红米3为例子，
-            缩放系数 = inTargetDensity(具体320 / inDensity（默认160）= 2 = density，
-            解码后图片大小为1440×1440。
-            以1080p的MX4为例子，
-            缩放系数 = inTargetDensity(具体480 / inDensity（默认160）= 3 = density,
-            解码后图片大小为2160×2160。
- *      ※ 【dpi文件夹的影响】
- *          把图片放到drawable或者raw这样不带dpi的文件夹，会按照上面的算法计算。
- *          如果放到xhdpi会怎样呢？ 在MX4上，放到xhdpi，解码后图片大小为1080 x 1080。
- *          因为放到有dpi的文件夹，会影响到inDensity的默认值，放到xhdpi为160 x 2 = 320;
- *          所以缩放系数 = 480（屏幕） / 320 （xhdpi） = 1.5; 所以得到的图片大小为1080 x 1080。
- *
+
  * ||------> inBitmap属性 [Bitmap优化的一个方法]
- * 该属性表示重用该Bitmap的内存区域，避免多次重复向dvm申请开辟新的内存区域。
+ *      该属性表示重用该Bitmap的内存区域，避免多次重复向dvm申请开辟新的内存区域。
  * 可以一次性申请多个模板的内存，解码时候匹配使用申请的内存.如565模板、4444模板、8888模板。
  * 使用内存模板的方法，即使是上千张的图片，也只会仅仅只需要占用屏幕所能够显示的图片数量的内存大小。
  * 起作用的条件：
@@ -75,6 +47,9 @@ import java.io.InputStream;
  *  所以图像的宽高将会变成原来的1/4，像素量会变成1/16.
  *  注意：解码器使用基于2的幂的最终值，任何其他值将舍入到最接近的2的幂。
  *
+ * ||=====>inJustDecodeBounds属性[图片加载避免OOM]
+ *      Options.inJustDecodeBounds = true的时候，解码的bitmap为null，只是把图片的宽高放在了Options里面。
+ *  不给其分配内存空间，但是可以查询图片信息（options.outHeight (图片原始高度)和option.outWidth(图片原始宽度)）
  *
  *
  * ※※※※※※※※ Matrix ※※※※※※※※
@@ -109,8 +84,18 @@ import java.io.InputStream;
  */
 public class BitMapUtils {
 
+    private static final Bitmap.Config defaultConfig = ARGB_8888;
 	public static final String TAG_RECYCLER = "BMP Recycler";
 	public static final boolean DEBUG = false;
+
+    private static ThreadLocal<byte[]> _local_buf;
+    private static ThreadLocal<BufferedInputStream> _localBufferedInputStream;
+
+    static {
+        _local_buf = new ThreadLocal<byte[]>();
+        _localBufferedInputStream = new ThreadLocal<BufferedInputStream>();
+    }
+
 
     private BitMapUtils() {
         /* cannot be instantiated */
@@ -247,7 +232,7 @@ public class BitMapUtils {
         RectF dstRect = new RectF(0, 0, bm.getWidth(), bm.getHeight());   //Dst
 
         //新建一个新位图
-        Bitmap newBitmap = Bitmap.createBitmap(bm.getWidth(), bm.getHeight(), Bitmap.Config.ARGB_8888);
+        Bitmap newBitmap = Bitmap.createBitmap(bm.getWidth(), bm.getHeight(), ARGB_8888);
         Canvas canvas = new Canvas(newBitmap);
         //圆角矩形(Dst)，radius为圆角大小
         canvas.drawRoundRect(dstRect, radius, radius, paint);
@@ -269,7 +254,7 @@ public class BitMapUtils {
 
         Paint paint = new Paint();
         paint.setAntiAlias(true);
-        Bitmap circleBitmap = Bitmap.createBitmap(min, min, Bitmap.Config.ARGB_8888);
+        Bitmap circleBitmap = Bitmap.createBitmap(min, min, ARGB_8888);
         Canvas canvas = new Canvas(circleBitmap);
         //绘制圆形
         canvas.drawCircle(min / 2, min / 2, min / 2, paint);
@@ -300,7 +285,7 @@ public class BitMapUtils {
         //倒影图
         Bitmap reflectBitmap = Bitmap.createBitmap(bm, 0, height - reflectHight, width, reflectHight, matrix, false);
         //总长度的空BitMap
-        Bitmap totalBitMap = Bitmap.createBitmap(width, height + reflectHight, Bitmap.Config.ARGB_8888);
+        Bitmap totalBitMap = Bitmap.createBitmap(width, height + reflectHight, ARGB_8888);
         Canvas canvas = new Canvas(totalBitMap);
         canvas.drawBitmap(bm, 0, 0, null);
         Paint paint = new Paint();
@@ -335,7 +320,7 @@ public class BitMapUtils {
         //倒影图
         Bitmap reflectBitmap = Bitmap.createBitmap(bm, 0, height - reflectHight, width, reflectHight, matrix, false);
         //总长度的空BitMap
-        Bitmap totalBitMap = Bitmap.createBitmap(width, height + reflectHight, Bitmap.Config.ARGB_8888);
+        Bitmap totalBitMap = Bitmap.createBitmap(width, height + reflectHight, ARGB_8888);
         Canvas canvas = new Canvas(totalBitMap);
         canvas.drawBitmap(bm, 0, 0, null);
         Paint paint = new Paint();
@@ -379,7 +364,7 @@ public class BitMapUtils {
         int markHeight = watermark.getHeight();
 
         // create the new blank bitmap
-        Bitmap newb = Bitmap.createBitmap(photoWidth, photoHeight, Bitmap.Config.ARGB_8888);
+        Bitmap newb = Bitmap.createBitmap(photoWidth, photoHeight, ARGB_8888);
         // 创建一个新的和SRC长度宽度一样的位图
         Canvas cv = new Canvas(newb);
 
@@ -409,7 +394,7 @@ public class BitMapUtils {
         int width = photo.getWidth();
         int hight = photo.getHeight();
         //建立一个空的BItMap
-        Bitmap icon = Bitmap.createBitmap(width, hight, Bitmap.Config.ARGB_8888);
+        Bitmap icon = Bitmap.createBitmap(width, hight, ARGB_8888);
         //初始化画布绘制的图像到icon上
         Canvas canvas = new Canvas(icon);
 
@@ -459,7 +444,7 @@ public class BitMapUtils {
             return null;
         }
         // 建立对应 bitmap
-        Bitmap bitmap = Bitmap.createBitmap(width, height, drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888 : Bitmap.Config.RGB_565);
+        Bitmap bitmap = Bitmap.createBitmap(width, height, drawable.getOpacity() != PixelFormat.OPAQUE ? ARGB_8888 : Bitmap.Config.RGB_565);
         // 建立对应 bitmap 的画布
         Canvas canvas = new Canvas(bitmap);
         drawable.setBounds(0, 0, width, height);
@@ -561,7 +546,7 @@ public class BitMapUtils {
     private static int getBytesPerPixel(Bitmap.Config config) {
         // A bitmap by decoding a gif has null "config" in certain environments.
         if (config == null) {
-            config = Bitmap.Config.ARGB_8888;
+            config = ARGB_8888;
         }
 
         int bytesPerPixel;
@@ -579,24 +564,62 @@ public class BitMapUtils {
         }
         return bytesPerPixel;
     }
+
+
      /**
-     * 获取Resource 图片资源
-     * @param resources
-     * @param id
-     * @return
+     * 获取应用内图片资源，获取得到的图片是原始尺寸*缩放系数
+     * @param res Resources
+     * @param resId        ResourcesId
+     * @param reqWidth  reqWidth
+     * @param reqHeight reqHeight
+     * @return 解码后的位图
      */
-    public static Bitmap decodeResource(Resources resources, int id) {
+    public static Bitmap decodeResource(Resources res, int resId,int reqWidth,int reqHeight) {
         TypedValue value = new TypedValue();
-        resources.openRawResource(id, value);
-        BitmapFactory.Options opts = new BitmapFactory.Options();
-        opts.inTargetDensity = value.density;
-        return BitmapFactory.decodeResource(resources, id, opts);
+        res.openRawResource(resId, value);
+
+         // First decode with inJustDecodeBounds=true to check dimensions
+        final BitmapFactory.Options options =new BitmapFactory.Options();
+        options.inJustDecodeBounds =true;
+        BitmapFactory.decodeResource(res, resId, options);
+
+        //adjust screen density
+        //options.inTargetDensity = value.density;
+
+        // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeResource(res, resId, options);
     }
 
     public static Bitmap decodeStream(InputStream inputStream) {
         BitmapFactory.Options opts = new BitmapFactory.Options();
         return BitmapFactory.decodeStream(inputStream,null, opts);
     }
+
+    private static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        //out size is more than request size.
+        if (height > reqHeight || width > reqWidth) {
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) >= reqHeight
+                    && (halfWidth / inSampleSize) >= reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+        ZLog.d("BitMapUtils","calculateInSampleSize()  inSampleSize = " + inSampleSize);
+        return inSampleSize;
+    }
+
     /**
      * 手动设置缩放系数
      * TestCode
@@ -614,7 +637,7 @@ public class BitMapUtils {
     }
 
     public static Bitmap replaceBitmapColor(Bitmap oldBitmap,int oldColor,int newColor){
-        return replaceBitmapColor(oldBitmap,oldColor,newColor,Bitmap.Config.ARGB_8888);
+        return replaceBitmapColor(oldBitmap,oldColor,newColor, ARGB_8888);
     }
 
     public static Bitmap replaceBitmapColor(Bitmap oldBitmap, int oldColor, int newColor, Bitmap.Config config){
@@ -668,7 +691,7 @@ public class BitMapUtils {
      */
 	public static Bitmap guassBlur(Bitmap bitmap, Context context,float radius) {
         // 用需要创建高斯模糊bitmap创建一个空的bitmap
-        Bitmap outBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        Bitmap outBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), ARGB_8888);
 
         // 初始化Renderscript，该类提供了RenderScript context，创建其他RS类之前必须先创建这个类，其控制RenderScript的初始化，资源管理及释放
         RenderScript rs = RenderScript.create(context);

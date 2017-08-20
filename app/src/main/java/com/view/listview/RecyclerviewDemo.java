@@ -16,7 +16,7 @@ import android.widget.Toast;
 import com.kingz.adapter.DemoRecyclerAdapter;
 import com.kingz.customdemo.R;
 import com.kingz.mode.RecycleDataInfo;
-import com.kingz.pages.photo.MyItemDecoration;
+import com.kingz.pages.photo.filmlist.MyItemDecoration;
 
 import java.util.ArrayList;
 import java.util.Calendar;

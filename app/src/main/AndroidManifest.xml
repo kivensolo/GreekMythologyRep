@@ -219,8 +219,12 @@
         <activity android:name="com.kingz.pages.photo.BitmapPhotosActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
+        <activity android:name="com.kingz.pages.photo.memory.MemoryCheck"
+                  android:screenOrientation="landscape"
+                  android:theme="@android:style/Theme.Black.NoTitleBar"/>
+
         <!--ColorMatrix-->
-        <activity android:name="com.kingz.pages.photo.ColorMatrixDemo"
+        <activity android:name="com.kingz.pages.photo.colormatrix.ColorMatrixDemo"
                   android:theme="@android:style/Theme.Material.NoActionBar"
                   tools:targetApi="lollipop"/>
 
@@ -275,7 +279,7 @@
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!-- FilmList -->
-        <activity android:name="com.kingz.pages.photo.FilmsListActivity"
+        <activity android:name="com.kingz.pages.photo.filmlist.FilmsListActivity"
                   android:screenOrientation="landscape"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
