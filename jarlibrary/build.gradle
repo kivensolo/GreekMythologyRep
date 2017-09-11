@@ -22,12 +22,11 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-// compile 'com.android.support:appcompat-v7:22.0.1'
-    testCompile 'junit:junit:4.12'
+    // compile 'com.android.support:appcompat-v7:22.0.1'
 }
 
 def SDK_BASENAME = "TestSdk";
@@ -35,7 +34,7 @@ def SDK_VERSION = "_V1.1";
 def SDK_FULLNAME = "${SDK_BASENAME}${SDK_VERSION}.jar"; //模板式字符串
 
 def sdkDestinationPath = "build/outputs/jar/";
-def jarUrl = "${sdkDestinationPath}${SDK_BASENAME}${SDK_VERSION}.jar";
+def jarUrl = "${sdkDestinationPath}${SDK_FULLNAME}";
 def code_From = "build/intermediates/classes/release/";
 
 task deleteBuild(type: Delete) {
@@ -44,7 +43,7 @@ task deleteBuild(type: Delete) {
 
 task makeTestJar(dependsOn: ['compileReleaseJavaWithJavac'], type: Jar){
     delete  jarUrl
-    from(code_From)
+    from(code_From)     //代码来源
     exclude('**/R.class')
     exclude('**/R\$*.class')
     exclude('**/BuildConfig.class')

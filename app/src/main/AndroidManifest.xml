@@ -34,6 +34,7 @@
 
 
     <uses-permission android:name="com.starcor.xinjiang.ReadUserinfo"/>
+    <permission android:name="com.starcor.xinjiang.ReadUserinfo"/>
      <!--Target Package为单元测试的包名-->
   <!--  <instrumentation
             android:name="android.test.InstrumentationTestRunner"
@@ -378,6 +379,13 @@
                  <data android:scheme="package" />
             </intent-filter>
         </receiver>
+
+        <receiver android:name="com.kingz.four_components.brodcast.PaySucessBroadcast" >
+            <intent-filter>
+                <action android:name="com.starcor.xinjiang.kork.pay" />
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>

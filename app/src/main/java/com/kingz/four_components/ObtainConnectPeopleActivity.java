@@ -69,16 +69,16 @@ public class ObtainConnectPeopleActivity extends BaseActivity {
             public void onClick(View v) {
                 try {
                     Uri uri = Uri.parse(CONTENT_URI_USER_INFO);
-                    //Cursor mCursor = baseResolver.query(uri, null, null, null, null);
-                    //if (mCursor != null) {
-                    //    if (mCursor.moveToFirst()) {
-                    //        String name = mCursor.getString(mCursor.getColumnIndex("user_name"));
-                    //        String id = mCursor.getString(mCursor.getColumnIndex("user_id"));
-                    //        String token = mCursor.getString(mCursor.getColumnIndex("user_webtoken"));
-                    //        ZLog.d("Test", "name = " + name + ";id=" + id + ";token = " + token);
-                    //    }
-                    //    mCursor.close();
-                    //}
+                    Cursor mCursor = baseResolver.query(uri, null, null, null, null);
+                    if (mCursor != null) {
+                        if (mCursor.moveToFirst()) {
+                            String name = mCursor.getString(mCursor.getColumnIndex("user_name"));
+                            String id = mCursor.getString(mCursor.getColumnIndex("user_id"));
+                            String token = mCursor.getString(mCursor.getColumnIndex("user_webtoken"));
+                            ZLog.d("Test", "name = " + name + ";id=" + id + ";token = " + token);
+                        }
+                        mCursor.close();
+                    }
 
                     Uri ur2 = Uri.parse(CONTENT_URI_COMMON_INFO);
                     //uri.withAppendedPath(uri, "");
@@ -109,11 +109,14 @@ public class ObtainConnectPeopleActivity extends BaseActivity {
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String[] value =  {"1001005","bestv","Umai:PROG/3101145@BESTV.SMG.SMG","show_product_purchase"};
                 Intent intent = new Intent();
-                intent.setClassName("com.starcor.hunan", "com.starcor.hunan.VipPackageDetailsActivity");
-                intent.putExtra("cmd_ex", "show_product_purchase");//String类参数
-                intent.putExtra("xj_singleFilmProducts", "10002004");
-                startActivityForResult(intent, 0);
+                intent.setClassName("com.starcor.xinjiang", "com.starcor.hunan.ThirdInvokePurchaseActivity");
+                intent.putExtra("product_id", value[0]);
+                intent.putExtra("cp_id", value[1]);
+                intent.putExtra("import_id", value[2]);
+                intent.putExtra("cmd_ex", value[3]);
+                startActivity(intent);
             }
         });
 

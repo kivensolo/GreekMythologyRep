@@ -30,7 +30,6 @@ import static android.content.Context.ACTIVITY_SERVICE;
  *     @see #getVersionCode(Context,String)
  *     @see #getIntentContentToStr(Intent)
  *     @see #getAppSignature(Context,String)
- *
  *     @see #getPackageInfoByName(Context, String, int)
  */
 public class AppInfoUtils {
