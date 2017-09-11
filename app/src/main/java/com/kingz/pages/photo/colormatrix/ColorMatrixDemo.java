@@ -1,4 +1,4 @@
-package com.kingz.pages.photo;
+package com.kingz.pages.photo.colormatrix;
 
 import android.os.Bundle;
 import com.BaseActivity;

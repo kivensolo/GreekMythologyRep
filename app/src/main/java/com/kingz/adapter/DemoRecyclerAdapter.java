@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.kingz.customdemo.R;
-import com.kingz.pages.photo.DemoViewHolder;
+import com.kingz.pages.photo.filmlist.DemoViewHolder;
 import com.kingz.mode.RecycleDataInfo;
 import com.utils.ZLog;
 

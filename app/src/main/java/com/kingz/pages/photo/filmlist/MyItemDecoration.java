@@ -1,4 +1,4 @@
-package com.kingz.pages.photo;
+package com.kingz.pages.photo.filmlist;
 
 import android.content.Context;
 import android.graphics.Canvas;
