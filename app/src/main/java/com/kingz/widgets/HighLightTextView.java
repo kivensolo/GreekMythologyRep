@@ -1,4 +1,4 @@
-package com.view.views;
+package com.kingz.widgets;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.kingz.customdemo.R;
 
 public class HighLightTextView extends TextView {
-	@SuppressWarnings("unused")
 	private static final int SELECTED_BACKGOURD_COLOR = 0xFF3892FF;
 	private boolean isSelected = false;
 	private boolean bgSelectedStyle = false;
@@ -32,9 +31,7 @@ public class HighLightTextView extends TextView {
 
 	/**
 	 * 设置焦点内容
-	 *
-	 * @param str
-	 *            焦点内容
+	 * @param str 焦点内容
 	 */
 	public void setFocusText(String str) {
 		focusText = str;
@@ -107,26 +104,24 @@ public class HighLightTextView extends TextView {
 			int start = scrText.indexOf(focusText);
 			if (start != -1) {
 				int end = start + focusText.length();
-				style.setSpan(new ForegroundColorSpan(Color.BLUE), start, end,
-						Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
+				style.setSpan(new ForegroundColorSpan(Color.BLUE), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 				setText(style);
 			}
 		}
 	}
 
-	public HighLightTextView(Context context, AttributeSet attrs, int defStyle) {
-		super(context, attrs, defStyle);
-		setTextColor(DEFAULT_COLOR);
-		setTextSize(TypedValue.COMPLEX_UNIT_PX, 24);
+	public HighLightTextView(Context context) {
+		this(context, null);
 	}
 
 	public HighLightTextView(Context context, AttributeSet attrs) {
 		this(context, attrs, 0);
 	}
 
-	public HighLightTextView(Context context) {
-		this(context, null);
+	public HighLightTextView(Context context, AttributeSet attrs, int defStyle) {
+		super(context, attrs, defStyle);
+		setTextColor(DEFAULT_COLOR);
+		setTextSize(TypedValue.COMPLEX_UNIT_PX, 26);
 	}
 
 	@Override

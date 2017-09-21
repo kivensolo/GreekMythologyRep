@@ -86,7 +86,9 @@ public class TitleFragmentDynamic extends ListFragment {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-       showDetails(position);
+        if(position != mCurCheckPosition){
+            showDetails(position);
+        }
     }
 
     private void showDetails(int index) {

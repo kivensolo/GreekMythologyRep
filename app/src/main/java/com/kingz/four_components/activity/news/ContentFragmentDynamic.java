@@ -9,6 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import com.kingz.customdemo.R;
+import com.utils.ZLog;
+
+import java.lang.ref.WeakReference;
+import java.util.WeakHashMap;
 
 import static com.kingz.four_components.activity.news.NewsInfo.newsData;
 import static com.kingz.four_components.activity.news.NewsInfo.titleData;
@@ -19,18 +24,25 @@ import static com.kingz.four_components.activity.news.NewsInfo.titleData;
  * Discription:内容Fragment
  */
 public class ContentFragmentDynamic extends Fragment {
-    static String titleName = "";
-    static String contentInfo = "";
-    //Todo 需要优化
+
+    static WeakHashMap<Integer,WeakReference<ContentFragmentDynamic>> _fragmentsCache = new WeakHashMap<>();
     public static ContentFragmentDynamic newInstance(int index) {
-        ContentFragmentDynamic f = new ContentFragmentDynamic();
+        ZLog.d("ContentFragmentDynamic","index = " + index);
+        WeakReference<ContentFragmentDynamic> reference = _fragmentsCache.get(index);
+        if(reference != null){
+            ZLog.d("ContentFragmentDynamic","find fragment cache.");
+            return reference.get();
+        }
+        ZLog.d("ContentFragmentDynamic","add new fragment");
+        ContentFragmentDynamic fragment = new ContentFragmentDynamic();
+        String titleName = titleData.get(index);
         Bundle args = new Bundle();
         args.putInt("index", index);
-        f.setArguments(args);
-
-        titleName = titleData.get(index);
-        contentInfo = newsData.get(titleName);
-        return f;
+        args.putString("title",titleName);
+        args.putString("content",newsData.get(titleName));
+        fragment.setArguments(args);
+        _fragmentsCache.put(index,new WeakReference<>(fragment));
+        return fragment;
     }
 
     @Override
@@ -61,8 +73,10 @@ public class ContentFragmentDynamic extends Fragment {
                 5, getActivity().getResources().getDisplayMetrics());
         text.setPadding(padding, padding, padding, padding);
         text.setTextSize(26f);
+        text.setFocusable(true);
+        text.setBackground(getResources().getDrawable(R.drawable.text_forcused_style_xjdx));
+        text.setText(getArguments().getString("content", "Empty Data"));
         scroller.addView(text);
-        text.setText(contentInfo);
         return scroller;
     }
 
