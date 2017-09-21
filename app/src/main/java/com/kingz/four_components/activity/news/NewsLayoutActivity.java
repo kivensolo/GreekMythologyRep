@@ -1,4 +1,4 @@
-package com.kingz.four_components.activity.fragments;
+package com.kingz.four_components.activity.news;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -12,7 +12,7 @@ import com.kingz.customdemo.R;
  * date:  2016/5/6 17:59 <br>
  * description: 向 Activity 添加片段方法之一: 在 Activity 的布局文件内声明片段 <br>
  */
-public class FragmentPageFromXml extends FragmentActivity {
+public class NewsLayoutActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -1,5 +1,6 @@
 package com.kingz.four_components.provider;
 
+import android.content.Context;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.net.Uri;
@@ -15,22 +16,23 @@ import com.utils.ZLog;
  * description: Content数据变化监听 <br>
  */
 public class ContentChangeListener extends ContentObserver {
+    Context context;
     /**
      * Creates a content observer.
      *
      * @param handler The handler to run {@link #onChange} on, or null if none.
      */
-    public ContentChangeListener(Handler handler) {
+    public ContentChangeListener(Handler handler,Context context) {
         super(handler);
+        this.context = context;
     }
 
     @Override
     public void onChange(boolean selfChange) {
         super.onChange(selfChange);
         ZLog.d("ContentChangeListener", "received UserInfo changed");
-        ObtainConnectPeopleActivity val = new ObtainConnectPeopleActivity();
         Uri uri = Uri.parse(ObtainConnectPeopleActivity.CONTENT_URI_USER_INFO);
-        Cursor mCursor = val.baseResolver.query(uri, null, null, null, null);
+        Cursor mCursor = context.getContentResolver().query(uri, null, null, null, null);
         //Cursor mCursor = val.baseResolver.query(uri, null, null, null, "personid desc");
 
         if (mCursor != null) {

@@ -50,6 +50,26 @@
                     android:layout_marginBottom="10dp">
 
     </RelativeLayout>
+    <Button
+            android:text="查询"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_alignTop="@+id/function_area_id"
+            android:layout_alignParentStart="true" android:id="@+id/query_btn"/>
+    <Button
+            android:text="购买"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_alignBottom="@+id/query_btn"
+            android:layout_toEndOf="@+id/query_btn" android:id="@+id/puykork_id"/>
+    <Button
+            android:text="显示"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_alignTop="@+id/function_area_id"
+            android:layout_centerHorizontal="true" android:id="@+id/show_intent"/>
+    <Button
+            android:text="content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_alignBottom="@+id/show_intent"
+            android:layout_toEndOf="@+id/show_intent" android:id="@+id/intent_content"/>
 
 
 </RelativeLayout>

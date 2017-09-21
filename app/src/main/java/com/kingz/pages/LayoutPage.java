@@ -10,10 +10,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.kingz.four_components.activity.news.NewsActivity;
 import com.kingz.mode.ListBillData;
 import com.kingz.customdemo.R;
-import com.kingz.four_components.activity.fragments.FragmentPageFromCode;
-import com.kingz.four_components.activity.fragments.FragmentPageFromXml;
+import com.kingz.four_components.activity.news.NewsLayoutActivity;
 
 public class LayoutPage extends Activity implements OnItemClickListener{
 
@@ -22,7 +22,6 @@ public class LayoutPage extends Activity implements OnItemClickListener{
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_layout_list);
 
@@ -35,8 +34,8 @@ public class LayoutPage extends Activity implements OnItemClickListener{
 	}
 
 	private void addData() {
-		mAdapter.add(new ListBillData(this,"FragmentByXml",new Intent(this,FragmentPageFromXml.class)));
-		mAdapter.add(new ListBillData(this,"FragmentByCode",new Intent(this,FragmentPageFromCode.class)));
+		mAdapter.add(new ListBillData(this,"NewsLayoutActivity",new Intent(this,NewsLayoutActivity.class)));
+		mAdapter.add(new ListBillData(this,"NewsActivity",new Intent(this,NewsActivity.class)));
 	}
 
 	/**

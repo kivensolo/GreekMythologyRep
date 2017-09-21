@@ -1,4 +1,4 @@
-package com.kingz.four_components.activity.fragments;
+package com.kingz.four_components.activity.news;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -15,9 +15,9 @@ import com.kingz.customdemo.R;
  * date:  2016/5/30 0:34
  * description:
  */
-public class TitleFragment2 extends Fragment{
+public class TitleFragmentStatic extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.title_layout,null,false);
+        return inflater.inflate(R.layout.title_layout,container,false);
     }
 }

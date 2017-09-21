@@ -73,6 +73,7 @@
 
     <string name="touch_voice">触摸发声</string>
     <string name="change_pic">切换图片</string>
+    <string name="crimtitle">Enter a title for the crime</string>
 
 
 </resources>

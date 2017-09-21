@@ -2,20 +2,18 @@ package com.kingz.four_components;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.ContactsContract;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.ListView;
+import android.widget.TextView;
 import com.BaseActivity;
+import com.kingz.customdemo.R;
 import com.kingz.four_components.provider.ContentChangeListener;
-import com.utils.ScreenTools;
 import com.utils.ZLog;
 
 import java.util.ArrayList;
@@ -36,6 +34,7 @@ public class ObtainConnectPeopleActivity extends BaseActivity {
     private Button deleteBtn;
     private Button insertBtn;
     private Button updateBtn;
+    private TextView contentView;
 
     private Cursor cursor = null;
 
@@ -46,24 +45,15 @@ public class ObtainConnectPeopleActivity extends BaseActivity {
         contactaList = new ArrayList<>();
         initViews();
         //注册监听
-        contentChangeListener = new ContentChangeListener(new Handler());
+        contentChangeListener = new ContentChangeListener(new Handler(),this);
         getContentResolver().registerContentObserver(Uri.parse(CONTENT_URI_USER_INFO), true, contentChangeListener);
         readContacts();
     }
 
     private void initViews() {
-        LinearLayout root = new LinearLayout(this);
-        root.setGravity(Gravity.FILL_VERTICAL);
-        ViewGroup.LayoutParams lps = new ViewGroup.LayoutParams(-1, -1);
-        root.setLayoutParams(lps);
-        setContentView(root);
+        setContentView(R.layout.relativelayout_page);
 
-        queryBtn = new Button(this);
-        queryBtn.setWidth(ScreenTools.Operation(100));
-        queryBtn.setHeight(ScreenTools.Operation(10));
-        queryBtn.setX(5);
-        queryBtn.setY(5);
-        queryBtn.setText("查询");
+        queryBtn = (Button) findViewById(R.id.query_btn);
         queryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,12 +90,7 @@ public class ObtainConnectPeopleActivity extends BaseActivity {
             }
         });
 
-        deleteBtn = new Button(this);
-        deleteBtn.setWidth(ScreenTools.Operation(150));
-        deleteBtn.setHeight(ScreenTools.Operation(10));
-        deleteBtn.setX(20);
-        deleteBtn.setY(5);
-        deleteBtn.setText("订购");
+        deleteBtn = (Button) findViewById(R.id.puykork_id);
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,29 +105,24 @@ public class ObtainConnectPeopleActivity extends BaseActivity {
             }
         });
 
-        insertBtn = new Button(this);
-        insertBtn.setWidth(ScreenTools.Operation(150));
-        insertBtn.setHeight(ScreenTools.Operation(10));
-        insertBtn.setX(20);
-        insertBtn.setY(5);
-        insertBtn.setText("InsertOne");
+        insertBtn = (Button) findViewById(R.id.show_intent);
+        insertBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                Uri uri = Uri.parse("scheme://authority/path1/path2?query1&query2&query3#fragment");
+                intent.setDataAndType(uri,"application/vnd.android.package-archive");
+                intent.setPackage("com.kingz.niubi");
+                intent.setSourceBounds(new Rect(110,110,1080,1080));
+            }
+        });
 
         updateBtn = new Button(this);
-        updateBtn.setWidth(ScreenTools.Operation(150));
-        updateBtn.setHeight(ScreenTools.Operation(10));
-        updateBtn.setX(20);
-        updateBtn.setY(5);
-        updateBtn.setText("Update");
 
-
-        ListView contactsView = new ListView(this);
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, contactaList);
-        contactsView.setAdapter(adapter);
-        root.addView(queryBtn);
-        root.addView(deleteBtn);
-        root.addView(insertBtn);
-        root.addView(updateBtn);
-        root.addView(contactsView);
+        contentView = (TextView) findViewById(R.id.intent_content);
+        //ListView contactsView = new ListView(this);
+        //adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, contactaList);
+        //contactsView.setAdapter(adapter);
     }
 
     /**

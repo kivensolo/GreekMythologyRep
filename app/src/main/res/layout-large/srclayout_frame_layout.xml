@@ -1,40 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools" android:id="@+id/fragment_container"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/fragment_container"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-
-    <!-- tools:layout告诉ide，Fragment在程序预览的时候该显示成什么样,开发使用 -->
-    <!-- <fragment> 中的 android:name 属性指定要在布局中实例化的 Fragment 类。 -->
     <fragment
+            android:name="com.kingz.four_components.activity.news.TitleFragmentDynamic"
             android:id="@+id/title_fragment"
-            android:name="com.kingz.four_components.activity.fragments.TitleFragment"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"/>
+    <LinearLayout android:layout_width="0dp"
+                  android:layout_height="match_parent"
+                  android:layout_weight="2"
+                  android:orientation="vertical">
 
-    <!--   <fragment
-               android:id="@+id/content_fragment"
-               android:name="com.kingz.four_components.activity.fragments.DynamicContentFragmentragment"
-               android:layout_width="0dp"
-               android:layout_weight="3"
-               android:layout_height="match_parent"/>-->
-    <FrameLayout android:id="@+id/details"
-                 android:layout_weight="2"
-                 android:layout_width="0px"
-                 android:layout_height="match_parent"
-                 android:background="?android:attr/detailsElementBackground"
-                 tools:ignore="InconsistentLayout"/>
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                  android:id="@+id/content_title"
+                  android:gravity="center_horizontal"
+                  android:textSize="26sp"/>
+        <FrameLayout android:id="@+id/details"
+                     android:layout_width="match_parent"
+                     android:layout_height="match_parent"
+                     android:background="?android:attr/detailsElementBackground"
+                     tools:ignore="InconsistentLayout"/>
 
-    <!-- 当系统创建此 Activity 布局时，会实例化在布局中指定的每个片段，
-         并为每个片段调用 onCreateView() 方法，以检索每个片段的布局。
-         系统会直接插入片段返回的 View 来替代 <fragment> 元素。
-    注：每个片段都需要一个唯一的标识符，重启 Activity 时，
-            系统可以使用该标识符来恢复片段（您也可以使用该标识符来捕获片段以执行某些事务，如将其删除）。
-    可以通过三种方式为片段提供 ID：
-            为 android:id 属性提供唯一 ID
-            为 android:tag 属性提供唯一字符串
-            如果您未给以上两个属性提供值，系统会使用容器视图的 ID
-    -->
-
+    </LinearLayout>
 </LinearLayout>

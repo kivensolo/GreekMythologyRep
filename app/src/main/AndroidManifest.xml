@@ -158,11 +158,11 @@
         <activity android:name="com.kingz.pages.LayoutPage"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
-        <activity android:name="com.kingz.four_components.activity.fragments.FragmentPageFromCode"
+        <activity android:name="com.kingz.four_components.activity.news.NewsActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"
                   android:screenOrientation="landscape"/>
 
-        <activity android:name="com.kingz.four_components.activity.fragments.FragmentPageFromXml"
+        <activity android:name="com.kingz.four_components.activity.news.NewsLayoutActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"
                    android:screenOrientation="landscape"/>
 

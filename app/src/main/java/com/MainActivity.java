@@ -44,9 +44,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author: KingZ
- * @Data: 2015年10月4日下午11:40:26
- * @Description: Demo首页
+ * author: KingZ
+ * Data: 2015年10月4日下午11:40:26
+ * Description: Demo首页
  */
 public class MainActivity extends ExpandableListActivity implements OnItemClickListener {
 
@@ -64,13 +64,11 @@ public class MainActivity extends ExpandableListActivity implements OnItemClickL
         initAdapterData();
         comExpandAdapter = new CommExpandableListAdapter(this, getGroupData(), getSubTitleData());
         listView.setAdapter(comExpandAdapter);
-        // In order to show animations, we need to use a custom click handler
-        // for our ExpandableListView.
         listView.setOnGroupClickListener(new ImpOnGroupClickListener());
 
     }
 
-    public class ImpOnGroupClickListener implements ExpandableListView.OnGroupClickListener {
+    private class ImpOnGroupClickListener implements ExpandableListView.OnGroupClickListener {
 
         @Override
         public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
