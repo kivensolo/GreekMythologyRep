@@ -2,6 +2,8 @@ package com.kingz.filemanager;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.TextUtils;
@@ -10,9 +12,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.BaseActivity;
-import com.kingz.filemanager.adapter.FileListAdapter;
 import com.kingz.customdemo.R;
+import com.kingz.filemanager.adapter.FileListAdapter;
+import com.kingz.utils.FileUtils;
+import com.kingz.utils.ZLog;
 
 import java.io.DataOutputStream;
 import java.io.File;
@@ -25,10 +30,13 @@ import java.util.List;
  * author: King.Z
  * date:  2016/2/26 13:50
  * description:文件管理器
+ * //TODo 增加文件删除工鞥
+ * //TODo 完善文件图标
  */
 public class FileManagerActivity extends BaseActivity implements AdapterView.OnItemClickListener,View.OnLongClickListener{
 
     private static final String  TAG= "FileManagerActivity";
+    //TODO View要抽离
     private ListView fileListView;
     private TextView titlePath;
     private TextView item_count;
@@ -40,8 +48,6 @@ public class FileManagerActivity extends BaseActivity implements AdapterView.OnI
 
 //    private static final String ROOT_PATH = Environment.getExternalStorageDirectory().getPath();  //根目录
     private static final String ROOT_PATH = "sdcard";  //根目录
-     //文件是否成功删除
-    private boolean isDeletSuccess;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +55,6 @@ public class FileManagerActivity extends BaseActivity implements AdapterView.OnI
         Log.d(TAG, "FileManagerActivity --- onCreate()");
         setContentView(R.layout.slider_list);
         initViews();
-
         File floder = new File(ROOT_PATH);
         showFileDir(floder);
     }
@@ -60,9 +65,13 @@ public class FileManagerActivity extends BaseActivity implements AdapterView.OnI
         fileListView = (ListView) findViewById(R.id.sliderCustomListView);
         fileListView.setOnLongClickListener(this);
         fileListView.setOnItemClickListener(this);
-
+        //获取root权限
         String apkRoot = "chmod 777 " + getPackageCodePath();
-        RootCommand(apkRoot);
+        if(RootCommand(apkRoot)){
+            ZLog.d(TAG,"root权限获取成功");
+        }else{
+            ZLog.w(TAG,"root权限获取失败");
+        }
     }
 
     /**
@@ -82,6 +91,7 @@ public class FileManagerActivity extends BaseActivity implements AdapterView.OnI
             process.waitFor();
         }
         catch (Exception e) {
+            //TODO finally会执行么
             return false;
         }
         finally {
@@ -161,32 +171,16 @@ public class FileManagerActivity extends BaseActivity implements AdapterView.OnI
         return false;
     }
 
-    /**
-     * 列表单项点击
-     * @param parent
-     * @param view
-     * @param position
-     * @param id
-     */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Log.d(TAG, "OnItemClickListener()..............");
         File file = (File) fileAdapter.getItem(position);
-        //String path = filePathsList.get(position);
-        //Log.d(TAG, "clicked path = " + path);
-        //File file = new File(path);
-
-        //文件不可读
         if(!file.canRead()){
-            new AlertDialog.Builder(this)
-                    .setTitle("提示")
-                    .setMessage("权限不足")
-                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-
-                        }
-                    }).show();
+            new AlertDialog.Builder(this).setTitle("提示").setMessage("权限不足")
+                                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {}
+                                        }).show();
         }else if (file.exists() && file.canRead()) {
             if (file.isDirectory()) {
                 showFileDir(file);
@@ -196,7 +190,6 @@ public class FileManagerActivity extends BaseActivity implements AdapterView.OnI
         }
     }
 
-
     @Override
     public void onBackPressed() {
         if(!isRoot){
@@ -204,5 +197,19 @@ public class FileManagerActivity extends BaseActivity implements AdapterView.OnI
             return;
         }
         super.onBackPressed();
+    }
+
+    public void openFile(File file) {
+        Intent intent = new Intent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setAction(Intent.ACTION_VIEW);
+        String type = FileUtils.getMIMEType(file);
+        Log.d(TAG, "Clicked File Type is :" + type);
+        intent.setDataAndType(Uri.fromFile(file), type);   //打开设置打开文件的类型
+        try {
+            startActivity(intent);
+        } catch (Exception e) {
+            Toast.makeText(this, "未知类型，不能打开", Toast.LENGTH_SHORT).show();
+        }
     }
 }

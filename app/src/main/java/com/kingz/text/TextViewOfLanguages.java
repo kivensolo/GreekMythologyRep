@@ -73,7 +73,7 @@ public class TextViewOfLanguages extends Activity {
     }
 
     private void sendMsg2Ui() {
-        if (!NetTools.isNetworkConnected(this)) {
+        if (!NetTools.isConnect()) {
             ToastTools.getInstance().showMgtvWaringToast(TextViewOfLanguages.this, "网络连接超时，请检查网络后再试");
             Log.e(TAG, "网络连接超时，请检查网络后再试。");
         }

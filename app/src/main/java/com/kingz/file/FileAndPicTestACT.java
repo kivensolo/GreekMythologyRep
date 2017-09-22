@@ -1,6 +1,5 @@
 package com.kingz.file;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
@@ -10,7 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import com.BaseActivity;
 import com.kingz.customdemo.R;
 import com.kingz.pages.SaveDataByFilePage;
 
@@ -19,8 +18,9 @@ import java.io.File;
 /**
  * Created by KingZ on 2015/11/1.
  * Discription:文件或者图片等的Demo
+ * //TODo 需要重构
  */
-public class FileAndPicTestACT extends Activity implements View.OnClickListener{
+public class FileAndPicTestACT extends BaseActivity implements View.OnClickListener{
 
     private static final String TAG = FileAndPicTestACT.class.getSimpleName();
     private boolean isSdcardExist;          //是否有SD卡挂载

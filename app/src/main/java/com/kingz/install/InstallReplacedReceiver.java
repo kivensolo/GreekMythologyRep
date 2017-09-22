@@ -1,4 +1,4 @@
-package com.kingz.upgrade;
+package com.kingz.install;
 
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;

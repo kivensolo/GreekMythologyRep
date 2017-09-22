@@ -31,6 +31,7 @@ import java.net.URL;
 /**
  * Created by KingZ on 2015/11/3.
  * Discription:图片/文件下载测试
+ * //TODO 需要重构
  */
 public class DownloadAPPActivity extends BaseActivity implements View.OnClickListener {
 
@@ -134,7 +135,7 @@ public class DownloadAPPActivity extends BaseActivity implements View.OnClickLis
             ToastTools.getInstance().showToast(context, "url is empty!");
             return;
         }
-        if (!NetTools.isNetworkConnected(context)) {
+        if (!NetTools.isConnect()) {
             Log.e(TAG, "网络未连接,无法进一步下载");
             ToastTools.getInstance().showMgtvWaringToast(context, "url is empty!");
             return;
