@@ -5,7 +5,7 @@ import android.util.Log;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.utils.ZLog;
+import com.kingz.utils.ZLog;
 
 /**
  * Copyright(C) 2015, 北京视达科科技有限公司

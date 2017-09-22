@@ -8,9 +8,9 @@ import android.widget.ImageView;
 import com.App;
 import com.kingz.mode.PosterGroupInfo;
 import com.kingz.pages.photo.filmlist.FilmListRecyclerViewHolder;
-import com.utils.FileUtils;
-import com.utils.OkHttpClientManager;
-import com.utils.ZLog;
+import com.kingz.utils.FileUtils;
+import com.kingz.utils.OkHttpClientManager;
+import com.kingz.utils.ZLog;
 
 import java.io.File;
 import java.util.List;

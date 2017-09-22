@@ -9,7 +9,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import com.kingz.customdemo.R;
-import com.utils.ZLog;
+import com.kingz.utils.ZLog;
 
 /**
  * Created by KingZ on 2016/1/24.

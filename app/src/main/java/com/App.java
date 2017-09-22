@@ -7,7 +7,7 @@ import android.os.StrictMode;
 import android.util.Log;
 import com.core.logic.GlobalCacheCenter;
 import com.kingz.customdemo.BuildConfig;
-import com.utils.ZLog;
+import com.kingz.utils.ZLog;
 import jp.wasabeef.takt.Takt;
 
 /**

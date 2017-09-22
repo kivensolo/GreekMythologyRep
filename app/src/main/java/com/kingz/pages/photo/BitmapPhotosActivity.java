@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import com.kingz.customdemo.R;
-import com.utils.BitMapUtils;
-import com.utils.ScreenShotUtils;
+import com.kingz.utils.BitMapUtils;
+import com.kingz.utils.ScreenShotUtils;
 
 import java.util.ArrayList;
 

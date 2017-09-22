@@ -17,7 +17,7 @@ import com.iflytek.cloud.SpeechSynthesizer;
 import com.iflytek.cloud.SpeechUtility;
 import com.iflytek.cloud.SynthesizerListener;
 import com.kingz.customdemo.R;
-import com.utils.ToastTools;
+import com.kingz.utils.ToastTools;
 
 public class VoiceActivity extends Activity implements OnClickListener {
 

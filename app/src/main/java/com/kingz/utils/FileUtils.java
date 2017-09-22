@@ -1,4 +1,4 @@
-package com.utils;
+package com.kingz.utils;
 
 import android.graphics.Bitmap;
 import android.text.TextUtils;

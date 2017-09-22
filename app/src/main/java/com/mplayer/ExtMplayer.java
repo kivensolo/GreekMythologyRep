@@ -6,8 +6,8 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-import com.utils.ScreenTools;
-import com.utils.ZLog;
+import com.kingz.utils.ScreenTools;
+import com.kingz.utils.ZLog;
 
 import java.util.HashMap;
 

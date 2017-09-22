@@ -17,7 +17,7 @@ import com.BaseActivity;
 import com.core.logic.GlobalCacheCenter;
 import com.kingz.FileDownloader;
 import com.kingz.customdemo.R;
-import com.utils.*;
+import com.kingz.utils.*;
 import com.kingz.customviews.HorizontalProgressBarView;
 
 import java.io.File;

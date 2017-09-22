@@ -17,8 +17,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.kingz.customdemo.R;
-import com.utils.ToastTools;
-import com.utils.ZLog;
+import com.kingz.utils.ToastTools;
+import com.kingz.utils.ZLog;
 
 import java.io.File;
 import java.io.FileOutputStream;

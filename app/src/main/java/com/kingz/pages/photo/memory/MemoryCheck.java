@@ -7,8 +7,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import com.BaseActivity;
 import com.kingz.customdemo.R;
-import com.utils.BitMapUtils;
-import com.utils.ZLog;
+import com.kingz.utils.BitMapUtils;
+import com.kingz.utils.ZLog;
 
 import java.util.Locale;
 

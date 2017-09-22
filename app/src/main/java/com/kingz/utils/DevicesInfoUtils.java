@@ -1,4 +1,4 @@
-package com.utils;
+package com.kingz.utils;
 
 import android.os.Debug;
 

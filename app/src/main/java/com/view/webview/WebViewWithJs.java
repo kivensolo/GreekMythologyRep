@@ -12,9 +12,9 @@ import android.webkit.WebView;
 import android.widget.Toast;
 import com.kingz.customdemo.R;
 import com.mplayer.ExtMplayer;
-import com.utils.ScreenTools;
-import com.utils.ToastTools;
-import com.utils.ZLog;
+import com.kingz.utils.ScreenTools;
+import com.kingz.utils.ToastTools;
+import com.kingz.utils.ZLog;
 import org.json.JSONObject;
 
 import java.util.Locale;

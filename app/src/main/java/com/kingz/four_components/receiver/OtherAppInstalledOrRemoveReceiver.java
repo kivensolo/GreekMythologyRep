@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 
-import com.utils.ZLog;
+import com.kingz.utils.ZLog;
 
 /**
  * Copyright(C) 2015, 北京视达科科技有限公司

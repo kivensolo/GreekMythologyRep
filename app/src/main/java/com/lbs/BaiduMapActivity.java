@@ -26,7 +26,7 @@ import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
 import com.kingz.customdemo.R;
-import com.utils.NetTools;
+import com.kingz.utils.NetTools;
 
 /**
  * Created by KingZ on 2016/1/7.

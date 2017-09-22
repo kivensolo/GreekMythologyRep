@@ -10,7 +10,7 @@ import android.os.Message;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.utils.ScreenTools;
+import com.kingz.utils.ScreenTools;
 
 /**
  * Copyright(C) 2016, 北京视达科科技有限公司

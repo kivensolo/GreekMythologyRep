@@ -1,7 +1,7 @@
 package com.parse.xml;
 
 import com.App;
-import com.utils.ZLog;
+import com.kingz.utils.ZLog;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;

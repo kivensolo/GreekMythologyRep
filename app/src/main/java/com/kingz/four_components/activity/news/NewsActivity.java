@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentActivity;
 import android.util.AttributeSet;
 import android.view.View;
 import com.kingz.customdemo.R;
-import com.utils.ZLog;
+import com.kingz.utils.ZLog;
 
 /**
  * Created by KingZ.

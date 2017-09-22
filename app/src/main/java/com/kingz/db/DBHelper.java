@@ -4,7 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.text.TextUtils;
-import com.utils.ZLog;
+import com.kingz.utils.ZLog;
 
 /**
  * author: King.Z <br>

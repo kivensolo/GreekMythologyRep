@@ -9,8 +9,8 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.FrameLayout;
-import com.utils.ToastTools;
-import com.utils.ZLog;
+import com.kingz.utils.ToastTools;
+import com.kingz.utils.ZLog;
 
 import java.io.IOException;
 

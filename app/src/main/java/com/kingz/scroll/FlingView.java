@@ -14,7 +14,7 @@ import android.view.animation.BounceInterpolator;
 import android.widget.Scroller;
 import android.widget.TextView;
 import com.kingz.customdemo.R;
-import com.utils.ZLog;
+import com.kingz.utils.ZLog;
 
 /**
  * Copyright(C) 2016, 北京视达科科技有限公司

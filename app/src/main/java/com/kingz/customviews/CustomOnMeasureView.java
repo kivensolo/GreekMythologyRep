@@ -19,7 +19,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.kingz.customdemo.R;
-import com.utils.ViewTools;
+import com.kingz.utils.ViewTools;
 
 import java.util.HashSet;
 import java.util.Random;

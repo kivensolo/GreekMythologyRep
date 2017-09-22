@@ -1,4 +1,4 @@
-package com.utils;
+package com.kingz.utils;
 import android.util.Log;
 //Logcat统一管理类
 public class ZLog {

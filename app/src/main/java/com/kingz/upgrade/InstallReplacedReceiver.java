@@ -9,7 +9,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.text.TextUtils;
 import com.App;
-import com.utils.ZLog;
+import com.kingz.utils.ZLog;
 
 import java.util.List;
 

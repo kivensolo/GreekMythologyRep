@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.BaseActivity;
 import com.kingz.customdemo.R;
 import com.kingz.four_components.provider.ContentChangeListener;
-import com.utils.ZLog;
+import com.kingz.utils.ZLog;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -12,7 +12,7 @@ import android.widget.ImageView;
 
 import com.kingz.animation.ViewpageTransformerAnimation;
 import com.kingz.customdemo.R;
-import com.utils.BitMapUtils;
+import com.kingz.utils.BitMapUtils;
 import com.view.slider.wzviewpager.wzcodepagger.DotsView;
 
 import java.util.ArrayList;

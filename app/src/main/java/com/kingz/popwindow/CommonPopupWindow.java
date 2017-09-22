@@ -3,7 +3,7 @@ package com.kingz.popwindow;
 import android.content.Context;
 import android.view.View;
 import android.widget.PopupWindow;
-import com.utils.ViewTools;
+import com.kingz.utils.ViewTools;
 
 /**
  * Copyright(C) 2016, 北京视达科科技有限公司

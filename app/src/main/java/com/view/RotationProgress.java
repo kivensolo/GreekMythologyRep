@@ -9,7 +9,7 @@ import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 
 import com.kingz.customdemo.R;
-import com.utils.ScreenTools;
+import com.kingz.utils.ScreenTools;
 
 /**
  * Created by KingZ on 2016/1/5.

@@ -11,8 +11,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import com.App;
 import com.kingz.customdemo.R;
-import com.utils.ScreenTools;
-import com.utils.ZLog;
+import com.kingz.utils.ScreenTools;
+import com.kingz.utils.ZLog;
 import com.kingz.widgets.text.LogTextBox;
 
 /**

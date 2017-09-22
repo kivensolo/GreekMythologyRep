@@ -1,8 +1,8 @@
 package com.core.logic;
 
 import android.content.Context;
-import com.utils.FileUtils;
-import com.utils.ZLog;
+import com.kingz.utils.FileUtils;
+import com.kingz.utils.ZLog;
 
 import java.io.File;
 

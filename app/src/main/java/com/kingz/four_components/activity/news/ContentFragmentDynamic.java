@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import com.kingz.customdemo.R;
-import com.utils.ZLog;
+import com.kingz.utils.ZLog;
 
 import java.lang.ref.WeakReference;
 import java.util.WeakHashMap;

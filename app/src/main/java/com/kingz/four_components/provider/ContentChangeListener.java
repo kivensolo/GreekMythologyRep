@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Handler;
 import com.kingz.four_components.ObtainConnectPeopleActivity;
-import com.utils.ZLog;
+import com.kingz.utils.ZLog;
 
 /**
  * Copyright(C) 2016, 北京视达科科技有限公司

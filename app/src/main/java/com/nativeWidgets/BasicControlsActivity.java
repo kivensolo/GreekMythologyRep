@@ -25,7 +25,7 @@ import android.widget.TextView;
 
 import com.App;
 import com.kingz.customdemo.R;
-import com.utils.ToastTools;
+import com.kingz.utils.ToastTools;
 
 /**
  * Created by KingZ.
