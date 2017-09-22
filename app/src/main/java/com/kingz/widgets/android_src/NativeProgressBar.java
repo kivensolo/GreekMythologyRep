@@ -1,4 +1,4 @@
-package com.kingz.nativewidgets;
+package com.kingz.widgets.android_src;
 
 import android.app.Activity;
 import android.app.AlertDialog;

@@ -1,4 +1,4 @@
-package com.kingz.text;
+package com.kingz.text.langs;
 
 import android.app.Activity;
 import android.content.Context;

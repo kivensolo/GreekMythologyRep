@@ -1,4 +1,4 @@
-package com.kingz.nativewidgets;
+package com.kingz.widgets.android_src;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;

@@ -1,4 +1,4 @@
-package com.kingz.text;
+package com.kingz.text.metrics;
 
 import android.app.Activity;
 import android.os.Bundle;

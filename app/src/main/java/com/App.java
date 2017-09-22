@@ -21,16 +21,12 @@ import jp.wasabeef.takt.Takt;
 public class App extends Application {
 
     public final static String TAG = "Application";
-
     private static App application;
-
     private static final boolean STRICT_MODE = true;
-    /**
-     * 全局变量
-     */
     public static Context mContext;
-
     private static Handler _appMainHandler;
+
+    public static final String BDApiKey = "467e6d8f8b06b8811b7a6fb939c8ad5e";
 
     /**
      * 屏幕适配参数

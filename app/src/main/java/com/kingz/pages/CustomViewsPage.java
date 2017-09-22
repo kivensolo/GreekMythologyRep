@@ -23,7 +23,7 @@ import com.kingz.scroll.SliderListViewActivity;
 import com.kingz.view.shape.ShapeDrawOval;
 import com.kingz.scroll.view_pager.WZViewPagerActicity;
 import com.kingz.view.webview.WebViewActivity;
-import com.kingz.popwindow.CommonPopupWindow;
+import com.kingz.widgets.android_src.popwindow.CommonPopupWindow;
 
 /**
  * 自定义View汇总主界面

@@ -1,4 +1,4 @@
-package com.kingz.text;
+package com.kingz.text.metrics;
 
 import android.content.Context;
 import android.graphics.Canvas;

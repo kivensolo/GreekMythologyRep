@@ -8,9 +8,9 @@ import com.kingz.customdemo.R;
 /**
  * @author: KingZ
  * @Description:自定义TextView
+ * //TODo 待完善
  */
 public class LableTextViewPage extends Activity{
-
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

@@ -132,7 +132,7 @@
                   android:screenOrientation="portrait"/>
 
         <!-- 原生SeekBar -->
-        <activity android:name="com.kingz.nativewidgets.NativeSeekBar"
+        <activity android:name="com.kingz.widgets.android_src.NativeSeekBar"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!-- 自定义 SeekBar -->
@@ -150,7 +150,7 @@
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!-- progressBar -->
-        <activity android:name="com.kingz.nativewidgets.NativeProgressBar"
+        <activity android:name="com.kingz.widgets.android_src.NativeProgressBar"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
 
@@ -167,9 +167,9 @@
                    android:screenOrientation="landscape"/>
 
         <!--常用控件集合-->
-        <activity android:name="com.kingz.nativewidgets.BasicControlsActivity"
+        <activity android:name="com.kingz.widgets.android_src.BasicControlsActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
-        <activity android:name="com.kingz.nativewidgets.AppsGridView"
+        <activity android:name="com.kingz.widgets.android_src.AppsGridView"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!-- 自定义控件的ListView-->
@@ -180,10 +180,10 @@
         <activity android:name="com.kingz.text.LableTextViewPage"
                   android:theme="@android:style/Theme.DeviceDefault"/>
 
-        <activity android:name="com.kingz.text.FontMetricsDemoActivity"
+        <activity android:name="com.kingz.text.metrics.FontMetricsDemoActivity"
                   android:theme="@android:style/Theme.DeviceDefault"/>
 
-        <activity android:name="com.kingz.text.TextViewOfLanguages"
+        <activity android:name="com.kingz.text.langs.TextViewOfLanguages"
                   android:theme="@android:style/Theme.DeviceDefault"/>
 
         <!-- 四大组件的listview -->
@@ -271,7 +271,7 @@
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!-- OriginViewPager -->
-        <activity android:name="com.kingz.nativewidgets.OriginViewPager"
+        <activity android:name="com.kingz.widgets.android_src.OriginViewPager"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
 
@@ -285,7 +285,7 @@
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!-- Span页面 -->
-        <activity android:name="com.kingz.nativewidgets.SpansDemo"
+        <activity android:name="com.kingz.widgets.android_src.SpansDemo"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!-- 讯飞语音页面 -->
