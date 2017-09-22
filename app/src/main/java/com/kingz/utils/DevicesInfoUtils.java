@@ -1,8 +1,13 @@
 package com.kingz.utils;
 
 import android.os.Debug;
+import android.os.Environment;
+import android.os.StatFs;
+import android.text.format.Formatter;
+import com.App;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -133,5 +138,39 @@ public class DevicesInfoUtils {
             return false;
     }
 
+    public static boolean isSDCardAvailable() {
+        return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
+    }
+
+    public static StatFs getSdCardStatFs(){
+        File directory = Environment.getExternalStorageDirectory();
+        return new  StatFs(directory.getAbsolutePath());
+    }
+
+    public static long getSdCardBlockSize(){
+        return getSdCardStatFs().getBlockSizeLong();
+    }
+
+    public static long getSdCardBlockCount(){
+        return getSdCardStatFs().getBlockCountLong();
+    }
+
+    public static long getSdCardAvailableBlocks(){
+        return getSdCardStatFs().getAvailableBlocksLong();
+    }
+
+    public static String getExtStorageCapacity(){
+        StatFs sf = getSdCardStatFs();
+        long  blockSize = sf.getBlockSizeLong();
+        long  blockCount = sf.getBlockCountLong();
+        return Formatter.formatFileSize(App.getAppContext(), blockCount * blockSize);
+    }
+
+    public static String getExtStorageAvailCapacity(){
+        StatFs sf = getSdCardStatFs();
+        long  blockSize = sf.getBlockSizeLong();
+        long  availCount = sf.getAvailableBlocks();
+        return Formatter.formatFileSize(App.getAppContext(), availCount * blockSize);
+    }
 
 }
