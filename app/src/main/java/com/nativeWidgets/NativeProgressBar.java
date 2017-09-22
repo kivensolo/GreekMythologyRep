@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.kingz.customdemo.R;
-import com.mplayer.ApolloSeekBar;
+import com.mplayer.view.ApolloSeekBar;
 
 
 public class NativeProgressBar extends Activity implements OnClickListener{

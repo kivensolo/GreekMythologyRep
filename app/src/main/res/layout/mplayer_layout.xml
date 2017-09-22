@@ -21,7 +21,7 @@
               android:scrollbars="none">
     </ListView>
 
-    <com.mplayer.ApolloSeekBar
+    <com.mplayer.view.ApolloSeekBar
             android:id="@+id/mediaplayer_seekbar"
             android:layout_width="500dip"
             android:layout_height="30dip"

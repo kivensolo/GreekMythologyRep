@@ -1,4 +1,4 @@
-package com.kingz.adapter;
+package com.kingz.filemanager.adapter;
 
 import android.content.Context;
 import android.util.Log;
@@ -9,8 +9,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.kingz.adapter.CommonAdapter;
 import com.kingz.holder.CommViewHodler;
 import com.kingz.customdemo.R;
+import com.provider.CommonViewHolder;
 
 import java.io.File;
 import java.text.DecimalFormat;
@@ -54,6 +56,11 @@ public class FileListAdapter extends CommonAdapter<File> {
 
         porocessDirAndFile(position);
         return commonViewHolder.getmConvertView();
+    }
+
+    @Override
+    protected void fillData(CommonViewHolder holder, int position) {
+
     }
 
     private void porocessDirAndFile(int position) {

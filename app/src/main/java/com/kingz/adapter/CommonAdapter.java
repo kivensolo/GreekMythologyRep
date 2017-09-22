@@ -5,8 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-
 import com.kingz.holder.CommViewHodler;
+import com.provider.CommonViewHolder;
 
 import java.util.List;
 
@@ -21,22 +21,22 @@ public abstract class CommonAdapter<T> extends BaseAdapter{
     protected CommViewHodler commonViewHolder;
     protected LayoutInflater mInflater;
     protected Context mContex;
-    protected List<T> mDatas;
+    protected List<T> mData;
 
     public CommonAdapter(Context contex,List<T> datas) {
         this.mContex = contex;
         mInflater = LayoutInflater.from(mContex);
-        this.mDatas = datas;
+        this.mData = datas;
     }
 
     @Override
     public int getCount() {
-        return mDatas.size();
+        return mData.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return  mDatas.get(position);
+        return  mData.get(position);
     }
 
     @Override
@@ -49,4 +49,24 @@ public abstract class CommonAdapter<T> extends BaseAdapter{
 
     //如果有统一的ItemView样式
     //则可以把commonViewHolder = CommViewHodler.getHolder(mContex,convertView,parent,R.layout.filemanager_list_item,position);写到getView里面
+
+    protected abstract void fillData(CommonViewHolder holder, int position);
+
+	public void setItems(List<T> items){
+		if(items != null){
+			this.mData =items;
+		}else{
+			this.mData.clear();
+		}
+		notifyDataSetChanged();
+	}
+
+	public void addItems(List<T> items){
+		if(items!= null){
+			this.mData.addAll(items);
+		}else{
+			this.mData.clear();
+		}
+		notifyDataSetChanged();
+	}
 }

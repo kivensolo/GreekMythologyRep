@@ -15,9 +15,6 @@ import com.utils.ZLog;
 import java.lang.ref.WeakReference;
 import java.util.WeakHashMap;
 
-import static com.kingz.four_components.activity.news.NewsInfo.newsData;
-import static com.kingz.four_components.activity.news.NewsInfo.titleData;
-
 /**
  * Created by KingZ.
  * Data: 2016 2016/1/31
@@ -35,11 +32,11 @@ public class ContentFragmentDynamic extends Fragment {
         }
         ZLog.d("ContentFragmentDynamic","add new fragment");
         ContentFragmentDynamic fragment = new ContentFragmentDynamic();
-        String titleName = titleData.get(index);
+        String titleName = NewsInfo.titleData.get(index);
         Bundle args = new Bundle();
         args.putInt("index", index);
         args.putString("title",titleName);
-        args.putString("content",newsData.get(titleName));
+        args.putString("content",NewsInfo.newsData.get(titleName));
         fragment.setArguments(args);
         _fragmentsCache.put(index,new WeakReference<>(fragment));
         return fragment;

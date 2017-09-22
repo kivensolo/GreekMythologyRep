@@ -15,6 +15,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import com.BaseActivity;
 import com.kingz.customdemo.R;
+import com.mplayer.adapter.ChanellListAdapter;
+import com.mplayer.view.ApolloSeekBar;
 import com.provider.ChannelData;
 import com.utils.ToastTools;
 import com.utils.ZLog;
@@ -161,7 +163,7 @@ public class ApolloMediaPlayer extends BaseActivity {
     private void initChannelListView() {
         leftListView = (ListView) findViewById(R.id.leftchanellView);
         if (channelLists != null) {
-            chanellListAdapter = new ChanellListAdapter(this, channelLists, R.layout.simple_listviewitem);
+            chanellListAdapter = new ChanellListAdapter(this, channelLists);
             leftListView.setAdapter(chanellListAdapter);
             leftListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override

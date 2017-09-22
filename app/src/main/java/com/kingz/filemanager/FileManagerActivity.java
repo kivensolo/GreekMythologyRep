@@ -11,7 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.BaseActivity;
-import com.kingz.adapter.FileListAdapter;
+import com.kingz.filemanager.adapter.FileListAdapter;
 import com.kingz.customdemo.R;
 
 import java.io.DataOutputStream;

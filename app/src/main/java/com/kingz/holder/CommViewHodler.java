@@ -21,11 +21,6 @@ public class CommViewHodler {
     private View mConvertView;
     private int mPosition;
 
-
-    /**
-     * 通用的获取ViewHolder方法
-     * @return
-     */
     public static CommViewHodler getHolder(Context mContext, View convertView,
                                      ViewGroup parent,int layoutId, int postion) {
         if (convertView == null) {
@@ -50,12 +45,6 @@ public class CommViewHodler {
         return mConvertView;
     }
 
-    /**
-     * 获取ItemView
-     * @param viewId  view的Id
-     * @param <T>
-     * @return
-     */
     public <T extends View> T getView(int viewId){
         View view = viewsMap.get(viewId);//从缓存的Map中查
         if(null == view){

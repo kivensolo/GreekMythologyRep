@@ -1,4 +1,4 @@
-package com.mplayer;
+package com.mplayer.view;
 
 import android.content.Context;
 import android.graphics.Canvas;

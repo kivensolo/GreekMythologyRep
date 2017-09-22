@@ -1,12 +1,14 @@
-package com.kingz.adapter;
+package com.kingz.pages.photo.adapter;
 
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import com.kingz.adapter.CommonAdapter;
 import com.kingz.customdemo.R;
 import com.kingz.holder.CommViewHodler;
 import com.kingz.pages.photo.BitmapPhotosActivity;
+import com.provider.CommonViewHolder;
 
 import java.util.List;
 
@@ -29,7 +31,12 @@ public class BitmapPageAdapter extends CommonAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         commonViewHolder = CommViewHodler.getHolder(mContex,convertView,parent, R.layout.simplelist_every_item,position);
         nameItem = commonViewHolder.getView(R.id.list_item);
-        nameItem.setText(((BitmapPhotosActivity.ItemInfo)(mDatas.get(position))).getName());
+        nameItem.setText(((BitmapPhotosActivity.ItemInfo)(mData.get(position))).getName());
         return commonViewHolder.getmConvertView();
+    }
+
+    @Override
+    protected void fillData(CommonViewHolder holder, int position) {
+
     }
 }
