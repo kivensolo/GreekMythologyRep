@@ -3,7 +3,11 @@
 
     <item android:state_pressed="false">
         <shape
-                android:shape="rectangle">
+            android:shape="ring">
+            <gradient
+                android:startColor="@color/whitesmoke"
+                android:endColor="@color/greenyellow"
+                android:gradientRadius="@integer/card_flip_time_half"/>
         </shape>
     </item>
 
@@ -11,8 +15,8 @@
         <shape android:shape="rectangle">
             <corners android:radius="2dip" />
             <stroke
-                    android:width="3dp"
-                    android:color="@color/yellow"/>
+                android:width="6dp"
+                android:color="@color/green"/>
         </shape>
     </item>
 </selector>
