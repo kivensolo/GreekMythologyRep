@@ -1,4 +1,4 @@
-package com.kingz.rains;
+package com.kingz.customviews.rains;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;

@@ -1,4 +1,4 @@
-package com.provider;
+package com.kingz.adapter;
 
 import android.content.Context;
 import android.util.SparseArray;

@@ -1,4 +1,4 @@
-package com.content;
+package com.apiDemo.content;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;

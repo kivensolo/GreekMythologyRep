@@ -59,7 +59,7 @@
 
         <provider
                 android:authorities="com.kingz.customdemo"
-                android:name="com.provider.KingZProvider"/>
+                android:name="com.kingz.four_components.provider.KingZProvider"/>
 
         <activity
                 android:name="com.SplashActivity"
@@ -199,7 +199,7 @@
         <!--文件及bitmap操作的activity-->
         <activity android:name="com.kingz.file.FileAndPicTestACT"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
-        <activity android:name="com.content.ExternalStorage"
+        <activity android:name="com.apiDemo.content.ExternalStorage"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <activity android:name="com.kingz.pages.SaveDataByFilePage"
@@ -257,7 +257,7 @@
                   android:screenOrientation="portrait"/>
 
         <!-- 可左右滑动的ListView -->
-        <activity android:name="com.view.scroll.SliderListViewActivity"
+        <activity android:name="com.kingz.scroll.SliderListViewActivity"
                   android:screenOrientation="portrait"/>
 
         <!-- WZViewPagerActicity -->
@@ -267,7 +267,7 @@
         <activity android:name="com.bling.pages.WaveLoadingActivity"
                   android:screenOrientation="portrait"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
-        <activity android:name="com.view.scroll.ScrollTestActivity"
+        <activity android:name="com.kingz.scroll.ScrollTestActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!-- OriginViewPager -->

@@ -1,4 +1,4 @@
-package com.view.views;
+package com.kingz.customviews;
 
 import android.animation.ValueAnimator;
 import android.content.Context;

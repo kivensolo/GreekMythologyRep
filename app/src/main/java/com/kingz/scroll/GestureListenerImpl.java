@@ -1,4 +1,4 @@
-package com.view.scroll;
+package com.kingz.scroll;
 
 import android.util.Log;
 import android.view.GestureDetector;

@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.widget.SeekBar;
 
 import com.kingz.customdemo.R;
-import com.view.views.WaveLoadingView;
+import com.kingz.customviews.WaveLoadingView;
 
 /**
  * Copyright(C) 2015, 北京视达科科技有限公司

@@ -1,4 +1,4 @@
-package com.view.scroll;
+package com.kingz.scroll;
 
 import android.os.Bundle;
 import android.view.ViewGroup;

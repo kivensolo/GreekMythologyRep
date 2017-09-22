@@ -8,7 +8,7 @@ import com.kingz.adapter.CommonAdapter;
 import com.kingz.customdemo.R;
 import com.kingz.holder.CommViewHodler;
 import com.kingz.pages.photo.BitmapPhotosActivity;
-import com.provider.CommonViewHolder;
+import com.kingz.adapter.CommonViewHolder;
 
 import java.util.List;
 

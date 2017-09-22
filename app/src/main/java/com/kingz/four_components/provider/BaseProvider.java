@@ -1,4 +1,4 @@
-package com.provider;
+package com.kingz.four_components.provider;
 
 import android.annotation.SuppressLint;
 import android.content.ContentProvider;

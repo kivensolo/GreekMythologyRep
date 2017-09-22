@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.kingz.adapter.CommonAdapter;
 import com.kingz.holder.CommViewHodler;
 import com.kingz.customdemo.R;
-import com.provider.CommonViewHolder;
+import com.kingz.adapter.CommonViewHolder;
 
 import java.io.File;
 import java.text.DecimalFormat;

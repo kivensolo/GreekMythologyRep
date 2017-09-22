@@ -9,7 +9,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ExpandableListView;
 import com.asuynctask_jsontest.LruPicListViewActivity;
-import com.content.ExternalStorage;
+import com.apiDemo.content.ExternalStorage;
 import com.iflytek.synthesizer.VoiceActivity;
 import com.kingz.adapter.CommExpandableListAdapter;
 import com.kingz.communicat.HMLActuivity;

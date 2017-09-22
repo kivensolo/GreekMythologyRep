@@ -1,4 +1,4 @@
-package com.view.scroll;
+package com.kingz.scroll;
 
 import android.content.Context;
 import android.graphics.Canvas;
