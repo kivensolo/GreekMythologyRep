@@ -33,12 +33,12 @@ import com.kingz.text.TextViewOfLanguages;
 import com.kingz.widgets.AnimatedExpandableListView;
 import com.lbs.BaiduMapActivity;
 import com.mplayer.ApolloMediaPlayer;
-import com.nativeWidgets.BasicControlsActivity;
-import com.nativeWidgets.NativeProgressBar;
-import com.nativeWidgets.OriginViewPager;
-import com.nativeWidgets.SpansDemo;
-import com.view.animation.*;
-import com.view.surface.DrawRectWithSurface;
+import com.kingz.nativewidgets.BasicControlsActivity;
+import com.kingz.nativewidgets.NativeProgressBar;
+import com.kingz.nativewidgets.OriginViewPager;
+import com.kingz.nativewidgets.SpansDemo;
+import com.kingz.view.animation.*;
+import com.kingz.view.surface.DrawRectWithSurface;
 
 import java.util.ArrayList;
 import java.util.List;

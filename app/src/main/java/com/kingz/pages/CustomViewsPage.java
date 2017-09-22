@@ -16,13 +16,13 @@ import com.bling.pages.FingerBallActivity;
 import com.bling.pages.UsingCustomSeekBar;
 import com.bling.pages.WaveLoadingActivity;
 import com.kingz.customdemo.R;
-import com.view.listview.CustomListViewActivity;
-import com.view.listview.RecyclerviewDemo;
+import com.kingz.view.listview.CustomListViewActivity;
+import com.kingz.view.listview.RecyclerviewDemo;
 import com.kingz.scroll.ScrollTestActivity;
 import com.kingz.scroll.SliderListViewActivity;
-import com.view.shape.ShapeDrawOval;
-import com.view.slider.wzviewpager.WZViewPagerActicity;
-import com.view.webview.WebViewActivity;
+import com.kingz.view.shape.ShapeDrawOval;
+import com.kingz.scroll.view_pager.WZViewPagerActicity;
+import com.kingz.view.webview.WebViewActivity;
 import com.kingz.popwindow.CommonPopupWindow;
 
 /**

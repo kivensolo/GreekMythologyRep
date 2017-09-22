@@ -20,7 +20,7 @@
 
     </android.support.v4.view.ViewPager>
 
-    <com.view.slider.wzviewpager.wzcodepagger.DotsView
+    <com.kingz.scroll.view_pager.sc_pagerinfo.DotsView
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

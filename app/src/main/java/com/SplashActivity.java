@@ -18,7 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
 import com.kingz.customdemo.R;
-import com.view.LogininView;
+import com.kingz.view.LogininView;
 
 import java.io.File;
 import java.io.FileOutputStream;

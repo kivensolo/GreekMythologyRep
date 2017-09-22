@@ -78,7 +78,7 @@
 
     </LinearLayout>
 
-    <com.view.porterduffmode.DuffTestView
+    <com.kingz.customviews.porterduffmode.DuffTestView
             android:layout_width="match_parent"
             android:layout_height="108dp"/>
 

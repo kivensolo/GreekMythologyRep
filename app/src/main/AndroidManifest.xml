@@ -120,19 +120,19 @@
         <activity android:name="com.kingz.pages.Test11"
                   android:screenOrientation="landscape"/>
 
-        <activity android:name="com.view.animation.PropertyAnimationsActivity"
+        <activity android:name="com.kingz.view.animation.PropertyAnimationsActivity"
                   android:screenOrientation="landscape"/>
-        <activity android:name="com.view.animation.CrossfadeActivity"
+        <activity android:name="com.kingz.view.animation.CrossfadeActivity"
                   android:screenOrientation="landscape"/>
-        <activity android:name="com.view.animation.ShakeAnimation"
+        <activity android:name="com.kingz.view.animation.ShakeAnimation"
                   android:screenOrientation="portrait"/>
-        <activity android:name="com.view.animation.ViewFlipperAnimation"
+        <activity android:name="com.kingz.view.animation.ViewFlipperAnimation"
                   android:screenOrientation="portrait"/>
-        <activity android:name="com.view.animation.InterpolatorAnimation"
+        <activity android:name="com.kingz.view.animation.InterpolatorAnimation"
                   android:screenOrientation="portrait"/>
 
         <!-- 原生SeekBar -->
-        <activity android:name="com.nativeWidgets.NativeSeekBar"
+        <activity android:name="com.kingz.nativewidgets.NativeSeekBar"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!-- 自定义 SeekBar -->
@@ -143,14 +143,14 @@
                 android:name="com.kingz.pages.CustomCanvasSeekBarAct"
                 android:theme="@android:style/Theme.Black.NoTitleBar"/>
         <activity
-                android:name="com.view.shape.ShapeDrawOval"
+                android:name="com.kingz.view.shape.ShapeDrawOval"
                 android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
-        <activity android:name="com.view.surface.DrawRectWithSurface"
+        <activity android:name="com.kingz.view.surface.DrawRectWithSurface"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!-- progressBar -->
-        <activity android:name="com.nativeWidgets.NativeProgressBar"
+        <activity android:name="com.kingz.nativewidgets.NativeProgressBar"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
 
@@ -167,9 +167,9 @@
                    android:screenOrientation="landscape"/>
 
         <!--常用控件集合-->
-        <activity android:name="com.nativeWidgets.BasicControlsActivity"
+        <activity android:name="com.kingz.nativewidgets.BasicControlsActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
-        <activity android:name="com.nativeWidgets.AppsGridView"
+        <activity android:name="com.kingz.nativewidgets.AppsGridView"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!-- 自定义控件的ListView-->
@@ -246,14 +246,14 @@
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!--webAppActivity-->
-        <activity android:name="com.view.webview.WebViewActivity"
+        <activity android:name="com.kingz.view.webview.WebViewActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!-- 自定义显示的listView -->
-        <activity android:name="com.view.listview.CustomListViewActivity"
+        <activity android:name="com.kingz.view.listview.CustomListViewActivity"
                   android:screenOrientation="portrait"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
-        <activity android:name="com.view.listview.RecyclerviewDemo"
+        <activity android:name="com.kingz.view.listview.RecyclerviewDemo"
                   android:screenOrientation="portrait"/>
 
         <!-- 可左右滑动的ListView -->
@@ -261,7 +261,7 @@
                   android:screenOrientation="portrait"/>
 
         <!-- WZViewPagerActicity -->
-        <activity android:name="com.view.slider.wzviewpager.WZViewPagerActicity"
+        <activity android:name="com.kingz.scroll.view_pager.WZViewPagerActicity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
         <!-- WaveLoadingActivity -->
         <activity android:name="com.bling.pages.WaveLoadingActivity"
@@ -271,7 +271,7 @@
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!-- OriginViewPager -->
-        <activity android:name="com.nativeWidgets.OriginViewPager"
+        <activity android:name="com.kingz.nativewidgets.OriginViewPager"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
 
@@ -285,7 +285,7 @@
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!-- Span页面 -->
-        <activity android:name="com.nativeWidgets.SpansDemo"
+        <activity android:name="com.kingz.nativewidgets.SpansDemo"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!-- 讯飞语音页面 -->
