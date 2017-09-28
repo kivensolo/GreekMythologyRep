@@ -71,6 +71,7 @@ public class ContentFragmentDynamic extends Fragment {
         text.setPadding(padding, padding, padding, padding);
         text.setTextSize(26f);
         text.setFocusable(true);
+        //todo 设置TextView焦点颜色
         text.setBackground(getResources().getDrawable(R.drawable.text_forcused_style_xjdx));
         text.setText(getArguments().getString("content", "Empty Data"));
         scroller.addView(text);

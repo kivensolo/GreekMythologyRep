@@ -6,8 +6,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 /**
- * Copyright(C) 2016, 北京视达科科技有限公司
- * All rights reserved. <br>
  * author: King.Z <br>
  * date:  2017/4/24 13:50 <br>
  * description: 字体测量 <br>

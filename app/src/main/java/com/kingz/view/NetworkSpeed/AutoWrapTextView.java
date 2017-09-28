@@ -16,8 +16,6 @@ import com.kingz.utils.ZLog;
 import java.util.ArrayList;
 
 /**
- * Copyright(C) 2016, 北京视达科科技有限公司
- * All rights reserved. <br>
  * author: King.Z <br>
  * date:  2017/4/23 17:27 <br>
  * description: 自动换行的TextView
@@ -186,7 +184,6 @@ public class AutoWrapTextView extends View {
 
     /**
      * TODO 这个是获取什么距离？
-     * @return
      */
     private int getFontSpace() {
         Paint.FontMetricsInt fontMetrics = mTextPaint.getFontMetricsInt();
