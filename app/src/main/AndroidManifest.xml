@@ -181,7 +181,8 @@
                   android:theme="@android:style/Theme.DeviceDefault"/>
 
         <activity android:name="com.kingz.text.metrics.FontMetricsDemoActivity"
-                  android:theme="@android:style/Theme.DeviceDefault"/>
+                  android:screenOrientation="landscape"
+                  android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <activity android:name="com.kingz.text.langs.TextViewOfLanguages"
                   android:theme="@android:style/Theme.DeviceDefault"/>

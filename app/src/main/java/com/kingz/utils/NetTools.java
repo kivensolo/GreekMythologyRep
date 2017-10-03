@@ -45,11 +45,11 @@ public class NetTools {
      * @return
      */
     public static boolean isConnect() {
-            ConnectivityManager mConnectivityManager = (ConnectivityManager) App.getAppContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
-            if (mNetworkInfo != null) {
-                return mNetworkInfo.isAvailable();
-            }
+        ConnectivityManager mConnectivityManager = (ConnectivityManager) App.getAppContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
+        if (mNetworkInfo != null) {
+            return mNetworkInfo.isAvailable();
+        }
         return false;
     }
 
@@ -332,7 +332,6 @@ public class NetTools {
     }
 
 
-
 	/**
 	 * 打开系统网络设置界面
 	 */
@@ -343,5 +342,4 @@ public class NetTools {
 		intent.setAction("android.intent.action.VIEW");
 		activity.startActivityForResult(intent, 0);
 	}
-
 }
