@@ -47,7 +47,7 @@ android {
 }
 
 dependencies {
-    debugCompile(["jp.wasabeef:takt:1.0.1"])
+    //debugCompile(["jp.wasabeef:takt:1.0.1"]) 屏蔽wasabeef用于显示Fps的第三方库  reason:应用中已经自己写好了
     compile fileTree(include: ['*.jar'], dir: 'libs')
     //    compile 'com.android.support:support-v4:22.0.+'
     //    compile 'com.android.support:appcompat-v7:22.1.1'

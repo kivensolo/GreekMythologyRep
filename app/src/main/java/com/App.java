@@ -2,13 +2,14 @@ package com;
 
 import android.app.Application;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Handler;
 import android.os.StrictMode;
 import android.util.Log;
 import com.core.logic.GlobalCacheCenter;
 import com.kingz.customdemo.BuildConfig;
 import com.kingz.utils.ZLog;
-import jp.wasabeef.takt.Takt;
+import com.takt.FpsTools;
 
 /**
  * author: King.Z
@@ -47,8 +48,16 @@ public class App extends Application {
         initLog();
         initAPPScreenParms();
         initCacheCenter();
-        Takt.stock(this).size(20f).play();
+        initFpsDebugView();
         initStrictListenner();
+    }
+
+    private void initFpsDebugView() {
+        //Takt.stock(this).size(20f).play();
+        FpsTools.init(this)
+                .size(30f)
+                .color(Color.WHITE)
+                .play();
     }
 
     private void initStrictListenner() {
@@ -71,7 +80,8 @@ public class App extends Application {
 
     @Override
     public void onTerminate() {
-        Takt.finish();
+        //Takt.finish();
+        FpsTools.finish();
         super.onTerminate();
     }
     private void initCacheCenter() {
