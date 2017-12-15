@@ -4,12 +4,14 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 import android.graphics.PixelFormat;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.kingz.customdemo.R;
+
 import java.text.DecimalFormat;
 
 /**
@@ -24,8 +26,7 @@ public class FpsTools {
     @SuppressLint("StaticFieldLeak")
     private static final Program program = new Program();
 
-    private FpsTools() {
-    }
+    private FpsTools() {}
 
     //stock
     public static Program init(Application application) {
@@ -52,7 +53,7 @@ public class FpsTools {
             this.params.width = WindowManager.LayoutParams.WRAP_CONTENT;
             this.params.height = WindowManager.LayoutParams.WRAP_CONTENT;
             this.params.type = WindowManager.LayoutParams.TYPE_TOAST;
-            this.params.flags = 168;
+            this.params.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE|WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL|WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;//168
             this.params.format = PixelFormat.TRANSLUCENT;
             this.params.gravity = 8388693;
             this.params.x = 10;
@@ -124,7 +125,7 @@ public class FpsTools {
                 this.params.gravity = 8388659;
                 break;
             case 3:
-                this.params.gravity = 49;
+                this.params.gravity = Gravity.TOP|Gravity.CENTER;
                 break;
             case 4:
                 this.params.gravity = 17;
@@ -142,7 +143,7 @@ public class FpsTools {
                 this.params.gravity = 8388691;
                 break;
             case 9:
-                this.params.gravity = 81;
+                this.params.gravity = Gravity.BOTTOM|Gravity.CENTER;
             }
             return this;
         }
