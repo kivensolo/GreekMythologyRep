@@ -10,9 +10,9 @@ import android.view.View;
 import android.widget.Button;
 
 import com.kingz.customdemo.R;
-import com.kingz.customviews.CircleProgressView;
-import com.kingz.customviews.ColorTrackView;
-import com.kingz.customviews.Win10LoaddingView;
+import com.kingz.customviews.grogress.CircleProgressView;
+import com.kingz.customviews.text.ColorTrackView;
+import com.kingz.customviews.loading.Win10LoaddingView;
 
 /**
  * Copyright(C) 2015, 北京视达科科技有限公司

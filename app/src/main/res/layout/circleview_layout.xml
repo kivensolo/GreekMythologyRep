@@ -30,7 +30,7 @@
         <LinearLayout android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:orientation="horizontal">
-            <com.kingz.customviews.CircleProgressView
+            <com.kingz.customviews.grogress.CircleProgressView
                     android:id="@+id/view_circle_progress"
                     android:layout_width="0dip"
                     android:layout_height="300dp"
@@ -41,7 +41,7 @@
                     zhi:innerColor="#dd5656"
                     zhi:outerColor="#88ff22"
                     zhi:speed="20"/>
-            <com.kingz.customviews.Win10LoaddingView
+            <com.kingz.customviews.loading.Win10LoaddingView
                     android:id="@+id/win10loadding"
                     android:layout_width="0dip"
                     android:layout_height="300dp"
@@ -88,7 +88,7 @@
             android:background="@color/darksalmon"
             android:orientation="vertical">
 
-        <com.kingz.customviews.ColorTrackView
+        <com.kingz.customviews.text.ColorTrackView
                 android:id="@+id/id_changeTextColorView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

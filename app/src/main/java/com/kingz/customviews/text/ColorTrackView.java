@@ -1,4 +1,4 @@
-package com.kingz.customviews;
+package com.kingz.customviews.text;
 
 import android.content.Context;
 import android.content.res.TypedArray;

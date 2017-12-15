@@ -1,4 +1,4 @@
-package com.kingz.customviews;
+package com.kingz.customviews.loading;
 
 import android.content.Context;
 import android.graphics.Bitmap;
