@@ -18,7 +18,7 @@ public class Win10LoaddingView extends View {
     private ValueAnimator valueAnimator;
     private Paint mPaint;
     private Path mPath;
-    private Path dstPath;
+    private Path dstPath; //用来储存截取后的内容
     /**
      * 每一圈的绘制时间
      */
@@ -65,9 +65,9 @@ public class Win10LoaddingView extends View {
         mPaint.setColor(Color.WHITE);
         //设置画笔为圆笔
         mPaint.setStrokeCap(Paint.Cap.ROUND);
-        mPaint.setAntiAlias(true); //抗锯齿
+        mPaint.setAntiAlias(true);
 
-        dstPath = new Path();                      //用来储存截取后的内容
+        dstPath = new Path();
         mPath = new Path();
         rect = new RectF(-150, -150, 150, 150);
         mPath.addArc(rect, -90, 359.9f);              //矩形内画弧线  如果是360f  那起点就会从0度开始
@@ -138,7 +138,7 @@ public class Win10LoaddingView extends View {
         mPaint.setColor(Color.WHITE);
 
         canvas.drawPath(dstPath, mPaint);                //绘制dst
-        //每次转动一圈聚成一个点后都会闪一下，这是因为重新开始动画刷新视图的原因，这里的补救方法就是我们在动画快结束的时候手动画一个点
+        //每次转动一圈聚成一个点后都会闪一下，这是因为重新开始动画刷新视图的原因，这里的补救方法就是在动画快结束的时候手动画一个点
         if (0.997 <= precent  && precent <=1) {
             canvas.drawPoint(0, -150, mPaint);
         }
