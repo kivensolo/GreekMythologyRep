@@ -70,4 +70,13 @@ public class PhotosActivity extends BaseActivity implements AdapterView.OnItemCl
         view.setBackground(background);
     }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(datas != null){
+            datas.clear();
+            datas = null;
+        }
+    }
 }

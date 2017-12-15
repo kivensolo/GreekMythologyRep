@@ -114,7 +114,6 @@ public class BitMapUtils {
         // 图片旋转矩阵
         Matrix matrix = new Matrix(); // 每一种变化都包括set，pre，post三种，分别为设置、矩阵先乘、矩阵后乘。
         matrix.postRotate(angle);
-        // 得到旋转后的图片
         Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
         return resizedBitmap;
     }
@@ -155,7 +154,6 @@ public class BitMapUtils {
         // 取得想要缩放的matrix参数
         Matrix matrix = new Matrix();
         matrix.postScale(scaleWidth, scaleHeight);
-        // 得到新的图片
         Bitmap newbm = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, true);
         return newbm;
     }
