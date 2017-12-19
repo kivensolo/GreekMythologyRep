@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GreekMyth</string>
+    <string name="accountinfo">Account</string>
+    <string name="action_settings">Setting</string>
+    <string name="add">add</string>
+    <string name="address">address</string>
+    <string name="alarm_service">\"This demonstrates how to schedule a repeating \"</string>
+    <string name="Common_Map">Normal map</string>
+    <string name="clear">clear</string>
+    <string name="create">create</string>
+    <string name="crimtitle">Enter a title for the crime</string>
+    <string name="delete">delete</string>
+</resources>

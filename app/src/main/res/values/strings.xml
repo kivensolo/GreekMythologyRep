@@ -1,78 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="button_login">Login</string>
-    <string name="button_signup">Sign Up</string>
-    <string name="button_confirm_login">Confirm Login</string>
-    <string name="button_cancel_login">Cancel Login</string>
-    <string name="button_confirm_signup">Confirm Sign Up</string>
-    <string name="button_cancel_signup">Cancel Sign Up</string>
-    <string name="edit_username">username</string>
-    <string name="edit_password">password</string>
+    <string name="button_login" translatable="false">Login</string>
+    <string name="button_signup" translatable="false">Sign Up</string>
+    <string name="button_confirm_login" translatable="false">Confirm Login</string>
+    <string name="button_cancel_login" translatable="false">Cancel Login</string>
+    <string name="button_confirm_signup" translatable="false">Confirm Sign Up</string>
+    <string name="button_cancel_signup" translatable="false">Cancel Sign Up</string>
+    <string name="edit_username" translatable="false">username</string>
+    <string name="edit_password" translatable="false">password</string>
 
     <!--Application Str-->
     <string name="app_name">GreekMyth</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="seek_bar">SeekBar Src</string>
+    <string name="hello_world" translatable="false">Hello world!</string>
+    <string name="seek_bar" translatable="false">SeekBar Src</string>
     <string name="action_settings">Settings</string>
 
 
-    <string name="seekbar_info">采用图片资源和颜色：</string>
+    <string name="seekbar_info" translatable="false">采用图片资源和颜色：</string>
 
     <string name="add">增加</string>
-    <string name="reduce">减少</string>
-    <string name="reset">重置</string>
+    <string name="reduce" translatable="false">减少</string>
+    <string name="reset" translatable="false">重置</string>
     <string name="clear">清除</string>
-    <string name="canvas_seekbar_info">绘图测试</string>
-    <string name="checkSdCard">检测SD卡</string>
-    <string name="getDefaultFilePath">获取默认的文件存放路径</string>
-    <string name="inputData">请输入需要保存的数据</string>
-    <string name="desc">把输入的数据保存在Sd卡中或者手机内存中，简单的SD卡数据读写以及文件读写，
+    <string name="canvas_seekbar_info" translatable="false">绘图测试</string>
+    <string name="checkSdCard" translatable="false">检测SD卡</string>
+    <string name="getDefaultFilePath" translatable="false">获取默认的文件存放路径</string>
+    <string name="inputData" translatable="false">请输入需要保存的数据</string>
+    <string name="desc" translatable="false">把输入的数据保存在Sd卡中或者手机内存中，简单的SD卡数据读写以及文件读写，
         需要加权限:创建与删除文件权限 MOUNT_UNMOUNT_FILESYSTEMS;向SDCard写入数据权限:WRITE_EXTERNAL_STORAGE
     </string>
-    <string name="save_data">保存</string>
-    <string name="underlinSpanStr">UnderlinSpan</string>
+    <string name="save_data" translatable="false">保存</string>
+    <string name="underlinSpanStr" translatable="false">UnderlinSpan</string>
 
     <!-- 百度地图 Str-->
     <string name="address">地址:</string>
     <string name="accountinfo">账户信息:</string>
     <string name="Common_Map">普通地图</string>
-    <string name="Site_Map">卫星地图</string>
-    <string name="Map_Traffic">实时交通（off）</string>
+    <string name="Site_Map" translatable="false">卫星地图</string>
+    <string name="Map_Traffic" translatable="false">实时交通（off）</string>
 
 
-    <string name="startIntentServer">启动IntentService</string>
+    <string name="startIntentServer" translatable="false">启动IntentService</string>
 
     <!-- service_strings -->
-    <string name="alarm_service_started">闹钟服务被启动，运行中.......</string>
-    <string name="alarm_service_finished">闹钟服务被停止运行</string>
-    <string name="alarm_service_label">闹钟服务例子</string>
+    <string name="alarm_service_started" translatable="false">闹钟服务被启动，运行中.......</string>
+    <string name="alarm_service_finished" translatable="false">闹钟服务被停止运行</string>
+    <string name="alarm_service_label" translatable="false">闹钟服务例子</string>
     <string name="alarm_service">This demonstrates how to schedule a repeating
         alarm that will initiate a long-lived operation through a service.</string>
-    <string name="start_alarm_service">Start Alarm Service</string>
-    <string name="stop_alarm_service">Stop Alarm Service</string>
+    <string name="start_alarm_service" translatable="false">Start Alarm Service</string>
+    <string name="stop_alarm_service" translatable="false">Stop Alarm Service</string>
 
-    <string name="popwin">弹出PopUp</string>
+    <string name="popwin" translatable="false">弹出PopUp</string>
 
 
 
     <!-- animation_viewfliper -->
-    <string name="animationviewfliper_text1">有一个古老的故事</string>
-    <string name="animationviewfliper_text2">----从前有个庙</string>
-    <string name="animationviewfliper_text3">庙里有个老和尚和一个小和尚</string>
-    <string name="animationviewfliper_text4">他们没老婆!!</string>
-    <string name="animationviewfliper_text5">Interpolators</string>
-    <string name="animationviewfliper_tips">选择一个动画</string>
+    <string name="animationviewfliper_text1" translatable="false">有一个古老的故事</string>
+    <string name="animationviewfliper_text2" translatable="false">----从前有个庙</string>
+    <string name="animationviewfliper_text3" translatable="false">庙里有个老和尚和一个小和尚</string>
+    <string name="animationviewfliper_text4" translatable="false">他们没老婆!!</string>
+    <string name="animationviewfliper_text5" translatable="false">Interpolators</string>
+    <string name="animationviewfliper_tips" translatable="false">选择一个动画</string>
 
     <string name="create">create</string>
     <string name="delete">delete</string>
 
-    <string name="lorem_ipsum">
+    <string name="lorem_ipsum" translatable="false">
         <![CDATA[Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et magna ut erat elementum cursus in quis ipsum. Nam faucibus ultrices eros, vel tempor leo semper sit amet. Duis magna quam, congue vitae interdum nec, condimentum ut lectus. Sed commodo venenatis eros a dignissim. Nunc adipiscing turpis nec magna venenatis at ultricies ipsum bibendum. Sed volutpat urna quis nisi vulputate egestas. Etiam eu dui a enim lacinia dapibus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.\n\nPhasellus orci mi, eleifend nec congue id, volutpat at neque. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer semper velit vel leo rutrum sed fermentum elit porta.]]>
     </string>
 
-    <string name="touch_voice">触摸发声</string>
-    <string name="change_pic">切换图片</string>
+    <string name="touch_voice" translatable="false">触摸发声</string>
+    <string name="change_pic" translatable="false">切换图片</string>
     <string name="crimtitle">Enter a title for the crime</string>
 
 
