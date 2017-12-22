@@ -17,6 +17,12 @@ def keystoreProperties = new Properties()
 // Load keystore.properties file into the keystoreProperties object.
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
+
+def appName_360 = "\"GreekMyth_360\""
+def appName_wdj = "\"GreekMyth_WDJ\""
+def appName_yd = "\"GreekMyth_YD\""
+def appName_dx = "\"GreekMyth_DX\""
+
 android {
     signingConfigs {
         ZekeSigned {
@@ -28,16 +34,18 @@ android {
     }
     compileSdkVersion 22
     buildToolsVersion '25.0.0'
+
+    //The default configuration, inherited by all product flavors(if any are defined)
     defaultConfig {
-        // defaultConfig 实际上属于ProductFlavor类   可以提供所有Flavor的基本配置
         applicationId 'com.kingz.customdemo'
-        minSdkVersion 19
-        targetSdkVersion 22
         multiDexEnabled true
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
         signingConfig signingConfigs.ZekeSigned
+        minSdkVersion 19
+        targetSdkVersion 22
+        buildConfigField("String", "APP_NAME", "${appName_360}")
     }
     productFlavors {
         //在创建和配置productFlavors之后SyncNow的话
@@ -48,19 +56,31 @@ android {
         // 可以将构建变体更改为要构建并运行的任何变体,只需转到 Build > Select Build Variant,然后从下拉菜单中选择一个变体
         // 然而,要开始自定义每个构建变体及其功能和资源,需要了解如何创建和管理源集。
         //readMore:https://developer.android.com/studio/build/build-variants.html#product-flavors
-        demo {
-            applicationIdSuffix ".demo"
-            versionNameSuffix "-demo"
+        v_360 {
+            applicationIdSuffix ".qihu"
+            versionNameSuffix "-360"
+            buildConfigField("String", "APP_NAME", "${appName_360}")
         }
-        full {
-            applicationIdSuffix ".full"
-            versionNameSuffix "-full"
+        v_wdj {
+            applicationIdSuffix ".wdj"
+            versionNameSuffix "-豌豆荚"
+            buildConfigField("String", "APP_NAME", "${appName_wdj}")
+        }
+        v_yd {
+            applicationIdSuffix ".yd"
+            versionNameSuffix "-移动"
+            buildConfigField("String", "APP_NAME", "${appName_yd}")
+        }
+        v_dx {
+            applicationIdSuffix ".dx"
+            versionNameSuffix "-电信"
+            buildConfigField("String", "APP_NAME", "${appName_dx}")
         }
     }
 
     buildTypes {
+        //buildTypes 的配置在productFlavors的基础上增加
         debug {
-            //buildTypes 的配置会覆盖productFlavors的配置
         }
         release {
             minifyEnabled false
