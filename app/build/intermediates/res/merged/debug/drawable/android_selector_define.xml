@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- 样式选择器，有不同的state
-        selector与shape可搭配使用，详见 selector_radius_buttons
-    -->
-    <item android:drawable="@drawable/text_focused_bg" android:state_focused="true"/>
-    <item android:drawable="@drawable/text_selected_bg_shape" android:state_selected="true"/>
-    <item android:drawable="@drawable/text_selected_bg_shape" android:state_pressed="true"/>
-</selector>
