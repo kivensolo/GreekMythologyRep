@@ -18,8 +18,6 @@ import java.util.List;
  */
 public class AIDLService extends Service {
     public static final String TAG = AIDLService.class.getSimpleName();
-
-    //包含Book对象的list
     private List<Book> mBooks = new ArrayList<>();
 
     @Override
@@ -72,7 +70,7 @@ public class AIDLService extends Service {
         @Override
         public List<Book> getBooks() throws RemoteException {
             synchronized (this) {
-                ZLog.e(TAG, "invoking getBooks() method , now the list is : " + mBooks.toString());
+                ZLog.d(TAG, "invoking getBooks() method , now the list is : " + mBooks.toString());
                 if (mBooks != null) {
                     return mBooks;
                 }

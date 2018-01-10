@@ -74,6 +74,8 @@
     <string name="touch_voice" translatable="false">触摸发声</string>
     <string name="change_pic" translatable="false">切换图片</string>
     <string name="crimtitle">Enter a title for the crime</string>
+    <string name="aidl_addData">Add Data To Service</string>
+    <string name="aidl_getData">Get Data From Service</string>
 
 
 </resources>

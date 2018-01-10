@@ -4,24 +4,32 @@
     android:layout_height="match_parent">
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="往服务器添加数据"
-        android:id="@+id/addBook"
-        android:onClick="addBook"
-        android:background="@drawable/uiusing_app_btn_style"
-        android:layout_below="@+id/getBooks"
-        android:layout_alignEnd="@+id/getBooks"
-        android:layout_marginTop="35dp" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Change SP File"
+            android:id="@+id/button7"
+            android:onClick="ChangeFile"
+            android:background="@drawable/uiusing_app_btn_style"
+            android:layout_marginTop="13dp"
+            android:layout_below="@+id/getBooks" android:layout_alignStart="@+id/getBooks"
+            android:layout_alignEnd="@+id/getBooks"/>
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="获取服务器数据"
-        android:id="@+id/getBooks"
-        android:onClick="getBooks"
-        android:background="@drawable/uiusing_app_btn_style"
-        android:layout_marginStart="60dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="28dp" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/aidl_addData"
+            android:id="@+id/addBook"
+            android:onClick="addBook"
+            android:background="@drawable/uiusing_app_btn_style"
+            android:layout_marginTop="19dp"
+            android:layout_below="@+id/button7" android:layout_alignStart="@+id/button7"/>
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/aidl_getData"
+            android:id="@+id/getBooks"
+            android:onClick="getBooks"
+            android:background="@drawable/uiusing_app_btn_style"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="14dp" android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"/>
 </RelativeLayout>
