@@ -46,8 +46,8 @@ public class FileManagerActivity extends BaseActivity implements AdapterView.OnI
     private ArrayList<File> currentPageFilesList;   //文件名
     private boolean isRoot;
 
-//    private static final String ROOT_PATH = Environment.getExternalStorageDirectory().getPath();  //根目录
-    private static final String ROOT_PATH = "sdcard";  //根目录
+    private static final String ROOT_PATH = Environment.getExternalStorageDirectory().getPath();  //  /mnt/shell/emulated/0   一般就是SD卡
+//    private static final String ROOT_PATH = "sdcard";  //根目录
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,9 +75,9 @@ public class FileManagerActivity extends BaseActivity implements AdapterView.OnI
     }
 
     /**
-     * 修改Root权限
+     * 获取root权限
      * @param command
-     * @return
+     * @return command result.
      */
     public static boolean RootCommand (String command) {
         Process process = null;
@@ -89,12 +89,9 @@ public class FileManagerActivity extends BaseActivity implements AdapterView.OnI
             os.writeBytes("exit\n");
             os.flush();
             process.waitFor();
-        }
-        catch (Exception e) {
-            //TODO finally会执行么
+        }catch (Exception e) {
             return false;
-        }
-        finally {
+        }finally {
             try {
                 if (os != null) {
                     os.close();

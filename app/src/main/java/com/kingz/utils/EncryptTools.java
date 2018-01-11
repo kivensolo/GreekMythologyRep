@@ -5,12 +5,8 @@ import android.util.Base64;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.security.KeyFactory;
-import java.security.PrivateKey;
-import java.security.PublicKey;
-import java.security.Signature;
+import java.io.*;
+import java.security.*;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Arrays;
@@ -201,5 +197,68 @@ public class EncryptTools {
             hexChars[j * 2 + 1] = HEX_CHAR_ARRAY[v & 0x0F];
         }
         return new String(hexChars);
+    }
+
+
+    //Md5 加密法一
+    public synchronized static String MD5(String src) {
+        try {
+            byte[] btInput = src.getBytes();
+            MessageDigest mdInst = MessageDigest.getInstance("MD5");  // 获得MD5摘要算法的 MessageDigest 对象
+            mdInst.update(btInput);                                      // 使用指定的字节更新摘要
+            byte[] md = mdInst.digest();                              // 获得密文
+            return bytes2Hex(md);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    //Md5 加密法二
+    private static void createMD5(String szSrc) throws NoSuchAlgorithmException {
+        System.out.println("明文:" + szSrc);
+        MessageDigest md = MessageDigest.getInstance("md5");
+        byte[] md5 = md.digest(szSrc.getBytes());
+        System.out.println("md5:" + byte2hex(md5));
+    }
+
+     //转换成十六进制字符串  法一
+    private static String bytes2Hex(byte[] bts) {
+        String des = "";
+        String tmp = null;
+
+        for (int i = 0; i < bts.length; i++) {
+            tmp = (Integer.toHexString(bts[i] & 0xFF));
+            if (tmp.length() == 1) {
+                des += "0";
+            }
+            des += tmp;
+        }
+        return des;
+    }
+
+    //转换成十六进制字符串  法二
+    public static String byte2hex(byte[] b) {
+        String stmp = "";
+
+        for (int n = 0; n < b.length; n++) {
+            stmp += String.format("%02X", b[n]);
+        }
+        return stmp.toLowerCase();
+    }
+
+    // 通过路径生成Base64文件
+    public static String getBase64FromPath(String path) {
+        String base64 = "";
+        try {
+            File file = new File(path);
+            byte[] buffer = new byte[(int) file.length() + 100];
+            @SuppressWarnings("resource")
+            int length = new FileInputStream(file).read(buffer);
+            base64 = Base64.encodeToString(buffer, 0, length, Base64.DEFAULT);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return base64;
     }
 }

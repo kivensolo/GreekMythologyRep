@@ -1,5 +1,6 @@
 package com.kingz.utils;
 
+import android.content.Context;
 import android.os.Environment;
 import android.os.StatFs;
 
@@ -13,31 +14,40 @@ public class SDCardUtils {
     }
 
     /**
-     * 判断SDCard是否可用
-     * @return
+     * 判断SDCard是否已挂在
      */
-    public static boolean isSDCardEnable() {
-        return Environment.getExternalStorageState().equals(
-                Environment.MEDIA_MOUNTED);
+    public static boolean isSDCardAvailable() {
+        return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
+    }
+
+    public static String getRootDir(){
+        return Environment.getExternalStorageDirectory().getAbsolutePath();
     }
 
     /**
      * 获取SD卡路径
      * @return
      */
-    public static String getSDCardPath() {
-        return Environment.getExternalStorageDirectory().getAbsolutePath()
-                + File.separator;
+    public static String getDir(Context context, String testRootDir) {
+        String dirPath;
+        if(isSDCardAvailable()){
+            dirPath =  Environment.getExternalStorageDirectory().getAbsolutePath();
+        }else{
+            dirPath = context.getCacheDir().getPath();
+        }
+        File rootDir = new File(dirPath, testRootDir);
+        if (!rootDir.exists()) {
+            rootDir.mkdirs();
+        }
+        return rootDir.getPath();
     }
 
     /**
-     * 获取SD卡的剩余容量 单位byte
-     *
-     * @return
+     * @return SD卡的剩余容量 单位byte
      */
-    public static long getSDCardAllSize() {
-        if (isSDCardEnable()) {
-            StatFs stat = new StatFs(getSDCardPath());
+    public static long getFreeSize() {
+        if (isSDCardAvailable()) {
+            StatFs stat = new StatFs(getRootDir());
             // 获取空闲的数据块的数量
             long availableBlocks = (long) stat.getAvailableBlocks() - 4;
             // 获取单个数据块的大小（byte）
@@ -49,15 +59,13 @@ public class SDCardUtils {
 
     /**
      * 获取指定路径所在空间的剩余可用容量字节数，单位byte
-     *
      * @param filePath
      * @return 容量字节 SDCard可用空间，内部存储可用空间
      */
     public static long getFreeBytes(String filePath) {
-        // 如果是sd卡的下的路径，则获取sd卡可用容量
-        if (filePath.startsWith(getSDCardPath())) {
-            filePath = getSDCardPath();
-        } else {// 如果是内部存储的路径，则获取内存存储的可用容量
+        if (filePath.startsWith(getRootDir())) {
+            filePath = getRootDir();
+        } else {
             filePath = Environment.getDataDirectory().getAbsolutePath();
         }
         StatFs stat = new StatFs(filePath);
@@ -67,8 +75,6 @@ public class SDCardUtils {
 
     /**
      * 获取系统存储路径
-     *
-     * @return
      */
     public static String getRootDirectoryPath() {
         return Environment.getRootDirectory().getAbsolutePath();
