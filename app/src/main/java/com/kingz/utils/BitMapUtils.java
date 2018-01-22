@@ -111,7 +111,6 @@ public class BitMapUtils {
      * @return Bitmap    旋转后的图片
      */
     public static Bitmap setRotateImage(int angle, Bitmap bitmap) {
-        // 图片旋转矩阵
         Matrix matrix = new Matrix(); // 每一种变化都包括set，pre，post三种，分别为设置、矩阵先乘、矩阵后乘。
         matrix.postRotate(angle);
         Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
@@ -145,13 +144,10 @@ public class BitMapUtils {
      * 通过矩阵方式
      */
     public static Bitmap setZoomImg(Bitmap bm, int newWidth, int newHeight) {
-        // 获得图片的宽高
         int width = bm.getWidth();
         int height = bm.getHeight();
-        // 计算缩放比例
         float scaleWidth = ((float) newWidth) / width;
         float scaleHeight = ((float) newHeight) / height;
-        // 取得想要缩放的matrix参数
         Matrix matrix = new Matrix();
         matrix.postScale(scaleWidth, scaleHeight);
         Bitmap newbm = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, true);
@@ -441,13 +437,11 @@ public class BitMapUtils {
         if (drawable == null) {
             return null;
         }
-        // 建立对应 bitmap
-        Bitmap bitmap = Bitmap.createBitmap(width, height, drawable.getOpacity() != PixelFormat.OPAQUE ? ARGB_8888 : Bitmap.Config.RGB_565);
-        // 建立对应 bitmap 的画布
+        Bitmap.Config config = drawable.getOpacity() != PixelFormat.OPAQUE ? ARGB_8888 : Bitmap.Config.RGB_565;
+        Bitmap bitmap = Bitmap.createBitmap(width, height, config);
         Canvas canvas = new Canvas(bitmap);
         drawable.setBounds(0, 0, width, height);
-        // 把 drawable 内容画到画布中
-        drawable.draw(canvas);
+        drawable.draw(canvas);  // 把 drawable 内容画到画布中
         return bitmap;
     }
 
