@@ -160,7 +160,7 @@ public class OkHttpClientManager {
                     //final Bitmap bm = BitmapFactory.decodeStream(is, null, ops);
                     final Bitmap bm = BitMapUtils.decodeStreamCustomOpts(is);
 
-                    FileUtils.saveBitmapWithPath(new File(new File(App.getAppContext().getCacheDir().getPath(),"FilmPageDir"),FileUtils.MD5(url)),
+                    FileUtils.saveBitmapWithPath(new File(new File(App.getAppContext().getCacheDir().getPath(),"FilmPageDir"),EncryptTools.MD5(url)),
                                                 bm,
                                                 Bitmap.CompressFormat.PNG,
                                                 90);

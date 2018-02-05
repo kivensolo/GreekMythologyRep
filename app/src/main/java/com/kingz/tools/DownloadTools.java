@@ -7,7 +7,7 @@ import android.os.StatFs;
 import android.text.format.Formatter;
 import android.util.Log;
 import com.App;
-import com.kingz.utils.FileUtils;
+import com.kingz.utils.EncryptTools;
 import com.kingz.utils.NetTools;
 import com.kingz.utils.ZLog;
 
@@ -90,7 +90,7 @@ public class DownloadTools {
             item.delete();
         }
 
-        String apkName = FileUtils.MD5(urlString) + ".apk";
+        String apkName = EncryptTools.MD5(urlString) + ".apk";
         String savePathString = savePAth + File.separator + apkName;
         File file = new File(savePathString);
         if (!file.exists()) {
