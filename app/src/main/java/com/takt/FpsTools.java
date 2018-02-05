@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.kingz.customdemo.R;
+import com.kingz.utils.ZLog;
 
 import java.text.DecimalFormat;
 
@@ -22,6 +23,7 @@ import java.text.DecimalFormat;
  */
 public class FpsTools {
 
+    private static final String TAG = "FpsTools";
     //此工具会在app整个生命周期存在  忽略在静态类中使用context造成的内存泄漏
     @SuppressLint("StaticFieldLeak")
     private static final Program program = new Program();
@@ -66,6 +68,12 @@ public class FpsTools {
                     if(Program.this.fpsText != null) {
                         Program.this.fpsText.setText(Program.this.decimal.format(fps));
                     }
+                }
+
+                @Override
+                public void heartstop(long times) {
+                    ZLog.e(TAG,"Droped_Frame!! times:" + times);
+                    LogMonitor.getInstance().startMonitor();
                 }
             });
             return this;

@@ -8,8 +8,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ExpandableListView;
-import com.asuynctask_jsontest.LruPicListViewActivity;
 import com.apiDemo.content.ExternalStorage;
+import com.asuynctask_jsontest.LruPicListViewActivity;
 import com.iflytek.synthesizer.VoiceActivity;
 import com.kingz.adapter.CommExpandableListAdapter;
 import com.kingz.communicat.HMLActuivity;
@@ -27,18 +27,19 @@ import com.kingz.pages.photo.BitmapPhotosActivity;
 import com.kingz.pages.photo.colormatrix.ColorMatrixDemo;
 import com.kingz.pages.photo.filmlist.FilmsListActivity;
 import com.kingz.pages.photo.memory.MemoryCheck;
-import com.kingz.text.metrics.FontMetricsDemoActivity;
 import com.kingz.text.LableTextViewPage;
 import com.kingz.text.langs.TextViewOfLanguages;
+import com.kingz.text.metrics.FontMetricsDemoActivity;
+import com.kingz.view.animation.*;
+import com.kingz.view.surface.DrawRectWithSurface;
 import com.kingz.widgets.AnimatedExpandableListView;
-import com.lbs.BaiduMapActivity;
-import com.mplayer.ApolloMediaPlayer;
 import com.kingz.widgets.android_src.BasicControlsActivity;
 import com.kingz.widgets.android_src.NativeProgressBar;
 import com.kingz.widgets.android_src.OriginViewPager;
 import com.kingz.widgets.android_src.SpansDemo;
-import com.kingz.view.animation.*;
-import com.kingz.view.surface.DrawRectWithSurface;
+import com.lbs.BaiduMapActivity;
+import com.mplayer.ApolloMediaPlayer;
+import com.takt.FpsTools;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -185,6 +186,7 @@ public class MainActivity extends ExpandableListActivity implements OnItemClickL
 
     @Override
     protected void onDestroy() {
+        FpsTools.finish();
         super.onDestroy();
     }
 
@@ -193,7 +195,7 @@ public class MainActivity extends ExpandableListActivity implements OnItemClickL
 
     }
 
-    class ListBillDataManager {
+    private class ListBillDataManager {
         private List<String> gruops = new ArrayList<>();
         private List<List<ListBillData>> childs = new ArrayList<>();
         private ArrayList<ListBillData> item = new ArrayList<>();
