@@ -8,9 +8,9 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.kingz.customdemo.R;
+import com.kingz.customviews.chart.FramesCurveChartView;
 import com.kingz.utils.ZLog;
 
 import java.text.DecimalFormat;
@@ -46,6 +46,7 @@ public class FpsTools {
         private WindowManager wm;
         private View stageView;
         private TextView fpsText;
+        private FramesCurveChartView fpsChart;
         private WindowManager.LayoutParams params;
         private final DecimalFormat decimal = new DecimalFormat("#.0\' fps\'");
 
@@ -61,7 +62,8 @@ public class FpsTools {
             this.params.x = 10;
             this.wm = WindowManager.class.cast(application.getSystemService(Context.WINDOW_SERVICE));
             LayoutInflater inflater = LayoutInflater.from(application);
-            this.stageView = inflater.inflate(R.layout.stage, new RelativeLayout(application));
+            this.stageView = inflater.inflate(R.layout.stage,null);
+            this.fpsChart = (FramesCurveChartView)this.stageView.findViewById(R.id.takt_chart);
             this.fpsText = (TextView)this.stageView.findViewById(R.id.takt_fps);
             this.listener(new IAudience() {
                 public void heartbeat(double fps) {
@@ -71,9 +73,10 @@ public class FpsTools {
                 }
 
                 @Override
-                public void heartstop(long times) {
-                    ZLog.e(TAG,"Droped_Frame!! times:" + times);
-                    LogMonitor.getInstance().startMonitor();
+                public void heartstop(long times,long delayDiff) {
+                    //ZLog.e(TAG,"Droped_Frame!! times:" + times + "  delayDiff:"+delayDiff);
+                    //LogMonitor.getInstance().startMonitor();
+                    fpsChart.addYData(delayDiff);
                 }
             });
             return this;

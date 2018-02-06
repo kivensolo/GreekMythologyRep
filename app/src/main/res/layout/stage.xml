@@ -1,12 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:id="@+id/takt_fps"
-  android:layout_width="wrap_content"
-  android:layout_height="wrap_content"
-  android:shadowColor="#7000"
-  android:shadowDx="6"
-  android:shadowDy="6"
-  android:shadowRadius="4"
-  android:textColor="@android:color/white"
-  />
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_height="550dp"
+        android:layout_width="700dp">
+
+    <com.kingz.customviews.chart.FramesCurveChartView
+            android:id="@+id/takt_chart"
+            android:background="#667B0E0E"
+            android:layout_height="550dp"
+            android:layout_width="700dp"/>
+    <TextView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/takt_fps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:shadowColor="#7000"
+            android:shadowDx="6"
+            android:shadowDy="6"
+            android:shadowRadius="4"
+            android:textColor="@android:color/white"
+    />
+</RelativeLayout>
+

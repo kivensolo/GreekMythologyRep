@@ -17,10 +17,10 @@ import java.util.concurrent.TimeUnit;
 public class GrapherFramesCallback implements Choreographer.FrameCallback {
     private Choreographer choreographer = Choreographer.getInstance();
     private List<IAudience> listeners = new ArrayList<>();
-    private long frameUpdateStartTime = 0L;
-    private long frameLastTime = 0L;
-    private long frameCurrentTime = 0L;
-    private int framesRendered = 0;
+    private long mFrameUpdateStartTime_ms = 0L;
+    private long mFrameLastTime_ns = 0L;
+    private long mFrameCurrentTime = 0L;
+    private int mFramesRendered = 0;
     private int interval = 500;
 
     public GrapherFramesCallback() {
@@ -31,10 +31,10 @@ public class GrapherFramesCallback implements Choreographer.FrameCallback {
     }
 
     public void stop() {
-        this.frameUpdateStartTime = 0L;
-        this.frameLastTime = 0L;
-        this.frameCurrentTime = 0L;
-        this.framesRendered = 0;
+        this.mFrameUpdateStartTime_ms = 0L;
+        this.mFrameLastTime_ns = 0L;
+        this.mFrameCurrentTime = 0L;
+        this.mFramesRendered = 0;
         this.choreographer.removeFrameCallback(this);
     }
 
@@ -48,32 +48,43 @@ public class GrapherFramesCallback implements Choreographer.FrameCallback {
 
     @Override
     public void doFrame(long frameTimeNanos) {
-        frameCurrentTime = frameTimeNanos;
-        //long diffMillis = TimeUnit.MILLISECONDS.convert(frameCurrentTime - frameLastTime, TimeUnit.NANOSECONDS);
+        mFrameCurrentTime = frameTimeNanos;
+        //long diffMillis = TimeUnit.MILLISECONDS.convert(mFrameCurrentTime - mFrameLastTime_ns, TimeUnit.NANOSECONDS);
         long currentTimeMillis = TimeUnit.NANOSECONDS.toMillis(frameTimeNanos);
-        if (this.frameUpdateStartTime > 0L) {
-            long timeSpan = currentTimeMillis - this.frameUpdateStartTime;
-            ++this.framesRendered;
+        if(mFrameUpdateStartTime_ms == 0){
+             mFrameUpdateStartTime_ms = currentTimeMillis;
+        }
+        if(mFrameLastTime_ns == 0){
+            mFrameLastTime_ns = frameTimeNanos;
+        }
+        if (mFrameUpdateStartTime_ms > 0L) {
+            long timeSpan = currentTimeMillis - mFrameUpdateStartTime_ms;
+            ++this.mFramesRendered;
             if (timeSpan > (long) this.interval) {
-                double fps = (double) (this.framesRendered * 1000) / (double) timeSpan;
-                this.frameUpdateStartTime = currentTimeMillis;
-                this.framesRendered = 0;
+                double fps = (double) (this.mFramesRendered * 1000) / (double) timeSpan;
+                this.mFrameUpdateStartTime_ms = currentTimeMillis;
+                this.mFramesRendered = 0;
                 for (IAudience audience : this.listeners) {
                     audience.heartbeat(fps);
                 }
             }
-        } else {
-            this.frameLastTime = this.frameUpdateStartTime = currentTimeMillis;
         }
-
-        long diffMillis = TimeUnit.NANOSECONDS.toMillis(frameCurrentTime - frameLastTime);
-        if(diffMillis > 16.6f * 3){
-            long droppedCount = (long) (diffMillis / 16.6);
-            for (IAudience audience : this.listeners) {
-                audience.heartstop(droppedCount);
-            }
+        long diffMillis = TimeUnit.NANOSECONDS.toMillis(mFrameCurrentTime - mFrameLastTime_ns);
+        if((float)diffMillis > 16.6f * 2){
+            long droppedCount = (int) (diffMillis / 16.6);
+            //丢帧值
+            notifyHeartStop(droppedCount,diffMillis);
+        }else {
+            //瞬时值
+            notifyHeartStop(0,diffMillis);
         }
-        frameLastTime = frameCurrentTime;
+        mFrameLastTime_ns = mFrameCurrentTime;
         this.choreographer.postFrameCallback(this);
+    }
+
+    private void notifyHeartStop(long times,long diffMillis) {
+        for (IAudience audience : this.listeners) {
+            audience.heartstop(times,diffMillis);
+        }
     }
 }
