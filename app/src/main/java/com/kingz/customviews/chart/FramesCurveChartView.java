@@ -3,7 +3,6 @@ package com.kingz.customviews.chart;
 import android.content.Context;
 import android.graphics.*;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import com.kingz.utils.ScreenTools;
 import com.kingz.utils.ZLog;
@@ -23,6 +22,8 @@ import java.util.List;
  *             |
  *             |____________________
  *             Time
+ *  In the graph view,the y-axis displays the frame time in milliseconds,
+ *  The x-axis shows the time elapsed.
  */
 public class FramesCurveChartView extends View {
 
@@ -173,7 +174,7 @@ public class FramesCurveChartView extends View {
     }
 
     private void drawYCoordinateValue(Canvas canvas) {
-        Log.d(TAG, "drawYCoordinateValue..");
+        //Log.d(TAG, "drawYCoordinateValue..");
         for (int i = 0; i <= Frame_Time_Limit_MS; i++){
             if(i % Y_LINE_DEC == 0){
                 canvas.drawText("" + i, 0, viewHeigth - PADDING_BOTTOM - averageHeigth * i - averageHeigth / 2, coordinateDescPaint);
