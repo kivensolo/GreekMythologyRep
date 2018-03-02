@@ -12,7 +12,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import com.kingz.mode.ListBillData;
 import com.bling.pages.CircleViewActivity;
-import com.bling.pages.FingerBallActivity;
 import com.bling.pages.UsingCustomSeekBar;
 import com.bling.pages.WaveLoadingActivity;
 import com.kingz.customdemo.R;
