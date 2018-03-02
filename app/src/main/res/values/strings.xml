@@ -17,7 +17,9 @@
     <string name="action_settings">Settings</string>
 
 
-    <string name="seekbar_info" translatable="false">采用图片资源和颜色：</string>
+    <string name="seekbar_info" translatable="false">A:[progressDrawable --- layer-list 使用item:drawable] \n
+        B:[progressDrawable --- layer-list 使用item:shape] \n
+        C:[自定义Style --- progressDrawable(a)]</string>
 
     <string name="add">增加</string>
     <string name="reduce" translatable="false">减少</string>
