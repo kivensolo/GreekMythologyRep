@@ -1,6 +1,8 @@
 package com.kingz.utils;
 
 import android.app.ActivityManager;
+import android.app.ActivityManager.RunningAppProcessInfo;
+import android.app.ActivityManager.RunningServiceInfo;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -11,10 +13,15 @@ import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.security.MessageDigest;
 import java.util.List;
 import java.util.Set;
 
 import static android.content.Context.ACTIVITY_SERVICE;
+import static com.kingz.utils.DevicesInfoUtils.getDeviceUsableMemory;
 
 /**
  * author: King.Z <br>
@@ -31,8 +38,12 @@ import static android.content.Context.ACTIVITY_SERVICE;
  *     @see #getIntentContentToStr(Intent)
  *     @see #getAppSignature(Context,String)
  *     @see #getPackageInfoByName(Context, String, int)
+ *     @see #hexdigest(byte[])
+ *     @see #gc(Context)
+ *     @see #getProcessNameByPid(int)
  */
 public class AppInfoUtils {
+    private static final boolean DEBUG = false;
     private static final String TAG = AppInfoUtils.class.getSimpleName();
 
     private AppInfoUtils() {
@@ -224,4 +235,116 @@ public class AppInfoUtils {
             return null;
         }
     }
+
+    /**
+     * 将签名字符串转换成需要的32位签名
+     *
+     * @param paramArrayOfByte 签名byte数组
+     * @return 32位签名字符串
+     */
+    private static String hexdigest(byte[] paramArrayOfByte) {
+        final char[] hexDigits = {48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 97,
+                98, 99, 100, 101, 102};
+        try {
+            MessageDigest localMessageDigest = MessageDigest.getInstance("MD5");
+            localMessageDigest.update(paramArrayOfByte);
+            byte[] arrayOfByte = localMessageDigest.digest();
+            char[] arrayOfChar = new char[32];
+            for (int i = 0, j = 0; ; i++, j++) {
+                if (i >= 16) {
+                    return new String(arrayOfChar);
+                }
+                int k = arrayOfByte[i];
+                arrayOfChar[j] = hexDigits[(0xF & k >>> 4)];
+                arrayOfChar[++j] = hexDigits[(k & 0xF)];
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+
+    /**
+     * 清理后台进程与服务
+     * @param context 应用上下文对象context
+     * @return 被清理的数量
+     */
+    public static int gc(Context context) {
+        long i = DevicesInfoUtils.getDeviceUsableMemory(context);
+        int count = 0; // 清理掉的进程数
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        // 获取正在运行的service列表
+        List<RunningServiceInfo> serviceList = am.getRunningServices(100);
+        if (serviceList != null){
+            for (ActivityManager.RunningServiceInfo service : serviceList) {
+                if (service.pid == android.os.Process.myPid())
+                    continue;
+                try {
+                    android.os.Process.killProcess(service.pid);
+                    count++;
+                } catch (Exception e) {
+                    e.getStackTrace();
+                }
+            }
+        }
+
+        // 获取正在运行的进程列表
+        List<RunningAppProcessInfo> processList = am.getRunningAppProcesses();
+        if (processList != null){
+            for (RunningAppProcessInfo process : processList) {
+                // 一般数值大于RunningAppProcessInfo.IMPORTANCE_SERVICE的进程都长时间没用或者空进程了
+                // 一般数值大于RunningAppProcessInfo.IMPORTANCE_VISIBLE的进程都是非可见进程，也就是在后台运行着
+                if (process.importance > RunningAppProcessInfo.IMPORTANCE_VISIBLE) {
+                    // pkgList 得到该进程下运行的包名
+                    String[] pkgList = process.pkgList;
+                    for (String pkgName : pkgList) {
+                        if (DEBUG) {
+                            ZLog.d(TAG, "======正在杀死包名：" + pkgName);
+                        }
+                        try {
+                            am.killBackgroundProcesses(pkgName);
+                            count++;
+                        } catch (Exception e) { // 防止意外发生
+                            e.getStackTrace();
+                        }
+                    }
+                }
+            }
+        }
+        if (DEBUG) {
+            ZLog.d(TAG, "清理了" + (getDeviceUsableMemory(context) - i) + "M内存");
+        }
+        return count;
+    }
+
+    /**
+     * 获取进程号对应的进程名
+     *
+     * @param pid 进程号
+     * @return 进程名
+     */
+    private static String getProcessNameByPid(int pid) {
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader("/proc/" + pid + "/cmdline"));
+            String processName = reader.readLine();
+            if (!TextUtils.isEmpty(processName)) {
+                processName = processName.trim();
+            }
+            return processName;
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        } finally {
+            try {
+                if (reader != null) {
+                    reader.close();
+                }
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            }
+        }
+        return null;
+    }
+
 }
