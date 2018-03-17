@@ -9,15 +9,15 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
 import android.view.View;
-
+import com.App;
 import com.kingz.utils.ScreenTools;
 
+import java.lang.ref.WeakReference;
+
 /**
- * Copyright(C) 2016, 北京视达科科技有限公司
- * All rights reserved. <br>
  * author: King.Z <br>
  * date:  2016/6/30 17:56 <br>
- * description: horizontal <br>
+ * description: Horizontal progressBar customView <br>
  */
 public class HorizontalProgressBarView extends View {
 
@@ -25,7 +25,6 @@ public class HorizontalProgressBarView extends View {
     private static final int MSG_NUM = 0x6029;
     private boolean isRunning = false;
     private boolean isComplete;
-    private Context context;
     private Paint innerPaint;        //内部画笔
     private Paint outerPaint;        //外部画笔（显示进度)
     private Paint textPaint;
@@ -54,19 +53,23 @@ public class HorizontalProgressBarView extends View {
 
     public HorizontalProgressBarView(Context context) {
         super(context);
-        this.context = context;
         initViews();
     }
 
     public HorizontalProgressBarView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        this.context = context;
         initViews();
     }
 
-    private Handler mHandler = new Handler() {
+    private class UIHandler extends Handler {
+        private WeakReference<Context> mContext;
+
+        UIHandler(Context c) {
+            mContext = new WeakReference<Context>(c);
+        }
+        @Override
         public void handleMessage(Message msg) {
-            switch (msg.what) {
+             switch (msg.what) {
                 case MSG_NUM:
                     refreshProgress();
                     break;
@@ -74,7 +77,9 @@ public class HorizontalProgressBarView extends View {
                     break;
             }
         }
-    };
+
+    }
+    private Handler mHandler = new UIHandler(App.getAppContext());
 
     private void initViews() {
         isRunning = true;

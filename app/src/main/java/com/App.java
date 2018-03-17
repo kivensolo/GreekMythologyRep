@@ -48,7 +48,7 @@ public class App extends Application {
         initLog();
         initAPPScreenParms();
         initCacheCenter();
-        initFpsDebugView();
+        //initFpsDebugView();
         initStrictListenner();
     }
 

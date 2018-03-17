@@ -323,6 +323,11 @@
         <!--  ************ 图形方面  End ************ -->
 
 
+        <!--  ************ Android 基本API效果展示  Start ************ -->
+        <activity android:name="com.kingz.basic_api.CanvasApiActivity"
+                  android:theme="@android:style/Theme.Holo.Light"/>
+        <!--  ************ Android 基本API效果展示  End ************ -->
+
 
         <!--服务 exported:外部是否可访问  process:为服务设置不同进程-->
         <service android:name="com.kingz.four_components.service.MyComponentsOfService"

@@ -1,19 +1,18 @@
 package com.kingz.ipcdemo;
 
 import android.app.Activity;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.ServiceConnection;
+import android.content.*;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.view.View;
 import android.widget.Toast;
-
 import com.kingz.customdemo.R;
 import com.kingz.utils.ZLog;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -68,9 +67,21 @@ public class AIDLActivity extends Activity {
         }
     }
 
-    public void ChangeFile(){
-
-
+    public void ChangeFile(View view){
+        File storageDirectory = Environment.getExternalStorageDirectory(); //storage/emulated/0
+        ZLog.d(TAG, "ChangeFile() path = "+storageDirectory.toString());
+        //File xmlFile = new File("/data/data/com.starcor.xinjiang.dispatcher/shared_prefs/AppConfig.xml");
+        try {
+            Context packageContext = getBaseContext().createPackageContext("com.starcor.xinjiang.dispatcher", Context.CONTEXT_IGNORE_SECURITY);
+            SharedPreferences sh = packageContext.getSharedPreferences("AppConfig", Context.MODE_WORLD_READABLE | Context.MODE_WORLD_WRITEABLE | Context.MODE_MULTI_PROCESS);
+            SharedPreferences.Editor editor = sh.edit();
+            editor.putString("choseApp","Greek");
+            editor.clear();
+            ////editor.apply();//write data by QueuedWork
+            editor.commit();//write data by application's main thread.
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     private void attemptToBindService() {
