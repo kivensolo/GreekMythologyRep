@@ -27,6 +27,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     // compile 'com.android.support:appcompat-v7:22.0.1'
+    testCompile 'org.testng:testng:6.9.6'
 }
 
 def SDK_BASENAME = "TestSdk";
