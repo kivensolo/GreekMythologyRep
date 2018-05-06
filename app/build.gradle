@@ -24,6 +24,7 @@ def appName_yd = "\"GreekMyth_YD\""
 def appName_dx = "\"GreekMyth_DX\""
 
 android {
+    /**  app signing */
     signingConfigs {
         ZekeSigned {
             keyAlias keystoreProperties['keyAlias']
@@ -33,7 +34,7 @@ android {
         }
     }
     compileSdkVersion 22
-    buildToolsVersion '25.0.0'
+    buildToolsVersion '25.0.1'
 
     //The default configuration, inherited by all product flavors(if any are defined)
     defaultConfig {
@@ -41,21 +42,42 @@ android {
         multiDexEnabled true
         versionCode 1
         versionName "1.0"
+        //unit test
         testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+        //signing
         signingConfig signingConfigs.ZekeSigned
         minSdkVersion 19
         targetSdkVersion 22
         buildConfigField("String", "APP_NAME", "${appName_360}")
+
+        /** NDK配置 */
+        /*ndk{
+            abiFilters 'x86','x86_64','armeabi-v7a','armeabi','armea64-v8a'
+        }
+        externalNativeBuild {
+            cmake {
+                cppFlags "-frtti -fexceptions"
+                // https://blog.csdn.net/renfujiang/article/details/54650355
+                //https://www.jianshu.com/p/6332418b12b1
+                // 配置之间用逗号分隔，每个配置需要使用单引号括起来，每个配置需要 “-” 开头，但是文档上并没有，末尾没有标点符号
+                // ANDROID_TOOLCHAIN  指定编译的工具链，有两个 gcc 或者是clang, 默认:clang
+                // DANDROID_PLATFORM  ndk版本号
+                arguments '-DANDROID_ARM_NEON=TRUE',
+                        '-DANDROID_TOOLCHAIN=clang',
+                        '-DANDROID_STL=gnustl_static'
+            }
+        }*/
     }
+
     productFlavors {
-        //在创建和配置productFlavors之后SyncNow的话
-        //Gradle 会根据buildTypes和productFlavors自动创建Build Variant
-        //并按照 <product-flavor><Build-Type> 的格式命名这些变体。
-        //例如，如果创建了“demo”和“full”这两种productFlavors并保留默认的“debug”和“release”构建类型，
-        // Gradle 将创建以下构建变体：demo-debug/demo-release/full-debug/full-release
-        // 可以将构建变体更改为要构建并运行的任何变体,只需转到 Build > Select Build Variant,然后从下拉菜单中选择一个变体
-        // 然而,要开始自定义每个构建变体及其功能和资源,需要了解如何创建和管理源集。
-        //readMore:https://developer.android.com/studio/build/build-variants.html#product-flavors
+       /* 在创建和配置productFlavors之后SyncNow的话
+        Gradle 会根据buildTypes和productFlavors自动创建Build Variant
+        并按照 <product-flavor><Build-Type> 的格式命名这些变体。
+        例如，如果创建了“demo”和“full”这两种productFlavors并保留默认的“debug”和“release”构建类型，
+         Gradle 将创建以下构建变体：demo-debug/demo-release/full-debug/full-release
+         可以将构建变体更改为要构建并运行的任何变体,只需转到 Build > Select Build Variant,然后从下拉菜单中选择一个变体
+         然而,要开始自定义每个构建变体及其功能和资源,需要了解如何创建和管理源集。
+        readMore:https://developer.android.com/studio/build/build-variants.html#product-flavors*/
         v_360 {
             applicationIdSuffix ".qihu"
             versionNameSuffix "-360"
@@ -87,6 +109,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
             signingConfig signingConfigs.ZekeSigned
         }
+
         /**
          * The 'initWith' property allows you to copy configurations from other build types,
          * so you don't have to configure one from the beginning. You can then configure
@@ -116,12 +139,22 @@ android {
     //http://google.github.io/android-gradle-dsl/current/com.android.build.gradle.internal.dsl.SigningConfig.html
 //    }
 
+
+    //Hello JNI   http://tools.android.com/tech-docs/external-c-builds
+    //By CMake
+//    externalNativeBuild{
+//       cmake{
+//            path "src/main/cpp/CMakeLists.txt"
+//        }
+//    }
 }
 
 dependencies {
     //debugCompile(["jp.wasabeef:takt:1.0.1"]) 屏蔽wasabeef用于显示Fps的第三方库  reason:应用中已经自己写好了
+
     //Local binary dependency
     compile fileTree(include: ['*.jar'], dir: 'libs')
+
     // Remote binary dependency
     //    compile 'com.android.support:support-v4:22.0.+'
     //    compile 'com.android.support:appcompat-v7:22.1.1'
@@ -134,7 +167,7 @@ dependencies {
     //编译extras目录下的ShimmerAndroid模块
     //compile project(':extras:ShimmerAndroid')
     // Dependency on the "jarlibrary" module from this project
-    compile project(':jarlibrary')
+//    compile project(':jarlibrary')
     //------------------- Local Unit  --------------------
     //Adds a compile time dependency for local tests. Required -- JUnit 4 framework
     testCompile 'junit:junit:4.12'
