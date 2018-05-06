@@ -15,25 +15,21 @@ import com.takt.FpsTools;
  * author: King.Z
  * date:  2016/5/10 23:25
  */
-@SuppressWarnings("JavaDoc")
 public class App extends Application {
 
     public final static String TAG = "Application";
     private static App application;
-    private static final boolean STRICT_MODE = true;
-    public static Context mContext;
     private static Handler _appMainHandler;
-
+    private static final boolean STRICT_MODE = true;
     public static final String BDApiKey = "467e6d8f8b06b8811b7a6fb939c8ad5e";
 
-    /**
-     * 屏幕适配参数
-     */
+    /** ------------------------- 屏幕适配参数  ----- Start -------- */
     public static int SCREEN_WIDTH = 1280;
 	public static int SCREEN_HEIGHT = 720;
 	public static final int DESIGN_WIDTH = 1280;
 	public static final int DESIGN_HEIGHT = 720;
 	public static float mainScale = 1.0f;
+    /** ------------------------- 屏幕适配参数  ----- End -------- */
 
     public static App getAppInstance() {
 		return application;
@@ -44,7 +40,6 @@ public class App extends Application {
         super.onCreate();
         _appMainHandler = new Handler(getMainLooper());
         application = this;
-        mContext = getApplicationContext();
         initLog();
         initAPPScreenParms();
         initCacheCenter();
@@ -81,11 +76,12 @@ public class App extends Application {
     @Override
     public void onTerminate() {
         //Takt.finish();
-        FpsTools.finish();
+        //FpsTools.finish();
         super.onTerminate();
     }
+
     private void initCacheCenter() {
-        GlobalCacheCenter.getInstance().init(mContext);  //缓存初始化
+        GlobalCacheCenter.getInstance().init(getAppContext());
     }
 
     private void initLog() {
@@ -93,7 +89,6 @@ public class App extends Application {
             ZLog.isDebug = true;
         }
     }
-
 
     private void initAPPScreenParms(){
         Log.i(TAG, "SCREEN_WIDTH = " + getResources().getDisplayMetrics().widthPixels
@@ -103,8 +98,8 @@ public class App extends Application {
         mainScale = Math.min(SCREEN_HEIGHT / DESIGN_HEIGHT, SCREEN_WIDTH / DESIGN_WIDTH);
     }
 
-    public static Context getAppContext() {
-        return mContext;
+    public Context getAppContext() {
+        return getApplicationContext();
     }
 
     /**

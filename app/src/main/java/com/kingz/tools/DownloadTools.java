@@ -75,8 +75,8 @@ public class DownloadTools {
         int  availCount = sf.getAvailableBlocks();
 
         String msg = String.format("\n block大小: %d bytes  block数目: %d个  磁盘总容量：%s \n 当前磁盘剩余block:%d个,剩余容量：%s"
-                , blockSize, blockCount, Formatter.formatFileSize(App.getAppContext(), blockCount * blockSize)
-                , availCount, Formatter.formatFileSize(App.getAppContext(), availCount * blockSize));
+                , blockSize, blockCount, Formatter.formatFileSize(App.getAppInstance().getAppContext(), blockCount * blockSize)
+                , availCount, Formatter.formatFileSize(App.getAppInstance().getAppContext(), availCount * blockSize));
         Log.d(TAG ,msg);
 
         int downedFileLength = 0;

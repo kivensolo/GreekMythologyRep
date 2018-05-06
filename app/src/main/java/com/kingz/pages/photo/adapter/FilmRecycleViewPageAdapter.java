@@ -69,7 +69,7 @@ public class FilmRecycleViewPageAdapter extends RecyclerView.Adapter<FilmListRec
 
     public FilmRecycleViewPageAdapter(List<PosterGroupInfo.Poster> posterList) {
         //指定缓存路径\路径名
-        dataPath = new File(App.getAppContext().getCacheDir().getPath(), FILMIMG_PATH_NAME);
+        dataPath = new File(App.getAppInstance().getAppContext().getCacheDir().getPath(), FILMIMG_PATH_NAME);
         if (!dataPath.exists()) {
             dataPath.mkdirs();
         } else if (dataPath.isFile()) {

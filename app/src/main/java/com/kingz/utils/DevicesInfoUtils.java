@@ -277,14 +277,14 @@ public class DevicesInfoUtils {
         StatFs sf = getSdCardStatFs();
         long  blockSize = sf.getBlockSizeLong();
         long  blockCount = sf.getBlockCountLong();
-        return Formatter.formatFileSize(App.getAppContext(), blockCount * blockSize);
+        return Formatter.formatFileSize(App.getAppInstance().getAppContext(), blockCount * blockSize);
     }
 
     public static String getExtStorageAvailCapacity(){
         StatFs sf = getSdCardStatFs();
         long  blockSize = sf.getBlockSizeLong();
         long  availCount = sf.getAvailableBlocks();
-        return Formatter.formatFileSize(App.getAppContext(), availCount * blockSize);
+        return Formatter.formatFileSize(App.getAppInstance().getAppContext(), availCount * blockSize);
     }
 
 }

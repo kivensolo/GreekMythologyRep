@@ -40,7 +40,6 @@ import com.kingz.widgets.android_src.OriginViewPager;
 import com.kingz.widgets.android_src.SpansDemo;
 import com.lbs.BaiduMapActivity;
 import com.mplayer.ApolloMediaPlayer;
-import com.takt.FpsTools;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -192,7 +191,7 @@ public class MainActivity extends ExpandableListActivity implements OnItemClickL
 
     @Override
     protected void onDestroy() {
-        FpsTools.finish();
+        //FpsTools.finish();
         super.onDestroy();
     }
 

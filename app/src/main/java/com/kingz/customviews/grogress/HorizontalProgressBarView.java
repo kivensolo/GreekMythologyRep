@@ -79,7 +79,7 @@ public class HorizontalProgressBarView extends View {
         }
 
     }
-    private Handler mHandler = new UIHandler(App.getAppContext());
+    private Handler mHandler = new UIHandler(App.getAppInstance().getAppContext());
 
     private void initViews() {
         isRunning = true;

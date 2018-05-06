@@ -41,7 +41,7 @@ public class HttpUtils {
      */
     public static void sendHttpRequest(final String address, final HttpCallBackListener listener){
         if(!isNetWorkAvailable()){
-            ToastTools.getInstance().showMgtvWaringToast(App.getAppContext(),"net work is inavailable");
+            ToastTools.getInstance().showMgtvWaringToast(App.getAppInstance().getAppContext(),"net work is inavailable");
         }
         new Thread(new Runnable() {
             @Override
@@ -91,7 +91,7 @@ public class HttpUtils {
      */
     public static void sendHttpRequest2(final String address, final HttpCallBackListener listener){
         if(!isNetWorkAvailable()){
-            ToastTools.getInstance().showMgtvWaringToast(App.getAppContext(),"net work is inavailable");
+            ToastTools.getInstance().showMgtvWaringToast(App.getAppInstance().getAppContext(),"net work is inavailable");
         }
         new Thread(new Runnable() {
             @Override

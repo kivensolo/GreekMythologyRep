@@ -57,7 +57,7 @@ public class DownloadAPPActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        context = App.getAppContext();
+        context = App.getAppInstance().getAppContext();
         setContentView(PAGE_ID);
         initviews();
     }

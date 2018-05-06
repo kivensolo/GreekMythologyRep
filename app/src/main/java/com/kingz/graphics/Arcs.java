@@ -119,8 +119,8 @@ public class Arcs extends Activity {
 
         @Override
         protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-            int width = ScreenTools.Operation(ScreenTools.getScreenWidth(App.getAppContext()));
-            int height = ScreenTools.Operation(ScreenTools.getScreenHeight(App.getAppContext()));
+            int width = ScreenTools.Operation(ScreenTools.getScreenWidth(App.getAppInstance().getAppContext()));
+            int height = ScreenTools.Operation(ScreenTools.getScreenHeight(App.getAppInstance().getAppContext()));
             setMeasuredDimension(width,height);
             ZLog.d("onMeasure kingz","width="+width+";height="+height);
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
