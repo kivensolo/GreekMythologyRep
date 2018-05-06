@@ -238,10 +238,6 @@
         <activity android:name="com.kingz.communicat.HMLActuivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
-        <!-- 自定义View -->
-        <activity android:name="com.bling.pages.FingerBallActivity"
-                  android:theme="@android:style/Theme.Black.NoTitleBar"/>
-
         <!-- CircleViewActivity -->
         <activity android:name="com.bling.pages.CircleViewActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
@@ -326,6 +322,11 @@
 
         <!--  ************ 图形方面  End ************ -->
 
+
+        <!--  ************ Android 基本API效果展示  Start ************ -->
+        <activity android:name="com.kingz.basic_api.CanvasApiActivity"
+                  android:theme="@android:style/Theme.Holo.Light"/>
+        <!--  ************ Android 基本API效果展示  End ************ -->
 
 
         <!--服务 exported:外部是否可访问  process:为服务设置不同进程-->

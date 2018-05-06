@@ -10,20 +10,28 @@
         android:layout_height="wrap_content"
         android:text="@string/seekbar_info" />
 
-    <!-- 图片更改的方式  -->
     <SeekBar
         android:id="@+id/seekbar_self"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:progressDrawable="@drawable/seekbar_self_style"
-        android:thumb="@drawable/seekbar_thumb_img"/>
+        android:thumb="@drawable/scrubber_control_selector_holo"
+        android:progress="50"/>
 
-    <!-- 颜色更改的方式  -->
     <SeekBar
-        android:id="@+id/seekbar_self_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:progressDrawable="@drawable/seekbar_self_color_style"
-        android:thumb="@drawable/seekbar_thumb_img" />
+        android:thumb="@drawable/scrubber_control_selector_holo"
+        android:progress="30"/>
 
+    <!-- 自定义Style方式 -->
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/mediacontroller_seekbar"
+        style="@style/MediaController_SeekBar"
+        android:layout_gravity="center_horizontal"
+        android:focusable="true"
+        android:max="1000"/>
 </LinearLayout>

@@ -3,19 +3,16 @@ package com.bling.pages;
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.SeekBar;
-import android.widget.TextView;
 import com.kingz.customdemo.R;
 
 /**
  * @author: KingZ
  * @Data: 2015-10-4   11:16:07
- * @Description:自定义进度条
+ * @Description:自定义SeekBar
  */
 public class UsingCustomSeekBar extends Activity{
 
     private SeekBar mSeekBarSelfPic;
-    private SeekBar mSeekBarSelfColor;
-    private TextView tv;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -25,9 +22,7 @@ public class UsingCustomSeekBar extends Activity{
 	}
 
 	private void initView() {
-		tv = (TextView) findViewById(R.id.textView1);
 		mSeekBarSelfPic = (SeekBar) findViewById(R.id.seekbar_self);
-		mSeekBarSelfColor = (SeekBar) findViewById(R.id.seekbar_self_2);
 		mSeekBarSelfPic.setOnSeekBarChangeListener(mSeekBarChangeListener);
 	}
 

@@ -4,6 +4,7 @@ import android.util.Log;
 public class ZLog {
     private static final String TAG = "Zlog";
     private ZLog() {
+        throw new Error("Do not need instantiate!");
     }
 
     public static boolean isDebug = true;       // 是否需要打印bug，可以在application的onCreate函数里面初始化

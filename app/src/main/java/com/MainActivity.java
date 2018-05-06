@@ -12,6 +12,7 @@ import com.apiDemo.content.ExternalStorage;
 import com.asuynctask_jsontest.LruPicListViewActivity;
 import com.iflytek.synthesizer.VoiceActivity;
 import com.kingz.adapter.CommExpandableListAdapter;
+import com.kingz.basic_api.CanvasApiActivity;
 import com.kingz.communicat.HMLActuivity;
 import com.kingz.customdemo.R;
 import com.kingz.file.DownloadAPPActivity;
@@ -159,6 +160,11 @@ public class MainActivity extends ExpandableListActivity implements OnItemClickL
         //通信
         billDataManager.addGroup("Communication");
         addChildData("HML_Deep", HMLActuivity.class);
+        billDataManager.pushChilds();
+
+        //BaseApiUnderStand
+        billDataManager.addGroup("BasicApi");
+        addChildData("Canvas", CanvasApiActivity.class);
         billDataManager.pushChilds();
     }
 

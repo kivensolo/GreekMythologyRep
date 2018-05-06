@@ -1,5 +1,6 @@
 package com.kingz.utils;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Resources;
@@ -14,6 +15,7 @@ import android.renderscript.ScriptIntrinsicBlur;
 import android.util.Base64;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.View;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
@@ -33,60 +35,61 @@ import static android.graphics.Bitmap.Config.ARGB_8888;
  * Android图像处理之Bitmap类:http://www.open-open.com/lib/view/open1333418945202.html
  * <p>
  * http://mp.weixin.qq.com/s?__biz=MzI3MDE0NzYwNA==&mid=2651433713&idx=1&sn=d152b053221c4c0bf1baa684b2a51e9c&scene=23&srcid=0805emSJb7dH8hdYfIcQiChP#rd
-
+ * <p>
  * ||------> inBitmap属性 [Bitmap优化的一个方法]
- *      该属性表示重用该Bitmap的内存区域，避免多次重复向dvm申请开辟新的内存区域。
+ * 该属性表示重用该Bitmap的内存区域，避免多次重复向dvm申请开辟新的内存区域。
  * 可以一次性申请多个模板的内存，解码时候匹配使用申请的内存.如565模板、4444模板、8888模板。
  * 使用内存模板的方法，即使是上千张的图片，也只会仅仅只需要占用屏幕所能够显示的图片数量的内存大小。
  * 起作用的条件：
  * Bitmap:isMutable = true; //可变的
  * BitmapFactory.Options:  inSampleSize = 1;
- *  The sample size is the number of pixels in either dimension that correspond to a single pixel in the decoded bitmap
- *  样本大小是在任一维度对应的解码位图的一个像素点的像素数。
- *  所以如果inSampleSize == 4 则说明原来一个像素点大小的位置要放四个像素点，
- *  所以图像的宽高将会变成原来的1/4，像素量会变成1/16.
- *  注意：解码器使用基于2的幂的最终值，任何其他值将舍入到最接近的2的幂。
- *
+ * The sample size is the number of pixels in either dimension that correspond to a single pixel in the decoded bitmap
+ * 样本大小是在任一维度对应的解码位图的一个像素点的像素数。
+ * 所以如果inSampleSize == 4 则说明原来一个像素点大小的位置要放四个像素点，
+ * 所以图像的宽高将会变成原来的1/4，像素量会变成1/16.
+ * 注意：解码器使用基于2的幂的最终值，任何其他值将舍入到最接近的2的幂。
+ * <p>
  * ||=====>inJustDecodeBounds属性[图片加载避免OOM]
- *      Options.inJustDecodeBounds = true的时候，解码的bitmap为null，只是把图片的宽高放在了Options里面。
- *  不给其分配内存空间，但是可以查询图片信息（options.outHeight (图片原始高度)和option.outWidth(图片原始宽度)）
- *
- *
+ * Options.inJustDecodeBounds = true的时候，解码的bitmap为null，只是把图片的宽高放在了Options里面。
+ * 不给其分配内存空间，但是可以查询图片信息（options.outHeight (图片原始高度)和option.outWidth(图片原始宽度)）
+ * <p>
+ * <p>
  * ※※※※※※※※ Matrix ※※※※※※※※
  * 矩阵相关：
  * Android的位置3*3矩阵:
- *  MSCALE_X    MSKEW_X     MTRANS_X
- *  MSKEW_Y     MSCALE_Y    MTRANS_Y
- *  MPERSP_0    MPERSP_1    MPERSP_2
- *  MSCALE_X & MSCALE_Y ------- 控制比例
- *  MSCALE_X & MSKEW_X & MSKEW_Y & MSCALE_Y ------- 控制旋转
- *  MTRANS_X & MTRANS_Y ------- 控制平移
- *  MPERSP_0 & MPERSP_1 & MPERSP_2 官方未明确介绍，似乎是控制透视的效果
- *
- *  Matrix matrix = new Matrix(); 生成的是单位矩阵：  |1 0 0|
- *                                                   |0 1 0|
- *                                                   |0 0 1|
- *       矩阵前乘  例如：变换矩阵为A，原始矩阵为B，pre方法的含义即是A*B：
- *          pre系列方法：preScale，preTranslate，preRotate，preSkew，
- *          set系列方法：setScale，setTranslate，setRotate，setSkew，
- *
- *       矩阵后乘  例如：变换矩阵为A，原始矩阵为B，post方法的含义即是B*A
- *          post系列方法：postScale，postTranslate，postRotate，postSkew。
- *
- *          注意：后调用的pre操作先执行，而后调用的post操作则后执行。
- *
- *  //图片的默认矩阵
- *  //      float[] values = {
- *  //              1.0f, 0f, 0f,
- *  //              0f, 1.0f, 0f,
- *  //              0f, 0f, 1.0f
- *  //      };
+ * MSCALE_X    MSKEW_X     MTRANS_X
+ * MSKEW_Y     MSCALE_Y    MTRANS_Y
+ * MPERSP_0    MPERSP_1    MPERSP_2
+ * MSCALE_X & MSCALE_Y ------- 控制比例
+ * MSCALE_X & MSKEW_X & MSKEW_Y & MSCALE_Y ------- 控制旋转
+ * MTRANS_X & MTRANS_Y ------- 控制平移
+ * MPERSP_0 & MPERSP_1 & MPERSP_2 官方未明确介绍，似乎是控制透视的效果
+ * <p>
+ * Matrix matrix = new Matrix(); 生成的是单位矩阵：  |1 0 0|
+ * |0 1 0|
+ * |0 0 1|
+ * 矩阵前乘  例如：变换矩阵为A，原始矩阵为B，pre方法的含义即是A*B：
+ * pre系列方法：preScale，preTranslate，preRotate，preSkew，
+ * set系列方法：setScale，setTranslate，setRotate，setSkew，
+ * <p>
+ * 矩阵后乘  例如：变换矩阵为A，原始矩阵为B，post方法的含义即是B*A
+ * post系列方法：postScale，postTranslate，postRotate，postSkew。
+ * <p>
+ * 注意：后调用的pre操作先执行，而后调用的post操作则后执行。
+ * <p>
+ * //图片的默认矩阵
+ * //      float[] values = {
+ * //              1.0f, 0f, 0f,
+ * //              0f, 1.0f, 0f,
+ * //              0f, 0f, 1.0f
+ * //      };
  */
 public class BitMapUtils {
 
     private static final Bitmap.Config defaultConfig = ARGB_8888;
-	public static final String TAG_RECYCLER = "BMP Recycler";
-	public static final boolean DEBUG = false;
+    public static final String TAG_RECYCLER = "BMP Recycler";
+    public static final String TAG = BitMapUtils.class.getSimpleName();
+    public static final boolean DEBUG = false;
 
     private static ThreadLocal<byte[]> _local_buf;
     private static ThreadLocal<BufferedInputStream> _localBufferedInputStream;
@@ -96,9 +99,10 @@ public class BitMapUtils {
         _localBufferedInputStream = new ThreadLocal<BufferedInputStream>();
     }
 
-
+    /**
+     * Don't let anyone instantiate this class.
+     */
     private BitMapUtils() {
-        /* cannot be instantiated */
         throw new UnsupportedOperationException("cannot be instantiated");
     }
 
@@ -106,6 +110,7 @@ public class BitMapUtils {
     /**
      * 旋转图片
      * 效果是围绕Z轴
+     *
      * @param angle  旋转角度
      * @param bitmap 目标图片
      * @return Bitmap    旋转后的图片
@@ -123,17 +128,17 @@ public class BitMapUtils {
      * @param bitmap 目标图片
      * @return Bitmap    旋转后的图片
      */
-    public static Bitmap setRotateImage_XYZ(float rotate_x,float rotate_y,float rotate_z,Bitmap bitmap) {
+    public static Bitmap setRotateImage_XYZ(float rotate_x, float rotate_y, float rotate_z, Bitmap bitmap) {
         Camera camera = new Camera();
         Matrix matrix = new Matrix();
         //Canvas canvas = new Canvas(bitmap);
         camera.save();
         //canvas.save();
-        camera.rotate(rotate_x,rotate_y,rotate_z);
+        camera.rotate(rotate_x, rotate_y, rotate_z);
         camera.getMatrix(matrix); //将单元矩阵应用于camera
         camera.restore();
-        matrix.preTranslate(-bitmap.getWidth()/2,-bitmap.getHeight()/2);
-        matrix.postTranslate(bitmap.getWidth()/2,bitmap.getHeight()/2);
+        matrix.preTranslate(-bitmap.getWidth() / 2, -bitmap.getHeight() / 2);
+        matrix.postTranslate(bitmap.getWidth() / 2, bitmap.getHeight() / 2);
         //canvas.concat(matrix);
         Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
         return resizedBitmap;
@@ -199,16 +204,16 @@ public class BitMapUtils {
     /**
      * 水平对称--图片关于X轴对称
      */
-	private Bitmap testSymmetryX(Bitmap bm) {
-		Matrix matrix = new Matrix();
-		int height =bm.getHeight();
-		int width =bm.getWidth();
-		float matrixValues[] = { 1f, 0f, 0f, 0f, -1f, 0f, 0f, 0f, 1f };
-		matrix.setValues(matrixValues);
-		//若是matrix.postTranslate(0, height);//表示将图片上下倒置
-		matrix.postTranslate(0, height*2);
+    private Bitmap testSymmetryX(Bitmap bm) {
+        Matrix matrix = new Matrix();
+        int height = bm.getHeight();
+        int width = bm.getWidth();
+        float matrixValues[] = {1f, 0f, 0f, 0f, -1f, 0f, 0f, 0f, 1f};
+        matrix.setValues(matrixValues);
+        //若是matrix.postTranslate(0, height);//表示将图片上下倒置
+        matrix.postTranslate(0, height * 2);
         return Bitmap.createBitmap(bm, 0, 0, width, height, matrix, true);
-	}
+    }
 
     /**
      * 设置圆角
@@ -264,8 +269,9 @@ public class BitMapUtils {
 
     /**
      * 倒影效果
-     * @param bm                原图
-     * @param reflectHight      倒影图高度
+     *
+     * @param bm           原图
+     * @param reflectHight 倒影图高度
      * @return
      */
     public static Bitmap setInvertedBitmap(Bitmap bm, int reflectHight) {
@@ -290,22 +296,22 @@ public class BitMapUtils {
         //线性梯度渐变
         paint = new Paint();
         LinearGradient shader = new LinearGradient(0,
-                bm.getHeight()+reflectionGap, 0,
+                bm.getHeight() + reflectionGap, 0,
                 totalBitMap.getHeight() + reflectionGap,
-                0x50000000,0x90000000,Shader.TileMode.CLAMP);
+                0x50000000, 0x90000000, Shader.TileMode.CLAMP);
         paint.setShader(shader);
 //        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN)); //倒影遮罩效果 取交集显示下面
         canvas.drawRect(0, height, width, totalBitMap.getHeight() + reflectionGap, paint);
         return totalBitMap;
     }
 
-    public static Bitmap setInvertedBitmapById(Context context,int resId, int reflectHight) {
-        Bitmap bm= BitmapFactory.decodeResource(context.getResources(),resId);
+    public static Bitmap setInvertedBitmapById(Context context, int resId, int reflectHight) {
+        Bitmap bm = BitmapFactory.decodeResource(context.getResources(), resId);
         int reflectionGap = 30; //倒影图和原图之间的距离
         int width = bm.getWidth();
         int height = bm.getHeight();
-        if(reflectHight == 0){
-            reflectHight = height/3;
+        if (reflectHight == 0) {
+            reflectHight = height / 3;
         }
         //创建单元矩阵
         Matrix matrix = new Matrix();
@@ -325,12 +331,12 @@ public class BitMapUtils {
         //线性梯度渐变
         paint = new Paint();
         LinearGradient shader = new LinearGradient(0,
-                bm.getHeight()+reflectionGap, 0,
+                bm.getHeight() + reflectionGap, 0,
                 totalBitMap.getHeight() + reflectionGap,
-                Color.BLACK,Color.TRANSPARENT,Shader.TileMode.CLAMP);
+                Color.BLACK, Color.TRANSPARENT, Shader.TileMode.CLAMP);
         paint.setShader(shader);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN)); //倒影遮罩效果 取交集显示下面
-        canvas.drawRect(0, height+reflectionGap, width, totalBitMap.getHeight() + reflectionGap, paint);
+        canvas.drawRect(0, height + reflectionGap, width, totalBitMap.getHeight() + reflectionGap, paint);
         return totalBitMap;
     }
 
@@ -418,12 +424,463 @@ public class BitMapUtils {
         canvas.restore();
         return icon;
     }
+    /**------------------------------------ 图形变换 End -----------------------------------*/
 
-    /************************************ 图形变换 End************************************/
+
+    /**------------------------------------ 图形色彩变换 Start -----------------------------------*/
+    /**
+     * 将彩色图转换为灰度图
+     *
+     * @param img 原Bitmap
+     * @return 返回转换好的位图
+     */
+    public static Bitmap convertGreyImg(Bitmap img) {
+        if (img == null) {
+            return null;
+        }
+        int width = img.getWidth();
+        int height = img.getHeight();
+        Bitmap.Config imgConfig = img.getConfig();
+        int[] pixels = new int[width * height];
+        img.getPixels(pixels, 0, width, 0, 0, width, height);
+        @SuppressWarnings("NumericOverflow")
+        int alpha = 0xFF << 24;  //默认将bitmap当成24位真色彩图片
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                int grey = pixels[width * i + j];
+
+                int red = ((grey & 0x00FF0000) >> 16);
+                int green = ((grey & 0x0000FF00) >> 8);
+                int blue = (grey & 0x000000FF);
+
+                grey = (int) ((float) red * 0.3 + (float) green * 0.59 + (float) blue * 0.11);
+                grey = alpha | (grey << 16) | (grey << 8) | grey;
+                pixels[width * i + j] = grey;
+            }
+        }
+        Bitmap result = Bitmap.createBitmap(width, height, imgConfig);
+        result.setPixels(pixels, 0, width, 0, 0, width, height);
+        return result;
+    }
+
+    /**
+     * 更改图片色系，变亮或变暗
+     *
+     * @param delta 图片的亮暗程度值，越小图片会越亮，取值范围(0,24)
+     */
+    public static Bitmap adjustTone(Bitmap src, int delta) {
+        if (delta >= 24 || delta <= 0) {
+            return null;
+        }
+        // 设置高斯矩阵
+        int[] gauss = new int[]{1, 2, 1, 2, 4, 2, 1, 2, 1};
+        int width = src.getWidth();
+        int height = src.getHeight();
+        Bitmap bitmap = Bitmap.createBitmap(width, height,
+                Bitmap.Config.RGB_565);
+
+        int pixR = 0;
+        int pixG = 0;
+        int pixB = 0;
+        int pixColor = 0;
+        int newR = 0;
+        int newG = 0;
+        int newB = 0;
+        int idx = 0;
+        int[] pixels = new int[width * height];
+
+        src.getPixels(pixels, 0, width, 0, 0, width, height);
+        for (int i = 1, length = height - 1; i < length; i++) {
+            for (int k = 1, len = width - 1; k < len; k++) {
+                idx = 0;
+                for (int m = -1; m <= 1; m++) {
+                    for (int n = -1; n <= 1; n++) {
+                        pixColor = pixels[(i + m) * width + k + n];
+                        pixR = Color.red(pixColor);
+                        pixG = Color.green(pixColor);
+                        pixB = Color.blue(pixColor);
+
+                        newR += (pixR * gauss[idx]);
+                        newG += (pixG * gauss[idx]);
+                        newB += (pixB * gauss[idx]);
+                        idx++;
+                    }
+                }
+                newR /= delta;
+                newG /= delta;
+                newB /= delta;
+                newR = Math.min(255, Math.max(0, newR));
+                newG = Math.min(255, Math.max(0, newG));
+                newB = Math.min(255, Math.max(0, newB));
+                pixels[i * width + k] = Color.argb(255, newR, newG, newB);
+                newR = 0;
+                newG = 0;
+                newB = 0;
+            }
+        }
+        bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
+        return bitmap;
+    }
+
+    /**
+     * 将彩色图转换为黑白图
+     *
+     * @param bmp 位图
+     * @return 返回转换好的位图
+     */
+    public static Bitmap convertToBlackWhite(Bitmap bmp) {
+        int width = bmp.getWidth();
+        int height = bmp.getHeight();
+        Bitmap.Config imgConfig = bmp.getConfig();
+        int[] pixels = new int[width * height];
+        bmp.getPixels(pixels, 0, width, 0, 0, width, height);
+
+        int alpha = 0xFF << 24; // 默认将bitmap当成24色图片
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                int grey = pixels[width * i + j];
+
+                int red = ((grey & 0x00FF0000) >> 16);
+                int green = ((grey & 0x0000FF00) >> 8);
+                int blue = (grey & 0x000000FF);
+
+                grey = (int) (red * 0.3 + green * 0.59 + blue * 0.11);
+                grey = alpha | (grey << 16) | (grey << 8) | grey;
+                pixels[width * i + j] = grey;
+            }
+        }
+        Bitmap newBmp = Bitmap.createBitmap(width, height, imgConfig);
+        newBmp.setPixels(pixels, 0, width, 0, 0, width, height);
+        return newBmp;
+    }
+
+    /**
+     * Apply a blur to a Bitmap
+     *
+     * @param context    Application context
+     * @param sentBitmap Bitmap to be converted
+     * @param radius     Desired Radius, 0 < r < 25
+     * @return a copy of the image with a blur
+     */
+    @SuppressLint("InlinedApi")
+    public static Bitmap blur(Context context, Bitmap sentBitmap, int radius) {
+
+        if (radius < 0) {
+            radius = 0;
+            if (DEBUG) {
+                ZLog.w(TAG, "radius must be 0 < r < 25 , forcing radius=0");
+            }
+        } else if (radius > 25) {
+            radius = 25;
+            if (DEBUG) {
+                ZLog.w(TAG, "radius must be 0 < r < 25 , forcing radius=25");
+            }
+        }
+
+        if (Build.VERSION.SDK_INT > 16) {
+            Bitmap bitmap = sentBitmap.copy(sentBitmap.getConfig(), true);
+
+            final RenderScript rs = RenderScript.create(context);
+            final Allocation input = Allocation.createFromBitmap(rs,
+                    sentBitmap, Allocation.MipmapControl.MIPMAP_NONE,
+                    Allocation.USAGE_SCRIPT);
+            final Allocation output = Allocation.createTyped(rs,
+                    input.getType());
+            final ScriptIntrinsicBlur script = ScriptIntrinsicBlur.create(rs,
+                    Element.U8_4(rs));
+            script.setRadius(radius /* e.g. 3.f */);
+            script.setInput(input);
+            script.forEach(output);
+            output.copyTo(bitmap);
+            return bitmap;
+        }
+
+        // Stack Blur v1.0 from
+        // http://www.quasimondo.com/StackBlurForCanvas/StackBlurDemo.html
+        //
+        // Java Author: Mario Klingemann <mario at quasimondo.com>
+        // http://incubator.quasimondo.com
+        // created Feburary 29, 2004
+        // Android port : Yahel Bouaziz <yahel at kayenko.com>
+        // http://www.kayenko.com
+        // ported april 5th, 2012
+
+        // This is a compromise between Gaussian Blur and Box blur
+        // It creates much better looking blurs than Box Blur, but is
+        // 7x faster than my Gaussian Blur implementation.
+        //
+        // I called it Stack Blur because this describes best how this
+        // filter works internally: it creates a kind of moving stack
+        // of colors whilst scanning through the image. Thereby it
+        // just has to add one new block of color to the right side
+        // of the stack and remove the leftmost color. The remaining
+        // colors on the topmost layer of the stack are either added on
+        // or reduced by one, depending on if they are on the right or
+        // on the left side of the stack.
+        //
+        // If you are using this algorithm in your code please add
+        // the following line:
+        //
+        // Stack Blur Algorithm by Mario Klingemann <mario@quasimondo.com>
+
+        Bitmap bitmap = sentBitmap.copy(sentBitmap.getConfig(), true);
+
+        if (radius < 1) {
+            return (null);
+        }
+
+        int w = bitmap.getWidth();
+        int h = bitmap.getHeight();
+
+        int[] pix = new int[w * h];
+        Log.e("pix", w + " " + h + " " + pix.length);
+        bitmap.getPixels(pix, 0, w, 0, 0, w, h);
+
+        int wm = w - 1;
+        int hm = h - 1;
+        int wh = w * h;
+        int div = radius + radius + 1;
+
+        int r[] = new int[wh];
+        int g[] = new int[wh];
+        int b[] = new int[wh];
+        int rsum, gsum, bsum, x, y, i, p, yp, yi, yw;
+        int vmin[] = new int[Math.max(w, h)];
+
+        int divsum = (div + 1) >> 1;
+        divsum *= divsum;
+        int dv[] = new int[256 * divsum];
+        for (i = 0; i < 256 * divsum; i++) {
+            dv[i] = (i / divsum);
+        }
+
+        yw = yi = 0;
+
+        int[][] stack = new int[div][3];
+        int stackpointer;
+        int stackstart;
+        int[] sir;
+        int rbs;
+        int r1 = radius + 1;
+        int routsum, goutsum, boutsum;
+        int rinsum, ginsum, binsum;
+
+        for (y = 0; y < h; y++) {
+            rinsum = ginsum = binsum = routsum = goutsum = boutsum = rsum = gsum = bsum = 0;
+            for (i = -radius; i <= radius; i++) {
+                p = pix[yi + Math.min(wm, Math.max(i, 0))];
+                sir = stack[i + radius];
+                sir[0] = (p & 0xff0000) >> 16;
+                sir[1] = (p & 0x00ff00) >> 8;
+                sir[2] = (p & 0x0000ff);
+                rbs = r1 - Math.abs(i);
+                rsum += sir[0] * rbs;
+                gsum += sir[1] * rbs;
+                bsum += sir[2] * rbs;
+                if (i > 0) {
+                    rinsum += sir[0];
+                    ginsum += sir[1];
+                    binsum += sir[2];
+                } else {
+                    routsum += sir[0];
+                    goutsum += sir[1];
+                    boutsum += sir[2];
+                }
+            }
+            stackpointer = radius;
+
+            for (x = 0; x < w; x++) {
+
+                r[yi] = dv[rsum];
+                g[yi] = dv[gsum];
+                b[yi] = dv[bsum];
+
+                rsum -= routsum;
+                gsum -= goutsum;
+                bsum -= boutsum;
+
+                stackstart = stackpointer - radius + div;
+                sir = stack[stackstart % div];
+
+                routsum -= sir[0];
+                goutsum -= sir[1];
+                boutsum -= sir[2];
+
+                if (y == 0) {
+                    vmin[x] = Math.min(x + radius + 1, wm);
+                }
+                p = pix[yw + vmin[x]];
+
+                sir[0] = (p & 0xff0000) >> 16;
+                sir[1] = (p & 0x00ff00) >> 8;
+                sir[2] = (p & 0x0000ff);
+
+                rinsum += sir[0];
+                ginsum += sir[1];
+                binsum += sir[2];
+
+                rsum += rinsum;
+                gsum += ginsum;
+                bsum += binsum;
+
+                stackpointer = (stackpointer + 1) % div;
+                sir = stack[(stackpointer) % div];
+
+                routsum += sir[0];
+                goutsum += sir[1];
+                boutsum += sir[2];
+
+                rinsum -= sir[0];
+                ginsum -= sir[1];
+                binsum -= sir[2];
+
+                yi++;
+            }
+            yw += w;
+        }
+        for (x = 0; x < w; x++) {
+            rinsum = ginsum = binsum = routsum = goutsum = boutsum = rsum = gsum = bsum = 0;
+            yp = -radius * w;
+            for (i = -radius; i <= radius; i++) {
+                yi = Math.max(0, yp) + x;
+
+                sir = stack[i + radius];
+
+                sir[0] = r[yi];
+                sir[1] = g[yi];
+                sir[2] = b[yi];
+
+                rbs = r1 - Math.abs(i);
+
+                rsum += r[yi] * rbs;
+                gsum += g[yi] * rbs;
+                bsum += b[yi] * rbs;
+
+                if (i > 0) {
+                    rinsum += sir[0];
+                    ginsum += sir[1];
+                    binsum += sir[2];
+                } else {
+                    routsum += sir[0];
+                    goutsum += sir[1];
+                    boutsum += sir[2];
+                }
+
+                if (i < hm) {
+                    yp += w;
+                }
+            }
+            yi = x;
+            stackpointer = radius;
+            for (y = 0; y < h; y++) {
+                // Preserve alpha channel: ( 0xff000000 & pix[yi] )
+                pix[yi] = (0xff000000 & pix[yi]) | (dv[rsum] << 16)
+                        | (dv[gsum] << 8) | dv[bsum];
+
+                rsum -= routsum;
+                gsum -= goutsum;
+                bsum -= boutsum;
+
+                stackstart = stackpointer - radius + div;
+                sir = stack[stackstart % div];
+
+                routsum -= sir[0];
+                goutsum -= sir[1];
+                boutsum -= sir[2];
+
+                if (x == 0) {
+                    vmin[y] = Math.min(y + r1, hm) * w;
+                }
+                p = x + vmin[y];
+
+                sir[0] = r[p];
+                sir[1] = g[p];
+                sir[2] = b[p];
+
+                rinsum += sir[0];
+                ginsum += sir[1];
+                binsum += sir[2];
+
+                rsum += rinsum;
+                gsum += ginsum;
+                bsum += binsum;
+
+                stackpointer = (stackpointer + 1) % div;
+                sir = stack[stackpointer];
+
+                routsum += sir[0];
+                goutsum += sir[1];
+                boutsum += sir[2];
+
+                rinsum -= sir[0];
+                ginsum -= sir[1];
+                binsum -= sir[2];
+
+                yi += w;
+            }
+        }
+
+        Log.e("pix", w + " " + h + " " + pix.length);
+        bitmap.setPixels(pix, 0, w, 0, 0, w, h);
+        return (bitmap);
+    }
+    /**------------------------------------ 图形色彩变换 End -----------------------------------*/
 
 
-    /************************************ BitMap转变 ************************************/
+    /**----------------------------------- BitMap转变  Start -----------------------------------*/
 
+
+    /**
+     * 从指定的view的缓存中获取Bitmap
+     *
+     * @param view View
+     * @return view对应的bitmap
+     */
+    public static Bitmap getBitmapFromViewCache(View view) {
+        view.clearFocus();
+        view.setPressed(false);
+        // 能画缓存就返回false
+        boolean willNotCache = view.willNotCacheDrawing();
+        view.setWillNotCacheDrawing(false);
+        int color = view.getDrawingCacheBackgroundColor();
+        view.setDrawingCacheBackgroundColor(0);
+        if (color != 0) {
+            view.destroyDrawingCache();
+        }
+        view.buildDrawingCache();
+        Bitmap cacheBitmap = view.getDrawingCache();
+        if (cacheBitmap == null) {
+            if (DEBUG) {
+                Log.e(TAG, "failed getViewBitmap(" + view + ")", new RuntimeException());
+            }
+            return null;
+        }
+        Bitmap bitmap = Bitmap.createBitmap(cacheBitmap);
+        // Restore the view
+        view.destroyDrawingCache();
+        view.setWillNotCacheDrawing(willNotCache);
+        view.setDrawingCacheBackgroundColor(color);
+        return bitmap;
+    }
+
+    /**
+     * 从指定的view获取Bitmap
+     *
+     * @param view View
+     * @return view对应的bitmap
+     */
+    public static Bitmap getBitMapFromView(View view) {
+        if (view == null) {
+            return null;
+        }
+        Bitmap bitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
+        //Create a Canvas which the View will be rendering.
+        Canvas canvas = new Canvas(bitmap);
+        view.layout(view.getLeft(), view.getTop(), view.getRight(), view.getBottom());
+        //Manually render this view (and all of its children) to the given Canvas.
+        view.draw(canvas);
+        return bitmap;
+    }
 
     /**
      * drawable转换为Bitmap
@@ -439,9 +896,10 @@ public class BitMapUtils {
         }
         Bitmap.Config config = drawable.getOpacity() != PixelFormat.OPAQUE ? ARGB_8888 : Bitmap.Config.RGB_565;
         Bitmap bitmap = Bitmap.createBitmap(width, height, config);
+
         Canvas canvas = new Canvas(bitmap);
         drawable.setBounds(0, 0, width, height);
-        drawable.draw(canvas);  // 把 drawable 内容画到画布中
+        drawable.draw(canvas);
         return bitmap;
     }
 
@@ -507,6 +965,31 @@ public class BitMapUtils {
         return BitmapFactory.decodeByteArray(b, 0, b.length);
     }
 
+    /**
+     * 合并Bitmap
+     *
+     * @param bgd 背景Bitmap
+     * @param fg  前景Bitmap
+     * @return 合成后的Bitmap
+     */
+    public static Bitmap combineImages(Bitmap bgd, Bitmap fg) {
+        if (bgd == null || fg == null) {
+            return bgd == null ? (fg == null ? null : fg) : bgd;
+        }
+        Bitmap bmp;
+        int width = bgd.getWidth() > fg.getWidth() ? bgd.getWidth() : fg.getWidth();
+        int height = bgd.getHeight() > fg.getHeight() ? bgd.getHeight() : fg.getHeight();
+        bmp = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Paint paint = new Paint();
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_ATOP));
+
+        Canvas canvas = new Canvas(bmp);
+        canvas.drawBitmap(bgd, 0, 0, null);
+        canvas.drawBitmap(fg, 0, 0, paint);
+
+        return bmp;
+    }
+
 
     /**
      * Returns the in memory size of the given {@link Bitmap} in bytes.
@@ -526,6 +1009,7 @@ public class BitMapUtils {
 
     /**
      * 根据指定编码格式获取Bitmap大小
+     *
      * @param width
      * @param height
      * @param config
@@ -558,21 +1042,22 @@ public class BitMapUtils {
     }
 
 
-     /**
+    /**
      * 获取应用内图片资源，获取得到的图片是原始尺寸*缩放系数
-     * @param res Resources
-     * @param resId        ResourcesId
+     *
+     * @param res       Resources
+     * @param resId     ResourcesId
      * @param reqWidth  reqWidth
      * @param reqHeight reqHeight
      * @return 解码后的位图
      */
-    public static Bitmap decodeResource(Resources res, int resId,int reqWidth,int reqHeight) {
+    public static Bitmap decodeResource(Resources res, int resId, int reqWidth, int reqHeight) {
         TypedValue value = new TypedValue();
         res.openRawResource(resId, value);
 
-         // First decode with inJustDecodeBounds=true to check dimensions
-        final BitmapFactory.Options options =new BitmapFactory.Options();
-        options.inJustDecodeBounds =true;
+        // First decode with inJustDecodeBounds=true to check dimensions
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
         BitmapFactory.decodeResource(res, resId, options);
 
         //adjust screen density
@@ -588,7 +1073,7 @@ public class BitMapUtils {
 
     public static Bitmap decodeStream(InputStream inputStream) {
         BitmapFactory.Options opts = new BitmapFactory.Options();
-        return BitmapFactory.decodeStream(inputStream,null, opts);
+        return BitmapFactory.decodeStream(inputStream, null, opts);
     }
 
     private static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
@@ -608,13 +1093,14 @@ public class BitMapUtils {
                 inSampleSize *= 2;
             }
         }
-        ZLog.d("BitMapUtils","calculateInSampleSize()  inSampleSize = " + inSampleSize);
+        ZLog.d("BitMapUtils", "calculateInSampleSize()  inSampleSize = " + inSampleSize);
         return inSampleSize;
     }
 
     /**
      * 手动设置缩放系数
      * TestCode
+     *
      * @param inputStream
      * @return
      */
@@ -625,24 +1111,24 @@ public class BitMapUtils {
         opts.inSampleSize = 1;
         opts.inDensity = 160;
         opts.inTargetDensity = 160;
-        return BitmapFactory.decodeStream(inputStream,null, opts);
+        return BitmapFactory.decodeStream(inputStream, null, opts);
     }
 
-    public static Bitmap replaceBitmapColor(Bitmap oldBitmap,int oldColor,int newColor){
-        return replaceBitmapColor(oldBitmap,oldColor,newColor, ARGB_8888);
+    public static Bitmap replaceBitmapColor(Bitmap oldBitmap, int oldColor, int newColor) {
+        return replaceBitmapColor(oldBitmap, oldColor, newColor, ARGB_8888);
     }
 
-    public static Bitmap replaceBitmapColor(Bitmap oldBitmap, int oldColor, int newColor, Bitmap.Config config){
-        Bitmap mBitmap = oldBitmap.copy(config,true);
+    public static Bitmap replaceBitmapColor(Bitmap oldBitmap, int oldColor, int newColor, Bitmap.Config config) {
+        Bitmap mBitmap = oldBitmap.copy(config, true);
         int mWidth = mBitmap.getWidth();
         int mHeight = mBitmap.getHeight();
         int mArrayColorLength = mWidth * mHeight;
         int currentPixelColor = 0;
-        for(int i=0; i < mHeight;i++){
-            for(int j=0;j < mWidth;j++){
-                currentPixelColor = mBitmap.getPixel(j,i);
-                if(currentPixelColor == oldColor){
-                    mBitmap.setPixel(j,i,newColor);
+        for (int i = 0; i < mHeight; i++) {
+            for (int j = 0; j < mWidth; j++) {
+                currentPixelColor = mBitmap.getPixel(j, i);
+                if (currentPixelColor == oldColor) {
+                    mBitmap.setPixel(j, i, newColor);
                 }
             }
         }
@@ -650,20 +1136,20 @@ public class BitMapUtils {
     }
 
     public static int calBitmapPixelsCount(Bitmap bmp) {
-		return bmp.getWidth() * bmp.getHeight();
-	}
+        return bmp.getWidth() * bmp.getHeight();
+    }
 
-	public static void addShadow(Canvas canvas,int shadowSize, int shadowColor,
-                                 int offsetX,int offsetY,
-                                 Bitmap srcBitmap,Paint paintShadow){
+    public static void addShadow(Canvas canvas, int shadowSize, int shadowColor,
+                                 int offsetX, int offsetY,
+                                 Bitmap srcBitmap, Paint paintShadow) {
         //绘制阴影，param1：模糊半径；param2：x轴大小：param3：y轴大小；param4：阴影颜色
 
         Rect rectSrc = new Rect(0, 0, srcBitmap.getWidth(), srcBitmap.getHeight());
-		Rect rectDst = new Rect(rectSrc);
-        canvas.saveLayer(0, 0, srcBitmap.getWidth(), srcBitmap.getHeight(), paintShadow,Canvas.HAS_ALPHA_LAYER_SAVE_FLAG);
-        DrawUtils.offsetRect(rectDst,offsetX,offsetY);
+        Rect rectDst = new Rect(rectSrc);
+        canvas.saveLayer(0, 0, srcBitmap.getWidth(), srcBitmap.getHeight(), paintShadow, Canvas.HAS_ALPHA_LAYER_SAVE_FLAG);
+        DrawUtils.offsetRect(rectDst, offsetX, offsetY);
         RectF rectF = new RectF(rectDst);
-        paintShadow.setShadowLayer(shadowSize,0,0,shadowColor);
+        paintShadow.setShadowLayer(shadowSize, 0, 0, shadowColor);
 
         canvas.drawRoundRect(rectF, 20f, 20f, paintShadow);
         canvas.restore();
@@ -675,13 +1161,12 @@ public class BitMapUtils {
     }
 
     /**
-     *
      * @param bitmap
      * @param context
-     * @param radius 模糊度 max:25.f
+     * @param radius  模糊度 max:25.f
      * @return
      */
-	public static Bitmap guassBlur(Bitmap bitmap, Context context,float radius) {
+    public static Bitmap guassBlur(Bitmap bitmap, Context context, float radius) {
         // 用需要创建高斯模糊bitmap创建一个空的bitmap
         Bitmap outBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), ARGB_8888);
 
@@ -695,7 +1180,7 @@ public class BitMapUtils {
         Allocation allOut = Allocation.createFromBitmap(rs, outBitmap);
 
         //设定模糊度(注：Radius最大只能设置25.f)
-        blurScript.setRadius(clamp(radius,0f,25.0f));
+        blurScript.setRadius(clamp(radius, 0f, 25.0f));
 
         // Perform the Renderscript
         blurScript.setInput(allIn);
@@ -710,33 +1195,33 @@ public class BitMapUtils {
         return outBitmap;
     }
 
-    public static float clamp(float values, float min, float max){
-        return Math.min(Math.max(values,min),max);
+    public static float clamp(float values, float min, float max) {
+        return Math.min(Math.max(values, min), max);
     }
 
     public static void recycleBitmap(Bitmap bmp) {
-		if (bmp == null) {
-			return;
-		}
-		if (!bmp.isMutable()) {
+        if (bmp == null) {
+            return;
+        }
+        if (!bmp.isMutable()) {
             if (DEBUG) {
                 Log.e(TAG_RECYCLER, "bitmap immutable!!!");
             }
-			return;
-		}
-		if (bmp.isRecycled()) {
-			if (DEBUG) {
-				Log.e(TAG_RECYCLER, "bitmap recycled!!!");
-			}
-			return;
-		}
-		int byteCount = calBitmapPixelsCount(bmp);
+            return;
+        }
+        if (bmp.isRecycled()) {
+            if (DEBUG) {
+                Log.e(TAG_RECYCLER, "bitmap recycled!!!");
+            }
+            return;
+        }
+        int byteCount = calBitmapPixelsCount(bmp);
         if (byteCount <= 0) {
-			if (DEBUG) {
-				Log.e(TAG_RECYCLER, "invalid bitmap bytecount! " + byteCount);
-			}
-			return;
-		}
+            if (DEBUG) {
+                Log.e(TAG_RECYCLER, "invalid bitmap bytecount! " + byteCount);
+            }
+            return;
+        }
     }
 
 
