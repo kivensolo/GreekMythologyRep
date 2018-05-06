@@ -1,4 +1,4 @@
-package com.asuynctask_jsontest;
+package com.asynctask_jsontest;
 
 public class NewsBean {
     public String newspictureUrl;

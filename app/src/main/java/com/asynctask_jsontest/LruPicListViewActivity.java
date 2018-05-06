@@ -1,4 +1,4 @@
-package com.asuynctask_jsontest;
+package com.asynctask_jsontest;
 
 import android.app.Activity;
 import android.os.AsyncTask;
