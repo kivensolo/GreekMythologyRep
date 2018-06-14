@@ -212,7 +212,7 @@
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!--图片缓存测试页面-->
-        <activity android:name="com.asuynctask_jsontest.LruPicListViewActivity"
+        <activity android:name="com.asynctask_jsontest.LruPicListViewActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!--图片缓存测试页面-->

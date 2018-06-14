@@ -1,5 +1,6 @@
 package com.kingz.utils;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
@@ -14,6 +15,7 @@ import com.App;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -26,8 +28,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Copyright(C) 2016, 北京视达科科技有限公司
- * All rights reserved.
  * author: King.Z
  * date:  2016/3/3 14:48
  * description: 常用网络Tools
@@ -41,21 +41,16 @@ public class NetTools {
     }
 
     /**
-     * 网络连接状态判断
-     * @return
+     * 判断网络连接是否可用
+     * @return 网络是否可用
      */
     public static boolean isConnect() {
-        ConnectivityManager mConnectivityManager = (ConnectivityManager) App.getAppInstance().getAppContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
-        if (mNetworkInfo != null) {
-            return mNetworkInfo.isAvailable();
-        }
-        return false;
+        NetworkInfo mNetworkInfo = getSysNetworkInfo(App.getAppInstance().getAppContext());
+        return mNetworkInfo != null && mNetworkInfo.isAvailable();
     }
 
     /**
      * byte数组转为Mac
-     *
      * @param mac
      * @return
      */
@@ -169,21 +164,49 @@ public class NetTools {
         return mac;
     }
 
-
     /**
-     * 判断是否是wifi连接
+     * 指定类型的网络是否可用
      */
-    public static boolean isWifiConnect(Context context) {
+    public static boolean isTypeNetAvailable(Context context,int netType) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        return cm != null && cm.getActiveNetworkInfo().getType() == ConnectivityManager.TYPE_WIFI;
-
+        NetworkInfo typeWorkInfo = cm.getNetworkInfo(netType);
+        return typeWorkInfo != null && typeWorkInfo.isAvailable();
     }
 
-    /**
-     * 获取Wifi的mac
-     *
-     * @return
-     */
+    public static int getNetWorkState(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo typeWorkInfo = cm.getActiveNetworkInfo();
+        if(typeWorkInfo.isConnected()){
+            return 0;
+        }else if(typeWorkInfo.isConnectedOrConnecting()){
+            return 1;
+        }else{
+            return -1;
+        }
+    }
+
+    public static int getConnectNetType(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo mNetworkInfo = cm.getActiveNetworkInfo();
+        if (mNetworkInfo != null && mNetworkInfo.isAvailable()) {
+            return mNetworkInfo.getType();
+        }
+        return -1;
+    }
+
+    /********************************* WIFI Info Start*******************************/
+
+    public static boolean isWifiConnect(Context context) {
+        NetworkInfo sysNetworkInfo = getSysNetworkInfo(context);
+        return sysNetworkInfo != null && sysNetworkInfo.getType() == ConnectivityManager.TYPE_WIFI;
+    }
+
+    public static boolean isWifiAvailable(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        return wifiInfo != null && wifiInfo.isAvailable();
+    }
+
     public static String getWifiMac() {
         String mac = getMacLevel9("wlan[0-9]+");
         if (mac.equals("")) {
@@ -200,22 +223,37 @@ public class NetTools {
         return mac;
     }
 
-    /**
-     * 获取连接的Wifi名称
-     *
-     * @param context
-     * @return
-     */
+    public static String getWifiIp(Context context) {
+        WifiManager wifimanage = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        if (wifimanage.isWifiEnabled()) {
+            wifimanage.setWifiEnabled(true);
+        }
+        WifiInfo wifiinfo = wifimanage.getConnectionInfo();
+        return intToIp(wifiinfo.getIpAddress());
+    }
+
+
     public static String getWifiName(Context context) {
+        @SuppressLint("WifiManagerPotentialLeak")
         WifiManager wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
         WifiInfo info = wifi.getConnectionInfo();
         return info.getSSID();
     }
+    /********************************* WIFI Info End*******************************/
+
+    private static NetworkInfo getSysNetworkInfo(Context context){
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm != null ? cm.getActiveNetworkInfo() : null;
+    }
 
     /**
      * 读取设备的默认网关IP地址
-     *
      * @return "000.000.000.000" 格式 如果不存在，返回""
+     *
+     * C:\Users\zhi.wang>adb shell ip route
+     *   default via 10.0.2.2 dev eth0
+     *   10.0.2.0/24 dev eth0  proto kernel  scope link  src 10.0.2.15
+     *
      */
     public static String getGatewayIp() {
         String ip = "";
@@ -229,7 +267,6 @@ public class NetTools {
             while (is.ready()) {
                 info = is.readLine();
                 Log.i(TAG, "getGatewayIp() ip route:" + info);
-
                 Matcher m = result_pattern.matcher(info);
                 if (m.matches()) {
                     ip = m.group(1).toLowerCase(Locale.CHINA);
@@ -250,8 +287,12 @@ public class NetTools {
 
     /**
      * 读取网口工作状态
-     *
      * @return true: UP false:DOWN
+     *
+     * C:\Users\zhi.wang>adb shell netcfg
+     *   sit0     DOWN     0.0.0.0/0   0x00000080 00:00:00:00:00:00
+     *   eth0     UP     10.0.2.15/24  0x00001043 52:54:00:12:34:56
+     *   lo       UP     127.0.0.1/8   0x00000049 00:00:00:00:00:00
      */
     public static boolean getPortIsWork() {
         Process proc;
@@ -269,9 +310,7 @@ public class NetTools {
                     String addr = m.group(3);
                     String mac = m.group(4).toUpperCase(Locale.CHINA).replace(':', '-');
                     Log.i(TAG, "getPortIsWork(), match success:" + name + " " + status + " " + addr + " " + mac);
-                    if (name.matches("eth[0-9]+") && status.matches("UP") && (!addr.matches("0.0.0.0")))
-
-                    {
+                    if (name.matches("eth[0-9]+") && status.matches("UP") && (!addr.matches("0.0.0.0"))){
                         return true;
                     }
                     if (name.matches("wlan[0-9]+") && status.matches("UP") && (!addr.matches("0.0.0.0"))) {
@@ -287,21 +326,6 @@ public class NetTools {
             e.printStackTrace();
         }
         return false;
-    }
-
-    /**
-     * 获取无线网IP
-     *
-     * @param context
-     * @return
-     */
-    public static String getWlanIp(Context context) {
-        WifiManager wifimanage = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-        if (wifimanage.isWifiEnabled()) {
-            wifimanage.setWifiEnabled(true);
-        }
-        WifiInfo wifiinfo = wifimanage.getConnectionInfo();
-        return intToIp(wifiinfo.getIpAddress());
     }
 
     /**
@@ -331,15 +355,52 @@ public class NetTools {
         return (i & 0xFF) + "." + ((i >> 8) & 0xFF) + "." + ((i >> 16) & 0xFF) + "." + ((i >> 24) & 0xFF);
     }
 
-
-	/**
-	 * 打开系统网络设置界面
-	 */
-	public static void openNetSetting(Activity activity){
+	public static void openNetSettingActivity(Activity activity){
 		Intent intent = new Intent("/");
 		ComponentName cm = new ComponentName("com.android.settings","com.android.settings.WirelessSettings");
 		intent.setComponent(cm);
 		intent.setAction("android.intent.action.VIEW");
 		activity.startActivityForResult(intent, 0);
 	}
+
+	 /*
+      * 判断是否有外网连接（普通方法不能判断外网的网络是否连接，比如连接上局域网）
+      * @return
+      *
+      * Usage: ping [-aAbBdDfhLnOqrRUvV] [-c count] [-i interval] [-I interface]
+      *     [-m mark] [-M pmtudisc_option] [-l preload] [-p pattern] [-Q tos]
+      *     [-s packetsize] [-S sndbuf] [-t ttl] [-T timestamp_option]
+      *     [-w deadline] [-W timeout] [hop1 ...] destination
+      */
+     public static boolean isPingIpSucess() {
+       String result = null;
+       try {
+           String ip = "www.baidu.com";// ping 的地址
+           Process p = Runtime.getRuntime().exec("ping -c 3 -w 100 " + ip);// ping网址3次
+           // 读取ping的内容
+           InputStream input = p.getInputStream();
+           BufferedReader in = new BufferedReader(new InputStreamReader(input));
+           StringBuilder stringBuffer = new StringBuilder();
+           String content = "";
+           while ((content = in.readLine()) != null) {
+               stringBuffer.append(content);
+           }
+           Log.d("------ping-----", "result content : " + stringBuffer.toString());
+           // ping的状态
+           int status = p.waitFor();
+           if (status == 0) {
+               result = "success";
+               return true;
+           } else {
+               result = "failed";
+           }
+       } catch (IOException e) {
+           result = "IOException";
+       } catch (InterruptedException e) {
+           result = "InterruptedException";
+       } finally {
+           Log.d("----result---", "result = " + result);
+       }
+       return false;
+     }
 }
