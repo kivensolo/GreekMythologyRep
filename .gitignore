@@ -82,16 +82,9 @@ captures/
 
 # Intellij
 *.iml
-.idea/workspace.xml
-.idea/libraries
+.idea
 
 # Keystore files
 *.jks
 .gradle/2.10/taskArtifacts/cache.properties.lock
-.idea/gradle.xml
-.idea/gradle.xml
-.idea/libraries/multidex_1_0_1.xml
-.idea/libraries/multidex_instrumentation_1_0_1.xml
-.idea/misc.xml
-.idea/workspace.xml
 local.properties
