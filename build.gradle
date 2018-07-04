@@ -1,20 +1,62 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 //整个工程目录下的build.gradle文件，这个文件跟模块下的build.gradle文件名字相同，
 //但是是负责整个工程所有模块的构建的（一个工程有可能包含多个模块，比如你的项目中还可能有一个Library）；
+
+//"buildscript block"告诉Gradle，构建需要一个插件，它可能不是基线Gradle发行版的一部分，
+//并告诉Gradle在哪里找到它。在这种情况下，使用坐标语法“group：name：version”指定所需的插件，
+// 其中组为com.android.tools.build，名称为gradle，版本为2.3.1。
+//当Gradle第一次构建这个项目的时候，这个plugin将会被下载并缓存，所以这个task只会执行一次。
 buildscript {
     repositories {
         jcenter() //Gradle工具要从哪个maven仓库下载-----jcenter()
     }
-    dependencies {
+    dependencies { //Identifies the Android plugin
         classpath 'com.android.tools.build:gradle:2.3.1'
     }
 }
 
-//工程里边所有模块的通用配置，这里只规定所有模块中要用到的jar包也都从jcenter这个maven仓库中获取 ，
+//Configuration for top-level and module projects 工程里边所有模块的通用配置
+// 这里只规定所有模块中要用到的jar包也都从jcenter这个maven仓库中获取 ，
 // 在allprojects标签下配置的好处是你不需要再在每个模块下的build.gradle中单独配置了，
-// 如果你想在每个模块下单独指定用哪个maven仓库，那么你在这个全局的build.gradle中也可以不写；
+// 如果想在每个模块下单独指定用哪个maven仓库，那么在这个全局的build.gradle中也可以不写；
 allprojects {
     repositories {
         jcenter()
     }
+
 }
+
+//custom( or ad hoc) task
+//task clean使用内置的任务类型Delete 删除rootProject目录下的buildDir.
+//build目录默认值是应用程序所在项目中的构建目录
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+//监听task的创建
+tasks.whenTaskAdded { task ->
+    task.ext.srcDir = "src/main/java"
+}
+
+//监听整个task关系图的创建
+gradle.taskGraph.whenReady {
+
+}
+
+//监听整个build完毕
+gradle.buildFinished {
+    println "All build Finished!"
+}
+
+//监听某个task开始执行，结束执行
+gradle.taskGraph.addTaskExecutionListener(new TaskExecutionListener() {
+    @Override
+    void beforeExecute(Task task) {
+
+    }
+
+    @Override
+    void afterExecute(Task task, TaskState state) {
+
+   }
+})

@@ -44,7 +44,7 @@ task deleteBuild(type: Delete) {
 
 task makeTestJar(dependsOn: ['compileReleaseJavaWithJavac'], type: Jar){
     delete  jarUrl
-    from(code_From)     //代码来源
+    from(code_From)
     exclude('**/R.class')
     exclude('**/R\$*.class')
     exclude('**/BuildConfig.class')
