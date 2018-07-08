@@ -7,6 +7,8 @@
 // 如果熟悉Gradle的api的话也可以写自己的插件，
 // github上有许多辅助Android开发的插件，下载下来就是个jar包，可以引入AndroidStudio中，有兴趣的可以去了解一下；
 apply plugin: 'com.android.application'
+apply from:'version.gradle'
+apply from:'compileConfig.gradle'
 
 def releaseTime() {
     return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
@@ -66,44 +68,54 @@ android {
         }*/
     }
     productFlavors {
-       /* 在创建和配置productFlavors之后SyncNow的话
-        Gradle 会根据buildTypes和productFlavors自动创建Build Variant
-        并按照 <product-flavor><Build-Type> 的格式命名这些变体。
+       /* 在创建和配置productFlavors之后SyncNow
+        Gradle 会根据buildTypes和productFlavors自动创建Build Variant,并按照 <product-flavor><Build-Type> 的格式命名这些变体。
         例如，如果创建了“demo”和“full”这两种productFlavors并保留默认的“debug”和“release”构建类型，
-         Gradle 将创建以下构建变体：demo-debug/demo-release/full-debug/full-release
-         可以将构建变体更改为要构建并运行的任何变体,只需转到 Build > Select Build Variant,然后从下拉菜单中选择一个变体
-         然而,要开始自定义每个构建变体及其功能和资源,需要了解如何创建和管理源集。
+        Gradle 将创建以下构建变体：demo-debug/demo-release/full-debug/full-release
+        可以将构建变体更改为要构建并运行的任何变体,只需转到 Build > Select Build Variant,然后从下拉菜单中选择一个变体
+        然而,要开始自定义每个构建变体及其功能和资源,需要了解如何创建和管理源集。
         readMore:https://developer.android.com/studio/build/build-variants.html#product-flavors*/
         v_360 {
             applicationIdSuffix ".qihu"
             versionNameSuffix "-360"
+            versionCode appVersionCode
+            versionName appVersionName
+            //自定义BuildConfig参数
             buildConfigField("String", "APP_NAME", "${appName_360}")
+            buildConfigField 'String','MAIN_URL','"http://www.360.com"'
         }
-        v_wdj {
-            applicationIdSuffix ".wdj"
-            versionNameSuffix "-豌豆荚"
-            buildConfigField("String", "APP_NAME", "${appName_wdj}")
-        }
-        v_yd {
-            applicationIdSuffix ".yd"
-            versionNameSuffix "-移动"
-            buildConfigField("String", "APP_NAME", "${appName_yd}")
-        }
-        v_dx {
-            applicationIdSuffix ".dx"
-            versionNameSuffix "-电信"
-            buildConfigField("String", "APP_NAME", "${appName_dx}")
-        }
+//        v_wdj {
+//            applicationIdSuffix ".wdj"
+//            versionNameSuffix "-豌豆荚"
+//            buildConfigField("String", "APP_NAME", "${appName_wdj}")
+//        }
+//        v_yd {
+//            applicationIdSuffix ".yd"
+//            versionNameSuffix "-移动"
+//            buildConfigField("String", "APP_NAME", "${appName_yd}")
+//        }
+//        v_dx {
+//            applicationIdSuffix ".dx"
+//            versionNameSuffix "-电信"
+//            buildConfigField("String", "APP_NAME", "${appName_dx}")
+//        }
     }
 
     buildTypes {
         //buildTypes 的配置在productFlavors的基础上增加
         debug {
+            zipAlignEnabled true  //zipalign优化
+
         }
         release {
+            zipAlignEnabled true
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
             signingConfig signingConfigs.ZekeSigned
+
+            //自动清理掉未使用资源  打开后，会在构建的时候检查所有资源，
+            // 看看哪些未被引用。包括第三方apk的。 (但好像有问题)
+//            shrinkResources true
         }
         /**
          * The 'initWith' property allows you to copy configurations from other build types,
@@ -123,8 +135,9 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
+        encoding compile_encoding
+        sourceCompatibility compile_source_compatibility
+        targetCompatibility compile_target_compatibility
     }
 
 //    LintOptions{
@@ -141,6 +154,10 @@ android {
             path "src/main/cpp/CMakeLists.txt"
         }
     }*/
+
+    adbOptions{
+
+    }
 }
 
 dependencies {
