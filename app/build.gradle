@@ -203,3 +203,12 @@ dependencies {
     // Set this dependency to build and run UI Automator tests : UI 测试框架；适合跨系统和已安装应用的跨应用功能性 UI 测试
     androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.0'
 }
+
+
+gradle.taskGraph.whenReady {
+    graph ->  println('>>>>>> taskGraph is ready! Config finished.')
+}
+
+gradle.buildFinished {
+    result -> println('>>>>>> all buildFinished!.')
+}
