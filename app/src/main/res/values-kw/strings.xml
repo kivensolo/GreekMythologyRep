@@ -11,4 +11,6 @@
     <string name="create">create</string>
     <string name="crimtitle">Enter a title for the crime</string>
     <string name="delete">delete</string>
+    <string name="aidl_addData">Get Data From Service</string>
+    <string name="aidl_getData">Get Data From Service</string>
 </resources>

@@ -11,4 +11,6 @@
     <string name="create">create</string>
     <string name="clear">clear</string>
     <string name="alarm_service">"This demonstrates how to schedule a repeating "</string>
+    <string name="aidl_addData">Add Data To Service</string>
+    <string name="aidl_getData">Get Data From Service</string>
 </resources>
