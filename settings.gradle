@@ -1,8 +1,8 @@
 //告诉gradle工具这个工程中包含哪几个模块.如果你的工程中有多个模块，那么就是多对单引号
 //include ':app',':library'
-include ':app', ':Customviews', ":jarlibrary"
+include ':app', ':Customviews', ':pluginrepo', ":jarlibrary"
 
 gradle.beforeProject {
-    //TODO 如何获取当前project的名称？
-    project -> println(">>>>>> Project Ready to config !!")
+    project -> println(">>>>>> A Project Ready to config !")
 }
+println ">>> settings end ]"

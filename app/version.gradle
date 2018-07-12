@@ -1,5 +1,8 @@
+println '   ————version.gradle config start'
+
 //ext{}表明当前project创建扩展属性  以供其他脚本引用
 ext{
     appVersionCode = 11
     appVersionName = "1.0.0"
 }
+println '   ————version.gradle config end'
