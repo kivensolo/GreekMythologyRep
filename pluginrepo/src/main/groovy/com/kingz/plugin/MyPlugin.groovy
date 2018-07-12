@@ -5,6 +5,6 @@ import org.gradle.api.Project
 class MyPlugin implements Plugin<Project>{
     @Override
     void apply(Project project) {
-        println "           [PLUGIN]--->[CustomPlugin apply invoke.. ]"
+        println "           [PLUGIN]--->[CustomPlugin apply invoked! ]"
     }
 }

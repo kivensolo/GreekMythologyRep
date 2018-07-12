@@ -1,3 +1,6 @@
+/**
+ *  插件资料地址：https://mp.weixin.qq.com/s?__biz=MzA5MzI3NjE2MA==&mid=2650243271&idx=1&sn=60aae09cb53bebc89dad3906c83cf594&chksm=886371a8bf14f8bee7d6ecad6c708608f05c0d2566d7b1683484613f6f2be599a78e76c6cb68&mpshare=1&scene=23&srcid=0629Egh7wBZble4To3ub34ss#rd
+ */
 apply plugin: 'groovy'
 apply plugin: 'maven'
 group = 'com.starcor.plugin'
