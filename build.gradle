@@ -9,9 +9,13 @@
 buildscript {
     repositories {
         jcenter() //Gradle工具要从哪个maven仓库下载-----jcenter()
+        maven {
+            url uri('D:/repos')
+        }
     }
     dependencies { //Identifies the Android plugin
         classpath 'com.android.tools.build:gradle:2.3.1'
+        classpath 'com.starcor.plugin:pluginrepo:1.0.0'
     }
 }
 
@@ -49,14 +53,14 @@ gradle.buildFinished {
 }
 
 //监听某个task开始执行，结束执行
-gradle.taskGraph.addTaskExecutionListener(new TaskExecutionListener() {
-    @Override
-    void beforeExecute(Task task) {
-
-    }
-
-    @Override
-    void afterExecute(Task task, TaskState state) {
-
-   }
-})
+//gradle.taskGraph.addTaskExecutionListener(new TaskExecutionListener() {
+//    @Override
+//    void beforeExecute(Task task) {
+//
+//    }
+//
+//    @Override
+//    void afterExecute(Task task, TaskState state) {
+//
+//    }
+//})

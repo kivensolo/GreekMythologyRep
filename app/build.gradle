@@ -2,11 +2,12 @@
 //后边跟的是插件名称，com.android.application是Google通过Gradle的api，
 //使用Groovy语言编写的一个插件，用于构建Android主工程,使'android' block 中特殊指定的构建选项可用
 //相当于eclipse中的ADT插件。
-
 //如果这个模块是一个Library的话，应该引入的插件叫做'com.android.library'，
-// 如果熟悉Gradle的api的话也可以写自己的插件，
-// github上有许多辅助Android开发的插件，下载下来就是个jar包，可以引入AndroidStudio中，有兴趣的可以去了解一下；
-apply plugin: 'com.android.application'
+
+println '>>>>>>>>>>> app config Start'
+
+apply plugin:'com.android.application'
+apply plugin:'com.kingz.firstplugin'
 apply from:'version.gradle'
 apply from:'compileConfig.gradle'
 
@@ -19,11 +20,8 @@ def keystoreProperties = new Properties()
 // Load keystore.properties file into the keystoreProperties object.
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
-
 def appName_360 = "\"GreekMyth_360\""
 def appName_wdj = "\"GreekMyth_WDJ\""
-def appName_yd = "\"GreekMyth_YD\""
-def appName_dx = "\"GreekMyth_DX\""
 
 android {
     signingConfigs {
@@ -88,16 +86,6 @@ android {
 //            applicationIdSuffix ".wdj"
 //            versionNameSuffix "-豌豆荚"
 //            buildConfigField("String", "APP_NAME", "${appName_wdj}")
-//        }
-//        v_yd {
-//            applicationIdSuffix ".yd"
-//            versionNameSuffix "-移动"
-//            buildConfigField("String", "APP_NAME", "${appName_yd}")
-//        }
-//        v_dx {
-//            applicationIdSuffix ".dx"
-//            versionNameSuffix "-电信"
-//            buildConfigField("String", "APP_NAME", "${appName_dx}")
 //        }
     }
 
@@ -173,11 +161,10 @@ dependencies {
     compile 'com.squareup.okio:okio:1.5.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     //compile 'org.testng:testng:6.9.6'
-
     //编译extras目录下的ShimmerAndroid模块
     //compile project(':extras:ShimmerAndroid')
     // Dependency on the "jarlibrary" module from this project
-//    compile project(':jarlibrary')
+    //    compile project(':jarlibrary')
     //------------------- Local Unit  --------------------
     //Adds a compile time dependency for local tests. Required -- JUnit 4 framework
     testCompile 'junit:junit:4.12'
@@ -212,3 +199,14 @@ gradle.taskGraph.whenReady {
 gradle.buildFinished {
     result -> println('>>>>>> all buildFinished!.')
 }
+
+/**
+ * 表示所有的模块都已经配置完
+ * 可以准备执行task
+ */
+project.afterEvaluate {
+    println "-----> app evaluate start"
+    println "-----> app evaluate end"
+}
+println '>>>>>>>>>>> app config End'
+
