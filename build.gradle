@@ -9,13 +9,15 @@
 buildscript {
     repositories {
         jcenter() //Gradle工具要从哪个maven仓库下载-----jcenter()
+        google()
+        //本地仓库
         maven {
             url uri('D:/repos')
         }
     }
     dependencies { //Identifies the Android plugin
         classpath 'com.android.tools.build:gradle:2.3.1'
-        classpath 'com.starcor.plugin:pluginrepo:1.0.0'
+//        classpath 'com.starcor.plugin:pluginrepo:1.0.0'
     }
 }
 
