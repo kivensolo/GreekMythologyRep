@@ -7,14 +7,8 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-
 import com.kingz.customdemo.R;
-import com.kingz.scroll.view_pager.sc_pagerinfo.DotsView;
-import com.kingz.scroll.view_pager.sc_pagerinfo.SCPositionAnimation;
-import com.kingz.scroll.view_pager.sc_pagerinfo.SCViewAnimation;
-import com.kingz.scroll.view_pager.sc_pagerinfo.SCViewAnimationUtil;
-import com.kingz.scroll.view_pager.sc_pagerinfo.SCViewPager;
-import com.kingz.scroll.view_pager.sc_pagerinfo.SCViewPagerAdapter;
+import com.kingz.scroll.view_pager.sc_pagerinfo.*;
 
 /**
  * Copyright(C) 2016, 北京视达科科技有限公司

@@ -5,10 +5,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.kingz.adapter.CommonAdapter;
+import com.kingz.adapter.CommonViewHolder;
 import com.kingz.customdemo.R;
 import com.kingz.holder.CommViewHodler;
 import com.kingz.pages.photo.BitmapPhotosActivity;
-import com.kingz.adapter.CommonViewHolder;
 
 import java.util.List;
 

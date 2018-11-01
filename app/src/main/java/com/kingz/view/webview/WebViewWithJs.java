@@ -11,10 +11,10 @@ import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.widget.Toast;
 import com.kingz.customdemo.R;
-import com.mplayer.ExtMplayer;
-import com.kingz.utils.ScreenTools;
 import com.kingz.utils.ToastTools;
 import com.kingz.utils.ZLog;
+import com.module.tools.ScreenTools;
+import com.mplayer.ExtMplayer;
 import org.json.JSONObject;
 
 import java.util.Locale;

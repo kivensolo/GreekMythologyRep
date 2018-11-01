@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.kingz.customdemo.R;
-import com.kingz.utils.ScreenTools;
+import com.module.tools.ScreenTools;
 
 import java.text.DecimalFormat;
 

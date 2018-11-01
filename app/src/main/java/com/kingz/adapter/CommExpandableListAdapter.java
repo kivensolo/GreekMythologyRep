@@ -7,9 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.kingz.mode.ListBillData;
 import com.kingz.customdemo.R;
+import com.kingz.mode.ListBillData;
 import com.kingz.widgets.AnimatedExpandableListView;
 
 import java.util.ArrayList;

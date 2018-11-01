@@ -1,4 +1,4 @@
-package com.kingz.view;
+package com.module.views.progress;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -7,9 +7,9 @@ import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
+import com.module.tools.ScreenTools;
+import com.module.views.R;
 
-import com.kingz.customdemo.R;
-import com.kingz.utils.ScreenTools;
 
 /**
  * Created by KingZ on 2016/1/5.

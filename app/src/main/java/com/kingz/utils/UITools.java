@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.kingz.customdemo.R;
+import com.module.tools.ScreenTools;
 
 public class UITools {
 	private final static String TAG = "UITools";

@@ -11,7 +11,6 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import com.kingz.customdemo.R;
 import com.kingz.customviews.chart.FramesCurveChartView;
-import com.kingz.utils.ZLog;
 
 import java.text.DecimalFormat;
 

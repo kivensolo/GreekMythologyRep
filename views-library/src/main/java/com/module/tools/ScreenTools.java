@@ -1,4 +1,4 @@
-package com.kingz.utils;
+package com.module.tools;
 
 import android.app.ActionBar;
 import android.app.Activity;

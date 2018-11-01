@@ -15,16 +15,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
 import com.kingz.customdemo.R;
 import com.kingz.utils.ToastTools;
 import com.kingz.utils.ZLog;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 
 /**
  * description: Demonstration of styled text resources. <br>

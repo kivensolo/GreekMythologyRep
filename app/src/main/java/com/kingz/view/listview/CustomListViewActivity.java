@@ -3,7 +3,6 @@ package com.kingz.view.listview;
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.ListView;
-
 import com.kingz.customdemo.R;
 import com.provider.SpanInfoData;
 

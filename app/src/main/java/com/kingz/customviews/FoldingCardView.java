@@ -12,8 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import com.kingz.customdemo.R;
-import com.kingz.utils.ScreenTools;
 import com.kingz.utils.ZLog;
+import com.module.tools.ScreenTools;
 
 import java.util.ArrayList;
 

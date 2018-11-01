@@ -1,21 +1,11 @@
 package com.kingz.scroll;
 
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Point;
-import android.graphics.Rect;
+import android.graphics.*;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.Display;
-import android.view.MotionEvent;
-import android.view.VelocityTracker;
-import android.view.View;
-import android.view.ViewConfiguration;
-import android.view.WindowManager;
+import android.view.*;
 import android.widget.Scroller;
-
 import com.App;
 
 /**

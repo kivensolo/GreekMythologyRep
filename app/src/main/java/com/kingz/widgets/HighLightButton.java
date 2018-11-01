@@ -7,11 +7,9 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.Button;
-
 import com.kingz.customdemo.R;
-import com.kingz.utils.ScreenTools;
 import com.kingz.utils.ZLog;
+import com.module.tools.ScreenTools;
 
 /**
  * Copyright(C) 2015, 北京视达科科技有限公司
@@ -20,7 +18,7 @@ import com.kingz.utils.ZLog;
  * date:  2016/12/10 20:46
  * description: 原生View绘制的按钮  支持焦点以及按压状态的样式切换
  */
-public class HighLightButton extends Button {
+public class HighLightButton extends android.support.v7.widget.AppCompatButton {
 
     private static final String TAG = "HightLightButton";
 

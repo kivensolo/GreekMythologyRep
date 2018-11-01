@@ -5,8 +5,8 @@ import android.graphics.*;
 import android.util.AttributeSet;
 import android.view.View;
 import com.kingz.customdemo.R;
-import com.kingz.utils.ScreenTools;
 import com.kingz.utils.ZLog;
+import com.module.tools.ScreenTools;
 
 /**
  * Copyright(C) 2016, 北京视达科科技有限公司

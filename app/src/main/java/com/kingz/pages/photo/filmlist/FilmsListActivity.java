@@ -10,12 +10,10 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Toast;
-
 import com.BaseActivity;
-import com.kingz.pages.photo.adapter.FilmRecycleViewPageAdapter;
 import com.kingz.customdemo.R;
 import com.kingz.mode.PosterGroupInfo;
-
+import com.kingz.pages.photo.adapter.FilmRecycleViewPageAdapter;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;

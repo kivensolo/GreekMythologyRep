@@ -8,11 +8,10 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.widget.Button;
-
 import com.kingz.customdemo.R;
 import com.kingz.customviews.grogress.CircleProgressView;
-import com.kingz.customviews.text.ColorTrackView;
 import com.kingz.customviews.loading.Win10LoaddingView;
+import com.kingz.customviews.text.ColorTrackView;
 
 /**
  * Copyright(C) 2015, 北京视达科科技有限公司

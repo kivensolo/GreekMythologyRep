@@ -2,7 +2,6 @@ package com.kingz.scroll;
 
 import android.os.Bundle;
 import android.view.ViewGroup;
-
 import com.BaseActivity;
 import com.kingz.customdemo.R;
 

@@ -9,9 +9,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
-import com.kingz.mode.ListBillData;
 import com.kingz.customdemo.R;
+import com.kingz.mode.ListBillData;
 
 /**
  * Created by KingZ on 2015/11/1.

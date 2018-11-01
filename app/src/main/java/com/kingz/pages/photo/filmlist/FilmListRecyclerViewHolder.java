@@ -3,7 +3,6 @@ package com.kingz.pages.photo.filmlist;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.View;
 import android.widget.ImageView;
-
 import com.kingz.customdemo.R;
 
 

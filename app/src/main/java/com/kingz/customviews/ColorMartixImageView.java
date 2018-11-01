@@ -12,8 +12,8 @@ import android.view.ViewGroup;
 import android.widget.SeekBar;
 import com.App;
 import com.kingz.customdemo.R;
-import com.kingz.utils.ScreenTools;
 import com.kingz.utils.ZLog;
+import com.module.tools.ScreenTools;
 
 /**
  * Copyright(C) 2016, 北京视达科科技有限公司

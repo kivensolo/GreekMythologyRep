@@ -3,7 +3,6 @@ package com.bling.pages;
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.SeekBar;
-
 import com.kingz.customdemo.R;
 import com.kingz.customviews.loading.WaveLoadingView;
 

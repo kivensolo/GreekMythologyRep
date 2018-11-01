@@ -7,9 +7,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 import com.kingz.customdemo.R;
-import com.kingz.widgets.text.LogTextBox;
 import com.kingz.utils.NetTools;
 import com.kingz.utils.ToastTools;
+import com.kingz.widgets.text.LogTextBox;
 
 /**
  * Copyright(C) 2016, 北京视达科科技有限公司

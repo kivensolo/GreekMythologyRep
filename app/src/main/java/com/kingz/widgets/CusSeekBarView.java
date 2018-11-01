@@ -1,11 +1,7 @@
 package com.kingz.widgets;
 
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.RectF;
+import android.graphics.*;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;

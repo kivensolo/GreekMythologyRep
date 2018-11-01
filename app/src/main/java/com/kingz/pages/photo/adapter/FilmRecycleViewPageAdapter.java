@@ -4,7 +4,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
 import com.App;
 import com.kingz.mode.PosterGroupInfo;
 import com.kingz.pages.photo.filmlist.FilmListRecyclerViewHolder;

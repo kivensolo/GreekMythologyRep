@@ -17,8 +17,11 @@ import com.BaseActivity;
 import com.core.logic.GlobalCacheCenter;
 import com.kingz.FileDownloader;
 import com.kingz.customdemo.R;
-import com.kingz.utils.*;
 import com.kingz.customviews.grogress.HorizontalProgressBarView;
+import com.kingz.utils.NetTools;
+import com.kingz.utils.ToastTools;
+import com.kingz.utils.ZLog;
+import com.module.tools.ScreenTools;
 
 import java.io.File;
 import java.io.IOException;

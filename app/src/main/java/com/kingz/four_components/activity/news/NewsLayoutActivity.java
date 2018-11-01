@@ -2,7 +2,6 @@ package com.kingz.four_components.activity.news;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-
 import com.kingz.customdemo.R;
 
 /**

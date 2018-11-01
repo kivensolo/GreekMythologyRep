@@ -10,8 +10,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.BaseActivity;
-import com.kingz.pages.photo.adapter.BitmapPageAdapter;
 import com.kingz.customdemo.R;
+import com.kingz.pages.photo.adapter.BitmapPageAdapter;
 
 import java.util.List;
 

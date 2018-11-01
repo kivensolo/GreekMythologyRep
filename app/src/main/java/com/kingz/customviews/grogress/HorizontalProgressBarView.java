@@ -10,7 +10,7 @@ import android.os.Message;
 import android.util.AttributeSet;
 import android.view.View;
 import com.App;
-import com.kingz.utils.ScreenTools;
+import com.module.tools.ScreenTools;
 
 import java.lang.ref.WeakReference;
 

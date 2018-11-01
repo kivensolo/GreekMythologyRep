@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
-
 import com.kingz.customdemo.R;
 import com.kingz.four_components.service.MyComponentsOfService;
 import com.kingz.utils.ZLog;

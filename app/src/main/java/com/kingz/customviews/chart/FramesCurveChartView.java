@@ -4,8 +4,8 @@ import android.content.Context;
 import android.graphics.*;
 import android.util.AttributeSet;
 import android.view.View;
-import com.kingz.utils.ScreenTools;
 import com.kingz.utils.ZLog;
+import com.module.tools.ScreenTools;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

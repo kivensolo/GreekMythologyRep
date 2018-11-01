@@ -9,11 +9,10 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
-import com.kingz.four_components.activity.news.NewsActivity;
-import com.kingz.mode.ListBillData;
 import com.kingz.customdemo.R;
+import com.kingz.four_components.activity.news.NewsActivity;
 import com.kingz.four_components.activity.news.NewsLayoutActivity;
+import com.kingz.mode.ListBillData;
 
 public class LayoutPage extends Activity implements OnItemClickListener{
 

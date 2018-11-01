@@ -5,8 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.kingz.customdemo.R;
-import com.kingz.pages.photo.filmlist.DemoViewHolder;
 import com.kingz.mode.RecycleDataInfo;
+import com.kingz.pages.photo.filmlist.DemoViewHolder;
 import com.kingz.utils.ZLog;
 
 import java.text.SimpleDateFormat;

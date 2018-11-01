@@ -6,10 +6,12 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-import com.kingz.utils.ScreenTools;
 import com.kingz.utils.ZLog;
+import com.module.tools.ScreenTools;
 
 import java.util.HashMap;
+
+//import com.module.tools.ScreenTools;
 
 /**
  * author: King.Z <br>
