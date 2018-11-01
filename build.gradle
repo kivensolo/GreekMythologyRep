@@ -1,22 +1,12 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-//整个工程目录下的build.gradle文件，这个文件跟模块下的build.gradle文件名字相同，
-//但是是负责整个工程所有模块的构建的（一个工程有可能包含多个模块，比如你的项目中还可能有一个Library）；
-
-//"buildscript block"告诉Gradle，构建需要一个插件，它可能不是基线Gradle发行版的一部分，
-//并告诉Gradle在哪里找到它。在这种情况下，使用坐标语法“group：name：version”指定所需的插件，
-// 其中组为com.android.tools.build，名称为gradle，版本为2.3.1。
-//当Gradle第一次构建这个项目的时候，这个plugin将会被下载并缓存，所以这个task只会执行一次。
 buildscript {
     repositories {
-        jcenter() //Gradle工具要从哪个maven仓库下载-----jcenter()
-        google()
-        //本地仓库
-        maven {
-            url uri('D:/repos')
-        }
+        jcenter()
+//      google() //since AS 3.0'
+        maven { url uri('D:/repos')}  //local repositories
+//        maven { url 'https://maven.google.com' }  //befor AS 3.0  Use google repositories
     }
     dependencies { //Identifies the Android plugin
-        classpath 'com.android.tools.build:gradle:2.3.1'
+        classpath 'com.android.tools.build:gradle:2.3.3'
 //        classpath 'com.starcor.plugin:pluginrepo:1.0.0'
     }
 }

@@ -1,6 +1,6 @@
 //告诉gradle工具这个工程中包含哪几个模块.如果你的工程中有多个模块，那么就是多对单引号
-//include ':app',':library'
-include ':app', ':Customviews', ':pluginrepo', ":jarlibrary"
+//include ':app',':library' ':pluginrepo'
+include ':app', ':views-library', ":jarlibrary"
 
 gradle.beforeProject {
     project -> println(">>>>>> A Project Ready to config !")
