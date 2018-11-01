@@ -1,20 +1,10 @@
 package com.kingz.graphics;
 
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.ComposePathEffect;
-import android.graphics.CornerPathEffect;
-import android.graphics.DashPathEffect;
-import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.PathDashPathEffect;
-import android.graphics.PathEffect;
-import android.graphics.RectF;
+import android.graphics.*;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
-
 import com.BaseActivity;
 
 /**
@@ -23,20 +13,20 @@ import com.BaseActivity;
  * author: King.Z
  * date:  2016/10/25 21:51
  * description: PathEffect是用来控制绘制轮廓(线条)的方式
- *       DashPathEffect是PathEffect类的一个子类,
+ *     DashPathEffect是PathEffect类的一个子类,
  *     可以使paint画出类似虚线的样子,并且可以任意指定虚实的排列方式
  *     Android包含了多个PathEffect，包括：
         【CornerPathEffect】：可以使用圆角来代替尖锐的角从而对基本图形的形状尖锐的边角进行平滑。
-        【DashPathEffect】：可以使用DashPathEffect来创建一个虚线的轮廓(短横线/小圆点)，而不是使用实线。你还可以指定任意的虚/实线段的重复模式。
-            DashPathEffect(float[] intervals, float offset) 其中intervals为虚线的ON(实)和OFF数组，该数组的length必须大于等于2，phase为绘制时的偏移量。
-        【DiscretePathEffect】：这个类的作用是打散Path的线段，使得在原来路径的基础上发生打散效果。与DashPathEffect相似，
-            但是添加了随机性。当绘制它的时候，需要指定每一段的长度和与原始路径的偏离度。一般的，
-            通过构造DiscretePathEffect(float segmentLength,float deviation)来构造一个实例，
+        【DashPathEffect】：可以使用DashPathEffect来创建一个虚线的轮廓(短横线/小圆点)，而不是使用实线。
+            还可以指定任意的虚/实线段的重复模式。
+            DashPathEffect(float[] intervals, float offset)
+            其中intervals为虚线的ON(实)和OFF数组，该数组的length必须大于等于2，phase为绘制时的偏移量。
+        【DiscretePathEffect】：这个类的作用是打散Path的线段，使得在原来路径的基础上发生打散效果。
+            与DashPathEffect相似，但是添加了随机性。当绘制它的时候，需要指定每一段的长度和与原始路径的偏离度。
+            一般通过DiscretePathEffect(float segmentLength,float deviation)创建，
             其中，segmentLength指定最大的段长，deviation指定偏离量。
-
         【PathDashPathEffect】：这种效果可以定义一个新的形状(路径)并将其用作原始路径的轮廓标记。
             下面的效果可以在一个Paint中组合使用多个Path Effect。
-
         【ComposePathEffect】：将两种效果组合起来应用，先使用第一种效果，然后在这种效果的基础上应用第二种效果。
         【SumPathEffect】:叠加效果 但与ComposePathEffect不同的是，在表现时，会分别对两个参数的效果各自独立进行表现，然后将两个效果简单的重叠在一起显示出来。
          对象形状的PathEffect的改变会影响到形状的区域。这就能够保证应用到相同形状的填充效果将会绘制到新的边界中。
