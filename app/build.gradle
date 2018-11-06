@@ -23,6 +23,7 @@ def appName_wdj = "\"GreekMyth_WDJ\""
 
 android {
     signingConfigs {
+        //http://google.github.io/android-gradle-dsl/current/com.android.build.gradle.internal.dsl.SigningConfig.html
         ZekeSigned {
             keyAlias keystoreProperties['keyAlias']
             keyPassword keystoreProperties['keyPassword']
@@ -109,10 +110,7 @@ android {
     }
 
 //    LintOptions{
-//        //http://google.github.io/android-gradle-dsl/current/com.android.build.gradle.internal.dsl.LintOptions.html
-//    }
-//    signingConfigs{
-    //http://google.github.io/android-gradle-dsl/current/com.android.build.gradle.internal.dsl.SigningConfig.html
+//http://google.github.io/android-gradle-dsl/current/com.android.build.gradle.internal.dsl.LintOptions.html
 //    }
 
   /*  Hello JNI   http://tools.android.com/tech-docs/external-c-builds
