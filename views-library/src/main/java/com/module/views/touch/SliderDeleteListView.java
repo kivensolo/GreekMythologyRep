@@ -1,4 +1,4 @@
-package com.kingz.widgets;
+package com.module.views.touch;
 
 import android.content.Context;
 import android.graphics.Point;
@@ -8,7 +8,6 @@ import android.view.*;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Scroller;
-import com.kingz.utils.ZLog;
 
 /**
  * Created by KingZ on 2015/12/27.
@@ -202,7 +201,7 @@ public class SliderDeleteListView extends ListView{
             postInvalidate();
             if(scroller.isFinished()){
                 if(mRemoveListener == null){
-                    ZLog.e(TAG,"RemovedListener is null, you should called setRemoveListener() befor you remove.");
+                    Log.e(TAG,"RemovedListener is null, you should called setRemoveListener() befor you remove.");
                     return;
                 }
                 itemView.scrollTo(0, 0);
