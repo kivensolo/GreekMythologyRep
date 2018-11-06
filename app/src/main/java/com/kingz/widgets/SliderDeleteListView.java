@@ -8,6 +8,7 @@ import android.view.*;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Scroller;
+import com.kingz.utils.ZLog;
 
 /**
  * Created by KingZ on 2015/12/27.
@@ -213,23 +214,20 @@ public class SliderDeleteListView extends ListView{
      */
       @Override
     public void computeScroll() {
-        // 调用startScroll后scroller.computeScrollOffset()返回true，
         if(scroller.computeScrollOffset()){
-            // 让ListView item根据当前的滚动偏移量进行滚动
             itemView.scrollTo(scroller.getCurrX(), scroller.getCurrY());
-            Log.i(TAG,"getCurrent_X = " + scroller.getCurrX()+"; getCurrenmt_Y" +scroller.getCurrY());
+            //Log.i(TAG,"getCurrent_X = " + scroller.getCurrX()+"; getCurrenmt_Y" +scroller.getCurrY());
             postInvalidate();
-
-            //是否停止滚动
             if(scroller.isFinished()){
                 if(mRemoveListener == null){
-                    throw  new NullPointerException("RemovedListener is null, we should called setRemoveListener()");
+                    ZLog.e(TAG,"RemovedListener is null, you should called setRemoveListener() befor you remove.");
+                    return;
                 }
                 itemView.scrollTo(0, 0);
                 mRemoveListener.removeItem(removeDirection, currentPosition);
             }
         }else{
-            Log.i(TAG,"computeScroll has done");
+            //computeScroll has done"
         }
     }
 

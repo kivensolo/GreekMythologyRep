@@ -30,7 +30,7 @@ import java.util.List;
  * author: King.Z
  * date:  2016/2/26 13:50
  * description:文件管理器
- * //TODo 增加文件删除工鞥
+ * //TODo 增加文件删除功能
  * //TODo 完善文件图标
  */
 public class FileManagerActivity extends BaseActivity implements AdapterView.OnItemClickListener,View.OnLongClickListener{
@@ -141,6 +141,10 @@ public class FileManagerActivity extends BaseActivity implements AdapterView.OnI
             //File skRoot  = Environment.getExternalStorageDirectory();
             File[] files = folder.listFiles();
             titlePath.setText(folder.getAbsolutePath());
+            if(null == files){
+                ZLog.e(TAG,"folder listfiles is null !");
+                return;
+            }
             Log.i(TAG,"currentPage files = " + files.length);
             item_count.setText("共" + files.length + "项");
             if (files.length > 0) {
@@ -153,7 +157,7 @@ public class FileManagerActivity extends BaseActivity implements AdapterView.OnI
             fileAdapter = new FileListAdapter(this, currentPageFilesList,isRoot);
             fileListView.setAdapter(fileAdapter);
         }else{
-            Log.d(TAG, "无外置储存卡");
+            Log.e(TAG, "无外置储存卡");
         }
 //        fileAdapter = new FileListAdapter(FileManagerActivity.this,currentPageFilesList,isRoot);
 //        fileListView.setAdapter(fileAdapter);
@@ -173,11 +177,14 @@ public class FileManagerActivity extends BaseActivity implements AdapterView.OnI
         Log.d(TAG, "OnItemClickListener()..............");
         File file = (File) fileAdapter.getItem(position);
         if(!file.canRead()){
-            new AlertDialog.Builder(this).setTitle("提示").setMessage("权限不足")
-                                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {}
-                                        }).show();
+            new AlertDialog.Builder(this).setTitle("提示")
+                    .setMessage("权限不足")
+                    .setPositiveButton(android.R.string.ok,
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                }
+                            }).show();
         }else if (file.exists() && file.canRead()) {
             if (file.isDirectory()) {
                 showFileDir(file);
