@@ -90,17 +90,12 @@ public class SliderDeleteListView extends ListView{
         mMinDis = ViewConfiguration.get(getContext()).getScaledTouchSlop();
     }
 
-    /**
-     * 触摸分发事件处理
-     * @param ev
-     * @return
-     */
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         switch(ev.getAction()){
             case MotionEvent.ACTION_DOWN:
-                addVelocityTracker(ev);         //添加行动追踪记录
-                //滚动还未结束,直接返回
+                //添加行动追踪记录
+                addVelocityTracker(ev);
                 if(!scroller.isFinished()){
                     return super.dispatchTouchEvent(ev);
                 }
@@ -108,12 +103,10 @@ public class SliderDeleteListView extends ListView{
                 startPoint_Y = (int) ev.getY();
                 //根据按下的点位置，确定点击的是哪个item
                 currentPosition = pointToPosition(startPoint_X,startPoint_Y);
-
-                //无效的位置时，不作任何处理
                 if(currentPosition == AdapterView.INVALID_POSITION){
                     return super.dispatchTouchEvent(ev);
                 }
-                //根据index获取相应子View
+
                 itemView = getChildAt(currentPosition - getFirstVisiblePosition());
                 break;
             case MotionEvent.ACTION_MOVE:
@@ -140,18 +133,14 @@ public class SliderDeleteListView extends ListView{
         //调用startScroll方法来设置一些滚动的参数，在computeScroll()方法中调用scrollTo来滚动item
         //由(startX , startY)在duration时间内前进(dx,dy)个单位，即到达坐标为(startX+dx , startY+dy)出
         scroller.startScroll(itemView.getScrollX(), itemView.getScrollY(), delta, 0,Math.abs(delta));
-        postInvalidate();  // 刷新itemView  会调用computeScroll()方法
+        postInvalidate();
     }
-    /**
-     * 往右滑动
-     */
+
     private void scrollToRight() {
-        removeDirection = RemoveDirection.RIGHT;        //方向向右
+        removeDirection = RemoveDirection.RIGHT;
         final int delta = (screenWidth + itemView.getScrollX());
-        // 调用startScroll方法来设置一些滚动的参数，在computeScroll()方法中调用scrollTo来滚动item
-        scroller.startScroll(itemView.getScrollX(), 0, -delta, 0,
-                Math.abs(delta));
-        postInvalidate(); // 刷新itemView
+        scroller.startScroll(itemView.getScrollX(), 0, -delta, 0,Math.abs(delta));
+        postInvalidate();
     }
 
      /**
@@ -169,11 +158,6 @@ public class SliderDeleteListView extends ListView{
         }
     }
 
-    /**
-     * 处理触摸事件
-     * @param ev
-     * @return
-     */
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
         if(isSlider && currentPosition != AdapterView.INVALID_POSITION){
@@ -209,10 +193,8 @@ public class SliderDeleteListView extends ListView{
             }
         return super.onTouchEvent(ev);
     }
-    /**
-     * 计算滚动
-     */
-      @Override
+
+    @Override
     public void computeScroll() {
         if(scroller.computeScrollOffset()){
             itemView.scrollTo(scroller.getCurrX(), scroller.getCurrY());
@@ -249,7 +231,6 @@ public class SliderDeleteListView extends ListView{
         }
 
         //为速度追踪者添加一个用户的移动轨迹
-        //本应该在actionDown的时候就调用，但是可以随意的在任何我想调用的时候调用
         velocityTracker.addMovement(event);
     }
     /**
