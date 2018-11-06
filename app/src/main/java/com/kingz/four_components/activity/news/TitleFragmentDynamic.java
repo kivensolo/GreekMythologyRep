@@ -1,6 +1,5 @@
 package com.kingz.four_components.activity.news;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -28,11 +27,11 @@ public class TitleFragmentDynamic extends ListFragment {
     int mCurCheckPosition = 0;
     private FragmentManager mManager;
 
-    @Override
-    public void onAttach(Context context) {
-        ZLog.d(TAG,"onAttach()");
-        super.onAttach(context);
-    }
+    //@Override
+    //public void onAttach(Context context) {
+    //    ZLog.d(TAG,"onAttach()");
+    //    super.onAttach(context);
+    //}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

@@ -100,7 +100,8 @@ public class AlarmClock_Service extends Service {
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
                 new Intent(this, AlarmServiceActivity.class), 0);
         // Set the info for the views that show in the notification panel.
-        notification.setLatestEventInfo(this, "Sample Alarm Service",text, contentIntent);
+        //HttpClient 已废弃
+        //notification.setLatestEventInfo(this, "Sample Alarm Service",text, contentIntent);
         // 发送通知
         // We use a layout id because it is a unique number.  We use it later to cancel.
         mNM.notify(R.string.alarm_service_started, notification);
