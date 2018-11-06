@@ -12,7 +12,7 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import com.kingz.customdemo.R;
-import com.kingz.utils.ViewTools;
+import com.module.tools.ViewTools;
 
 import java.util.HashSet;
 import java.util.Random;

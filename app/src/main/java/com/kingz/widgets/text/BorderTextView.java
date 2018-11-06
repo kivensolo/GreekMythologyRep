@@ -6,7 +6,7 @@ import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.widget.TextView;
-import com.kingz.utils.ViewTools;
+import com.module.tools.ViewTools;
 
 /**
  * Copyright(C) 2016, 北京视达科科技有限公司

@@ -1,4 +1,4 @@
-package com.kingz.utils;
+package com.module.tools;
 
 import android.app.Activity;
 import android.graphics.Canvas;
@@ -18,11 +18,6 @@ import android.widget.TextView;
  */
 public class ViewTools {
 
-     /**
-     * 测量View的宽高
-     *
-     * @param view View
-     */
     public static void measureWidthAndHeight(View view) {
         int w = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
         int h = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
