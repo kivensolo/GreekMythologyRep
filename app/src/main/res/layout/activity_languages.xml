@@ -10,37 +10,37 @@
             android:padding="10dp"
             android:id="@+id/ll_right_context">
 
-        <com.kingz.widgets.text.BorderTextView
+        <com.module.views.text.BorderTextView
                 android:layout_width="330dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:id="@+id/textView_zh"/>
-        <com.kingz.widgets.text.BorderTextView
+        <com.module.views.text.BorderTextView
                 android:layout_width="330dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:id="@+id/textView_en"/>
-        <com.kingz.widgets.text.BorderTextView
+        <com.module.views.text.BorderTextView
                 android:layout_width="330dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:id="@+id/textView_uyg"/>
-        <com.kingz.widgets.text.BorderTextView
+        <com.module.views.text.BorderTextView
                 android:layout_width="330dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:id="@+id/textView_ch_uyg"/>
-        <com.kingz.widgets.text.BorderTextView
+        <com.module.views.text.BorderTextView
                 android:layout_width="330dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:id="@+id/textView_ch_en"/>
-        <com.kingz.widgets.text.BorderTextView
+        <com.module.views.text.BorderTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:id="@+id/textView_ch_en_2"/>
-        <com.kingz.widgets.text.BorderTextView
+        <com.module.views.text.BorderTextView
                 android:layout_width="330dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
