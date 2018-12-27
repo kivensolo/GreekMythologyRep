@@ -19,11 +19,9 @@ def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 def appName_360 = "\"GreekMyth_360\""
-def appName_wdj = "\"GreekMyth_WDJ\""
 
 android {
     signingConfigs {
-        //http://google.github.io/android-gradle-dsl/current/com.android.build.gradle.internal.dsl.SigningConfig.html
         ZekeSigned {
             keyAlias keystoreProperties['keyAlias']
             keyPassword keystoreProperties['keyPassword']
@@ -31,7 +29,7 @@ android {
             storePassword keystoreProperties['storePassword']
         }
     }
-    compileSdkVersion 25
+    compileSdkVersion 22
     buildToolsVersion '25.0.1'
 
     //The default configuration, inherited by all product flavors(if any are defined)
@@ -87,8 +85,11 @@ android {
     //buildTypes 的配置在productFlavors的基础上增加
     buildTypes {
         debug {
-            zipAlignEnabled true  //zipalign优化
-
+//            buildConfigField "boolean", "LOG_DEBUG", "false" //不显示log
+            zipAlignEnabled true
+//            minifyEnabled true
+//            shrinkResources true
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
         release {
             zipAlignEnabled true
@@ -103,6 +104,10 @@ android {
 
     }
 
+    configurations {
+
+    }
+
     compileOptions {
         encoding compile_encoding
         sourceCompatibility compile_source_compatibility
@@ -110,8 +115,9 @@ android {
     }
 
 //    LintOptions{
-//http://google.github.io/android-gradle-dsl/current/com.android.build.gradle.internal.dsl.LintOptions.html
+//        //http://google.github.io/android-gradle-dsl/current/com.android.build.gradle.internal.dsl.LintOptions.html
 //    }
+
 
   /*  Hello JNI   http://tools.android.com/tech-docs/external-c-builds
       By CMake
@@ -125,29 +131,19 @@ android {
 
     }
 
-    //>=6.0 使用HttpClient
-    useLibrary 'org.apache.http.legacy'
+//>=6.0 使用HttpClient
+//    useLibrary 'org.apache.http.legacy'
 }
 
 dependencies {
-    //debugCompile(["jp.wasabeef:takt:1.0.1"]) 屏蔽wasabeef用于显示Fps的第三方库  reason:应用中已经自己写好了
-    //Local binary dependency
     compile fileTree(include: ['*.jar'], dir: 'libs')
-
-    compile 'com.google.code.gson:gson:2.7'
+    compile 'com.google.code.gson:gson:2.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.squareup.okhttp:okhttp:2.4.0'
     compile 'com.squareup.okio:okio:1.5.0'
-
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.android.support:support-annotations:25.3.1'
-    compile 'com.android.support:recyclerview-v7:25.3.1'
-    compile 'com.android.support:support-v4:25.3.1'
-
+    //    compile 'com.android.tools.build:gradle:2.3.1'
     compile project(path: ':views-library')
-
-    //compile 'org.testng:testng:6.9.6'
-
     //-----------------Exo Player Start-------------------------
     compile 'com.google.android.exoplayer:exoplayer:r2.4.2'
 //    compile 'com.google.android.exoplayer:exoplayer-core:r2.X.X'
@@ -167,8 +163,8 @@ dependencies {
     //------------------- Local Unit  --------------------
     //Andr`oid测试支持库  适用于 Android 且与 JUnit 4 兼容的测试运行器
     androidTestCompile 'com.android.support.test:runner:0.4'
-    // Set this dependency to use JUnit 4 rules
     androidTestCompile 'com.android.support.test:rules:0.4'
+    androidTestCompile 'com.android.support:support-annotations:25.3.1'
     // Adds a compile time dependency for the test APK.
     //    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
     // Set this dependency to build and run Espresso tests : UI 测试框架:适合应用中的功能性 UI 测试
@@ -181,12 +177,9 @@ dependencies {
     //        exclude module: 'recyclerview-v7'
     //        exclude module: 'appcompat-v7'
     //    }
-    // Set this dependency to build and run UI Automator tests : UI 测试框架；适合跨系统和已安装应用的跨应用功能性 UI 测试
-    androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.0'
-}
 
-configurations.all {
-    resolutionStrategy.force 'com.android.support:support-annotations:23.0.1'
+    // Set this dependency to build and run UI Automator tests : UI 测试框架；适合跨系统和已安装应用的跨应用功能性 UI 测试
+    //    androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.0'
 }
 
 gradle.taskGraph.whenReady {
@@ -202,8 +195,58 @@ gradle.buildFinished {
  * 可以准备执行task
  */
 project.afterEvaluate {
-    println "-----> app evaluate start"
-    println "-----> app evaluate end"
+    logger.log(LogLevel.ERROR,'>>>>> Evaluate End')
+    logger.log(LogLevel.ERROR, assemble.getTaskDependencies().toString())
+    logger.log(LogLevel.ERROR, assemble.getTaskDependencies().getDependencies().toString())
+
+    /** 遍历构建遍历 可以根据构建类型进行任务处理 */
+//    android.libraryVariants.each{ variant ->
+//
+//    }
+    /** 修改Task依赖关系  可以让normalTask_Jar在assembleTask之前执行*/
+//    def jarTask = tasks.normalTask_Jar
+//    jarTask.dependsOn assemble.getTaskDependencies().getDependencies()
+//    assemble.dependsOn jarTask
+
+    /**  自动打多个jar包 */
+    def pluginJar = [1, 2, 3, 4, 5]
+    pluginJar.each {
+        def pluginName = it;
+        def starcor_plugins_task = tasks.create(name: "plugin-${pluginName}", type: Jar) {
+            destinationDir = file('build/plugin-libs') //默认存放在build/libs
+            archiveName = "${pluginName}.jar"
+            def pathList = ['build', 'intermediates', 'classes', "debug", 'com', 'starcor', 'hunan', 'operator', 'plugin', 'blacklist']
+            def pluginClass = pathList.join(File.separator)
+            logger.log(LogLevel.DEBUG, "插件class路径：${pluginClass}")
+            from(pluginClass)
+            from fileTree(dir: ['src', 'main', 'assets', 'plugin', 'blacklist'].join(File.separator))
+            exclude('**/R.class')
+            exclude('**/R\$*.class')
+        }
+        starcor_plugins_task.doLast {
+            logger.log(LogLevel.DEBUG, "jar包打完+1")
+        }
+        starcor_plugins_task.dependsOn assemble.getTaskDependencies().getDependencies()
+        assemble.dependsOn starcor_plugins_task
+    }
 }
-println '>>>>>>>>>>> app config End'
+
+/** 常规jar包打包方式 */
+task normalTask_Jar(name: "normal-jar", type: Jar) {
+    baseName = "Starcor"
+    appendix = "test"
+    version = "1.0.0"
+    classifier = "release"
+    //extension 扩展名，默认为“jar”
+    //自定义文件名，默认为 [baseName]-[appendix]-[version]-[classifier].[extension]
+    // archiveName = "AndroidJarDemo.jar"
+    //jar包文件输出路径  默认在build/libs
+    destinationDir = file('build/plugin-libs')
+    from fileTree(dir:['src','main','assets','plugin','blacklist'].join(File.separator))
+    exclude('**/R.class')
+    exclude('**/R\$*.class')
+}
+
+logger.log(LogLevel.DEBUG, ">>>>>>>>>>> app config End")
+
 
