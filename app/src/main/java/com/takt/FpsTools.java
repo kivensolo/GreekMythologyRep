@@ -18,7 +18,7 @@ import java.text.DecimalFormat;
  * author: King.Z <br>
  * date:  2017/11/25 16:51 <br>
  * description: 系统FPS显示工具 <br>
- * //TODO 完善具体常量
+ *  学习自wasabeef的第三方库  远程仓库地址为：jp.wasabeef:takt:1.0.1
  */
 public class FpsTools {
 
