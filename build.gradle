@@ -1,30 +1,26 @@
+apply from: "config.gradle"
+
 buildscript {
     repositories {
         jcenter()
-//      google() //since AS 3.0'
+        google()
         maven { url uri('D:/repos')}  //local repositories
-//        maven { url 'https://maven.google.com' }  //befor AS 3.0  Use google repositories
+//      maven { url 'https://maven.google.com' }  //befor AS 3.0  Use google repositories
     }
     dependencies { //Identifies the Android plugin
-        classpath 'com.android.tools.build:gradle:2.3.3'
+        classpath 'com.android.tools.build:gradle:3.0.1'
 //        classpath 'com.starcor.plugin:pluginrepo:1.0.0'
     }
 }
 
-//Configuration for top-level and module projects 工程里边所有模块的通用配置
-// 这里只规定所有模块中要用到的jar包也都从jcenter这个maven仓库中获取 ，
-// 在allprojects标签下配置的好处是你不需要再在每个模块下的build.gradle中单独配置了，
-// 如果想在每个模块下单独指定用哪个maven仓库，那么在这个全局的build.gradle中也可以不写；
 allprojects {
     repositories {
         jcenter()
+        google()
     }
 
 }
 
-//custom( or ad hoc) task
-//task clean使用内置的任务类型Delete 删除rootProject目录下的buildDir.
-//build目录默认值是应用程序所在项目中的构建目录
 task clean(type: Delete) {
     delete rootProject.buildDir
 }

@@ -86,5 +86,3 @@ captures/
 
 # Keystore files
 *.jks
-.gradle/2.10/taskArtifacts/cache.properties.lock
-local.properties
