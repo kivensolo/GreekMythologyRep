@@ -1,8 +1,5 @@
-println '   ————compileConfig.gradle config start'
-
 ext{
     compile_encoding = 'UTF-8'
     compile_source_compatibility = JavaVersion.VERSION_1_7
     compile_target_compatibility = JavaVersion.VERSION_1_7
 }
-println '   ————compileConfig.gradle config end'

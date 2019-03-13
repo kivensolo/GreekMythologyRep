@@ -1,24 +1,15 @@
-//使用Groovy语言编写的一个插件，用于构建Android主工程,使'android' block 中特殊指定的构建选项可用
-//相当于eclipse中的ADT插件。
-//如果这个模块是一个Library的话，应该引入的插件叫做'com.android.library'，
-
-println '>>>>>>>>>>> app config Start'
-
-apply plugin:'com.android.application'
-//apply plugin:'com.kingz.firstplugin'
-apply from:'version.gradle'
-apply from:'compile.gradle'
-
-def releaseTime() {
-    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+apply {
+    plugin 'com.android.application'
+    from 'version.gradle'
+    from 'compile.gradle'
 }
+
+
 def keystorePropertiesFile = rootProject.file("keystore.properties")
-// Initialize a new Properties() object called keystoreProperties.
+// Initialize a new Properties() object
 def keystoreProperties = new Properties()
 // Load keystore.properties file into the keystoreProperties object.
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-
-def appName_360 = "\"GreekMyth_360\""
 
 android {
     signingConfigs {
@@ -29,60 +20,49 @@ android {
             storePassword keystoreProperties['storePassword']
         }
     }
-    compileSdkVersion 22
-    buildToolsVersion '25.0.1'
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
 
     //The default configuration, inherited by all product flavors(if any are defined)
     defaultConfig {
         applicationId 'com.kingz.customdemo'
-        multiDexEnabled true
-        versionCode 1
-        versionName "1.0"
+        multiDexEnabled false
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
         //unit test
         testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
         signingConfig signingConfigs.ZekeSigned
         minSdkVersion 19
         targetSdkVersion 22
-        buildConfigField("String", "APP_NAME", "${appName_360}")
-        /** NDK配置 */
-        /*ndk{
-            abiFilters 'x86','x86_64','armeabi-v7a','armeabi','armea64-v8a'
-        }
-        externalNativeBuild {
-            cmake {
-                cppFlags "-frtti -fexceptions"
-                // https://blog.csdn.net/renfujiang/article/details/54650355
-                //https://www.jianshu.com/p/6332418b12b1
-                // 配置之间用逗号分隔，每个配置需要使用单引号括起来，每个配置需要 “-” 开头，但是文档上并没有，末尾没有标点符号
-                // ANDROID_TOOLCHAIN  指定编译的工具链，有两个 gcc 或者是clang, 默认:clang
-                // DANDROID_PLATFORM  ndk版本号
-                arguments '-DANDROID_ARM_NEON=TRUE',
-                        '-DANDROID_TOOLCHAIN=clang',
-                        '-DANDROID_STL=gnustl_static'
-            }
-        }*/
+        buildConfigField("String", "APP_NAME", "STARCOR")
     }
-    productFlavors {
-       /* 在创建和配置productFlavors之后SyncNow
-        Gradle 会根据buildTypes和productFlavors自动创建Build Variant,并按照 <product-flavor><Build-Type> 的格式命名这些变体。
-        例如，如果创建了“demo”和“full”这两种productFlavors并保留默认的“debug”和“release”构建类型，
-        Gradle 将创建以下构建变体：demo-debug/demo-release/full-debug/full-release
-        可以将构建变体更改为要构建并运行的任何变体,只需转到 Build > Select Build Variant,然后从下拉菜单中选择一个变体
-        然而,要开始自定义每个构建变体及其功能和资源,需要了解如何创建和管理源集。
-        readMore:https://developer.android.com/studio/build/build-variants.html#product-flavors*/
-        v_360 {
-            applicationIdSuffix ".qihu"
-            versionNameSuffix "-360"
+
+    // Specifies one flavor dimension.
+    flavorDimensions "version"
+    productFlavors{
+        demo {
+            // Assigns this product flavor to the "version" flavor dimension.
+            // This property is optional if you are using only one dimension.
+            dimension "version"
+            applicationIdSuffix ".demo"
+            versionNameSuffix "-2019"
             versionCode appVersionCode
             versionName appVersionName
+            buildConfigField("String", "APP_NAME", "\"STARCOR\"")
+            buildConfigField 'String','MAIN_URL','"http://www.starcor.com"'
+        }
 
-            //自定义BuildConfig参数
-            buildConfigField("String", "APP_NAME", "${appName_360}")
-            buildConfigField 'String','MAIN_URL','"http://www.360.com"'
+        full {
+            dimension "version"
+            applicationIdSuffix ".full"
+            versionNameSuffix "-2019"
+            versionCode appVersionCode
+            versionName appVersionName
+            buildConfigField("String", "APP_NAME", "\"STARCOR\"")
+            buildConfigField 'String','MAIN_URL','"http://www.starcor.com"'
         }
     }
 
-    //buildTypes 的配置在productFlavors的基础上增加
     buildTypes {
         debug {
 //            buildConfigField "boolean", "LOG_DEBUG", "false" //不显示log
@@ -101,11 +81,9 @@ android {
             // 看看哪些未被引用。包括第三方apk的。 (但好像有问题)
 //            shrinkResources true
         }
-
     }
 
     configurations {
-
     }
 
     compileOptions {
@@ -114,61 +92,50 @@ android {
         targetCompatibility compile_target_compatibility
     }
 
-//    LintOptions{
-//        //http://google.github.io/android-gradle-dsl/current/com.android.build.gradle.internal.dsl.LintOptions.html
-//    }
-
-
-  /*  Hello JNI   http://tools.android.com/tech-docs/external-c-builds
-      By CMake
-    externalNativeBuild{
-       cmake{
-            path "src/main/cpp/CMakeLists.txt"
-        }
-    }*/
-
     adbOptions{
-
     }
 
 //>=6.0 使用HttpClient
 //    useLibrary 'org.apache.http.legacy'
+
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.google.code.gson:gson:2.0'
-    compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.squareup.okhttp:okhttp:2.4.0'
-    compile 'com.squareup.okio:okio:1.5.0'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    //    compile 'com.android.tools.build:gradle:2.3.1'
-    compile project(path: ':views-library')
-    //-----------------Exo Player Start-------------------------
-    compile 'com.google.android.exoplayer:exoplayer:r2.4.2'
-//    compile 'com.google.android.exoplayer:exoplayer-core:r2.X.X'
-//    compile 'com.google.android.exoplayer:exoplayer-dash:2.X.X'
-//    compile 'com.google.android.exoplayer:exoplayer-hls:2.X.X'
-//    compile 'com.google.android.exoplayer:exoplayer-ui:2.X.X'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.google.code.gson:gson:2.0'
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
+    implementation 'com.squareup.okhttp:okhttp:2.4.0'
+    implementation 'com.squareup.okio:okio:1.5.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation 'com.android.support:support-v4:25.3.1'
+    implementation 'com.android.support:recyclerview-v7:25.3.1'
+    implementation project(path: ':views-library')
+    //implementation project(':jarlibrary')
 
-    //编译extras目录下的ShimmerAndroid模块
-    //compile project(':extras:ShimmerAndroid')
-    // Dependency on the "jarlibrary" module from this project
-    //    compile project(':jarlibrary')
+    //-----------------Exo Player Start-------------------------
+    implementation 'com.google.android.exoplayer:exoplayer:r2.4.2'
+//    implementation 'com.google.android.exoplayer:exoplayer-core:r2.X.X'
+//    implementation 'com.google.android.exoplayer:exoplayer-dash:2.X.X'
+//    implementation 'com.google.android.exoplayer:exoplayer-hls:2.X.X'
+//    implementation 'com.google.android.exoplayer:exoplayer-ui:2.X.X'
+
+
     //------------------- Local Unit  --------------------
-    //Adds a compile time dependency for local tests. Required -- JUnit 4 framework
-    testCompile 'junit:junit:4.12'
+    //Adds a implementation time dependency for local tests. Required -- JUnit 4 framework
+    testImplementation 'junit:junit:4.12'
+
     // Optional -- Mockito framework
-//    testCompile 'org.mockito:mockito-core:1.10.19'
+//    testimplementation 'org.mockito:mockito-core:1.10.19'
+
     //------------------- Local Unit  --------------------
     //Andr`oid测试支持库  适用于 Android 且与 JUnit 4 兼容的测试运行器
-    androidTestCompile 'com.android.support.test:runner:0.4'
-    androidTestCompile 'com.android.support.test:rules:0.4'
-    androidTestCompile 'com.android.support:support-annotations:25.3.1'
-    // Adds a compile time dependency for the test APK.
-    //    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
+    androidTestImplementation 'com.android.support.test:runner:0.4'
+    androidTestImplementation 'com.android.support.test:rules:0.4'
+    androidTestImplementation 'com.android.support:support-annotations:25.3.1'
+    // Adds a implementation time dependency for the test APK.
+    //    androidTestimplementation 'com.android.support.test.espresso:espresso-core:2.2.2'
     // Set this dependency to build and run Espresso tests : UI 测试框架:适合应用中的功能性 UI 测试
-    //    androidTestCompile ('com.android.support.test.espresso:espresso-core:2.2.2'){
+    //    androidTestimplementation ('com.android.support.test.espresso:espresso-core:2.2.2'){
     //        //如果项目中有用Dagger或者Dagger2的话,不加这行会编译失败的.
     //        exclude group: 'javax.inject'
     //        exclude module: 'support-annotations'
@@ -179,7 +146,7 @@ dependencies {
     //    }
 
     // Set this dependency to build and run UI Automator tests : UI 测试框架；适合跨系统和已安装应用的跨应用功能性 UI 测试
-    //    androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.0'
+    //    androidTestimplementation 'com.android.support.test.uiautomator:uiautomator-v18:2.1.0'
 }
 
 gradle.taskGraph.whenReady {
@@ -198,53 +165,10 @@ project.afterEvaluate {
     logger.log(LogLevel.ERROR,'>>>>> Evaluate End')
     logger.log(LogLevel.ERROR, assemble.getTaskDependencies().toString())
     logger.log(LogLevel.ERROR, assemble.getTaskDependencies().getDependencies().toString())
-
     /** 遍历构建遍历 可以根据构建类型进行任务处理 */
 //    android.libraryVariants.each{ variant ->
 //
 //    }
-    /** 修改Task依赖关系  可以让normalTask_Jar在assembleTask之前执行*/
-//    def jarTask = tasks.normalTask_Jar
-//    jarTask.dependsOn assemble.getTaskDependencies().getDependencies()
-//    assemble.dependsOn jarTask
-
-    /**  自动打多个jar包 */
-    def pluginJar = [1, 2, 3, 4, 5]
-    pluginJar.each {
-        def pluginName = it;
-        def starcor_plugins_task = tasks.create(name: "plugin-${pluginName}", type: Jar) {
-            destinationDir = file('build/plugin-libs') //默认存放在build/libs
-            archiveName = "${pluginName}.jar"
-            def pathList = ['build', 'intermediates', 'classes', "debug", 'com', 'starcor', 'hunan', 'operator', 'plugin', 'blacklist']
-            def pluginClass = pathList.join(File.separator)
-            logger.log(LogLevel.DEBUG, "插件class路径：${pluginClass}")
-            from(pluginClass)
-            from fileTree(dir: ['src', 'main', 'assets', 'plugin', 'blacklist'].join(File.separator))
-            exclude('**/R.class')
-            exclude('**/R\$*.class')
-        }
-        starcor_plugins_task.doLast {
-            logger.log(LogLevel.DEBUG, "jar包打完+1")
-        }
-        starcor_plugins_task.dependsOn assemble.getTaskDependencies().getDependencies()
-        assemble.dependsOn starcor_plugins_task
-    }
-}
-
-/** 常规jar包打包方式 */
-task normalTask_Jar(name: "normal-jar", type: Jar) {
-    baseName = "Starcor"
-    appendix = "test"
-    version = "1.0.0"
-    classifier = "release"
-    //extension 扩展名，默认为“jar”
-    //自定义文件名，默认为 [baseName]-[appendix]-[version]-[classifier].[extension]
-    // archiveName = "AndroidJarDemo.jar"
-    //jar包文件输出路径  默认在build/libs
-    destinationDir = file('build/plugin-libs')
-    from fileTree(dir:['src','main','assets','plugin','blacklist'].join(File.separator))
-    exclude('**/R.class')
-    exclude('**/R\$*.class')
 }
 
 logger.log(LogLevel.DEBUG, ">>>>>>>>>>> app config End")
