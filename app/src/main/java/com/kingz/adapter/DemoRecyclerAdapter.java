@@ -4,13 +4,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.kingz.customdemo.R;
 import com.kingz.mode.RecycleDataInfo;
 import com.kingz.pages.photo.filmlist.DemoViewHolder;
 import com.kingz.utils.ZLog;
 
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Copyright(C) 2016, 北京视达科科技有限公司
@@ -23,7 +28,8 @@ import java.util.*;
 public class DemoRecyclerAdapter extends RecyclerView.Adapter<DemoViewHolder> {
 
     private static final String TAG="DemoRecyclerAdapter";
-    private List<RecycleDataInfo> mDataModels;
+    private List<RecycleDataInfo> mCacheData;
+    //瀑布流模拟高度数据
     private List<Integer> mHeights;
     private OnItemClickLitener mOnItemClickLitener;
 
@@ -40,10 +46,13 @@ public class DemoRecyclerAdapter extends RecyclerView.Adapter<DemoViewHolder> {
         if(dataModels == null){
             throw new IllegalArgumentException("DataModel must not be null");
         }
-        mDataModels = dataModels;
+        mCacheData = dataModels;
         mHeights = new ArrayList<>();
     }
 
+    /**
+     * viewHolder持有view的信息，用作缓存
+     */
     @Override
     public DemoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ZLog.i(TAG,"onBindViewHolder()");
@@ -60,20 +69,21 @@ public class DemoRecyclerAdapter extends RecyclerView.Adapter<DemoViewHolder> {
     @Override
     public void onBindViewHolder(final DemoViewHolder holder, int position) {
         ZLog.i(TAG,"onBindViewHolder() holder="+holder+"---position:"+position);
-        RecycleDataInfo dataModel = mDataModels.get(position);
+        RecycleDataInfo dataModel = mCacheData.get(position);
         // 随机高度, 模拟瀑布效果.
-        if (mHeights.size() <= position) {
-            mHeights.add((int) (50 + Math.random() * 200));
-        }
+//        if (mHeights.size() <= position) {
+//            mHeights.add((int) (50 + Math.random() * 200));
+//        }
 
         ViewGroup.LayoutParams lp = holder.getTvLabel().getLayoutParams();
-        lp.height = mHeights.get(position);
+//        lp.height = mHeights.get(position);
         holder.getTvLabel().setLayoutParams(lp);
 
-        holder.getTvLabel().setText(dataModel.getLabel());
+        holder.getTvLabel()
+              .setText(dataModel.getLabel());
         holder.getTvDateTime()
-               .setText(new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-               .format(dataModel.getDateTime()));
+              .setText(new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+              .format(dataModel.getDateTime()));
 
 //        if (mOnItemClickLitener != null) {
 //            holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -97,7 +107,7 @@ public class DemoRecyclerAdapter extends RecyclerView.Adapter<DemoViewHolder> {
 
     @Override
     public int getItemCount() {
-        return mDataModels.size();
+        return mCacheData.size();
     }
 
     public void addData(int position) {
@@ -105,12 +115,13 @@ public class DemoRecyclerAdapter extends RecyclerView.Adapter<DemoViewHolder> {
         model.setDateTime(getBeforeDay(new Date(), position));
         model.setLabel("New Item");
 
-        mDataModels.add(position, model);
+        mCacheData.add(position, model);
+        //应该会触发重新布局  部分view应该是dirty view
         notifyItemInserted(position);
     }
 
     public void removeData(int position) {
-        mDataModels.remove(position);
+        mCacheData.remove(position);
         notifyItemRemoved(position);
     }
 

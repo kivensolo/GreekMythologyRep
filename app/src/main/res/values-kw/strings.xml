@@ -13,4 +13,7 @@
     <string name="delete">delete</string>
     <string name="aidl_addData">Get Data From Service</string>
     <string name="aidl_getData">Get Data From Service</string>
+    <string name="bkg_poster">Bkg of poster</string>
+    <string name="label_desc">文本描述</string>
+    <string name="default_buttom_label">8月6</string>
 </resources>

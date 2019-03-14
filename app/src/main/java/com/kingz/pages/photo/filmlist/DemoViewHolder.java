@@ -2,7 +2,9 @@ package com.kingz.pages.photo.filmlist;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.kingz.customdemo.R;
 
 /**
@@ -14,13 +16,19 @@ import com.kingz.customdemo.R;
  */
 public class DemoViewHolder extends RecyclerView.ViewHolder{
 
-    private TextView mTvLabel; // 标签
-    private TextView mTvDateTime; // 日期
+    private ImageView mPosterView;
+    private TextView mTvLabel;
+    private TextView mTvDateTime;
 
     public DemoViewHolder(View itemView) {
         super(itemView);
+        mPosterView = (ImageView) itemView.findViewById(R.id.recom_poster);
         mTvLabel = (TextView) itemView.findViewById(R.id.item_text);
         mTvDateTime = (TextView) itemView.findViewById(R.id.item_date);
+    }
+
+    public ImageView getmPosterView() {
+        return mPosterView;
     }
 
     public TextView getTvLabel() {

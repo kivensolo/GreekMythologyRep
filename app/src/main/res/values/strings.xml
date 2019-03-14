@@ -79,5 +79,8 @@
     <string name="aidl_addData">Add Data To Service</string>
     <string name="aidl_getData">Get Data From Service</string>
 
+    <string name="bkg_poster">海报背景图</string>
+    <string name="label_desc">文本描述</string>
+    <string name="default_buttom_label">8月6</string>
 
 </resources>
