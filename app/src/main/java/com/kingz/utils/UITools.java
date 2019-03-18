@@ -13,6 +13,8 @@ import android.widget.Toast;
 import com.kingz.customdemo.R;
 import com.module.tools.ScreenTools;
 
+import java.lang.reflect.Method;
+
 public class UITools {
 	private final static String TAG = "UITools";
 
@@ -130,6 +132,34 @@ public class UITools {
         toast.setDuration(Toast.LENGTH_SHORT);
         toast.setView(root);
         toast.show();
+	}
+
+
+	/**
+	 * 通过系统反射方法强制隐藏状态栏
+	 * 适用系统应该是:
+	 * Build.VERSION.SDK_INT <  Build.VERSION_CODES.LOLLIPOP
+	 * 5.0后的系统,把{@link Context#STATUS_BAR_SERVICE}弄成hide的了
+	 * @param context
+	 */
+	public void hindStatuBarByInvoke(Context context){
+		try {
+			Class<?> localClass2 = Class.forName("android.os.SystemProperties");
+			Method localMethod2 = localClass2.getMethod("set", String.class,
+				String.class);
+			String arg1 = "sys.statusbar.forcehide";
+			String arg2 = "true";
+			localMethod2.invoke(null, arg1, arg2);
+			ZLog.i(TAG, "强制隐藏状态栏");
+			Object localObject = context.getSystemService("statusbar");
+			Class<?> localClass1 = localObject.getClass();
+			int i = localClass1.getField("DISABLE_MASK").getInt(null);
+			Method localMethod1 = localClass1.getMethod("disable", int.class);
+			localMethod1.invoke(localObject, i);
+			ZLog.i(TAG, "App hideStatusBar OK");
+		} catch (Exception localException2) {
+			localException2.printStackTrace();
+		}
 	}
 
 }
