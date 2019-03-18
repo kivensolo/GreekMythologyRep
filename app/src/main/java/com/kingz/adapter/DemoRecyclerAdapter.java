@@ -4,18 +4,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.ImageView;
+import com.App;
 import com.kingz.customdemo.R;
 import com.kingz.mode.RecycleDataInfo;
 import com.kingz.pages.photo.filmlist.DemoViewHolder;
-import com.kingz.utils.ZLog;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 /**
  * Copyright(C) 2016, 北京视达科科技有限公司
@@ -28,6 +24,7 @@ import java.util.Locale;
 public class DemoRecyclerAdapter extends RecyclerView.Adapter<DemoViewHolder> {
 
     private static final String TAG="DemoRecyclerAdapter";
+    public final int testViewTypeCode = 10086;
     private List<RecycleDataInfo> mCacheData;
     //瀑布流模拟高度数据
     private List<Integer> mHeights;
@@ -50,14 +47,25 @@ public class DemoRecyclerAdapter extends RecyclerView.Adapter<DemoViewHolder> {
         mHeights = new ArrayList<>();
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        if(position == 5){
+            return testViewTypeCode;
+        }
+        return super.getItemViewType(position);
+    }
+
     /**
      * viewHolder持有view的信息，用作缓存
      */
     @Override
     public DemoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        ZLog.i(TAG,"onBindViewHolder()");
         //创建item的view
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.photoitem_recycler_view, parent, false);
+        if(viewType == testViewTypeCode){
+            ImageView img = (ImageView) itemView.findViewById(R.id.recom_poster);
+            img.setBackground(App.getAppInstance().getAppContext().getResources().getDrawable(R.drawable.bg1));
+        }
         return new DemoViewHolder(itemView);
     }
 
@@ -68,7 +76,7 @@ public class DemoRecyclerAdapter extends RecyclerView.Adapter<DemoViewHolder> {
      */
     @Override
     public void onBindViewHolder(final DemoViewHolder holder, int position) {
-        ZLog.i(TAG,"onBindViewHolder() holder="+holder+"---position:"+position);
+        //ZLog.i(TAG,"onBindViewHolder() holder="+holder+"---position:"+position);
         RecycleDataInfo dataModel = mCacheData.get(position);
         // 随机高度, 模拟瀑布效果.
 //        if (mHeights.size() <= position) {

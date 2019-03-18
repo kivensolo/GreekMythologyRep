@@ -1,24 +1,22 @@
 package com.kingz.view.listview;
 
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
+import android.view.*;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-
 import com.kingz.adapter.DemoRecyclerAdapter;
 import com.kingz.customdemo.R;
 import com.kingz.mode.RecycleDataInfo;
 import com.kingz.pages.photo.filmlist.MyItemDecoration;
+import com.kingz.utils.ZLog;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -40,6 +38,7 @@ import java.util.Date;
  */
 public class RecyclerviewDemo extends Activity {
 
+    public static final String TAG = "RecyclerviewDemo";
     private RecyclerView view;
     private DemoRecyclerAdapter mAdapter;
 
@@ -77,6 +76,7 @@ public class RecyclerviewDemo extends Activity {
         setRecyclerAdapter(view);          // 初始化适配器
         setItemDecoration(view);           // 初始化装饰
         setItemAnimator(view);             // 初始化动画效果
+        setListeners();
     }
 
     private void setRecyclerLayoutManager(RecyclerView recyclerView) {
@@ -108,6 +108,46 @@ public class RecyclerviewDemo extends Activity {
         recyclerView.setAdapter(mAdapter);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
+    private void setListeners() {
+        //FIXME 警告的原因 ？？？？
+        view.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()){
+                    case MotionEvent.ACTION_DOWN:
+                        ZLog.d(TAG,"viewq onTouch ---->>> ACTION_DOWN ");
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        ZLog.d(TAG,"viewq onTouch ---->>> ACTION_MOVE ");
+                        break;
+                    case MotionEvent.ACTION_SCROLL:
+                        ZLog.d(TAG,"viewq onTouch ---->>> ACTION_SCROLL ");
+                        break;
+                }
+                return false;
+            }
+        });
+        //@Deprecated
+        //view.setOnScrollListener();
+
+        RecyclerView.OnScrollListener scrollListener = new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                //ZLog.d(TAG,"view scrollListener ---->>> onScrollStateChanged ");
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                //ZLog.d(TAG,"viewq scrollListener ---->>> onScrolled dx:" + dx + "; dy:" + dy);
+                super.onScrolled(recyclerView, dx, dy);
+            }
+        };
+        view.addOnScrollListener(scrollListener);
+        view.performClick();
+    }
+
     private void setItemDecoration(RecyclerView recyclerView) {
         //调用addItemDecoration()方法添加decoration的时候，RecyclerView在绘制的时候，会去绘制decorator，即调用该类的onDraw和onDrawOver方法，
         recyclerView.addItemDecoration(new MyItemDecoration(this, LinearLayout.HORIZONTAL));
@@ -116,8 +156,8 @@ public class RecyclerviewDemo extends Activity {
     private void setItemAnimator(RecyclerView recyclerView) {
         Animation deleteAnimation = AnimationUtils.loadAnimation(this, R.anim.push_up_in);
         deleteAnimation.setRepeatMode(ValueAnimator.RESTART);
-        deleteAnimation.setRepeatCount(0);
-        deleteAnimation.setDuration(300);
+        //deleteAnimation.setRepeatCount(0);
+        //deleteAnimation.setDuration(300);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAnimation(deleteAnimation);
     }
@@ -127,7 +167,7 @@ public class RecyclerviewDemo extends Activity {
      * @return list of fake data.
      */
     private ArrayList<RecycleDataInfo> getDataSource() {
-        int count = 40;
+        int count = 10;
         ArrayList<RecycleDataInfo> data = new ArrayList<>();
         Date date = new Date();
         for (int i = 0; i < count; i++) {

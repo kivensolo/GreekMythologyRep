@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
+              android:layout_width="90dp"
+              android:layout_height="160dp"
               android:background="#AE30A4F7"
               android:orientation="vertical"
               android:layout_margin="@dimen/poster_margin">
 
     <ImageView
-        android:id="@+id/recom_poster"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/raspberry_pi_logo"
-        android:contentDescription="@string/bkg_poster"/>
+            android:id="@+id/recom_poster"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@drawable/raspberry_pi_logo"
+            android:contentDescription="@string/bkg_poster"/>
 
     <TextView
-        android:id="@+id/item_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/qianpurple"
-        android:text="@string/label_desc"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        android:textAlignment="center"
-        android:textAppearance="?android:attr/textAppearanceMedium"/>
+            android:id="@+id/item_text"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@color/qianpurple"
+            android:text="@string/label_desc"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:textAlignment="center"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
     <TextView
-        android:id="@+id/item_date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="@string/default_buttom_label"
-        android:textAppearance="?android:attr/textAppearanceMedium"/>
+            android:id="@+id/item_date"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:gravity="center_horizontal"
+            android:text="@string/default_buttom_label"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
 </LinearLayout>

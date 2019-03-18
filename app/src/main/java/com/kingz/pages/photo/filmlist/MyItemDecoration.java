@@ -7,9 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
-
 import com.kingz.customdemo.R;
-import com.kingz.utils.ZLog;
 
 /**
  * Copyright(C) 2015, 北京视达科科技有限公司
@@ -36,7 +34,7 @@ public class MyItemDecoration extends RecyclerView.ItemDecoration {
 
     @Override
     public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
-        ZLog.i("recyclerview - itemdecoration", "onDraw() +1");
+        //ZLog.i("recyclerview - itemdecoration", "onDraw() +1");
         if (mOrientation == LinearLayout.VERTICAL) {
             drawVertical(c, parent);
         } else if(mOrientation == LinearLayout.HORIZONTAL) {
