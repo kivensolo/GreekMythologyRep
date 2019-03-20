@@ -1,34 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="90dp"
-              android:layout_height="160dp"
-              android:background="#AE30A4F7"
-              android:orientation="vertical"
-              android:layout_margin="@dimen/poster_margin">
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#AE30A4F7"
+        android:layout_margin="@dimen/poster_margin">
 
     <ImageView
             android:id="@+id/recom_poster"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
             android:background="@drawable/raspberry_pi_logo"
-            android:contentDescription="@string/bkg_poster"/>
+            android:layout_height="120dp"
+            tools:ignore="contentDescription" />
 
     <TextView
-            android:id="@+id/item_text"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:background="@color/qianpurple"
-            android:text="@string/label_desc"
-            android:textColor="@color/white"
-            android:textSize="24sp"
-            android:textAlignment="center"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
-
-    <TextView
+            app:layout_constraintTop_toBottomOf="@+id/recom_poster"
             android:id="@+id/item_date"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:gravity="center_horizontal"
-            android:text="@string/default_buttom_label"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
-</LinearLayout>
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            tools:text="@string/default_buttom_label"
+            tools:ignore="MissingConstraints"/>
+
+    <TextView
+            app:layout_constraintTop_toBottomOf="@+id/item_date"
+            android:id="@+id/item_text"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@color/qianpurple"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:textAlignment="center"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            tools:ignore="MissingConstraints"
+            tools:text="@string/label_desc"/>
+</android.support.constraint.ConstraintLayout>

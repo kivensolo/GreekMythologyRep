@@ -33,7 +33,8 @@
             android:layout_height="wrap_content"
             android:background="@drawable/loginin_button"
             android:text="@string/button_login"
-            android:textColor="@color/loginbutton_text" />
+            android:textColor="@color/loginbutton_text"
+            style="?android:attr/borderlessButtonStyle"/>
 
         <Button
             android:id="@+id/buttonRight"
@@ -42,7 +43,8 @@
             android:layout_marginStart="24dp"
             android:background="@drawable/loginin_button"
             android:text="@string/button_signup"
-            android:textColor="@color/loginbutton_text" />
+            android:textColor="@color/loginbutton_text"
+            style="?android:attr/borderlessButtonStyle"/>
     </LinearLayout>
     <TextView
         android:id="@+id/appName"
