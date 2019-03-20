@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.Build;
 import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -46,26 +47,18 @@ public class ScreenTools {
 	}
 	/*************** 720P/1080P 屏幕适配尺寸转换 ***************/
 
-
-    /**
-     *获得屏幕宽度
-     * @param context
-     * @return
-     */
     public static int getScreenWidth(Context context) {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        if(wm == null){ return -1; }
         DisplayMetrics outMetrics = new DisplayMetrics();
-        wm.getDefaultDisplay().getMetrics(outMetrics);
+        Display display = wm.getDefaultDisplay();
+        display.getMetrics(outMetrics);
         return outMetrics.widthPixels;
     }
 
-    /**
-     * 获得屏幕高度
-     * @param context
-     * @return
-     */
     public static int getScreenHeight(Context context) {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        if(wm == null){ return -1; }
         DisplayMetrics outMetrics = new DisplayMetrics();
         wm.getDefaultDisplay().getMetrics(outMetrics);
         return outMetrics.heightPixels;
