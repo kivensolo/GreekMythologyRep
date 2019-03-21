@@ -29,7 +29,7 @@
             app:layout_constraintTop_toBottomOf="@+id/item_date"
             android:id="@+id/item_text"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="28dp"
             android:background="@color/qianpurple"
             android:textColor="@color/white"
             android:textSize="24sp"

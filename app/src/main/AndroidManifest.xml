@@ -255,7 +255,7 @@
         <activity android:name="com.bling.pages.WaveLoadingActivity"
                   android:screenOrientation="portrait"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
-        <activity android:name="com.kingz.scroll.ScrollTestActivity"
+        <activity android:name="com.kingz.scroll.SoapFlingActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!-- OriginViewPager -->
