@@ -13,31 +13,36 @@ import android.view.View;
 import android.view.animation.BounceInterpolator;
 import android.widget.Scroller;
 import android.widget.TextView;
-
 import com.kingz.customdemo.R;
 import com.kingz.utils.ZLog;
+import com.module.tools.ScreenTools;
 
 /**
  * author: King.Z <br>
  * date:  2016/8/19 17:37 <br>
- * description: 滑动Item的FlingView <br>
- * //TODO 对触摸点进行精准度校验
+ *     update at : 2019/3/24
+ * description: Drag & Fling View <br>
  */
-public class FlingView extends TextView {
+public class DragAndFlingView extends TextView {
 
-    public static final String TAG = FlingView.class.getSimpleName();
+    public static final String TAG = DragAndFlingView.class.getSimpleName();
     public static final int VIEW_WIDTH = 250;
     public static final int VIEW_HEIGHT = 150;
+    public static final int VELOCITYLIMIT = 15000;
     private Scroller mScroller;
     private Paint borderPaint;
     private Paint textPaint;
-    private float prePostionX;    //初始坐标X
-    private float prePostionY;    //初始坐标Y
+    private float preX;    //View坐标X
+    private float preY;    //View坐标Y
+    private float preMotionRawX;    //触摸点的x坐标
+    private float preMotionRawY;    //触摸点的y坐标
 
+    private int screenWidth;
+    private int screenHeight;
     //SDK提供的手势监听类  封装了VelocityTracker和手势判断
     GestureDetector mGestureDetector;
 
-    public FlingView(Context context) {
+    public DragAndFlingView(Context context) {
         this(context, null);
         setClickable(true);
         setOnTouchListener(new OnTouchListener() {
@@ -49,7 +54,7 @@ public class FlingView extends TextView {
         });
     }
 
-    public FlingView(Context context, AttributeSet attrs) {
+    public DragAndFlingView(Context context, AttributeSet attrs) {
         super(context, attrs);
         mScroller = new Scroller(context, new BounceInterpolator());
         mGestureDetector = new GestureDetector(context, new FlingViewGestureListener());
@@ -57,6 +62,9 @@ public class FlingView extends TextView {
         //禁用后，用户可以按住然后按下移动他们的手指，会得到滚动事件
         mGestureDetector.setIsLongpressEnabled(false);
         initPaints();
+        screenWidth = ScreenTools.getScreenWidth(getContext());
+        screenHeight = ScreenTools.getScreenHeight(getContext());
+        ZLog.d(TAG, "FlingView screenWidth=" + screenWidth + ";screenHeight=" + screenHeight);
     }
 
     private void initPaints() {
@@ -69,11 +77,31 @@ public class FlingView extends TextView {
 
         textPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         textPaint.setTextSize(26);
-        textPaint.setColor(Color.YELLOW);
+        textPaint.setColor(getResources().getColor(R.color.fruitpurple));
     }
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        // 边界控制
+        if(left < 0){
+            left = 0;
+            right = VIEW_WIDTH;
+        }
+
+        if(top < 0){
+            top = 0;
+            bottom = VIEW_HEIGHT;
+        }
+
+        if(right > screenWidth){
+            right = screenWidth;
+            left = right - VIEW_WIDTH;
+        }
+        if(bottom >= screenHeight){
+            bottom = screenHeight - 20;
+            top = bottom - VIEW_HEIGHT;
+        }
+
         super.onLayout(changed, left, top, right, bottom);
     }
 
@@ -92,13 +120,11 @@ public class FlingView extends TextView {
         canvas.drawRect(0, 0,width , height, borderPaint);
         setBackground(getResources().getDrawable(R.drawable.soap));
 
-        //FIXME 直接setText会导致触摸失效
-        //setText("我是文本");
-        canvas.drawText("快乐的肥皂", width / 2, height / 2, textPaint);
+        canvas.drawText("快乐的肥皂", 0, height / 2, textPaint);
     }
 
 
-    public FlingView(Context context, AttributeSet attrs, int defStyle) {
+    public DragAndFlingView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 
@@ -109,21 +135,30 @@ public class FlingView extends TextView {
 //        ZLog.i(TAG, "Zeke  onTouchEvent....");
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                float x = event.getX();
-                prePostionX = event.getRawX();
-                prePostionY = event.getRawY();
-                ZLog.i(TAG, "ACTION_DOWN : prePostionX = " + prePostionX + ";prePostionY = " + prePostionY + "; x = " + x);
+                float x = event.getX();          //当前view为坐标系的x
+                preMotionRawX = event.getRawX(); // 屏幕为坐标系，触点的x
+                preMotionRawY = event.getRawY();
+                preX = getX();
+                preY = getY();
+                ZLog.i(TAG, "ACTION_DOWN : preX = " + preX + ";preY = " + preY + "; x = " + x);
                 break;
             case MotionEvent.ACTION_MOVE:
-                float disX = event.getRawX() - prePostionX;
-                float disY = event.getRawY() - prePostionY;
-                // ?????
-                offsetLeftAndRight((int) disX);
-                offsetTopAndBottom((int) disY);
-                prePostionX = event.getRawX();
-                prePostionY = event.getRawY();
-                ZLog.i(TAG, "ACTION_MOVE :" + prePostionX + "-" + prePostionY);
+                float x_offset = event.getRawX() - preMotionRawX;
+                float y_offset = event.getRawY() - preMotionRawY;
+
+                offsetLeftAndRight((int) x_offset); // 调整左右Layout
+                offsetTopAndBottom((int) y_offset); // 调整上下Layout
+                preMotionRawX = event.getRawX();
+                preMotionRawY = event.getRawY();
+                preX = getX();
+                preY = getY();
+                ZLog.i(TAG, "ACTION_MOVE : x_offset=" + x_offset+";y_offset="+y_offset+"   prePostion=" + preX + "-" + preY);
                 break;
+            case MotionEvent.ACTION_UP:
+                preX = getX();
+                preY = getY();
+                break;
+
         }
         mGestureDetector.onTouchEvent(event);
         return true;
@@ -144,20 +179,12 @@ public class FlingView extends TextView {
 
     private void itemFling(int vX, int vY) {
         ZLog.d(TAG,"itemFling   vX=" + vX + ";vY="+vY);
-        //mScroller.startScroll((int)getX(), (int)getY(), -(int)(getX() - prePostionX),-(int)(getY() - prePostionY));
-        /*
-         * 手势滑动，滑动距离由初始速度决定
-         * startX：开始滑动的X坐标
-         * startY：开始滑动的Y坐标
-         * velocityX: X方向上的初始化滑行速度  像素/秒
-         * velocityY: Y方向上的初始化滑行速度  像素/秒
-         * minX:最小的X值，Scroll不会划过这个点
-         * maxX:最大的X值，Scroll不会划过这个点
-         * minY:最小的Y值，Scroll不会划过这个点
-         * maxY:最大的Y值，Scroll不会划过这个点
-         *
-         */
-        mScroller.fling((int) prePostionX, (int) prePostionY, vX, vY, 0, 500, 0, 500);
+        //mScroller.startScroll((int)getX(), (int)getY(), -(int)(getX() - preX),-(int)(getY() - preY));
+        int scrollStartX = (int) preX;
+        int scrollStartY = (int) preY;
+        mScroller.fling(scrollStartX, scrollStartY, vX, vY,
+                0, screenWidth - VIEW_WIDTH,
+                0, screenHeight - VIEW_HEIGHT);
     }
 
     @Override
@@ -181,8 +208,13 @@ public class FlingView extends TextView {
 
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            ZLog.i(TAG, "FlingViewGestureListener : onFling   velocityX:"
-                                    + velocityX + "; velocityY:" + velocityY);
+            ZLog.i(TAG, "FlingViewGestureListener : onFling   velocityX:"  + velocityX + "; velocityY:" + velocityY);
+            velocityX  = velocityX >= VELOCITYLIMIT
+                    ? VELOCITYLIMIT :
+                    (velocityX <= -VELOCITYLIMIT ? -VELOCITYLIMIT : velocityX);
+            velocityY  = velocityY >= VELOCITYLIMIT
+                    ? VELOCITYLIMIT :
+                    (velocityY <= -VELOCITYLIMIT ? -VELOCITYLIMIT : velocityY);
             itemFling((int)velocityX,(int)velocityY);
             return true;
         }

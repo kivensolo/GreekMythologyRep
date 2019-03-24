@@ -55,10 +55,8 @@ public class CustomViewsPage extends  Activity implements OnItemClickListener{
 		mAdapter.add(new ListBillData(this,"自定义ListView",new Intent(this,CustomListViewActivity.class)));
 		mAdapter.add(new ListBillData(this,"Recyclerview例子",new Intent(this,RecyclerviewDemo.class)));
 		mAdapter.add(new ListBillData(this,"ListView-----左右滑动删除",new Intent(this,SliderListViewActivity.class)));
-		mAdapter.add(new ListBillData(this,"View的Fling效果",new Intent(this,SoapFlingActivity.class)));
+		mAdapter.add(new ListBillData(this,"View 的Drag & Fling",new Intent(this,SoapFlingActivity.class)));
 		mAdapter.add(new ListBillData(this,"PopupWindow",new Intent(this,CommonPopupWindow.class)));
-		mAdapter.add(new ListBillData(this,"滚动View_3",new Intent(this,SoapFlingActivity.class)));
-		mAdapter.add(new ListBillData(this,"滚动View_4",new Intent(this,SoapFlingActivity.class)));
 		mAdapter.add(new ListBillData(this,"WebAPP测试",new Intent(this,WebViewActivity.class)));
 		mAdapter.add(new ListBillData(this,"WZViewPager",new Intent(this,WZViewPagerActicity.class)));
 		mAdapter.add(new ListBillData(this,"贝塞尔水波曲线",new Intent(this,WaveLoadingActivity.class)));
