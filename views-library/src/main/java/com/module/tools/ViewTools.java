@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
@@ -77,6 +78,18 @@ public class ViewTools {
         borderPaint.setStrokeWidth(width);
         borderPaint.setColor(color);
         canvas.drawRect(1, 1, v.getMeasuredWidth(), v.getMeasuredHeight() - 1, borderPaint);
+    }
+
+    /**
+     * 获取系统所能识别出的被认为是滑动的最小像素距离
+     * 其他数据：
+     *
+     * {@link ViewConfiguration#getDoubleTapTimeout()}
+     * {@link ViewConfiguration#getLongPressTimeout()}
+     * {@link ViewConfiguration#getKeyRepeatTimeout()}
+     */
+    public static int getTouchSlop(ViewConfiguration vc){
+        return vc.getScaledTouchSlop();
     }
 
 
