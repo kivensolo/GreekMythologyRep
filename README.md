@@ -1,2 +1,2 @@
 # GreekMythologyRep
-Some Demos
+The record of learning Android every thing. 
