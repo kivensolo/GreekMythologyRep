@@ -229,8 +229,8 @@
         <activity android:name="com.kingz.communicat.HMLActuivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
-        <!-- CircleViewActivity -->
-        <activity android:name="com.bling.pages.CircleViewActivity"
+        <!-- ProgressViewsActivity -->
+        <activity android:name="com.bling.pages.ProgressViewsActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!--webAppActivity-->

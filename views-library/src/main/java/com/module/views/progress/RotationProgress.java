@@ -13,7 +13,7 @@ import com.module.views.R;
 
 /**
  * Created by KingZ on 2016/1/5.
- * Discription: 自定义加载圈
+ * Discription: 旋转Loading加载圈
  */
 public class RotationProgress extends ProgressDialog{
 

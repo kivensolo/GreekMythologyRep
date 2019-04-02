@@ -10,7 +10,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import com.bling.pages.CircleViewActivity;
+import com.bling.pages.ProgressViewsActivity;
 import com.bling.pages.UsingCustomSeekBar;
 import com.bling.pages.WaveLoadingActivity;
 import com.kingz.customdemo.R;
@@ -49,7 +49,7 @@ public class CustomViewsPage extends  Activity implements OnItemClickListener{
 
 	private void addData() {
 		mAdapter.add(new ListBillData(this,"ShapeDrawOval",new Intent(this,ShapeDrawOval.class)));
-		mAdapter.add(new ListBillData(this,"Customer TitleView",new Intent(this,CircleViewActivity.class)));
+		mAdapter.add(new ListBillData(this,"ProgressViews",new Intent(this,ProgressViewsActivity.class)));
 		mAdapter.add(new ListBillData(this,"Customer SeekBar",new Intent(this,UsingCustomSeekBar.class)));
 		mAdapter.add(new ListBillData(this,"画布绘制进度条",new Intent(this,CustomCanvasSeekBarAct.class)));
 		mAdapter.add(new ListBillData(this,"自定义ListView",new Intent(this,CustomListViewActivity.class)));

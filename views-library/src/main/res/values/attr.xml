@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    【resource】是根标签，可以在里面定义若干个【declare-styleable】
+      <declare-styleable name="XXXXX">中name定义了变量的名称，下面可以再自定义多个属性attr
+      对于<attr name="progress_unreached_color" format="dimension"/>来说，
+      其属性的名称为"progress_unreached_color"，
+      format指定了该属性类型为dimension，只能表示字体的大小。
+      format还可以指定其他的类型比如:
+        reference   表示引用，参考某一资源ID
+        string   表示字符串
+        color   表示颜色值
+        dimension   表示尺寸值
+        boolean   表示布尔值
+        integer   表示整型值
+        float   表示浮点值
+        fraction   表示百分数
+        enum   表示枚举值
+        flag   表示位运算
+-->
+<resources>
+
+    <declare-styleable name="circleView">
+        <attr name="innerColor" format="color"/>
+        <attr name="outerColor" format="color"/>
+        <attr name="circleWidth" format="dimension"/>
+        <attr name="speed" format="integer"/>
+    </declare-styleable>
+
+    <declare-styleable name="HorizontalProgressBarWithNumber">
+        <attr name="progress_unreached_color" format="color" />
+        <attr name="progress_reached_color" format="color" />
+        <attr name="progress_reached_bar_height" format="dimension" />
+        <attr name="progress_unreached_bar_height" format="dimension" />
+        <attr name="progress_text_size" format="dimension" />
+        <attr name="progress_text_color" format="color" />
+        <attr name="progress_text_offset" format="dimension" />
+        <attr name="progress_text_visibility" format="enum">
+            <enum name="visible" value="0" />
+            <enum name="invisible" value="1" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="RoundProgressBarWidthNumber">
+        <attr name="radius" format="dimension" />
+    </declare-styleable>
+
+</resources>

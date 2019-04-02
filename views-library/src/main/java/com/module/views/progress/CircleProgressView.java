@@ -1,4 +1,4 @@
-package com.kingz.customviews.grogress;
+package com.module.views.progress;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -10,7 +10,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
-import com.kingz.customdemo.R;
+import com.module.views.R;
 
 /**
  * Copyright(C) 2015, 北京视达科科技有限公司
@@ -20,7 +20,7 @@ import com.kingz.customdemo.R;
  * description: 圆形进度条的绘制
  */
 public class CircleProgressView extends View {
-    public static final String TAG = "circleProgressView";
+    public static final String TAG = "CircleProgressView";
 
     /**
      * 是否停止绘图
@@ -124,21 +124,16 @@ public class CircleProgressView extends View {
 
         for (int i = 0; i < typeCount; i++) {
             int attr = typedArray.getIndex(i);
-            switch (attr) {
-                case R.styleable.circleView_innerColor:
-                    mFirstColor = typedArray.getColor(attr, Color.RED);
-                    break;
-                case R.styleable.circleView_outerColor:
-                    mSecondColor = typedArray.getColor(attr, Color.BLUE);
-                    break;
-                case R.styleable.circleView_circleWidth:
-                    mCircleWidth = (int) typedArray.getDimension(attr,
-                        TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,20,getResources().getDisplayMetrics())
-                    );
-                    break;
-                case R.styleable.circleView_speed:
-                    mSpeed = typedArray.getInteger(attr,2000);
-                    break;
+            if (attr == R.styleable.circleView_innerColor) {
+                mFirstColor = typedArray.getColor(attr, Color.RED);
+            } else if (attr == R.styleable.circleView_outerColor) {
+                mSecondColor = typedArray.getColor(attr, Color.BLUE);
+            } else if (attr == R.styleable.circleView_circleWidth) {
+                mCircleWidth = (int) typedArray.getDimension(attr,
+                        TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics())
+                );
+            } else if (attr == R.styleable.circleView_speed) {
+                mSpeed = typedArray.getInteger(attr, 2000);
             }
         }
         //注意回收
