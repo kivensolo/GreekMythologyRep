@@ -45,6 +45,7 @@ public class App extends Application {
         initCacheCenter();
         //initFpsDebugView();
         initStrictListenner();
+        //Bmob.initialize(this, "fea19b87f0795833b30de91f46f1465c");
     }
 
     private void initFpsDebugView() {
@@ -57,18 +58,27 @@ public class App extends Application {
 
     private void initStrictListenner() {
         if(STRICT_MODE){
+            //https://blog.csdn.net/meegomeego/article/details/45746721
+            //https://www.jianshu.com/p/113b9c54b5d1
             //设置StrictMode监听那些潜在问题，出现问题时可以对屏幕闪红色，也可以输出错误日志
+            //设置线程方面的策略
+            // 主要用于发现在UI线程中是否有读写磁盘的操作，是否有网络操作，
+            // 以及检查UI线程中调用的自定义代码是否执行得比较慢。
             StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-                    .detectDiskReads()
+                    .detectDiskReads()          //磁盘读写检查
                     .detectDiskWrites()
-                    .detectNetwork()   // or .detectAll() for all detectable problems
-                    .penaltyLog()
+                    .detectCustomSlowCalls()    //帮助开发者发现UI线程调用的那些方法执行得比较慢
+                    .detectNetwork()            // or .detectAll() for all detectable problems
+                    .penaltyLog()               //在Logcat 中打印违规异常信息
                     .build());
+            //设置VM方面的策略
+            //主要用于发现内存问题，比如 Activity内存泄露， SQL 对象内存泄露，
+            //资源未释放，能够限定某个类的最大对象数。
             StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
                     .detectLeakedSqlLiteObjects()
                     .detectLeakedClosableObjects()
                     .penaltyLog()
-                    .penaltyDeath()
+                    .penaltyDeath()  //当触发违规条件时，直接Crash掉当前应用程序
                     .build());
         }
     }

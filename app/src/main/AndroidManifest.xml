@@ -21,7 +21,7 @@
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES"/>
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
     <uses-permission android:name="android.permission.WRITE_CONTACTS"/>
-
+    <!--保持CPU 运转，屏幕和键盘灯有可能是关闭的,用于文件上传和下载 -->
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
 
@@ -49,8 +49,15 @@
                 android:value="XwMW9CR6w14VOWGG4AkGue8W|GlideModule"/>
 
         <provider
-                android:authorities="com.kingz.customdemo"
-                android:name="com.kingz.four_components.provider.KingZProvider"/>
+                android:authorities="${packageName}"
+                android:name="com.kingz.four_components.provider.KingZProvider">
+        </provider>
+
+        <!--android:authorities="${packageName}.BmobContentProvider">-->
+        <!--<provider-->
+                <!--android:name="cn.bmob.v3.util.BmobContentProvider"-->
+                <!--android:authorities="${packageName}.BmobContentProvider">-->
+        <!--</provider>-->
 
         <activity
                 android:name="com.SplashActivity"
