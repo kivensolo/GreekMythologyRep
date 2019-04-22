@@ -23,6 +23,9 @@ android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
     buildToolsVersion rootProject.ext.android.buildToolsVersion
 
+    //>=6.0 使用HttpClient
+    useLibrary 'org.apache.http.legacy'
+
     //The default configuration, inherited by all product flavors(if any are defined)
     defaultConfig {
         applicationId 'com.kingz.customdemo'
@@ -95,17 +98,22 @@ android {
     adbOptions{
     }
 
-//>=6.0 使用HttpClient
-//    useLibrary 'org.apache.http.legacy'
-
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.google.code.gson:gson:2.0'
+    implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.github.bumptech.glide:glide:3.7.0'
+    //OKHttp 2.X
     implementation 'com.squareup.okhttp:okhttp:2.4.0'
-    implementation 'com.squareup.okio:okio:1.5.0'
+//    implementation 'com.squareup.okio:okio:1.5.0'
+    //OKHttp 3.X
+    implementation 'com.squareup.okhttp3:okhttp:3.12.0'
+    implementation 'com.squareup.okio:okio:2.1.0'
+
+    implementation 'cn.bmob.android:bmob-sdk:3.7.2'
+    implementation "io.reactivex.rxjava2:rxjava:2.2.2"
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation 'com.android.support:support-v4:25.3.1'
     implementation 'com.android.support:recyclerview-v7:25.3.1'

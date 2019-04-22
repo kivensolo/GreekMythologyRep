@@ -7,15 +7,13 @@ import android.widget.ImageView;
 import com.App;
 import com.google.gson.Gson;
 import com.google.gson.internal.$Gson$Types;
-import com.squareup.okhttp.*;
+import okhttp3.*;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.net.CookieManager;
-import java.net.CookiePolicy;
 import java.net.FileNameMap;
 import java.net.URLConnection;
 import java.util.HashMap;
@@ -23,43 +21,56 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+//import com.squareup.okhttp.FormEncodingBuilder;
+//import com.squareup.okhttp.MultipartBuilder;
+//import com.squareup.okhttp.RequestBody;
+
 /**
  * author: King.Z <br>
- * date:  2016/10/27 17:49 <br>
+ * date:  2019/4/16 23:49 <br>
  * description: OkHttp工具类
- *  基于OKHttp 2.0 <br>
+ * 基于OKHttp 3.x <br>
+ *     TODO 完善 优化
  */
-public class OkHttpClientManager {
-    private static final String TAG = "OkHttpClientManager";
+public class OkHttpClientManagerV3 {
+    private static final String TAG = "OkHttpClientManagerV3";
 
-    private static OkHttpClientManager mInstance;
+    private static OkHttpClientManagerV3 mInstance;
     private OkHttpClient mOkHttpClient;
     private Handler mDelivery;
     private Gson mGson;
 
-    private OkHttpClientManager() {
-        mOkHttpClient = new OkHttpClient();
-        //cookie enabled
-        mOkHttpClient.setCookieHandler(new CookieManager(null, CookiePolicy.ACCEPT_ORIGINAL_SERVER));
+    private OkHttpClientManagerV3() {
+        _initDefaultOkHttpClient();
         mDelivery = new Handler(Looper.getMainLooper());
         mGson = new Gson();
     }
 
-    public static OkHttpClientManager getInstance() {
+    private OkHttpClient _initDefaultOkHttpClient() {
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        return builder.build();
+    }
+
+    public static OkHttpClientManagerV3 getInstance() {
         if (mInstance == null) {
-            synchronized (OkHttpClientManager.class) {
+            synchronized (OkHttpClientManagerV3.class) {
                 if (mInstance == null) {
-                    mInstance = new OkHttpClientManager();
+                    mInstance = new OkHttpClientManagerV3();
                 }
             }
         }
         return mInstance;
     }
 
-    private void _initTimeOut(int connectTimeOut,int readTimeOut,int writeTimeOut){
-        mOkHttpClient.setConnectTimeout(connectTimeOut, TimeUnit.MINUTES);
-        mOkHttpClient.setReadTimeout(readTimeOut, TimeUnit.MINUTES);
-        mOkHttpClient.setWriteTimeout(writeTimeOut, TimeUnit.MINUTES);
+    private void _initWithTimeOut(int connectTimeOut, int readTimeOut, int writeTimeOut) {
+        // 3.x设置超时和2.x有区别，不能再通过OkHttpClient对象设置，
+        // 而是通过OkHttpClient.Builder来设置，通过builder配置好OkHttpClient后
+        // 用builder.build()来返回OkHttpClient
+        OkHttpClient.Builder builder = new OkHttpClient.Builder()
+                .connectTimeout(connectTimeOut, TimeUnit.SECONDS)
+                .readTimeout(readTimeOut, TimeUnit.SECONDS)
+                .writeTimeout(writeTimeOut, TimeUnit.SECONDS);
+        mOkHttpClient = builder.build();
     }
 
     /**************************
@@ -70,8 +81,7 @@ public class OkHttpClientManager {
                 .url(url)
                 .build();
         Call call = mOkHttpClient.newCall(request);
-        Response execute = call.execute();
-        return execute;
+        return call.execute();
     }
 
     private String _getAsString(String url) throws IOException {
@@ -84,8 +94,7 @@ public class OkHttpClientManager {
      **************************/
     private Response _post(String url, Param... params) throws IOException {
         Request request = buildPostRequest(url, params);
-        Response response = mOkHttpClient.newCall(request).execute();
-        return response;
+        return mOkHttpClient.newCall(request).execute();
     }
 
     private String _postAsString(String url, Param... params) throws IOException {
@@ -135,12 +144,21 @@ public class OkHttpClientManager {
                 .build();
         Call call = mOkHttpClient.newCall(request);
         call.enqueue(new Callback() {
+            //TODO
             @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+            }
+
             public void onFailure(Request request, IOException e) {
                 setErrorResId(view, errorResId);
             }
 
-            @Override
             public void onResponse(Response response) {
                 InputStream is = null;
                 try {
@@ -160,10 +178,10 @@ public class OkHttpClientManager {
                     //final Bitmap bm = BitmapFactory.decodeStream(is, null, ops);
                     final Bitmap bm = BitMapUtils.decodeStreamCustomOpts(is);
 
-                    FileUtils.saveBitmapWithPath(new File(new File(App.getAppInstance().getAppContext().getCacheDir().getPath(),"FilmPageDir"),EncryptTools.MD5(url)),
-                                                bm,
-                                                Bitmap.CompressFormat.PNG,
-                                                90);
+                    FileUtils.saveBitmapWithPath(new File(new File(App.getAppInstance().getAppContext().getCacheDir().getPath(), "FilmPageDir"), EncryptTools.MD5(url)),
+                            bm,
+                            Bitmap.CompressFormat.PNG,
+                            90);
 //                    FileUtils.dealPathFilesWithOldDate(new File(App.getAppContext().getCacheDir().getPath(),"FilmPageDir").toString(),System.currentTimeMillis() - 3 * 24 * 3600 * 1000);
 
                     mDelivery.post(new Runnable() {
@@ -195,8 +213,8 @@ public class OkHttpClientManager {
     }
     //*************对外公布的方法************
 
-    public static void initTimeOut(int connectTimeOut,int readTimeOut,int writeTimeOut){
-        getInstance()._initTimeOut(connectTimeOut,readTimeOut,writeTimeOut);
+    public static void initWithTimeOut(int connectTimeOut, int readTimeOut, int writeTimeOut) {
+        getInstance()._initWithTimeOut(connectTimeOut, readTimeOut, writeTimeOut);
     }
 
     public static Response getAsyn(String url) throws IOException {
@@ -273,33 +291,8 @@ public class OkHttpClientManager {
 
     private Request buildMultipartFormRequest(String url, File[] files,
                                               String[] fileKeys, Param[] params) {
-        params = validateParam(params);
-
-        MultipartBuilder builder = new MultipartBuilder()
-                .type(MultipartBuilder.FORM);
-
-        for (Param param : params) {
-            builder.addPart(Headers.of("Content-Disposition", "form-data; name=\"" + param.key + "\""),
-                    RequestBody.create(null, param.value));
-        }
-        if (files != null) {
-            RequestBody fileBody = null;
-            for (int i = 0; i < files.length; i++) {
-                File file = files[i];
-                String fileName = file.getName();
-                fileBody = RequestBody.create(MediaType.parse(guessMimeType(fileName)), file);
-                //TODO 根据文件名设置contentType
-                builder.addPart(Headers.of("Content-Disposition",
-                        "form-data; name=\"" + fileKeys[i] + "\"; filename=\"" + fileName + "\""),
-                        fileBody);
-            }
-        }
-
-        RequestBody requestBody = builder.build();
-        return new Request.Builder()
-                .url(url)
-                .post(requestBody)
-                .build();
+        //TODO  buildMultipartFormRequest
+        return null;
     }
 
     private String guessMimeType(String path) {
@@ -335,14 +328,24 @@ public class OkHttpClientManager {
 
     private Map<String, String> mSessions = new HashMap<String, String>();
 
+    //异步request请求
     private void deliveryResult(final ResultCallback callback, Request request) {
         mOkHttpClient.newCall(request).enqueue(new Callback() {
+            //TODO 分发请求
             @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+            }
+
             public void onFailure(final Request request, final IOException e) {
                 sendFailedStringCallback(request, e, callback);
             }
 
-            @Override
             public void onResponse(final Response response) {
                 try {
                     final String string = response.body().string();//获得返回的字符串
@@ -387,17 +390,11 @@ public class OkHttpClientManager {
     }
 
     private Request buildPostRequest(String url, Param[] params) {
-        if (params == null) {
-            params = new Param[0];
-        }
-        FormEncodingBuilder builder = new FormEncodingBuilder();
-        for (Param param : params) {
-            builder.add(param.key, param.value);
-        }
-        RequestBody requestBody = builder.build();
+        MediaType mediaType = MediaType.parse("text/html; charset=utf-8");
+        RequestBody body = RequestBody.create(mediaType, "I'm Test content");
         return new Request.Builder()
                 .url(url)
-                .post(requestBody)
+                .post(body)
                 .build();
     }
 

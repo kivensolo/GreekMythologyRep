@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:zhi="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
-    <!--
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:zhi="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@color/white">
+    <!-- /res-auto/ 为自定义attributes命名空间的方式 values目录下，根节点为resources的xml文件-->
+
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        <!--
          <com.customview.views.CustomOnMeasureView
                 android:layout_width="440dp"
                 android:layout_height="330dp"
@@ -19,112 +27,199 @@
                 zhi:titleText="至尊宝"
                 zhi:titleSize="40sp"/>
                 zhi:titleSize="40sp"/>-->
-
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:background="@color/chartreuse2"
-            android:orientation="vertical">
-
-        <LinearLayout android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:orientation="horizontal">
-            <com.kingz.customviews.grogress.CircleProgressView
-                    android:id="@+id/view_circle_progress"
-                    android:layout_width="0dip"
-                    android:layout_height="300dp"
-                    android:layout_weight="3"
-                    android:layout_gravity="start"
-                    android:background="@color/peru"
-                    zhi:circleWidth="20dp"
-                    zhi:innerColor="#dd5656"
-                    zhi:outerColor="#88ff22"
-                    zhi:speed="20"/>
-            <com.kingz.customviews.loading.Win10LoaddingView
-                    android:id="@+id/win10loadding"
-                    android:layout_width="0dip"
-                    android:layout_height="300dp"
-                    android:layout_weight="5"
-                    android:background="@color/green"/>
-
-        </LinearLayout>
-
-        <RelativeLayout android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-            <Button
-                    android:id="@+id/start_circle_progress"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:background="@drawable/selector_radius_buttons"
-                    android:focusable="true"
-                    android:text="Start"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginStart="64dp"/>
-            <Button
-                    android:id="@+id/win10loadding_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:background="@drawable/selector_radius_buttons"
-                    android:focusable="true"
-                    android:text="Dialog"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="60dp"/>
-        </RelativeLayout>
-
-    </LinearLayout>
-
-    <com.kingz.customviews.porterduffmode.DuffTestView
-            android:layout_width="match_parent"
-            android:layout_height="108dp"/>
-
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/darksalmon"
-            android:orientation="vertical">
-
-        <com.kingz.customviews.text.ColorTrackView
-                android:id="@+id/id_changeTextColorView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/darksalmon"
-                android:padding="10dp"
-                zhi:progress="0"
-                zhi:text="竹齋眠聽雨 夢裡長青苔"
-                zhi:text_change_color="#33aaee"
-                zhi:text_origin_color="#88ff22"
-                zhi:text_size="32sp"/>
-
         <LinearLayout
-                xmlns:zhi="http://schemas.android.com/apk/res-auto"
+                android:contentDescription="@string/win10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:layout_gravity="start"
+                android:background="@color/chartreuse2"
+                android:orientation="vertical">
 
-            <Button
-                    android:id="@+id/id_left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/selector_radius_buttons"
-                    android:onClick="startLeftChange"
-                    android:text="StartLeft"/>
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="horizontal">
+                <com.module.views.progress.CircleProgressView
+                        android:id="@+id/view_circle_progress"
+                        android:layout_width="0dip"
+                        android:layout_height="300dp"
+                        android:layout_weight="3"
+                        android:layout_gravity="start"
+                        android:background="@color/peru"
+                        zhi:circleWidth="20dp"
+                        zhi:innerColor="#dd5656"
+                        zhi:outerColor="#88ff22"
+                        zhi:speed="20"/>
+                <com.module.views.loading.Win10LoaddingView
+                        android:id="@+id/win10loadding"
+                        android:layout_width="0dip"
+                        android:layout_height="300dp"
+                        android:layout_weight="5"
+                        android:background="@color/green"/>
 
-            <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_toRightOf="@id/id_left"
-                    android:background="@drawable/selector_radius_buttons"
-                    android:onClick="startRightChange"
-                    android:text="StartRight"/>
+            </LinearLayout>
+
+            <RelativeLayout android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                <Button
+                        android:id="@+id/start_circle_progress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/selector_radius_buttons"
+                        android:focusable="true"
+                        android:text="Start"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="64dp"/>
+                <Button
+                        android:id="@+id/win10loadding_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/selector_radius_buttons"
+                        android:focusable="true"
+                        android:text="Dialog"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="60dp"/>
+            </RelativeLayout>
+
         </LinearLayout>
 
-    </LinearLayout>
+        <com.kingz.customviews.porterduffmode.DuffTestView
+                android:layout_width="match_parent"
+                android:layout_height="108dp"/>
 
-</LinearLayout>
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/darksalmon"
+                android:contentDescription="@string/song_hourse"
+                android:orientation="vertical">
+
+            <com.kingz.customviews.text.ColorTrackView
+                    android:id="@+id/id_changeTextColorView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/darksalmon"
+                    android:padding="10dp"
+                    zhi:progress="0"
+                    zhi:text="竹齋眠聽雨 夢裡長青苔"
+                    zhi:text_change_color="#33aaee"
+                    zhi:text_origin_color="#88ff22"
+                    zhi:text_size="32sp"/>
+
+            <LinearLayout
+                    xmlns:zhi="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                <Button
+                        android:id="@+id/id_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/selector_radius_buttons"
+                        android:onClick="startLeftChange"
+                        android:text="StartLeft"/>
+
+                <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@id/id_left"
+                        android:background="@drawable/selector_radius_buttons"
+                        android:onClick="startRightChange"
+                        android:text="StartRight"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+                android:contentDescription="@string/progress_with_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="25dp">
+
+            <com.module.views.progress.HorizontalProgressBarWithNumber
+                    android:id="@+id/id_progressbar01"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dip"
+                    android:padding="5dp"/>
+
+            <com.module.views.progress.HorizontalProgressBarWithNumber
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dip"
+                    android:padding="5dp"
+                    android:progress="10"
+                    zhi:progress_text_color="#ff2903FC"
+                    zhi:progress_reached_color="#FF00FFFF"
+                    zhi:progress_unreached_color="#ffBCB4E8"/>
+
+            <com.module.views.progress.HorizontalProgressBarWithNumber
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dip"
+                    android:background="#44ff0000"
+                    android:progress="30"
+                    zhi:progress_text_color="#ff03F793"
+                    zhi:progress_text_size="30dp"
+                    zhi:progress_unreached_color="#ffAFF2D6"/>
+
+            <com.module.views.progress.HorizontalProgressBarWithNumber
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dip"
+                    android:padding="5dp"
+                    android:progress="50"
+                    zhi:progress_text_color="#ffF53B03"
+                    zhi:progress_unreached_color="#ffF7C6B7"/>
+
+            <com.module.views.progress.RoundProgressBarWidthNumber
+                    android:id="@+id/id_progress02"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="50dip"
+                    android:background="#44ff0000"
+                    android:progress="30"/>
+
+            <com.module.views.progress.RoundProgressBarWidthNumber
+                    android:id="@+id/id_progress03"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dip"
+                    android:background="#44ff0000"
+                    android:padding="5dp"
+                    android:progress="50"
+                    zhi:progress_reached_bar_height="20dp"
+                    zhi:progress_text_color="#ffF53B03"
+                    zhi:radius="60dp"/>
+
+            <com.module.views.progress.RoundProgressBarWidthNumber
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dip"
+                    android:background="#44ff0000"
+                    android:padding="15dp"
+                    android:progress="70"
+                    zhi:progress_text_color="#ff2903FC"
+                    zhi:progress_text_size="30sp"
+                    zhi:progress_unreached_color="#ffBCB4E8"
+                    zhi:radius="80dp"/>
+
+            <com.module.views.progress.HorizontalProgressBarWithNumber
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dip"
+                    android:background="#44ff0000"
+                    android:padding="5dp"
+                    android:progress="70"
+                    zhi:progress_reached_bar_height="20dp"
+                    zhi:progress_text_color="#ffF53B03"
+                    zhi:progress_unreached_color="#00F7C6B7"/>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

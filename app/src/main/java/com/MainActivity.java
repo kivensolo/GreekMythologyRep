@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
+import cn.bmob.v3.BmobUser;
 import com.apiDemo.content.ExternalStorage;
 import com.asynctask_jsontest.LruPicListViewActivity;
 import com.iflytek.synthesizer.VoiceActivity;
@@ -31,6 +33,7 @@ import com.kingz.pages.photo.memory.MemoryCheck;
 import com.kingz.text.LableTextViewPage;
 import com.kingz.text.langs.TextViewOfLanguages;
 import com.kingz.text.metrics.FontMetricsDemoActivity;
+import com.kingz.utils.ZLog;
 import com.kingz.view.animation.*;
 import com.kingz.view.surface.DrawRectWithSurface;
 import com.kingz.widgets.AnimatedExpandableListView;
@@ -67,6 +70,21 @@ public class MainActivity extends ExpandableListActivity implements OnItemClickL
         listView.setAdapter(comExpandAdapter);
         listView.setOnGroupClickListener(new ImpOnGroupClickListener());
 
+        //new BmobQuery<BmobUser>()
+        //    .getObject("vO4whhhJ", new QueryListener<BmobUser>() {
+        //        @Override
+        //        public void done(BmobUser bmobUser, BmobException e) {
+        //            if(e == null){
+        //                bmobToastShow(bmobUser);
+        //            }
+        //        }
+        //    });
+    }
+
+    private void bmobToastShow(BmobUser bmobUser){
+        String userinfo = bmobUser.toString();
+        Toast.makeText(this,userinfo,Toast.LENGTH_LONG).show();
+        ZLog.d(TAG,"bmob test = " + userinfo);
     }
 
     private class ImpOnGroupClickListener implements ExpandableListView.OnGroupClickListener {
