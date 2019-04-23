@@ -115,6 +115,7 @@ dependencies {
     //OKHttp 3.X
     implementation 'com.squareup.okhttp3:okhttp:3.12.0'
     implementation 'com.squareup.okio:okio:2.1.0'
+
     //FAB
     implementation 'com.getbase:floatingactionbutton:1.10.1'
 
@@ -126,13 +127,8 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:25.3.1'
     implementation project(path: ':views-library')
 
-    //-----------------Exo Player Start-------------------------
-    implementation 'com.google.android.exoplayer:exoplayer:r2.4.2'
-//    implementation 'com.google.android.exoplayer:exoplayer-core:r2.X.X'
-//    implementation 'com.google.android.exoplayer:exoplayer-dash:2.X.X'
-//    implementation 'com.google.android.exoplayer:exoplayer-hls:2.X.X'
-//    implementation 'com.google.android.exoplayer:exoplayer-ui:2.X.X'
-
+    //-----------------Exo Player-------------------------
+    implementation 'com.google.android.exoplayer:exoplayer:2.7.0'
 
     //------------------- Local Unit  --------------------
     //Adds a implementation time dependency for local tests. Required -- JUnit 4 framework
@@ -142,7 +138,7 @@ dependencies {
 //    testimplementation 'org.mockito:mockito-core:1.10.19'
 
     //------------------- Local Unit  --------------------
-    //Andr`oid测试支持库  适用于 Android 且与 JUnit 4 兼容的测试运行器
+    //Android测试支持库  适用于 Android 且与 JUnit 4 兼容的测试运行器
     androidTestImplementation 'com.android.support.test:runner:0.4'
     androidTestImplementation 'com.android.support.test:rules:0.4'
     androidTestImplementation 'com.android.support:support-annotations:25.3.1'
