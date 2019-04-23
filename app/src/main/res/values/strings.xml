@@ -85,5 +85,6 @@
     <string name="win10">简单环形进度和win10加载圈</string>
     <string name="song_hourse">歌词跑马灯</string>
     <string name="progress_with_number">带数字的水平和环形Progress</string>
+    <string name="btn_collect">收藏按钮</string>
 
 </resources>

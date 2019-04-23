@@ -293,6 +293,7 @@
                   android:theme="@android:style/Theme.Black.NoTitleBar"
                   android:screenOrientation="landscape"/>
 
+        <activity android:name="com.mplayer.exo_player.DetailPageActivty"/>
 
         <!-- ************ API Demos 页面 ************ -->
 
