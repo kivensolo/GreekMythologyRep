@@ -4,7 +4,6 @@ apply {
     from 'compile.gradle'
 }
 
-
 def keystorePropertiesFile = rootProject.file("keystore.properties")
 // Initialize a new Properties() object
 def keystoreProperties = new Properties()
@@ -22,6 +21,7 @@ android {
     }
     compileSdkVersion rootProject.ext.android.compileSdkVersion
     buildToolsVersion rootProject.ext.android.buildToolsVersion
+
 
     //>=6.0 使用HttpClient
     useLibrary 'org.apache.http.legacy'
@@ -98,6 +98,11 @@ android {
     adbOptions{
     }
 
+    packagingOptions {
+        doNotStrip '*/mips/*.so'
+        doNotStrip '*/mips64/*.so'
+    }
+
 }
 
 dependencies {
@@ -110,6 +115,8 @@ dependencies {
     //OKHttp 3.X
     implementation 'com.squareup.okhttp3:okhttp:3.12.0'
     implementation 'com.squareup.okio:okio:2.1.0'
+    //FAB
+    implementation 'com.getbase:floatingactionbutton:1.10.1'
 
     implementation 'cn.bmob.android:bmob-sdk:3.7.2'
     implementation "io.reactivex.rxjava2:rxjava:2.2.2"

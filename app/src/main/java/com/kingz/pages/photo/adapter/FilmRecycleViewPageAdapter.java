@@ -8,7 +8,7 @@ import com.App;
 import com.kingz.mode.PosterGroupInfo;
 import com.kingz.pages.photo.filmlist.FilmListRecyclerViewHolder;
 import com.kingz.utils.FileUtils;
-import com.kingz.utils.OkHttpClientManager;
+import com.kingz.utils.OkHttpClientManagerV2;
 import com.kingz.utils.ZLog;
 
 import java.io.File;
@@ -109,7 +109,7 @@ public class FilmRecycleViewPageAdapter extends RecyclerView.Adapter<FilmListRec
 //        }
         ZLog.d(TAG, "新图片数据，本地不存在的图片,添加.");
         //请求网络图片数据
-        OkHttpClientManager.displayImage(viewHolder.getmImageView(), mPoster.poster_ur);
+        OkHttpClientManagerV2.displayImage(viewHolder.getmImageView(), mPoster.poster_ur);
         ViewGroup.LayoutParams lp = viewHolder.getmImageView().getLayoutParams();
 //        lp.height = ;
 //        viewHolder.getTvLabel().setLayoutParams(lp);
