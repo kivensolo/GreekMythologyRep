@@ -3,6 +3,7 @@ package com.kingz.utils;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.graphics.*;
 import android.graphics.drawable.BitmapDrawable;
@@ -19,7 +20,10 @@ import android.view.View;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.nio.ByteBuffer;
+import java.util.Arrays;
 
 import static android.graphics.Bitmap.Config.ARGB_8888;
 
@@ -827,8 +831,8 @@ public class BitMapUtils {
     /**------------------------------------ 图形色彩变换 End -----------------------------------*/
 
 
-    /**----------------------------------- BitMap转变  Start -----------------------------------*/
 
+    /************************************* BitMap 获取 Start*************************************/
 
     /**
      * 从指定的view的缓存中获取Bitmap
@@ -882,6 +886,30 @@ public class BitMapUtils {
         return bitmap;
     }
 
+    /**
+     * 从assets中加载图片
+     *
+     * @param context    当前上下文
+     * @param bitmapPath bitmap路径
+     */
+    public static Bitmap loadBitmapFromAssets(Context context, String bitmapPath) {
+        Bitmap image = null;
+        AssetManager assets = context.getResources().getAssets();
+        try {
+            InputStream is = assets.open(bitmapPath);
+            image = BitmapFactory.decodeStream(is);
+            is.close();
+        } catch (IOException e) {
+            Log.e(TAG, "加载图片失败", e);
+        }
+
+        return image;
+    }
+
+    /************************************* BitMap 获取 End*************************************/
+
+
+    /**----------------------------------- BitMap转变  Start -----------------------------------*/
     /**
      * drawable转换为Bitmap
      *
@@ -959,7 +987,7 @@ public class BitMapUtils {
      * byte[] 转 Bitmap
      */
     public static Bitmap bytes2Bitmap(byte[] b) {
-        if (b.length == 0) {
+        if (b == null || b.length == 0) {
             return null;
         }
         return BitmapFactory.decodeByteArray(b, 0, b.length);
@@ -1222,6 +1250,132 @@ public class BitMapUtils {
             }
             return;
         }
+    }
+
+
+    /**  最多允许不相等的容差数 */
+    private static final int MAX_NON_MATCH_COUNTS = 16;
+    /**  卷积矩阵大小 */
+    private static final int CONVOLUTION_FACTOR = 5;
+
+    private static final int BYTE_COUNT_PER_PIXEL = 4;
+    private static final int ALPHA_CHANNEL_INDEX = 3;
+
+    public static class BitmapCompareResult {
+        boolean mIsEquals;
+        Bitmap mExpectedBitmap;
+        Bitmap mActualBitmap;
+        Bitmap mCompareResult;
+    }
+
+    /**
+     * 通过比较RGB通道值比较两张bitmap是否相同
+     */
+    public static BitmapCompareResult compareBitmap(Bitmap expectedBitmap, Bitmap actualBitmap) {
+        boolean isEquals = true;
+        Bitmap comparedBitmap = null;
+
+        if (expectedBitmap == null || actualBitmap == null) {
+            Log.w(TAG, "图片为空");
+            isEquals = false;
+        } else {
+            ByteBuffer expBuffer = ByteBuffer.allocate(expectedBitmap.getByteCount());
+            expectedBitmap.copyPixelsToBuffer(expBuffer);
+            ByteBuffer actBuffer = ByteBuffer.allocate(actualBitmap.getByteCount());
+            actualBitmap.copyPixelsToBuffer(actBuffer);
+            byte[] expBytes = expBuffer.array();
+            byte[] actBytes = actBuffer.array();
+            if (expBytes.length != actBytes.length) {
+                Log.i(TAG, "图片大小不一致");
+                isEquals = false;
+            } else {
+                // 创建新的Bitmap用于保存比较结果
+                comparedBitmap = actualBitmap.copy(Bitmap.Config.ARGB_8888, true);
+                ByteBuffer comparedBuffer = ByteBuffer.allocate(comparedBitmap.getByteCount());
+                comparedBitmap.copyPixelsToBuffer(comparedBuffer);
+                byte[] comparedBytes = comparedBuffer.array();
+                for (int i = 0; i < actBytes.length; i++) {
+                    if ((i % BYTE_COUNT_PER_PIXEL) != ALPHA_CHANNEL_INDEX) { // 跳过Alpha通道
+                        comparedBytes[i] = (byte) Math.abs(actBytes[i] - expBytes[i]);
+
+                        // 先做容差
+                        if (comparedBytes[i] <= MAX_NON_MATCH_COUNTS) {
+                            comparedBytes[i] = 0;
+                        }
+                    } else {
+                        comparedBytes[i] = (byte) 0xFF; // 透明度统一设为不透明
+                    }
+                }
+
+                // 做中值卷积，忽略微小差异
+                int width = comparedBitmap.getWidth();
+                int height = comparedBitmap.getHeight();
+                int nonZeroCount = 0;
+                for (int i = 0; i < ALPHA_CHANNEL_INDEX; i++) {
+                    // 分别对R, G, B三个通道做卷积
+                    nonZeroCount = calcConvolution(comparedBytes, width, height, i);
+                    if (nonZeroCount > 0) {
+                        Log.i(TAG, "图片不匹配，差异像素数为=" + nonZeroCount);
+                        isEquals = false;
+                        // 为了统计方便，给所有通道做卷积，并在不匹配时保存图片
+                        // break;
+                    }
+                }
+
+                // 将buffer写回bitmap
+                comparedBuffer.rewind();
+                comparedBitmap.copyPixelsFromBuffer(comparedBuffer);
+            }
+        }
+
+        // 保存本次比较结果
+        BitmapCompareResult compareResult = new BitmapCompareResult();
+        compareResult.mIsEquals = isEquals;
+        if (!isEquals) {
+            Log.i(TAG, "图片不匹配，保存比较结果");
+            compareResult.mExpectedBitmap = expectedBitmap;
+            compareResult.mActualBitmap = actualBitmap;
+            compareResult.mCompareResult = comparedBitmap;
+        }
+        return compareResult;
+    }
+
+
+    /**
+     * 对传入的像素数组做中值卷积
+     *
+     * @param pixels 像素数组
+     * @param width  图片宽度
+     * @param height 图片高度
+     * @param offset 偏移量，用于区分R,G,B通道
+     * @return 卷积操作后非零像素数
+     */
+    private static int calcConvolution(byte[] pixels, int width, int height, int offset) {
+        byte[] convolutionArray = new byte[CONVOLUTION_FACTOR * CONVOLUTION_FACTOR];
+        int nonZeroCount = 0;
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                for (int k = 0; k < CONVOLUTION_FACTOR; k++) {
+                    for (int l = 0; l < CONVOLUTION_FACTOR; l++) {
+                        int tempX = i + k - 1;
+                        int tempY = j + l - 1;
+                        if (tempX < 0 || tempX >= width || tempY < 0 || tempY >= height) {
+                            convolutionArray[k] = 0;
+                        } else {
+                            int index = (tempY * width + tempX) * BYTE_COUNT_PER_PIXEL + offset;
+                            convolutionArray[l * CONVOLUTION_FACTOR + k] = pixels[index];
+                        }
+                    }
+                }
+                Arrays.sort(convolutionArray);
+                int pixelIndex = (j * width + i) * BYTE_COUNT_PER_PIXEL + offset;
+                pixels[pixelIndex] = convolutionArray[convolutionArray.length / 2];
+                if (pixels[pixelIndex] != 0) {
+                    nonZeroCount++;
+                }
+            }
+        }
+        return nonZeroCount;
     }
 
 
