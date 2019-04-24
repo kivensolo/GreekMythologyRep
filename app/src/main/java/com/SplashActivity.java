@@ -6,7 +6,6 @@ import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
@@ -39,22 +38,13 @@ public class SplashActivity extends Activity implements View.OnClickListener {
     private Button buttonLeft, buttonRight;
     private LogininView formView;
     private ViewGroup contianer;
-    private TextView appName;
+    private TextView logoNameView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            Window window = getWindow();
-            window.setFlags(
-                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
-                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//            window.setFlags(
-//                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,
-//                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-        }
+        setWindowsTranslucent();
         setContentView(R.layout.splash_activity);
-        //getSupportActionBar().hide();
         findView();
         initView();
 
@@ -66,13 +56,23 @@ public class SplashActivity extends Activity implements View.OnClickListener {
         playAnim();
     }
 
+    private void setWindowsTranslucent() {
+        Window window = getWindow();
+        window.setFlags(
+                WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+                WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//        window.setFlags(
+//                WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,
+//                WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+    }
+
     private void findView() {
         mVideoView = (VideoView) findViewById(R.id.videoView);
         buttonLeft = (Button) findViewById(R.id.buttonLeft);
         buttonRight = (Button) findViewById(R.id.buttonRight);
         contianer = (ViewGroup) findViewById(R.id.container);
         formView = (LogininView) findViewById(R.id.loginView);
-        appName = (TextView) findViewById(R.id.appName);
+        logoNameView = (TextView) findViewById(R.id.appName);
         formView.post(new Runnable() {
             @Override
             public void run() {
@@ -101,7 +101,7 @@ public class SplashActivity extends Activity implements View.OnClickListener {
     }
 
     private void playAnim() {
-        ObjectAnimator anim = ObjectAnimator.ofFloat(appName, "alpha", 0,1);
+        ObjectAnimator anim = ObjectAnimator.ofFloat(logoNameView, "alpha", 0,1);
         anim.setDuration(4000);
         anim.setRepeatCount(1);
         anim.setRepeatMode(ObjectAnimator.REVERSE);
@@ -109,13 +109,19 @@ public class SplashActivity extends Activity implements View.OnClickListener {
         anim.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                appName.setVisibility(View.INVISIBLE);
-                Intent intent = new Intent(SplashActivity.this,MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
-                startActivity(intent);
-                finish();
+                if(logoNameView.getVisibility() != View.INVISIBLE ){
+                    logoNameView.setVisibility(View.INVISIBLE);
+                    openMainPage();
+                }
             }
         });
+    }
+
+    private void openMainPage() {
+        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+        startActivity(intent);
+        finish();
     }
 
     @NonNull
@@ -125,7 +131,7 @@ public class SplashActivity extends Activity implements View.OnClickListener {
             FileOutputStream fos = openFileOutput(VIDEO_NAME, MODE_PRIVATE);
             InputStream in = getResources().openRawResource(R.raw.welcome_video);
             byte[] buff = new byte[1024];
-            int len = 0;
+            int len;
             while ((len = in.read(buff)) != -1) {
                 fos.write(buff, 0, len);
             }
@@ -165,12 +171,9 @@ public class SplashActivity extends Activity implements View.OnClickListener {
 
                 formView.animate().translationY(-1 * delta).alpha(0).setDuration(500).start();
                 if (view == buttonLeft) {
-                    Intent intent = new Intent(this,MainActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
-                    startActivity(intent);
-                    finish();
+                    logoNameView.setVisibility(View.INVISIBLE);
+                    openMainPage();
                     return;
-                } else if (view == buttonRight) {
                 }
                 inputType = InputType.NONE;
                 buttonLeft.setText(R.string.button_login);
@@ -178,11 +181,6 @@ public class SplashActivity extends Activity implements View.OnClickListener {
                 break;
             case SIGN_UP:
                 formView.animate().translationY(-1 * delta).alpha(0).setDuration(500).start();
-                if (view == buttonLeft) {
-
-                } else if (view == buttonRight) {
-
-                }
                 inputType = InputType.NONE;
                 buttonLeft.setText(R.string.button_login);
                 buttonRight.setText(R.string.button_signup);
