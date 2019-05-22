@@ -35,7 +35,6 @@ public class FourComponentPage extends  Activity implements OnItemClickListener{
 
 	private void addData() {
 		addItem("服务",ServiceComponentsACT.class);
-		addItem("自定义seekBar",CustomCanvasSeekBarAct.class);
 		addItem("LableTextViewPage",LableTextViewPage.class);
 		addItem("ContentProvider",ObtainConnectPeopleActivity.class);
 		addItem("AIDL",AIDLActivity.class);

@@ -37,34 +37,34 @@ android {
         signingConfig signingConfigs.ZekeSigned
         minSdkVersion 19
         targetSdkVersion 22
-        buildConfigField("String", "APP_NAME", "STARCOR")
+        buildConfigField("String", "APP_NAME", "\"STARCOR\"")
     }
 
     // Specifies one flavor dimension.
     flavorDimensions "version"
-    productFlavors{
-        demo {
-            // Assigns this product flavor to the "version" flavor dimension.
-            // This property is optional if you are using only one dimension.
-            dimension "version"
-            applicationIdSuffix ".demo"
-            versionNameSuffix "-2019"
-            versionCode appVersionCode
-            versionName appVersionName
-            buildConfigField("String", "APP_NAME", "\"STARCOR\"")
-            buildConfigField 'String','MAIN_URL','"http://www.starcor.com"'
-        }
-
-        full {
-            dimension "version"
-            applicationIdSuffix ".full"
-            versionNameSuffix "-2019"
-            versionCode appVersionCode
-            versionName appVersionName
-            buildConfigField("String", "APP_NAME", "\"STARCOR\"")
-            buildConfigField 'String','MAIN_URL','"http://www.starcor.com"'
-        }
-    }
+//    productFlavors{
+//        demo {
+//            // Assigns this product flavor to the "version" flavor dimension.
+//            // This property is optional if you are using only one dimension.
+//            dimension "version"
+//            applicationIdSuffix ".demo"
+//            versionNameSuffix "-2019"
+//            versionCode appVersionCode
+//            versionName appVersionName
+//            buildConfigField("String", "APP_NAME", "\"STARCOR\"")
+//            buildConfigField 'String','MAIN_URL','"http://www.starcor.com"'
+//        }
+//
+//        full {
+//            dimension "version"
+//            applicationIdSuffix ".full"
+//            versionNameSuffix "-2019"
+//            versionCode appVersionCode
+//            versionName appVersionName
+//            buildConfigField("String", "APP_NAME", "\"STARCOR\"")
+//            buildConfigField 'String','MAIN_URL','"http://www.starcor.com"'
+//        }
+//    }
 
     buildTypes {
         debug {
