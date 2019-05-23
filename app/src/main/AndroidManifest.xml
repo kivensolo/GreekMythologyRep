@@ -133,13 +133,12 @@
         <activity android:name="com.kingz.widgets.android_src.NativeSeekBar"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
+        <activity android:name="com.kingz.TestActivity"
+                  android:theme="@android:style/Theme.Black.NoTitleBar"/>
+
         <!-- 自定义 SeekBar -->
         <activity android:name="com.bling.pages.UsingCustomSeekBar"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
-        <!-- 绘画的方式画seekBar -->
-        <activity
-                android:name="com.kingz.pages.CustomCanvasSeekBarAct"
-                android:theme="@android:style/Theme.Black.NoTitleBar"/>
         <activity
                 android:name="com.kingz.view.shape.ShapeDrawOval"
                 android:theme="@android:style/Theme.Black.NoTitleBar"/>

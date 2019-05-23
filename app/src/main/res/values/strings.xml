@@ -82,9 +82,9 @@
     <string name="bkg_poster">海报背景图</string>
     <string name="label_desc">Test Text</string>
     <string name="default_buttom_label">8月6</string>
-    <string name="win10">简单环形进度和win10加载圈</string>
-    <string name="song_hourse">歌词跑马灯</string>
-    <string name="progress_with_number">带数字的水平和环形Progress</string>
-    <string name="btn_collect">收藏按钮</string>
+    <string name="win10" translatable="false">简单环形进度和win10加载圈</string>
+    <string name="song_hourse" translatable="false">歌词跑马灯</string>
+    <string name="progress_with_number" translatable="false">带数字的水平和环形Progress</string>
+    <string name="btn_collect" translatable="false">收藏按钮</string>
 
 </resources>
