@@ -41,12 +41,18 @@ public class NetTools {
     }
 
     /**
-     * 判断网络连接是否可用
-     * @return 网络是否可用
+     * 网络连接是否可用
      */
     public static boolean isConnect() {
         NetworkInfo mNetworkInfo = getSysNetworkInfo(App.getAppInstance().getAppContext());
         return mNetworkInfo != null && mNetworkInfo.isAvailable();
+    }
+
+    /**
+     * 指定的网络连接类型是否可用
+     */
+    public static boolean isConnect(NetworkInfo networkInfo){
+        return networkInfo.isConnected();
     }
 
     /**
@@ -169,12 +175,22 @@ public class NetTools {
      */
     public static boolean isTypeNetAvailable(Context context,int netType) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(cm == null){
+            return false;
+        }
         NetworkInfo typeWorkInfo = cm.getNetworkInfo(netType);
         return typeWorkInfo != null && typeWorkInfo.isAvailable();
     }
 
-    public static int getNetWorkState(Context context) {
+    /**
+     * 获取当前网络状态
+     * @return 已连接或者正在连接
+     */
+    public static int getCurrentNetState(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(cm == null){
+            return -1;
+        }
         NetworkInfo typeWorkInfo = cm.getActiveNetworkInfo();
         if(typeWorkInfo.isConnected()){
             return 0;
@@ -185,14 +201,26 @@ public class NetTools {
         }
     }
 
+    /**
+     * 获取当前连接的网络类型
+     * @param context
+     * @return one of {@link ConnectivityManager#TYPE_MOBILE}, {@link
+     * ConnectivityManager#TYPE_WIFI}, {@link ConnectivityManager#TYPE_WIMAX}, {@link络
+     * ConnectivityManager#TYPE_ETHERNET},  {@link ConnectivityManager#TYPE_BLUETOOTH}, or other
+     * types defined by {@link ConnectivityManager}
+     */
     public static int getConnectNetType(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(cm == null){
+            return -1;
+        }
         NetworkInfo mNetworkInfo = cm.getActiveNetworkInfo();
         if (mNetworkInfo != null && mNetworkInfo.isAvailable()) {
             return mNetworkInfo.getType();
         }
         return -1;
     }
+
 
     /********************************* WIFI Info Start*******************************/
 
@@ -224,7 +252,10 @@ public class NetTools {
     }
 
     public static String getWifiIp(Context context) {
-        WifiManager wifimanage = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        WifiManager wifimanage = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        if(wifimanage == null){
+            return "0.0.0.0";
+        }
         if (wifimanage.isWifiEnabled()) {
             wifimanage.setWifiEnabled(true);
         }

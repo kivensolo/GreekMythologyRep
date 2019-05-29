@@ -25,8 +25,8 @@ import java.net.URL;
  */
 public class HttpUtils {
 
-    public static final String GET = "Get";
-    public static final String POST = "Post";
+    public static final String GET = "GET";
+    public static final String POST = "POST";
 
     interface HttpCallBackListener{
         public void onFinish(String response);
