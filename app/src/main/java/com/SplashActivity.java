@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -31,8 +32,6 @@ import java.io.InputStream;
  */
 public class SplashActivity extends Activity implements View.OnClickListener {
 
-    public static final String VIDEO_NAME = "welcome_video.mp4";
-
     private VideoView mVideoView;
     private InputType inputType = InputType.NONE;
     private Button buttonLeft, buttonRight;
@@ -47,12 +46,7 @@ public class SplashActivity extends Activity implements View.OnClickListener {
         setContentView(R.layout.splash_activity);
         findView();
         initView();
-
-        File videoFile = getFileStreamPath(VIDEO_NAME);
-        if (!videoFile.exists()) {
-            videoFile = copyVideoFile();
-        }
-        playVideo(videoFile);
+        playVideo();
         playAnim();
     }
 
@@ -88,8 +82,9 @@ public class SplashActivity extends Activity implements View.OnClickListener {
         buttonLeft.setOnClickListener(this);
     }
 
-    private void playVideo(File videoFile) {
-        mVideoView.setVideoPath(videoFile.getPath());
+    private void playVideo() {
+        String _videoUrl = "android.resource://" + getPackageName() + "/" + R.raw.welcome_video;
+        mVideoView.setVideoPath(_videoUrl);
         mVideoView.setLayoutParams(new RelativeLayout.LayoutParams(-1, -1));
         mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
@@ -122,26 +117,6 @@ public class SplashActivity extends Activity implements View.OnClickListener {
         intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
         startActivity(intent);
         finish();
-    }
-
-    @NonNull
-    private File copyVideoFile() {
-        File videoFile;
-        try {
-            FileOutputStream fos = openFileOutput(VIDEO_NAME, MODE_PRIVATE);
-            InputStream in = getResources().openRawResource(R.raw.welcome_video);
-            byte[] buff = new byte[1024];
-            int len;
-            while ((len = in.read(buff)) != -1) {
-                fos.write(buff, 0, len);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        videoFile = getFileStreamPath(VIDEO_NAME);
-        if (!videoFile.exists())
-            throw new RuntimeException("video file has problem, are you sure you have welcome_video.mp4 in res/raw folder?");
-        return videoFile;
     }
 
     @Override
