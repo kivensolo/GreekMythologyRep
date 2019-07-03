@@ -161,8 +161,9 @@
     <color name="fruitpurple">#7151E0</color><!--葡萄色 -->
     <color name="qianpurple">#A08BE8</color><!--浅_葡萄色 -->
     <color name="suncolor">#FED094</color><!--夕阳色 -->
-
-
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#FF4081</color>
 
 
     <!--wzviewpager所需颜色-->

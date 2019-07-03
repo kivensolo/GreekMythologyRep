@@ -23,6 +23,7 @@ import com.kingz.filemanager.FileManagerActivity;
 import com.kingz.graphics.Arcs;
 import com.kingz.graphics.PathEffects;
 import com.kingz.mode.ListBillData;
+import com.kingz.newfeatures.NewFeaturesMainActivity;
 import com.kingz.pages.CustomViewsPage;
 import com.kingz.pages.FourComponentPage;
 import com.kingz.pages.LayoutPage;
@@ -184,6 +185,10 @@ public class MainActivity extends ExpandableListActivity implements OnItemClickL
         //BaseApiUnderStand
         billDataManager.addGroup("BasicApi");
         addChildData("Canvas", CanvasApiActivity.class);
+        billDataManager.pushChilds();
+        //新特性
+        billDataManager.addGroup("NewFeatures");
+        addChildData("NewFeature of UI", NewFeaturesMainActivity.class);
         billDataManager.pushChilds();
     }
 

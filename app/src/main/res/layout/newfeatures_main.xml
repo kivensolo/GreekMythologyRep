@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.kingz.newfeatures.NewFeaturesMainActivity">
+
+    <Button
+        android:id="@+id/decompose_anim"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="分解"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <Button
+        android:id="@+id/slide_anim"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="滑动"
+        app:layout_constraintLeft_toRightOf="@id/decompose_anim"
+        app:layout_constraintTop_toTopOf="parent" />
+    <Button
+        android:id="@+id/fade_anim"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="淡入淡出"
+        app:layout_constraintLeft_toRightOf="@id/slide_anim"
+        app:layout_constraintTop_toTopOf="parent" />
+    <Button
+        android:id="@+id/shared_anim"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:transitionName="shared_btn_one"
+        android:text="共享元素"
+        app:layout_constraintLeft_toRightOf="@id/fade_anim"
+        app:layout_constraintTop_toTopOf="parent" />
+    <Button
+        android:id="@+id/perssion_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="权限"
+        app:layout_constraintTop_toBottomOf="@id/decompose_anim"/>
+    <Button
+        android:id="@+id/pip_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="画中画"
+        app:layout_constraintLeft_toRightOf="@id/perssion_btn"
+        app:layout_constraintTop_toBottomOf="@id/decompose_anim"/>
+</android.support.constraint.ConstraintLayout>

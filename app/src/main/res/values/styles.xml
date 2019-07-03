@@ -19,11 +19,15 @@
         <item name="android:listDivider">@drawable/divider_bg</item>
     </style>
 
+    <style name="Lollipop_NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/skygreen</item>
+    </style>
+
     <style name="customstyle">
          <item name="android:background">@android:color/holo_red_light</item>
-            <!--两种方式引用这个customstyle
-             1:直接在布局文件该view标签里使用:style="@style/customstyle"
-             2:在AndroidManifest.xml的application标签里使用:android:theme="@style/customstyle"-->
+
     </style>
 
     <!-- 无Title的Dialog -->

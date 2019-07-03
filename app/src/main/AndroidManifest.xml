@@ -27,15 +27,11 @@
 
     <uses-permission android:name="com.starcor.xinjiang.ReadUserinfo"/>
     <permission android:name="com.starcor.xinjiang.ReadUserinfo"/>
-     <!--Target Package为单元测试的包名-->
-  <!--  <instrumentation
-            android:name="android.test.InstrumentationTestRunner"
-            android:targetPackage="com.kingz"
-            android:label="Tests for GeekMythologyRep"/>-->
 
     <application
             android:allowBackup="true"
-            android:icon="@drawable/bg3"
+            android:icon="@mipmap/ic_launcher"
+            android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:label="@string/app_name"
             android:theme="@style/AppTheme"
@@ -131,9 +127,6 @@
 
         <!-- 原生SeekBar -->
         <activity android:name="com.kingz.widgets.android_src.NativeSeekBar"
-                  android:theme="@android:style/Theme.Black.NoTitleBar"/>
-
-        <activity android:name="com.kingz.TestActivity"
                   android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!-- 自定义 SeekBar -->
@@ -326,6 +319,27 @@
                   android:theme="@android:style/Theme.Holo.Light"/>
         <!--  ************ Android 基本API效果展示  End ************ -->
 
+        <!--  ************ Android >=5.0 新特性展示  Start ************ -->
+        <activity android:name="com.kingz.newfeatures.NewFeaturesMainActivity"
+                  android:theme="@style/Lollipop_NoActionBar"/>
+        <activity android:name="com.kingz.newfeatures.FadeAnim"
+                  android:theme="@style/Lollipop_NoActionBar"/>
+        <activity android:name="com.kingz.newfeatures.DecomposeAnim"
+                  android:theme="@style/Lollipop_NoActionBar"/>
+        <activity android:name="com.kingz.newfeatures.SlideAnim"
+                  android:theme="@style/Lollipop_NoActionBar"/>
+        <activity android:name="com.kingz.newfeatures.SharedAnim"
+                  android:theme="@style/Lollipop_NoActionBar"/>
+        <activity android:name="com.kingz.newfeatures.PermissionActivity"
+                  android:theme="@style/Lollipop_NoActionBar"/>
+        <activity android:name="com.kingz.newfeatures.PinpActivity"
+                  android:theme="@style/Lollipop_NoActionBar"
+                  android:supportsPictureInPicture="true"
+                  android:configChanges="screenLayout|orientation"
+                  tools:targetApi="n">
+        </activity>
+        <!--  ************ Android >=5.0 新特性展示  End ************ -->
+
 
         <!--服务 exported:外部是否可访问  process:为服务设置不同进程-->
         <service android:name="com.kingz.four_components.service.MyComponentsOfService"
@@ -366,6 +380,17 @@
         <provider android:name="com.kingz.four_components.provider.ThetisProvider"
                   android:authorities="com.kingz.four_components.myprovider"
                   android:exported="true">
+        </provider>
+
+        <!--7.0 fileprovider-->
+        <provider
+            android:authorities="com.kingz.newfeatures.fileprovider"
+            android:name="android.support.v4.content.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
         </provider>
 
 
