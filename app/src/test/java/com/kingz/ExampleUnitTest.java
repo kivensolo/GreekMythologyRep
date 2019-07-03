@@ -1,5 +1,7 @@
 package com.kingz;
 
+import com.kingz.utils.NetTools;
+
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -16,5 +18,4 @@ public class ExampleUnitTest {
 		System.out.println("结果为：" + sum);
 		assertEquals(4, sum);
     }
-
 }
