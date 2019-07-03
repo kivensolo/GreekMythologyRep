@@ -4,8 +4,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Copyright(C) 2016, 北京视达科科技有限公司
- * All rights reserved. <br>
  * author: King.Z <br>
  * date:  2016/10/17 16:21 <br>
  * description: 实现Parcelable接口 执行序列化操作 <br>
@@ -13,7 +11,8 @@ import android.os.Parcelable;
  *     为什么呢？因为默认生成的类里面只有 writeToParcel() 方法，
  *     而如果要支持为 out 或者 inout 的定向 tag 的话，
  *     还需要实现 readFromParcel() 方法——而这个方法其实并没有在 Parcelable 接口里面，
- *     所以需要我们从头写。具体为什么可以去看： http://www.open-open.com/lib/view/open1469494342021.html
+ *     所以需要我们从头写。具体为什么可以去看：
+ *     http://www.open-open.com/lib/view/open1469494342021.html
  */
 
 public class Book implements Parcelable{
