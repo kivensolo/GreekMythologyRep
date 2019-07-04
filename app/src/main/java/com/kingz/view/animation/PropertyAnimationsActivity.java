@@ -109,11 +109,11 @@ public class PropertyAnimationsActivity extends BaseActivity implements AdapterV
     private void initViews() {
         datas = Arrays.asList(strs);
         bitmapAdapter = new BitmapPageAdapter(this, datas);
-        mListView = (ListView) findViewById(R.id.anmations_list_id);
+        mListView = findViewById(R.id.anmations_list_id);
         mListView.setAdapter(bitmapAdapter);
         mListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         mListView.setOnItemClickListener(this);
-        mRightText = (TextView) findViewById(R.id.animation_show_text_id);
+        mRightText = findViewById(R.id.animation_show_text_id);
         initAnimator();
     }
 

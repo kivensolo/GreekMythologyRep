@@ -32,6 +32,7 @@ public class PhotosActivity extends BaseActivity implements AdapterView.OnItemCl
     protected Bitmap waterMark;
     protected int backgroundId;
     protected ImageView img1;
+    //TODO  优化
     List<BitmapPhotosActivity.ItemInfo> datas;
 
 
@@ -44,11 +45,11 @@ public class PhotosActivity extends BaseActivity implements AdapterView.OnItemCl
 
     private void initViews() {
         bitmapAdapter = new BitmapPageAdapter(this, datas);
-        mListView = (ListView) findViewById(R.id.type_change_id);
+        mListView = findViewById(R.id.type_change_id);
         mListView.setAdapter(bitmapAdapter);
         mListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         mListView.setOnItemClickListener(this);
-        img1 = (ImageView) findViewById(R.id.normal_pic);
+        img1 = findViewById(R.id.normal_pic);
     }
 
     @Override

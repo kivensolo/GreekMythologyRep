@@ -2,6 +2,7 @@ apply {
     plugin 'com.android.application'
     from 'version.gradle'
     from 'compile.gradle'
+    from "../config.gradle"
 }
 
 def keystorePropertiesFile = rootProject.file("keystore.properties")
@@ -19,8 +20,8 @@ android {
             storePassword keystoreProperties['storePassword']
         }
     }
-    compileSdkVersion rootProject.ext.android.compileSdkVersion
-    buildToolsVersion rootProject.ext.android.buildToolsVersion
+    compileSdkVersion android.compileSdkVersion
+    buildToolsVersion android.buildToolsVersion
 
 
     //>=6.0 使用HttpClient
@@ -30,13 +31,13 @@ android {
     defaultConfig {
         applicationId 'com.kingz.customdemo'
         multiDexEnabled false
-        versionCode rootProject.ext.android.versionCode
-        versionName rootProject.ext.android.versionName
+        versionCode android.versionCode
+        versionName android.versionName
         //unit test
         testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
         signingConfig signingConfigs.ZekeSigned
-        minSdkVersion 19
-        targetSdkVersion 22
+        minSdkVersion 22
+        targetSdkVersion 24
         buildConfigField("String", "APP_NAME", "\"STARCOR\"")
     }
 

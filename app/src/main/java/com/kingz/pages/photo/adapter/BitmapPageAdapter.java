@@ -31,7 +31,14 @@ public class BitmapPageAdapter extends CommonAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         commonViewHolder = CommViewHodler.getHolder(mContex,convertView,parent, R.layout.simplelist_every_item,position);
         nameItem = commonViewHolder.getView(R.id.list_item);
-        nameItem.setText(((BitmapPhotosActivity.ItemInfo)(mData.get(position))).getName());
+        Object o = mData.get(position);
+        String text = "";
+        if(o instanceof BitmapPhotosActivity.ItemInfo){
+            text = ((BitmapPhotosActivity.ItemInfo) o).getName();
+        }else if(o instanceof String){
+            text = (String) o;
+        }
+        nameItem.setText(text);
         return commonViewHolder.getmConvertView();
     }
 
