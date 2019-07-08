@@ -161,7 +161,7 @@ public class MainActivity extends ExpandableListActivity implements OnItemClickL
         //Net
         billDataManager.addGroup("Net");
         addChildData("JsonParseAndPicLru", LruPicListViewActivity.class);
-        addChildData("BaiduMapTest", BaiduMapActivity.class);
+//        addChildData("BaiduMapTest", BaiduMapActivity.class);
         addChildData("FilmsList", FilmsListActivity.class);
         billDataManager.pushChilds();
 

@@ -2,6 +2,7 @@ package com.kingz.utils;
 
 import android.graphics.Bitmap;
 import android.text.TextUtils;
+import android.util.Log;
 
 import java.io.*;
 
@@ -192,11 +193,8 @@ public class FileUtils {
             } else {
                 throw new IOException("The filePath is can not Write!");
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        } catch (IOException|ClassNotFoundException  e) {
+            Log.e(TAG,"File not found :" + filePath.getAbsolutePath());
             return null;
         }
     }

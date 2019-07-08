@@ -1,14 +1,17 @@
 package com.kingz.pages.photo.adapter;
 
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import com.App;
 import com.kingz.mode.PosterGroupInfo;
 import com.kingz.pages.photo.filmlist.FilmListRecyclerViewHolder;
+import com.kingz.utils.EncryptTools;
 import com.kingz.utils.FileUtils;
-import com.kingz.utils.OkHttpClientManagerV2;
+import com.kingz.utils.OkHttpClientManager;
 import com.kingz.utils.ZLog;
 
 import java.io.File;
@@ -24,7 +27,7 @@ import java.util.List;
 
 public class FilmRecycleViewPageAdapter extends RecyclerView.Adapter<FilmListRecyclerViewHolder> {
 
-    private static String TAG = "FilmRecycleViewPageAdapter";
+    private static String TAG = FilmRecycleViewPageAdapter.class.getSimpleName();
 
     /**
      * 储存海报图片的文件信息
@@ -94,23 +97,24 @@ public class FilmRecycleViewPageAdapter extends RecyclerView.Adapter<FilmListRec
 
     /**
      * 每一个ViewHolder的数据绑定回调
-     *
-     * @param viewHolder
-     * @param i
      */
     @Override
     public void onBindViewHolder(FilmListRecyclerViewHolder viewHolder, int i) {
         PosterGroupInfo.Poster mPoster = posterList.get(i);
-//        if(FileUtils.MD5(mPoster.poster_ur) != null && FileUtils.readObjectWithPath(new File(dataPath,FileUtils.MD5(mPoster.poster_ur))) != null){
-//            ZLog.d(TAG, "本地已经有此海报的图片，加载缓存图片");
-//            Bitmap cacheBitmap = (Bitmap) FileUtils.readObjectWithPath(new File(dataPath,FileUtils.MD5(mPoster.poster_ur)));
-//            viewHolder.getmImageView().setImageBitmap(cacheBitmap);
-//            return;
-//        }
-        ZLog.d(TAG, "新图片数据，本地不存在的图片,添加.");
+        String md5 = EncryptTools.MD5(mPoster.poster_ur);
+        if(TextUtils.isEmpty(md5)){
+            return;
+        }
+        File file = new File(dataPath, md5);
+        if(FileUtils.readObjectWithPath(file) != null){
+            //加载缓存图片
+            Bitmap cacheBitmap = (Bitmap) FileUtils.readObjectWithPath(file);
+            viewHolder.getmImageView().setImageBitmap(cacheBitmap);
+            return;
+        }
         //请求网络图片数据
-        OkHttpClientManagerV2.displayImage(viewHolder.getmImageView(), mPoster.poster_ur);
-        ViewGroup.LayoutParams lp = viewHolder.getmImageView().getLayoutParams();
+        OkHttpClientManager.displayImage(viewHolder.getmImageView(), mPoster.poster_ur);
+//        ViewGroup.LayoutParams lp = viewHolder.getmImageView().getLayoutParams();
 //        lp.height = ;
 //        viewHolder.getTvLabel().setLayoutParams(lp);
     }

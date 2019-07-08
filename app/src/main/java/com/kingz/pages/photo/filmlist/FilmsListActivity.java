@@ -28,7 +28,6 @@ import java.util.ArrayList;
  * author: King.Z
  * date: 2016 2016/4/2 16:49
  * description: 影片列表页  用GridView和本地的图片url去显示图片
- * 网络方式使用OKHttp
  * <p>
  * 改：用RecyclerView替换GridView,实现瀑布流
  */
@@ -46,32 +45,19 @@ public class FilmsListActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getLocalPosterData();
-
-//        ViewGroup.LayoutParams lps = new ViewGroup.LayoutParams(-1, -1);
-//        GridView rootView = new GridView(this);
-//        rootView.setColumnWidth(200);
-//        rootView.setVerticalSpacing(20);
-//        rootView.setHorizontalSpacing(20);
-//        rootView.setNumColumns(GridView.AUTO_FIT);
-//        rootView.setStretchMode(GridView.STRETCH_COLUMN_WIDTH);
-//        rootView.setLayoutParams(lps);
-//        rootView.setBackgroundColor(Color.WHITE);
-//        rootView.setAdapter(new FilmListGridViewAdapter(this, posterList));
-//        setContentView(rootView);
-
         setContentView(R.layout.activity_recyclerview_demo);
-        mRecyclerView = (RecyclerView) findViewById(R.id.test_recycler_view);
-        initRecyclerView(mRecyclerView);
+        getLocalPosterData();
+        initRecyclerView();
 
     }
 
-    private void initRecyclerView(RecyclerView recyclerView) {
-        recyclerView.setHasFixedSize(true);         // 设置固定大小
-        initRecyclerLayoutManager(recyclerView);    // 初始化布局
-        initRecyclerAdapter(recyclerView);          // 初始化适配器
-        initItemDecoration(recyclerView);           // 初始化装饰
-        initItemAnimator(recyclerView);             // 初始化动画效果
+    private void initRecyclerView() {
+        mRecyclerView = findViewById(R.id.test_recycler_view);
+        mRecyclerView.setHasFixedSize(true);         // 设置固定大小
+        initRecyclerLayoutManager(mRecyclerView);    // 初始化布局
+        initRecyclerAdapter(mRecyclerView);          // 初始化适配器
+        initItemDecoration(mRecyclerView);           // 初始化装饰
+        initItemAnimator(mRecyclerView);             // 初始化动画效果
     }
 
     private void initRecyclerLayoutManager(RecyclerView recyclerView) {
