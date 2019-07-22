@@ -25,6 +25,13 @@
         <item name="colorAccent">@color/skygreen</item>
     </style>
 
+    <style name="MDTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <!-- 设置statusBarColor 为透明-->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
     <style name="customstyle">
          <item name="android:background">@android:color/holo_red_light</item>
 
