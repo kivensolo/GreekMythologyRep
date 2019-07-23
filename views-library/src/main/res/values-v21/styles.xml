@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="DetailPlayerButton">
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+        <item name="android:layout_width">@dimen/detail_media_button_width</item>
+        <item name="android:layout_height">@dimen/detail_media_button_height</item>
+    </style>
+
+    <style name="DetailPlayerButton.Pause">
+        <item name="android:src">@drawable/exo_pause</item>
+        <item name="android:contentDescription">@string/exo_controls_pause_description</item>
+    </style>
+    <style name="DetailPlayerButton.Play">
+        <item name="android:src">@drawable/exo_pause</item>
+        <item name="android:contentDescription">@string/exo_controls_play_description</item>
+    </style>
+</resources>

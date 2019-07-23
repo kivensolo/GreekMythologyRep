@@ -1,4 +1,9 @@
 <resources>
+
+
+    <dimen name="detail_media_button_height">19dp</dimen>
+    <dimen name="detail_media_button_width">17dp</dimen>
+
     <style name="ViewLibraryBaseTheme" parent="android:Theme.Light">
 
     </style>
@@ -7,5 +12,4 @@
         <!--<item name="primaryDark">@color/colorPrimaryDark</item>-->
         <!--<item name="accent">@color/colorAccent</item>-->
     <!--</style>-->
-
 </resources>
