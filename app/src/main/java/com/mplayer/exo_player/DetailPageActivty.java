@@ -60,6 +60,7 @@ public class DetailPageActivty extends BaseActivity {
 //                Uri.parse("https://recordcdn.quklive.com/broadcast/activity/1555981304628785/20190423/093356_29.ts"),
                 Uri.parse("http://113.105.248.47/14/v/i/k/h/vikhmhifgwpksztpfxxcckpfnkxsbu/he.yinyuetai.com/AE3B0166F34C8148E6F94146DBC1BBCE.mp4"),
                 "");
+        player.setPlayWhenReady(true);
         player.prepare(mediaSource,true,true);
     }
 
