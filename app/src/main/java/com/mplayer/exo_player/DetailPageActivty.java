@@ -2,10 +2,10 @@ package com.mplayer.exo_player;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.SurfaceView;
 
 import com.App;
 import com.base.BaseActivity;
-import com.google.android.exoplayer2.ui.PlayerView;
 import com.kingz.customdemo.R;
 import com.kingz.library.player.IMediaPlayer;
 import com.kingz.library.player.MediaPlayerFactory;
@@ -22,7 +22,7 @@ import com.kingz.utils.ZLog;
 public class DetailPageActivty extends BaseActivity {
     public static final String TAG = "DetailPageActivty";
     private IMediaPlayer player;
-    private PlayerView playerView;
+    private SurfaceView playerView;
     private int currentWindow;
     private long playbackPosition;
 
@@ -37,16 +37,16 @@ public class DetailPageActivty extends BaseActivity {
         playerView = findViewById(R.id.detail_page_playerview);
         ZLog.d(TAG,"initializePlayer()");
         player = getMediaPlayerCore();
-        player.setPlayerView(playerView.getVideoSurfaceView());
+        //TODO 需要挪给Present
+        player.setPlayerView(playerView);
 //        Uri testPlayUri = Uri.parse("http://113.105.248.47/14/v/i/k/h/vikhmhifgwpksztpfxxcckpfnkxsbu/he.yinyuetai.com/AE3B0166F34C8148E6F94146DBC1BBCE.mp4");
         Uri testPlayUri = Uri.parse("http://183.60.197.33/8/w/w/k/e/wwkeazjkxmrhtvpmdfolzahahbtfua/hc.yinyuetai.com/A3B001588B7A43C2C89C0CD899FEFF76.mp4?sc=1d6a19222c007613&br=778&vid=2729951&aid=4539&area=US&vst=3");
         player.setPlayURI(testPlayUri);
     }
 
-    public IMediaPlayer getMediaPlayerCore() {
+    private IMediaPlayer getMediaPlayerCore() {
         return MediaPlayerFactory.newInstance(App.getAppInstance(), MediaPlayerFactory.FLAG_EXO, null);
     }
-
 
     @Override
     protected void onDestroy() {

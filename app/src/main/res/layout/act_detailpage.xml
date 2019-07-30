@@ -6,17 +6,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/MDTheme">
-
-    <com.google.android.exoplayer2.ui.PlayerView
-        android:id="@+id/detail_page_playerview"
-        android:layout_height="200dp"
+    <FrameLayout
+        android:id="@+id/detail_page_playerframe"
         android:layout_width="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        app:controller_layout_id="@layout/exo_custom_playback_control_view"/>
+        android:layout_height="200dp">
+
+        <SurfaceView
+            android:id="@+id/detail_page_playerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
+
+    <!--<com.google.android.exoplayer2.ui.PlayerView-->
+        <!--android:id="@+id/detail_page_playerview"-->
+        <!--android:layout_height="200dp"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--app:controller_layout_id="@layout/exo_custom_playback_control_view"/>-->
 
     <ScrollView
-        app:layout_constraintTop_toBottomOf="@+id/detail_page_playerview"
+        app:layout_constraintTop_toBottomOf="@+id/detail_page_playerframe"
         android:id="@+id/content_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="600dp"
