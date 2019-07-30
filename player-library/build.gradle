@@ -22,6 +22,13 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    api 'com.google.android.exoplayer:exoplayer:2.7.3'
+
+    api 'tv.danmaku.ijk.media:ijkplayer-java:0.8.4'
+    api 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.8.4'
+    api 'tv.danmaku.ijk.media:ijkplayer-armv5:0.8.4'
+    api 'tv.danmaku.ijk.media:ijkplayer-x86:0.8.4'
+    api 'tv.danmaku.ijk.media:ijkplayer-exo:0.8.4'
 
     implementation 'com.android.support:appcompat-v7:26.1.0'
     testImplementation 'junit:junit:4.12'
