@@ -111,7 +111,10 @@ configurations.all {
 }
 
 dependencies {
+    implementation project(path: ':views-library')
+    implementation project(path: ':player-library')
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.github.bumptech.glide:glide:3.7.0'
     //OKHttp 2.X
@@ -131,12 +134,6 @@ dependencies {
     implementation 'com.android.support:support-v4:27.1.1'
     implementation 'com.android.support:recyclerview-v7:27.1.1'
     implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation project(path: ':views-library')
-
-    //-----------------Exo Player-------------------------
-    implementation 'com.google.android.exoplayer:exoplayer:2.7.0'
-
-
 
     //for local tests
     testImplementation 'junit:junit:4.12'
