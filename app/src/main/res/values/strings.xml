@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="button_login" translatable="false">Login</string>
-    <string name="button_signup" translatable="false">Sign Up</string>
-    <string name="button_confirm_login" translatable="false">Confirm Login</string>
-    <string name="button_cancel_login" translatable="false">Cancel Login</string>
-    <string name="button_confirm_signup" translatable="false">Confirm Sign Up</string>
+    <string name="button_login">Login</string>
+    <string name="button_signup">Sign Up</string>
+    <string name="button_confirm_login">Confirm Login</string>
+    <string name="button_cancel_login">Cancel Login</string>
+    <string name="button_confirm_signup">Confirm Sign Up</string>
     <string name="button_cancel_signup" translatable="false">Cancel Sign Up</string>
     <string name="edit_username" translatable="false">username</string>
     <string name="edit_password" translatable="false">password</string>
@@ -86,5 +86,8 @@
     <string name="song_hourse" translatable="false">歌词跑马灯</string>
     <string name="progress_with_number" translatable="false">带数字的水平和环形Progress</string>
     <string name="btn_collect" translatable="false">收藏按钮</string>
+
+    <!--播放器提示-->
+    <string name="full_play">全屏</string>
 
 </resources>

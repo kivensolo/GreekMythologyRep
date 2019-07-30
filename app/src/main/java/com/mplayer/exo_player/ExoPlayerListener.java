@@ -83,9 +83,9 @@ public class ExoPlayerListener extends Player.DefaultEventListener {
     @Override
     public void onPlayerError(ExoPlaybackException error) {
         super.onPlayerError(error);
-        ZLog.d("ExoPlayerListener","onPlayerError !  msg:" + error.getMessage());
         if (error.type == ExoPlaybackException.TYPE_SOURCE) {
             IOException cause = error.getSourceException();
+            ZLog.e("ExoPlayerListener","onPlayerError !  cause:" + cause.getMessage());
             if (cause instanceof HttpDataSource.HttpDataSourceException) {
                 // An HTTP error occurred.
                 HttpDataSource.HttpDataSourceException httpError = (HttpDataSource.HttpDataSourceException) cause;

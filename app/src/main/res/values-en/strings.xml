@@ -16,4 +16,10 @@
     <string name="bkg_poster">Bkg of poster</string>
     <string name="label_desc">文本描述</string>
     <string name="default_buttom_label">8月6</string>
+    <string name="full_play">Full</string>
+    <string name="button_login" translatable="false">Login</string>
+    <string name="button_signup" translatable="false">Sign Up</string>
+    <string name="button_confirm_login" translatable="false">Confirm Login</string>
+    <string name="button_cancel_login">Cancel Login</string>
+    <string name="button_confirm_signup">Confirm Sign Up</string>
 </resources>

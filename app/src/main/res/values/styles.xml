@@ -62,4 +62,9 @@
         <item name="android:paddingRight">16dip</item>
     </style>
 
+    <style name="DetailPlayerButton.Pause">
+        <item name="android:src">@drawable/exo_pause</item>
+        <item name="android:contentDescription">@string/exo_controls_pause_description</item>
+    </style>
+
 </resources>

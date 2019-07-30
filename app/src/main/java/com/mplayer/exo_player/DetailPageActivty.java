@@ -4,11 +4,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import com.BaseActivity;
+import com.base.BaseActivity;
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
@@ -56,11 +57,12 @@ public class DetailPageActivty extends BaseActivity {
         }
         player.addListener(_playerLsr);
         playerView.setPlayer(player);
+        player.setPlayWhenReady(true);
+        player.setRepeatMode(Player.REPEAT_MODE_ALL);
         MediaSource mediaSource = buildMediaSource(
 //                Uri.parse("https://recordcdn.quklive.com/broadcast/activity/1555981304628785/20190423/093356_29.ts"),
                 Uri.parse("http://113.105.248.47/14/v/i/k/h/vikhmhifgwpksztpfxxcckpfnkxsbu/he.yinyuetai.com/AE3B0166F34C8148E6F94146DBC1BBCE.mp4"),
                 "");
-        player.setPlayWhenReady(true);
         player.prepare(mediaSource,true,true);
     }
 
