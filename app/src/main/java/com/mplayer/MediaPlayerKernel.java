@@ -3,12 +3,15 @@ package com.mplayer;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.TimedText;
 import android.net.Uri;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.FrameLayout;
+
+import com.kingz.library.player.internal.AndroidMediaPlayerListeners;
 import com.kingz.utils.ToastTools;
 import com.kingz.utils.ZLog;
 
@@ -20,6 +23,8 @@ import java.io.IOException;
  * author: King.Z
  * date:  2016/9/5 21:40
  * description:播放器核心类
+ * @deprecated  View和Player严重耦合
+ * 使用{@code AndroidMediaPlayer}代替
  */
 public class MediaPlayerKernel extends SurfaceView {
 
@@ -31,7 +36,7 @@ public class MediaPlayerKernel extends SurfaceView {
     //是否正常播放完毕
     boolean playFinished = false;
     private SurfaceHolder mSurfaceHolder;
-    private MediaPlayerListeners mListenners;
+    private AndroidMediaPlayerListeners mListenners;
     OnStateChangeListener onStateChangeListener;
 
     private MediaState mediaState;
@@ -78,7 +83,17 @@ public class MediaPlayerKernel extends SurfaceView {
     }
 
     private void initListeners() {
-        mListenners = new MediaPlayerListeners() {
+        mListenners = new AndroidMediaPlayerListeners() {
+            @Override
+            public void onTimedText(MediaPlayer mp, TimedText text) {
+
+            }
+
+            @Override
+            public void onBufferingUpdate(MediaPlayer mp, int percent) {
+
+            }
+
             @Override
             public void onCompletion(MediaPlayer mp) {
                 playFinished = true;
