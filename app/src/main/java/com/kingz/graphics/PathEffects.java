@@ -5,7 +5,7 @@ import android.graphics.*;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
-import com.BaseActivity;
+import com.base.BaseActivity;
 
 /**
  * Copyright(C) 2015, 北京视达科科技有限公司

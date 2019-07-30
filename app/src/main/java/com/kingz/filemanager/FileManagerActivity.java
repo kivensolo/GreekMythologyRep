@@ -13,7 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.BaseActivity;
+import com.base.BaseActivity;
 import com.kingz.customdemo.R;
 import com.kingz.filemanager.adapter.FileListAdapter;
 import com.kingz.utils.FileUtils;

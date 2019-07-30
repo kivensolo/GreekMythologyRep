@@ -1,4 +1,4 @@
-package com;
+package com.base;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -39,17 +39,6 @@ public class BaseActivity extends Activity {
     protected void findID() {
     }
 
-    //protected void AddToolbar() {
-    //    ListView toolbar = (ListView) findViewById(R.id.list_view);
-    //
-    //}
-
-    /**
-     * 初始
-     */
-    public void InData() {
-    }
-
     /**
      * 监听
      */
@@ -62,8 +51,6 @@ public class BaseActivity extends Activity {
     protected void initIntent() {
 
     }
-
-
 
     public boolean isLoadding =false;
 

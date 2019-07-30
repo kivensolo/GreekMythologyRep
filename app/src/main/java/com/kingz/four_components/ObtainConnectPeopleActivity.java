@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-import com.BaseActivity;
+import com.base.BaseActivity;
 import com.kingz.customdemo.R;
 import com.kingz.four_components.provider.ContentChangeListener;
 import com.kingz.utils.ZLog;

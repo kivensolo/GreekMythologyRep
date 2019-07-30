@@ -332,10 +332,9 @@ public class OkHttpClientManager {
     //    getInstance()._postAsyn(url, callback, file, fileKey, params);
     //}
 
-    public static void displayImage(final ImageView view, String url, int errorResId) throws IOException {
-        getInstance()._displayImage(view, url, errorResId);
+    public static void displayImage(final ImageView view, String url, int defaultResId) throws IOException {
+        getInstance()._displayImage(view, url, defaultResId);
     }
-
 
     public static void displayImage(final ImageView view, String url) {
         url = "http://p0.meituan.net/165.220/movie/7f32684e28253f39fe2002868a1f3c95373851.jpg";

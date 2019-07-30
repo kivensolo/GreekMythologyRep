@@ -1,7 +1,7 @@
 package com.kingz.pages.photo.colormatrix;
 
 import android.os.Bundle;
-import com.BaseActivity;
+import com.base.BaseActivity;
 import com.kingz.customdemo.R;
 
 /**

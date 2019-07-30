@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import com.BaseActivity;
+import com.base.BaseActivity;
 import com.kingz.customdemo.R;
 import com.kingz.utils.BitMapUtils;
 import com.kingz.utils.ZLog;
