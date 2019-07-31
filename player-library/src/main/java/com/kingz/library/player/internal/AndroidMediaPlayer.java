@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.Surface;
 
 import com.kingz.library.player.AbstractMediaPlayer;
+import com.kingz.library.player.IMediaPlayer;
 
 /**
  * author：KingZ
@@ -251,5 +252,10 @@ public class AndroidMediaPlayer extends AbstractMediaPlayer implements AndroidMe
 
     @Override
     public void onSurfaceTextureUpdated(SurfaceTexture surface) {
+    }
+
+    @Override
+    public IMediaPlayer getMediaPlayer() {
+        return this;
     }
 }

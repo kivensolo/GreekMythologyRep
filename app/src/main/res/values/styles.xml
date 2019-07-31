@@ -19,9 +19,13 @@
         <item name="android:listDivider">@drawable/divider_bg</item>
     </style>
 
+
     <style name="Lollipop_NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <!--App Bar  的背景色-->
         <item name="colorPrimary">@color/colorPrimary</item>
+        <!-- status bar（状态栏）背景色。仅作用于 Lollipop 及更高版本 -->
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <!-- 许多控件在选中状态或获取焦点状态下使用这个颜色 -->
         <item name="colorAccent">@color/skygreen</item>
     </style>
 
@@ -51,6 +55,8 @@
         <item name="android:windowEnterAnimation">@anim/dialog_anim_in</item>
     </style>-->
 
+
+    <!-- 自定义SeekBar样式 -->
     <style name="MediaController_SeekBar" parent="android:Widget.SeekBar">
         <item name="android:progressDrawable">@drawable/scrubber_progress_horizontal_holo_dark</item>
         <item name="android:indeterminateDrawable">@drawable/scrubber_progress_horizontal_holo_dark</item>
@@ -61,6 +67,18 @@
         <item name="android:paddingLeft">16dip</item>
         <item name="android:paddingRight">16dip</item>
     </style>
+
+    <style name="player_controller_seekbar" parent="android:Widget.SeekBar">
+        <item name="android:progressDrawable">@drawable/player_seekbar_progress</item>
+        <item name="android:indeterminateDrawable">@drawable/player_seekbar_progress</item>
+        <item name="android:minHeight">4dip</item>
+        <item name="android:maxHeight">4dip</item>
+        <item name="android:thumb">@drawable/scrubber_control_selector_holo</item>
+        <item name="android:thumbOffset">2dip</item>
+        <item name="android:paddingLeft">2dip</item>
+        <item name="android:paddingRight">2dip</item>
+    </style>
+
 
     <style name="DetailPlayerButton.Pause">
         <item name="android:src">@drawable/exo_pause</item>

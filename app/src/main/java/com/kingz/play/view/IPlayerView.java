@@ -9,7 +9,7 @@ import com.base.IAppView;
  * description：播放器顶层View接口
  */
 
-public interface IPlayerView extends IAppView {
+public interface IPlayerView extends IAppView,View.OnClickListener {
     /**
      * 获取播放视图
      */
@@ -95,7 +95,7 @@ public interface IPlayerView extends IAppView {
     /**
      * 开启关闭定时消失蒙层
      */
-    void enableDelayDismiss(boolean isDelayDismiss);
+    void dismissControlbar(boolean enable);
 
     /**
      * 在蒙层显示的时候 都需要收起pop

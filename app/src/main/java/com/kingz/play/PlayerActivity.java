@@ -6,7 +6,6 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.media.AudioManager;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.view.WindowManager;
@@ -24,13 +23,16 @@ import java.util.concurrent.TimeUnit;
  * description：播放器的顶层抽象层
  */
 public abstract class PlayerActivity extends BaseActivity {
+    protected static final String TAG_VOD_PLAY = "vod_play";
+    protected static final String TAG_VOD_INFO = "vod_info";
+    protected static final String TAG_VOD_DETAIL = "vod_detail";
 
     //播放部分的layout params
     private LinearLayout.LayoutParams portraitParams;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         keepScreenOn();
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
         setContentView(R.layout.activity_play);

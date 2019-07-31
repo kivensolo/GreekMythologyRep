@@ -551,5 +551,8 @@ public class ExoMediaPlayer extends AbstractMediaPlayer implements Player.EventL
         }
     }
 
-
+    @Override
+    public IMediaPlayer getMediaPlayer() {
+        return this;
+    }
 }

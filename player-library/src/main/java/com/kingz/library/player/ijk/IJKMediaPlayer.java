@@ -246,5 +246,9 @@ public class IJKMediaPlayer extends AbstractMediaPlayer implements IJKMediaPlaye
         player.setOnCompletionListener(null);
         player.setOnInfoListener(null);
     }
-    
+
+    @Override
+    public com.kingz.library.player.IMediaPlayer getMediaPlayer() {
+        return this;
+    }
 }

@@ -1,66 +1,73 @@
 package com.mplayer.exo_player;
 
-import android.net.Uri;
+import android.content.res.Configuration;
 import android.os.Bundle;
-import android.view.SurfaceView;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 
-import com.App;
-import com.base.BaseActivity;
 import com.kingz.customdemo.R;
-import com.kingz.library.player.IMediaPlayer;
-import com.kingz.library.player.MediaPlayerFactory;
-import com.kingz.library.player.exo.ExoMediaPlayer;
-import com.kingz.utils.ZLog;
+import com.kingz.play.MediaParams;
+import com.kingz.play.PlayerActivity;
+import com.kingz.play.fragment.PlayFragment;
+import com.kingz.play.presenter.PlayPresenter;
 
 /**
  * author：KingZ
  * date：2019/4/23
  * description：手机版本的详情页
  * 基于exo播放器组件
- * https://www.jianshu.com/p/6e466e112877
  */
-public class DetailPageActivty extends BaseActivity {
+public class DetailPageActivty extends PlayerActivity {
     public static final String TAG = "DetailPageActivty";
-    private IMediaPlayer player;
-    private SurfaceView playerView;
-    private int currentWindow;
-    private long playbackPosition;
+
+    private PlayFragment playFragment;
+    private PlayPresenter playPresenter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.act_detailpage);
-        initializePlayer();
+        initFragment();
     }
 
-    private void initializePlayer() {
-        playerView = findViewById(R.id.detail_page_playerview);
-        ZLog.d(TAG,"initializePlayer()");
-        player = getMediaPlayerCore();
-        //TODO 需要挪给Present
-        player.setPlayerView(playerView);
-//        Uri testPlayUri = Uri.parse("http://113.105.248.47/14/v/i/k/h/vikhmhifgwpksztpfxxcckpfnkxsbu/he.yinyuetai.com/AE3B0166F34C8148E6F94146DBC1BBCE.mp4");
-        Uri testPlayUri = Uri.parse("http://183.60.197.33/8/w/w/k/e/wwkeazjkxmrhtvpmdfolzahahbtfua/hc.yinyuetai.com/A3B001588B7A43C2C89C0CD899FEFF76.mp4?sc=1d6a19222c007613&br=778&vid=2729951&aid=4539&area=US&vst=3");
-        player.setPlayURI(testPlayUri);
-    }
+    private void initFragment() {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        playFragment = (PlayFragment) fm.findFragmentByTag(TAG_VOD_DETAIL);
+        if (playFragment == null) {
+            playFragment = PlayFragment.newInstance(new MediaParams());
+            fragmentTransaction
+                    .add(R.id.player_content, playFragment, TAG_VOD_DETAIL)
+                    .show(playFragment);
+        }
+//        playPresenter = new PlayPresenter(playFragment); //p和view层关联
+//        playFragment.setPresenter(playPresenter);
 
-    private IMediaPlayer getMediaPlayerCore() {
-        return MediaPlayerFactory.newInstance(App.getAppInstance(), MediaPlayerFactory.FLAG_EXO, null);
+        // 影片详情显示
+//        vodInfoFragment = (VodInfoFragment) fm.findFragmentByTag(TAG_VOD_INFO);
+//        if (vodInfoFragment == null) {
+//            vodInfoFragment = new VodInfoFragment();
+//            vodInfoPresenter = new VodInfoPresenter(vodInfoFragment, mediaParams, playRequestManager, playEventManager);   //这样写的原因是要确保presenter在fragment的onCreate之前执行
+//            fragmentTransaction.add(R.id.content_layout, vodInfoFragment, TAG_VOD_INFO);
+//        } else {
+//            vodInfoPresenter = new VodInfoPresenter(vodInfoFragment, mediaParams, playRequestManager, playEventManager);
+//        }
+//        vodInfoFragment.setPresenter(vodInfoPresenter);
+//
+//        fragmentTransaction.show(vodInfoFragment);
+        fragmentTransaction.commit();
     }
 
     @Override
-    protected void onDestroy() {
-        releasePlayer();
-        super.onDestroy();
-    }
-
-    private void releasePlayer() {
-        if (player != null) {
-            playbackPosition = player.getCurrentPosition();
-            if(player instanceof ExoMediaPlayer){
-                currentWindow = ((ExoMediaPlayer)player).getCurrentWindowIndex();
-            }
-            player.release();
+    public void onBackPressed() {
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            //目前是横屏的话
+            playFragment.onBackPressed();
+        }
+//        else if (vodDetailFragment != null && vodDetailFragment.isAdded() && vodDetailFragment.isVisible()) {
+//            getSupportFragmentManager().beginTransaction().remove(vodDetailFragment).commit();
+//        }
+        else {
+            super.onBackPressed();
         }
     }
 

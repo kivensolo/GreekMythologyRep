@@ -1,5 +1,6 @@
 package com.kingz.four_components;
 
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Rect;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+
 import com.base.BaseActivity;
 import com.kingz.customdemo.R;
 import com.kingz.four_components.provider.ContentChangeListener;
@@ -30,6 +32,7 @@ public class ObtainConnectPeopleActivity extends BaseActivity {
     private ArrayAdapter<String> adapter = null;
     private List<String> contactaList;
     ContentChangeListener contentChangeListener;
+    public ContentResolver baseResolver;
     private Button queryBtn;
     private Button deleteBtn;
     private Button insertBtn;

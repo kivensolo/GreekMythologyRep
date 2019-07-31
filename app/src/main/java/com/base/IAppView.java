@@ -8,6 +8,9 @@ import android.view.View;
  * description：app顶层view接口
  */
 public interface IAppView {
+
+    void setPresenter(IPresenter presenter);
+
     /**
      * 显示加载
      */
@@ -32,5 +35,4 @@ public interface IAppView {
      */
     void showMessage(String tips);
 
-    void setPresenter(IPresenter presenter);
 }

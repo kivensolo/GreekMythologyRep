@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- 欢迎页面 -->
     <string name="button_login">Login</string>
     <string name="button_signup">Sign Up</string>
     <string name="button_confirm_login">Confirm Login</string>
@@ -67,7 +68,7 @@
     <string name="animationviewfliper_tips" translatable="false">选择一个动画</string>
 
     <string name="create">create</string>
-    <string name="delete">delete</string>
+    <string name="delete" translatable="false">delete</string>
 
     <string name="lorem_ipsum" translatable="false">
         <![CDATA[Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et magna ut erat elementum cursus in quis ipsum. Nam faucibus ultrices eros, vel tempor leo semper sit amet. Duis magna quam, congue vitae interdum nec, condimentum ut lectus. Sed commodo venenatis eros a dignissim. Nunc adipiscing turpis nec magna venenatis at ultricies ipsum bibendum. Sed volutpat urna quis nisi vulputate egestas. Etiam eu dui a enim lacinia dapibus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.\n\nPhasellus orci mi, eleifend nec congue id, volutpat at neque. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer semper velit vel leo rutrum sed fermentum elit porta.]]>
@@ -89,5 +90,12 @@
 
     <!--播放器提示-->
     <string name="full_play">全屏</string>
+    <string name="player_flow_tips" translatable="false">正在使用流量播放</string>
+
+
+    <!--日期相关-->
+    <string name="today" translatable="false">今天</string>
+    <string name="yesterday" translatable="false">昨天</string>
+    <string name="tomorrow" translatable="false">明天</string>
 
 </resources>

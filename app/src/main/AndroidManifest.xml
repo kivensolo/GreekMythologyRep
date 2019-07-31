@@ -43,10 +43,6 @@
 
         <!--<uses-library android:name="android.test.AndroidTestRunner"/>-->
 
-        <meta-data
-                android:name="com.baidu.lbsapi.API_KEY"
-                android:value="XwMW9CR6w14VOWGG4AkGue8W|GlideModule"/>
-
         <provider
                 android:authorities="${packageName}"
                 android:name="com.kingz.four_components.provider.KingZProvider">
@@ -266,8 +262,6 @@
 
 
         <!-- 百度地图View -->
-        <activity android:name="com.lbs.BaiduMapActivity"
-                  android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <!-- FilmList -->
         <activity android:name="com.kingz.pages.photo.filmlist.FilmsListActivity"
@@ -287,7 +281,8 @@
                   android:theme="@android:style/Theme.Black.NoTitleBar"
                   android:screenOrientation="landscape"/>
 
-        <activity android:name="com.mplayer.exo_player.DetailPageActivty"/>
+        <activity
+            android:name="com.mplayer.exo_player.DetailPageActivty"/>
 
         <!-- ************ API Demos 页面 ************ -->
 

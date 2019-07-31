@@ -9,7 +9,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
-import cn.bmob.v3.BmobUser;
+
 import com.apiDemo.content.ExternalStorage;
 import com.asynctask_jsontest.LruPicListViewActivity;
 import com.iflytek.synthesizer.VoiceActivity;
@@ -35,19 +35,24 @@ import com.kingz.text.LableTextViewPage;
 import com.kingz.text.langs.TextViewOfLanguages;
 import com.kingz.text.metrics.FontMetricsDemoActivity;
 import com.kingz.utils.ZLog;
-import com.kingz.view.animation.*;
+import com.kingz.view.animation.CrossfadeActivity;
+import com.kingz.view.animation.InterpolatorAnimation;
+import com.kingz.view.animation.PropertyAnimationsActivity;
+import com.kingz.view.animation.ShakeAnimation;
+import com.kingz.view.animation.ViewFlipperAnimation;
 import com.kingz.view.surface.DrawRectWithSurface;
 import com.kingz.widgets.AnimatedExpandableListView;
 import com.kingz.widgets.android_src.BasicControlsActivity;
 import com.kingz.widgets.android_src.NativeProgressBar;
 import com.kingz.widgets.android_src.OriginViewPager;
 import com.kingz.widgets.android_src.SpansDemo;
-import com.lbs.BaiduMapActivity;
 import com.mplayer.ApolloMediaPlayer;
 import com.mplayer.exo_player.DetailPageActivty;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.bmob.v3.BmobUser;
 
 /**
  * author: KingZ
@@ -161,7 +166,6 @@ public class MainActivity extends ExpandableListActivity implements OnItemClickL
         //Net
         billDataManager.addGroup("Net");
         addChildData("JsonParseAndPicLru", LruPicListViewActivity.class);
-//        addChildData("BaiduMapTest", BaiduMapActivity.class);
         addChildData("FilmsList", FilmsListActivity.class);
         billDataManager.pushChilds();
 

@@ -1,9 +1,15 @@
 package com.kingz.pages.photo;
 
-import android.graphics.*;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+
 import com.kingz.customdemo.R;
 import com.kingz.utils.BitMapUtils;
 import com.kingz.utils.ScreenShotUtils;
@@ -55,21 +61,6 @@ public class BitmapPhotosActivity extends PhotosActivity {
 
     private void setImageView() {
         img1.setImageBitmap(srcBitmap);
-    }
-
-    @Override
-    public void showLoadingDialog() {
-        super.showLoadingDialog();
-    }
-
-    @Override
-    protected void Listener() {
-        super.Listener();
-    }
-
-    @Override
-    protected void initIntent() {
-        super.initIntent();
     }
 
     @Override

@@ -1,0 +1,22 @@
+@startuml
+
+interface Player{
+    interface VideoComponent
+    interface TextComponent
+    interface EventListener
+}
+
+interface ExoPlayer extends Player
+class ExoPlayerImpl implements ExoPlayer
+
+class FrameLayout
+class PlayerControlView extends FrameLayout{
+    ComponentListener componentListener
+    interface VisibilityListener
+}
+
+class ExoPlayerImplInternal implements Handler.Callback,MediaPeriod.Callback,TrackSelector.InvalidationListener,MediaSource.Listener
+
+class SimpleExoPlayer implements ExoPlayer, Player.VideoComponent, Player.TextComponent
+
+@enduml

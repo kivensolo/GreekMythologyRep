@@ -1,10 +1,10 @@
 package com.base;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 
 import com.App;
 
@@ -44,8 +44,14 @@ public abstract class BaseFragment extends Fragment {
     }
 
     public boolean onBackPressed() {
-        return true;
+        return false;
     }
 
-
+    public void showPlayBufferTips() {}
+    public void dismissPlayBufferTips() {}
+    public void showPreviewCompleteTips(String tips) {}
+    public void showVipBuyTips(String tips) {}
+    public void showLoginTips(String tips) {}
+    public void showDLNA(String tags) {
+ }
 }

@@ -1,15 +1,14 @@
 package com.base;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Application;
 import android.content.ComponentCallbacks;
-import android.content.ContentResolver;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.widget.Toast;
+
 import com.kingz.utils.ZLog;
 
 /**
@@ -18,41 +17,30 @@ import com.kingz.utils.ZLog;
  * author: King.Z
  * date: 2016 2016/3/27 18:26
  */
-@SuppressLint("Registered")
-public class BaseActivity extends Activity {
+public class BaseActivity extends AppCompatActivity {
 
     private static final String TAG = BaseActivity.class.getSimpleName();
-    public ContentResolver baseResolver;
-    private Toast mToast;
+    public boolean isLoadding =false;
+    protected boolean isShow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.i(TAG,"BaseActivity onCreate()");
         super.onCreate(savedInstanceState);
-        findID();
-        baseResolver = getContentResolver();
     }
 
-    /**
-     * 获取资源
-     */
-    protected void findID() {
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isShow = true;
     }
 
-    /**
-     * 监听
-     */
-    protected void Listener() {
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        isShow = false;
     }
-
-    /**
-     * 对传递数据处
-     */
-    protected void initIntent() {
-
-    }
-
-    public boolean isLoadding =false;
 
     public void showLoadingDialog() {
         if (!isFinishing()) {
@@ -61,6 +49,7 @@ public class BaseActivity extends Activity {
                 return;
             }
             isLoadding = true;
+            //TODO 替换新版本的加载圈
             isLoadding = showDialog(5, null);
         }
     }
@@ -119,6 +108,17 @@ public class BaseActivity extends Activity {
         activityDisplayMetries.density = targetDensity;
         activityDisplayMetries.scaledDensity = targetScaleDensity;
         activityDisplayMetries.densityDpi = targetDensityDPI;
+    }
+
+    public boolean isActivityShow() {
+        return isShow;
+    }
+
+
+    //避免getActivity为空,不保存fragment的实例
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
     }
 
 }

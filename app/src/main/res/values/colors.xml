@@ -158,6 +158,7 @@
 
     <!-- Android L 颜色 -->
     <color name="skygreen">#5FCDDA</color><!--天绿色 -->
+    <color name="skygreen_b">#2cbdd7</color>
     <color name="fruitpurple">#7151E0</color><!--葡萄色 -->
     <color name="qianpurple">#A08BE8</color><!--浅_葡萄色 -->
     <color name="suncolor">#FED094</color><!--夕阳色 -->
@@ -179,5 +180,8 @@
 
     <color name="mplayer_seekbar_played">#55E1FA</color>
     <color name="mplayer_seekbar_unplayed">#66F8F9FA</color>
+    <color name="bg_main_vod_searchbar">#cc30343c</color>
+    <color name="bg_main_vod_search_text">#55050505</color>
+
 
 </resources>

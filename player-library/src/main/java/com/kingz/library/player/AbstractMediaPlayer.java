@@ -75,7 +75,6 @@ public abstract class AbstractMediaPlayer implements IMediaPlayer,
             playCallBack.onViewDestroyed();
         }
     }
-
     @Override
     public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
         mSurface = new Surface(surface);
@@ -190,6 +189,9 @@ public abstract class AbstractMediaPlayer implements IMediaPlayer,
     public Bitmap getCurrentThumb() {
         return playView instanceof TextureView ? ((TextureView) playView).getBitmap() : null;
     }
+
+    @Override
+    public abstract  IMediaPlayer getMediaPlayer();
 
     private void removeHandler() {
         mainHandler.removeCallbacksAndMessages(null);

@@ -83,5 +83,6 @@ public interface IMediaPlayer {
      */
     Bitmap getCurrentThumb();
 
+    IMediaPlayer getMediaPlayer();
 
 }
