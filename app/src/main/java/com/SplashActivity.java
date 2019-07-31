@@ -3,34 +3,25 @@ package com;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
+import com.base.BaseActivity;
 import com.kingz.customdemo.R;
 import com.kingz.view.LogininView;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * author: King.Z <br>
  * date:  2016/9/29 19:03 <br>
  * description: 应用欢迎页面 <br>
  */
-public class SplashActivity extends Activity implements View.OnClickListener {
+public class SplashActivity extends BaseActivity implements View.OnClickListener {
 
     private VideoView mVideoView;
     private InputType inputType = InputType.NONE;
@@ -48,16 +39,6 @@ public class SplashActivity extends Activity implements View.OnClickListener {
         initView();
         playVideo();
         playAnim();
-    }
-
-    private void setWindowsTranslucent() {
-        Window window = getWindow();
-        window.setFlags(
-                WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
-                WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//        window.setFlags(
-//                WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,
-//                WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
     }
 
     private void findView() {

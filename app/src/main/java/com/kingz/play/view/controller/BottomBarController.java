@@ -5,7 +5,6 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-
 import com.kingz.customdemo.R;
 import com.kingz.utils.TimeUtils;
 import com.kingz.utils.ViewTools;
@@ -75,7 +74,7 @@ public class BottomBarController extends BaseController{
     @Override
     public void show() {
 //        qualityTxt.setVisibility(View.GONE);
-//        liveTv.setVisibility(View.GONE);
+        liveTv.setVisibility(View.GONE);
         nextImg.setVisibility(View.GONE);
         if(ViewTools.isLandScape(rootView)){
             fullScreenImg.setVisibility(View.GONE);

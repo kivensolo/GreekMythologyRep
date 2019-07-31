@@ -10,27 +10,9 @@ import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceView;
 import android.view.TextureView;
-
-import com.google.android.exoplayer2.C;
-import com.google.android.exoplayer2.DefaultLoadControl;
-import com.google.android.exoplayer2.DefaultRenderersFactory;
-import com.google.android.exoplayer2.ExoPlaybackException;
-import com.google.android.exoplayer2.ExoPlayerFactory;
-import com.google.android.exoplayer2.PlaybackParameters;
-import com.google.android.exoplayer2.Player;
-import com.google.android.exoplayer2.SimpleExoPlayer;
-import com.google.android.exoplayer2.Timeline;
-import com.google.android.exoplayer2.drm.DefaultDrmSessionManager;
-import com.google.android.exoplayer2.drm.DrmSessionManager;
-import com.google.android.exoplayer2.drm.FrameworkMediaCrypto;
-import com.google.android.exoplayer2.drm.FrameworkMediaDrm;
-import com.google.android.exoplayer2.drm.HttpMediaDrmCallback;
-import com.google.android.exoplayer2.drm.UnsupportedDrmException;
-import com.google.android.exoplayer2.source.ConcatenatingMediaSource;
-import com.google.android.exoplayer2.source.ExtractorMediaSource;
-import com.google.android.exoplayer2.source.MediaSource;
-import com.google.android.exoplayer2.source.MediaSourceEventListener;
-import com.google.android.exoplayer2.source.TrackGroupArray;
+import com.google.android.exoplayer2.*;
+import com.google.android.exoplayer2.drm.*;
+import com.google.android.exoplayer2.source.*;
 import com.google.android.exoplayer2.source.dash.DashMediaSource;
 import com.google.android.exoplayer2.source.dash.DefaultDashChunkSource;
 import com.google.android.exoplayer2.source.hls.HlsMediaSource;
@@ -40,11 +22,7 @@ import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelection;
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
-import com.google.android.exoplayer2.upstream.DataSource;
-import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
-import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
-import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
-import com.google.android.exoplayer2.upstream.HttpDataSource;
+import com.google.android.exoplayer2.upstream.*;
 import com.google.android.exoplayer2.util.EventLogger;
 import com.google.android.exoplayer2.util.Util;
 import com.kingz.library.player.AbstractMediaPlayer;
@@ -76,7 +54,7 @@ import java.util.UUID;
  */
 
 public class ExoMediaPlayer extends AbstractMediaPlayer implements Player.EventListener {
-    private static final String TAG = ExoMediaPlayer.class.getName();
+    private static final String TAG = ExoMediaPlayer.class.getSimpleName();
     private static final DefaultBandwidthMeter BANDWIDTH_METER = new DefaultBandwidthMeter();
     private static final CookieManager DEFAULT_COOKIE_MANAGER = new CookieManager();
 
@@ -155,7 +133,7 @@ public class ExoMediaPlayer extends AbstractMediaPlayer implements Player.EventL
                 stateString = "ExoPlayer.STATE_READY     -";
                 if (!isPrepared()) {
                     isPrepared = true;
-//                    onPrepared();
+                    onPrepared();
                 }
                 if (isBuffering()) {
                     onInfo(AbstractMediaPlayer.MEDIA_INFO_BUFFERING_END);
@@ -166,6 +144,13 @@ public class ExoMediaPlayer extends AbstractMediaPlayer implements Player.EventL
                 break;
         }
         Log.d(TAG, "changed state to " + stateString + " playWhenReady: " + playWhenReady);
+    }
+
+    private void onPrepared(){
+        isPrepared = true;
+        if (playCallBack != null) {
+            playCallBack.onPrepared(this);
+        }
     }
 
     @Override
@@ -489,9 +474,7 @@ public class ExoMediaPlayer extends AbstractMediaPlayer implements Player.EventL
 
     public void onInfo(int what) {
         String s = "正在缓冲";
-        if (what == Player.STATE_BUFFERING) {
-
-        } else if (what == Player.STATE_READY) {
+        if (what == Player.STATE_READY) {
             s = "缓冲结束";
         }
         logout("onInfo():" + s);

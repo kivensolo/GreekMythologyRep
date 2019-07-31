@@ -3,9 +3,8 @@ apply from: "config.gradle"
 buildscript {
     repositories {
         jcenter()
+//      maven { url uri('D:/repos')}  //local repositories
         google()
-        maven { url uri('D:/repos')}  //local repositories
-//      maven { url 'https://maven.google.com' }  //befor AS 3.0  Use google repositories
     }
     dependencies { //Identifies the Android plugin
         classpath 'com.android.tools.build:gradle:3.0.1'
@@ -17,8 +16,6 @@ allprojects {
     repositories {
         jcenter()
         google()
-        //Bmob的maven仓库地址
-        maven { url "https://raw.github.com/bmob/bmob-android-sdk/master" }
     }
 
 }

@@ -4,7 +4,6 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-
 import com.kingz.customdemo.R;
 import com.kingz.play.MediaParams;
 import com.kingz.play.PlayerActivity;
@@ -26,6 +25,7 @@ public class DetailPageActivty extends PlayerActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //setWindowsTranslucent();
         initFragment();
     }
 
@@ -55,6 +55,12 @@ public class DetailPageActivty extends PlayerActivity {
 //
 //        fragmentTransaction.show(vodInfoFragment);
         fragmentTransaction.commit();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        playFragment.onDestroy();
     }
 
     @Override

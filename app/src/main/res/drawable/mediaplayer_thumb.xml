@@ -6,8 +6,8 @@
 	<corners android:radius="20dp" />
     <size android:width="15dp"
         android:height="15dp"/>
-    <solid android:color="@color/peru"/>
-    <stroke android:color="@color/peru"/>
+    <solid android:color="@color/deepskyblue"/>
+    <stroke android:color="@color/cyan"/>
     <padding
         android:bottom="1dip"
         android:left="1dip"

@@ -49,14 +49,10 @@
         </provider>
 
         <!--android:authorities="${packageName}.BmobContentProvider">-->
-        <!--<provider-->
-                <!--android:name="cn.bmob.v3.util.BmobContentProvider"-->
-                <!--android:authorities="${packageName}.BmobContentProvider">-->
-        <!--</provider>-->
 
         <activity
                 android:name="com.SplashActivity"
-                android:theme="@android:style/Theme.Black.NoTitleBar">
+                android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -282,6 +278,7 @@
                   android:screenOrientation="landscape"/>
 
         <activity
+                android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:name="com.mplayer.exo_player.DetailPageActivty"/>
 
         <!-- ************ API Demos 页面 ************ -->

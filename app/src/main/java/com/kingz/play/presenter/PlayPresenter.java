@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 import android.widget.SeekBar;
-
 import com.kingz.library.player.IMediaPlayer;
 import com.kingz.library.player.exo.ExoMediaPlayer;
 import com.kingz.play.view.IPlayerView;
@@ -16,69 +15,70 @@ import static com.google.android.exoplayer2.Player.REPEAT_MODE_ALL;
  * author：KingZ
  * date：2019/7/30
  * description：
+ *
+ * 视频地址：http://www.zhiboo.net/
  * FIXME 这个presenter实现SeekBar的监听可否优化
+ *
+ * TODO 画面模式调整， 全屏播放  全屏的播控画面亮度、声音
  */
 public class PlayPresenter implements IPlayPresenter,
-        View.OnClickListener,
-        SeekBar.OnSeekBarChangeListener {
-    private static final String TAG = PlayPresenter.class.getName();
+        View.OnClickListener, SeekBar.OnSeekBarChangeListener {
+    private static final String TAG = PlayPresenter.class.getSimpleName();
     private IPlayerView playerView;
-    private IMediaPlayer player;
+    private IMediaPlayer mPlayer;
 
     public PlayPresenter(IMediaPlayer player,IPlayerView playerView) {
-        this.player = player;
+        this.mPlayer = player;
         this.playerView = playerView;
     }
 
     @Override
     public void onCreateView() {
-        player.setPlayerView(playerView.getPlayView());
-        player.setPlayerEventCallBack(this);
-//        Uri testPlayUri = Uri.parse("http://113.105.248.47/14/v/i/k/h/vikhmhifgwpksztpfxxcckpfnkxsbu/he.yinyuetai.com/AE3B0166F34C8148E6F94146DBC1BBCE.mp4");
-        Uri testPlayUri = Uri.parse("http://183.60.197.33/8/w/w/k/e/wwkeazjkxmrhtvpmdfolzahahbtfua/hc.yinyuetai.com/A3B001588B7A43C2C89C0CD899FEFF76.mp4?sc=1d6a19222c007613&br=778&vid=2729951&aid=4539&area=US&vst=3");
-        player.setPlayURI(testPlayUri);
-        if(player instanceof ExoMediaPlayer){
-            ((ExoMediaPlayer)player).setRepeatMode(REPEAT_MODE_ALL);
+        mPlayer.setPlayerView(playerView.getPlayView());
+        mPlayer.setPlayerEventCallBack(this);
+        playTest();
+    }
+
+    private void playTest() {
+        //Uri testPlayUri = Uri.parse("http://113.105.248.47/14/v/i/k/h/vikhmhifgwpksztpfxxcckpfnkxsbu/he.yinyuetai.com/AE3B0166F34C8148E6F94146DBC1BBCE.mp4");
+        //Uri testPlayUri = Uri.parse("http://183.222.102.65/cache/hc.yinyuetai.com/uploads/videos/common/C1C6015E95755D79B2A706CC75BB1809.mp4?sc=022fceb4b8b24fb7&br=780&vid=3045490&aid=42545&area=US&vst=4&ich_args2=394-31214602005373_4274ad8eeb58c86e3763a95d241faabd_10307403_9c896228d2cbf1d69f3a518939a83798_6af147aa7f96aa8723f9c43d081fec81");
+        Uri testPlayUri = Uri.parse("http://cctvtxyh5c.liveplay.myqcloud.com/wstv/dongfang_2/index.m3u8");
+        mPlayer.setPlayURI(testPlayUri);
+        if(mPlayer instanceof ExoMediaPlayer){
+            ((ExoMediaPlayer) mPlayer).setRepeatMode(REPEAT_MODE_ALL);
         }
         play();
     }
 
     public void play() {
-        player.play();
+        mPlayer.play();
         playerView.showPlayStateView();
     }
 
     public void pause() {
-        player.pause();
+        mPlayer.pause();
         playerView.showPauseStateView();
     }
 
-    public void release() {
-        player.release();
+    private void release() {
+        mPlayer.release();
     }
 
     private void seekTo(long progress) {
-        if (progress < 0 || progress > player.getDuration()) {
+        if (progress < 0 || progress > mPlayer.getDuration()) {
             return;
         }
-        player.seekTo(progress);
+        mPlayer.seekTo(progress);
     }
 
     @Override
-    public void onCreate() {
-
-    }
-
+    public void onCreate() {}
 
     @Override
-    public void onStart() {
-
-    }
+    public void onStart() {}
 
     @Override
-    public void onResume() {
-
-    }
+    public void onResume() {}
 
     @Override
     public void onPause() {
@@ -88,18 +88,16 @@ public class PlayPresenter implements IPlayPresenter,
 
     @Override
     public void onStop() {
-
+        mPlayer.pause();
     }
 
     @Override
     public void onDestroyView() {
-
+        release();
     }
 
     @Override
-    public void onDestroy() {
-
-    }
+    public void onDestroy() {}
 
     @Override
     public void onClick(View v) {
@@ -169,6 +167,7 @@ public class PlayPresenter implements IPlayPresenter,
 
     @Override
     public boolean onInfo(IMediaPlayer player, int what, int extra) {
+        Log.d(TAG,"onInfo what="+what + "; extra="+extra);
         return false;
     }
 

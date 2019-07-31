@@ -56,7 +56,7 @@
     </style>-->
 
 
-    <!-- 自定义SeekBar样式 -->
+    <!-- 自定义SeekBar样式  Start-->
     <style name="MediaController_SeekBar" parent="android:Widget.SeekBar">
         <item name="android:progressDrawable">@drawable/scrubber_progress_horizontal_holo_dark</item>
         <item name="android:indeterminateDrawable">@drawable/scrubber_progress_horizontal_holo_dark</item>
@@ -73,11 +73,13 @@
         <item name="android:indeterminateDrawable">@drawable/player_seekbar_progress</item>
         <item name="android:minHeight">4dip</item>
         <item name="android:maxHeight">4dip</item>
-        <item name="android:thumb">@drawable/scrubber_control_selector_holo</item>
+        <!--<item name="android:thumb">@drawable/scrubber_control_selector_holo</item>-->
+        <item name="android:thumb">@drawable/mediaplayer_thumb</item>
         <item name="android:thumbOffset">2dip</item>
         <item name="android:paddingLeft">2dip</item>
         <item name="android:paddingRight">2dip</item>
     </style>
+    <!-- 自定义SeekBar样式  End-->
 
 
     <style name="DetailPlayerButton.Pause">

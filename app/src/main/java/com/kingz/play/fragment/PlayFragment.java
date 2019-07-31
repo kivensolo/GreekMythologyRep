@@ -10,7 +10,6 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupWindow;
-
 import com.base.BaseActivity;
 import com.base.BaseFragment;
 import com.base.IPresenter;
@@ -34,6 +33,7 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
     private SurfaceView playView;
     private MediaParams mediaParams;
     private BasePlayPop basePlayPop;
+    private static final long ORIENTATION_CHANGE_DELAY_MS = 2000L;
 
     public static PlayFragment newInstance(MediaParams mediaParams) {
         PlayFragment playFragment = new PlayFragment();
@@ -75,7 +75,7 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
 
     @Override
     public void onClick(View v) {
-        dismissControlbar(true);
+        repostControllersDismissTask(true);
         switch (v.getId()) {
             case R.id.back_tv:
             case R.id.cover_back:
@@ -85,6 +85,7 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
                 break;
             case R.id.img_fullscreen:
             case R.id.img_fullscreen_cover:
+                //TODO 横屏后播放
                 switchOrientation(true);
                 break;
             case R.id.tv_quality:
@@ -110,6 +111,7 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
             default:
                 playPresenter.onClick(v);
         }
+
         if (basePlayPop != null) {
             basePlayPop.setOnDismissListener(new PopupWindow.OnDismissListener() {
                 @Override
@@ -131,7 +133,7 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
         if (basePlayPop != null) {
             basePlayPop.dismiss();
         }
-        playControllerView.dismissControlbar(false);
+        playControllerView.repostControllersDismissTask(false);
         playPresenter.onDestroyView();
         super.onDestroy();
     }
@@ -153,7 +155,7 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
                         mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
                     }
                 }
-            }, 2000L);
+            }, ORIENTATION_CHANGE_DELAY_MS);
             return false;
         }
         return true;
@@ -235,14 +237,15 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
         playControllerView.switchVisibleState();
     }
 
+    //TODO 更新进度条
     @Override
     public void updatePlayProgressView(boolean isDrag) {
         playControllerView.updatePlayProgressView(isDrag);
     }
 
     @Override
-    public void dismissControlbar(boolean enable) {
-        playControllerView.dismissControlbar(enable);
+    public void repostControllersDismissTask(boolean enable) {
+        playControllerView.repostControllersDismissTask(enable);
     }
 
     @Override

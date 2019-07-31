@@ -1,7 +1,6 @@
 package com.kingz.play.view;
 
 import android.view.View;
-
 import com.base.IAppView;
 
 /**
@@ -95,7 +94,7 @@ public interface IPlayerView extends IAppView,View.OnClickListener {
     /**
      * 开启关闭定时消失蒙层
      */
-    void dismissControlbar(boolean enable);
+    void repostControllersDismissTask(boolean enable);
 
     /**
      * 在蒙层显示的时候 都需要收起pop

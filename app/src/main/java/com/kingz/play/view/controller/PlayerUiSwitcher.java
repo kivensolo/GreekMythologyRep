@@ -5,7 +5,7 @@ import android.content.pm.ActivityInfo;
 import android.util.Log;
 import android.view.View;
 import android.widget.SeekBar;
-
+import com.kingz.customdemo.R;
 import com.kingz.library.player.IMediaPlayer;
 
 /**
@@ -22,8 +22,10 @@ public class PlayerUiSwitcher {
     private BottomBarController bottomBarController;
     private LockPanelController lockPanelController;
     private CoverPanelController coverPanelController;
+    private View bufferLoadView;
     private static final int SCREEN_LANSCAPE = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
     private static final int SCREEN_UNSPECIFIED = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
+    private static final int CONTROLLER_DELAY_GONE_MS = 5000;
 
     /**
      * 显示和关闭 各个状态栏的Runnable
@@ -41,6 +43,7 @@ public class PlayerUiSwitcher {
     public PlayerUiSwitcher(IMediaPlayer mp, View view) {
         _mp = mp;
         rootView = view;
+        bufferLoadView = rootView.findViewById(R.id.play_load_layout);
         topBarController = new TopBarController(view);
         bottomBarController = new BottomBarController(view);
         lockPanelController = new LockPanelController(view);
@@ -70,12 +73,13 @@ public class PlayerUiSwitcher {
      * 切换全部蒙层的显示效果
      */
     public void switchVisibleState() {
+        Log.d(TAG,"switchVisibleState()");
         if (isLocked()) {
             showControllerBar(!lockPanelController.isShown(), lockPanelController);
         } else {
             showControllerBar(!bottomBarController.isShown(), topBarController, lockPanelController, bottomBarController);
         }
-        dismissControlbar(true);
+        repostControllersDismissTask(true);
     }
 
 
@@ -89,16 +93,16 @@ public class PlayerUiSwitcher {
         if (!isLocked()) {
             showControllerBar(true, topBarController, lockPanelController, bottomBarController);
         }
-        dismissControlbar(true);
+        repostControllersDismissTask(true);
     }
 
     /**
      * 是否开启定时消失指示栏
      */
-    public void dismissControlbar(boolean enable) {
+    public void repostControllersDismissTask(boolean enable) {
         rootView.removeCallbacks(delayDismissRunnable);
         if (enable) {
-            rootView.postDelayed(delayDismissRunnable, 5000);
+            rootView.postDelayed(delayDismissRunnable, CONTROLLER_DELAY_GONE_MS);
         }
     }
 
@@ -145,10 +149,12 @@ public class PlayerUiSwitcher {
         }
         coverPanelController.showError(tips);
     }
+
     /**
      * 播放状态
      */
     public void showPlayStateView() {
+
         bottomBarController.showPlayState();
     }
 
@@ -164,6 +170,7 @@ public class PlayerUiSwitcher {
      */
     public void showPlayingView() {
         Log.d(TAG,"showPlayingView()");
+        bufferLoadView.setVisibility(View.GONE);
         coverPanelController.close();
         if (!isLocked()) {
             topBarController.show();
@@ -172,11 +179,11 @@ public class PlayerUiSwitcher {
             topBarController.close();
             bottomBarController.close();
         }
-        //设置左上角文字  TODO 进度条显示
-        bottomBarController.setDuration(0L);
-        bottomBarController.setPosition(150000L);
+        //设置左上角文字
+        bottomBarController.setPosition(_mp.getCurrentPosition());
+        bottomBarController.setDuration(_mp.getDuration());
         lockPanelController.show();
-        dismissControlbar(true);
+        repostControllersDismissTask(true);
     }
 
 
@@ -185,8 +192,8 @@ public class PlayerUiSwitcher {
      */
     public void updatePlayProgressView(boolean isDrag) {
         if (!isDrag) {
-            bottomBarController.setDuration(0L);
-            bottomBarController.setPosition(150000L);
+            bottomBarController.setDuration(_mp.getCurrentPosition());
+            bottomBarController.setPosition(_mp.getDuration());
         }
     }
 

@@ -10,7 +10,7 @@ import android.view.View;
  * description：播放器对象顶层接口
  */
 public interface IMediaPlayer {
-    String TAG = IMediaPlayer.class.getName();
+    String TAG = IMediaPlayer.class.getSimpleName();
     int MEDIA_ERROR_SEEK_STATUS = 0x1001;
     int MEDIA_ERROR_PLAY_STATUS = 0x1002;
     int MEDIA_ERROR_PAUSE_STATUS = 0x1003;

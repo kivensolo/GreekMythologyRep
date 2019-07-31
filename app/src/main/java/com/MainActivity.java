@@ -8,8 +8,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ExpandableListView;
-import android.widget.Toast;
-
 import com.apiDemo.content.ExternalStorage;
 import com.asynctask_jsontest.LruPicListViewActivity;
 import com.iflytek.synthesizer.VoiceActivity;
@@ -34,12 +32,7 @@ import com.kingz.pages.photo.memory.MemoryCheck;
 import com.kingz.text.LableTextViewPage;
 import com.kingz.text.langs.TextViewOfLanguages;
 import com.kingz.text.metrics.FontMetricsDemoActivity;
-import com.kingz.utils.ZLog;
-import com.kingz.view.animation.CrossfadeActivity;
-import com.kingz.view.animation.InterpolatorAnimation;
-import com.kingz.view.animation.PropertyAnimationsActivity;
-import com.kingz.view.animation.ShakeAnimation;
-import com.kingz.view.animation.ViewFlipperAnimation;
+import com.kingz.view.animation.*;
 import com.kingz.view.surface.DrawRectWithSurface;
 import com.kingz.widgets.AnimatedExpandableListView;
 import com.kingz.widgets.android_src.BasicControlsActivity;
@@ -51,8 +44,6 @@ import com.mplayer.exo_player.DetailPageActivty;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.bmob.v3.BmobUser;
 
 /**
  * author: KingZ
@@ -76,23 +67,8 @@ public class MainActivity extends ExpandableListActivity implements OnItemClickL
         comExpandAdapter = new CommExpandableListAdapter(this, getGroupData(), getSubTitleData());
         listView.setAdapter(comExpandAdapter);
         listView.setOnGroupClickListener(new ImpOnGroupClickListener());
-
-        //new BmobQuery<BmobUser>()
-        //    .getObject("vO4whhhJ", new QueryListener<BmobUser>() {
-        //        @Override
-        //        public void done(BmobUser bmobUser, BmobException e) {
-        //            if(e == null){
-        //                bmobToastShow(bmobUser);
-        //            }
-        //        }
-        //    });
     }
 
-    private void bmobToastShow(BmobUser bmobUser){
-        String userinfo = bmobUser.toString();
-        Toast.makeText(this,userinfo,Toast.LENGTH_LONG).show();
-        ZLog.d(TAG,"bmob test = " + userinfo);
-    }
 
     private class ImpOnGroupClickListener implements ExpandableListView.OnGroupClickListener {
 
