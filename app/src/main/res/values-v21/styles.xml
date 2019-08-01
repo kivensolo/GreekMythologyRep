@@ -11,4 +11,11 @@
     </style>
 
 
+    <style name="NoTitleBarTheme" parent="Theme.AppCompat.Light.NoActionBar"/>
+
+    <style name="PlayTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
 </resources>

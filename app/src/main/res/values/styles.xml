@@ -19,6 +19,8 @@
         <item name="android:listDivider">@drawable/divider_bg</item>
     </style>
 
+    <style name="NoTitleBarTheme" parent="@android:style/Theme.Light.NoTitleBar"/>
+
 
     <style name="Lollipop_NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
         <!--App Bar  的背景色-->
@@ -73,8 +75,7 @@
         <item name="android:indeterminateDrawable">@drawable/player_seekbar_progress</item>
         <item name="android:minHeight">4dip</item>
         <item name="android:maxHeight">4dip</item>
-        <!--<item name="android:thumb">@drawable/scrubber_control_selector_holo</item>-->
-        <item name="android:thumb">@drawable/mediaplayer_thumb</item>
+        <item name="android:thumb">@drawable/player_seekbar_circle</item>
         <item name="android:thumbOffset">2dip</item>
         <item name="android:paddingLeft">2dip</item>
         <item name="android:paddingRight">2dip</item>
@@ -88,9 +89,8 @@
     </style>
 
 
-    <style name="PlayTheme" parent="AppBaseTheme">
-        <item name="android:windowFullscreen">false</item>
-        <item name="android:windowTranslucentNavigation">true</item>
+    <style name="PlayTheme" parent="NoTitleBarTheme">
+        <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
 

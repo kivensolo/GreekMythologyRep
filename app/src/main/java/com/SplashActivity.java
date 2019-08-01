@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
+
 import com.base.BaseActivity;
 import com.kingz.customdemo.R;
 import com.kingz.view.LogininView;
@@ -33,7 +34,7 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setWindowsTranslucent();
+        setStatusTranslucent();
         setContentView(R.layout.splash_activity);
         findView();
         initView();

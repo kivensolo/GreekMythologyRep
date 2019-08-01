@@ -8,8 +8,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Window;
 import android.view.WindowManager;
+
 import com.kingz.utils.ZLog;
 
 /**
@@ -122,12 +122,33 @@ public class BaseActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
     }
 
-    public void setWindowsTranslucent() {
-        Window window = getWindow();
-        window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+
+
+    /**
+     * 设置窗口状态栏半透明
+     * 需在setContentView方法之前调用
+     */
+    public void setStatusTranslucent() {
+        setWindows(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
                 WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//        window.setFlags(
-//                WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,
-//                WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+    }
+
+
+    /**
+     * 设置导航栏半透明
+     * 需在setContentView方法之前调用
+     */
+    public void setNavigationTranslucent() {
+        setWindows(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,
+                WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+    }
+
+    /**
+     * 动态修改Activity屏幕占比模式
+     * @param flags 指定的布局样式Flag
+     * @param mask  指定的布局样式mask
+     */
+    private void setWindows(int flags, int mask){
+        getWindow().setFlags(flags,mask);
     }
 }
