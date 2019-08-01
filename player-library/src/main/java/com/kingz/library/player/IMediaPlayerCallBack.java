@@ -71,9 +71,9 @@ public interface IMediaPlayerCallBack {
     void onSeekComplete(IMediaPlayer player);
 
     /**
-     * 每秒一次的回调 让外部更新UI
+     * 播放器定时刷新回调  主要用于更新UI
      */
-    void onProgressInSecond();
+    void onPlayerTimingUpdate();
 
     /**
      * 信息回调  比如第一帧显示等等

@@ -1,6 +1,7 @@
 package com.kingz.play.view;
 
 import android.view.View;
+
 import com.base.IAppView;
 
 /**
@@ -88,8 +89,10 @@ public interface IPlayerView extends IAppView,View.OnClickListener {
 
     /**
      * 更新视频播放的进度显示
+     * @param isDrag    是否拖动中
+     * @param postion   当前进度位置  isDrag为false的时候，参数无效
      */
-    void updatePlayProgressView(boolean isDrag);
+    void updatePlayProgressView(boolean isDrag,int postion);
 
     /**
      * 开启关闭定时消失蒙层

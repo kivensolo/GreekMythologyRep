@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 import android.widget.SeekBar;
+
 import com.kingz.library.player.IMediaPlayer;
 import com.kingz.library.player.exo.ExoMediaPlayer;
 import com.kingz.play.view.IPlayerView;
@@ -17,19 +18,21 @@ import static com.google.android.exoplayer2.Player.REPEAT_MODE_ALL;
  * description：
  *
  * 视频地址：http://www.zhiboo.net/
- * FIXME 这个presenter实现SeekBar的监听可否优化
- *
  * TODO 画面模式调整， 全屏播放  全屏的播控画面亮度、声音
  */
-public class PlayPresenter implements IPlayPresenter,
-        View.OnClickListener, SeekBar.OnSeekBarChangeListener {
+public class PlayPresenter implements IPlayPresenter{
     private static final String TAG = PlayPresenter.class.getSimpleName();
     private IPlayerView playerView;
     private IMediaPlayer mPlayer;
+    public PlaySeekBarChangeListener seekBarChangeListener;
+
+    private boolean isDraggingSeekBar; //是否正在拖动进度条
+
 
     public PlayPresenter(IMediaPlayer player,IPlayerView playerView) {
         this.mPlayer = player;
         this.playerView = playerView;
+        seekBarChangeListener = new PlaySeekBarChangeListener();
     }
 
     @Override
@@ -40,9 +43,9 @@ public class PlayPresenter implements IPlayPresenter,
     }
 
     private void playTest() {
-        //Uri testPlayUri = Uri.parse("http://113.105.248.47/14/v/i/k/h/vikhmhifgwpksztpfxxcckpfnkxsbu/he.yinyuetai.com/AE3B0166F34C8148E6F94146DBC1BBCE.mp4");
+        Uri testPlayUri = Uri.parse("http://113.105.248.47/14/v/i/k/h/vikhmhifgwpksztpfxxcckpfnkxsbu/he.yinyuetai.com/AE3B0166F34C8148E6F94146DBC1BBCE.mp4");
         //Uri testPlayUri = Uri.parse("http://183.222.102.65/cache/hc.yinyuetai.com/uploads/videos/common/C1C6015E95755D79B2A706CC75BB1809.mp4?sc=022fceb4b8b24fb7&br=780&vid=3045490&aid=42545&area=US&vst=4&ich_args2=394-31214602005373_4274ad8eeb58c86e3763a95d241faabd_10307403_9c896228d2cbf1d69f3a518939a83798_6af147aa7f96aa8723f9c43d081fec81");
-        Uri testPlayUri = Uri.parse("http://cctvtxyh5c.liveplay.myqcloud.com/wstv/dongfang_2/index.m3u8");
+//        Uri testPlayUri = Uri.parse("http://cctvtxyh5c.liveplay.myqcloud.com/wstv/dongfang_2/index.m3u8");
         mPlayer.setPlayURI(testPlayUri);
         if(mPlayer instanceof ExoMediaPlayer){
             ((ExoMediaPlayer) mPlayer).setRepeatMode(REPEAT_MODE_ALL);
@@ -99,24 +102,8 @@ public class PlayPresenter implements IPlayPresenter,
     @Override
     public void onDestroy() {}
 
-    @Override
-    public void onClick(View v) {
+    public void onViewClick(View v) {
         playerView.switchVisibleState();
-    }
-
-    @Override
-    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
-    }
-
-    @Override
-    public void onStartTrackingTouch(SeekBar seekBar) {
-
-    }
-
-    @Override
-    public void onStopTrackingTouch(SeekBar seekBar) {
-
     }
 
     @Override
@@ -161,7 +148,13 @@ public class PlayPresenter implements IPlayPresenter,
     }
 
     @Override
-    public void onProgressInSecond() {
+    public void onPlayerTimingUpdate() {
+//        long position = mPlayer.getCurrentPosition();
+//        long duration = mPlayer.getDuration();
+        if(!isDraggingSeekBar){
+            //不是拖动中才自动更新进度
+            playerView.updatePlayProgressView(false,-1);
+        }
 
     }
 
@@ -189,5 +182,30 @@ public class PlayPresenter implements IPlayPresenter,
     @Override
     public void onViewDestroyed() {
 
+    }
+
+    class PlaySeekBarChangeListener implements SeekBar.OnSeekBarChangeListener{
+
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            if (fromUser) {
+                playerView.updatePlayProgressView(true,progress);
+            }
+        }
+
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+            playerView.repostControllersDismissTask(false);
+            isDraggingSeekBar = true;
+        }
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+            int progress = seekBar.getProgress();
+            playerView.updatePlayProgressView(true,progress);
+            seekTo(progress);
+            isDraggingSeekBar = false;
+            playerView.repostControllersDismissTask(true);
+        }
     }
 }

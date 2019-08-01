@@ -10,6 +10,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupWindow;
+
 import com.base.BaseActivity;
 import com.base.BaseFragment;
 import com.base.IPresenter;
@@ -28,7 +29,7 @@ import com.kingz.play.view.controller.PlayerUiSwitcher;
  * description：播放器Fragment
  */
 public class PlayFragment extends BaseFragment implements IPlayerView{
-    private PlayerUiSwitcher playControllerView;
+    private PlayerUiSwitcher playerUiSwitcher;
     private PlayPresenter playPresenter;
     private SurfaceView playView;
     private MediaParams mediaParams;
@@ -64,12 +65,13 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
         playView.setOnClickListener(this);
 
         IMediaPlayer mediaPlayer = MediaPlayTool.getInstance().getMediaPlayerCore();
-        playControllerView = new PlayerUiSwitcher(mediaPlayer,rootView);
-        playControllerView.setOnClickListener(this);
-        playControllerView.setOnSeekBarChangeListener(playPresenter);
+
+        playerUiSwitcher = new PlayerUiSwitcher(mediaPlayer,rootView);
+        playerUiSwitcher.setOnClickListener(this);
 
         playPresenter = new PlayPresenter(mediaPlayer,this); // p和view层关联
         playPresenter.onCreateView();
+        playerUiSwitcher.setOnSeekBarChangeListener(playPresenter.seekBarChangeListener);
         return rootView;
     }
 
@@ -93,10 +95,10 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
                 //清晰度弹窗
 //                basePlayPop = new QualityPop(getContext(), mediaParams, playPresenter.playEventManager);
 //                basePlayPop.showAtLocation(getView(), Gravity.CENTER, 0, 0);
-//                playControllerView.switchVisibleState();
+//                playerUiSwitcher.switchVisibleState();
                 break;
             case R.id.play_pause:
-                if (playControllerView.isInPlayState()) {
+                if (playerUiSwitcher.isInPlayState()) {
                     playPresenter.pause();
                 } else {
                     playPresenter.play();
@@ -109,14 +111,14 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
                 //DO Nothing
                 break;
             default:
-                playPresenter.onClick(v);
+                playPresenter.onViewClick(v);
         }
 
         if (basePlayPop != null) {
             basePlayPop.setOnDismissListener(new PopupWindow.OnDismissListener() {
                 @Override
                 public void onDismiss() {
-                    playControllerView.switchVisibleState();
+                    playerUiSwitcher.switchVisibleState();
                 }
             });
         }
@@ -133,7 +135,7 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
         if (basePlayPop != null) {
             basePlayPop.dismiss();
         }
-        playControllerView.repostControllersDismissTask(false);
+        playerUiSwitcher.repostControllersDismissTask(false);
         playPresenter.onDestroyView();
         super.onDestroy();
     }
@@ -144,14 +146,14 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
     }
 
     public boolean switchOrientation(boolean isLand) {
-        if (mActivity != null && !playControllerView.isLocked()) {
+        if (mActivity != null && !playerUiSwitcher.isLocked()) {
             final int autoRotation = Settings.System.getInt(mActivity.getContentResolver(), Settings.System.ACCELEROMETER_ROTATION, 0);
             mActivity.setRequestedOrientation(isLand ? ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE : ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             //2秒，横竖屏默认
             playView.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    if (isShown() && autoRotation == 1 && !playControllerView.isLocked()) {
+                    if (isShown() && autoRotation == 1 && !playerUiSwitcher.isLocked()) {
                         mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
                     }
                 }
@@ -191,24 +193,24 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
     @Override
     public void showPlayLoadingTips(String tips) {
         dismissPop();
-        playControllerView.showLoadingView(tips);
+        playerUiSwitcher.showLoadingView(tips);
     }
 
     @Override
     public void showPlayingView() {
-        playControllerView.showPlayingView();
+        playerUiSwitcher.showPlayingView();
     }
 
     @Override
     public void showPlayCompleteTips(String tips) {
         dismissPop();
-        playControllerView.showCompleteView(tips);
+        playerUiSwitcher.showCompleteView(tips);
     }
 
     @Override
     public void showPlayErrorTips(String tips) {
         dismissPop();
-        playControllerView.showErrorView(tips);
+        playerUiSwitcher.showErrorView(tips);
     }
 
     @Override
@@ -219,12 +221,12 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
 
     @Override
     public void showPlayStateView() {
-        playControllerView.showPlayStateView();
+        playerUiSwitcher.showPlayStateView();
     }
 
     @Override
     public void showPauseStateView() {
-        playControllerView.showPauseStateView();
+        playerUiSwitcher.showPauseStateView();
     }
 
     @Override
@@ -234,18 +236,18 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
 
     @Override
     public void switchVisibleState() {
-        playControllerView.switchVisibleState();
+        playerUiSwitcher.switchVisibleState();
     }
 
     //TODO 更新进度条
     @Override
-    public void updatePlayProgressView(boolean isDrag) {
-        playControllerView.updatePlayProgressView(isDrag);
+    public void updatePlayProgressView(boolean isDrag,int postion) {
+        playerUiSwitcher.updatePlayProgressView(isDrag,postion);
     }
 
     @Override
     public void repostControllersDismissTask(boolean enable) {
-        playControllerView.repostControllersDismissTask(enable);
+        playerUiSwitcher.repostControllersDismissTask(enable);
     }
 
     @Override
@@ -256,6 +258,6 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
     }
 
     public PlayerUiSwitcher getControllerViewManager(){
-        return playControllerView;
+        return playerUiSwitcher;
     }
 }

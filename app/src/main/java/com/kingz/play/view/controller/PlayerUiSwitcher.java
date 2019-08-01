@@ -5,6 +5,7 @@ import android.content.pm.ActivityInfo;
 import android.util.Log;
 import android.view.View;
 import android.widget.SeekBar;
+
 import com.kingz.customdemo.R;
 import com.kingz.library.player.IMediaPlayer;
 
@@ -179,7 +180,6 @@ public class PlayerUiSwitcher {
             topBarController.close();
             bottomBarController.close();
         }
-        //设置左上角文字
         bottomBarController.setPosition(_mp.getCurrentPosition());
         bottomBarController.setDuration(_mp.getDuration());
         lockPanelController.show();
@@ -190,11 +190,9 @@ public class PlayerUiSwitcher {
     /**
      * 更新视频播放的进度显示
      */
-    public void updatePlayProgressView(boolean isDrag) {
-        if (!isDrag) {
-            bottomBarController.setDuration(_mp.getCurrentPosition());
-            bottomBarController.setPosition(_mp.getDuration());
-        }
+    public void updatePlayProgressView(boolean isDragging,int postion) {
+        bottomBarController.setPosition(isDragging ? postion : _mp.getCurrentPosition());
+        bottomBarController.setDuration(_mp.getDuration());
     }
 
     /**

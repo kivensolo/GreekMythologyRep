@@ -20,6 +20,7 @@ public abstract class AbstractMediaPlayer implements IMediaPlayer,
         SurfaceHolder.Callback,
         TextureView.SurfaceTextureListener {
 
+    protected static final int PLAYER_UPDATE_INTERVAL_MS = 500;
     protected Handler mainHandler = new Handler(Looper.getMainLooper());
     protected IMediaPlayerCallBack playCallBack;
     protected Surface mSurface;
@@ -34,9 +35,9 @@ public abstract class AbstractMediaPlayer implements IMediaPlayer,
     private Runnable loopRunnable = new Runnable() {
         @Override
         public void run() {
-            mainHandler.postDelayed(this, 1000);
+            mainHandler.postDelayed(this, PLAYER_UPDATE_INTERVAL_MS);
             if (playCallBack != null) {
-                playCallBack.onProgressInSecond();
+                playCallBack.onPlayerTimingUpdate();
             }
         }
     };

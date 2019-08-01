@@ -45,11 +45,11 @@ public class IJKMediaPlayer extends AbstractMediaPlayer implements IJKMediaPlaye
                 currentPosition = player.getCurrentPosition();
             } else if (player != null && player.isPlaying()) {
                 //解决pause之后 play会跳一秒时间的问题
-                currentPosition += 1000;
+                currentPosition += PLAYER_UPDATE_INTERVAL_MS;
             }
-            mainHandler.postDelayed(this, 1000);
+            mainHandler.postDelayed(this, PLAYER_UPDATE_INTERVAL_MS);
             if (playCallBack != null) {
-                playCallBack.onProgressInSecond();
+                playCallBack.onPlayerTimingUpdate();
             }
         }
     };

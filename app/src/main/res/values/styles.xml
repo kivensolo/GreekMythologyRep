@@ -87,4 +87,11 @@
         <item name="android:contentDescription">@string/exo_controls_pause_description</item>
     </style>
 
+
+    <style name="PlayTheme" parent="AppBaseTheme">
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
 </resources>
