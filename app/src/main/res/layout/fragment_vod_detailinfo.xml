@@ -1,0 +1,198 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/white">
+
+    <ScrollView
+        android:id="@+id/vod_detail_scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        android:visibility="visible"
+        tools:ignore="UselessParent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- 简介部分 -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="18dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="21dp">
+                <!--影片名称-->
+                <TextView
+                    android:id="@+id/tv_name_video"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/chk_collect"
+                    android:layout_alignBottom="@+id/chk_collect"
+                    android:layout_alignParentStart="true"
+                    android:ellipsize="end"
+                    android:gravity="start|center_vertical"
+                    android:maxLines="1"
+                    android:maxWidth="240dp"
+                    android:textColor="@color/skygreen_b"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    tools:text="逃学威龙222"/>
+
+                <!--评分-->
+                <TextView
+                    android:id="@+id/tv_score_video"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/iv_detail_arrow_more"
+                    android:layout_toEndOf="@+id/tv_name_video"
+                    android:layout_marginStart="20dp"
+                    android:textColor="@color/tomato"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    tools:text="8.7"/>
+
+                <!-- 收藏 -->
+                <CheckBox
+                    android:id="@+id/chk_collect"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:button="@drawable/collecte_selector"
+                    android:gravity="center"
+                    android:layout_marginEnd="17dp"
+                    android:layout_marginTop="7dp"/>
+
+                <!--详情-->
+                <TextView
+                    android:id="@+id/tv_detail_video"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_name_video"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginTop="13dp"
+                    android:layout_toStartOf="@id/iv_detail_arrow_more"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textColor="#a5a4a4"
+                    android:textSize="12sp"
+                    tools:text="撒撒娇的平时就阿婆大家撒频道军嫂觉得生怕打开"/>
+
+                <!-- 更多 -->
+                <TextView
+                    android:id="@+id/iv_detail_arrow_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@id/tv_name_video"
+                    android:layout_marginTop="13dp"
+                    android:drawablePadding="5dp"
+                    android:drawableEnd="@drawable/ic_arrow_small"
+                    android:text="@string/video_desc"
+                    android:textColor="#a5a4a4"
+                    android:textSize="14sp"/>
+            </RelativeLayout>
+
+            <!-- 剧集部分 -->
+            <RelativeLayout
+                android:id="@+id/episode_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="10dp"
+                android:paddingEnd="8dp"
+                android:visibility="visible"
+                tools:visibility="visible">
+
+                <View
+                    android:id="@+id/episode_divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginBottom="28dp"
+                    android:background="@color/aliceblue" />
+
+                <!--剧集-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/episode_divider"
+                    android:text="@string/episode"
+                    android:textColor="#222222"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+                <!--剧集-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/episode_divider"
+                    android:text="@string/episode"
+                    android:textColor="@color/text_dark"
+                    android:textSize="42px"
+                    android:textStyle="bold" />
+
+                <!-- 更多 -->
+                <TextView
+                    android:id="@+id/episode_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@id/episode_divider"
+                    android:drawablePadding="5dp"
+                    android:drawableEnd="@drawable/ic_arrow_small"
+                    android:textColor="#a5a4a4"
+                    android:textSize="14sp"
+                    android:text="更新至14集"
+                    tools:text="更新至14集" />
+
+                <!-- 剧集列表-->
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/episode_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/episode_more"
+                    android:layout_marginBottom="18dp"
+                    android:layout_marginTop="18dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_below="@id/episode_recycler"
+                    android:background="@color/aliceblue" />
+
+            </RelativeLayout>
+
+            <!-- 相关推荐部分-->
+            <LinearLayout
+                android:id="@+id/recommend_layout"
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:orientation="vertical"
+                android:visibility="visible"
+                android:background="@color/skygreen"
+                tools:visibility="visible">
+                <!--猜你喜欢-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="29dp"
+                    android:paddingStart="10dp"
+                    android:text="@string/guess_you_lisk"
+                    android:textColor="@color/text_dark"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    tools:ignore="RtlSymmetry"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recommend_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:paddingRight="-5dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

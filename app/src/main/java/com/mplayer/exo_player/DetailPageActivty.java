@@ -9,7 +9,8 @@ import com.kingz.customdemo.R;
 import com.kingz.play.MediaParams;
 import com.kingz.play.PlayerActivity;
 import com.kingz.play.fragment.PlayFragment;
-import com.kingz.play.presenter.PlayPresenter;
+import com.kingz.play.fragment.VodInfoFragment;
+import com.kingz.play.presenter.VodInfoPresenter;
 
 /**
  * author：KingZ
@@ -21,7 +22,10 @@ public class DetailPageActivty extends PlayerActivity {
     public static final String TAG = "DetailPageActivty";
 
     private PlayFragment playFragment;
-    private PlayPresenter playPresenter;
+    private VodInfoFragment vodInfoFragment;
+    private VodInfoPresenter vodInfoPresenter;
+    //影片详情介绍的Fragment
+//    private VodDetailFragment vodDetailFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,28 +36,22 @@ public class DetailPageActivty extends PlayerActivity {
     private void initFragment() {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        playFragment = (PlayFragment) fm.findFragmentByTag(TAG_VOD_DETAIL);
+        // 播放区域
+        playFragment = (PlayFragment) fm.findFragmentByTag(TAG_VOD_PLAY);
         if (playFragment == null) {
             playFragment = PlayFragment.newInstance(new MediaParams());
-            fragmentTransaction
-                    .add(R.id.player_content, playFragment, TAG_VOD_DETAIL)
-                    .show(playFragment);
+            fragmentTransaction.add(R.id.player_content, playFragment, TAG_VOD_PLAY);
         }
-//        playPresenter = new PlayPresenter(playFragment); //p和view层关联
-//        playFragment.setPresenter(playPresenter);
 
-        // 影片详情显示
-//        vodInfoFragment = (VodInfoFragment) fm.findFragmentByTag(TAG_VOD_INFO);
-//        if (vodInfoFragment == null) {
-//            vodInfoFragment = new VodInfoFragment();
-//            vodInfoPresenter = new VodInfoPresenter(vodInfoFragment, mediaParams, playRequestManager, playEventManager);   //这样写的原因是要确保presenter在fragment的onCreate之前执行
-//            fragmentTransaction.add(R.id.content_layout, vodInfoFragment, TAG_VOD_INFO);
-//        } else {
-//            vodInfoPresenter = new VodInfoPresenter(vodInfoFragment, mediaParams, playRequestManager, playEventManager);
-//        }
-//        vodInfoFragment.setPresenter(vodInfoPresenter);
-//
-//        fragmentTransaction.show(vodInfoFragment);
+        // 影片信息区域
+        vodInfoFragment = (VodInfoFragment) fm.findFragmentByTag(TAG_VOD_INFO);
+        if (vodInfoFragment == null) {
+            vodInfoFragment = new VodInfoFragment();
+            fragmentTransaction.add(R.id.content_layout, vodInfoFragment, TAG_VOD_INFO);
+        } else {
+            vodInfoPresenter = new VodInfoPresenter(vodInfoFragment);
+        }
+        fragmentTransaction.show(vodInfoFragment);
         fragmentTransaction.commit();
     }
 

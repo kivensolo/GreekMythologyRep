@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.SeekBar;
 
 import com.kingz.library.player.IMediaPlayer;
+import com.kingz.library.player.IMediaPlayerCallBack;
 import com.kingz.library.player.exo.ExoMediaPlayer;
 import com.kingz.play.view.IPlayerView;
 
@@ -20,8 +21,7 @@ import static com.google.android.exoplayer2.Player.REPEAT_MODE_ALL;
  * 视频地址：http://www.zhiboo.net/
  * TODO 画面模式调整， 全屏播放  全屏的播控画面亮度、声音
  */
-public class PlayPresenter implements IPlayPresenter{
-    private static final String TAG = PlayPresenter.class.getSimpleName();
+public class PlayPresenter extends AbsBasePresenter implements IMediaPlayerCallBack {
     private IPlayerView playerView;
     private IMediaPlayer mPlayer;
     public PlaySeekBarChangeListener seekBarChangeListener;
@@ -76,12 +76,6 @@ public class PlayPresenter implements IPlayPresenter{
 
     @Override
     public void onCreate() {}
-
-    @Override
-    public void onStart() {}
-
-    @Override
-    public void onResume() {}
 
     @Override
     public void onPause() {

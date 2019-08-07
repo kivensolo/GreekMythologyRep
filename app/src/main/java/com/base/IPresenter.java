@@ -3,7 +3,7 @@ package com.base;
 /**
  * author：KingZ
  * date：2019/7/30
- * description：app 顶层Presenter对象
+ * description：app顶层Presenter对于Fragment主要生命周期的定义
  */
 public interface IPresenter<T extends IAppView> {
     void onCreate();

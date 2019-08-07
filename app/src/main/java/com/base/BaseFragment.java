@@ -49,9 +49,4 @@ public abstract class BaseFragment extends Fragment {
 
     public void showPlayBufferTips() {}
     public void dismissPlayBufferTips() {}
-    public void showPreviewCompleteTips(String tips) {}
-    public void showVipBuyTips(String tips) {}
-    public void showLoginTips(String tips) {}
-    public void showDLNA(String tags) {
- }
 }

@@ -42,25 +42,11 @@ public interface IPlayerView extends IAppView,View.OnClickListener {
      */
     void showPlayErrorTips(String tips);
 
-    /**
-     * 试看完成的提示
-     */
-    void showPreviewCompleteTips(String tips);
-
-    /**
-     * 需要购买时候的提示
-     */
-    void showVipBuyTips(String tips);
 
     /**
      * 更新标题
      */
     void updateTitleView();
-
-    /**
-     * 需要登陆时候的提示
-     */
-    void showLoginTips(String tips);
 
     /**
      * 播放状态的展示
@@ -76,11 +62,6 @@ public interface IPlayerView extends IAppView,View.OnClickListener {
      * 流量提示的展示
      */
     void showFlowTipsView();
-
-    /**
-     * 展示当前剧集的多屏按钮
-     */
-    void showDLNA(String tags);
 
     /**
      * 切换蒙层显示状态

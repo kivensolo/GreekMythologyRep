@@ -97,5 +97,10 @@
     <string name="today" translatable="false">今天</string>
     <string name="yesterday" translatable="false">昨天</string>
     <string name="tomorrow" translatable="false">明天</string>
+    <string name="guess_you_lisk">猜你喜欢</string>
+    <string name="player_area">播放器区域</string>
+    <string name="content_desc_are">影片内容描述区域</string>
+    <string name="episode">剧集</string>
+    <string name="video_desc">简介</string>
 
 </resources>

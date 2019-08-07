@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
+    <!-- 播放器区域 -->
     <FrameLayout
         android:id="@+id/player_content"
         android:layout_width="match_parent"
-        android:layout_height="302dp" >
+        android:layout_height="302dp"
+        android:contentDescription="@string/player_area"/>
 
-        <FrameLayout
-            android:id="@+id/content_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    </FrameLayout>
+    <!-- 视频播放器下边的内容区域 -->
+    <FrameLayout
+        android:id="@+id/content_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/content_desc_are"/>
 
 </LinearLayout>
