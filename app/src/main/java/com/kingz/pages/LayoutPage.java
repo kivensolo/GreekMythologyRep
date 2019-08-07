@@ -9,9 +9,9 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
 import com.kingz.customdemo.R;
 import com.kingz.four_components.activity.news.NewsActivity;
-import com.kingz.four_components.activity.news.NewsLayoutActivity;
 import com.kingz.mode.ListBillData;
 
 public class LayoutPage extends Activity implements OnItemClickListener{
@@ -24,8 +24,8 @@ public class LayoutPage extends Activity implements OnItemClickListener{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_layout_list);
 
-		listView = (ListView) findViewById(R.id.layout_list_view);
-		mAdapter = new ArrayAdapter<ListBillData>(this, R.layout.list_bill);
+		listView = findViewById(R.id.layout_list_view);
+		mAdapter = new ArrayAdapter<>(this, R.layout.list_bill);
 		listView.setAdapter(mAdapter);//加载适配器
 
 		addData();
@@ -33,8 +33,7 @@ public class LayoutPage extends Activity implements OnItemClickListener{
 	}
 
 	private void addData() {
-		mAdapter.add(new ListBillData(this,"NewsLayoutActivity",new Intent(this,NewsLayoutActivity.class)));
-		mAdapter.add(new ListBillData(this,"NewsActivity",new Intent(this,NewsActivity.class)));
+		mAdapter.add(new ListBillData(this,"NewsPage",new Intent(this,NewsActivity.class)));
 	}
 
 	/**
@@ -45,6 +44,8 @@ public class LayoutPage extends Activity implements OnItemClickListener{
 			long id) {
 		ActivityOptions opts = ActivityOptions.makeCustomAnimation(this,R.anim.zoom_enter,R.anim.zoom_enter);
 		ListBillData data = mAdapter.getItem(position);
-		data.startActivity(opts);
+		if (data != null) {
+			data.startActivity(opts);
+		}
 	}
 }

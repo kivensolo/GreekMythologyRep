@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ExpandableListView;
+
 import com.apiDemo.content.ExternalStorage;
 import com.asynctask_jsontest.LruPicListViewActivity;
 import com.iflytek.synthesizer.VoiceActivity;
@@ -32,7 +33,11 @@ import com.kingz.pages.photo.memory.MemoryCheck;
 import com.kingz.text.LableTextViewPage;
 import com.kingz.text.langs.TextViewOfLanguages;
 import com.kingz.text.metrics.FontMetricsDemoActivity;
-import com.kingz.view.animation.*;
+import com.kingz.view.animation.CrossfadeActivity;
+import com.kingz.view.animation.InterpolatorAnimation;
+import com.kingz.view.animation.PropertyAnimationsActivity;
+import com.kingz.view.animation.ShakeAnimation;
+import com.kingz.view.animation.ViewFlipperAnimation;
 import com.kingz.view.surface.DrawRectWithSurface;
 import com.kingz.widgets.AnimatedExpandableListView;
 import com.kingz.widgets.android_src.BasicControlsActivity;
@@ -92,88 +97,88 @@ public class MainActivity extends ExpandableListActivity implements OnItemClickL
     private void initData() {
         //ViewAimation
         billDataManager.addGroup("Animation");
-        addChildData("PropertyAnimation", PropertyAnimationsActivity.class);
-        addChildData("ShakeAnimation", ShakeAnimation.class);
-        addChildData("ViewFlipperAnimation", ViewFlipperAnimation.class);
-        addChildData("InterpolatorAnimation", InterpolatorAnimation.class);
-        addChildData("Crossfading Two Views", CrossfadeActivity.class);
+        appendChildNode("PropertyAnimation", PropertyAnimationsActivity.class);
+        appendChildNode("ShakeAnimation", ShakeAnimation.class);
+        appendChildNode("ViewFlipperAnimation", ViewFlipperAnimation.class);
+        appendChildNode("InterpolatorAnimation", InterpolatorAnimation.class);
+        appendChildNode("Crossfading Two Views", CrossfadeActivity.class);
         billDataManager.pushChilds();
 
         //AboutText
         billDataManager.addGroup("AboutText");
-        addChildData("FontMetrics",FontMetricsDemoActivity.class);
-        addChildData("TextViewOfLanguages",TextViewOfLanguages.class);
-        addChildData("LableText",LableTextViewPage.class);
-        addChildData("SpanLable", SpansDemo.class);
+        appendChildNode("FontMetrics",FontMetricsDemoActivity.class);
+        appendChildNode("TextViewOfLanguages",TextViewOfLanguages.class);
+        appendChildNode("LableText",LableTextViewPage.class);
+        appendChildNode("SpanLable", SpansDemo.class);
         billDataManager.pushChilds();
 
         //原生基本控件
         billDataManager.addGroup("Original");
-        addChildData("BasicControls", BasicControlsActivity.class);
-        addChildData("ProgressBar", NativeProgressBar.class);
-        addChildData("SrcLayout", LayoutPage.class);
-        addChildData("Four major components", FourComponentPage.class);
-        addChildData("ViewPager", OriginViewPager.class);
-        addChildData("SurfaceDraw", DrawRectWithSurface.class);
+        appendChildNode("BasicControls", BasicControlsActivity.class);
+        appendChildNode("ProgressBar", NativeProgressBar.class);
+        appendChildNode("SrcLayout", LayoutPage.class);
+        appendChildNode("Four major components", FourComponentPage.class);
+        appendChildNode("ViewPager", OriginViewPager.class);
+        appendChildNode("SurfaceDraw", DrawRectWithSurface.class);
         billDataManager.pushChilds();
 
         //Bimap
         billDataManager.addGroup("Graphics");
-        addChildData("BitMapOverall", BitmapPhotosActivity.class);
-        addChildData("ColorMatrix", ColorMatrixDemo.class);
-        addChildData("Arcs", Arcs.class);
-        addChildData("PathEffects", PathEffects.class);
-        addChildData("MemoryCheck", MemoryCheck.class);
+        appendChildNode("BitMapOverall", BitmapPhotosActivity.class);
+        appendChildNode("ColorMatrix", ColorMatrixDemo.class);
+        appendChildNode("Arcs", Arcs.class);
+        appendChildNode("PathEffects", PathEffects.class);
+        appendChildNode("MemoryCheck", MemoryCheck.class);
         billDataManager.pushChilds();
 
         //自定义控件
         billDataManager.addGroup("Custom controls");
-        addChildData("Custom controls", CustomViewsPage.class);
+        appendChildNode("Custom controls", CustomViewsPage.class);
         billDataManager.pushChilds();
 
         //File
         billDataManager.addGroup("File");
-        addChildData("File Test", FileAndPicTestACT.class);
-        addChildData("DownloadFile", DownloadAPPActivity.class);
-        addChildData("ExternalStorage", ExternalStorage.class);
+        appendChildNode("File Test", FileAndPicTestACT.class);
+        appendChildNode("DownloadFile", DownloadAPPActivity.class);
+        appendChildNode("ExternalStorage", ExternalStorage.class);
         billDataManager.pushChilds();
 
 
         //Net
         billDataManager.addGroup("Net");
-        addChildData("JsonParseAndPicLru", LruPicListViewActivity.class);
-        addChildData("FilmsList", FilmsListActivity.class);
+        appendChildNode("JsonParseAndPicLru", LruPicListViewActivity.class);
+        appendChildNode("FilmsList", FilmsListActivity.class);
         billDataManager.pushChilds();
 
         //Mediaplayer
         billDataManager.addGroup("Mediaplayer");
-        addChildData("Media", ApolloMediaPlayer.class);
-        addChildData("Exo-Player", DetailPageActivty.class);
+        appendChildNode("Media", ApolloMediaPlayer.class);
+        appendChildNode("Exo-Player", DetailPageActivty.class);
         billDataManager.pushChilds();
 
         //Other
         billDataManager.addGroup("Other");
-        addChildData("FileManager", FileManagerActivity.class);
-        addChildData("Iflytek", VoiceActivity.class);
+        appendChildNode("FileManager", FileManagerActivity.class);
+        appendChildNode("Iflytek", VoiceActivity.class);
         billDataManager.pushChilds();
 
         //通信
         billDataManager.addGroup("Communication");
-        addChildData("HML_Deep", HMLActuivity.class);
+        appendChildNode("HML_Deep", HMLActuivity.class);
         billDataManager.pushChilds();
 
         //BaseApiUnderStand
         billDataManager.addGroup("BasicApi");
-        addChildData("Canvas", CanvasApiActivity.class);
+        appendChildNode("Canvas", CanvasApiActivity.class);
         billDataManager.pushChilds();
         //新特性
         billDataManager.addGroup("NewFeatures");
-        addChildData("NewFeature of UI", NewFeaturesMainActivity.class);
+        appendChildNode("NewFeature of UI", NewFeaturesMainActivity.class);
         billDataManager.pushChilds();
     }
 
-    private void addChildData(String subTitle, Class<?> pageClass) {
-        billDataManager.buildChilds(this, subTitle, pageClass);
+    private void appendChildNode(String childName, Class<?> clazz) {
+        billDataManager.buildChilds(this, childName, clazz);
     }
 
     private List<String> getGroupData() {

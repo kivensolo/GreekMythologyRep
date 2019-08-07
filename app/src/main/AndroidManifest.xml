@@ -160,11 +160,6 @@
             android:screenOrientation="landscape"
             android:theme="@style/NoTitleBarTheme"/>
 
-        <activity
-            android:name="com.kingz.four_components.activity.news.NewsLayoutActivity"
-            android:screenOrientation="landscape"
-            android:theme="@style/NoTitleBarTheme"/>
-
         <!--常用控件集合-->
         <activity
             android:name="com.kingz.widgets.android_src.BasicControlsActivity"

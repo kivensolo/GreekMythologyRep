@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
 import com.kingz.customdemo.R;
 import com.kingz.utils.ZLog;
 
@@ -20,23 +21,28 @@ import java.util.WeakHashMap;
  * Data: 2016 2016/1/31
  * Discription:内容Fragment
  */
-public class ContentFragmentDynamic extends Fragment {
+public class ContentFragment extends Fragment {
+    public static final String TAG = "ContentFragment";
 
-    static WeakHashMap<Integer,WeakReference<ContentFragmentDynamic>> _fragmentsCache = new WeakHashMap<>();
-    public static ContentFragmentDynamic newInstance(int index) {
-        ZLog.d("ContentFragmentDynamic","index = " + index);
-        WeakReference<ContentFragmentDynamic> reference = _fragmentsCache.get(index);
+    public static final String ARG_INDEX = "index";
+    public static final String ARG_TITLE = "title";
+    public static final String ARGS_CONTENT = "content";
+    static WeakHashMap<Integer,WeakReference<ContentFragment>> _fragmentsCache = new WeakHashMap<>();
+
+    public static ContentFragment newInstance(int index) {
+        WeakReference<ContentFragment> reference = _fragmentsCache.get(index);
         if(reference != null){
-            ZLog.d("ContentFragmentDynamic","find fragment cache.");
+            ZLog.d(TAG,"find fragment cache.");
             return reference.get();
         }
-        ZLog.d("ContentFragmentDynamic","add new fragment");
-        ContentFragmentDynamic fragment = new ContentFragmentDynamic();
+
+        ZLog.d(TAG,"add new fragment");
+        ContentFragment fragment = new ContentFragment();
         String titleName = NewsInfo.titleData.get(index);
         Bundle args = new Bundle();
-        args.putInt("index", index);
-        args.putString("title",titleName);
-        args.putString("content",NewsInfo.newsData.get(titleName));
+        args.putInt(ARG_INDEX, index);
+        args.putString(ARG_TITLE,titleName);
+        args.putString(ARGS_CONTENT,NewsInfo.newsData.get(titleName));
         fragment.setArguments(args);
         _fragmentsCache.put(index,new WeakReference<>(fragment));
         return fragment;
@@ -48,32 +54,34 @@ public class ContentFragmentDynamic extends Fragment {
     }
 
     public int getShownIndex() {
-        return getArguments().getInt("index", 0);
+        Bundle arguments = getArguments();
+        if(arguments == null){
+            return -1;
+        }
+        return arguments.getInt(ARG_INDEX, 0);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
          if (container == null) {
-            // We have different layouts, and in one of them this
-            // fragment's containing frame doesn't exist.  The fragment
-            // may still be created from its saved state, but there is
-            // no reason to try to create its view hierarchy because it
-            // won't be displayed.  Note this is not needed -- we could
-            // just run the code below, where we would create and return
-            // the view hierarchy; it would just never be used.
             return null;
         }
-        ScrollView scroller = new ScrollView(getActivity());
 
+        ScrollView scroller = new ScrollView(getActivity());
         TextView text = new TextView(getActivity());
         int padding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
                 5, getActivity().getResources().getDisplayMetrics());
         text.setPadding(padding, padding, padding, padding);
         text.setTextSize(26f);
         text.setFocusable(true);
-        //todo 设置TextView焦点颜色
-        text.setBackground(getResources().getDrawable(R.drawable.text_forcused_style_xjdx));
-        text.setText(getArguments().getString("content", "Empty Data"));
+        text.setBackground(getResources().getDrawable(R.drawable.news_content_bkg,null));
+        text.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        Bundle args = getArguments();
+        if(args == null){
+            text.setText("Empty Data");
+        }else{
+            text.setText(getArguments().getString(ARGS_CONTENT, "Empty Data"));
+        }
         scroller.addView(text);
         return scroller;
     }
