@@ -1,12 +1,16 @@
 <resources>
 
     <!--
-        Base application theme for API 14+. This theme completely replaces
-        AppBaseTheme from BOTH res/values/styles.xml and
-        res/values-v11/styles.xml on API 14+ devices.
+        API 14+的设备的应用基础主题。
+        在API 14+的设备上，这个主题设置会替换掉 res/values/styles.xml 和 res/values-v11/styles.xml
     -->
-    <style name="AppBaseTheme" parent="android:Theme.Holo.Light.DarkActionBar">
-        <!-- API 14 theme customizations can go here. -->
+
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- API 14+ theme customizations can go here. -->
     </style>
 
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!--All customizations that are NOT specific to a particular API-level can go here.-->
+    </style>
 </resources>

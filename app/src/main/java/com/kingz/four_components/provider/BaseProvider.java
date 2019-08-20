@@ -8,23 +8,23 @@ import android.net.Uri;
 import android.support.annotation.Nullable;
 
 /**
- * Copyright(C) 2015, 北京视达科科技有限公司
- * All rights reserved.
  * author: King.Z
  * date:  2016/8/15 22:29
  * description: BaseProvider
- *   ContentProvider的接口函数无法直接调用，可通过ContentResolver对象来通过URI间接调用ContentProvider。
+ *   ContentProvider的接口函数无法直接调用，需通过ContentResolver对象来通过URI间接调用ContentProvider。
  *
  *     content://<authority>/<data_path>/<id>
  *
- *     Uri指定了将要操作的ContentProvider，其实可以把一个Uri看作是一个网址，我们把Uri分为三部分。
-        第一部分是"content://"。可以看作是网址中的"http://"。
-        第二部分是主机名或authority，用于唯一标识这个ContentProvider，外部应用需要根据这个标识来找到它。可以看作是网址中的主机名，比如"blog.csdn.net"。
-             因此一般< authority >都由类的小写全称组成，以保证唯一性< data_path > 是数据路径，用来确定请求的是哪个数据集。
-             如果ContentProvider近提供一个数据集，数据路径则可以省略；如果ContentProvider提供多个数据集，
-             数据路径必须指明具体数据集。数据集的数据路径可以写成多段格式，例如people/girl和people/boy。
-
-        第三部分是路径名，用来表示将要操作的数据。可以看作网址中细分的内容路径
+ *     Uri指定了将要操作的ContentProvider，其实可以把一个Uri看作是一个网址，把Uri分为三部分。
+ *      第一部分是"content://"。可以看作是网址中的"http://"。
+ *      第二部分是主机名或authority，用于唯一标识这个ContentProvider，外部应用需要根据这个标识来找到它。
+ *          可以看作是网址中的主机名，比如"blog.csdn.net"。
+ *          因此一般< authority >都由类的小写全称组成，以保证唯一性。
+ *          <data_path> 是数据路径，用来确定请求的是哪个数据集。
+ *          如果ContentProvider仅提供一个数据集，数据路径则可以省略；如果ContentProvider提供多个数据集，
+ *          数据路径必须指明具体数据集。数据集的数据路径可以写成多段格式，例如people/girl和people/boy。
+ *
+ *      第三部分是路径名，用来表示将要操作的数据。可以看作网址中细分的内容路径
  */
 @SuppressLint("Registered")
 public class BaseProvider extends ContentProvider{

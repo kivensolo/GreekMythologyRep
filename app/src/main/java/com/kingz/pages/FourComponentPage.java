@@ -9,15 +9,16 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
 import com.kingz.customdemo.R;
-import com.kingz.four_components.ObtainConnectPeopleActivity;
+import com.kingz.four_components.ObtainProviderDataPage;
 import com.kingz.four_components.ServiceComponentsACT;
 import com.kingz.four_components.activity.AttrOfAliasAct;
 import com.kingz.ipcdemo.AIDLActivity;
 import com.kingz.mode.ListBillData;
 import com.kingz.text.LableTextViewPage;
 
-public class FourComponentPage extends  Activity implements OnItemClickListener{
+public class FourComponentPage extends Activity implements OnItemClickListener{
 
 	private ListView listView;
 	private ArrayAdapter<ListBillData> mAdapter;
@@ -36,7 +37,7 @@ public class FourComponentPage extends  Activity implements OnItemClickListener{
 	private void addData() {
 		addItem("服务",ServiceComponentsACT.class);
 		addItem("LableTextViewPage",LableTextViewPage.class);
-		addItem("ContentProvider",ObtainConnectPeopleActivity.class);
+		addItem("ContentProvider",ObtainProviderDataPage.class);
 		addItem("AIDL",AIDLActivity.class);
 		addItem("Activity-Alias",AttrOfAliasAct.class);
 	}

@@ -36,7 +36,7 @@ android {
         //unit test
         testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
         signingConfig signingConfigs.ZekeSigned
-        minSdkVersion 22
+        minSdkVersion 19
         targetSdkVersion 24
         buildConfigField("String", "APP_NAME", "\"STARCOR\"")
     }

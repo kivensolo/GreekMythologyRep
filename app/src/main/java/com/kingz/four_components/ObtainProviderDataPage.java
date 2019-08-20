@@ -23,12 +23,14 @@ import java.util.List;
 
 /**
  * Created by KingZ on 2016/1/13.
- * Discription:获取系统的内容提供数据
+ * Discription:获取ontentProvider数据
+ * 用于测试其他应用提供的数据
  */
-public class ObtainConnectPeopleActivity extends BaseActivity {
+public class ObtainProviderDataPage extends BaseActivity {
 
-    public static final String CONTENT_URI_USER_INFO = "content://com.starcor.xinjiang.system.provider.kork.userinfo/query";
-    public static final String CONTENT_URI_COMMON_INFO = "content://com.starcor.xinjiang.system.provider.kork.commoninfo/query";
+    public static final String CONTENT_URI_USER_INFO = "content://stbconfig/authentication/username";
+    public static final String CONTENT_URI_COMMON_INFO = "content://stbconfig/authentication/user_token";
+    public static final String CONTENT_URI_EPGURL = "content://stbconfig/authentication/epg_server";
     private ArrayAdapter<String> adapter = null;
     private List<String> contactaList;
     ContentChangeListener contentChangeListener;
@@ -64,11 +66,11 @@ public class ObtainConnectPeopleActivity extends BaseActivity {
                     Uri uri = Uri.parse(CONTENT_URI_USER_INFO);
                     Cursor mCursor = baseResolver.query(uri, null, null, null, null);
                     if (mCursor != null) {
-                        if (mCursor.moveToFirst()) {
-                            String name = mCursor.getString(mCursor.getColumnIndex("user_name"));
-                            String id = mCursor.getString(mCursor.getColumnIndex("user_id"));
-                            String token = mCursor.getString(mCursor.getColumnIndex("user_webtoken"));
-                            ZLog.d("Test", "name = " + name + ";id=" + id + ";token = " + token);
+                        while (mCursor.moveToNext()) {
+                            String name = mCursor.getString(mCursor.getColumnIndex("value"));
+//                            String id = mCursor.getString(mCursor.getColumnIndex("user_id"));
+//                            String token = mCursor.getString(mCursor.getColumnIndex("user_webtoken"));
+                            ZLog.d("ObtainProviderDataPage", "name = " + name);
                         }
                         mCursor.close();
                     }
@@ -77,13 +79,24 @@ public class ObtainConnectPeopleActivity extends BaseActivity {
                     //uri.withAppendedPath(uri, "");
                     Cursor c2 = baseResolver.query(ur2, null, null, null, null);
                     if (c2 != null) {
-                        if (c2.moveToFirst()) {
-                            String appName = c2.getString(c2.getColumnIndex("app_name"));
-                            String version = c2.getString(c2.getColumnIndex("app_version"));
-                            String mac = c2.getString(c2.getColumnIndex("device_mac"));
-                            ZLog.d("Test", "appName=" + appName + ";  version=" + version + ";  mac=" + mac);
+                        while (c2.moveToNext()) {
+                            String value = c2.getString(c2.getColumnIndex("value"));
+//                            String version = c2.getString(c2.getColumnIndex("app_version"));
+//                            String mac = c2.getString(c2.getColumnIndex("device_mac"));
+                            ZLog.d("ObtainProviderDataPage", "token = " + value);
                         }
                         c2.close();
+                    }
+
+                    Uri ur3 = Uri.parse(CONTENT_URI_EPGURL);
+                    //uri.withAppendedPath(uri, "");
+                    Cursor c3 = baseResolver.query(ur3, null, null, null, null);
+                    if (c3 != null) {
+                        while (c3.moveToNext()) {
+                            String value = c3.getString(c3.getColumnIndex("value"));
+                            ZLog.d("ObtainProviderDataPage", "epg_url = " + value);
+                        }
+                        c3.close();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

@@ -5,7 +5,8 @@ import android.database.ContentObserver;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Handler;
-import com.kingz.four_components.ObtainConnectPeopleActivity;
+
+import com.kingz.four_components.ObtainProviderDataPage;
 import com.kingz.utils.ZLog;
 
 /**
@@ -31,7 +32,7 @@ public class ContentChangeListener extends ContentObserver {
     public void onChange(boolean selfChange) {
         super.onChange(selfChange);
         ZLog.d("ContentChangeListener", "received UserInfo changed");
-        Uri uri = Uri.parse(ObtainConnectPeopleActivity.CONTENT_URI_USER_INFO);
+        Uri uri = Uri.parse(ObtainProviderDataPage.CONTENT_URI_USER_INFO);
         Cursor mCursor = context.getContentResolver().query(uri, null, null, null, null);
         //Cursor mCursor = val.baseResolver.query(uri, null, null, null, "personid desc");
 

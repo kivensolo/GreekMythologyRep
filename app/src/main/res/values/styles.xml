@@ -3,26 +3,23 @@
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
-    <style name="AppBaseTheme" parent="android:Theme.Light">
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
             backward-compatibility can go here.
         -->
     </style>
+
     <!-- Application theme. -->
-    <!--<style name="AppTheme" parent="AppBaseTheme">-->
-         <!--All customizations that are NOT specific to a particular API-level can go here. -->
-    <!--</style>-->
-AIDL
     <style name="AppTheme" parent="AppBaseTheme">
-        <item name="android:listDivider">@drawable/divider_bg</item>
+         <!--All customizations that are NOT specific to a particular API-level can go here.-->
     </style>
 
     <style name="NoTitleBarTheme" parent="@android:style/Theme.Light.NoTitleBar"/>
 
 
-    <style name="Lollipop_NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Lollipop_NoActionBar" parent="AppBaseTheme">
         <!--App Bar  的背景色-->
         <item name="colorPrimary">@color/colorPrimary</item>
         <!-- status bar（状态栏）背景色。仅作用于 Lollipop 及更高版本 -->
@@ -31,7 +28,7 @@ AIDL
         <item name="colorAccent">@color/skygreen</item>
     </style>
 
-    <style name="MDTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="MDTheme" parent="AppBaseTheme">
         <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:windowTranslucentStatus">true</item>
         <!-- 设置statusBarColor 为透明-->

@@ -197,8 +197,8 @@
             android:theme="@style/NoTitleBarTheme"/>
 
         <activity
-            android:name="com.kingz.four_components.ObtainConnectPeopleActivity"
-            android:theme="@style/NoTitleBarTheme"/>
+            android:name="com.kingz.four_components.ObtainProviderDataPage"
+            android:theme="@style/AppTheme"/>
 
         <!--文件及bitmap操作的activity-->
         <activity

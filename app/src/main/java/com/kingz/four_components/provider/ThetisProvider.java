@@ -9,13 +9,14 @@ import android.net.Uri;
 /**
  * Created by KingZ on 2016/1/12.
  * Discription: ContentProvider Test
- * 应用程序之间共享数据的一种机制
- * 为存储和获取数据提供了统一的接口。ContentProvide对数据进行封装，不用关心数据存储的细节。使用表的形式来组织数据。
+ *
+ * 应用程序之间共享数据的一种机制,为存储和获取数据提供了统一的接口。
+ * ContentProvide对数据进行封装，不用关心数据存储的细节。使用表的形式来组织数据。
+ *
  * 常见的一些数据提供了默认的ContentProvider（包括音频、视频、图片和通讯录等）。
  * 总的来说使用ContentProvider对外共享数据的好处是统一了数据的访问方式
  * 标准uri:  "content://com.kingz.four_components.componentsofcontentprovider/tablename"  访问**这个应用的tablename表
  * "content://com.kingz.four_components.componentsofcontentprovider/tablename/1" 表中id为1的数据
- *
  *
  * Story:
  * 忒提丝---海洋女神，海神涅柔斯(Nereus)和海洋女神多丽斯(Doris)的女儿，
@@ -51,11 +52,9 @@ public class ThetisProvider extends ContentProvider {
     }
 
     /**
-     * 初始化内容提供者的时候调用，通常会在这里完成对数据库的创建和升级等操作，
-     * 返回true表示内容提供者初始化成功，false则失败。
-     * ps： 只有当存在ContentResolver尝试访问我们程序中的数据的时候，被容提供者才会被初始化
-     *
-     * @return
+     * Provider初始化
+     * 只有当存在ContentResolver尝试访问程序中数据的时候，被容提供者才会被初始化
+     * @return 是否初始化成功
      */
     @Override
     public boolean onCreate() {
