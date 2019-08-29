@@ -3,7 +3,11 @@ package com.kingz.widgets.android_src.popwindow;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.PopupWindow;
 
 /**
@@ -18,9 +22,8 @@ public class PopupController {
      * PopupWindowd的布局文件id
      */
     private int layoutResId;
-    private Context context;
     /**
-     * tips:产品原型
+     * "产品原型"
      */
     private PopupWindow popupWindow;
     /**
@@ -29,25 +32,26 @@ public class PopupController {
     View mPopupView;
     private View mView;
     private Window mWindow;
+    private Context context;
 
     PopupController(Context context, PopupWindow popupWindow) {
         this.context = context;
         this.popupWindow = popupWindow;
     }
 
-    public void setView(int layoutResId) {
+    public void setView(int layoutId) {
         mView = null;
-        this.layoutResId = layoutResId;
-        installContent();
+        layoutResId = layoutId;
+        setPopView();
     }
 
      public void setView(View view) {
         mView = view;
-        this.layoutResId = 0;
-        installContent();
+        layoutResId = 0;
+        setPopView();
     }
 
-    private void installContent() {
+    private void setPopView() {
         if (layoutResId != 0) {
             mPopupView = LayoutInflater.from(context).inflate(layoutResId, null);
         } else if (mView != null) {
@@ -72,9 +76,10 @@ public class PopupController {
         }
     }
 
-     /**
+    /**
      * 如果是全屏弹窗
-      * 设置Window背景灰色程度
+     * 设置Window背景灰色程度
+     *
      * @param level 0.0f-1.0f
      */
     void setBackGroundLevel(float level) {
@@ -101,6 +106,14 @@ public class PopupController {
         popupWindow.setFocusable(outsideTouchable);
     }
 
+    private void setFocusable(boolean focusable){
+        popupWindow.setFocusable(focusable);
+    }
+
+    private void setClippingEnabled(boolean enabled){
+        popupWindow.setClippingEnabled(enabled);
+    }
+
     private void setBackgroundDrawable(Drawable background){
         //new ColorDrawable(0x00000000)  设置透明背景
         popupWindow.setBackgroundDrawable(background);
@@ -115,6 +128,9 @@ public class PopupController {
         popupWindow.setTouchable(touchable);
     }
 
+    /**
+     * 常用的PopupWindow参数封装
+     */
     static class PopupParams {
         public Context mContext;
         int layoutResId;             //自定义popUp_View的布局id
@@ -125,6 +141,8 @@ public class PopupController {
         float bg_level;              //屏幕背景灰色程度
         int animationStyle;          //动画Id
         boolean isTouchable = true;
+        boolean isFocusable = false;
+        boolean mClippingEnabled = true; //是否允许PopupWindow的范围超过屏幕范围
 
         PopupParams(Context mContext) {
             this.mContext = mContext;
@@ -141,6 +159,9 @@ public class PopupController {
             controller.setWidthAndHeight(mWidth, mHeight);
             //设置outside可点击
             controller.setOutsideTouchable(isTouchable);
+
+            controller.setFocusable(isFocusable);
+            controller.setClippingEnabled(isFocusable);
             if (isShowBg) {
                 //设置背景
                 controller.setBackGroundLevel(bg_level);

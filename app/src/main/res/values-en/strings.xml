@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">GreekMyth</string>
     <string name="Common_Map">Normal map</string>
     <string name="add">add</string>
@@ -17,9 +18,9 @@
     <string name="label_desc">文本描述</string>
     <string name="default_buttom_label">8月6</string>
     <string name="full_play">Full</string>
-    <string name="button_login" translatable="false">Login</string>
-    <string name="button_signup" translatable="false">Sign Up</string>
-    <string name="button_confirm_login" translatable="false">Confirm Login</string>
+    <string name="button_login">Login</string>
+    <string name="button_signup">Sign Up</string>
+    <string name="button_confirm_login">Confirm Login</string>
     <string name="button_cancel_login">Cancel Login</string>
     <string name="button_confirm_signup">Confirm Sign Up</string>
     <string name="guess_you_lisk">Guess you like</string>

@@ -68,7 +68,7 @@
     <string name="animationviewfliper_tips" translatable="false">选择一个动画</string>
 
     <string name="create">create</string>
-    <string name="delete" translatable="false">delete</string>
+    <string name="delete">delete</string>
 
     <string name="lorem_ipsum" translatable="false">
         <![CDATA[Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et magna ut erat elementum cursus in quis ipsum. Nam faucibus ultrices eros, vel tempor leo semper sit amet. Duis magna quam, congue vitae interdum nec, condimentum ut lectus. Sed commodo venenatis eros a dignissim. Nunc adipiscing turpis nec magna venenatis at ultricies ipsum bibendum. Sed volutpat urna quis nisi vulputate egestas. Etiam eu dui a enim lacinia dapibus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.\n\nPhasellus orci mi, eleifend nec congue id, volutpat at neque. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer semper velit vel leo rutrum sed fermentum elit porta.]]>
@@ -98,9 +98,9 @@
     <string name="yesterday" translatable="false">昨天</string>
     <string name="tomorrow" translatable="false">明天</string>
     <string name="guess_you_lisk">猜你喜欢</string>
-    <string name="player_area">播放器区域</string>
-    <string name="content_desc_are">影片内容描述区域</string>
-    <string name="episode">剧集</string>
-    <string name="video_desc">简介</string>
+    <string name="player_area" translatable="false">播放器区域</string>
+    <string name="content_desc_are" translatable="false">影片内容描述区域</string>
+    <string name="episode" translatable="false">剧集</string>
+    <string name="video_desc" translatable="false">简介</string>
 
 </resources>

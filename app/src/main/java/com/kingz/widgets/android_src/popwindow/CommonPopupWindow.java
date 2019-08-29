@@ -3,16 +3,15 @@ package com.kingz.widgets.android_src.popwindow;
 import android.content.Context;
 import android.view.View;
 import android.widget.PopupWindow;
+
 import com.module.tools.ViewTools;
 
 /**
- * Copyright(C) 2016, 北京视达科科技有限公司
- * All rights reserved. <br>
  * author: King.Z <br>
  * date:  2016/8/23 19:52 <br>
  * description: 一个自定义通用的PopupWindow
- * 因PopupWindow的创建方法比较繁琐，{@see com.nativeWidgets.BasicControlsActivity#setInputMethodMode()}
- * 切很多东西是可以复用的，
+ *
+ * 因PopupWindow的创建方法比较繁琐,但很多东西是可以复用的，
  * 所以，通过建造者模式构建一个公用的popupWindow
  *
  * https://github.com/crazyqiang/AndroidStudy/blob/master/app/src/main/java/org/ninetripods/mq/study/popup/PopupWindowActivity.java
@@ -21,14 +20,14 @@ public class CommonPopupWindow extends PopupWindow{
     final PopupController controller;
 
     public interface ViewInterface {
-        void getChildView(View view, int layoutResId);
+        void onChildViewCreate(View popView, int layoutResId);
     }
 
     private CommonPopupWindow(Context context) {
         controller = new PopupController(context, this);
     }
 
-     @Override
+    @Override
     public int getWidth() {
         return controller.mPopupView.getMeasuredWidth();
     }
@@ -75,11 +74,9 @@ public class CommonPopupWindow extends PopupWindow{
 
         /**
          * 设置宽度和高度 如果不设置 默认是wrap_content
-         *
-         * @param width 宽
          * @return Builder
          */
-        public Builder setWidthAndHeight(int width, int height) {
+        public Builder setSize(int width, int height) {
             params.mWidth = width;
             params.mHeight = height;
             return this;
@@ -105,35 +102,34 @@ public class CommonPopupWindow extends PopupWindow{
             params.isTouchable = touchable;
             return this;
         }
-        /**
-         * 设置动画
-         *
-         * @return Builder
-         */
+
+        public Builder setFocusable(boolean focusable) {
+            params.isFocusable = focusable;
+            return this;
+        }
+
+        public Builder setClippingEnabled(boolean enabled) {
+            params.mClippingEnabled = enabled;
+            return this;
+        }
+
         public Builder setAnimationStyle(int animationStyle) {
             params.isShowAnim = true;
             params.animationStyle = animationStyle;
             return this;
         }
 
-
         public CommonPopupWindow create() {
             final CommonPopupWindow popupWindow = new CommonPopupWindow(params.mContext);
             params.apply(popupWindow.controller);
             if (listener != null && params.layoutResId != 0) {
-                listener.getChildView(popupWindow.controller.mPopupView, params.layoutResId);
+                listener.onChildViewCreate(popupWindow.controller.mPopupView, params.layoutResId);
             }
             ViewTools.measureWidthAndHeight(popupWindow.controller.mPopupView);
             return popupWindow;
         }
 
-        /**
-         * 设置子View
-         *
-         * @param listener ViewInterface
-         * @return Builder
-         */
-        public Builder setViewOnclickListener(ViewInterface listener) {
+        public Builder setListener(ViewInterface listener) {
             this.listener = listener;
             return this;
         }

@@ -8,7 +8,14 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
-import com.iflytek.cloud.*;
+
+import com.iflytek.cloud.ErrorCode;
+import com.iflytek.cloud.InitListener;
+import com.iflytek.cloud.SpeechConstant;
+import com.iflytek.cloud.SpeechError;
+import com.iflytek.cloud.SpeechSynthesizer;
+import com.iflytek.cloud.SpeechUtility;
+import com.iflytek.cloud.SynthesizerListener;
 import com.kingz.customdemo.R;
 import com.kingz.utils.ToastTools;
 
@@ -79,10 +86,9 @@ public class VoiceActivity extends Activity implements OnClickListener {
 		ToastTools.getInstance().showMgtvWaringToast(this,info);
 	}
 
-	/**********合成监听器** 回调都发生在主线程（UI线程）中******** 合成回调接口 *****************/
+
 	private SynthesizerListener mTtsListener = new SynthesizerListener() {
 		@Override
-		//	缓冲进度回调报告
 		public void onBufferProgress(int percent,int beginPos,
 				int endPos,String info) {
 //			mPercentForBuffering = percent;	//百分比
@@ -108,13 +114,10 @@ public class VoiceActivity extends Activity implements OnClickListener {
 		//	合成会话事件 扩展用接口，由具体业务进行约定
 		@Override
 		public void onEvent(int arg0, int arg1, int arg2, Bundle arg3) {}
-		//  开始播放
 		@Override
 		public void onSpeakBegin() {}
-		//	暂停播放
 		@Override
 		public void onSpeakPaused() {}
-		//	继续播放
 		@Override
 		public void onSpeakResumed() {}
 	};
