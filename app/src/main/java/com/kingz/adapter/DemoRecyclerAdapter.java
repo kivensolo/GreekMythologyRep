@@ -5,13 +5,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
 import com.App;
 import com.kingz.customdemo.R;
 import com.kingz.mode.RecycleDataInfo;
 import com.kingz.pages.photo.filmlist.DemoViewHolder;
+import com.kingz.posterfilm.data.MgResponseBean;
 
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Copyright(C) 2016, 北京视达科科技有限公司
@@ -25,7 +31,8 @@ public class DemoRecyclerAdapter extends RecyclerView.Adapter<DemoViewHolder> {
 
     private static final String TAG="DemoRecyclerAdapter";
     public final int testViewTypeCode = 10086;
-    private List<RecycleDataInfo> mCacheData;
+//    RecycleDataInfo
+    private ArrayList mCacheData;
     //瀑布流模拟高度数据
     private List<Integer> mHeights;
     private OnItemClickLitener mOnItemClickLitener;
@@ -39,12 +46,21 @@ public class DemoRecyclerAdapter extends RecyclerView.Adapter<DemoViewHolder> {
         this.mOnItemClickLitener = mOnItemClickLitener;
     }
 
-    public DemoRecyclerAdapter(List<RecycleDataInfo> dataModels){
+    public DemoRecyclerAdapter(){
+        mCacheData = new ArrayList();
+        mHeights = new ArrayList<>();
+    }
+
+    public DemoRecyclerAdapter(ArrayList dataModels){
         if(dataModels == null){
             throw new IllegalArgumentException("DataModel must not be null");
         }
         mCacheData = dataModels;
         mHeights = new ArrayList<>();
+    }
+
+    public void attachData(ArrayList dataModels){
+        mCacheData.addAll(dataModels);
     }
 
     @Override
@@ -77,7 +93,7 @@ public class DemoRecyclerAdapter extends RecyclerView.Adapter<DemoViewHolder> {
     @Override
     public void onBindViewHolder(final DemoViewHolder holder, int position) {
         //ZLog.i(TAG,"onBindViewHolder() holder="+holder+"---position:"+position);
-        RecycleDataInfo dataModel = mCacheData.get(position);
+
         // 随机高度, 模拟瀑布效果.
 //        if (mHeights.size() <= position) {
 //            mHeights.add((int) (50 + Math.random() * 200));
@@ -87,11 +103,22 @@ public class DemoRecyclerAdapter extends RecyclerView.Adapter<DemoViewHolder> {
 //        lp.height = mHeights.get(position);
         holder.getTvLabel().setLayoutParams(lp);
 
-        holder.getTvLabel()
-              .setText(dataModel.getLabel());
-        holder.getTvDateTime()
-              .setText(new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-              .format(dataModel.getDateTime()));
+        Object obj = mCacheData.get(position);
+        if(obj instanceof RecycleDataInfo){
+            RecycleDataInfo dataModel = (RecycleDataInfo)obj;
+            holder.getTvLabel()
+                    .setText(dataModel.getLabel());
+            holder.getTvDateTime()
+                    .setText(new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+                            .format(dataModel.getDateTime()));
+        }else if(obj instanceof MgResponseBean){
+            MgResponseBean dataModel = (MgResponseBean)obj;
+            holder.getTvLabel()
+                    .setText(dataModel.getData().getHitDocs().get(position).getTitle());
+            holder.getTvDateTime()
+                    .setText(new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
+                            .format(dataModel.getData().getHitDocs().get(position).getUpdateInfo()));
+        }
 
 //        if (mOnItemClickLitener != null) {
 //            holder.itemView.setOnClickListener(new View.OnClickListener() {

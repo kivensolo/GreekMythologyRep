@@ -60,9 +60,11 @@ android {
     buildTypes {
         debug {
 //            buildConfigField "boolean", "LOG_DEBUG", "false" //不显示log
+            buildConfigField("String", "N1A1", "\"www.baidu.com2\"")
             zipAlignEnabled true
         }
         release {
+            buildConfigField("String", "N1A1", "\"www.baidu.com\"")
             zipAlignEnabled true
             minifyEnabled true
             shrinkResources true

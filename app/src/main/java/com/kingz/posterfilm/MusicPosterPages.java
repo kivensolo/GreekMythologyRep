@@ -1,26 +1,38 @@
-package com.kingz.view.listview;
+package com.kingz.posterfilm;
 
 import android.animation.ValueAnimator;
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.*;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.base.BaseActivity;
+import com.google.gson.Gson;
 import com.kingz.adapter.DemoRecyclerAdapter;
 import com.kingz.customdemo.R;
 import com.kingz.mode.RecycleDataInfo;
 import com.kingz.pages.photo.filmlist.MyItemDecoration;
+import com.kingz.posterfilm.data.MgResponseBean;
+import com.kingz.utils.OkHttpClientManager;
 import com.kingz.utils.ZLog;
 
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * author: King.Z
@@ -32,21 +44,79 @@ import java.util.Date;
  * ItemAnimator :  负责添加\移除\重排序时的动画效果，控制Item增删的动画.
  *
  * LayoutManager\Adapter是必须, ItemDecoration\ItemAnimator是可选.
- * <p>
- * RecyclerView架构，提供了一种插拔式的体验，高度的解耦，
- * 异常的灵活，通过设置它提供的不同LayoutManager，ItemDecoration , ItemAnimator实现令人瞠目的效果。
  */
-public class RecyclerviewDemo extends Activity {
+public class MusicPosterPages extends BaseActivity {
 
-    public static final String TAG = "RecyclerviewDemo";
+    public static final String TAG = "MgtvPosterPages";
     private RecyclerView view;
     private DemoRecyclerAdapter mAdapter;
+    private final String url = "http://pianku.api.mgtv.com/rider/tag-data?ticket=&device_id=173365c356c6f97b69bca90a60009d6f4b8f7c97&tagId=222&net_id=&type=3&version=5.9.501.200.3.MGTV_TVAPP.0.0_Debug&uuid=mgtvmac020000445566&platform=ott&mac_id=02-00-00-44-55-66&license=ZgOOgo5MjkyOTA4FqqoghzuqhyA7IL8NBZkgDZk7lQ0GlSAGBgYNeyC%2FtJl8vwU7DQUFjkyOTI5MZgOOgg%3D%3D&_support=00100101011&pc=200&buss_id=1000014&pn=1";
 
+    private static final int PROTECTED_LENGTH = 51200;// 输入流保护 50KB
+    private static final String DEFAULT_ENCODING = "utf-8";//编码
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recyclerview_demo);
         initRecyclerView();
+
+        OkHttpClientManager.getAsyn(url, new OkHttpClientManager.ResultCallback<MgResponseBean>(){
+            @Override
+            public void onError(Request request, Exception e) {
+                ZLog.d(TAG,"onError " );
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(final Response response) {
+                ZLog.d(TAG,"onResponse");
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        String result = "";
+                        final InputStream inputStream = response.body().byteStream();
+                        final ByteArrayOutputStream infoStream = new ByteArrayOutputStream();
+
+                        byte[] bcache = new byte[8 * 1024];
+                        int readSize = 0;//每次读取的字节长度
+                        long totalSize = 0;//总字节长度
+                        try {
+                            while ((readSize = inputStream.read(bcache)) > 0) {
+                                totalSize += readSize;
+//                        if (totalSize > PROTECTED_LENGTH) {
+//                            throw new Exception("输入流超出50K大小限制");
+//                        }
+                                //将bcache中读取的input数据写入infoStream
+                                infoStream.write(bcache,0,readSize);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        } finally {
+                            try{
+                                inputStream.close();
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
+                        }
+                        try {
+                            result = infoStream.toString(DEFAULT_ENCODING);
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
+                        }
+                        final String finalResult = result;
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                MgResponseBean responseBean = new Gson().fromJson(finalResult, MgResponseBean.class);
+                                mAdapter.attachData(responseBean.getData().getHitDocs());
+                                mAdapter.notifyDataSetChanged();
+                            }
+                        });
+                    }
+                });
+
+            }
+        });
     }
 
     @Override
@@ -60,10 +130,10 @@ public class RecyclerviewDemo extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add:
-                mAdapter.addData(1);
+//                mAdapter.addData(1);
                 break;
             case R.id.action_delete:
-                mAdapter.removeData(1);
+//                mAdapter.removeData(1);
                 break;
         }
         return true;
@@ -72,14 +142,14 @@ public class RecyclerviewDemo extends Activity {
     private void initRecyclerView() {
         view = (RecyclerView) findViewById(R.id.test_recycler_view);
         view.setHasFixedSize(true);        // 设置固定大小  适配器更改不能影响RecyclerView的大小
-        setRecyclerLayoutManager(view);    // 初始化布局
-        setRecyclerAdapter(view);          // 初始化适配器
-        setItemDecoration(view);           // 初始化装饰
-        setItemAnimator(view);             // 初始化动画效果
+        setRecyclerLayoutManager();    // 初始化布局
+        setRecyclerAdapter();
+        setItemDecoration();           // 初始化装饰
+        setItemAnimator();             // 初始化动画效果
         setListeners();
     }
 
-    private void setRecyclerLayoutManager(RecyclerView recyclerView) {
+    private void setRecyclerLayoutManager() {
         //LayoutManager--------->GridLayoutManager(网格)/LinearLayoutManager(线性)/StaggeredGridLayoutManager(错列网格)
 
         //默认线性(垂直方向展示  正序)
@@ -91,7 +161,7 @@ public class RecyclerviewDemo extends Activity {
         //| 0 1 |
         //| 2 3 |
         //| 4 5 |
-        recyclerView.setLayoutManager(new GridLayoutManager(this,2));
+        view.setLayoutManager(new GridLayoutManager(this,2));
 
         //横向固定网格
         //| 0 2 4 ... 39|
@@ -102,35 +172,13 @@ public class RecyclerviewDemo extends Activity {
         //recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
     }
 
-    private void setRecyclerAdapter(RecyclerView recyclerView) {
-        mAdapter = new DemoRecyclerAdapter(getDataSource());
+    private void setRecyclerAdapter() {
+        mAdapter = new DemoRecyclerAdapter();
         mAdapter.setOnItemClickLitener(new OnRecycleViewItemClickLitener());
-        recyclerView.setAdapter(mAdapter);
+        view.setAdapter(mAdapter);
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     private void setListeners() {
-        //FIXME 警告的原因 ？？？？
-        view.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()){
-                    case MotionEvent.ACTION_DOWN:
-                        ZLog.d(TAG,"viewq onTouch ---->>> ACTION_DOWN ");
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                        ZLog.d(TAG,"viewq onTouch ---->>> ACTION_MOVE ");
-                        break;
-                    case MotionEvent.ACTION_SCROLL:
-                        ZLog.d(TAG,"viewq onTouch ---->>> ACTION_SCROLL ");
-                        break;
-                }
-                return false;
-            }
-        });
-        //@Deprecated
-        //view.setOnScrollListener();
-
         RecyclerView.OnScrollListener scrollListener = new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -148,25 +196,25 @@ public class RecyclerviewDemo extends Activity {
         view.performClick();
     }
 
-    private void setItemDecoration(RecyclerView recyclerView) {
+    private void setItemDecoration() {
         //调用addItemDecoration()方法添加decoration的时候，RecyclerView在绘制的时候，会去绘制decorator，即调用该类的onDraw和onDrawOver方法，
-        recyclerView.addItemDecoration(new MyItemDecoration(this, LinearLayout.HORIZONTAL));
+        view.addItemDecoration(new MyItemDecoration(this, LinearLayout.HORIZONTAL));
     }
 
-    private void setItemAnimator(RecyclerView recyclerView) {
+    private void setItemAnimator() {
         Animation deleteAnimation = AnimationUtils.loadAnimation(this, R.anim.push_up_in);
         deleteAnimation.setRepeatMode(ValueAnimator.RESTART);
         //deleteAnimation.setRepeatCount(0);
         //deleteAnimation.setDuration(300);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAnimation(deleteAnimation);
+        view.setItemAnimator(new DefaultItemAnimator());
+        view.setAnimation(deleteAnimation);
     }
 
     /**
      * Create fake data.
      * @return list of fake data.
      */
-    private ArrayList<RecycleDataInfo> getDataSource() {
+    private ArrayList<RecycleDataInfo> getFakeDataSource() {
         int count = 10;
         ArrayList<RecycleDataInfo> data = new ArrayList<>();
         Date date = new Date();
@@ -195,13 +243,13 @@ public class RecyclerviewDemo extends Activity {
     public class OnRecycleViewItemClickLitener implements DemoRecyclerAdapter.OnItemClickLitener {
         @Override
         public void onItemClick(View view, int position) {
-             Toast.makeText(RecyclerviewDemo.this, position + " click",
+             Toast.makeText(MusicPosterPages.this, position + " click",
                         Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onItemLongClick(View view, int position) {
-            Toast.makeText(RecyclerviewDemo.this, position + "long click",
+            Toast.makeText(MusicPosterPages.this, position + "long click",
                         Toast.LENGTH_SHORT).show();
             mAdapter.removeData(position);
         }

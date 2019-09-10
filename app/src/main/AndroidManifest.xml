@@ -26,7 +26,7 @@
     <uses-permission android:name="android.permission.WRITE_CONTACTS"/>
     <!--保持CPU 运转，屏幕和键盘灯有可能是关闭的,用于文件上传和下载 -->
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
-
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <uses-permission android:name="com.starcor.xinjiang.ReadUserinfo"/>
 
@@ -267,7 +267,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/NoTitleBarTheme"/>
         <activity
-            android:name="com.kingz.view.listview.RecyclerviewDemo"
+            android:name="com.kingz.posterfilm.MusicPosterPages"
             android:screenOrientation="portrait"/>
 
         <!-- 可左右滑动的ListView -->

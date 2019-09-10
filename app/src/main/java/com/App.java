@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Handler;
 import android.os.StrictMode;
 import android.util.Log;
+
 import com.core.logic.GlobalCacheCenter;
 import com.kingz.customdemo.BuildConfig;
 import com.kingz.utils.ZLog;
@@ -40,6 +41,7 @@ public class App extends Application {
         super.onCreate();
         _appMainHandler = new Handler(getMainLooper());
         application = this;
+        ZLog.d("App", "app name is:" + BuildConfig.APP_NAME);
         initLog();
         initAPPScreenParms();
         initCacheCenter();
