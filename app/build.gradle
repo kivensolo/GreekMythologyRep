@@ -59,12 +59,12 @@ android {
 
     buildTypes {
         debug {
-//            buildConfigField "boolean", "LOG_DEBUG", "false" //不显示log
-            buildConfigField("String", "N1A1", "\"www.baidu.com2\"")
+//            buildConfigField("String", "n1_a_1", "\"www.baidu.com2\"")
+            buildConfigField("boolean", "SPLSH_DEBUG", "false")
             zipAlignEnabled true
         }
         release {
-            buildConfigField("String", "N1A1", "\"www.baidu.com\"")
+            buildConfigField("boolean", "SPLSH_DEBUG", "true")
             zipAlignEnabled true
             minifyEnabled true
             shrinkResources true

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.base.BaseActivity;
+import com.kingz.customdemo.BuildConfig;
 import com.kingz.customdemo.R;
 import com.kingz.view.LogininView;
 
@@ -38,8 +39,13 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
         setContentView(R.layout.splash_activity);
         findView();
         initView();
-        playVideo();
-        playAnim();
+
+        if(!BuildConfig.SPLSH_DEBUG){
+            openMainPage();
+        }else{
+            playVideo();
+            playAnim();
+        }
     }
 
     private void findView() {
