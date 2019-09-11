@@ -4,7 +4,12 @@ import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.util.Log;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 /**
  * Created by KingZ on 2015/11/4.
@@ -91,9 +96,8 @@ public class FileUtils {
 
     /**
      * 删除指定目录文件夹下面的文件，如果文件超过指定时间未修改
-     * @param path
-     * @param limitTime
-     * @return
+     * @param path  目录路径
+     * @param limitTime 限制时间
      */
     public static boolean dealPathFilesWithOldDate(String path,long limitTime){
         if(TextUtils.isEmpty(path)){
@@ -102,7 +106,7 @@ public class FileUtils {
         File file = new File(path);
         File[] fl = file.listFiles();
         if(fl ==null){
-            return true;
+            return false;
         }
         ZLog.i(TAG, "deletePathFilesOldFile path:" + path + ", count:" + fl.length);
         for(File curFile : fl){

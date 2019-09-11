@@ -2,24 +2,15 @@ package com.kingz.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.widget.ImageView;
+
 import com.App;
 import com.google.gson.Gson;
 import com.google.gson.internal.$Gson$Types;
 import com.kingz.customdemo.R;
-
-import okhttp3.*;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -34,6 +25,15 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
 //import com.squareup.okhttp.FormEncodingBuilder;
 //import com.squareup.okhttp.MultipartBuilder;
 //import com.squareup.okhttp.RequestBody;
@@ -43,17 +43,17 @@ import java.util.concurrent.TimeUnit;
  * date:  2019/4/16 23:49 <br>
  * description: OkHttp工具类
  * 基于OKHttp 3.x <br>
- *
- *   异步发起的请求会被加入到 Dispatcher 中的 runningAsyncCalls 双端队列中通过线程池来执行。
- *   --- Post :
- *      post需要构造RequestBody对象，用它来携带我们要提交的数据。
- *      在构造 RequestBody 需要指定MediaType(https://tools.ietf.org/html/rfc2045)，
- *      用于描述请求/响应 body 的内容类型，
+ * <p>
+ * 异步发起的请求会被加入到 Dispatcher 中的 runningAsyncCalls 双端队列中通过线程池来执行。
+ * --- Post :
+ * post需要构造RequestBody对象，用它来携带我们要提交的数据。
+ * 在构造 RequestBody 需要指定MediaType(https://tools.ietf.org/html/rfc2045)，
+ * 用于描述请求/响应 body 的内容类型，
  */
 public class OkHttpClientManager {
     private static final String TAG = "OkHttpClientManager";
-    private static final long DEFAULT_CONNECT = 8L;
-    private static final long DEFAULT_READ = 4L;
+    private static final long DEFAULT_CONNECT = 8000L;
+    private static final long DEFAULT_READ = 4000L;
     private static final long DEFAULT_WRITE = DEFAULT_READ;
 
     private static OkHttpClientManager mInstance;
@@ -63,7 +63,7 @@ public class OkHttpClientManager {
 
     private OkHttpClientManager() {
         _initDefaultOkHttpClient();
-        _initWithTimeOut(DEFAULT_CONNECT, DEFAULT_READ,DEFAULT_WRITE);
+        _initWithTimeOut(DEFAULT_CONNECT, DEFAULT_READ, DEFAULT_WRITE);
         mDelivery = new Handler(Looper.getMainLooper());
         mGson = new Gson();
     }
@@ -89,19 +89,19 @@ public class OkHttpClientManager {
         // 而是通过OkHttpClient.Builder来设置，通过builder配置好OkHttpClient后
         // 用builder.build()来返回OkHttpClient
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
-                .connectTimeout(connectTimeOut, TimeUnit.SECONDS)
-                .readTimeout(readTimeOut, TimeUnit.SECONDS)
-                .writeTimeout(writeTimeOut, TimeUnit.SECONDS);
+                .connectTimeout(connectTimeOut, TimeUnit.MILLISECONDS)
+                .readTimeout(readTimeOut, TimeUnit.MILLISECONDS)
+                .writeTimeout(writeTimeOut, TimeUnit.MILLISECONDS);
         mOkHttpClient = builder.build();
     }
 
 
     /**
      * 构建Post的Request对象
+     *
      * @param url
      * @param params
-     * @return
-     * TODO 增加Post的RequestBody动态处理
+     * @return TODO 增加Post的RequestBody动态处理
      */
     private Request buildPostRequest(String url, Param... params) {
 //        guessMimeType(url);
@@ -114,14 +114,19 @@ public class OkHttpClientManager {
     }
 
 
-    /** Get请求 [异步]  Call.enqueue() **/
+    /**
+     * Get请求 [异步]  Call.enqueue()
+     **/
     private void _getAsyn(String url, final ResultCallback callback) {
         final Request request = new Request.Builder()
                 .url(url)
                 .build();
         deliveryResult(callback, request);
     }
-    /** Get请求 [同步] 使用execute后,要关闭ResponseBody**/
+
+    /**
+     * Get请求 [同步] 使用execute后,要关闭ResponseBody
+     **/
     private Response _getAsyn(String url) throws IOException {
         final Request request = new Request.Builder()
                 .url(url)
@@ -135,11 +140,14 @@ public class OkHttpClientManager {
         return execute.body().string();
     }
 
-    /** Post请求 [同步] **/
+    /**
+     * Post请求 [同步]
+     **/
     private Response _post(String url, Param... params) throws IOException {
         Request request = buildPostRequest(url, params);
         return mOkHttpClient.newCall(request).execute();
     }
+
     private Response _post(String url, File[] files, String[] fileKeys, Param... params) throws IOException {
         Request request = buildPostRequest(url, params);
         return mOkHttpClient.newCall(request).execute();
@@ -150,7 +158,9 @@ public class OkHttpClientManager {
         return response.body().string();
     }
 
-    /** Post请求 [异步] **/
+    /**
+     * Post请求 [异步]
+     **/
     private void _postAsyn(String url, final ResultCallback callback, Param... params) {
         Request request = buildPostRequest(url, params);
         deliveryResult(callback, request);
@@ -168,16 +178,16 @@ public class OkHttpClientManager {
         mOkHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.d(TAG,"onFailure: " + e.getMessage());
+                Log.d(TAG, "onFailure: " + e.getMessage());
                 sendFailedStringCallback(request, e, callback);
 
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                Log.d(TAG, "onResponse: " + response.protocol() + " " +response.code() + " " + response.message());
-                if(response.body() == null){
-                    onFailure(call,new IOException("responseBody is empty."));
+                Log.d(TAG, "onResponse: " + response.protocol() + " " + response.code() + " " + response.message());
+                if (response.body() == null) {
+                    onFailure(call, new IOException("responseBody is empty."));
                     return;
                 }
                 sendSuccessResultCallback(response, callback);
@@ -200,7 +210,7 @@ public class OkHttpClientManager {
      * @throws IOException
      */
     private void _displayImage(final ImageView view, final String url, final int errorResId) {
-        ZLog.d(TAG,"_displayImage : url = " + url);
+//        ZLog.d(TAG, "_displayImage : url = " + url);
         final Request request = new Request.Builder()
                 .url(url)
                 .build();
@@ -208,13 +218,13 @@ public class OkHttpClientManager {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                ZLog.e(TAG,"_displayImage onFailure : url = " + url);
+                ZLog.e(TAG, "_displayImage onFailure : url = " + url);
                 setErrorResId(view, errorResId);
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                ZLog.d(TAG,"_displayImage onResponse \n url = " + url);
+//                ZLog.d(TAG, "_displayImage onResponse \n url = " + url);
                 InputStream is = null;
                 try {
                     // response.body()只能用一次
@@ -223,8 +233,8 @@ public class OkHttpClientManager {
                     ByteArrayOutputStream outStream = new ByteArrayOutputStream();
                     byte[] buffer = new byte[1024];
                     byte[] bmp_buffer;
-                    int len = 0;
-                    while( (len = is.read(buffer)) != -1){
+                    int len;
+                    while ((len = is.read(buffer)) != -1) {
                         outStream.write(buffer, 0, len);
                     }
                     outStream.flush();
@@ -232,14 +242,14 @@ public class OkHttpClientManager {
                     bmp_buffer = outStream.toByteArray();
                     final Bitmap bm = BitmapFactory.decodeByteArray(bmp_buffer, 0, bmp_buffer.length);
 //                    final Bitmap bm = BitMapUtils.decodeStreamCustomOpts(is);
-                    if(bm == null){
+                    if (bm == null) {
                         setErrorResId(view, errorResId);
                         return;
                     }
-                    File filePath = new File(App.getAppInstance().getAppContext().getCacheDir().getPath(),"FilmPageDir");
+                    File filePath = new File(App.getAppInstance().getAppContext().getCacheDir().getPath(), "FilmPageDir");
                     File file = new File(filePath, EncryptTools.MD5(url));
-                    FileUtils.saveBitmapWithPath(file, bm, Bitmap.CompressFormat.PNG,90);
-                  FileUtils.dealPathFilesWithOldDate(filePath.toString(),System.currentTimeMillis() - TimeUnit.DAYS.toMillis(3));
+                    FileUtils.saveBitmapWithPath(file, bm, Bitmap.CompressFormat.PNG, 90);
+                    FileUtils.dealPathFilesWithOldDate(filePath.toString(), System.currentTimeMillis() - TimeUnit.DAYS.toMillis(3));
                     mDelivery.post(new Runnable() {
                         @Override
                         public void run() {
@@ -267,8 +277,6 @@ public class OkHttpClientManager {
             }
         });
     }
-
-
 
 
     //*************对外公布的方法  Start************
@@ -337,7 +345,6 @@ public class OkHttpClientManager {
     }
 
     public static void displayImage(final ImageView view, String url) {
-        url = "http://p0.meituan.net/165.220/movie/7f32684e28253f39fe2002868a1f3c95373851.jpg";
         getInstance()._displayImage(view, url, R.drawable.pic_default);
     }
 
@@ -346,24 +353,28 @@ public class OkHttpClientManager {
     //}
 
     //*************对外公布的方法  End************
+
     /**
      * 创建表单请求Body
+     *
      * @param params
      * @return
      */
-    private RequestBody createFormBody(Param[] params){
+    private RequestBody createFormBody(Param[] params) {
         params = validateParam(params);
         FormBody.Builder builder = new FormBody.Builder();
-        for (Param p:params){
-            builder.add(p.key,p.value);
+        for (Param p : params) {
+            builder.add(p.key, p.value);
         }
         return builder.build();
     }
 
     /**
      * 猜测路径对应的Mime类型
+     *
      * @param path
-     * @return Mime类型     */
+     * @return Mime类型
+     */
     private String guessMimeType(String path) {
         FileNameMap fileNameMap = URLConnection.getFileNameMap();
         String contentTypeFor = fileNameMap.getContentTypeFor(path);
@@ -436,7 +447,7 @@ public class OkHttpClientManager {
 
         public abstract void onError(Request request, Exception e);
 
-        // 返回Response数据  具体的数据类型由业务代码处理response.body().XXXX()
+        // 返回Response数据(主线程)  具体的数据类型由业务代码处理response.body().XXXX()
         public abstract void onResponse(Response response);
     }
 
