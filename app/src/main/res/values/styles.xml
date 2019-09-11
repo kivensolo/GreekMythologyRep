@@ -85,7 +85,6 @@
         <item name="android:contentDescription">@string/exo_controls_pause_description</item>
     </style>
 
-
     <style name="PlayTheme" parent="NoTitleBarTheme">
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>

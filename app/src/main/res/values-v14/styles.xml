@@ -2,7 +2,7 @@
 
     <!--
         API 14+的设备的应用基础主题。
-        在API 14+的设备上，这个主题设置会替换掉 res/values/styles.xml 和 res/values-v11/styles.xml
+        在API 14+的设备上，这个主题设置会替换掉 res/values/styles.xml 和 res/values-v14/styles.xml
     -->
 
     <style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -13,4 +13,10 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <!--All customizations that are NOT specific to a particular API-level can go here.-->
     </style>
+
+    <style name="PlayTheme" parent="AppBaseTheme">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
 </resources>
