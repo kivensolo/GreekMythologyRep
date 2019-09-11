@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <videos>
     <video>
+        <name>Video_8</name>
+        <play_url>http://129.28.160.49/__cl/cg:ingest01/__c/cctv8/__op/default/__f/index.m3u8</play_url>
+    </video>
+    <video>
         <name>东南卫视</name>
         <play_url>http://video.chinanews.com/tvmining/News/MP4ZXW/DongNanTV/2016/04/29/DongNanTV_1500000_20160429_18866283_0_40.mp4</play_url>
     </video>
@@ -29,20 +33,20 @@
         <play_url>http://yydy.file.alimmdn.com/source/586732FA-05FD-430C-B177-0D3BDDF348F3_V</play_url>
     </video>
     <video>
-        <name>Video_5</name>
-        <play_url>http://yydy.file.alimmdn.com/source/907B5F50-0BB9-44BF-9F62-C9986F533951_V</play_url>
+        <name>CCTV3</name>
+        <play_url>http://117.59.125.132/__cl/cg:ingest01/__c/cctv3/__op/default/__f/index.m3u8</play_url>
     </video>
     <video>
-        <name>Video_6</name>
-        <play_url>http://yydy.file.alimmdn.com/source/13C0F717-4E10-4357-8F62-22D2231B8240_V</play_url>
+        <name>CCTV5</name>
+        <play_url>http://129.28.160.49/__cl/cg:ingest01/__c/cctv5/__op/default/__f/index.m3u8</play_url>
     </video>
     <video>
-        <name>Video_7</name>
-        <play_url>http://yydy.file.alimmdn.com/source/0DC3B36C-BBD4-4961-8E6C-33CD219A0F78_V</play_url>
+        <name>CCTV6</name>
+        <play_url>http://129.28.160.49/__cl/cg:ingest01/__c/cctv6/__op/default/__f/index.m3u8</play_url>
     </video>
     <video>
         <name>Video_8</name>
-        <play_url>http://yydy.file.alimmdn.com/source/A168D52F-EBBD-4B9B-BFBF-26DEE4AB2A92_V</play_url>
+        <play_url>http://129.28.160.49/__cl/cg:ingest01/__c/cctv8/__op/default/__f/index.m3u8</play_url>
     </video>
     <video>
         <name>Video_9</name>
