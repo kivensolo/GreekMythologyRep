@@ -21,6 +21,7 @@ import com.kingz.customdemo.R;
 import com.kingz.mode.RecycleDataInfo;
 import com.kingz.pages.photo.filmlist.MyItemDecoration;
 import com.kingz.posterfilm.data.MgResponseBean;
+import com.kingz.utils.ExecutorServiceHelper;
 import com.kingz.utils.OkHttpClientManager;
 import com.kingz.utils.ZLog;
 
@@ -42,35 +43,36 @@ import okhttp3.Response;
  * Adapter : 处理每个Item的显示.
  * ItemDecoration : 添加每个Item的装饰，控制Item间的间隔.
  * ItemAnimator :  负责添加\移除\重排序时的动画效果，控制Item增删的动画.
- *
+ * <p>
  * LayoutManager\Adapter是必须, ItemDecoration\ItemAnimator是可选.
  */
 public class MusicPosterPages extends BaseActivity {
 
-    public static final String TAG = "MgtvPosterPages";
+    public static final String TAG = "MusicPosterPages";
     private RecyclerView view;
     private DemoRecyclerAdapter mAdapter;
     private final String url = "http://pianku.api.mgtv.com/rider/tag-data?ticket=&device_id=173365c356c6f97b69bca90a60009d6f4b8f7c97&tagId=222&net_id=&type=3&version=5.9.501.200.3.MGTV_TVAPP.0.0_Debug&uuid=mgtvmac020000445566&platform=ott&mac_id=02-00-00-44-55-66&license=ZgOOgo5MjkyOTA4FqqoghzuqhyA7IL8NBZkgDZk7lQ0GlSAGBgYNeyC%2FtJl8vwU7DQUFjkyOTI5MZgOOgg%3D%3D&_support=00100101011&pc=200&buss_id=1000014&pn=1";
 
     private static final int PROTECTED_LENGTH = 51200;// 输入流保护 50KB
     private static final String DEFAULT_ENCODING = "utf-8";//编码
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recyclerview_demo);
         initRecyclerView();
 
-        OkHttpClientManager.getAsyn(url, new OkHttpClientManager.ResultCallback<MgResponseBean>(){
+        OkHttpClientManager.getAsyn(url, new OkHttpClientManager.ResultCallback<MgResponseBean>() {
             @Override
             public void onError(Request request, Exception e) {
-                ZLog.d(TAG,"onError " );
+                ZLog.d(TAG, "onError ");
                 e.printStackTrace();
             }
 
             @Override
             public void onResponse(final Response response) {
-                ZLog.d(TAG,"onResponse");
-                new Thread(new Runnable() {
+                ZLog.d(TAG, "onResponse");
+                ExecutorServiceHelper.getInstance().execute(new Runnable() {
                     @Override
                     public void run() {
                         String result = "";
@@ -87,14 +89,14 @@ public class MusicPosterPages extends BaseActivity {
 //                            throw new Exception("输入流超出50K大小限制");
 //                        }
                                 //将bcache中读取的input数据写入infoStream
-                                infoStream.write(bcache,0,readSize);
+                                infoStream.write(bcache, 0, readSize);
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
                         } finally {
-                            try{
+                            try {
                                 inputStream.close();
-                            }catch (Exception e){
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         }
@@ -114,7 +116,6 @@ public class MusicPosterPages extends BaseActivity {
                         });
                     }
                 });
-
             }
         });
     }
@@ -161,7 +162,7 @@ public class MusicPosterPages extends BaseActivity {
         //| 0 1 |
         //| 2 3 |
         //| 4 5 |
-        view.setLayoutManager(new GridLayoutManager(this,2));
+        view.setLayoutManager(new GridLayoutManager(this, 3));
 
         //横向固定网格
         //| 0 2 4 ... 39|
@@ -212,6 +213,7 @@ public class MusicPosterPages extends BaseActivity {
 
     /**
      * Create fake data.
+     *
      * @return list of fake data.
      */
     private ArrayList<RecycleDataInfo> getFakeDataSource() {
@@ -229,6 +231,7 @@ public class MusicPosterPages extends BaseActivity {
 
     /**
      * Get the date of the specified offset days based on the current date.
+     *
      * @param date Current date
      * @param i    offset days
      * @return new date
@@ -243,14 +246,14 @@ public class MusicPosterPages extends BaseActivity {
     public class OnRecycleViewItemClickLitener implements DemoRecyclerAdapter.OnItemClickLitener {
         @Override
         public void onItemClick(View view, int position) {
-             Toast.makeText(MusicPosterPages.this, position + " click",
-                        Toast.LENGTH_SHORT).show();
+            Toast.makeText(MusicPosterPages.this, position + " click",
+                    Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onItemLongClick(View view, int position) {
             Toast.makeText(MusicPosterPages.this, position + "long click",
-                        Toast.LENGTH_SHORT).show();
+                    Toast.LENGTH_SHORT).show();
             mAdapter.removeData(position);
         }
     }

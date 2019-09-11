@@ -1,5 +1,6 @@
 package com.kingz.adapter;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,8 +10,10 @@ import android.widget.ImageView;
 import com.App;
 import com.kingz.customdemo.R;
 import com.kingz.mode.RecycleDataInfo;
-import com.kingz.pages.photo.filmlist.DemoViewHolder;
-import com.kingz.posterfilm.data.MgResponseBean;
+import com.kingz.pages.photo.filmlist.MgPosterViewHolder;
+import com.kingz.posterfilm.data.MgPosterBean;
+import com.kingz.utils.OkHttpClientManager;
+import com.kingz.utils.ZLog;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,7 +30,7 @@ import java.util.Locale;
  * description:
  *   RecycleView的数据适配器
  */
-public class DemoRecyclerAdapter extends RecyclerView.Adapter<DemoViewHolder> {
+public class DemoRecyclerAdapter extends RecyclerView.Adapter<MgPosterViewHolder> {
 
     private static final String TAG="DemoRecyclerAdapter";
     public final int testViewTypeCode = 10086;
@@ -75,33 +78,31 @@ public class DemoRecyclerAdapter extends RecyclerView.Adapter<DemoViewHolder> {
      * viewHolder持有view的信息，用作缓存
      */
     @Override
-    public DemoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MgPosterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         //创建item的view
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.photoitem_recycler_view, parent, false);
         if(viewType == testViewTypeCode){
             ImageView img = (ImageView) itemView.findViewById(R.id.recom_poster);
             img.setBackground(App.getAppInstance().getAppContext().getResources().getDrawable(R.drawable.bg1));
         }
-        return new DemoViewHolder(itemView);
+        return new MgPosterViewHolder(itemView);
     }
 
     /**
      * 绑定每一项数据
-     * @param holder
-     * @param position
      */
     @Override
-    public void onBindViewHolder(final DemoViewHolder holder, int position) {
-        //ZLog.i(TAG,"onBindViewHolder() holder="+holder+"---position:"+position);
+    public void onBindViewHolder(@NonNull final MgPosterViewHolder holder, int position) {
+        ZLog.i(TAG,"onBindViewHolder() holder="+holder+"---position:"+position);
 
         // 随机高度, 模拟瀑布效果.
 //        if (mHeights.size() <= position) {
 //            mHeights.add((int) (50 + Math.random() * 200));
 //        }
 
-        ViewGroup.LayoutParams lp = holder.getTvLabel().getLayoutParams();
+//        ViewGroup.LayoutParams lp = holder.getTvLabel().getLayoutParams();
 //        lp.height = mHeights.get(position);
-        holder.getTvLabel().setLayoutParams(lp);
+//        holder.getTvLabel().setLayoutParams(lp);
 
         Object obj = mCacheData.get(position);
         if(obj instanceof RecycleDataInfo){
@@ -111,13 +112,12 @@ public class DemoRecyclerAdapter extends RecyclerView.Adapter<DemoViewHolder> {
             holder.getTvDateTime()
                     .setText(new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
                             .format(dataModel.getDateTime()));
-        }else if(obj instanceof MgResponseBean){
-            MgResponseBean dataModel = (MgResponseBean)obj;
-            holder.getTvLabel()
-                    .setText(dataModel.getData().getHitDocs().get(position).getTitle());
-            holder.getTvDateTime()
-                    .setText(new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                            .format(dataModel.getData().getHitDocs().get(position).getUpdateInfo()));
+        }else if(obj instanceof MgPosterBean){
+            MgPosterBean data = (MgPosterBean)obj;
+            holder.getTvLabel().setText(data.getTitle());
+            holder.getTvDateTime().setText(data.getUpdateInfo());
+            //TODO 获取缓存
+            OkHttpClientManager.displayImage(holder.getmPosterView(),data.getImg());
         }
 
 //        if (mOnItemClickLitener != null) {

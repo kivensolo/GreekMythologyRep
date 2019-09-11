@@ -8,19 +8,17 @@ import android.widget.TextView;
 import com.kingz.customdemo.R;
 
 /**
- * Copyright(C) 2015, 北京视达科科技有限公司
  * All rights reserved.
  * author: King.Z
  * date:  2016/8/7 22:44
  * description:
  */
-public class DemoViewHolder extends RecyclerView.ViewHolder{
-
+public class MgPosterViewHolder extends RecyclerView.ViewHolder{
     private ImageView mPosterView;
     private TextView mTvLabel;
     private TextView mTvDateTime;
 
-    public DemoViewHolder(View itemView) {
+    public MgPosterViewHolder(View itemView) {
         super(itemView);
         mPosterView = (ImageView) itemView.findViewById(R.id.recom_poster);
         mTvLabel = (TextView) itemView.findViewById(R.id.item_text);
