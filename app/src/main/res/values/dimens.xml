@@ -18,4 +18,5 @@
 
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="poster_margin">1dp</dimen>
+    <dimen name="poster_margin_b">3dp</dimen>
 </resources>

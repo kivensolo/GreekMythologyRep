@@ -28,7 +28,9 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
+import okhttp3.Headers;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -45,8 +47,9 @@ import okhttp3.Response;
  * 基于OKHttp 3.x <br>
  * <p>
  * 异步发起的请求会被加入到 Dispatcher 中的 runningAsyncCalls 双端队列中通过线程池来执行。
+ *
  * --- Post :
- * post需要构造RequestBody对象，用它来携带我们要提交的数据。
+ * post需要构造RequestBody对象，携带要提交的数据。
  * 在构造 RequestBody 需要指定MediaType(https://tools.ietf.org/html/rfc2045)，
  * 用于描述请求/响应 body 的内容类型，
  */
@@ -95,18 +98,22 @@ public class OkHttpClientManager {
         mOkHttpClient = builder.build();
     }
 
-
     /**
      * 构建Post的Request对象
      *
-     * @param url
-     * @param params
-     * @return TODO 增加Post的RequestBody动态处理
+     * @param url 请求url
+     * @param params post的参数数据
+     * @return  post的Request
      */
-    private Request buildPostRequest(String url, Param... params) {
-//        guessMimeType(url);
-        MediaType mediaType = MediaType.parse("text/html; charset=utf-8");
-        RequestBody body = RequestBody.create(mediaType, "I'm Test content");
+    private Request buildPostRequest(String url, Param[] params) {
+        if (params == null) {
+            params = new Param[0];
+        }
+        FormBody.Builder builder = new FormBody.Builder();
+        for (Param p:params){
+           builder.add(p.key,p.value);
+        }
+        RequestBody body = builder.build();
         return new Request.Builder()
                 .url(url)
                 .post(body)
@@ -167,8 +174,14 @@ public class OkHttpClientManager {
     }
 
     private void _postAsyn(String url, final ResultCallback callback, Map<String, String> params) {
-        //TODO
-//        deliveryResult(callback, request);
+        Param[] paramsArr = map2Params(params);
+        Request request = buildPostRequest(url, paramsArr);
+        deliveryResult(callback, request);
+    }
+
+    private String getFileName(String path) {
+        int separatorIndex = path.lastIndexOf("/");
+        return (separatorIndex < 0) ? path : path.substring(separatorIndex + 1, path.length());
     }
 
     /**
@@ -196,11 +209,6 @@ public class OkHttpClientManager {
     }
     // ----------------------- 异步  End
 
-
-    private String getFileName(String path) {
-        int separatorIndex = path.lastIndexOf("/");
-        return (separatorIndex < 0) ? path : path.substring(separatorIndex + 1, path.length());
-    }
 
     /**
      * 异步加载图片
@@ -278,6 +286,35 @@ public class OkHttpClientManager {
         });
     }
 
+    private Request buildMultipartFormRequest(String url, File[] files,
+                                              String[] fileKeys, Param[] params) {
+        params = validateParam(params);
+
+        MultipartBody.Builder builder = new MultipartBody.Builder();
+        builder.setType(MultipartBody.FORM);
+        for (Param param : params) {
+            builder.addPart(Headers.of("Content-Disposition", "form-data; name=\"" + param.key + "\""),
+                    RequestBody.create(null, param.value));
+        }
+        if (files != null) {
+            RequestBody fileBody;
+            for (int i = 0; i < files.length; i++) {
+                File file = files[i];
+                String fileName = file.getName();
+                fileBody = RequestBody.create(MediaType.parse(guessMimeType(fileName)), file);
+                //TODO 根据文件名设置contentType
+                builder.addPart(Headers.of("Content-Disposition",
+                        "form-data; name=\"" + fileKeys[i] + "\"; filename=\"" + fileName + "\""),
+                        fileBody);
+            }
+        }
+
+        RequestBody requestBody = builder.build();
+        return new Request.Builder()
+                .url(url)
+                .post(requestBody)
+                .build();
+    }
 
     //*************对外公布的方法  Start************
     public static void initWithTimeOut(int connectTimeOut, int readTimeOut, int writeTimeOut) {
