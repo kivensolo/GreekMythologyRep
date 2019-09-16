@@ -19,10 +19,10 @@ import com.google.gson.Gson;
 import com.kingz.adapter.DemoRecyclerAdapter;
 import com.kingz.customdemo.R;
 import com.kingz.mode.RecycleDataInfo;
+import com.kingz.net.OkHttpClientManager;
 import com.kingz.pages.photo.filmlist.MyItemDecoration;
 import com.kingz.posterfilm.data.MgResponseBean;
 import com.kingz.utils.ExecutorServiceHelper;
-import com.kingz.utils.OkHttpClientManager;
 import com.kingz.utils.ZLog;
 
 import java.io.ByteArrayOutputStream;

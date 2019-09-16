@@ -10,9 +10,9 @@ import android.widget.ImageView;
 import com.App;
 import com.kingz.customdemo.R;
 import com.kingz.mode.RecycleDataInfo;
+import com.kingz.net.OkHttpClientManager;
 import com.kingz.pages.photo.filmlist.MgPosterViewHolder;
 import com.kingz.posterfilm.data.MgPosterBean;
-import com.kingz.utils.OkHttpClientManager;
 import com.kingz.utils.ZLog;
 
 import java.text.SimpleDateFormat;

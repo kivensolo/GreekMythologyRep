@@ -1,4 +1,4 @@
-package com.kingz.utils;
+package com.kingz.net;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,6 +11,9 @@ import com.App;
 import com.google.gson.Gson;
 import com.google.gson.internal.$Gson$Types;
 import com.kingz.customdemo.R;
+import com.kingz.utils.EncryptTools;
+import com.kingz.utils.FileUtils;
+import com.kingz.utils.ZLog;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

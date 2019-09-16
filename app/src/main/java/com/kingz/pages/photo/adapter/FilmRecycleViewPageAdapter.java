@@ -6,12 +6,13 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
 import com.App;
 import com.kingz.mode.PosterGroupInfo;
+import com.kingz.net.OkHttpClientManager;
 import com.kingz.pages.photo.filmlist.FilmListRecyclerViewHolder;
 import com.kingz.utils.EncryptTools;
 import com.kingz.utils.FileUtils;
-import com.kingz.utils.OkHttpClientManager;
 import com.kingz.utils.ZLog;
 
 import java.io.File;
