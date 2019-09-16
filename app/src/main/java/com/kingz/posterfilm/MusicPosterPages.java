@@ -143,34 +143,15 @@ public class MusicPosterPages extends BaseActivity {
     private void initRecyclerView() {
         view = (RecyclerView) findViewById(R.id.test_recycler_view);
         view.setHasFixedSize(true);        // 设置固定大小  适配器更改不能影响RecyclerView的大小
-        setRecyclerLayoutManager();    // 初始化布局
+        setRecyclerLayoutManager();
         setRecyclerAdapter();
-        setItemDecoration();           // 初始化装饰
-        setItemAnimator();             // 初始化动画效果
+        setItemDecoration();
+        setItemAnimator();
         setListeners();
     }
 
     private void setRecyclerLayoutManager() {
-        //LayoutManager--------->GridLayoutManager(网格)/LinearLayoutManager(线性)/StaggeredGridLayoutManager(错列网格)
-
-        //默认线性(垂直方向展示  正序)
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        //水平线性 反转(40-39-....-1-0)
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayout.HORIZONTAL, true));
-
-        //固定网格(默认垂直、正序布局) ----- 两列
-        //| 0 1 |
-        //| 2 3 |
-        //| 4 5 |
         view.setLayoutManager(new GridLayoutManager(this, 3));
-
-        //横向固定网格
-        //| 0 2 4 ... 39|
-        //| 1 3 5 ... 40|
-//        recyclerView.setLayoutManager(new GridLayoutManager(this,2,LinearLayout.HORIZONTAL,false));
-
-        // 错列网格布局 spanCount：方向垂直:列数  方向水平:行数
-        //recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
     }
 
     private void setRecyclerAdapter() {

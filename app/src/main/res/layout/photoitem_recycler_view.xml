@@ -3,9 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="108dp"
-    android:layout_height="166dp"
-    android:layout_margin="@dimen/poster_margin"
+    android:layout_width="162dp"
+    android:layout_height="249dp"
+    android:layout_marginLeft="@dimen/poster_margin"
+    android:layout_marginTop="@dimen/poster_margin"
+    android:layout_marginRight="@dimen/poster_margin"
+    android:layout_marginBottom="@dimen/poster_margin_b"
     android:background="#AE30A4F7">
 
     <ImageView
@@ -18,7 +21,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_marginTop="121dp"
+        android:layout_marginTop="204dp"
         android:background="@color/dark_qian"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

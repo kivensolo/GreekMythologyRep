@@ -8,7 +8,6 @@ import android.widget.TextView;
 import com.kingz.customdemo.R;
 
 /**
- * All rights reserved.
  * author: King.Z
  * date:  2016/8/7 22:44
  * description:
