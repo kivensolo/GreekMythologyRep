@@ -4,15 +4,14 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.ImageView;
 
-import com.App;
 import com.google.gson.Gson;
 import com.google.gson.internal.$Gson$Types;
 import com.kingz.customdemo.R;
-import com.kingz.utils.EncryptTools;
-import com.kingz.utils.FileUtils;
+import com.kingz.net.interceptors.LoggingInterceptor;
 import com.kingz.utils.ZLog;
 
 import java.io.ByteArrayOutputStream;
@@ -38,6 +37,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 //import com.squareup.okhttp.FormEncodingBuilder;
 //import com.squareup.okhttp.MultipartBuilder;
@@ -62,21 +62,21 @@ public class OkHttpClientManager {
     private static final long DEFAULT_READ = 4000L;
     private static final long DEFAULT_WRITE = DEFAULT_READ;
 
+    //reate a single OkHttpClient instanceC
     private static OkHttpClientManager mInstance;
     private OkHttpClient mOkHttpClient;
     private Handler mDelivery;
     private Gson mGson;
 
     private OkHttpClientManager() {
-        _initDefaultOkHttpClient();
+//        _initDefaultOkHttpClient();
         _initWithTimeOut(DEFAULT_CONNECT, DEFAULT_READ, DEFAULT_WRITE);
         mDelivery = new Handler(Looper.getMainLooper());
         mGson = new Gson();
     }
 
     private OkHttpClient _initDefaultOkHttpClient() {
-        OkHttpClient.Builder builder = new OkHttpClient.Builder();
-        return builder.build();
+        return new OkHttpClient.Builder().build();
     }
 
     public static OkHttpClientManager getInstance() {
@@ -91,13 +91,11 @@ public class OkHttpClientManager {
     }
 
     private void _initWithTimeOut(long connectTimeOut, long readTimeOut, long writeTimeOut) {
-        // 3.x设置超时和2.x有区别，不能再通过OkHttpClient对象设置，
-        // 而是通过OkHttpClient.Builder来设置，通过builder配置好OkHttpClient后
-        // 用builder.build()来返回OkHttpClient
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
                 .connectTimeout(connectTimeOut, TimeUnit.MILLISECONDS)
                 .readTimeout(readTimeOut, TimeUnit.MILLISECONDS)
-                .writeTimeout(writeTimeOut, TimeUnit.MILLISECONDS);
+                .writeTimeout(writeTimeOut, TimeUnit.MILLISECONDS)
+                .addInterceptor(new LoggingInterceptor());
         mOkHttpClient = builder.build();
     }
 
@@ -123,36 +121,36 @@ public class OkHttpClientManager {
                 .build();
     }
 
-
     /**
      * Get请求 [异步]  Call.enqueue()
      **/
     private void _getAsyn(String url, final ResultCallback callback) {
         final Request request = new Request.Builder()
                 .url(url)
+//                .header("User-Agent","KingZ Example")
                 .build();
         deliveryResult(callback, request);
     }
 
     /**
-     * Get请求 [同步] 使用execute后,要关闭ResponseBody
+     * Get请求 [同步]
+     * @return Response  需要执行response.body().close()
      **/
     private Response _getAsyn(String url) throws IOException {
         final Request request = new Request.Builder()
                 .url(url)
+//                .header("User-Agent","KingZ Example")
                 .build();
-        Call call = mOkHttpClient.newCall(request);
-        return call.execute();
+        return mOkHttpClient.newCall(request).execute();
     }
 
     private String _getAsString(String url) throws IOException {
         Response execute = _getAsyn(url);
-        return execute.body().string();
+        ResponseBody body = execute.body();
+        return body == null ? "" : body.string();
     }
 
-    /**
-     * Post请求 [同步]
-     **/
+    /** Post请求 [同步] **/
     private Response _post(String url, Param... params) throws IOException {
         Request request = buildPostRequest(url, params);
         return mOkHttpClient.newCall(request).execute();
@@ -168,9 +166,7 @@ public class OkHttpClientManager {
         return response.body().string();
     }
 
-    /**
-     * Post请求 [异步]
-     **/
+    /** Post请求 [异步] **/
     private void _postAsyn(String url, final ResultCallback callback, Param... params) {
         Request request = buildPostRequest(url, params);
         deliveryResult(callback, request);
@@ -210,37 +206,40 @@ public class OkHttpClientManager {
             }
         });
     }
-    // ----------------------- 异步  End
+    // -------------------------------------------- 异步  End ------------------------------------
 
+
+    // ------------------------------------------- 加载图片 ---------------------------------------
 
     /**
-     * 异步加载图片
+     * Load the image asynchronously and display it on the imageview
+     * @param view Display imageview
+     * @param url  image url
+     * @param errorResId  resource id of default image.
      *
-     * @param view
-     * @param url
-     * @throws IOException
      */
     private void _displayImage(final ImageView view, final String url, final int errorResId) {
-//        ZLog.d(TAG, "_displayImage : url = " + url);
-        final Request request = new Request.Builder()
-                .url(url)
-                .build();
+        final Request request = new Request.Builder().url(url).build();
         Call call = mOkHttpClient.newCall(request);
         call.enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 ZLog.e(TAG, "_displayImage onFailure : url = " + url);
                 setErrorResId(view, errorResId);
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
-//                ZLog.d(TAG, "_displayImage onResponse \n url = " + url);
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 InputStream is = null;
                 try {
-                    // response.body()只能用一次
-                    is = response.body().byteStream();
-                    // 对InputStream先进行转换
+                    // response.body() Only be used once
+                    ResponseBody body = response.body();
+                    if(body == null) {
+                        setErrorResId(view, errorResId);
+                        return;
+                    }
+                    is =  body.byteStream();
+                    // Convert the InputStream first
                     ByteArrayOutputStream outStream = new ByteArrayOutputStream();
                     byte[] buffer = new byte[1024];
                     byte[] bmp_buffer;
@@ -257,16 +256,11 @@ public class OkHttpClientManager {
                         setErrorResId(view, errorResId);
                         return;
                     }
-                    File filePath = new File(App.getAppInstance().getAppContext().getCacheDir().getPath(), "FilmPageDir");
-                    File file = new File(filePath, EncryptTools.MD5(url));
-                    FileUtils.saveBitmapWithPath(file, bm, Bitmap.CompressFormat.PNG, 90);
-                    FileUtils.dealPathFilesWithOldDate(filePath.toString(), System.currentTimeMillis() - TimeUnit.DAYS.toMillis(3));
-                    mDelivery.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            view.setImageBitmap(bm);
-                        }
-                    });
+//                    File filePath = new File(App.getAppInstance().getAppContext().getCacheDir().getPath(), "FilmPageDir");
+//                    File file = new File(filePath, EncryptTools.MD5(url));
+//                    FileUtils.saveBitmapWithPath(file, bm, Bitmap.CompressFormat.PNG, 90);
+//                    FileUtils.dealPathFilesWithOldDate(filePath.toString(), System.currentTimeMillis() - TimeUnit.DAYS.toMillis(3));
+                    setImage(view,bm);
                 } catch (Exception e) {
                     setErrorResId(view, errorResId);
                 } finally {
@@ -279,7 +273,14 @@ public class OkHttpClientManager {
             }
         });
     }
-
+    private void setImage(final ImageView view, final Bitmap bm){
+        mDelivery.post(new Runnable() {
+            @Override
+            public void run() {
+                view.setImageBitmap(bm);
+            }
+        });
+    }
     private void setErrorResId(final ImageView view, final int errorResId) {
         mDelivery.post(new Runnable() {
             @Override

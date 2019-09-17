@@ -152,7 +152,7 @@
         android:layout_below="@id/imageview_main_check_out"
         android:autoLink="web"
         android:textAppearance="@android:style/TextAppearance.Large"
-        android:text="https://github.com/sacot41"/>
+        android:text="https://github.com/kivensolo"/>
 
     <TextView
         android:id="@+id/textview_main_linkedin_link"
@@ -166,7 +166,7 @@
         android:layout_below="@id/textview_main_github_link"
         android:autoLink="web"
         android:textAppearance="@android:style/TextAppearance.Large"
-        android:text="https://ca.linkedin.com/pub/samuel-côté/62/211/22a"/>
+        android:text="https://"/>
 
 
 
