@@ -16,13 +16,13 @@ import com.kingz.utils.ZLog;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.net.FileNameMap;
 import java.net.URLConnection;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -39,10 +39,6 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-//import com.squareup.okhttp.FormEncodingBuilder;
-//import com.squareup.okhttp.MultipartBuilder;
-//import com.squareup.okhttp.RequestBody;
-
 /**
  * author: King.Z <br>
  * date:  2019/4/16 23:49 <br>
@@ -56,6 +52,7 @@ import okhttp3.ResponseBody;
  * 在构造 RequestBody 需要指定MediaType(https://tools.ietf.org/html/rfc2045)，
  * 用于描述请求/响应 body 的内容类型，
  */
+@SuppressWarnings({"WeakerAccess"})
 public class OkHttpClientManager {
     private static final String TAG = "OkHttpClientManager";
     private static final long DEFAULT_CONNECT = 8000L;
@@ -75,6 +72,7 @@ public class OkHttpClientManager {
         mGson = new Gson();
     }
 
+    @SuppressWarnings("unused")
     private OkHttpClient _initDefaultOkHttpClient() {
         return new OkHttpClient.Builder().build();
     }
@@ -89,6 +87,92 @@ public class OkHttpClientManager {
         }
         return mInstance;
     }
+
+    /* -------------------------------------对外公布的方法  Start -------------------------------------*/
+    public static void initWithTimeOut(int connectTimeOut, int readTimeOut, int writeTimeOut) {
+        getInstance()._initWithTimeOut(connectTimeOut, readTimeOut, writeTimeOut);
+    }
+
+    public static Response getAsyn(String url) throws IOException {
+        return getInstance()._getAsyn(url);
+    }
+
+    public static String getAsString(String url) throws IOException {
+        return getInstance()._getAsString(url);
+    }
+
+    public static void getAsyn(String url, ResultCallback callback) {
+        getInstance()._getAsyn(url, callback);
+    }
+
+    public static Response post(String url, Param... params) throws IOException {
+        return getInstance()._post(url, params);
+    }
+
+    public static String postAsString(String url, Param... params) throws IOException {
+        return getInstance()._postAsString(url, params);
+    }
+
+    public static void postAsyn(String url, final ResultCallback callback, Param... params) {
+        getInstance()._postAsyn(url, callback, params);
+    }
+
+
+    public static void postAsyn(String url, final ResultCallback callback, Map<String, String> params) {
+        getInstance()._postAsyn(url, callback, params);
+    }
+
+
+    public static Response post(String url, File[] files, String[] fileKeys, Param... params) throws IOException {
+        return getInstance()._post(url, files, fileKeys, params);
+    }
+
+    public static Response post(String url, File file, String fileKey) throws IOException {
+        return getInstance()._post(url, file, fileKey);
+    }
+
+    public static Response post(String url, File file, String fileKey,
+                                Param... params) throws IOException {
+        return getInstance()._post(url, file, fileKey, params);
+    }
+
+    public static void postAsyn(String url, ResultCallback callback,
+                                File[] files, String[] fileKeys,
+                                Param... params) throws IOException {
+        getInstance()._postAsyn(url, callback, files, fileKeys, params);
+    }
+
+
+    public static void postAsyn(String url, ResultCallback callback,
+                                File file, String fileKey) throws IOException {
+        getInstance()._postAsyn(url, callback, file, fileKey);
+    }
+
+
+    public static void postAsyn(String url, ResultCallback callback,
+                                File file, String fileKey,
+                                Param... params) throws IOException {
+        getInstance()._postAsyn(url, callback, file, fileKey, params);
+    }
+
+    public static void displayImage(final ImageView view, String url, int defaultResId) throws IOException {
+        getInstance()._displayImage(view, url, defaultResId);
+    }
+
+    public static void displayImage(final ImageView view, String url) {
+        getInstance()._displayImage(view, url, R.drawable.pic_default);
+    }
+
+    /**
+     * 文件下载
+     * @param url   文件url
+     * @param destDir   目标dir
+     * @param callback  callback
+     */
+    public static void downloadAsyn(String url, String destDir, ResultCallback callback) {
+        getInstance()._downloadAsyn(url, destDir, callback);
+    }
+    /* -------------------------------------对外公布的方法  End -------------------------------------*/
 
     private void _initWithTimeOut(long connectTimeOut, long readTimeOut, long writeTimeOut) {
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
@@ -156,17 +240,57 @@ public class OkHttpClientManager {
         return mOkHttpClient.newCall(request).execute();
     }
 
+    private String _postAsString(String url, Param... params) throws IOException {
+        Response response = _post(url, params);
+        ResponseBody body = response.body();
+        return body == null ? null : body.string();
+    }
+
+    /**
+     * 基于同步post的文件上传
+     */
+    private Response _post(String url, File file, String fileKey) throws IOException {
+        return _post(url, file, fileKey, (Param) null);
+    }
+
+    private Response _post(String url, File file, String fileKey, Param... params) throws IOException {
+        return _post(url, new File[]{file}, new String[]{fileKey}, params);
+    }
+
     private Response _post(String url, File[] files, String[] fileKeys, Param... params) throws IOException {
-        Request request = buildPostRequest(url, params);
+        Request request = buildMultipartFormRequest(url, files, fileKeys, params);
         return mOkHttpClient.newCall(request).execute();
     }
 
-    private String _postAsString(String url, Param... params) throws IOException {
-        Response response = _post(url, params);
-        return response.body().string();
+    /*--------------------------- 异步post的文件上传  ----------------- Start ----------*/
+    /**
+     * 单文件上传,不带参数
+     */
+    private void _postAsyn(String url, ResultCallback callback, File file, String fileKey) throws IOException{
+        _postAsyn(url, callback, new File[]{file}, new String[]{fileKey}, (Param) null);
     }
 
-    /** Post请求 [异步] **/
+    /**
+     * 单文件上传,带参数
+     */
+    private void _postAsyn(String url, ResultCallback callback, File file, String fileKey,
+                           Param... params) throws IOException{
+        _postAsyn(url, callback, new File[]{file}, new String[]{fileKey}, params);
+    }
+
+    /**
+     * 多文件上传,带参数
+     */
+    private void _postAsyn(String url,ResultCallback callback,File[] files,
+                           String[] fileKeys, Param... params) throws IOException{
+        Request request = buildMultipartFormRequest(url, files, fileKeys, params);
+        deliveryResult(callback, request);
+    }
+
+    /*--------------------------- 异步post的文件上传  ----------------- End ----------*/
+
+
+    /*--------------------------- 异步 post 请求  ----------------- Start ----------*/
     private void _postAsyn(String url, final ResultCallback callback, Param... params) {
         Request request = buildPostRequest(url, params);
         deliveryResult(callback, request);
@@ -177,6 +301,8 @@ public class OkHttpClientManager {
         Request request = buildPostRequest(url, paramsArr);
         deliveryResult(callback, request);
     }
+    /*--------------------------- 异步 post 请求  ----------------- End ----------*/
+
 
     private String getFileName(String path) {
         int separatorIndex = path.lastIndexOf("/");
@@ -189,20 +315,30 @@ public class OkHttpClientManager {
     private void deliveryResult(final ResultCallback callback, final Request request) {
         mOkHttpClient.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 Log.d(TAG, "onFailure: " + e.getMessage());
                 sendFailedStringCallback(request, e, callback);
-
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 Log.d(TAG, "onResponse: " + response.protocol() + " " + response.code() + " " + response.message());
-                if (response.body() == null) {
+                ResponseBody body = response.body();
+                if (body == null) {
                     onFailure(call, new IOException("responseBody is empty."));
                     return;
                 }
-                sendSuccessResultCallback(response, callback);
+                try{
+                    final String string = body.string();
+                    if (callback.mType == String.class){
+                        sendSuccessResultCallback(string, callback);
+                    } else{
+                        Object o = mGson.fromJson(string, callback.mType);
+                        sendSuccessResultCallback(o, callback);
+                    }
+                }catch(IOException e){
+                    sendFailedStringCallback(response.request(), e, callback);
+                }
             }
         });
     }
@@ -320,86 +456,54 @@ public class OkHttpClientManager {
                 .build();
     }
 
-    //*************对外公布的方法  Start************
-    public static void initWithTimeOut(int connectTimeOut, int readTimeOut, int writeTimeOut) {
-        getInstance()._initWithTimeOut(connectTimeOut, readTimeOut, writeTimeOut);
+    private void _downloadAsyn(final String url, final String destDir,
+                               final ResultCallback callback) {
+        final Request request = new Request.Builder()
+                .url(url)
+                .build();
+        final Call call = mOkHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                sendFailedStringCallback(request, e, callback);
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) {
+                InputStream is = null;
+                byte[] buf = new byte[2048];
+                int len;
+                FileOutputStream fos = null;
+                try {
+                    //noinspection ConstantConditions
+                    is = response.body().byteStream();
+                    File file = new File(destDir, getFileName(url));
+                    fos = new FileOutputStream(file);
+                    while ((len = is.read(buf)) != -1) {
+                        fos.write(buf, 0, len);
+                    }
+                    fos.flush();
+                    //如果下载文件成功，第一个参数为文件的绝对路径
+                    sendSuccessResultCallback(file.getAbsolutePath(), callback);
+                } catch (IOException e) {
+                    sendFailedStringCallback(response.request(), e, callback);
+                } finally {
+                    try {
+                        if (is != null) is.close();
+                    } catch (IOException ignored) {}
+                    try {
+                        if (fos != null) fos.close();
+                    } catch (IOException ignored) {}
+                }
+
+            }
+        });
     }
-
-    public static Response getAsyn(String url) throws IOException {
-        return getInstance()._getAsyn(url);
-    }
-
-    public static String getAsString(String url) throws IOException {
-        return getInstance()._getAsString(url);
-    }
-
-    public static void getAsyn(String url, ResultCallback callback) {
-        getInstance()._getAsyn(url, callback);
-    }
-
-    public static Response post(String url, Param... params) throws IOException {
-        return getInstance()._post(url, params);
-    }
-
-    public static String postAsString(String url, Param... params) throws IOException {
-        return getInstance()._postAsString(url, params);
-    }
-
-    public static void postAsyn(String url, final ResultCallback callback, Param... params) {
-        getInstance()._postAsyn(url, callback, params);
-    }
-
-
-    public static void postAsyn(String url, final ResultCallback callback, Map<String, String> params) {
-        getInstance()._postAsyn(url, callback, params);
-    }
-
-
-    public static Response post(String url, File[] files, String[] fileKeys, Param... params) throws IOException {
-        return getInstance()._post(url, files, fileKeys, params);
-    }
-    //
-    //public static Response post(String url, File file, String fileKey) throws IOException {
-    //    return getInstance()._post(url, file, fileKey);
-    //}
-    //
-    //public static Response post(String url, File file, String fileKey, Param... params) throws IOException {
-    //    return getInstance()._post(url, file, fileKey, params);
-    //}
-    //
-    //public static void postAsyn(String url, ResultCallback callback, File[] files, String[] fileKeys, Param... params) throws IOException {
-    //    getInstance()._postAsyn(url, callback, files, fileKeys, params);
-    //}
-    //
-    //
-    //public static void postAsyn(String url, ResultCallback callback, File file, String fileKey) throws IOException {
-    //    getInstance()._postAsyn(url, callback, file, fileKey);
-    //}
-
-
-    //public static void postAsyn(String url, ResultCallback callback, File file, String fileKey, Param... params) throws IOException {
-    //    getInstance()._postAsyn(url, callback, file, fileKey, params);
-    //}
-
-    public static void displayImage(final ImageView view, String url, int defaultResId) throws IOException {
-        getInstance()._displayImage(view, url, defaultResId);
-    }
-
-    public static void displayImage(final ImageView view, String url) {
-        getInstance()._displayImage(view, url, R.drawable.pic_default);
-    }
-
-    //public static void downloadAsyn(String url, String destDir, ResultCallback callback) {
-    //    getInstance()._downloadAsyn(url, destDir, callback);
-    //}
-
-    //*************对外公布的方法  End************
 
     /**
      * 创建表单请求Body
-     *
-     * @param params
-     * @return
+     * @return 请求body
      */
     private RequestBody createFormBody(Param[] params) {
         params = validateParam(params);
@@ -412,8 +516,6 @@ public class OkHttpClientManager {
 
     /**
      * 猜测路径对应的Mime类型
-     *
-     * @param path
      * @return Mime类型
      */
     private String guessMimeType(String path) {
@@ -424,7 +526,6 @@ public class OkHttpClientManager {
         }
         return contentTypeFor;
     }
-
 
     private Param[] validateParam(Param[] params) {
         if (params == null)
@@ -444,11 +545,6 @@ public class OkHttpClientManager {
         return res;
     }
 
-    private static final String SESSION_KEY = "Set-Cookie";
-    private static final String mSessionKey = "JSESSIONID";
-
-    private Map<String, String> mSessions = new HashMap<String, String>();
-
     private void sendFailedStringCallback(final Request request, final Exception e, final ResultCallback callback) {
         mDelivery.post(new Runnable() {
             @Override
@@ -459,8 +555,9 @@ public class OkHttpClientManager {
         });
     }
 
-    private void sendSuccessResultCallback(final Response response, final ResultCallback callback) {
+    private void sendSuccessResultCallback(final Object response, final ResultCallback callback) {
         mDelivery.post(new Runnable() {
+            @SuppressWarnings("unchecked")
             @Override
             public void run() {
                 if (callback != null) {
@@ -489,9 +586,10 @@ public class OkHttpClientManager {
         public abstract void onError(Request request, Exception e);
 
         // 返回Response数据(主线程)  具体的数据类型由业务代码处理response.body().XXXX()
-        public abstract void onResponse(Response response);
+        public abstract void onResponse(T response);
     }
 
+    @SuppressWarnings({"WeakerAccess", "unused"})
     public static class Param {
         public Param() {
         }

@@ -3,7 +3,7 @@ package com.kingz.posterfilm.data;
 /**
  * author：KingZ
  * date：2019/9/10
- * description：
+ * description：芒果tv海报数据实体
  */
 public class MgPosterBean {
     String assetSource = "";

@@ -15,25 +15,19 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.base.BaseActivity;
-import com.google.gson.Gson;
 import com.kingz.adapter.DemoRecyclerAdapter;
 import com.kingz.customdemo.R;
 import com.kingz.mode.RecycleDataInfo;
 import com.kingz.net.OkHttpClientManager;
 import com.kingz.pages.photo.filmlist.MyItemDecoration;
 import com.kingz.posterfilm.data.MgResponseBean;
-import com.kingz.utils.ExecutorServiceHelper;
 import com.kingz.utils.ZLog;
 
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
 import okhttp3.Request;
-import okhttp3.Response;
 
 /**
  * author: King.Z
@@ -53,8 +47,6 @@ public class MusicPosterPages extends BaseActivity {
     private DemoRecyclerAdapter mAdapter;
     private final String url = "http://pianku.api.mgtv.com/rider/tag-data?ticket=&device_id=173365c356c6f97b69bca90a60009d6f4b8f7c97&tagId=222&net_id=&type=3&version=5.9.501.200.3.MGTV_TVAPP.0.0_Debug&uuid=mgtvmac020000445566&platform=ott&mac_id=02-00-00-44-55-66&license=ZgOOgo5MjkyOTA4FqqoghzuqhyA7IL8NBZkgDZk7lQ0GlSAGBgYNeyC%2FtJl8vwU7DQUFjkyOTI5MZgOOgg%3D%3D&_support=00100101011&pc=200&buss_id=1000014&pn=1";
 
-    private static final int PROTECTED_LENGTH = 51200;// 输入流保护 50KB
-    private static final String DEFAULT_ENCODING = "utf-8";//编码
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,52 +62,10 @@ public class MusicPosterPages extends BaseActivity {
             }
 
             @Override
-            public void onResponse(final Response response) {
+            public void onResponse(final MgResponseBean response) {
                 ZLog.d(TAG, "onResponse");
-                ExecutorServiceHelper.getInstance().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        String result = "";
-                        final InputStream inputStream = response.body().byteStream();
-                        final ByteArrayOutputStream infoStream = new ByteArrayOutputStream();
-
-                        byte[] bcache = new byte[8 * 1024];
-                        int readSize = 0;//每次读取的字节长度
-                        long totalSize = 0;//总字节长度
-                        try {
-                            while ((readSize = inputStream.read(bcache)) > 0) {
-                                totalSize += readSize;
-//                        if (totalSize > PROTECTED_LENGTH) {
-//                            throw new Exception("输入流超出50K大小限制");
-//                        }
-                                //将bcache中读取的input数据写入infoStream
-                                infoStream.write(bcache, 0, readSize);
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        } finally {
-                            try {
-                                inputStream.close();
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        try {
-                            result = infoStream.toString(DEFAULT_ENCODING);
-                        } catch (UnsupportedEncodingException e) {
-                            e.printStackTrace();
-                        }
-                        final String finalResult = result;
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                MgResponseBean responseBean = new Gson().fromJson(finalResult, MgResponseBean.class);
-                                mAdapter.attachData(responseBean.getData().getHitDocs());
-                                mAdapter.notifyDataSetChanged();
-                            }
-                        });
-                    }
-                });
+                mAdapter.attachData(response.getData().getHitDocs());
+                mAdapter.notifyDataSetChanged();
             }
         });
     }
