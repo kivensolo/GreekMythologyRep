@@ -89,12 +89,20 @@ public class OkHttpClientManager {
     }
 
     /* -------------------------------------对外公布的方法  Start -------------------------------------*/
+    public Request.Builder getRequestBuilder(){
+        return new Request.Builder();
+    }
+
     public static void initWithTimeOut(int connectTimeOut, int readTimeOut, int writeTimeOut) {
         getInstance()._initWithTimeOut(connectTimeOut, readTimeOut, writeTimeOut);
     }
 
     public static Response getAsyn(String url) throws IOException {
         return getInstance()._getAsyn(url);
+    }
+
+    public Response getAsyn(Request request) throws IOException {
+        return mOkHttpClient.newCall(request).execute();
     }
 
     public static String getAsString(String url) throws IOException {

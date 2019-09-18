@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+
 import com.App;
 import com.base.BaseActivity;
 import com.core.logic.GlobalCacheCenter;
@@ -31,6 +32,12 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import static com.kingz.FileDownloader.ERROR;
+import static com.kingz.FileDownloader.FINISHED;
+import static com.kingz.FileDownloader.PROGRESSING;
+import static com.kingz.FileDownloader.RECIVING;
+import static com.kingz.FileDownloader.STARTING;
+
 /**
  * Created by KingZ on 2015/11/3.
  * Discription:图片/文件下载测试
@@ -47,9 +54,7 @@ public class DownloadAPPActivity extends BaseActivity implements View.OnClickLis
     private ImageView imgNetPic, imgResPic;
     private FileDownloader _downloader;
     private Context context;
-    /** APP下载路径 */
-//    private String appUrlPath = "http://192.168.90.115/pub_apk/update-test/V4.6.0_XJCBC_IPTV_QUANZHI_Beta_MG_22773_181.apk";
-    private String appUrlPath = "http://www.apk3.com/uploads/soft/guiguangbao/com.xdsdfdvcswa20160630.apk";
+    private String appUrlPath = "http://gyxza3.eymlz.com/yq/yx_lm1/gat5sjb.apk";
     private HttpURLConnection urlConnection;
     private InputStream downloadIs = null;
     private OutputStream downloadOs = null;
@@ -151,23 +156,22 @@ public class DownloadAPPActivity extends BaseActivity implements View.OnClickLis
         _downloader.start(url, downloadFile, true, new Handler(new Handler.Callback() {
             @Override
             public boolean handleMessage(Message msg) {
-                Log.i(TAG, "msg.msg = " + msg.what +"; obj = " + msg.obj);
+                Log.i(TAG, "msg.what = " + msg.what +"; obj = " + msg.obj);
                 switch (msg.what){
-                    case 1:
-
+                    case STARTING:
                         break;
-                    case 2:
+                    case RECIVING:
                         break;
-                    case 3:
+                    case PROGRESSING:
                         percent = (float) msg.obj;
                         if(percent >= 0.9){
                             percent = (float) 1.0;
                         }
                         mProgressBarView.setWidth((int) (percent * 600));
                         break;
-                    case 4:
+                    case ERROR:
                         break;
-                    case 5:
+                    case FINISHED:
                         break;
                     default:
                         break;

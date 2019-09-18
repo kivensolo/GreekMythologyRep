@@ -1,301 +1,300 @@
 package com.kingz;
 
-import android.net.http.AndroidHttpClient;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import org.apache.http.Header;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.StatusLine;
-import org.apache.http.client.methods.HttpGet;
 
-import java.io.*;
+import com.kingz.net.OkHttpClientManager;
+import com.kingz.utils.ExecutorServiceHelper;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.RandomAccessFile;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import okhttp3.Headers;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
+
 /**
- * 文件下载器
+ * 文件下载器，具备断点下载功能。
  *
+ * <p>
  * |---RandomAccessFile介绍：
- *      java的RandomAccessFile提供对文件的读写功能，与普通的输入输出流不一样的
- *   是RamdomAccessFile可以任意的访问文件的任何地方。
- *   RandomAccessFile的对象包含一个记录指针，用于标识当前流的读写位置，
- *   这个位置可以向前移动，也可以向后移动。
- *   long getFilePoint():记录文件指针的当前位置。
- *   void seek(long pos):将文件记录指针定位到pos位置。
- *   RandomAccessFile包含InputStream的三个read方法，也包含OutputStream的三个write方法。
- *   同时RandomAccessFile还包含一系列的readXxx和writeXxx方法完成输入输出
+ *      java的RandomAccessFile提供对文件的读写功能，
+ *  与普通的输入输出流不一样的是RamdomAccessFile可以任意的访问文件的任何地方。
+ *
+ *  RandomAccessFile的对象包含一个记录指针，用于标识当前流的读写位置，
+ *  这个位置可以向前移动，也可以向后移动。
+ *      --- long getFilePoint():记录文件指针的当前位置。
+ *      --- void seek(long pos):将文件记录指针定位到pos位置。
+ *
+ *  RandomAccessFile包含InputStream的三个read方法，也包含OutputStream的三个write方法。
+ *  同时RandomAccessFile还包含一系列的readXXX和writeXXX方法完成输入输出
  */
+@SuppressWarnings("WeakerAccess")
 public class FileDownloader implements Runnable {
-	private Thread downloadThread = null;
-	private volatile Handler _handler;
-	private volatile AndroidHttpClient _client = null;
-	private String download_url;
-	private RandomAccessFile raFile;
-	private File _file_info;
-	private long _resume_pos;
-	private byte[] _resume_sign;
-	private StatusLine _status;
-	private volatile long _file_size;
-	private volatile long _file_write_pos;
-	private int _error_status;
+    private static final String TAG = "FileDownloader";
+    private volatile Handler _handler;
+    private volatile OkHttpClientManager okClient = null;
+    private String download_url;
+    private RandomAccessFile raFile;
+    private File _file_info;
+    private long _resume_pos;
+    private byte[] _resume_sign;
+    private volatile long _file_size;
+    private volatile long _file_write_pos;
 
-	// -----------------------------
-	public boolean start(String url, File local_file, Handler handler) {
-		return start(url, local_file, false, handler);
-	}
+    /**
+     * 启动下载(重头开始)
+     *
+     * @param url        文件url
+     * @param local_file 本地保存file
+     * @param handler    Handler
+     * @return 是否下载成功
+     */
+    public boolean start(String url, File local_file, Handler handler) {
+        return start(url, local_file, false, handler);
+    }
 
-	public boolean start(String url, File local_file, boolean resume, Handler handler) {
-		if (_client != null) {
-			return false;
-		}
-		_error_status = ERR_NO_ERROR;
-//		_client = AndroidHttpClient.newInstance("Starcor upgrade service");
-		_client = AndroidHttpClient.newInstance("default");
-		downloadThread = new Thread(this);
-		try {
-			_file_info = local_file;
-			raFile = new RandomAccessFile(_file_info, "rw"); //已读写方式打开文件，不存在就创建新文件
-			long file_size = raFile.length();
-			if (resume && file_size > 512) {
-				raFile.seek(file_size - 512);
-				byte[] buffer = new byte[512];
-				raFile.read(buffer);
-				_resume_sign = buffer;
-				_resume_pos = file_size - 512;
-			} else {
-				_resume_sign = null;
-				_resume_pos = 0;
-			}
-		} catch (FileNotFoundException e) {
-			_error_status = ERR_CANNOT_OPEN_LOCALFILE;
-			Log.e("file_downloader.start", "file not found exception");
-			return false;
-		} catch (IOException e) {
-			_error_status = ERR_IO_ERROR;
-			Log.e("file_downloader.start", "io exception");
-			return false;
-		}
+    public boolean start(String url, File local_file, boolean resume, Handler handler) {
+        if (okClient != null) {
+            return false;
+        }
+        okClient = OkHttpClientManager.getInstance();
+        try {
+            _file_info = local_file;
+            raFile = new RandomAccessFile(_file_info, "rw"); //已读写方式打开文件，不存在就创建新文件
+            long file_size = raFile.length();
+            if (resume && file_size > 512) {
+                raFile.seek(file_size - 512);
+                byte[] buffer = new byte[512];
+                raFile.read(buffer);
+                _resume_sign = buffer;
+                _resume_pos = file_size - 512;
+            } else {
+                _resume_sign = null;
+                _resume_pos = 0;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
 
-		_handler = handler;
-		download_url = url;
-		downloadThread.start();
-		_status = null;
-		return true;
-	}
+        _handler = handler;
+        download_url = url;
+        ExecutorServiceHelper.getInstance().execute(this);
+        return true;
+    }
 
-	public boolean resume() {
-		if (_client == null) {
-			return false;
-		}
-		Handler handler = _handler;
-		File local_file = _file_info;
-		String url = download_url;
-		stop();
-		return start(url, local_file, true, handler);
-	}
+    public boolean resume() {
+        if (okClient == null) {
+            return false;
+        }
+        Handler handler = _handler;
+        File local_file = _file_info;
+        String url = download_url;
+        stop();
+        return start(url, local_file, true, handler);
+    }
 
-	public boolean stop() {
-		if (_client == null) {
-			return false;
-		}
-		_handler = null;
-		try {
-			downloadThread.interrupt();
-			downloadThread.join();
-			downloadThread = null;
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		if (raFile != null) {
-			try {
-				raFile.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		if (_client != null) {
-			_client.close();
-		}
-		_client = null;
-		return true;
-	}
+    public boolean stop() {
+        if (okClient == null) {
+            return false;
+        }
+        _handler = null;
+        if (raFile != null) {
+            try {
+                raFile.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        okClient = null;
+        return true;
+    }
 
-	public float getProgress() {
-		if (_file_size > 0) {
-			return ((float) _file_write_pos) / _file_size;
-		}
-		return 0.0f;
-	}
+    public float getProgress() {
+        if (_file_size > 0) {
+            return ((float) _file_write_pos) / _file_size;
+        }
+        return 0.0f;
+    }
 
-	public int getError() {
-		return _error_status;
-	}
-	// -----------------------------
-	public static final int MSG_STARTING = 1;
-	public static final int MSG_RECIVING = 2;
-	public static final int MSG_PROGRESSING = 3;
-	public static final int MSG_ERROR = 4;
-	public static final int MSG_FINISHED = 5;
+    // -----------------------------
+    public static final int STARTING = 0x01;
+    public static final int RECIVING = 0x02;
+    public static final int PROGRESSING = 0x03;
+    public static final int ERROR = 0x04;
+    public static final int FINISHED = 0x05;
+    static final String MSG_NORMAL = "normal";
+    static final String MSG_URL_INVALID = "url-invalid";
+    static final String MSG_INTERNAL_ERROR = "network-error";
+    static final String MSG_RESUME_CHECK_FAILED = "resume-check-failed";
+    static final String MSG_CANNOT_OPEN_LOCALFILE = "open-localfile-failed";
+    static final String MSG_IO_ERROR = "io-error";
+    static final String MSG_HTTP_RESPONSE_ERROR = "http-code-error";
 
-	// ---------------状态机--------------
-	static final int ERR_NO_ERROR = 0x00;   					//正常
-	static final int ERR_INTERNAL_ERROR = 0x01;				//网络异常
-	static final int ERR_RESUME_CHECK_FAILED = 0x010;  		//重试检查失败
-	static final int ERR_CANNOT_OPEN_LOCALFILE = 0x011;		//无法打开本地文件
-	static final int ERR_IO_ERROR = 0x012;						//IO异常
-	static final int ERR_HTTP_RESPONSE_ERROR = 0x013;			//HTTP返回错误
+    private void sendMessage(int state) {
+        sendMessage(state, MSG_NORMAL);
+    }
 
-	private void sendMessage(int msg) {
-		if (_handler != null) {
-			_handler.removeMessages(msg);
-			_handler.sendEmptyMessage(msg);
-		}
-	}
-	private void sendMessage(int what,Object obj) {
-		if (_handler != null) {
-			Message msg = Message.obtain();
-			msg.what = what;
-			msg.obj = obj;
-			_handler.removeMessages(what);
-			_handler.sendMessage(msg);
-		}
-	}
+    private void sendMessage(int state, Object obj) {
+        if (_handler != null) {
+            Message msg = Message.obtain();
+            msg.what = state;
+            msg.obj = obj;
+            _handler.removeMessages(state);
+            _handler.sendMessage(msg);
+        }
+    }
 
-	// -----------------------------
-	@Override
-	public void run() {
-		try {
-			Log.d("file_downloader.run", "start downloading... " + download_url);
-			URI uri = new URI(download_url);
-			if ( uri.getHost() == null || uri.getPath() == null ) {
-				Log.e("file_downloader.run", "URI no host/path error!! " + download_url);
-				this._error_status = ERR_INTERNAL_ERROR;
-				this.sendMessage(MSG_ERROR);
-				return;
-			}
-			HttpGet get_url = new HttpGet(uri);
-			if (_resume_pos > 0) {
-				Log.d("file_downloader.run", "resuming... bytes=" + _resume_pos + "-");
-				get_url.setHeader("Range", "bytes=" + Long.toString(_resume_pos) + "-");
-			}
-			HttpResponse resp;
-			this.sendMessage(MSG_STARTING);
-			resp = _client.execute(get_url);
-			_status = resp.getStatusLine();
-			long code = _status.getStatusCode();
-			Log.d("file_downloader.run", "response " + code + " " + _status.getReasonPhrase());
-			if (code != 200 && code != 206) {
-				Log.e("file_downloader.run", "HTTP error!! ");
-				this._error_status = ERR_HTTP_RESPONSE_ERROR;
-				this.sendMessage(MSG_ERROR);
-				return;
-			}
-			this.sendMessage(MSG_RECIVING);
-			HttpEntity entity = resp.getEntity();
-			InputStream is = entity.getContent();
-			long total_size = entity.getContentLength();
-			this._file_size = total_size;
-			long read_bytes = 0;
+    // -----------------------------
+    @Override
+    public void run() {
+        try {
+            Log.d(TAG, "start downloading... " + download_url);
+            if (isUrlInValid()) {
+                return;
+            }
 
-			if (_resume_pos > 0 && code == 206) {
-				Log.d("file_downloader.run", "check content-range...");
-				// resume downloading
-				Header[] header = resp.getHeaders("Content-Range");
-				if (header == null || header.length != 1) {
-					Log.e("file_downloader.run", "resume: HTTP error, no content-range header!");
-					this._error_status = ERR_INTERNAL_ERROR;
-					this.sendMessage(MSG_ERROR);
-					return;
-				}
-				{
-					String content_range_val = header[0].getValue();
-					Pattern pattern = Pattern.compile("^bytes\\s+(\\d+)-(\\d*)/(\\d+)$", Pattern.CASE_INSENSITIVE);
-					Matcher m = pattern.matcher(content_range_val);
-					if (!m.matches()) {
-						Log.e("file_downloader.run", "resume: unsupported content-range:" + content_range_val);
-						this._error_status = ERR_INTERNAL_ERROR;
-						this.sendMessage(MSG_ERROR);
-						return;
-					}
-					long begin_pos = Long.parseLong(m.group(1));
-					long end_pos = Long.parseLong(m.group(2));
-					long file_length = Long.parseLong(m.group(3));
-					if (begin_pos != _resume_pos) {
-						Log.e("file_downloader.run", "resume: file range invalid");
-						this._error_status = ERR_RESUME_CHECK_FAILED;
-						this.sendMessage(MSG_ERROR);
-						return;
-					}
-					_file_size = file_length;
-					byte[] sign_buffer = new byte[_resume_sign.length];
-					int size = 0;
-					while (size < _resume_sign.length) {
-						if (Thread.interrupted()) {
-							Log.w("file_downloader.run", "download interrupted!!");
-							return;
-						}
-						size += is.read(sign_buffer, size, _resume_sign.length - size);
-					}
-					read_bytes += size;
-					if (size != _resume_sign.length || !Arrays.equals(sign_buffer, _resume_sign)) {
-						Log.e("file_downloader.run", "resume data check failed!!");
-						this._error_status = ERR_RESUME_CHECK_FAILED;
-						this.sendMessage(MSG_ERROR);
-						return;
-					}
-					Log.d("file_downloader.run", "continue download from " + _resume_pos);
-				}
-			} else {
-				Log.d("file_downloader.run", "download from begining...");
-				raFile.seek(0);
-			}
-			byte[] read_cache = new byte[2048];
-			float percentage=0f;
-			while (read_bytes < total_size) {
-				long max_len = Math.min(read_cache.length, total_size - read_bytes);
-				if (Thread.interrupted()) {
-					Log.w("file_downloader.run", "download interrupted!!");
-					return;
-				}
-				int size = is.read(read_cache, 0, (int) max_len);
-				raFile.write(read_cache, 0, size);
-				read_bytes += size;
-				_file_write_pos = raFile.getFilePointer();
-				if(getProgress()-percentage>0.10f){
-					percentage=getProgress();
-					this.sendMessage(MSG_PROGRESSING,percentage);
-				}
+            this.sendMessage(STARTING);
+            Response resp = sendAsynRequest();
+            long code = resp.code();
+            if (code != 200 && code != 206) {
+                Log.e(TAG, "HTTP error!! code=" + code);
+                this.sendMessage(ERROR);
+                return;
+            }
+            this.sendMessage(RECIVING);
 
-			}
-			_file_write_pos = raFile.getFilePointer();
-			raFile.setLength(_file_write_pos);
-			raFile.close();
-			raFile = null;
-			_client.close();
-			Log.d("file_downloader.run", "download finished!");
-			this.sendMessage(MSG_FINISHED);
-			_client = null;
-		} catch (IOException e) {
-			Log.e("file_downloader.run", "io exception");
-			this._error_status = ERR_IO_ERROR;
-			this.sendMessage(MSG_ERROR);
-		} catch (NumberFormatException e) {
-			Log.e("file_downloader.run", "number format exception");
-			this._error_status = ERR_INTERNAL_ERROR;
-			this.sendMessage(MSG_ERROR);
-		} catch (URISyntaxException e) {
-			Log.e("file_downloader.run", "URI syntax error!! " + download_url);
-			this._error_status = ERR_INTERNAL_ERROR;
-			this.sendMessage(MSG_ERROR);
-		} catch (Exception e) {
-			Log.e("file_downloader.run", "unknown exception!! " + e.getMessage());
-			this._error_status = ERR_INTERNAL_ERROR;
-			this.sendMessage(MSG_ERROR);
-		}
-	}
+            ResponseBody body = resp.body();
+            if (body == null) {
+                Log.e(TAG, "Response body is empty!! ");
+                this.sendMessage(ERROR, MSG_HTTP_RESPONSE_ERROR);
+                return;
+            }
+
+            InputStream is = body.byteStream();
+            long total_size = body.contentLength();
+            this._file_size = total_size;
+            long read_bytes = 0;
+
+            if (_resume_pos > 0 && code == 206) {
+                Log.d(TAG, "check content-range...");
+                // resume downloading
+                Headers headers = resp.headers();
+                if (headers.size() < 1) {
+                    Log.e(TAG, "resume: HTTP error, no content-range header!");
+                    this.sendMessage(ERROR, MSG_INTERNAL_ERROR);
+                    return;
+                }
+                {
+
+                    String content_range_val = headers.get("content-range");
+                    Pattern pattern = Pattern.compile("^bytes\\s+(\\d+)-(\\d*)/(\\d+)$", Pattern.CASE_INSENSITIVE);
+                    Matcher m = pattern.matcher(content_range_val);
+                    if (!m.matches()) {
+                        Log.e(TAG, "resume: unsupported content-range:" + content_range_val);
+                        this.sendMessage(ERROR, MSG_INTERNAL_ERROR);
+                        return;
+                    }
+                    long begin_pos = Long.parseLong(m.group(1));
+                    long end_pos = Long.parseLong(m.group(2));
+                    long file_length = Long.parseLong(m.group(3));
+                    if (begin_pos != _resume_pos) {
+                        Log.e(TAG, "resume: file range invalid");
+                        this.sendMessage(ERROR, MSG_INTERNAL_ERROR);
+                        return;
+                    }
+                    _file_size = file_length;
+                    byte[] sign_buffer = new byte[_resume_sign.length];
+                    int size = 0;
+                    while (size < _resume_sign.length) {
+                        if (Thread.interrupted()) {
+                            Log.w(TAG, "download interrupted!!");
+                            return;
+                        }
+                        size += is.read(sign_buffer, size, _resume_sign.length - size);
+                    }
+                    read_bytes += size;
+                    if (size != _resume_sign.length || !Arrays.equals(sign_buffer, _resume_sign)) {
+                        Log.e(TAG, "resume data check failed!!");
+                        this.sendMessage(ERROR, MSG_RESUME_CHECK_FAILED);
+                        return;
+                    }
+                    Log.d(TAG, "continue download from " + _resume_pos);
+                }
+            } else {
+                Log.d(TAG, "download from begining...");
+                raFile.seek(0);
+            }
+            byte[] read_cache = new byte[2048];
+            float percentage = 0f;
+            while (read_bytes < total_size) {
+                long max_len = Math.min(read_cache.length, total_size - read_bytes);
+                if (Thread.interrupted()) {
+                    Log.w(TAG, "download interrupted!!");
+                    return;
+                }
+                int size = is.read(read_cache, 0, (int) max_len);
+                raFile.write(read_cache, 0, size);
+                read_bytes += size;
+                _file_write_pos = raFile.getFilePointer();
+                if (getProgress() - percentage > 0.10f) {
+                    percentage = getProgress();
+                    this.sendMessage(PROGRESSING, percentage);
+                }
+
+            }
+            _file_write_pos = raFile.getFilePointer();
+            raFile.setLength(_file_write_pos);
+            raFile.close();
+            raFile = null;
+            Log.d(TAG, "download finished!");
+            this.sendMessage(FINISHED);
+            okClient = null;
+        } catch (IOException | URISyntaxException e) {
+            e.printStackTrace();
+            this.sendMessage(ERROR);
+        }
+    }
+
+    /**
+     * 发送同步请求
+     *
+     * @return Response
+     */
+    private Response sendAsynRequest() throws IOException {
+        Request.Builder request = okClient.getRequestBuilder();
+        request.url(download_url);
+        if (_resume_pos > 0) {
+            Log.d(TAG, "resuming... bytes=" + _resume_pos + "-");
+            request.header("Range", "bytes=" + Long.toString(_resume_pos) + "-");
+        }
+        okClient.getAsyn(request.build());
+        return okClient.getAsyn(request.build());
+    }
+
+    /**
+     * 检查url地址是否是无效的
+     *
+     * @return true 无效
+     * @throws URISyntaxException URI语法异常
+     */
+    private boolean isUrlInValid() throws URISyntaxException {
+        URI uri = new URI(download_url);
+        if (uri.getHost() == null || uri.getPath() == null) {
+            Log.e(TAG, "URI no host/path error!! " + download_url);
+            this.sendMessage(ERROR,MSG_URL_INVALID);
+            return true;
+        }
+        return false;
+    }
 }
