@@ -78,13 +78,6 @@ public class BitmapPhotosActivity extends PhotosActivity {
         }else if(datas.get(position).name.equals("截屏")){
             setShowBitMap(ScreenShotUtils.screenShot(getWindow().getDecorView()));
         }
-
-        //Glide.with(this)
-        //    .load("http://nuuneoi.com/uploads/source/playstore/cover.jpg")
-        //    .error(R.mipmap.sample_2)
-        //    .fitCenter() //图片比ImageView大的时候，就会按照比例对图片进行缩放，并将图片居中显示。如果这张图片比ImageView小，那么就会根据比例对图片进行扩大，然后将其居中显示
-        //    .centerCrop()
-        //    .into(img1);
     }
 
     private void setShowBitMap(final Bitmap bitmap) {

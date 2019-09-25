@@ -72,6 +72,10 @@ public class OkHttpClientManager {
         mGson = new Gson();
     }
 
+    public OkHttpClient getOkHttpClient(){
+        return mOkHttpClient;
+    }
+
     @SuppressWarnings("unused")
     private OkHttpClient _initDefaultOkHttpClient() {
         return new OkHttpClient.Builder().build();
