@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
+
 import com.kingz.customdemo.R;
 import com.kingz.customviews.chart.FramesCurveChartView;
 
@@ -57,7 +58,7 @@ public class FpsTools {
             this.params.type = WindowManager.LayoutParams.TYPE_TOAST;
             this.params.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE|WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL|WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;//168
             this.params.format = PixelFormat.TRANSLUCENT;
-            this.params.gravity = 8388693;
+            this.params.gravity = Gravity.BOTTOM | Gravity.END;
             this.params.x = 10;
             this.wm = WindowManager.class.cast(application.getSystemService(Context.WINDOW_SERVICE));
             LayoutInflater inflater = LayoutInflater.from(application);
@@ -129,28 +130,28 @@ public class FpsTools {
         public Program seat(Seats seat) {
             switch(seat.ordinal()) {
             case 1:
-                this.params.gravity = 8388661;
+                this.params.gravity = Gravity.START;
                 break;
             case 2:
-                this.params.gravity = 8388659;
+                this.params.gravity = Gravity.TOP|Gravity.START;
                 break;
             case 3:
                 this.params.gravity = Gravity.TOP|Gravity.CENTER;
                 break;
             case 4:
-                this.params.gravity = 17;
+                this.params.gravity = Gravity.CENTER;
                 break;
             case 5:
-                this.params.gravity = 8388629;
+                this.params.gravity = Gravity.CENTER | Gravity.END;
                 break;
             case 6:
-                this.params.gravity = 8388627;
+                this.params.gravity = Gravity.START | Gravity.CENTER;
                 break;
             case 7:
-                this.params.gravity = 8388693;
+                this.params.gravity = Gravity.BOTTOM | Gravity.END;
                 break;
             case 8:
-                this.params.gravity = 8388691;
+                this.params.gravity = Gravity.BOTTOM | Gravity.START;
                 break;
             case 9:
                 this.params.gravity = Gravity.BOTTOM|Gravity.CENTER;
