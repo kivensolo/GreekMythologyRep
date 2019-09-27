@@ -1,6 +1,8 @@
 package com.module.tools;
 
 import android.app.Activity;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -92,6 +94,17 @@ public class ViewTools {
         return vc.getScaledTouchSlop();
     }
 
-
+    /**
+     * 当前view是否水平横向
+     * @param v 判断水平方向的view
+     * @return
+     *  true: 该view水平横向
+     *  fasle: 该view垂直方向
+     */
+    public static boolean isLandScape(View v){
+        Resources resources = v.getResources();
+        int state = resources.getConfiguration().orientation;
+        return state == Configuration.ORIENTATION_LANDSCAPE;
+    }
 
 }
