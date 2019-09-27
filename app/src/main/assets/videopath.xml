@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <videos>
     <video>
-        <name>Video_8</name>
-        <play_url>http://129.28.160.49/__cl/cg:ingest01/__c/cctv8/__op/default/__f/index.m3u8</play_url>
+        <name>东方卫视</name>
+        <play_url>http://cctvtxyh5c.liveplay.myqcloud.com/wstv/dongfang_2/index.m3u8</play_url>
     </video>
     <video>
         <name>东南卫视</name>
@@ -45,7 +45,7 @@
         <play_url>http://129.28.160.49/__cl/cg:ingest01/__c/cctv6/__op/default/__f/index.m3u8</play_url>
     </video>
     <video>
-        <name>Video_8</name>
+        <name>CCTV8</name>
         <play_url>http://129.28.160.49/__cl/cg:ingest01/__c/cctv8/__op/default/__f/index.m3u8</play_url>
     </video>
     <video>
