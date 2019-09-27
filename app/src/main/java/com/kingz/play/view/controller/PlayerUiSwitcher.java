@@ -15,7 +15,7 @@ import com.kingz.play.presenter.PlayPresenter;
  * description：播放视图controller的控制类
  */
 public class PlayerUiSwitcher {
-    private static final String TAG = PlayerUiSwitcher.class.getName();
+    private static final String TAG = PlayerUiSwitcher.class.getSimpleName();
 
 //    private IMediaPlayer _mp;
 
@@ -117,6 +117,7 @@ public class PlayerUiSwitcher {
      * 是否在播放
      */
     public boolean isInPlayState() {
+        //TODO 优化  不能按照播放按钮是否是checked来判断，要根据播放器
         return bottomBarController.isInPlayState();
     }
 

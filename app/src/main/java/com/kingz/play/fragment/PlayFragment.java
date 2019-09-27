@@ -120,11 +120,7 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
 //                playerUiSwitcher.switchVisibleState();
                 break;
             case R.id.play_pause:
-                if (playerUiSwitcher.isInPlayState()) {
-                    playPresenter.pause();
-                } else {
-                    playPresenter.play();
-                }
+                TogglePlayState();
                 break;
             case R.id.play_flow_tips:
                 playPresenter.play();
@@ -133,7 +129,7 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
                 //DO Nothing
                 break;
             default:
-                playPresenter.onViewClick(v);
+                break;
         }
 
         if (basePlayPop != null) {
@@ -166,6 +162,18 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
     public boolean onBackPressed() {
         switchScreenMode(false);
         return false;
+    }
+
+
+    /**
+     * 切换播放器状态
+     */
+    private void TogglePlayState() {
+        if (playerUiSwitcher.isInPlayState()) {
+            playPresenter.pause();
+        } else {
+            playPresenter.play();
+        }
     }
 
     /**
@@ -295,6 +303,7 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
     class FragmentGustureListener implements PlayerGestureListener.VideoGestureListener{
         @Override
         public void onGestureLeftTB(float ratio) {
+            ZLog.d(TAG,"onGestureLeftTB");
             if(getActivity() != null){
                 Window window = getActivity().getWindow();
                 WindowManager.LayoutParams layoutParams = window.getAttributes();
@@ -305,6 +314,7 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
 
         @Override
         public void onGestureRightTB(float ratio) {
+            ZLog.d(TAG,"onGestureRightTB");
             //TODO 进行音量变换
 //                AudioManager audioManager = (AudioManager)getContext().getSystemService(AUDIO_SERVICE);
 //                //当前音量
@@ -322,22 +332,23 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
 
         @Override
         public void onGestureUpdateVideoTime(int duration) {
-            ZLog.d(TAG,"onGestureUpdateVideoTime duration: " + duration);
+//            ZLog.d(TAG,"onGestureUpdateVideoTime duration: " + duration);
+            //TODO 进行快进快退操作
         }
 
         @Override
         public void onGestureSingleClick() {
-            //TODO 进行浮层切换
+            ZLog.d(TAG,"onGesture Single click...");
+            playPresenter.onViewClick();
         }
 
         @Override
         public void onGestureDoubleClick() {
-            //TODO 进行播放暂停切换
+            ZLog.d(TAG,"onGesture double click...");
+            TogglePlayState();
         }
 
         @Override
-        public void onGestureDown() {
-
-        }
+        public void onGestureDown() {}
     }
 }

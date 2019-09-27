@@ -3,7 +3,6 @@ package com.kingz.play.presenter;
 import android.media.TimedText;
 import android.net.Uri;
 import android.util.Log;
-import android.view.View;
 import android.widget.SeekBar;
 
 import com.kingz.library.player.IMediaPlayer;
@@ -99,7 +98,7 @@ public class PlayPresenter extends AbsBasePresenter implements IMediaPlayerCallB
     public void onDestroy() {
     }
 
-    public void onViewClick(View v) {
+    public void onViewClick() {
         playerView.switchVisibleState();
     }
 

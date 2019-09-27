@@ -64,8 +64,8 @@ public class DetailPageActivty extends PlayerActivity {
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         playFragment.onDestroy();
+        super.onDestroy();
     }
 
     @Override

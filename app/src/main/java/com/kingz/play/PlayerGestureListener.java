@@ -9,15 +9,15 @@ import com.kingz.utils.ZLog;
 import com.module.tools.ScreenTools;
 import com.module.tools.ViewTools;
 
-import java.lang.ref.WeakReference;
+import java.util.concurrent.TimeUnit;
 
 /**
  * author：KingZ
  * date：2019/9/27
- * description：
+ * description：简单手势监听器实现类
  */
 public class PlayerGestureListener extends GestureDetector.SimpleOnGestureListener {
-    private WeakReference<VideoGestureListener> listener;
+    private VideoGestureListener listener;
     private int screenWidth, centerW;
     //播放器View的长宽DP
     private float dpVideoWidth, dpVideoHeight;
@@ -34,7 +34,7 @@ public class PlayerGestureListener extends GestureDetector.SimpleOnGestureListen
     private float density;
 
     public PlayerGestureListener(Context context, VideoGestureListener listener) {
-        this.listener = new WeakReference<>(listener);
+        this.listener = listener;
         this.screenWidth = ScreenTools.getScreenWidth(context);
         centerW = this.screenWidth / 2;
         ZLog.d("PlayerGestureListener","screenWidth="+ this.screenWidth);
@@ -42,13 +42,18 @@ public class PlayerGestureListener extends GestureDetector.SimpleOnGestureListen
         density = context.getResources().getDisplayMetrics().density;
     }
 
-    //设置播放器SurfaceView的宽高
+    /**
+     * 设置播放器SurfaceView的宽高
+     * @param w 宽度  像素值
+     * @param h 高度  像素值
+     */
     public void setVideoWH(int w, int h) {
+        //计算出视频的宽高dp值
         dpVideoWidth = w / density;
         dpVideoHeight = h / density;
 
         //默认基础总共2分钟，代表的意义：从屏幕一边滑动到另一边，总共可以快进2分钟
-        preDpVideoDuration = (int) (2 * 60 * 1000 / dpVideoWidth);
+        preDpVideoDuration = (int) (TimeUnit.MINUTES.toMillis(2) / dpVideoWidth);
     }
 
     @Override
@@ -58,8 +63,8 @@ public class PlayerGestureListener extends GestureDetector.SimpleOnGestureListen
         totalDuration = 0;
         leftTBValue = 0;
         rightTBValue = 0;
-        if (listener.get() != null) {
-            listener.get().onGestureDown();
+        if (listener != null) {
+            listener.onGestureDown();
         }
         return true;
     }
@@ -118,8 +123,8 @@ public class PlayerGestureListener extends GestureDetector.SimpleOnGestureListen
 
     @Override
     public boolean onDoubleTap(MotionEvent e) {
-        if (listener.get() != null) {
-            listener.get().onGestureDoubleClick();
+        if (listener != null) {
+            listener.onGestureDoubleClick();
         }
         //双击事件
         return super.onDoubleTap(e);
@@ -132,8 +137,8 @@ public class PlayerGestureListener extends GestureDetector.SimpleOnGestureListen
 
     @Override
     public boolean onSingleTapConfirmed(MotionEvent e) {
-        if (listener.get() != null) {
-            listener.get().onGestureSingleClick();
+        if (listener != null) {
+            listener.onGestureSingleClick();
         }
         //单击事件，在双击事件发生时不会产生这个事件，所以用这个回调作为播放器单击事件
         return super.onSingleTapConfirmed(e);
@@ -143,7 +148,7 @@ public class PlayerGestureListener extends GestureDetector.SimpleOnGestureListen
      * 根据滑动速度更新速度比率值，这样可以在滑动速率较快时，
      * 快进的速度也会变快，可以根据需要调整。
      * 根据经验，正常速度一般在10~40dp/s
-     * @param dpX：横向滑动距离 dp
+     * @param dpX：  横向滑动距离 dp
      * @param duration：时间间隔 ms
      */
     private void updateScrollRatio(float dpX, long duration) {
@@ -172,24 +177,24 @@ public class PlayerGestureListener extends GestureDetector.SimpleOnGestureListen
     //累积快进进度,totalDuration：当前快进的总值，负值代表是要快退
     private void updateVideoTime(int duration) {
         totalDuration += duration;
-        if (listener.get() != null) {
-            listener.get().onGestureUpdateVideoTime(totalDuration);
+        if (listener != null) {
+            listener.onGestureUpdateVideoTime(totalDuration);
         }
     }
 
     //累积亮度
     private void updateVideoLeftTB(float ratio) {
         leftTBValue += ratio;
-        if (listener.get() != null) {
-            listener.get().onGestureLeftTB(leftTBValue);
+        if (listener != null) {
+            listener.onGestureLeftTB(leftTBValue);
         }
     }
 
     //累积声音
     private void updateVideoRightTB(float ratio) {
         rightTBValue += ratio;
-        if (listener.get() != null) {
-            listener.get().onGestureRightTB(rightTBValue);
+        if (listener != null) {
+            listener.onGestureRightTB(rightTBValue);
         }
     }
 
@@ -203,7 +208,7 @@ public class PlayerGestureListener extends GestureDetector.SimpleOnGestureListen
     }
 
     /**
-     * 播放器手势监听接口
+     * 对外提供的手势监听监听器
      */
     public interface VideoGestureListener {
         /***
@@ -235,6 +240,9 @@ public class PlayerGestureListener extends GestureDetector.SimpleOnGestureListen
          */
         void onGestureDoubleClick();
 
+        /**
+         * 按下即触发
+         */
         void onGestureDown();
     }
 }
