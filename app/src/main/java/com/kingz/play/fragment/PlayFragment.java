@@ -5,10 +5,14 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.PopupWindow;
 
 import com.base.BaseActivity;
@@ -18,10 +22,12 @@ import com.kingz.customdemo.R;
 import com.kingz.library.player.IMediaPlayer;
 import com.kingz.play.MediaParams;
 import com.kingz.play.MediaPlayTool;
+import com.kingz.play.PlayerGestureListener;
 import com.kingz.play.presenter.PlayPresenter;
 import com.kingz.play.view.BasePlayPop;
 import com.kingz.play.view.IPlayerView;
 import com.kingz.play.view.controller.PlayerUiSwitcher;
+import com.kingz.utils.ZLog;
 
 /**
  * author：KingZ
@@ -29,12 +35,19 @@ import com.kingz.play.view.controller.PlayerUiSwitcher;
  * description：播放器Fragment
  */
 public class PlayFragment extends BaseFragment implements IPlayerView{
+    public static final String TAG = "PlayFragment";
     private PlayerUiSwitcher playerUiSwitcher;
     private PlayPresenter playPresenter;
     private SurfaceView playView;
     private MediaParams mediaParams;
     private BasePlayPop basePlayPop;
+    private GestureDetector gestureDetector;
+    private PlayerGestureListener gestureDetectorLsr;
     private static final long ORIENTATION_CHANGE_DELAY_MS = 2000L;
+
+    public PlayFragment() {
+        initGestureDetector();
+    }
 
     public static PlayFragment newInstance(MediaParams mediaParams) {
         PlayFragment playFragment = new PlayFragment();
@@ -42,6 +55,12 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
         bundle.putSerializable("MediaParams", mediaParams);
         playFragment.setArguments(bundle);
         return playFragment;
+    }
+
+    private void initGestureDetector(){
+        gestureDetectorLsr = new PlayerGestureListener(getContext(),new FragmentGustureListener());
+        gestureDetectorLsr.setVideoWH(1920 ,1080);
+        gestureDetector = new GestureDetector(getContext(),gestureDetectorLsr);
     }
 
     @Override
@@ -66,13 +85,17 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
 
         IMediaPlayer mediaPlayer = MediaPlayTool.getInstance().getMediaPlayerCore();
 
-        playerUiSwitcher = new PlayerUiSwitcher(mediaPlayer,rootView);
+        playPresenter = new PlayPresenter(mediaPlayer,this);
+        playerUiSwitcher = new PlayerUiSwitcher(playPresenter, rootView);
         playerUiSwitcher.setOnClickListener(this);
-
-        playPresenter = new PlayPresenter(mediaPlayer,this); // p和view层关联
-        playPresenter.onCreateView();
         playerUiSwitcher.setOnSeekBarChangeListener(playPresenter.seekBarChangeListener);
+        playPresenter.onCreateView();
         return rootView;
+    }
+
+    public boolean onTouchEvent(MotionEvent event){
+        gestureDetector.onTouchEvent(event);
+        return true;
     }
 
     @Override
@@ -85,10 +108,9 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
                     getActivity().onBackPressed();
                 }
                 break;
-            case R.id.img_fullscreen:
-            case R.id.img_fullscreen_cover:
-                //TODO 横屏后播放
-                switchOrientation(true);
+            case R.id.fullscreen_icon:
+            case R.id.fullscreen_icon_mask:
+                switchScreenMode(true);
                 break;
             case R.id.tv_quality:
             case R.id.tv_quality_cover:
@@ -142,25 +164,34 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
 
     @Override
     public boolean onBackPressed() {
-        return switchOrientation(false);
+        switchScreenMode(false);
+        return false;
     }
 
-    public boolean switchOrientation(boolean isLand) {
+    /**
+     * 切换屏幕模式
+     * @param isFull 是否全屏
+     * @return 是否成功切换
+     */
+    public boolean switchScreenMode(boolean isFull) {
         if (mActivity != null && !playerUiSwitcher.isLocked()) {
-            final int autoRotation = Settings.System.getInt(mActivity.getContentResolver(), Settings.System.ACCELEROMETER_ROTATION, 0);
-            mActivity.setRequestedOrientation(isLand ? ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE : ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-            //2秒，横竖屏默认
+            final int autoRotation = Settings.System.getInt(mActivity.getContentResolver(),
+                    Settings.System.ACCELEROMETER_ROTATION, 0);
+            int orientation = isFull ? ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE : ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+            mActivity.setRequestedOrientation(orientation);
             playView.postDelayed(new Runnable() {
                 @Override
                 public void run() {
+                    //2秒后，横竖屏在由重力感应决定
                     if (isShown() && autoRotation == 1 && !playerUiSwitcher.isLocked()) {
                         mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
                     }
                 }
             }, ORIENTATION_CHANGE_DELAY_MS);
-            return false;
+            playerUiSwitcher.refreshViewState();
+            return true;
         }
-        return true;
+        return false;
     }
 
     @Override
@@ -259,5 +290,54 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
 
     public PlayerUiSwitcher getControllerViewManager(){
         return playerUiSwitcher;
+    }
+
+    class FragmentGustureListener implements PlayerGestureListener.VideoGestureListener{
+        @Override
+        public void onGestureLeftTB(float ratio) {
+            if(getActivity() != null){
+                Window window = getActivity().getWindow();
+                WindowManager.LayoutParams layoutParams = window.getAttributes();
+                layoutParams.screenBrightness = ratio;
+                window.setAttributes(layoutParams);
+            }
+        }
+
+        @Override
+        public void onGestureRightTB(float ratio) {
+            //TODO 进行音量变换
+//                AudioManager audioManager = (AudioManager)getContext().getSystemService(AUDIO_SERVICE);
+//                //当前音量
+//                int k = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+//                //最大音量
+//                int max =audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+//                Log.d("==d==", "" + max);
+//                Log.d("==d==", "" + k);
+//                k=k+volume;
+//                if(k>=0&&k<=max){
+//                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,k,AudioManager.FLAG_PLAY_SOUND);
+//                }
+            //audioManager.adjustVolume(i+volume,AudioManager.FLAG_PLAY_SOUND);
+        }
+
+        @Override
+        public void onGestureUpdateVideoTime(int duration) {
+            ZLog.d(TAG,"onGestureUpdateVideoTime duration: " + duration);
+        }
+
+        @Override
+        public void onGestureSingleClick() {
+            //TODO 进行浮层切换
+        }
+
+        @Override
+        public void onGestureDoubleClick() {
+            //TODO 进行播放暂停切换
+        }
+
+        @Override
+        public void onGestureDown() {
+
+        }
     }
 }

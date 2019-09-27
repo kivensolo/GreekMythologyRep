@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.SeekBar;
 
 import com.kingz.customdemo.R;
-import com.kingz.library.player.IMediaPlayer;
+import com.kingz.play.presenter.PlayPresenter;
 
 /**
  * author：KingZ
@@ -17,7 +17,9 @@ import com.kingz.library.player.IMediaPlayer;
 public class PlayerUiSwitcher {
     private static final String TAG = PlayerUiSwitcher.class.getName();
 
-    private IMediaPlayer _mp;
+//    private IMediaPlayer _mp;
+
+    private PlayPresenter _presenter;
     private View rootView;
     private TopBarController topBarController;
     private BottomBarController bottomBarController;
@@ -41,8 +43,8 @@ public class PlayerUiSwitcher {
         }
     };
 
-    public PlayerUiSwitcher(IMediaPlayer mp, View view) {
-        _mp = mp;
+    public PlayerUiSwitcher(PlayPresenter playPresenter, View view) {
+        _presenter = playPresenter;
         rootView = view;
         bufferLoadView = rootView.findViewById(R.id.play_load_layout);
         topBarController = new TopBarController(view);
@@ -180,8 +182,8 @@ public class PlayerUiSwitcher {
             topBarController.close();
             bottomBarController.close();
         }
-        bottomBarController.setPosition(_mp.getCurrentPosition());
-        bottomBarController.setDuration(_mp.getDuration());
+        bottomBarController.setPosition(_presenter.getCurrentPosition());
+        bottomBarController.setDuration(_presenter.getDuration());
         lockPanelController.show();
         repostControllersDismissTask(true);
     }
@@ -191,8 +193,8 @@ public class PlayerUiSwitcher {
      * 更新视频播放的进度显示
      */
     public void updatePlayProgressView(boolean isDragging,int postion) {
-        bottomBarController.setPosition(isDragging ? postion : _mp.getCurrentPosition());
-        bottomBarController.setDuration(_mp.getDuration());
+        bottomBarController.setPosition(isDragging ? postion : _presenter.getCurrentPosition());
+        bottomBarController.setDuration(_presenter.getDuration());
     }
 
     /**

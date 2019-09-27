@@ -7,7 +7,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.kingz.customdemo.R;
-import com.kingz.utils.ViewTools;
+import com.module.tools.ViewTools;
 
 /**
  * author：KingZ
@@ -37,7 +37,7 @@ public class CoverPanelController  extends BaseController{
         mTipsTxt = rootView.findViewById(R.id.player_tips_txt);
         backImg = rootView.findViewById(R.id.cover_back);
         titleTxt = rootView.findViewById(R.id.player_title_name_cover);
-        fullScreenImg = rootView.findViewById(R.id.img_fullscreen_cover);
+        fullScreenImg = rootView.findViewById(R.id.fullscreen_icon_mask);
         qualityTxt = rootView.findViewById(R.id.tv_quality_cover);
     }
 

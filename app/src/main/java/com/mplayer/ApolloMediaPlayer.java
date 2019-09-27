@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import com.base.BaseActivity;
 import com.kingz.customdemo.R;
 import com.kingz.utils.ToastTools;
@@ -20,6 +21,7 @@ import com.kingz.utils.ZLog;
 import com.mplayer.adapter.ChanellListAdapter;
 import com.mplayer.view.ApolloSeekBar;
 import com.provider.ChannelData;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -50,7 +52,7 @@ public class ApolloMediaPlayer extends BaseActivity {
 
     private static final String TAG = "ApolloMediaPlayer";
     private ApolloSeekBar seekBar;
-    private MediaPlayerKernel mPlayer;
+    private KingzPlayerView mPlayer;
 
     private ListView leftListView;
     private TextView rightChangeBtn;
@@ -118,7 +120,6 @@ public class ApolloMediaPlayer extends BaseActivity {
                 switch (evtType) {
                     case XmlPullParser.START_TAG:
                         String attr = xmlParser.getName();
-                        //Log.d(TAG, "start Tag：" + attr);
                         if ("video".equalsIgnoreCase(attr)) {
                             channelData = new ChannelData();
                         } else if (channelData != null) {
@@ -130,7 +131,6 @@ public class ApolloMediaPlayer extends BaseActivity {
                         }
                         break;
                     case XmlPullParser.END_TAG:
-                        //Log.d(TAG, "end Tag：" + xmlParser.getName());
                         if ("video".equals(xmlParser.getName()) && channelData != null) {
                             channelLists.add(channelData);
                             channelData = null;
@@ -139,13 +139,12 @@ public class ApolloMediaPlayer extends BaseActivity {
                     default:
                         break;
                 }
-                //获得下一个节点的信息
                 evtType = xmlParser.next();
             }
         } catch (IOException | XmlPullParserException e) {
             e.printStackTrace();
         }
-        ZLog.i(TAG, "共有" + channelLists.size() + "条数据");
+//        ZLog.i(TAG, "共有" + channelLists.size() + "条数据");
     }
 
     /**
@@ -170,10 +169,10 @@ public class ApolloMediaPlayer extends BaseActivity {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     ZLog.i(TAG, "onItemClick() getCurrentPlayerState：" + mPlayer.getState());
                     stopSeekBarTimer();
-                    if (mPlayer.getState() == MediaPlayerKernel.MediaState.PLAYING) {
+                    if (mPlayer.getState() == KingzPlayerView.MediaState.PLAYING) {
                         mPlayer.stop();
                     }
-                    if(mPlayer.getState() != MediaPlayerKernel.MediaState.IDLE){
+                    if(mPlayer.getState() != KingzPlayerView.MediaState.IDLE){
                         //IDLE状态去reset会抛出非法的状态异常
                         mPlayer.reset();
                     }
@@ -217,8 +216,8 @@ public class ApolloMediaPlayer extends BaseActivity {
     }
 
     private void initMPlayer() {
-        mPlayer = (MediaPlayerKernel) findViewById(R.id.mplayercore);
-        mPlayer.setOnStateChangeListener(new MediaPlayerKernel.OnStateChangeListener() {
+        mPlayer = (KingzPlayerView) findViewById(R.id.mplayercore);
+        mPlayer.setOnStateChangeListener(new KingzPlayerView.OnStateChangeListener() {
             @Override
             public void onSurfaceViewDestroyed(SurfaceHolder surface) {
                 anthorFlag = false;
@@ -284,7 +283,7 @@ public class ApolloMediaPlayer extends BaseActivity {
                 if (mVideoWidth != 0 && mVideoHeight != 0) {
                     if (mPlayer != null) {
                         mPlayer.start();
-                        mPlayer.setState(MediaPlayerKernel.MediaState.PLAYING);
+                        mPlayer.setState(KingzPlayerView.MediaState.PLAYING);
                         ZLog.i(TAG, "onPrepare() setPlayeState is Playing");
                     }
                 }
@@ -467,7 +466,7 @@ public class ApolloMediaPlayer extends BaseActivity {
         mPlayer.releasePlayer();
     }
 
-    private MediaPlayerKernel.MediaState getMplayerState(){
+    private KingzPlayerView.MediaState getMplayerState(){
         return mPlayer.getState();
     }
 }

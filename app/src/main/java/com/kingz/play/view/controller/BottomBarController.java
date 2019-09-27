@@ -5,9 +5,10 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
 import com.kingz.customdemo.R;
 import com.kingz.utils.TimeUtils;
-import com.kingz.utils.ViewTools;
+import com.module.tools.ViewTools;
 
 /**
  * author：KingZ
@@ -34,7 +35,7 @@ public class BottomBarController extends BaseController{
         currentTxt = rootView.findViewById(R.id.player_txt_current_time);
         durationTxt = rootView.findViewById(R.id.player_txt_all_time);
         qualityTxt = rootView.findViewById(R.id.tv_quality);
-        fullScreenImg = rootView.findViewById(R.id.img_fullscreen);
+        fullScreenImg = rootView.findViewById(R.id.fullscreen_icon);
     }
 
     public void setPosition(long position) {

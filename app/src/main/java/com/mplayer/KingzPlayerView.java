@@ -18,17 +18,13 @@ import com.kingz.utils.ZLog;
 import java.io.IOException;
 
 /**
- * Copyright(C) 2015, 北京视达科科技有限公司
- * All rights reserved.
  * author: King.Z
  * date:  2016/9/5 21:40
- * description:播放器核心类
- * @deprecated  View和Player严重耦合
- * 使用{@code AndroidMediaPlayer}代替
- */
-public class MediaPlayerKernel extends SurfaceView {
+ * description: 带surface的原生播放器视图
+ * */
+public class KingzPlayerView extends SurfaceView {
 
-    private static final String TAG = "MediaPlayerKernel";
+    private static final String TAG = "KingzPlayerView";
     private Context mContext;
     private int mAudioSession;
     private Uri playUrl = null;
@@ -44,19 +40,19 @@ public class MediaPlayerKernel extends SurfaceView {
         INIT, PREPARING, PLAYING, STOP, PAUSED, IDLE, END, ERROR, RELEASE
     }
 
-    public MediaPlayerKernel(Context context) {
+    public KingzPlayerView(Context context) {
         super(context);
         mContext = context;
         initVideoView();
     }
 
-    public MediaPlayerKernel(Context context, AttributeSet attrs) {
+    public KingzPlayerView(Context context, AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
         initVideoView();
     }
 
-    public MediaPlayerKernel(Context context, AttributeSet attrs, int defStyle) {
+    public KingzPlayerView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         mContext = context;
         initVideoView();

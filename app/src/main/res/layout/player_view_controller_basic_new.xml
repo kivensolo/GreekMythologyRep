@@ -173,8 +173,8 @@
                 android:id="@+id/player_txt_all_time"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="2dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="10dp"
                 android:background="@null"
                 android:gravity="center"
                 android:textColor="@android:color/white"
@@ -200,8 +200,8 @@
                     tools:ignore="HardcodedText,RtlSymmetry"/>
 
                 <ImageView
+                    android:id="@+id/fullscreen_icon"
                     android:contentDescription="全屏图标View"
-                    android:id="@+id/img_fullscreen"
                     android:layout_width="40dp"
                     android:layout_height="match_parent"
                     android:paddingEnd="20dp"
@@ -319,7 +319,8 @@
 
             <!-- 全屏按钮-->
             <ImageView
-                android:id="@+id/img_fullscreen_cover"
+                android:id="@+id/fullscreen_icon_mask"
+                android:contentDescription="有挡板信息时的全屏图标View"
                 android:layout_width="40dp"
                 android:layout_height="match_parent"
                 android:paddingEnd="13dp"

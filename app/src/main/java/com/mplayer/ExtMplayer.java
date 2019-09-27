@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+
 import com.kingz.utils.ZLog;
 import com.module.tools.ScreenTools;
 
@@ -23,7 +24,7 @@ public class ExtMplayer extends RelativeLayout implements IExtMplayer {
     private static final String TAG = ExtMplayer.class.getSimpleName();
 
     /**播放器容器*/
-    private HashMap<String,MediaPlayerKernel> mPlayerMap = new HashMap<>();
+    private HashMap<String, KingzPlayerView> mPlayerMap = new HashMap<>();
 
     /**异常反馈值*/
     public static final String ERROR = "-1";
@@ -60,7 +61,7 @@ public class ExtMplayer extends RelativeLayout implements IExtMplayer {
     }
 
     void initMplayerCore(Context context,String x, String y, String width, String height) {
-        final MediaPlayerKernel mpCore = new MediaPlayerKernel(context);
+        final KingzPlayerView mpCore = new KingzPlayerView(context);
         ViewGroup.LayoutParams lps = new ViewGroup.LayoutParams(ScreenTools.Operation(Integer.valueOf(width)),ScreenTools.Operation(Integer.valueOf(height)));
         mpCore.setLayoutParams(lps);
         addView(mpCore);
@@ -79,7 +80,7 @@ public class ExtMplayer extends RelativeLayout implements IExtMplayer {
 
     @Override
     public String playVideoByUrl(String playerId, String playUrl, String position) {
-        MediaPlayerKernel playerCore = getMplayerCore(playerId);
+        KingzPlayerView playerCore = getMplayerCore(playerId);
         if(playerCore != null){
             Uri uri = Uri.parse(playUrl);
             playerCore.setVideoURI(uri);
@@ -90,7 +91,7 @@ public class ExtMplayer extends RelativeLayout implements IExtMplayer {
 
     @Override
     public String pause(String playerId) {
-        MediaPlayerKernel playerCore = getMplayerCore(playerId);
+        KingzPlayerView playerCore = getMplayerCore(playerId);
         if(playerCore != null){
             playerCore.pause();
             return playerId;
@@ -100,7 +101,7 @@ public class ExtMplayer extends RelativeLayout implements IExtMplayer {
 
     @Override
     public String stop(String playerId) {
-        MediaPlayerKernel playerCore = getMplayerCore(playerId);
+        KingzPlayerView playerCore = getMplayerCore(playerId);
         if (playerCore != null) {
             playerCore.stop();
             return playerId;
@@ -110,7 +111,7 @@ public class ExtMplayer extends RelativeLayout implements IExtMplayer {
 
     @Override
     public String play(String playerId) {
-        MediaPlayerKernel playerCore = getMplayerCore(playerId);
+        KingzPlayerView playerCore = getMplayerCore(playerId);
         if (playerCore != null) {
             playerCore.start();
             return playerId;
@@ -120,7 +121,7 @@ public class ExtMplayer extends RelativeLayout implements IExtMplayer {
 
     @Override
     public String destory(String playerId) {
-        MediaPlayerKernel core = mPlayerMap.remove(playerId);
+        KingzPlayerView core = mPlayerMap.remove(playerId);
         if(core != null){
             mLatestPlayerid--;
             return playerId;
@@ -130,7 +131,7 @@ public class ExtMplayer extends RelativeLayout implements IExtMplayer {
 
     @Override
     public String getDuration(String playerId) {
-        MediaPlayerKernel core = getMplayerCore(playerId);
+        KingzPlayerView core = getMplayerCore(playerId);
         if(core != null){
             int duration = core.getDuration();
             ZLog.d(TAG,"getDuration = " + duration);
@@ -141,7 +142,7 @@ public class ExtMplayer extends RelativeLayout implements IExtMplayer {
 
     @Override
     public String getCurrentPosition(String playerId) {
-        MediaPlayerKernel core = getMplayerCore(playerId);
+        KingzPlayerView core = getMplayerCore(playerId);
         if(core != null){
             int currentPosition = core.getCurrentPosition();
             ZLog.d(TAG,"getCurrentPosition = " + currentPosition);
@@ -152,7 +153,7 @@ public class ExtMplayer extends RelativeLayout implements IExtMplayer {
 
     @Override
     public String seekTo(String playerId, String pos) {
-        MediaPlayerKernel core = getMplayerCore(playerId);
+        KingzPlayerView core = getMplayerCore(playerId);
         if(core != null){
             core.seekTo(Integer.parseInt(pos));
             return playerId;
@@ -160,13 +161,13 @@ public class ExtMplayer extends RelativeLayout implements IExtMplayer {
         return ERROR;
     }
 
-    private MediaPlayerKernel getMplayerCore(String playerId) {
+    private KingzPlayerView getMplayerCore(String playerId) {
         return mPlayerMap.get(playerId);
     }
 
     @Override
     public String getPlayerState(String playerId) {
-        MediaPlayerKernel core = getMplayerCore(playerId);
+        KingzPlayerView core = getMplayerCore(playerId);
         if (core != null) {
             //int playState = core.getPlayState();
             int playState = 0;

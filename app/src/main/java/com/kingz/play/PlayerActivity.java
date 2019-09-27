@@ -8,6 +8,7 @@ import android.media.AudioManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
+import android.view.MotionEvent;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
@@ -20,7 +21,8 @@ import java.util.concurrent.TimeUnit;
 /**
  * author：KingZ
  * date：2019/7/30
- * description：播放器的顶层抽象层
+ * description：手机端播放页面的抽象层
+ *  - 横竖屏旋转的逻辑
  */
 public abstract class PlayerActivity extends BaseActivity {
     protected static final String TAG_VOD_PLAY = "vod_play";
@@ -48,6 +50,10 @@ public abstract class PlayerActivity extends BaseActivity {
         getWindow().setFlags(keepScreenOn, keepScreenOn);
     }
 
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        return super.dispatchTouchEvent(ev);
+    }
 
     /**
      * 初始化横竖屏

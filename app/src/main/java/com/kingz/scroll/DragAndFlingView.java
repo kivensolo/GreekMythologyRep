@@ -6,13 +6,14 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.BounceInterpolator;
 import android.widget.Scroller;
-import android.widget.TextView;
+
 import com.kingz.customdemo.R;
 import com.kingz.utils.ZLog;
 import com.module.tools.ScreenTools;
@@ -23,7 +24,7 @@ import com.module.tools.ScreenTools;
  *     update at : 2019/3/24
  * description: Drag & Fling View <br>
  */
-public class DragAndFlingView extends TextView {
+public class DragAndFlingView extends AppCompatTextView {
 
     public static final String TAG = DragAndFlingView.class.getSimpleName();
     public static final int VIEW_WIDTH = 250;

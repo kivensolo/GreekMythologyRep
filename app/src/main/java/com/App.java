@@ -20,7 +20,7 @@ public class App extends Application {
 
     public final static String TAG = "Application";
     private static App application;
-    private static Handler _appMainHandler;
+    private Handler _appMainHandler;
     private static final boolean STRICT_MODE = false;
     public static final String BDApiKey = "467e6d8f8b06b8811b7a6fb939c8ad5e";
 
