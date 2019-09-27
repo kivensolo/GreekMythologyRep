@@ -5,6 +5,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.ViewConfiguration;
 
+import com.kingz.play.gesture.IGestureCallBack;
 import com.kingz.utils.ZLog;
 import com.module.tools.ScreenTools;
 import com.module.tools.ViewTools;
@@ -14,10 +15,13 @@ import java.util.concurrent.TimeUnit;
 /**
  * author：KingZ
  * date：2019/9/27
- * description：简单手势监听器实现类
+ * description： 手势监听器
+ * 支持：
+ *  左&右侧上下滑动
+ *  整体水平滑动
  */
 public class PlayerGestureListener extends GestureDetector.SimpleOnGestureListener {
-    private VideoGestureListener listener;
+    private IGestureCallBack listener;
     private int screenWidth, centerW;
     //播放器View的长宽DP
     private float dpVideoWidth, dpVideoHeight;
@@ -33,7 +37,7 @@ public class PlayerGestureListener extends GestureDetector.SimpleOnGestureListen
     private float rightTBValue = 0;     //单次右边累计值(一般是声音)
     private float density;
 
-    public PlayerGestureListener(Context context, VideoGestureListener listener) {
+    public PlayerGestureListener(Context context, IGestureCallBack listener) {
         this.listener = listener;
         this.screenWidth = ScreenTools.getScreenWidth(context);
         centerW = this.screenWidth / 2;
@@ -207,42 +211,4 @@ public class PlayerGestureListener extends GestureDetector.SimpleOnGestureListen
         DOUBLE_CLICK        //双击
     }
 
-    /**
-     * 对外提供的手势监听监听器
-     */
-    public interface VideoGestureListener {
-        /***
-         * 手指在Layout左半部上下滑动时候调用，一般是亮度手势
-         * 从View底部滑动到顶部，代表从0升到1
-         * @param ratio：0-1 之间，1代表最亮，0代表最暗
-         */
-        void onGestureLeftTB(float ratio);
-
-        /***
-         * 手指在Layout右半部上下滑动时候调用，一般是音量手势
-         * 从View底部滑动到顶部，代表从0升到1
-         * @param ratio：0-1 之间，1代表音量最大，0代表音量最低
-         */
-        void onGestureRightTB(float ratio);
-
-        /**
-         * @param duration :快进快退,大于0快进，小于0快退
-         */
-        void onGestureUpdateVideoTime(int duration);
-
-        /**
-         * 单击手势，确认是单击的时候调用
-         */
-        void onGestureSingleClick();
-
-        /**
-         * 双击手势，确认是双击的时候调用，可用于播放器暂停
-         */
-        void onGestureDoubleClick();
-
-        /**
-         * 按下即触发
-         */
-        void onGestureDown();
-    }
 }

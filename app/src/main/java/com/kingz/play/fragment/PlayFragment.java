@@ -23,6 +23,7 @@ import com.kingz.library.player.IMediaPlayer;
 import com.kingz.play.MediaParams;
 import com.kingz.play.MediaPlayTool;
 import com.kingz.play.PlayerGestureListener;
+import com.kingz.play.gesture.IGestureCallBack;
 import com.kingz.play.presenter.PlayPresenter;
 import com.kingz.play.view.BasePlayPop;
 import com.kingz.play.view.IPlayerView;
@@ -42,7 +43,6 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
     private MediaParams mediaParams;
     private BasePlayPop basePlayPop;
     private GestureDetector gestureDetector;
-    private PlayerGestureListener gestureDetectorLsr;
     private static final long ORIENTATION_CHANGE_DELAY_MS = 2000L;
 
     public PlayFragment() {
@@ -58,9 +58,10 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
     }
 
     private void initGestureDetector(){
-        gestureDetectorLsr = new PlayerGestureListener(getContext(),new FragmentGustureListener());
+        PlayerGestureListener gestureDetectorLsr = new PlayerGestureListener(getContext(),
+                new FragmentGustureCallback());
         gestureDetectorLsr.setVideoWH(1920 ,1080);
-        gestureDetector = new GestureDetector(getContext(),gestureDetectorLsr);
+        gestureDetector = new GestureDetector(getContext(), gestureDetectorLsr);
     }
 
     @Override
@@ -300,7 +301,7 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
         return playerUiSwitcher;
     }
 
-    class FragmentGustureListener implements PlayerGestureListener.VideoGestureListener{
+    class FragmentGustureCallback implements IGestureCallBack {
         @Override
         public void onGestureLeftTB(float ratio) {
             ZLog.d(TAG,"onGestureLeftTB");
