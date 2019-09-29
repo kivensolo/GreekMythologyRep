@@ -34,8 +34,8 @@ public class PlayerGestureListener extends GestureDetector.SimpleOnGestureListen
     //每一dp，快进的时长,ms
     private int preDpVideoDuration = 0;
     private int totalDuration = 0;      //单次快进快退累计值
-    private float leftTBValue = 0;      //单次左边累计值(一般是亮度)
-    private float rightTBValue = 0;     //单次右边累计值(一般是声音)
+    private float brightnessValue = 0;      // 亮度值
+    private float rightTBValue = 0;     // 声音值
     private float density;
 
     public PlayerGestureListener(Context context, IGestureCallBack listener) {
@@ -46,6 +46,7 @@ public class PlayerGestureListener extends GestureDetector.SimpleOnGestureListen
         mTouchSlop = ViewTools.getTouchSlop(ViewConfiguration.get(context));
         density = context.getResources().getDisplayMetrics().density;
 
+        brightnessValue = ScreenTools.getScreenBrightnessValue(context) / 255f;
         dpVideoWidth = 1920 / density;
         dpVideoHeight = 1080 / density;
     }
@@ -71,7 +72,6 @@ public class PlayerGestureListener extends GestureDetector.SimpleOnGestureListen
         scrollMode = ScrollMode.NONE;
         timeStamp = System.currentTimeMillis();
         totalDuration = 0;
-        leftTBValue = 0;
         rightTBValue = 0;
         if (listener != null) {
             listener.onGestureDown();
@@ -98,9 +98,9 @@ public class PlayerGestureListener extends GestureDetector.SimpleOnGestureListen
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
         long time = System.currentTimeMillis();
         distanceX = -distanceX;
-        distanceY = -distanceY;
-        float dpX = distanceX / density; // 横向滑动的dp值
-        float dpY = distanceY / density;
+        distanceY += distanceY;
+        float dpX = distanceX / density;    // 横向滑动的dp值
+        float dpY = distanceY / density;    // 垂直方向滑动的dp值
         updateScrollRatio(dpX, time - timeStamp);
         timeStamp = time;
         float xDiff = e2.getX() - e1.getX();
@@ -124,7 +124,7 @@ public class PlayerGestureListener extends GestureDetector.SimpleOnGestureListen
         else if (scrollMode == ScrollMode.HORIZONTAL_S) {
             updateVideoTime((int) (preDpVideoDuration * scrollRatio * dpX));
         } else if (scrollMode == ScrollMode.LEFT_TB) {
-            updateVideoLeftTB(dpY / dpVideoHeight);
+            updateVideoLeftTB(dpY / dpVideoHeight); // y方向滑动距离比例即为亮度比例
         } else if (scrollMode == ScrollMode.RIGHT_TB) {
             updateVideoRightTB(dpY / dpVideoHeight);
         }
@@ -192,11 +192,18 @@ public class PlayerGestureListener extends GestureDetector.SimpleOnGestureListen
         }
     }
 
-    //累积亮度
+    /**
+     * 更新亮度值
+     * @param ratio 单次滑动改边的亮度比率 0.0~1.0f
+     */
     private void updateVideoLeftTB(float ratio) {
-        leftTBValue += ratio;
+        brightnessValue += ratio;
+        brightnessValue = Math.min(brightnessValue, 1.0f);
+        if(brightnessValue < 1.0f){
+            brightnessValue = Math.max(brightnessValue, 0f);
+        }
         if (listener != null) {
-            listener.onGestureLeftTB(leftTBValue);
+            listener.onGestureLeftTB(brightnessValue);
         }
     }
 

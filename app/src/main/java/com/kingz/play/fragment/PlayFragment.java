@@ -139,7 +139,7 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
                 //DO Nothing
                 break;
             default:
-                break;
+                playPresenter.onViewClick();
         }
 
         if (basePlayPop != null) {
@@ -309,8 +309,8 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
     class FragmentGustureCallback implements IGestureCallBack {
         @Override
         public void onGestureLeftTB(float ratio) {
-            ZLog.d(TAG,"onGestureLeftTB");
             if(getActivity() != null){
+                ZLog.d(TAG,"onGestureLeftTB ratio="+ratio);
                 Window window = getActivity().getWindow();
                 WindowManager.LayoutParams layoutParams = window.getAttributes();
                 layoutParams.screenBrightness = ratio;
@@ -343,7 +343,8 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
 
         @Override
         public void onGestureSingleClick() {
-            playPresenter.onViewClick();
+//            使用单击事件的时候，会触发全部view切换状态的情况  用onclick做兼容则不会
+//            playPresenter.onViewClick();
         }
 
         @Override

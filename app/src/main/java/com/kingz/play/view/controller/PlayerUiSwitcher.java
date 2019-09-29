@@ -194,6 +194,7 @@ public class PlayerUiSwitcher {
         Log.d(TAG,"showPlayingView()");
         bufferLoadView.setVisibility(View.GONE);
         coverPanelController.close();
+        seekTimePreViewController.close();
         if (!isLocked()) {
             topBarController.show();
             bottomBarController.show();

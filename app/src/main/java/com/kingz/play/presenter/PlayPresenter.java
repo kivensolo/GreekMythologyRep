@@ -90,10 +90,8 @@ public class PlayPresenter extends AbsBasePresenter implements IMediaPlayerCallB
     }
 
     @Override
-    public void onPause() {
-        //TODO 进行其他业务处理 如播放记录的记录
+    public void onPause() {  //进行其他业务处理 如播放记录的记录
     }
-
 
     @Override
     public void onStop() {
