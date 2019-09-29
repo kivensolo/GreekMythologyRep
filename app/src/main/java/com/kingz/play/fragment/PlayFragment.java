@@ -11,8 +11,6 @@ import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.PopupWindow;
 
 import com.base.BaseActivity;
@@ -28,7 +26,8 @@ import com.kingz.play.presenter.PlayPresenter;
 import com.kingz.play.view.BasePlayPop;
 import com.kingz.play.view.IPlayerView;
 import com.kingz.play.view.controller.PlayerUiSwitcher;
-import com.kingz.utils.ZLog;
+import com.kingz.utils.VolumeTools;
+import com.module.tools.ScreenTools;
 
 /**
  * author：KingZ
@@ -309,31 +308,14 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
     class FragmentGustureCallback implements IGestureCallBack {
         @Override
         public void onGestureLeftTB(float ratio) {
-            if(getActivity() != null){
-                ZLog.d(TAG,"onGestureLeftTB ratio="+ratio);
-                Window window = getActivity().getWindow();
-                WindowManager.LayoutParams layoutParams = window.getAttributes();
-                layoutParams.screenBrightness = ratio;
-                window.setAttributes(layoutParams);
-            }
+//            ZLog.d(TAG,"onGesture LeftTB ratio=" + ratio);
+            ScreenTools.setScreenBrightness(getActivity(),ratio);
         }
 
         @Override
         public void onGestureRightTB(float ratio) {
-            ZLog.d(TAG,"onGestureRightTB");
-            //TODO 进行音量变换
-//                AudioManager audioManager = (AudioManager)getContext().getSystemService(AUDIO_SERVICE);
-//                //当前音量
-//                int k = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-//                //最大音量
-//                int max =audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-//                Log.d("==d==", "" + max);
-//                Log.d("==d==", "" + k);
-//                k=k+volume;
-//                if(k>=0&&k<=max){
-//                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,k,AudioManager.FLAG_PLAY_SOUND);
-//                }
-            //audioManager.adjustVolume(i+volume,AudioManager.FLAG_PLAY_SOUND);
+//            ZLog.d(TAG,"onGesture RightTB ratio=" + ratio);
+            VolumeTools.setStreamMusicVolume(getContext(),ratio);
         }
 
         @Override

@@ -222,6 +222,9 @@ public class ScreenTools {
      * @param  ratio：0-1 之间，1代表最亮，0代表最暗
      */
     public static void setScreenBrightness(Activity activity,float ratio) {
+        if(activity == null){
+            return;
+        }
         Window localWindow = activity.getWindow();
         WindowManager.LayoutParams localLayoutParams = localWindow.getAttributes();
         localLayoutParams.screenBrightness = ratio;

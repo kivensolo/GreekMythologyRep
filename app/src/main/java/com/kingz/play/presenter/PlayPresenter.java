@@ -19,8 +19,6 @@ import static com.google.android.exoplayer2.Player.REPEAT_MODE_ALL;
  * <p>
  * 视频地址：http://www.zhiboo.net/
  * TODO 画面模式调整，
- * TODO 全屏的播控画面亮度
- * TODO 全屏的播控声音
  */
 public class PlayPresenter extends AbsBasePresenter implements IMediaPlayerCallBack {
     private IPlayerView playerView;
@@ -69,7 +67,7 @@ public class PlayPresenter extends AbsBasePresenter implements IMediaPlayerCallB
         playerView.showPlayStateView();
     }
 
-    private void pause() {
+    public void pause() {
         mPlayer.pause();
         playerView.showPauseStateView();
     }

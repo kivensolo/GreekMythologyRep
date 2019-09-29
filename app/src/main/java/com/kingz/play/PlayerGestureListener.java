@@ -6,6 +6,7 @@ import android.view.MotionEvent;
 import android.view.ViewConfiguration;
 
 import com.kingz.play.gesture.IGestureCallBack;
+import com.kingz.utils.VolumeTools;
 import com.kingz.utils.ZLog;
 import com.module.tools.ScreenTools;
 import com.module.tools.ViewTools;
@@ -33,13 +34,15 @@ public class PlayerGestureListener extends GestureDetector.SimpleOnGestureListen
     private int scrollRatio = 1;
     //每一dp，快进的时长,ms
     private int preDpVideoDuration = 0;
-    private int totalDuration = 0;      //单次快进快退累计值
-    private float brightnessValue = 0;      // 亮度值
-    private float rightTBValue = 0;     // 声音值
+    private int totalDuration = 0;     //单次快进快退累计值
+    private float brightnessValue = 0; // 亮度值
+    private float volumeValue = 0;     // 声音值
     private float density;
+    private Context context;
 
     public PlayerGestureListener(Context context, IGestureCallBack listener) {
         this.listener = listener;
+        this.context = context;
         this.screenWidth = ScreenTools.getScreenWidth(context);
         centerW = this.screenWidth / 2;
         ZLog.d(TAG,"screenWidth="+ this.screenWidth);
@@ -47,6 +50,9 @@ public class PlayerGestureListener extends GestureDetector.SimpleOnGestureListen
         density = context.getResources().getDisplayMetrics().density;
 
         brightnessValue = ScreenTools.getScreenBrightnessValue(context) / 255f;
+        volumeValue = VolumeTools.getCurrentVolumePrecent(context);
+
+        //TODO 使用正确的屏幕像素
         dpVideoWidth = 1920 / density;
         dpVideoHeight = 1080 / density;
     }
@@ -72,7 +78,7 @@ public class PlayerGestureListener extends GestureDetector.SimpleOnGestureListen
         scrollMode = ScrollMode.NONE;
         timeStamp = System.currentTimeMillis();
         totalDuration = 0;
-        rightTBValue = 0;
+        volumeValue = VolumeTools.getCurrentVolumePrecent(this.context);
         if (listener != null) {
             listener.onGestureDown();
         }
@@ -207,11 +213,14 @@ public class PlayerGestureListener extends GestureDetector.SimpleOnGestureListen
         }
     }
 
-    //累积声音
     private void updateVideoRightTB(float ratio) {
-        rightTBValue += ratio;
+        volumeValue += ratio;
+        volumeValue = Math.min(volumeValue, 1.0f);
+        if(volumeValue < 1.0f){
+            volumeValue = Math.max(volumeValue, 0f);
+        }
         if (listener != null) {
-            listener.onGestureRightTB(rightTBValue);
+            listener.onGestureRightTB(volumeValue);
         }
     }
 

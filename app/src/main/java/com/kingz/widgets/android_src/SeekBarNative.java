@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
 import com.kingz.customdemo.R;
 
 /**
@@ -31,7 +32,6 @@ public class SeekBarNative extends Activity{
 	}
 
 	private void initView() {
-		// TODO Auto-generated method stub
 		mSeekBarDefault = (SeekBar) findViewById(R.id.seekBar_default);
 		tv_1 = (TextView) findViewById(R.id.skbdefault_tv1);
 		tv_2 = (TextView) findViewById(R.id.skbdefault_tv2);
@@ -41,13 +41,11 @@ public class SeekBarNative extends Activity{
 
 		@Override
 		public void onStopTrackingTouch(SeekBar seekBar) {
-			// TODO Auto-generated method stub
 			tv_1.setText("EndTouch");
 		}
 
 		@Override
 		public void onStartTrackingTouch(SeekBar seekBar) {
-			// TODO Auto-generated method stub
 			tv_1.setText("StartTouch");
 		}
 

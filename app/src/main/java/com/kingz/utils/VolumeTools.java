@@ -2,133 +2,71 @@ package com.kingz.utils;
 
 import android.content.Context;
 import android.media.AudioManager;
-import android.util.Log;
-
 /**
- * 媒体播放音量的控制
+ * 音量控制工具类
  */
-public class VolumeTools
-{
-	private final static String TAG = "VolumeTools";
+public class VolumeTools {
+    private final static String TAG = "VolumeTools";
+    private static final int DEFAULT_CURRENT_VALUE = 40;
+    private static final int DEFAULT_MAX_VALUE = -1;
 
-	/**
-	 * 进入APK前，系统的音量，保存起来，后续可以恢复或是使用
-	 */
-	private static int systemVolumePercentNotThisApp = 40;
-	/**
-	 * 进入播放器时的音量
-	 */
-	private static int appPlayerVolumePercent = 40;
+    /**
+     * 读取当前系统的音量, 0-100
+     * @return 当前音量
+     */
+    public static int getCurrentVolume(Context context) {
+        AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+        if (audioManager == null) {
+            return DEFAULT_CURRENT_VALUE;
+        }
+        return audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+    }
 
-	/**
-	 * 设置进入播放器后，设置音量的初始值
-	 * 如果这个值已经有保存，则使用保存值，
-	 * 如果没有保存，则使用默认值（分不同的平台，支持不同的值）
-//	 */
-//	public static void setVolumeDefaultInPlayer()
-//	{
-//		//当前音量
-//		systemVolumePercentNotThisApp = getStreamMusicVolumePercent();
-//		Log.i(TAG, "setVolumeDefaultInPlayer systemVolumePercentNotThisApp:"+systemVolumePercentNotThisApp);
-//
-//		if( !GlobalEnv.getInstance().isVolumeConfiged() )
-//		{
-//			appPlayerVolumePercent = systemVolumePercentNotThisApp;
-////			if( DeviceInfo.getFactory() == Factory.VERION_TV_TCL_MTK55 )
-////			{
-////				appPlayerVolumePercent = Math.max(40, systemVolumePercentNotThisApp);
-////			}
-//			GlobalEnv.getInstance().setVolumePercent(appPlayerVolumePercent);
-//			Log.i(TAG, "setVolumeDefaultInPlayer firstDefault percent:"+appPlayerVolumePercent);
-//		}
-//		else
-//		{
-//			appPlayerVolumePercent = GlobalEnv.getInstance().getVolumePercent();
-//			Log.i(TAG, "setVolumeDefaultInPlayer readConfig percent:"+appPlayerVolumePercent);
-//		}
-//
-//		setStreamMusicVolumePercent(appPlayerVolumePercent);
-//
-//	}
+    public static float getCurrentVolumePrecent(Context context) {
+        AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+        if (audioManager == null) {
+            return 0f;
+        }
+        int current = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+        int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        return (float) current / maxVolume;
+    }
 
+    /**
+     * 获取最大音量
+     * @param context
+     * @return 最大音量
+     */
+    public static int getMaxVolume(Context context) {
+        if(context == null){
+            return DEFAULT_MAX_VALUE;
+        }
+        AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+        if (audioManager == null) {
+            return DEFAULT_MAX_VALUE;
+        }
+        return audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+    }
 
-	/**
-	 * 恢复APP默认音
-	 */
-	//public static void restoreVolumeExitPlayer()
-	//{
-	//	int curVolumePercent = getStreamMusicVolumePercent();
-	//	if( curVolumePercent != appPlayerVolumePercent )
-	//	{
-	//		GlobalEnv.getInstance().setVolumePercent(curVolumePercent);
-	//	}
-    //
-	//	setStreamMusicVolumePercent(systemVolumePercentNotThisApp);
-	//	Log.i(TAG, "restoreVolumeNotThisApp systemVolumePercentNotThisApp:"+systemVolumePercentNotThisApp);
-	//}
-
-	/**
-	 * 初始化
-	 */
-
-
-
-
-	/**
-	 * 读取当前系统的音量, 0-100
-	 * @return
-	 */
-	public static int getStreamMusicVolumePercent(Context context)
-	{
-		AudioManager audioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
-		if( audioManager == null )
-		{
-			Log.e(TAG, "getStreamMusicVolumePercent getSystemService(Context.AUDIO_SERVICE)" );
-			return 40;
-		}
-		//最大音量
-		int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-		int curVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-
-		if( maxVolume <= 0 )
-		{
-			Log.e(TAG, "getStreamMusicVolumePercent getStreamVolume cur:"+curVolume+", max:"+maxVolume );
-			return 40;
-		}
-
-		int percent = 100*curVolume/maxVolume;
-		Log.i(TAG, "getStreamMusicVolumePercent getStreamVolume cur:"+curVolume+", max:"+maxVolume +", percent:"+percent);
-		return percent;
-	}
-
-	/**
-	 *
-	 * @param percent 0-100
-	 * @return
-	 */
-	public static boolean setStreamMusicVolumePercent(Context context,int percent)
-	{
-		AudioManager audioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
-		if( audioManager == null )
-		{
-			Log.e(TAG, "setStreamMusicVolumePercent getSystemService(Context.AUDIO_SERVICE)" );
-			return false;
-		}
-		//最大音量
-		int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-		int curVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-
-		if( maxVolume <= 0 )
-		{
-			Log.e(TAG, "setStreamMusicVolumePercent getStreamVolume cur:"+curVolume+", max:"+maxVolume );
-			return false;
-		}
-
-		int newVolume = percent*maxVolume/100;
-		if( newVolume != curVolume )
-			audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, newVolume, 0);
-
-		Log.i(TAG, "setStreamMusicVolumePercent percent:"+percent+", newVolume:"+newVolume );
-		return true;
-	}
+    /**
+     * 设置音量
+     * @param percent 0.0 ~ 1.0f 百分比
+     * @return 是否设置成功
+     */
+    public static boolean setStreamMusicVolume(Context context, float percent) {
+        AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+        if (audioManager == null) {
+            return false;
+        }
+        int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        int curVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+        if (maxVolume <= 0) {
+            return false;
+        }
+        int newVolume = (int) (percent * maxVolume);
+        if (newVolume != curVolume) {
+            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, newVolume, 0);
+        }
+        return true;
+    }
 }
