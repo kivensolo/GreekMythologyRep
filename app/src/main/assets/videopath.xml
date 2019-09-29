@@ -1,8 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <videos>
+    <!--http://www.hao5.net/-->
+    <video>
+        <name>CCTV1</name>
+        <play_url>http://cctvalih5c.v.myalicdn.com/live/cctv1_2/index.m3u8</play_url>
+    </video>
+    <video>
+        <name>CCTV5</name>
+        <play_url>http://cctv5txyw.liveplay.myqcloud.com/live/cctv5_1_hd.m3u8</play_url>
+    </video>
     <video>
         <name>东方卫视</name>
         <play_url>http://cctvtxyh5c.liveplay.myqcloud.com/wstv/dongfang_2/index.m3u8</play_url>
+    </video>
+    <video>
+        <name>四川卫视</name>
+        <play_url>http://cctvtxyh5c.liveplay.myqcloud.com/wstv/sichuan_2_hd.m3u8</play_url>
     </video>
     <video>
         <name>东南卫视</name>
@@ -25,27 +38,19 @@
         <play_url>http://ottvideows.hifuntv.com/f4f1d08cb5d06dfea0db20b5c87163d4/591b7421/internettv/c1/2017/05/13/BD7E8410A928B1D07EC09C175C85462C.ts?uuid=ab31784b150e400eb29451b0664d5025</play_url>
     </video>
     <video>
-        <name>海峡两岸515</name>
-        <play_url>http://ottvideoyd.hifuntv.com/4b3930a52240eb59d801250554e36418/591b74d4/internettv/c1/2017/05/15/7A9611968D633834F9B363E4FA6C3747.ts?uuid=1b55716807c14725acfad647e3486813</play_url>
-    </video>
-    <video>
-        <name>Video_4</name>
-        <play_url>http://yydy.file.alimmdn.com/source/586732FA-05FD-430C-B177-0D3BDDF348F3_V</play_url>
-    </video>
-    <video>
-        <name>CCTV3</name>
+        <name>CCTV3_HD</name>
         <play_url>http://117.59.125.132/__cl/cg:ingest01/__c/cctv3/__op/default/__f/index.m3u8</play_url>
     </video>
     <video>
-        <name>CCTV5</name>
+        <name>CCTV5_HD</name>
         <play_url>http://129.28.160.49/__cl/cg:ingest01/__c/cctv5/__op/default/__f/index.m3u8</play_url>
     </video>
     <video>
-        <name>CCTV6</name>
+        <name>CCTV6_HD</name>
         <play_url>http://129.28.160.49/__cl/cg:ingest01/__c/cctv6/__op/default/__f/index.m3u8</play_url>
     </video>
     <video>
-        <name>CCTV8</name>
+        <name>CCTV8_HD</name>
         <play_url>http://129.28.160.49/__cl/cg:ingest01/__c/cctv8/__op/default/__f/index.m3u8</play_url>
     </video>
     <video>
