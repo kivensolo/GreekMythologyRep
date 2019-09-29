@@ -57,11 +57,26 @@ public class TimeUtils {
         int minutes = totalSeconds / 60 % 60;
         int hours = totalSeconds / 3600;
         if (minutes <= 0 && hours <= 0) {
-            return String.format("00:00:%02d", new Object[]{Integer.valueOf(seconds)});
+            return String.format("00:00:%02d", seconds);
         } else if (minutes > 0 && hours <= 0) {
-            return String.format("00:%02d:%02d", new Object[]{Integer.valueOf(minutes), Integer.valueOf(seconds)});
+            return String.format("00:%02d:%02d", minutes, seconds);
         } else {
-            return String.format("%02d:%02d:%02d", new Object[]{Integer.valueOf(hours), Integer.valueOf(minutes), Integer.valueOf(seconds)});
+            return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+        }
+    }
+
+    public static String formatSeekingPreviewTime(long time) {
+        int totalSeconds = (int) (Math.abs(time) / 1000L);
+        int seconds = totalSeconds % 60;
+        int minutes = totalSeconds / 60 % 60;
+        int hours = totalSeconds / 3600;
+        String prefix = time >= 0 ? "+" : "-";
+        if (minutes <= 0 && hours <= 0) {
+            return String.format("%s 00:%02d", prefix, seconds);
+        } else if (minutes > 0 && hours <= 0) {
+            return String.format("%s %02d:%02d", prefix, minutes, seconds);
+        } else {
+            return String.format("%s %02d:%02d:%02d", prefix, hours, minutes, seconds);
         }
     }
 

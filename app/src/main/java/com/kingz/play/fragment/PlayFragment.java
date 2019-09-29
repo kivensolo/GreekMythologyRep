@@ -43,6 +43,7 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
     private MediaParams mediaParams;
     private BasePlayPop basePlayPop;
     private GestureDetector gestureDetector;
+    private PlayerGestureListener gestureDetectorLsr;
     private static final long ORIENTATION_CHANGE_DELAY_MS = 2000L;
 
     public PlayFragment() {
@@ -58,7 +59,7 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
     }
 
     private void initGestureDetector(){
-        PlayerGestureListener gestureDetectorLsr = new PlayerGestureListener(getContext(),
+        gestureDetectorLsr = new PlayerGestureListener(getContext(),
                 new FragmentGustureCallback());
         gestureDetectorLsr.setVideoWH(1920 ,1080);
         gestureDetector = new GestureDetector(getContext(), gestureDetectorLsr);
@@ -96,6 +97,14 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
 
     public boolean onTouchEvent(MotionEvent event){
         gestureDetector.onTouchEvent(event);
+        if(event.getAction() == MotionEvent.ACTION_UP){
+            if(playerUiSwitcher.isSeekingByGesture()){
+                long durationOffSet = playerUiSwitcher.switchSeekPreviewState();
+                long currentPosition = playPresenter.getCurrentPosition();
+                long postion = currentPosition + durationOffSet;
+                playPresenter.seekTo(postion);
+            }
+        }
         return true;
     }
 
@@ -121,7 +130,7 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
 //                playerUiSwitcher.switchVisibleState();
                 break;
             case R.id.play_pause:
-                TogglePlayState();
+                togglePlayState();
                 break;
             case R.id.play_flow_tips:
                 playPresenter.play();
@@ -169,12 +178,8 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
     /**
      * 切换播放器状态
      */
-    private void TogglePlayState() {
-        if (playerUiSwitcher.isInPlayState()) {
-            playPresenter.pause();
-        } else {
-            playPresenter.play();
-        }
+    private void togglePlayState() {
+        playPresenter.togglePlay();
     }
 
     /**
@@ -333,20 +338,17 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
 
         @Override
         public void onGestureUpdateVideoTime(int duration) {
-//            ZLog.d(TAG,"onGestureUpdateVideoTime duration: " + duration);
-            //TODO 进行快进快退操作
+            playerUiSwitcher.updateSeekTimePreView(duration);
         }
 
         @Override
         public void onGestureSingleClick() {
-            ZLog.d(TAG,"onGesture Single click...");
             playPresenter.onViewClick();
         }
 
         @Override
         public void onGestureDoubleClick() {
-            ZLog.d(TAG,"onGesture double click...");
-            TogglePlayState();
+            togglePlayState();
         }
 
         @Override

@@ -21,6 +21,7 @@ import java.util.concurrent.TimeUnit;
  *  整体水平滑动
  */
 public class PlayerGestureListener extends GestureDetector.SimpleOnGestureListener {
+    public static final String TAG = "PlayerGestureListener";
     private IGestureCallBack listener;
     private int screenWidth, centerW;
     //播放器View的长宽DP
@@ -28,7 +29,7 @@ public class PlayerGestureListener extends GestureDetector.SimpleOnGestureListen
     private ScrollMode scrollMode = ScrollMode.NONE;
     private long timeStamp;
     private int mTouchSlop;
-    //快进的比率，速度越快，值越大
+    //快进的速率，速度越快，值越大.默认为1
     private int scrollRatio = 1;
     //每一dp，快进的时长,ms
     private int preDpVideoDuration = 0;
@@ -41,9 +42,12 @@ public class PlayerGestureListener extends GestureDetector.SimpleOnGestureListen
         this.listener = listener;
         this.screenWidth = ScreenTools.getScreenWidth(context);
         centerW = this.screenWidth / 2;
-        ZLog.d("PlayerGestureListener","screenWidth="+ this.screenWidth);
+        ZLog.d(TAG,"screenWidth="+ this.screenWidth);
         mTouchSlop = ViewTools.getTouchSlop(ViewConfiguration.get(context));
         density = context.getResources().getDisplayMetrics().density;
+
+        dpVideoWidth = 1920 / density;
+        dpVideoHeight = 1080 / density;
     }
 
     /**
@@ -52,12 +56,14 @@ public class PlayerGestureListener extends GestureDetector.SimpleOnGestureListen
      * @param h 高度  像素值
      */
     public void setVideoWH(int w, int h) {
+        ZLog.d(TAG,"setVideoWH w="+w+" ;h="+h);
         //计算出视频的宽高dp值
         dpVideoWidth = w / density;
         dpVideoHeight = h / density;
 
-        //默认基础总共2分钟，代表的意义：从屏幕一边滑动到另一边，总共可以快进2分钟
+        //默认基础总共2分钟(scrollRatio=1的情况下)，代表的意义：从屏幕一边滑动到另一边，总共可以快进2分钟
         preDpVideoDuration = (int) (TimeUnit.MINUTES.toMillis(2) / dpVideoWidth);
+        ZLog.d(TAG,"setVideoWH dpVideoWidth="+dpVideoWidth+" ;dpVideoHeight="+dpVideoHeight);
     }
 
     @Override
@@ -93,7 +99,7 @@ public class PlayerGestureListener extends GestureDetector.SimpleOnGestureListen
         long time = System.currentTimeMillis();
         distanceX = -distanceX;
         distanceY = -distanceY;
-        float dpX = distanceX / density;
+        float dpX = distanceX / density; // 横向滑动的dp值
         float dpY = distanceY / density;
         updateScrollRatio(dpX, time - timeStamp);
         timeStamp = time;

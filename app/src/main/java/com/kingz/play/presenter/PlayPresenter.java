@@ -53,12 +53,23 @@ public class PlayPresenter extends AbsBasePresenter implements IMediaPlayerCallB
         play();
     }
 
+    /**
+     * 切换播放状态
+     */
+    public void togglePlay(){
+        if(mPlayer.isPlaying()){
+            pause();
+        }else{
+            play();
+        }
+    }
+
     public void play() {
         mPlayer.play();
         playerView.showPlayStateView();
     }
 
-    public void pause() {
+    private void pause() {
         mPlayer.pause();
         playerView.showPauseStateView();
     }
@@ -67,7 +78,7 @@ public class PlayPresenter extends AbsBasePresenter implements IMediaPlayerCallB
         mPlayer.release();
     }
 
-    private void seekTo(long progress) {
+    public void seekTo(long progress) {
         if (progress < 0 || progress > mPlayer.getDuration()) {
             return;
         }

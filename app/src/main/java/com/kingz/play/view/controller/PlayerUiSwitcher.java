@@ -25,6 +25,7 @@ public class PlayerUiSwitcher {
     private BottomBarController bottomBarController;
     private LockPanelController lockPanelController;
     private CoverPanelController coverPanelController;
+    private SeekTimePreViewController seekTimePreViewController;
     private View bufferLoadView;
     private static final int SCREEN_LANSCAPE = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
     private static final int SCREEN_UNSPECIFIED = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
@@ -51,6 +52,7 @@ public class PlayerUiSwitcher {
         bottomBarController = new BottomBarController(view);
         lockPanelController = new LockPanelController(view);
         coverPanelController = new CoverPanelController(view);
+        seekTimePreViewController = new SeekTimePreViewController(view);
     }
 
     public void setOnClickListener(View.OnClickListener listener) {
@@ -85,6 +87,15 @@ public class PlayerUiSwitcher {
         repostControllersDismissTask(true);
     }
 
+    /**
+     * 切换seek时间提示view的状态
+     *
+     */
+    public long switchSeekPreviewState(){
+        showControllerBar(!seekTimePreViewController.isShown(), seekTimePreViewController);
+        return seekTimePreViewController.getDurationOffset();
+    }
+
 
     /**
      * 刷新显示 主要用来在转屏的时候刷新显示
@@ -111,6 +122,13 @@ public class PlayerUiSwitcher {
 
     public boolean isLocked() {
         return lockPanelController.isLocked();
+    }
+
+    /**
+     * 是否通过手势在Seeking
+     */
+    public boolean isSeekingByGesture(){
+        return seekTimePreViewController.isShown();
     }
 
     /**
@@ -196,6 +214,17 @@ public class PlayerUiSwitcher {
     public void updatePlayProgressView(boolean isDragging,int postion) {
         bottomBarController.setPosition(isDragging ? postion : _presenter.getCurrentPosition());
         bottomBarController.setDuration(_presenter.getDuration());
+    }
+
+    /**
+     * 更新seek的预览效果
+     * @param duration 松手时需要seek的时长.
+     */
+    public void updateSeekTimePreView(long duration){
+        if(!seekTimePreViewController.isShown()){
+            seekTimePreViewController.show();
+        }
+        seekTimePreViewController.setDuration(duration);
     }
 
     /**
