@@ -10,6 +10,7 @@ import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -66,6 +67,19 @@ public class ScreenTools {
         return outMetrics.heightPixels;
     }
 
+
+    /**
+     * 获取系统所能识别出的被认为是滑动的最小像素距离
+     * 其他数据：
+     *
+     * {@link ViewConfiguration#getDoubleTapTimeout()}
+     * {@link ViewConfiguration#getLongPressTimeout()}
+     * {@link ViewConfiguration#getKeyRepeatTimeout()}
+     */
+    public static int getTouchSlop(ViewConfiguration vc){
+        return vc.getScaledTouchSlop();
+    }
+
     /**
      * 获得状态栏的高度
      *
@@ -87,9 +101,6 @@ public class ScreenTools {
 
     /**
      * 获取当前屏幕截图，包含状态栏
-     *
-     * @param activity
-     * @return
      */
     public static Bitmap snapShotWithStatusBar(Activity activity) {
         View view = activity.getWindow().getDecorView();
@@ -107,9 +118,6 @@ public class ScreenTools {
 
     /**
      * 获取当前屏幕截图，不包含状态栏
-     *
-     * @param activity
-     * @return
      */
     public static Bitmap snapShotWithoutStatusBar(Activity activity) {
         View view = activity.getWindow().getDecorView();
@@ -143,7 +151,6 @@ public class ScreenTools {
 
     /**
      * 设置状态栏透明
-     * @param activity
      */
     public static void setStatusBarTransparent(Activity activity) {
         if (Build.VERSION.SDK_INT >= 21) {
@@ -158,6 +165,7 @@ public class ScreenTools {
             actionBar.hide();
         }
     }
+
 
     /**
      * 获得当前屏幕亮度的模式

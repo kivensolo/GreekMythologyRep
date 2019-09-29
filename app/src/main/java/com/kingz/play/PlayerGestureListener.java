@@ -9,7 +9,6 @@ import com.kingz.play.gesture.IGestureCallBack;
 import com.kingz.utils.VolumeTools;
 import com.kingz.utils.ZLog;
 import com.module.tools.ScreenTools;
-import com.module.tools.ViewTools;
 
 import java.util.concurrent.TimeUnit;
 
@@ -46,7 +45,7 @@ public class PlayerGestureListener extends GestureDetector.SimpleOnGestureListen
         this.screenWidth = ScreenTools.getScreenWidth(context);
         centerW = this.screenWidth / 2;
         ZLog.d(TAG,"screenWidth="+ this.screenWidth);
-        mTouchSlop = ViewTools.getTouchSlop(ViewConfiguration.get(context));
+        mTouchSlop = ScreenTools.getTouchSlop(ViewConfiguration.get(context));
         density = context.getResources().getDisplayMetrics().density;
 
         brightnessValue = ScreenTools.getScreenBrightnessValue(context) / 255f;
