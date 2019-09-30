@@ -33,7 +33,7 @@ public class PlayerGestureListener extends GestureDetector.SimpleOnGestureListen
     private int scrollRatio = 1;
     //每一dp，快进的时长,ms
     private int preDpVideoDuration = 0;
-    private int totalDuration = 0;     //单次快进快退累计值
+    private long totalDuration = 0;     //单次快进快退累计值
     private float brightnessValue = 0; // 亮度值
     private float volumeValue = 0;     // 声音值
     private float density;
@@ -72,6 +72,14 @@ public class PlayerGestureListener extends GestureDetector.SimpleOnGestureListen
         ZLog.d(TAG,"setVideoWH dpVideoWidth="+dpVideoWidth+" ;dpVideoHeight="+dpVideoHeight);
     }
 
+    /**
+     * 自定义设置单次手势快进快退最大时间值,默认为2min
+     * @param maxDuration ms
+     */
+    public void setSeekMaxDuration(int maxDuration){
+        preDpVideoDuration = (int) (maxDuration / dpVideoWidth);
+    }
+
     @Override
     public boolean onDown(MotionEvent e) {
         scrollMode = ScrollMode.NONE;
@@ -106,7 +114,7 @@ public class PlayerGestureListener extends GestureDetector.SimpleOnGestureListen
         distanceY += distanceY;
         float dpX = distanceX / density;    // 横向滑动的dp值
         float dpY = distanceY / density;    // 垂直方向滑动的dp值
-        updateScrollRatio(dpX, time - timeStamp);
+//        updateScrollRatio(dpX, time - timeStamp);
         timeStamp = time;
         float xDiff = e2.getX() - e1.getX();
         float yDiff = e2.getY() - e1.getY();

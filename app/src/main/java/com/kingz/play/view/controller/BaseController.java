@@ -4,10 +4,9 @@ import android.view.View;
 
 
 /**
- * Copyright (c) 2015, 北京视达科科技有限责任公司 All rights reserved.
  * author：KingZ
  * date：2019/7/31
- * description：
+ * description：UI控制器基类
  */
 
 public abstract class BaseController implements Displayable{

@@ -23,7 +23,7 @@ public interface IGestureCallBack {
     /**
      * @param duration :快进快退,大于0快进，小于0快退
      */
-    void onGestureUpdateVideoTime(int duration);
+    void onGestureUpdateVideoTime(long duration);
 
     /**
      * 单击手势，确认是单击的时候调用

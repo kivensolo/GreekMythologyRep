@@ -4,7 +4,6 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.view.MotionEvent;
 
 import com.kingz.customdemo.R;
 import com.kingz.play.MediaParams;
@@ -54,12 +53,6 @@ public class DetailPageActivty extends PlayerActivity {
         }
         fragmentTransaction.show(vodInfoFragment);
         fragmentTransaction.commit();
-    }
-
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent event) {
-        playFragment.onTouchEvent(event);
-        return super.dispatchTouchEvent(event);
     }
 
     @Override

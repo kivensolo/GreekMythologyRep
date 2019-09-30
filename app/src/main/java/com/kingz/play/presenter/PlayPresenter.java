@@ -41,8 +41,9 @@ public class PlayPresenter extends AbsBasePresenter implements IMediaPlayerCallB
     }
 
     private void playTest() {
-        Uri testPlayUri = Uri.parse("http://video.chinanews.com/flv/2019/04/23/400/111773_web.mp4");
-        //Uri testPlayUri = Uri.parse("http://183.222.102.65/cache/hc.yinyuetai.com/uploads/videos/common/C1C6015E95755D79B2A706CC75BB1809.mp4?sc=022fceb4b8b24fb7&br=780&vid=3045490&aid=42545&area=US&vst=4&ich_args2=394-31214602005373_4274ad8eeb58c86e3763a95d241faabd_10307403_9c896228d2cbf1d69f3a518939a83798_6af147aa7f96aa8723f9c43d081fec81");
+        Uri testPlayUri = Uri.parse("http://play.bgp.kanmv.cn/m3u8/2019/05/25/BEga7dB66DD5stKcyu0e/Ip3vj.m3u8");
+        //嫦娥探月
+//        Uri testPlayUri = Uri.parse("http://video.chinanews.com/flv/2019/04/23/400/111773_web.mp4");
 //        Uri testPlayUri = Uri.parse("http://cctvtxyh5c.liveplay.myqcloud.com/wstv/dongfang_2/index.m3u8");
         mPlayer.setPlayURI(testPlayUri);
         if (mPlayer instanceof ExoMediaPlayer) {
@@ -70,6 +71,10 @@ public class PlayPresenter extends AbsBasePresenter implements IMediaPlayerCallB
     public void pause() {
         mPlayer.pause();
         playerView.showPauseStateView();
+    }
+
+    public boolean isPlayeing(){
+        return mPlayer.isPlaying();
     }
 
     private void release() {

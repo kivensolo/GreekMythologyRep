@@ -25,7 +25,7 @@ public class PlayerUiSwitcher {
     private BottomBarController bottomBarController;
     private LockPanelController lockPanelController;
     private CoverPanelController coverPanelController;
-    private SeekTimePreViewController seekTimePreViewController;
+    private GestureViewController gestureViewController;
     private View bufferLoadView;
     private static final int SCREEN_LANSCAPE = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
     private static final int SCREEN_UNSPECIFIED = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
@@ -52,7 +52,7 @@ public class PlayerUiSwitcher {
         bottomBarController = new BottomBarController(view);
         lockPanelController = new LockPanelController(view);
         coverPanelController = new CoverPanelController(view);
-        seekTimePreViewController = new SeekTimePreViewController(view);
+        gestureViewController = new GestureViewController(view);
     }
 
     public void setOnClickListener(View.OnClickListener listener) {
@@ -88,14 +88,15 @@ public class PlayerUiSwitcher {
     }
 
     /**
-     * 切换seek时间提示view的状态
-     *
+     * 获取seeking总时长
      */
-    public long switchSeekPreviewState(){
-        showControllerBar(!seekTimePreViewController.isShown(), seekTimePreViewController);
-        return seekTimePreViewController.getDurationOffset();
+    public long getSeekingDurationByGesture(){
+        return gestureViewController.getDurationOffset();
     }
 
+    public void setGestureViewVisible(boolean display){
+        showControllerBar(display, gestureViewController);
+    }
 
     /**
      * 刷新显示 主要用来在转屏的时候刷新显示
@@ -125,10 +126,17 @@ public class PlayerUiSwitcher {
     }
 
     /**
+     * 手势交互界面是否Visible
+     */
+    public boolean isGestureViewVisible(){
+        return gestureViewController.isShown();
+    }
+
+    /**
      * 是否通过手势在Seeking
      */
     public boolean isSeekingByGesture(){
-        return seekTimePreViewController.isShown();
+        return gestureViewController.isInSeekingControl();
     }
 
     /**
@@ -193,15 +201,8 @@ public class PlayerUiSwitcher {
     public void showPlayingView() {
         Log.d(TAG,"showPlayingView()");
         bufferLoadView.setVisibility(View.GONE);
-        coverPanelController.close();
-        seekTimePreViewController.close();
-        if (!isLocked()) {
-            topBarController.show();
-            bottomBarController.show();
-        } else {
-            topBarController.close();
-            bottomBarController.close();
-        }
+        showControllerBar(false,coverPanelController, gestureViewController);
+        showControllerBar(!isLocked(),topBarController, bottomBarController);
         bottomBarController.setPosition(_presenter.getCurrentPosition());
         bottomBarController.setDuration(_presenter.getDuration());
         lockPanelController.show();
@@ -222,18 +223,41 @@ public class PlayerUiSwitcher {
      * @param duration 松手时需要seek的时长.
      */
     public void updateSeekTimePreView(long duration){
-        if(!seekTimePreViewController.isShown()){
-            seekTimePreViewController.show();
+        if(!gestureViewController.isShown()){
+            gestureViewController.show();
         }
-        seekTimePreViewController.setDuration(duration);
+        gestureViewController.setDuration(duration);
     }
+
+    /**
+     * 更新亮度
+     * @param ratio
+     */
+    public void updateBrightness(float ratio){
+        if(!gestureViewController.isShown()){
+            gestureViewController.show();
+        }
+        gestureViewController.setBrightness(ratio);
+    }
+
+    /**
+     * 更新音量
+     * @param ratio
+     */
+    public void updateVolume(float ratio){
+        if(!gestureViewController.isShown()){
+            gestureViewController.show();
+        }
+        gestureViewController.setVolume(ratio);
+    }
+
 
     /**
      * 显示和关闭 各个状态栏
      */
-    private void showControllerBar(boolean release, Displayable... controller) {
+    private void showControllerBar(boolean display, Displayable... controller) {
         for (Displayable v : controller) {
-            if (release) {
+            if (display) {
                 v.show();
             } else if (v.isShown()) {
                 v.close();

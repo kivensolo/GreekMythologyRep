@@ -59,7 +59,7 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
 
     private void initGestureDetector(){
         gestureDetectorLsr = new PlayerGestureListener(getContext(),
-                new FragmentGustureCallback());
+                new SurfaceGustureCallback());
         gestureDetectorLsr.setVideoWH(1920 ,1080);
         gestureDetector = new GestureDetector(getContext(), gestureDetectorLsr);
     }
@@ -82,7 +82,31 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.player_view_controller_basic_new, container, false);
         playView = rootView.findViewById(R.id.play_view);
-        playView.setOnClickListener(this);
+//        playView.setOnClickListener(this);
+        playView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(!playerUiSwitcher.isLocked()) {
+                    gestureDetector.onTouchEvent(event);
+                }
+                if(event.getAction() == MotionEvent.ACTION_UP){
+                    if(playerUiSwitcher.isGestureViewVisible()){
+                        if(playerUiSwitcher.isSeekingByGesture()){
+                            long durationOffSet = playerUiSwitcher.getSeekingDurationByGesture();
+                            long currentPosition = playPresenter.getCurrentPosition();
+                            long postion = currentPosition + durationOffSet;
+                            playPresenter.seekTo(postion);
+                            playPresenter.play();
+                        }
+                        playerUiSwitcher.setGestureViewVisible(false);
+                    }
+                    if(playerUiSwitcher.isLocked()){
+                        playerUiSwitcher.switchVisibleState();
+                    }
+                }
+                return true;
+            }
+        });
 
         IMediaPlayer mediaPlayer = MediaPlayTool.getInstance().getMediaPlayerCore();
 
@@ -92,19 +116,6 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
         playerUiSwitcher.setOnSeekBarChangeListener(playPresenter.seekBarChangeListener);
         playPresenter.onCreateView();
         return rootView;
-    }
-
-    public boolean onTouchEvent(MotionEvent event){
-        gestureDetector.onTouchEvent(event);
-        if(event.getAction() == MotionEvent.ACTION_UP){
-            if(playerUiSwitcher.isSeekingByGesture()){
-                long durationOffSet = playerUiSwitcher.switchSeekPreviewState();
-                long currentPosition = playPresenter.getCurrentPosition();
-                long postion = currentPosition + durationOffSet;
-                playPresenter.seekTo(postion);
-            }
-        }
-        return true;
     }
 
     @Override
@@ -138,14 +149,14 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
                 //DO Nothing
                 break;
             default:
-                playPresenter.onViewClick();
+                break;
         }
 
         if (basePlayPop != null) {
             basePlayPop.setOnDismissListener(new PopupWindow.OnDismissListener() {
                 @Override
                 public void onDismiss() {
-                    playerUiSwitcher.switchVisibleState();
+                    switchVisibleState();
                 }
             });
         }
@@ -305,28 +316,35 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
         return playerUiSwitcher;
     }
 
-    class FragmentGustureCallback implements IGestureCallBack {
+    class SurfaceGustureCallback implements IGestureCallBack {
+        //seek达到结尾得保护时间 3s
+        private long seekProtectTime = 3 * 1000L;
         @Override
         public void onGestureLeftTB(float ratio) {
 //            ZLog.d(TAG,"onGesture LeftTB ratio=" + ratio);
             ScreenTools.setScreenBrightness(getActivity(),ratio);
+            playerUiSwitcher.updateBrightness(ratio);
         }
 
         @Override
         public void onGestureRightTB(float ratio) {
 //            ZLog.d(TAG,"onGesture RightTB ratio=" + ratio);
             VolumeTools.setStreamMusicVolume(getContext(),ratio);
+            playerUiSwitcher.updateVolume(ratio);
         }
 
         @Override
-        public void onGestureUpdateVideoTime(int duration) {
-            playerUiSwitcher.updateSeekTimePreView(duration);
+        public void onGestureUpdateVideoTime(long duration) {
+            if(playPresenter.isPlayeing()){
+                playPresenter.pause();
+            }
+            long time = limitSeekingTime(duration);
+            playerUiSwitcher.updateSeekTimePreView(time);
         }
 
         @Override
         public void onGestureSingleClick() {
-//            使用单击事件的时候，会触发全部view切换状态的情况  用onclick做兼容则不会
-//            playPresenter.onViewClick();
+            playPresenter.onViewClick();
         }
 
         @Override
@@ -336,5 +354,28 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
 
         @Override
         public void onGestureDown() {}
+
+        /**
+         * 限制seek的有效时长
+         * @param duration 手势拖动得时长
+         * @return 能前后seek得有效时长
+         */
+        private long limitSeekingTime(long duration) {
+            long time;
+            if(duration <= 0){ //快退
+                long currentPosition = playPresenter.getCurrentPosition();
+                if(currentPosition <= Math.abs(duration)){
+                    time = -currentPosition;
+                }else{
+                    time = duration;
+                }
+            }else{ //快进
+                long currentPosition = playPresenter.getCurrentPosition();
+                long totalDuration = playPresenter.getDuration();
+                long left = totalDuration - currentPosition - seekProtectTime;
+                time = Math.min(duration, left);
+            }
+            return time;
+        }
     }
 }

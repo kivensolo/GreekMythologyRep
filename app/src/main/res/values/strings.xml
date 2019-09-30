@@ -102,5 +102,6 @@
     <string name="content_desc_are" translatable="false">影片内容描述区域</string>
     <string name="episode" translatable="false">剧集</string>
     <string name="video_desc" translatable="false">简介</string>
+    <string name="gusture_tip_icon">手势展示图标</string>
 
 </resources>

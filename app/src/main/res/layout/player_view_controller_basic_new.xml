@@ -37,19 +37,31 @@
         android:id="@+id/gesture_seek_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="55dp"
-        android:layout_centerHorizontal="true"
+        android:layout_marginTop="70dp"
+        android:layout_centerInParent="true"
         android:orientation="horizontal"
         android:visibility="invisible"
-        tools:visibility="visible">
+        tools:visibility="visible"
+        tools:ignore="UseCompoundDrawables">
+
+        <ImageView
+            android:id="@+id/gesture_tip_img"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical"
+            android:visibility="gone"
+            tools:visibility="visible"
+            tools:src="@drawable/brightness_icon"
+            android:contentDescription="@string/gusture_tip_icon"/>
+
         <TextView
             android:id="@+id/seek_time_preview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="32sp"
-            android:textColor="@color/darkturquoise"
-            tools:text="- 03:45"
-            android:visibility="invisible"
+            android:textColor="@color/honeydew"
+            android:layout_marginStart="10dp"
+            tools:text="23%"
             tools:visibility="visible"/>
 
     </LinearLayout>
