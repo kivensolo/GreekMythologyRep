@@ -1,7 +1,9 @@
 package com.kingz.four_components.activity.news;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -43,6 +45,7 @@ public class ContentFragment extends Fragment {
         args.putInt(ARG_INDEX, index);
         args.putString(ARG_TITLE,titleName);
         args.putString(ARGS_CONTENT,NewsInfo.newsData.get(titleName));
+        // 传递数据到Fragment中
         fragment.setArguments(args);
         _fragmentsCache.put(index,new WeakReference<>(fragment));
         return fragment;
@@ -61,6 +64,7 @@ public class ContentFragment extends Fragment {
         return arguments.getInt(ARG_INDEX, 0);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
          if (container == null) {

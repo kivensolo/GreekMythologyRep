@@ -14,9 +14,11 @@ import com.base.BaseActivity;
 import com.base.BaseFragment;
 import com.base.IPresenter;
 import com.kingz.customdemo.R;
+import com.kingz.play.VideoInfo;
 import com.kingz.play.presenter.VodInfoPresenter;
 import com.kingz.play.view.IPlayerView;
 import com.kingz.utils.ZLog;
+import com.mplayer.exo_player.DetailPageActivty;
 
 /**
  * author：KingZ
@@ -31,6 +33,7 @@ public class VodInfoFragment extends BaseFragment implements IPlayerView,View.On
     private TextView scoreTv;       //评分
     private TextView descTv;        //评分
     private CheckBox collectChk;    //收藏按钮
+    private VideoInfo videoInfo;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,18 +65,18 @@ public class VodInfoFragment extends BaseFragment implements IPlayerView,View.On
         if(vodInfoPresenter != null){
             vodInfoPresenter.onCreateView();
         }
-        //直接显示假数据页面
         showVideoInfo();
     }
 
     /**
-     * 显示影片信息
+     * 显示影片信息 (假数据)
      */
     public void showVideoInfo(){
+        this.videoInfo = new VideoInfo();
         mScrollView.setVisibility(View.VISIBLE);
-        nameTv.setText("测试影片1测试影片1测试影片1测试影片1测试影片1");
-        scoreTv.setText("9.9");
-        descTv.setText("香港邵氏电影公司(Shaw Brothers)在60年代由何梦华导演拍摄了四部《西游记》系列电影");
+        nameTv.setText(videoInfo.videoName);
+        scoreTv.setText(videoInfo.userScore);
+        descTv.setText(videoInfo.summary);
         syncCollectState();
     }
 
@@ -93,10 +96,17 @@ public class VodInfoFragment extends BaseFragment implements IPlayerView,View.On
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_detail_arrow_more:
-                ZLog.d(TAG,"onClick --- 影片详情UI暂时未实现");
+                if (getActivity() != null) {
+                    //通过Activity来与Fragment交互
+                    ((DetailPageActivty) getActivity()).showOrDismissVideoDetail(true, videoInfo);
+                }
                 break;
             case R.id.episode_more:
                 ZLog.d(TAG,"onClick --- 更多剧集UI暂时未实现");
+                //打开剧集Activity  REQUEST_EPISODE
+//                Intent episodeIntent = new Intent(getContext(), EpisodeActivity.class);
+//                episodeIntent.putExtra("MediaParams", mediaParams);
+//                startActivityForResult(episodeIntent, REQUEST_EPISODE);
                 break;
             case R.id.chk_collect:
                 collect();

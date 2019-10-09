@@ -8,7 +8,9 @@ import android.support.v4.app.FragmentTransaction;
 import com.kingz.customdemo.R;
 import com.kingz.play.MediaParams;
 import com.kingz.play.PlayerActivity;
+import com.kingz.play.VideoInfo;
 import com.kingz.play.fragment.PlayFragment;
+import com.kingz.play.fragment.VodDetailFragment;
 import com.kingz.play.fragment.VodInfoFragment;
 import com.kingz.play.presenter.VodInfoPresenter;
 
@@ -25,7 +27,7 @@ public class DetailPageActivty extends PlayerActivity {
     private VodInfoFragment vodInfoFragment;
     private VodInfoPresenter vodInfoPresenter;
     //影片详情介绍的Fragment
-//    private VodDetailFragment vodDetailFragment;
+    private VodDetailFragment vodDetailFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,13 +70,35 @@ public class DetailPageActivty extends PlayerActivity {
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             //目前是横屏的话
             playFragment.onBackPressed();
-        }
-//        else if (vodDetailFragment != null && vodDetailFragment.isAdded() && vodDetailFragment.isVisible()) {
-//            getSupportFragmentManager().beginTransaction().remove(vodDetailFragment).commit();
-//        }
-        else {
+        } else if (vodDetailFragment != null && vodDetailFragment.isAdded() && vodDetailFragment.isVisible()) {
+            // 隐藏影片详情简介fragment
+            getSupportFragmentManager().beginTransaction().remove(vodDetailFragment).commit();
+        } else {
             super.onBackPressed();
         }
     }
+
+    /**
+     * 展示&收起 详情页
+     * @param isShow    是否显示
+     */
+    public void showOrDismissVideoDetail(boolean isShow,VideoInfo videoInfo) {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        vodDetailFragment = (VodDetailFragment) fm.findFragmentByTag(TAG_VOD_DETAIL);
+        if (vodDetailFragment == null) {
+            vodDetailFragment = VodDetailFragment.newInstance(videoInfo);
+        }
+        if (isShow) {
+            if (!vodDetailFragment.isAdded()) {
+                fragmentTransaction.add(R.id.content_layout, vodDetailFragment, TAG_VOD_DETAIL);
+            }
+            fragmentTransaction.show(vodDetailFragment);
+        } else {
+            fragmentTransaction.remove(vodDetailFragment);
+        }
+        fragmentTransaction.commit();
+    }
+
 
 }
