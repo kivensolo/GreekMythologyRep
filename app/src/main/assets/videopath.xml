@@ -2,6 +2,10 @@
 <videos>
     <!--http://www.hao5.net/-->
     <video>
+        <name>央视新闻频道</name>
+        <play_url>http://tx-pclivemate.hlspull.yximgs.com/5bzamt7j5_I_sd1000tp.m3u8</play_url>
+    </video>
+    <video>
         <name>CCTV1</name>
         <play_url>http://cctvalih5c.v.myalicdn.com/live/cctv1_2/index.m3u8</play_url>
     </video>
@@ -61,4 +65,9 @@
         <name>Video_9</name>
         <play_url>http://yydy.file.alimmdn.com/source/5D4DF42D-9E90-4A71-AE9C-817FD912382B_V</play_url>
     </video>
+    <video>
+        <name>光年之外720P-MV</name>
+        <play_url>http://play.bgp.kanmv.cn/m3u8/2019/05/25/BEga7dB66DD5stKcyu0e/Ip3vj.m3u8</play_url>
+    </video>
+
 </videos>
