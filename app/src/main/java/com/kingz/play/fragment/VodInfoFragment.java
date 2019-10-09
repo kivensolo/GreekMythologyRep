@@ -210,4 +210,9 @@ public class VodInfoFragment extends BaseFragment implements IPlayerView,View.On
     public void dismissPop() {
 
     }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
 }

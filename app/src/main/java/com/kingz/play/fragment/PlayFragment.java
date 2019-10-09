@@ -378,4 +378,9 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
             return time;
         }
     }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
 }
