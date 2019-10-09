@@ -30,7 +30,9 @@ public class DetailPageActivty extends PlayerActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initFragment();
+        if(savedInstanceState == null){
+            initFragment();
+        }
     }
 
     private void initFragment() {

@@ -357,7 +357,7 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
 
         /**
          * 限制seek的有效时长
-         * @param duration 手势拖动得时长
+         * @param duration 手势拖动的时长
          * @return 能前后seek得有效时长
          */
         private long limitSeekingTime(long duration) {
