@@ -8,8 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.kingz.adapter.CommonAdapter;
+import com.kingz.adapter.CommonListAdapter;
 import com.kingz.adapter.CommonViewHolder;
 import com.kingz.customdemo.R;
 import com.kingz.holder.BaseViewHolder;
@@ -24,7 +23,7 @@ import java.util.ArrayList;
  * Data: 2016 2016/2/27
  * Discription:文件管理器的适配器
  */
-public class FileListAdapter extends CommonAdapter<File> {
+public class FileListAdapter extends CommonListAdapter<File> {
 
     private static final String TAG = FileListAdapter.class.getSimpleName();
 

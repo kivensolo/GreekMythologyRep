@@ -5,7 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.kingz.adapter.CommonAdapter;
+import com.kingz.adapter.CommonListAdapter;
 import com.kingz.adapter.CommonViewHolder;
 import com.kingz.customdemo.R;
 import com.provider.ChannelData;
@@ -17,7 +17,7 @@ import java.util.List;
  * date: 2016 2016/3/23 23:52
  * description:
  */
-public class ChanellListAdapter extends CommonAdapter {
+public class ChanellListAdapter extends CommonListAdapter {
 
     public ChanellListAdapter(Context context, List listDatas) {
         super(context, listDatas);

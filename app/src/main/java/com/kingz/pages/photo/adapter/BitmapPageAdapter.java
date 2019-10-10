@@ -4,8 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import com.kingz.adapter.CommonAdapter;
+import com.kingz.adapter.CommonListAdapter;
 import com.kingz.adapter.CommonViewHolder;
 import com.kingz.customdemo.R;
 import com.kingz.holder.BaseViewHolder;
@@ -19,7 +18,7 @@ import java.util.List;
  * date:  2016/8/25 19:15 <br>
  * description: bitmap页面的适配器 <br>
  */
-public class BitmapPageAdapter extends CommonAdapter<PhotosActivity.ItemInfo> {
+public class BitmapPageAdapter extends CommonListAdapter<PhotosActivity.ItemInfo> {
 
     public BitmapPageAdapter(Context contex, List<PhotosActivity.ItemInfo> mDatas) {
         super(contex, mDatas);

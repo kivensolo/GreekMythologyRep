@@ -1,5 +1,6 @@
 package com.kingz.adapter;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
@@ -14,15 +15,17 @@ import java.util.List;
 /**
  * author：KingZ
  * date：2019/10/10
- * description：公共RecyclerView的适配器
+ * description：通用 RecyclerView 的适配器
  */
 public abstract class CommonRecyclerAdapter<T> extends Adapter<CommonRecyclerAdapter.ViewHolder> {
     protected List<T> mData;
+    protected Context context;
 
-    public CommonRecyclerAdapter(List<T> datas) {
+    public CommonRecyclerAdapter(Context context, List<T> datas) {
         if(datas == null){
             throw new IllegalArgumentException("Adapter Data must not be null");
         }
+        this.context = context;
         this.mData = datas;
     }
 
@@ -106,13 +109,13 @@ public abstract class CommonRecyclerAdapter<T> extends Adapter<CommonRecyclerAda
             super(itemView);
         }
 
-        public <K extends View> K getView(int id) {
+        public <T extends View> T getView(int id) {
             View view = this.holder.get(id);
             if(view == null) {
                 view = this.itemView.findViewById(id);
                 this.holder.put(id, view);
             }
-            return (K) view;
+            return (T) view;
         }
 
         public void setOnClickListener(View.OnClickListener listener) {

@@ -1,11 +1,12 @@
 package com.kingz.adapter;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import android.widget.Toast;
 import com.App;
 import com.kingz.customdemo.R;
 import com.kingz.net.OkHttpClientManager;
@@ -18,42 +19,28 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Copyright(C) 2016, 北京视达科科技有限公司
- * All rights reserved.
  * author: King.Z
  * date:  2016/8/7 22:41
- * description:
- *   RecycleView的数据适配器
+ * description:  芒果海报数据Adapter
  */
-public class DemoRecyclerAdapter extends CommonRecyclerAdapter<MgPosterBean> {
+public class MgPosterAdapter extends CommonRecyclerAdapter<MgPosterBean> {
 
-    private static final String TAG="DemoRecyclerAdapter";
+    private static final String TAG = "MgPosterAdapter";
     private static final int TYPE_DEFAULT = 1; // 默认海报
     //瀑布流模拟高度数据
     private List<Integer> mHeights;
-    private OnItemClickLitener mOnItemClickLitener;
 
-    @Deprecated
-    public interface OnItemClickLitener {
-        void onItemClick(View view, int position);
-        void onItemLongClick(View view, int position);
-    }
-
-    public void setOnItemClickLitener(OnItemClickLitener mOnItemClickLitener) {
-        this.mOnItemClickLitener = mOnItemClickLitener;
-    }
-
-    public DemoRecyclerAdapter(){
-        super(new ArrayList<MgPosterBean>());
+    public MgPosterAdapter(Context context) {
+        super(context, new ArrayList<MgPosterBean>());
         mHeights = new ArrayList<>();
     }
 
-    public DemoRecyclerAdapter(ArrayList<MgPosterBean> dataModels){
-        super(dataModels);
+    public MgPosterAdapter(Context context, ArrayList<MgPosterBean> dataModels) {
+        super(context, dataModels);
         mHeights = new ArrayList<>();
     }
 
-    public void attachData(ArrayList<MgPosterBean> dataModels){
+    public void attachData(ArrayList<MgPosterBean> dataModels) {
         mData.addAll(dataModels);
     }
 
@@ -64,7 +51,7 @@ public class DemoRecyclerAdapter extends CommonRecyclerAdapter<MgPosterBean> {
 
     @Override
     public int getItemViewType(int position) {
-        if(position == 5){
+        if (position == 5) {
             return TYPE_DEFAULT;
         }
         return super.getItemViewType(position);
@@ -73,10 +60,11 @@ public class DemoRecyclerAdapter extends CommonRecyclerAdapter<MgPosterBean> {
     /**
      * viewHolder持有view的信息，用作缓存
      */
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         ViewHolder viewHolder = super.onCreateViewHolder(parent, viewType);
-        if(viewType == TYPE_DEFAULT){
+        if (viewType == TYPE_DEFAULT) {
             ImageView img = viewHolder.itemView.findViewById(R.id.recom_poster);
             img.setBackground(App.getAppInstance().getAppContext().getResources().getDrawable(R.drawable.bg1));
         }
@@ -88,7 +76,7 @@ public class DemoRecyclerAdapter extends CommonRecyclerAdapter<MgPosterBean> {
      */
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
-        ZLog.i(TAG,"onBindViewHolder() holder="+holder+"---position:"+position);
+        ZLog.i(TAG, "onBindViewHolder() holder=" + holder + "---position:" + position);
 
         // 随机高度, 模拟瀑布效果.
 //        if (mHeights.size() <= position) {
@@ -99,33 +87,35 @@ public class DemoRecyclerAdapter extends CommonRecyclerAdapter<MgPosterBean> {
 //        lp.height = mHeights.get(position);
 //        holder.getTvLabel().setLayoutParams(lp);
 
-            MgPosterBean data = mData.get(position);
-            TextView tvLabel = holder.getView(R.id.item_text);
-            tvLabel.setText(data.getTitle());
-            TextView dateTime = holder.getView(R.id.item_date);
-            dateTime.setText(data.getUpdateInfo());
-            ImageView posterView = holder.getView(R.id.recom_poster);
-            //TODO 获取缓存
-            OkHttpClientManager.displayImage(posterView,data.getImg());
+        MgPosterBean data = mData.get(position);
+        TextView tvLabel = holder.getView(R.id.item_text);
+        tvLabel.setText(data.getTitle());
+        TextView dateTime = holder.getView(R.id.item_date);
+        dateTime.setText(data.getUpdateInfo());
+        ImageView posterView = holder.getView(R.id.recom_poster);
+        //TODO 获取缓存
+        OkHttpClientManager.displayImage(posterView, data.getImg());
+        setHolderListeners(holder);
+    }
 
-//        if (mOnItemClickLitener != null) {
-//            holder.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    int pos = holder.getLayoutPosition();
-//                    mOnItemClickLitener.onItemClick(holder.itemView, pos);
-//                }
-//            });
-//
-//            holder.setOnLongClickListener(new View.OnLongClickListener() {
-//                @Override
-//                public boolean onLongClick(View v) {
-//                    int pos = holder.getLayoutPosition();
-//                    mOnItemClickLitener.onItemLongClick(holder.itemView, pos);
-//                    return false;
-//                }
-//            });
-//        }
+    private void setHolderListeners(@NonNull final ViewHolder holder) {
+        holder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int pos = holder.getLayoutPosition();
+                Toast.makeText(context, pos + " click", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        holder.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                int pos = holder.getLayoutPosition();
+                Toast.makeText(context, pos + " delete", Toast.LENGTH_SHORT).show();
+                removeData(pos);
+                return true;
+            }
+        });
     }
 
     public void addData(int position) {

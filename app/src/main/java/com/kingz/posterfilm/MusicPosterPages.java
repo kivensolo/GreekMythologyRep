@@ -8,14 +8,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
-import android.widget.Toast;
-
 import com.base.BaseActivity;
-import com.kingz.adapter.DemoRecyclerAdapter;
+import com.kingz.adapter.MgPosterAdapter;
 import com.kingz.customdemo.R;
 import com.kingz.mode.RecycleDataInfo;
 import com.kingz.net.OkHttpClientManager;
@@ -24,32 +21,31 @@ import com.kingz.net.retrofit.RetrofitServiceManager;
 import com.kingz.pages.photo.filmlist.MyItemDecoration;
 import com.kingz.posterfilm.data.MgResponseBean;
 import com.kingz.utils.ZLog;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
+import okhttp3.Request;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
-import okhttp3.Request;
-
 /**
  * author: King.Z
  * date:  2016/11/13 22:23
  * description:recyclerview 的Demo展示页面
- * LayoutManager : 管理RecyclerView的结构，控制其布局显示的方式。
- * Adapter : 处理每个Item的显示.
- * ItemDecoration : 添加每个Item的装饰，控制Item间的间隔.
- * ItemAnimator :  负责添加\移除\重排序时的动画效果，控制Item增删的动画.
+ *      LayoutManager : 管理RecyclerView的结构，控制其布局显示的方式。
+ *      Adapter : 处理每个Item的显示.
+ *      ItemDecoration : 添加每个Item的装饰，控制Item间的间隔.
+ *      ItemAnimator :  负责添加\移除\重排序时的动画效果，控制Item增删的动画.
  * <p>
- * LayoutManager\Adapter是必须, ItemDecoration\ItemAnimator是可选.
+ *      LayoutManager\Adapter是必须, ItemDecoration\ItemAnimator是可选.
  */
 public class MusicPosterPages extends BaseActivity {
 
-    public static final String TAG = "MusicPosterPages";
+    public static final String TAG = MusicPosterPages.class.getSimpleName();
     private RecyclerView view;
-    private DemoRecyclerAdapter mAdapter;
+    private MgPosterAdapter mAdapter;
     private final String url = "http://pianku.api.mgtv.com/rider/tag-data?ticket=&device_id=173365c356c6f97b69bca90a60009d6f4b8f7c97&tagId=222&net_id=&type=3&version=5.9.501.200.3.MGTV_TVAPP.0.0_Debug&uuid=mgtvmac020000445566&platform=ott&mac_id=02-00-00-44-55-66&license=ZgOOgo5MjkyOTA4FqqoghzuqhyA7IL8NBZkgDZk7lQ0GlSAGBgYNeyC%2FtJl8vwU7DQUFjkyOTI5MZgOOgg%3D%3D&_support=00100101011&pc=200&buss_id=1000014&pn=1";
 
 
@@ -127,7 +123,7 @@ public class MusicPosterPages extends BaseActivity {
         setRecyclerAdapter();
         setItemDecoration();
         setItemAnimator();
-        setListeners();
+        setScrollListeners();
     }
 
     private void setRecyclerLayoutManager() {
@@ -135,12 +131,11 @@ public class MusicPosterPages extends BaseActivity {
     }
 
     private void setRecyclerAdapter() {
-        mAdapter = new DemoRecyclerAdapter();
-        mAdapter.setOnItemClickLitener(new OnRecycleViewItemClickLitener());
+        mAdapter = new MgPosterAdapter(getBaseContext());
         view.setAdapter(mAdapter);
     }
 
-    private void setListeners() {
+    private void setScrollListeners() {
         RecyclerView.OnScrollListener scrollListener = new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -172,6 +167,9 @@ public class MusicPosterPages extends BaseActivity {
         view.setAnimation(deleteAnimation);
     }
 
+
+
+
     /**
      * Create fake data.
      *
@@ -202,20 +200,5 @@ public class MusicPosterPages extends BaseActivity {
         calendar.setTime(date);
         calendar.add(Calendar.DAY_OF_YEAR, i);
         return calendar.getTime();
-    }
-
-    public class OnRecycleViewItemClickLitener implements DemoRecyclerAdapter.OnItemClickLitener {
-        @Override
-        public void onItemClick(View view, int position) {
-            Toast.makeText(MusicPosterPages.this, position + " click",
-                    Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        public void onItemLongClick(View view, int position) {
-            Toast.makeText(MusicPosterPages.this, position + "long click",
-                    Toast.LENGTH_SHORT).show();
-            mAdapter.removeData(position);
-        }
     }
 }

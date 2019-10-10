@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-
 import com.kingz.holder.BaseViewHolder;
 
 import java.util.Arrays;
@@ -14,15 +13,15 @@ import java.util.List;
 /**
  * Created by KingZ.
  * Data: 2016 2016/8/18
- * Discription:公共List适配器
+ * Discription: 通用 List 适配器
  */
-public abstract class CommonAdapter<T> extends BaseAdapter{
+public abstract class CommonListAdapter<T> extends BaseAdapter{
     protected BaseViewHolder commonViewHolder;
     protected LayoutInflater mInflater;
     protected Context mContex;
     protected List<T> mData;
 
-    public CommonAdapter(Context contex,List<T> datas) {
+    public CommonListAdapter(Context contex, List<T> datas) {
         this.mContex = contex;
         mInflater = LayoutInflater.from(mContex);
         this.mData = datas;
@@ -54,7 +53,7 @@ public abstract class CommonAdapter<T> extends BaseAdapter{
 
     protected abstract void fillData(CommonViewHolder holder, int position);
 
-	public CommonAdapter<T> addItem(T obj, int index){
+	public CommonListAdapter<T> addItem(T obj, int index){
 	    this.mData.add(index,obj);
 	    return this;
     }
