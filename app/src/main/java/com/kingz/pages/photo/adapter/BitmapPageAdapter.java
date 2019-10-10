@@ -8,7 +8,7 @@ import android.widget.TextView;
 import com.kingz.adapter.CommonAdapter;
 import com.kingz.adapter.CommonViewHolder;
 import com.kingz.customdemo.R;
-import com.kingz.holder.BaseViewHodler;
+import com.kingz.holder.BaseViewHolder;
 import com.kingz.pages.photo.PhotosActivity;
 
 import java.util.List;
@@ -27,7 +27,7 @@ public class BitmapPageAdapter extends CommonAdapter<PhotosActivity.ItemInfo> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        commonViewHolder = BaseViewHodler.getHolder(mContex,convertView,parent, R.layout.simplelist_every_item,position);
+        commonViewHolder = BaseViewHolder.getHolder(mContex,convertView,parent, R.layout.simplelist_every_item,position);
         TextView nameItem = (TextView) commonViewHolder.getView(R.id.list_item);
         PhotosActivity.ItemInfo itemInfo = mData.get(position);
         String text = itemInfo != null ? itemInfo.getName() : "";

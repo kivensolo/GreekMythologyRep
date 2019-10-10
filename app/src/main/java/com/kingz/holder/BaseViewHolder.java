@@ -12,25 +12,25 @@ import android.view.ViewGroup;
  * description:
  *  通用ViewHolder
  */
-public class BaseViewHodler {
+public class BaseViewHolder {
 
     private Context mContext;
     private SparseArray<View> viewsMap;
     private View mConvertView;
     private int mPosition;
 
-    public static BaseViewHodler getHolder(Context mContext, View convertView,
+    public static BaseViewHolder getHolder(Context mContext, View convertView,
                                            ViewGroup parent, int layoutId, int postion) {
         if (convertView == null) {
-            return new BaseViewHodler(mContext, parent, layoutId, postion);
+            return new BaseViewHolder(mContext, parent, layoutId, postion);
         } else {
-            BaseViewHodler holder = (BaseViewHodler) convertView.getTag();
+            BaseViewHolder holder = (BaseViewHolder) convertView.getTag();
             holder.mPosition = postion;
             return holder;
         }
     }
 
-    private BaseViewHodler(Context mContext, ViewGroup parent, int layoutId, int postion) {
+    private BaseViewHolder(Context mContext, ViewGroup parent, int layoutId, int postion) {
         viewsMap = new SparseArray<>();
         this.mContext = mContext;
         mPosition = postion;

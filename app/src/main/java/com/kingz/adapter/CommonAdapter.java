@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import com.kingz.holder.BaseViewHodler;
+import com.kingz.holder.BaseViewHolder;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.List;
  * Discription:万能适配器
  */
 public abstract class CommonAdapter<T> extends BaseAdapter{
-    protected BaseViewHodler commonViewHolder;
+    protected BaseViewHolder commonViewHolder;
     protected LayoutInflater mInflater;
     protected Context mContex;
     protected List<T> mData;
@@ -50,7 +50,7 @@ public abstract class CommonAdapter<T> extends BaseAdapter{
     public abstract View getView(int position, View convertView, ViewGroup parent);
 
     //如果有统一的ItemView样式
-    //则可以把commonViewHolder = BaseViewHodler.getHolder(mContex,convertView,parent,R.layout.filemanager_list_item,position);写到getView里面
+    //则可以把commonViewHolder = BaseViewHolder.getHolder(mContex,convertView,parent,R.layout.filemanager_list_item,position);写到getView里面
 
     protected abstract void fillData(CommonViewHolder holder, int position);
 

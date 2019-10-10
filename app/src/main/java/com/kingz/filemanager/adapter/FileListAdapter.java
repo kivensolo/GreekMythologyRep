@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.kingz.adapter.CommonAdapter;
 import com.kingz.adapter.CommonViewHolder;
 import com.kingz.customdemo.R;
-import com.kingz.holder.BaseViewHodler;
+import com.kingz.holder.BaseViewHolder;
 
 import java.io.File;
 import java.text.DecimalFormat;
@@ -47,7 +47,7 @@ public class FileListAdapter extends CommonAdapter<File> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        commonViewHolder = BaseViewHodler.getHolder(mContex,convertView,parent,R.layout.filemanager_list_item,position);
+        commonViewHolder = BaseViewHolder.getHolder(mContex,convertView,parent,R.layout.filemanager_list_item,position);
         nameView = commonViewHolder.getView(R.id.file_name);
         sizeView = commonViewHolder.getView(R.id.file_size);
         typeView = commonViewHolder.getView(R.id.file_type);

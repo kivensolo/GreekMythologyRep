@@ -8,7 +8,7 @@ import android.widget.TextView;
 import com.kingz.adapter.CommonAdapter;
 import com.kingz.adapter.CommonViewHolder;
 import com.kingz.customdemo.R;
-import com.kingz.holder.BaseViewHodler;
+import com.kingz.holder.BaseViewHolder;
 
 import java.util.List;
 
@@ -25,7 +25,7 @@ public class PropertyAdapter extends CommonAdapter<String> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        commonViewHolder = BaseViewHodler.getHolder(mContex,convertView,parent, R.layout.simplelist_every_item,position);
+        commonViewHolder = BaseViewHolder.getHolder(mContex,convertView,parent, R.layout.simplelist_every_item,position);
         nameItem = (TextView) commonViewHolder.getView(R.id.list_item);
         Object o = mData.get(position);
         String text = (String) o;
