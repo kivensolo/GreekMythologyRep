@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.kingz.adapter.CommonListAdapter;
-import com.kingz.adapter.CommonViewHolder;
 import com.kingz.customdemo.R;
 import com.provider.ChannelData;
 
