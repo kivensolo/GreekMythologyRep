@@ -1,26 +1,21 @@
 package com.kingz.adapter;
 
 import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.App;
 import com.kingz.customdemo.R;
-import com.kingz.mode.RecycleDataInfo;
 import com.kingz.net.OkHttpClientManager;
-import com.kingz.pages.photo.filmlist.MgPosterViewHolder;
 import com.kingz.posterfilm.data.MgPosterBean;
 import com.kingz.utils.ZLog;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Copyright(C) 2016, 北京视达科科技有限公司
@@ -30,16 +25,15 @@ import java.util.Locale;
  * description:
  *   RecycleView的数据适配器
  */
-public class DemoRecyclerAdapter extends RecyclerView.Adapter<MgPosterViewHolder> {
+public class DemoRecyclerAdapter extends CommonRecyclerAdapter<MgPosterBean> {
 
     private static final String TAG="DemoRecyclerAdapter";
-    public final int testViewTypeCode = 10086;
-//    RecycleDataInfo
-    private ArrayList mCacheData;
+    private static final int TYPE_DEFAULT = 1; // 默认海报
     //瀑布流模拟高度数据
     private List<Integer> mHeights;
     private OnItemClickLitener mOnItemClickLitener;
 
+    @Deprecated
     public interface OnItemClickLitener {
         void onItemClick(View view, int position);
         void onItemLongClick(View view, int position);
@@ -50,26 +44,28 @@ public class DemoRecyclerAdapter extends RecyclerView.Adapter<MgPosterViewHolder
     }
 
     public DemoRecyclerAdapter(){
-        mCacheData = new ArrayList();
+        super(new ArrayList<MgPosterBean>());
         mHeights = new ArrayList<>();
     }
 
-    public DemoRecyclerAdapter(ArrayList dataModels){
-        if(dataModels == null){
-            throw new IllegalArgumentException("DataModel must not be null");
-        }
-        mCacheData = dataModels;
+    public DemoRecyclerAdapter(ArrayList<MgPosterBean> dataModels){
+        super(dataModels);
         mHeights = new ArrayList<>();
     }
 
-    public void attachData(ArrayList dataModels){
-        mCacheData.addAll(dataModels);
+    public void attachData(ArrayList<MgPosterBean> dataModels){
+        mData.addAll(dataModels);
+    }
+
+    @Override
+    protected int getItemLayout(int type) {
+        return R.layout.photoitem_recycler_view;
     }
 
     @Override
     public int getItemViewType(int position) {
         if(position == 5){
-            return testViewTypeCode;
+            return TYPE_DEFAULT;
         }
         return super.getItemViewType(position);
     }
@@ -78,21 +74,20 @@ public class DemoRecyclerAdapter extends RecyclerView.Adapter<MgPosterViewHolder
      * viewHolder持有view的信息，用作缓存
      */
     @Override
-    public MgPosterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        //创建item的view
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.photoitem_recycler_view, parent, false);
-        if(viewType == testViewTypeCode){
-            ImageView img = (ImageView) itemView.findViewById(R.id.recom_poster);
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        ViewHolder viewHolder = super.onCreateViewHolder(parent, viewType);
+        if(viewType == TYPE_DEFAULT){
+            ImageView img = viewHolder.itemView.findViewById(R.id.recom_poster);
             img.setBackground(App.getAppInstance().getAppContext().getResources().getDrawable(R.drawable.bg1));
         }
-        return new MgPosterViewHolder(itemView);
+        return viewHolder;
     }
 
     /**
      * 绑定每一项数据
      */
     @Override
-    public void onBindViewHolder(@NonNull final MgPosterViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         ZLog.i(TAG,"onBindViewHolder() holder="+holder+"---position:"+position);
 
         // 随机高度, 模拟瀑布效果.
@@ -104,24 +99,17 @@ public class DemoRecyclerAdapter extends RecyclerView.Adapter<MgPosterViewHolder
 //        lp.height = mHeights.get(position);
 //        holder.getTvLabel().setLayoutParams(lp);
 
-        Object obj = mCacheData.get(position);
-        if(obj instanceof RecycleDataInfo){
-            RecycleDataInfo dataModel = (RecycleDataInfo)obj;
-            holder.getTvLabel()
-                    .setText(dataModel.getLabel());
-            holder.getTvDateTime()
-                    .setText(new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
-                            .format(dataModel.getDateTime()));
-        }else if(obj instanceof MgPosterBean){
-            MgPosterBean data = (MgPosterBean)obj;
-            holder.getTvLabel().setText(data.getTitle());
-            holder.getTvDateTime().setText(data.getUpdateInfo());
+            MgPosterBean data = mData.get(position);
+            TextView tvLabel = holder.getView(R.id.item_text);
+            tvLabel.setText(data.getTitle());
+            TextView dateTime = holder.getView(R.id.item_date);
+            dateTime.setText(data.getUpdateInfo());
+            ImageView posterView = holder.getView(R.id.recom_poster);
             //TODO 获取缓存
-            OkHttpClientManager.displayImage(holder.getmPosterView(),data.getImg());
-        }
+            OkHttpClientManager.displayImage(posterView,data.getImg());
 
 //        if (mOnItemClickLitener != null) {
-//            holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            holder.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onClick(View v) {
 //                    int pos = holder.getLayoutPosition();
@@ -129,7 +117,7 @@ public class DemoRecyclerAdapter extends RecyclerView.Adapter<MgPosterViewHolder
 //                }
 //            });
 //
-//            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+//            holder.setOnLongClickListener(new View.OnLongClickListener() {
 //                @Override
 //                public boolean onLongClick(View v) {
 //                    int pos = holder.getLayoutPosition();
@@ -140,23 +128,17 @@ public class DemoRecyclerAdapter extends RecyclerView.Adapter<MgPosterViewHolder
 //        }
     }
 
-    @Override
-    public int getItemCount() {
-        return mCacheData.size();
-    }
-
     public void addData(int position) {
-        RecycleDataInfo model = new RecycleDataInfo();
-        model.setDateTime(getBeforeDay(new Date(), position));
-        model.setLabel("New Item");
-
-        mCacheData.add(position, model);
+        MgPosterBean data = new MgPosterBean();
+        data.setTitle("测试数据" + position);
+        data.setUpdateInfo("即将更新");
+        mData.add(position, data);
         //应该会触发重新布局  部分view应该是dirty view
         notifyItemInserted(position);
     }
 
     public void removeData(int position) {
-        mCacheData.remove(position);
+        mData.remove(position);
         notifyItemRemoved(position);
     }
 

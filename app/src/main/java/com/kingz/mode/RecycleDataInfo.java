@@ -3,8 +3,6 @@ package com.kingz.mode;
 import java.util.Date;
 
 /**
- * Copyright(C) 2015, 北京视达科科技有限公司
- * All rights reserved.
  * author: King.Z
  * date:  2016/8/7 22:48
  * description: Bean数据

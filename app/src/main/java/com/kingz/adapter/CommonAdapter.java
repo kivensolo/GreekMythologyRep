@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Created by KingZ.
  * Data: 2016 2016/8/18
- * Discription:万能适配器
+ * Discription:公共List适配器
  */
 public abstract class CommonAdapter<T> extends BaseAdapter{
     protected BaseViewHolder commonViewHolder;

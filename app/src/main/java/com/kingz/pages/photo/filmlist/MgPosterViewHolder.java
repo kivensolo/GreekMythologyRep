@@ -12,6 +12,7 @@ import com.kingz.customdemo.R;
  * date:  2016/8/7 22:44
  * description:
  */
+@Deprecated
 public class MgPosterViewHolder extends RecyclerView.ViewHolder{
     private ImageView mPosterView;
     private TextView mTvLabel;
