@@ -26,7 +26,7 @@ public class PropertyAdapter extends CommonAdapter<String> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         commonViewHolder = BaseViewHolder.getHolder(mContex,convertView,parent, R.layout.simplelist_every_item,position);
-        nameItem = (TextView) commonViewHolder.getView(R.id.list_item);
+        nameItem = commonViewHolder.getView(R.id.list_item);
         Object o = mData.get(position);
         String text = (String) o;
         nameItem.setText(text);

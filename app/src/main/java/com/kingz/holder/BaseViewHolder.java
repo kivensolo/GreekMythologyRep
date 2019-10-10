@@ -9,13 +9,12 @@ import android.view.ViewGroup;
 /**
  * author: King.Z <br>
  * date:  2016/8/18 20:16 <br>
- * description:
- *  通用ViewHolder
+ * description: 通用ViewHolder
  */
 public class BaseViewHolder {
 
     private Context mContext;
-    private SparseArray<View> viewsMap;
+    private SparseArray<View> viewsArray;
     private View mConvertView;
     private int mPosition;
 
@@ -31,7 +30,7 @@ public class BaseViewHolder {
     }
 
     private BaseViewHolder(Context mContext, ViewGroup parent, int layoutId, int postion) {
-        viewsMap = new SparseArray<>();
+        viewsArray = new SparseArray<>();
         this.mContext = mContext;
         mPosition = postion;
         mConvertView = LayoutInflater.from(mContext).inflate(layoutId,parent,false);
@@ -42,12 +41,12 @@ public class BaseViewHolder {
         return mConvertView;
     }
 
-    public View getView(int viewId){
-        View view = viewsMap.get(viewId);//从缓存的Map中查
+    public <T extends View> T getView(int viewId){
+        View view = viewsArray.get(viewId);//从缓存的Map中查
         if(null == view){
             view = mConvertView.findViewById(viewId);
-            viewsMap.put(viewId,view);
+            viewsArray.put(viewId,view);
         }
-        return view;
+        return (T) view;
     }
 }
