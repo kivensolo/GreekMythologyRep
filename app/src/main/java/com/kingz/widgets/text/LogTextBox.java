@@ -7,18 +7,15 @@ import android.text.Editable;
 import android.text.method.MovementMethod;
 import android.text.method.ScrollingMovementMethod;
 import android.util.AttributeSet;
-import android.widget.TextView;
 import com.module.tools.ViewTools;
 
 /**
- * Copyright(C) 2016, 北京视达科科技有限公司
- * All rights reserved. <br>
  * author: King.Z <br>
  * date:  2017/1/25 15:21 <br>
  * description: 一个可编辑并且带默认滚动条的文本控件 <br>
  */
 
-public class LogTextBox extends TextView {
+public class LogTextBox extends android.support.v7.widget.AppCompatTextView {
     private boolean borderFlag = false;
     private Paint  borderPaint = new Paint();
     public LogTextBox(Context context) {

@@ -9,8 +9,6 @@ import android.widget.Scroller;
 import com.App;
 
 /**
- * Copyright(C) 2016, 北京视达科科技有限公司
- * All rights reserved. <br>
  * author: King.Z <br>
  * date:  2016/6/26 23:53 <br>
  * description: 一个测试滑动类 <br>

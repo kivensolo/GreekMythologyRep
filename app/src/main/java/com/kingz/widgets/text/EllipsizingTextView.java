@@ -7,7 +7,6 @@ import android.text.Layout.Alignment;
 import android.text.StaticLayout;
 import android.text.TextUtils.TruncateAt;
 import android.util.AttributeSet;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +15,7 @@ import java.util.List;
  * 解决部分设备maxLines和ellipsize同时使用任然无效的问题。
  * 详见：http://stackoverflow.com/questions/2160619/android-ellipsize-multiline-textview
  */
-public class EllipsizingTextView extends TextView {
+public class EllipsizingTextView extends android.support.v7.widget.AppCompatTextView {
     private static final String ELLIPSIS = "...";
 
     public interface EllipsizeListener {
