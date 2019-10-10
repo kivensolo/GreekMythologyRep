@@ -239,7 +239,7 @@
         <!--ColorMatrix-->
         <activity
             android:name="com.kingz.pages.photo.colormatrix.ColorMatrixDemo"
-            android:theme="@android:style/Theme.Material.NoActionBar"
+            android:theme="@style/NoTitleBarTheme"
             tools:targetApi="lollipop"/>
 
         <!--文件管理页面-->

@@ -1,6 +1,5 @@
 package com.kingz.pages.photo;
 
-import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -9,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import com.base.BaseActivity;
 import com.kingz.customdemo.R;
 import com.kingz.pages.photo.adapter.BitmapPageAdapter;
@@ -16,14 +16,11 @@ import com.kingz.pages.photo.adapter.BitmapPageAdapter;
 import java.util.List;
 
 /**
- * Copyright(C) 2016, 北京视达科科技有限公司
- * All rights reserved. <br>
  * author: King.Z <br>
  * date:  2016/9/2 17:21 <br>
- * description: PhotosActivity <br>
+ * description: 图片展示基类页面 <br>
  */
-@SuppressLint("Registered")
-public class PhotosActivity extends BaseActivity implements AdapterView.OnItemClickListener {
+public abstract class PhotosActivity extends BaseActivity implements AdapterView.OnItemClickListener {
 
     protected BitmapPageAdapter bitmapAdapter;
     protected ListView mListView;
@@ -32,8 +29,7 @@ public class PhotosActivity extends BaseActivity implements AdapterView.OnItemCl
     protected Bitmap waterMark;
     protected int backgroundId;
     protected ImageView img1;
-    //TODO  优化
-    List<BitmapPhotosActivity.ItemInfo> datas;
+    List<ItemInfo> datas;
 
 
     @Override
@@ -78,6 +74,19 @@ public class PhotosActivity extends BaseActivity implements AdapterView.OnItemCl
         if(datas != null){
             datas.clear();
             datas = null;
+        }
+    }
+
+    public class ItemInfo {
+        private String name = "";
+        public Bitmap dstBitmap;
+
+        public ItemInfo(String name, Bitmap dstBitmap) {
+            this.name = name;
+            this.dstBitmap = dstBitmap;
+        }
+        public String getName(){
+            return name;
         }
     }
 }

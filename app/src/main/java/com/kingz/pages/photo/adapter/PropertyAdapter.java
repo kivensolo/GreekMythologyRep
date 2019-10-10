@@ -9,28 +9,26 @@ import com.kingz.adapter.CommonAdapter;
 import com.kingz.adapter.CommonViewHolder;
 import com.kingz.customdemo.R;
 import com.kingz.holder.BaseViewHodler;
-import com.kingz.pages.photo.PhotosActivity;
 
 import java.util.List;
 
 /**
- * All rights reserved. <br>
- * author: King.Z <br>
- * date:  2016/8/25 19:15 <br>
- * description: bitmap页面的适配器 <br>
+ * author：KingZ
+ * date：2019/10/10
+ * description：
  */
-public class BitmapPageAdapter extends CommonAdapter<PhotosActivity.ItemInfo> {
-
-    public BitmapPageAdapter(Context contex, List<PhotosActivity.ItemInfo> mDatas) {
-        super(contex, mDatas);
+public class PropertyAdapter extends CommonAdapter<String> {
+    private TextView nameItem;
+    public PropertyAdapter(Context contex, List<String> datas) {
+        super(contex, datas);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         commonViewHolder = BaseViewHodler.getHolder(mContex,convertView,parent, R.layout.simplelist_every_item,position);
-        TextView nameItem = (TextView) commonViewHolder.getView(R.id.list_item);
-        PhotosActivity.ItemInfo itemInfo = mData.get(position);
-        String text = itemInfo != null ? itemInfo.getName() : "";
+        nameItem = (TextView) commonViewHolder.getView(R.id.list_item);
+        Object o = mData.get(position);
+        String text = (String) o;
         nameItem.setText(text);
         return commonViewHolder.getmConvertView();
     }

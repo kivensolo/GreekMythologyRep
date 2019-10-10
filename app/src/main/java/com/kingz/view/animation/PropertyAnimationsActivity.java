@@ -10,9 +10,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import com.base.BaseActivity;
 import com.kingz.customdemo.R;
-import com.kingz.pages.photo.adapter.BitmapPageAdapter;
+import com.kingz.pages.photo.adapter.PropertyAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -74,7 +75,7 @@ import java.util.List;
 public class PropertyAnimationsActivity extends BaseActivity implements AdapterView.OnItemClickListener {
 
     public static final String TAG = "PropertyAnimationsActivity";
-    protected BitmapPageAdapter bitmapAdapter;
+    protected PropertyAdapter propertyAdapter;
     protected ListView mListView;
     protected TextView mTextView;
     protected TextView mRightText;
@@ -108,9 +109,9 @@ public class PropertyAnimationsActivity extends BaseActivity implements AdapterV
 
     private void initViews() {
         datas = Arrays.asList(strs);
-        bitmapAdapter = new BitmapPageAdapter(this, datas);
+        propertyAdapter = new PropertyAdapter(this, datas);
         mListView = findViewById(R.id.anmations_list_id);
-        mListView.setAdapter(bitmapAdapter);
+        mListView.setAdapter(propertyAdapter);
         mListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         mListView.setOnItemClickListener(this);
         mRightText = findViewById(R.id.animation_show_text_id);
@@ -140,7 +141,7 @@ public class PropertyAnimationsActivity extends BaseActivity implements AdapterV
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        bitmapAdapter.notifyDataSetChanged();
+        propertyAdapter.notifyDataSetChanged();
         changeAnimation(view, position);
     }
 
@@ -148,7 +149,7 @@ public class PropertyAnimationsActivity extends BaseActivity implements AdapterV
         mTextView = (TextView) view.findViewById(R.id.list_item);
         changeListItemStyle(view, position);
 
-        //String clickedtype = (String) bitmapAdapter.getItem(position);
+        //String clickedtype = (String) propertyAdapter.getItem(position);
         //ZLog.i(TAG, "onItemClick： chooseTpye = " + clickedtype);
         if (animatorSet.isRunning()) {
             animatorSet.end();

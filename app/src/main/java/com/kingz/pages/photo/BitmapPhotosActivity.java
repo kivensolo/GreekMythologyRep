@@ -67,7 +67,7 @@ public class BitmapPhotosActivity extends PhotosActivity {
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         super.onItemClick(parent, view, position, id);
         setShowBitMap(datas.get(position).dstBitmap);
-        if(datas.get(position).name.equals("加投影")){
+        if(datas.get(position).getName().equals("加投影")){
             Paint paint = new Paint();
             paint.setFlags(Paint.ANTI_ALIAS_FLAG | Paint.HINTING_ON | Paint.FILTER_BITMAP_FLAG);
             paint.setStyle(Paint.Style.FILL);
@@ -75,7 +75,7 @@ public class BitmapPhotosActivity extends PhotosActivity {
             paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DARKEN));
             paint.setColor(0xFF00ff00);
             BitMapUtils.addShadow(new Canvas(datas.get(position).dstBitmap),20,0x00FF00,50,50,datas.get(position).dstBitmap,paint);
-        }else if(datas.get(position).name.equals("截屏")){
+        }else if(datas.get(position).getName().equals("截屏")){
             setShowBitMap(ScreenShotUtils.screenShot(getWindow().getDecorView()));
         }
     }
@@ -91,19 +91,6 @@ public class BitmapPhotosActivity extends PhotosActivity {
                 img1.setImageBitmap(bitmap);
             }
         });
-    }
-
-    public class ItemInfo {
-        private String name = "";
-        public Bitmap dstBitmap;
-
-        public ItemInfo(String name, Bitmap dstBitmap) {
-            this.name = name;
-            this.dstBitmap = dstBitmap;
-        }
-        public String getName(){
-            return name;
-        }
     }
 }
 

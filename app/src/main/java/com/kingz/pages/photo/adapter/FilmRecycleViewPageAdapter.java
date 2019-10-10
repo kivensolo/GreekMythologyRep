@@ -19,13 +19,10 @@ import java.io.File;
 import java.util.List;
 
 /**
- * Copyright(C) 2015, 北京视达科科技有限公司
- * All rights reserved.
  * author: King.Z
  * date:  2017/2/7 21:51
  * description:
  */
-
 public class FilmRecycleViewPageAdapter extends RecyclerView.Adapter<FilmListRecyclerViewHolder> {
 
     private static String TAG = FilmRecycleViewPageAdapter.class.getSimpleName();

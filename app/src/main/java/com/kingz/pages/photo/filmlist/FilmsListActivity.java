@@ -10,10 +10,12 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Toast;
+
 import com.base.BaseActivity;
 import com.kingz.customdemo.R;
 import com.kingz.mode.PosterGroupInfo;
 import com.kingz.pages.photo.adapter.FilmRecycleViewPageAdapter;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -27,9 +29,7 @@ import java.util.ArrayList;
  * All rights reserved.
  * author: King.Z
  * date: 2016 2016/4/2 16:49
- * description: 影片列表页  用GridView和本地的图片url去显示图片
- * <p>
- * 改：用RecyclerView替换GridView,实现瀑布流
+ * description: 影片列表页
  */
 public class FilmsListActivity extends BaseActivity {
 
@@ -38,8 +38,6 @@ public class FilmsListActivity extends BaseActivity {
     private PosterGroupInfo posterGroupInfo;
     private ArrayList<PosterGroupInfo.Poster> posterList = new ArrayList<>();
     private PosterGroupInfo.Poster posterInfo;
-    private RecyclerView mRecyclerView;
-    private FilmRecycleViewPageAdapter mFilmRecycleViewPageAdapter;
 
 
     @Override
@@ -52,7 +50,7 @@ public class FilmsListActivity extends BaseActivity {
     }
 
     private void initRecyclerView() {
-        mRecyclerView = findViewById(R.id.test_recycler_view);
+        RecyclerView mRecyclerView = findViewById(R.id.test_recycler_view);
         mRecyclerView.setHasFixedSize(true);         // 设置固定大小
         initRecyclerLayoutManager(mRecyclerView);    // 初始化布局
         initRecyclerAdapter(mRecyclerView);          // 初始化适配器
@@ -69,7 +67,7 @@ public class FilmsListActivity extends BaseActivity {
     }
 
     private void initRecyclerAdapter(RecyclerView recyclerView) {
-        mFilmRecycleViewPageAdapter = new FilmRecycleViewPageAdapter(posterList);
+        FilmRecycleViewPageAdapter mFilmRecycleViewPageAdapter = new FilmRecycleViewPageAdapter(posterList);
         mFilmRecycleViewPageAdapter.setOnItemClickLinstener(new OnRecycleViewItemClickLitener());
         recyclerView.setAdapter(mFilmRecycleViewPageAdapter);
     }

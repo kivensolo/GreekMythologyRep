@@ -3,6 +3,8 @@ package com.kingz.play.fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +37,10 @@ public class VodInfoFragment extends BaseFragment implements IPlayerView,View.On
     private CheckBox collectChk;    //收藏按钮
     private VideoInfo videoInfo;
 
+    // 剧集
+//    private EpisodeAdapter episodeAdapter;
+    private RecyclerView episodeRecyclerView;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +65,12 @@ public class VodInfoFragment extends BaseFragment implements IPlayerView,View.On
         rootView.findViewById(R.id.iv_detail_arrow_more).setOnClickListener(this);
         collectChk = rootView.findViewById(R.id.chk_collect);
         collectChk.setOnClickListener(this);
+
+        episodeRecyclerView = rootView.findViewById(R.id.episode_recycler);
+        episodeRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        //TODo 进行剧集数据适配器数据绑定
+//        episodeAdapter = new EpisodeAdapter(mediaParams);
+//        episodeRecyclerView.setAdapter(episodeAdapter);
     }
 
     private void onPresenterCreateView() {
