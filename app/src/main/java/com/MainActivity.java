@@ -30,6 +30,7 @@ import com.kingz.pages.photo.BitmapPhotosActivity;
 import com.kingz.pages.photo.colormatrix.ColorMatrixDemo;
 import com.kingz.pages.photo.filmlist.FilmsListActivity;
 import com.kingz.pages.photo.memory.MemoryCheck;
+import com.kingz.recyclerview.MusicPosterPages;
 import com.kingz.text.LableTextViewPage;
 import com.kingz.text.langs.TextViewOfLanguages;
 import com.kingz.text.metrics.FontMetricsDemoActivity;
@@ -165,6 +166,11 @@ public class MainActivity extends ExpandableListActivity implements OnItemClickL
         //通信
         billDataManager.addGroup("Communication");
         appendChildNode("HML_Deep", HMLActuivity.class);
+        billDataManager.pushChilds();
+
+        //RrecyclerView
+        billDataManager.addGroup("Recyclerview Demo");
+        appendChildNode("DragRecyclerView", MusicPosterPages.class);
         billDataManager.pushChilds();
 
         //BaseApiUnderStand

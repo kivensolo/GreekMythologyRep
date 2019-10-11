@@ -6,11 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import com.App;
 import com.kingz.customdemo.R;
 import com.kingz.net.OkHttpClientManager;
-import com.kingz.posterfilm.data.MgPosterBean;
+import com.kingz.recyclerview.data.MgPosterBean;
 import com.kingz.utils.ZLog;
 
 import java.util.ArrayList;
@@ -98,21 +98,23 @@ public class MgPosterAdapter extends CommonRecyclerAdapter<MgPosterBean> {
         setHolderListeners(holder);
     }
 
+    // FIXME 为每个ViewHolder设置点击监听器
     private void setHolderListeners(@NonNull final ViewHolder holder) {
         holder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int pos = holder.getLayoutPosition();
-                Toast.makeText(context, pos + " click", Toast.LENGTH_SHORT).show();
+                if(itemClickListener != null){
+                    itemClickListener.onItemClick(holder,v);
+                }
             }
         });
 
         holder.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                int pos = holder.getLayoutPosition();
-                Toast.makeText(context, pos + " delete", Toast.LENGTH_SHORT).show();
-                removeData(pos);
+                if(itemClickListener != null){
+                    itemClickListener.onItemLongClick(holder, v);
+                }
                 return true;
             }
         });

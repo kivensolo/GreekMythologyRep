@@ -1,4 +1,4 @@
-package com.kingz.posterfilm.data;
+package com.kingz.recyclerview.data;
 
 import java.util.ArrayList;
 

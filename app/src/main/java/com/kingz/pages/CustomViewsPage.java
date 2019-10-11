@@ -16,7 +16,6 @@ import com.bling.pages.UsingCustomSeekBar;
 import com.bling.pages.WaveLoadingActivity;
 import com.kingz.customdemo.R;
 import com.kingz.mode.ListBillData;
-import com.kingz.posterfilm.MusicPosterPages;
 import com.kingz.scroll.SliderListViewActivity;
 import com.kingz.scroll.SoapFlingActivity;
 import com.kingz.scroll.view_pager.WZViewPagerActicity;
@@ -53,7 +52,6 @@ public class CustomViewsPage extends  Activity implements OnItemClickListener{
 		mAdapter.add(new ListBillData(this,"ProgressViews",new Intent(this,ProgressViewsActivity.class)));
 		mAdapter.add(new ListBillData(this,"Customer SeekBar",new Intent(this,UsingCustomSeekBar.class)));
 		mAdapter.add(new ListBillData(this,"自定义ListView",new Intent(this,CustomListViewActivity.class)));
-		mAdapter.add(new ListBillData(this,"Recyclerview例子",new Intent(this,MusicPosterPages.class)));
 		mAdapter.add(new ListBillData(this,"ListView-----左右滑动删除",new Intent(this,SliderListViewActivity.class)));
 		mAdapter.add(new ListBillData(this,"View 的Drag & Fling",new Intent(this,SoapFlingActivity.class)));
 		mAdapter.add(new ListBillData(this,"PopupWindow",new Intent(this,CommonPopupWindow.class)));

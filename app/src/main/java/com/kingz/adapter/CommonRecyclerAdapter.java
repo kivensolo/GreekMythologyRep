@@ -20,6 +20,17 @@ import java.util.List;
 public abstract class CommonRecyclerAdapter<T> extends Adapter<CommonRecyclerAdapter.ViewHolder> {
     protected List<T> mData;
     protected Context context;
+    protected IItemClickListener itemClickListener;
+
+
+    public interface IItemClickListener{
+        void onItemClick(ViewHolder holder,View v);
+        void onItemLongClick(ViewHolder holder,View v);
+    }
+
+    public void setItemClickListener(IItemClickListener itemClickListener){
+        this.itemClickListener = itemClickListener;
+    }
 
     public CommonRecyclerAdapter(Context context, List<T> datas) {
         if(datas == null){
@@ -31,6 +42,10 @@ public abstract class CommonRecyclerAdapter<T> extends Adapter<CommonRecyclerAda
 
     public int getCount() {
         return mData.size();
+    }
+
+    public List<T> getAll(){
+        return mData;
     }
 
     public T getItem(int position) {
@@ -118,12 +133,13 @@ public abstract class CommonRecyclerAdapter<T> extends Adapter<CommonRecyclerAda
             return (T) view;
         }
 
-        public void setOnClickListener(View.OnClickListener listener) {
-            this.itemView.setOnClickListener(listener);
-        }
-
+        //FIXME 优化onItemClick和onLongClick回调  这种为每个item添加点击监听的解决方案是浪费性能的
         public void setOnLongClickListener(View.OnLongClickListener listener) {
             this.itemView.setOnLongClickListener(listener);
+        }
+
+        public void setOnClickListener(View.OnClickListener listener) {
+            this.itemView.setOnClickListener(listener);
         }
     }
 }
