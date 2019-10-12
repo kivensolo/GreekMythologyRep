@@ -168,8 +168,8 @@ public class MainActivity extends ExpandableListActivity implements OnItemClickL
         appendChildNode("HML_Deep", HMLActuivity.class);
         billDataManager.pushChilds();
 
-        //RrecyclerView
-        billDataManager.addGroup("Recyclerview Demo");
+        //Meterial Design
+        billDataManager.addGroup("Meterial Design");
         appendChildNode("DragRecyclerView", MusicPosterPages.class);
         billDataManager.pushChilds();
 

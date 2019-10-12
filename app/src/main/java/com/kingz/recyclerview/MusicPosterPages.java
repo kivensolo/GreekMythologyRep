@@ -58,6 +58,7 @@ public class MusicPosterPages extends BaseActivity {
     private RecyclerView view;
     private ItemTouchHelper mItemTouchHelper;
     private MgPosterAdapter mAdapter;
+    private Vibrator vibrator;
     private final String url = "http://pianku.api.mgtv.com/rider/tag-data?ticket=&device_id=173365c356c6f97b69bca90a60009d6f4b8f7c97&tagId=222&net_id=&type=3&version=5.9.501.200.3.MGTV_TVAPP.0.0_Debug&uuid=mgtvmac020000445566&platform=ott&mac_id=02-00-00-44-55-66&license=ZgOOgo5MjkyOTA4FqqoghzuqhyA7IL8NBZkgDZk7lQ0GlSAGBgYNeyC%2FtJl8vwU7DQUFjkyOTI5MZgOOgg%3D%3D&_support=00100101011&pc=200&buss_id=1000014&pn=1";
 
 
@@ -65,6 +66,8 @@ public class MusicPosterPages extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recyclerview_demo);
+        //获取系统震动服务
+        vibrator = (Vibrator) MusicPosterPages.this.getSystemService(Service.VIBRATOR_SERVICE);
         initRecyclerView();
         initItemTouchHelper();
 
@@ -163,14 +166,13 @@ public class MusicPosterPages extends BaseActivity {
 
             @Override
             public void onItemLongClick(CommonRecyclerAdapter.ViewHolder holder, View v) {
-                int pos = holder.getLayoutPosition();
-                //获取系统震动服务
-                Vibrator vib = (Vibrator) MusicPosterPages.this.getSystemService(Service.VIBRATOR_SERVICE);
-                if(vib != null){
-                    vib.vibrate(70); //震动70毫秒
-                }
                 if (holder.getLayoutPosition() != 1) {
+                    if(vibrator != null){
+                        vibrator.vibrate(70); //震动70毫秒
+                    }
                     mItemTouchHelper.startDrag(holder);
+                }else{
+                    Toast.makeText(MusicPosterPages.this, "这是固定的Item", Toast.LENGTH_SHORT).show();
                 }
             }
         });

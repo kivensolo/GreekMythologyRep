@@ -22,6 +22,7 @@ import java.util.List;
  * author: King.Z
  * date:  2017/2/7 21:51
  * description:
+ * TODO 使用顶级抽象Adapter处理
  */
 public class FilmRecycleViewPageAdapter extends RecyclerView.Adapter<FilmListRecyclerViewHolder> {
 
@@ -52,6 +53,7 @@ public class FilmRecycleViewPageAdapter extends RecyclerView.Adapter<FilmListRec
     /**
      * Item回调接口
      */
+    //FIXME remove
     public interface OnItemClickListener {
         void onItemClick(View view, int posotion);
 
