@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.kingz.customdemo.R;
 import com.kingz.mode.ListBillData;
 import com.kingz.widgets.AnimatedExpandableListView;
@@ -153,7 +154,7 @@ public class CommExpandableListAdapter extends AnimatedExpandableListView.Animat
         }
         viewHolder.itemText.setTextSize(20);
         viewHolder.itemText.setGravity(Gravity.CENTER_VERTICAL | Gravity.START);
-        viewHolder.itemText.setText(itemList.get(groupPosition).get(childPosition).getUserName());
+        viewHolder.itemText.setText(itemList.get(groupPosition).get(childPosition).getItemName());
         return convertView;
     }
 

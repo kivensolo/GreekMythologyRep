@@ -84,6 +84,12 @@ public abstract class CommonRecyclerAdapter<T> extends Adapter<CommonRecyclerAda
         return this.mData.size();
     }
 
+
+    public CommonRecyclerAdapter<T> addItem(T obj){
+        this.mData.add(obj);
+        return this;
+    }
+
     public CommonRecyclerAdapter<T> addItem(T obj, int index){
         this.mData.add(index,obj);
         return this;
@@ -116,6 +122,27 @@ public abstract class CommonRecyclerAdapter<T> extends Adapter<CommonRecyclerAda
         this.mData.clear();
     }
 
+
+    protected void setHolderListeners(@NonNull final ViewHolder holder) {
+        holder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(itemClickListener != null){
+                    itemClickListener.onItemClick(holder,v);
+                }
+            }
+        });
+
+        holder.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if(itemClickListener != null){
+                    itemClickListener.onItemLongClick(holder, v);
+                }
+                return true;
+            }
+        });
+    }
 
     public static final class ViewHolder extends RecyclerView.ViewHolder {
         private SparseArray<View> holder = new SparseArray<>();

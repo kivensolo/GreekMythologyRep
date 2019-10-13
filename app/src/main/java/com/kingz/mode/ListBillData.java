@@ -6,7 +6,7 @@ import android.content.Intent;
 
 /**
  * @author: KingZ
- * @Description: Bean封装
+ * @Description: 列表页面数据Bean封装
  */
 public class ListBillData {
 
@@ -21,7 +21,7 @@ public class ListBillData {
 		this.mIntent = mIntent;
 	}
 
-	public String getUserName() {
+	public String getItemName() {
 		return itemName;
 	}
 
@@ -50,7 +50,7 @@ public class ListBillData {
 
 	@Override
 	public String toString() {
-		return getUserName();
+		return getItemName();
 	}
 
 }

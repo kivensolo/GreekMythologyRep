@@ -2,7 +2,6 @@ package com.kingz.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -98,27 +97,6 @@ public class MgPosterAdapter extends CommonRecyclerAdapter<MgPosterBean> {
         setHolderListeners(holder);
     }
 
-    // FIXME 为每个ViewHolder设置点击监听器
-    private void setHolderListeners(@NonNull final ViewHolder holder) {
-        holder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(itemClickListener != null){
-                    itemClickListener.onItemClick(holder,v);
-                }
-            }
-        });
-
-        holder.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                if(itemClickListener != null){
-                    itemClickListener.onItemLongClick(holder, v);
-                }
-                return true;
-            }
-        });
-    }
 
     public void addData(int position) {
         MgPosterBean data = new MgPosterBean();

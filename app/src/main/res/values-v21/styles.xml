@@ -11,7 +11,10 @@
     </style>
 
 
-    <style name="NoTitleBarTheme" parent="Theme.AppCompat.Light.NoActionBar"/>
+    <style name="NoTitleBarTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
 
     <style name="PlayTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowFullscreen">true</item>

@@ -152,7 +152,7 @@
             android:theme="@style/NoTitleBarTheme"/>
 
 
-        <!-- 布局测试的ListView -->
+        <!-- 原生布局汇总页面 -->
         <activity
             android:name="com.kingz.pages.LayoutPage"
             android:theme="@style/NoTitleBarTheme"/>

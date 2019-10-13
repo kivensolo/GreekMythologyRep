@@ -171,6 +171,7 @@ public class MainActivity extends ExpandableListActivity implements OnItemClickL
         //Meterial Design
         billDataManager.addGroup("Meterial Design");
         appendChildNode("DragRecyclerView", MusicPosterPages.class);
+        appendChildNode("DragRecyclerView", MusicPosterPages.class);
         billDataManager.pushChilds();
 
         //BaseApiUnderStand
