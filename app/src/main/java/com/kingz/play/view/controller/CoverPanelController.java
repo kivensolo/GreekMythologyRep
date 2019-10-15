@@ -7,7 +7,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.kingz.customdemo.R;
-import com.module.tools.ViewTools;
+import com.module.tools.ViewUtils;
 
 /**
  * author：KingZ
@@ -88,7 +88,7 @@ public class CoverPanelController  extends BaseController{
 
     @Override
     public void show() {
-        if(ViewTools.isLandScape(rootView)){
+        if(ViewUtils.isLandScape(rootView)){
             fullScreenImg.setVisibility(View.GONE);
             titleTxt.setText(titleContent);
         }else{

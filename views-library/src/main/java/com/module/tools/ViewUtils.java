@@ -18,7 +18,14 @@ import android.widget.TextView;
  * date:  2016/7/21 15:38
  * description: View相关的工具类
  */
-public class ViewTools {
+public class ViewUtils {
+
+    /**
+     * Don't let anyone instantiate this class.
+     */
+    private ViewUtils() {
+        throw new Error("Do not need instantiate!");
+    }
 
     public static void measureWidthAndHeight(View view) {
         int w = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);

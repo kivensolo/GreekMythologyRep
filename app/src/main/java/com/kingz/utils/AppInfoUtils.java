@@ -11,9 +11,11 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.text.TextUtils;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.security.MessageDigest;
@@ -94,6 +96,48 @@ public class AppInfoUtils {
             installed = false;
         }
         return installed;
+    }
+
+    /**
+     * 安装apk
+     *
+     * @param context 上下文
+     * @param file    APK文件
+     */
+    public static void installApk(Context context, File file) {
+        Intent intent = new Intent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.setDataAndType(Uri.fromFile(file),
+                "application/vnd.android.package-archive");
+        context.startActivity(intent);
+    }
+
+    /**
+     * 安装apk
+     *
+     * @param context 上下文
+     * @param file    APK文件uri
+     */
+    public static void installApk(Context context, Uri file) {
+        Intent intent = new Intent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.setDataAndType(file, "application/vnd.android.package-archive");
+        context.startActivity(intent);
+    }
+
+    /**
+     * 卸载apk
+     *
+     * @param context     上下文
+     * @param packageName 包名
+     */
+    public static void uninstallApk(Context context, String packageName) {
+        Intent intent = new Intent(Intent.ACTION_DELETE);
+        Uri packageURI = Uri.parse("package:" + packageName);
+        intent.setData(packageURI);
+        context.startActivity(intent);
     }
 
     /**

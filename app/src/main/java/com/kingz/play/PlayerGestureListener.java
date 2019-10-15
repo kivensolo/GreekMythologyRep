@@ -51,7 +51,7 @@ public class PlayerGestureListener extends GestureDetector.SimpleOnGestureListen
         brightnessValue = ScreenTools.getScreenBrightnessValue(context) / 255f;
         volumeValue = VolumeTools.getCurrentVolumePrecent(context);
 
-        //TODO 使用正确的屏幕像素
+        //默认的视频宽高dp值
         dpVideoWidth = 1920 / density;
         dpVideoHeight = 1080 / density;
     }

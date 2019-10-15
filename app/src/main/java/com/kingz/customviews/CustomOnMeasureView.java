@@ -2,7 +2,13 @@ package com.kingz.customviews;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.*;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -11,8 +17,9 @@ import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+
 import com.kingz.customdemo.R;
-import com.module.tools.ViewTools;
+import com.module.tools.ViewUtils;
 
 import java.util.HashSet;
 import java.util.Random;
@@ -237,7 +244,7 @@ public class CustomOnMeasureView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        ViewTools.setViewBorder(this,canvas,borderPaint);
+        ViewUtils.setViewBorder(this,canvas,borderPaint);
         drawImageMatchRect();
 
         setShadowLayer();

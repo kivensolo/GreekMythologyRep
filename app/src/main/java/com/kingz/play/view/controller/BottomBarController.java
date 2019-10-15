@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.kingz.customdemo.R;
 import com.kingz.utils.TimeUtils;
-import com.module.tools.ViewTools;
+import com.module.tools.ViewUtils;
 
 /**
  * author：KingZ
@@ -77,7 +77,7 @@ public class BottomBarController extends BaseController{
 //        qualityTxt.setVisibility(View.GONE);
         liveTv.setVisibility(View.GONE);
         nextImg.setVisibility(View.GONE);
-        if(ViewTools.isLandScape(rootView)){
+        if(ViewUtils.isLandScape(rootView)){
             fullScreenImg.setVisibility(View.GONE);
         }else{
             fullScreenImg.setVisibility(View.VISIBLE);

@@ -4,7 +4,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.kingz.customdemo.R;
-import com.module.tools.ViewTools;
+import com.module.tools.ViewUtils;
 
 /**
  * author：KingZ
@@ -37,7 +37,7 @@ public class LockPanelController extends BaseController{
 
     @Override
     public void show() {
-        lockImg.setVisibility(ViewTools.isLandScape(rootView) ? View.VISIBLE : View.GONE);
+        lockImg.setVisibility(ViewUtils.isLandScape(rootView) ? View.VISIBLE : View.GONE);
         rootView.setVisibility(View.VISIBLE);
     }
 }

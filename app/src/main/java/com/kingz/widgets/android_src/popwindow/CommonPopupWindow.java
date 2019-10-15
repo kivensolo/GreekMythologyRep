@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.widget.PopupWindow;
 
-import com.module.tools.ViewTools;
+import com.module.tools.ViewUtils;
 
 /**
  * author: King.Z <br>
@@ -125,7 +125,7 @@ public class CommonPopupWindow extends PopupWindow{
             if (listener != null && params.layoutResId != 0) {
                 listener.onChildViewCreate(popupWindow.controller.mPopupView, params.layoutResId);
             }
-            ViewTools.measureWidthAndHeight(popupWindow.controller.mPopupView);
+            ViewUtils.measureWidthAndHeight(popupWindow.controller.mPopupView);
             return popupWindow;
         }
 

@@ -5,7 +5,8 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.widget.TextView;
-import com.module.tools.ViewTools;
+
+import com.module.tools.ViewUtils;
 
 /**
  * author: King.Z <br>
@@ -31,7 +32,7 @@ public class BorderTextView extends TextView {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        ViewTools.setViewBorder(this,canvas,mPaint);
+        ViewUtils.setViewBorder(this,canvas,mPaint);
         super.onDraw(canvas);
     }
 }

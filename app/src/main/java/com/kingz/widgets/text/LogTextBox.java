@@ -7,7 +7,8 @@ import android.text.Editable;
 import android.text.method.MovementMethod;
 import android.text.method.ScrollingMovementMethod;
 import android.util.AttributeSet;
-import com.module.tools.ViewTools;
+
+import com.module.tools.ViewUtils;
 
 /**
  * author: King.Z <br>
@@ -49,7 +50,7 @@ public class LogTextBox extends android.support.v7.widget.AppCompatTextView {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if(borderFlag){
-            ViewTools.setViewBorder(this,canvas,borderPaint);
+            ViewUtils.setViewBorder(this,canvas,borderPaint);
         }
     }
 
