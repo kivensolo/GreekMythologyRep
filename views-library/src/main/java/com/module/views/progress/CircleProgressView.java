@@ -10,11 +10,10 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
+
 import com.module.views.R;
 
 /**
- * Copyright(C) 2015, 北京视达科科技有限公司
- * All rights reserved.
  * author: King.Z
  * date: 2016 2016/3/27 21:57
  * description: 圆形进度条的绘制
