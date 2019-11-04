@@ -16,6 +16,8 @@ import android.widget.EditText;
  * author：KingZ
  * date：2019/11/4
  * description：带清除功能的EditText
+ *  方案1：布局组合封装，即组合EditText和删除按钮，封装成一个整体来使用。
+ *  方案2：使用 CompoundDrawable 属性
  *
  *  设置ClearDrawable:
  *      android:drawableEnd="@mipmap/clear"
@@ -88,9 +90,18 @@ public class CleanableEditText extends EditText implements OnFocusChangeListener
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_UP && mClearDrawable != null) {
-            //getTotalPaddingRight()图标左边缘至控件右边缘的距离
-            //getCompoundDrawablePadding()表示从文本右边到图标左边缘的距离
-            int left = getWidth() - getTotalPaddingRight() - getCompoundDrawablePadding();
+            //getTotalPaddingRight()图标左边缘至控件右边缘的距离 D-->E
+            //getCompoundDrawablePadding()表示从文本右边到图标左边缘的距离 C-->D
+
+            //A<->B<------------------->C<->D<-->E
+            // |---------------------------------|
+            // |👨| 123456789            |  | X  |
+            // |---------------------------------|
+
+            // MotionEvent.getX()  触摸点相对于其所在组件原点的x坐标
+            // MotionEvent.getRawX()  触摸点相对于其所在组件原点的x坐标
+
+            int left = getWidth() - getTotalPaddingRight() - getCompoundDrawablePadding(); //C的x位置
             boolean touchable = event.getX() > left && event.getX() < getWidth();
             if (touchable) {
                 this.setText("");
