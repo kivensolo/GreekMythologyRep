@@ -54,6 +54,7 @@ public class VodInfoFragment extends BaseFragment implements IPlayerView,View.On
         View rootView = inflater.inflate(R.layout.fragment_vod_detailinfo, container, false);
         initViews(rootView);
         onPresenterCreateView();
+        bindButterKnife(rootView);
         return rootView;
     }
 

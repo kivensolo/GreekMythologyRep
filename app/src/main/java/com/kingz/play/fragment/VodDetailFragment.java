@@ -57,6 +57,7 @@ public class VodDetailFragment extends BaseFragment implements View.OnClickListe
         detailTv = rootView.findViewById(R.id.video_detail);
         rootView.findViewById(R.id.arrow_down).setOnClickListener(this);
         showUI();
+        bindButterKnife(rootView);
         return rootView;
     }
 

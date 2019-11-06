@@ -13,17 +13,16 @@ import android.view.ViewGroup;
  */
 public class BaseViewHolder {
 
-    private Context mContext;
     private SparseArray<View> viewsArray;
-    private View mConvertView;
+    private View inflateView;
     private int mPosition;
 
-    public static BaseViewHolder getHolder(Context mContext, View convertView,
+    public static BaseViewHolder getHolder(Context mContext, View view,
                                            ViewGroup parent, int layoutId, int postion) {
-        if (convertView == null) {
+        if (view == null) {
             return new BaseViewHolder(mContext, parent, layoutId, postion);
         } else {
-            BaseViewHolder holder = (BaseViewHolder) convertView.getTag();
+            BaseViewHolder holder = (BaseViewHolder) view.getTag();
             holder.mPosition = postion;
             return holder;
         }
@@ -31,20 +30,19 @@ public class BaseViewHolder {
 
     private BaseViewHolder(Context mContext, ViewGroup parent, int layoutId, int postion) {
         viewsArray = new SparseArray<>();
-        this.mContext = mContext;
         mPosition = postion;
-        mConvertView = LayoutInflater.from(mContext).inflate(layoutId,parent,false);
-        mConvertView.setTag(this);
+        inflateView = LayoutInflater.from(mContext).inflate(layoutId,parent,false);
+        inflateView.setTag(this);
     }
 
-    public View getmConvertView(){
-        return mConvertView;
+    public View getInflateView(){
+        return inflateView;
     }
 
     public <T extends View> T getView(int viewId){
         View view = viewsArray.get(viewId);//从缓存的Map中查
         if(null == view){
-            view = mConvertView.findViewById(viewId);
+            view = inflateView.findViewById(viewId);
             viewsArray.put(viewId,view);
         }
         return (T) view;

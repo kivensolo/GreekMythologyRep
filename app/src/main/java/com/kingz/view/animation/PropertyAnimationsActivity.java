@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import butterknife.BindView;
+
 /**
  * Copyright(C) 2015, 北京视达科科技有限公司
  * All rights reserved.
@@ -28,13 +30,14 @@ import java.util.List;
  *
  * http://mp.weixin.qq.com/s?__biz=MzA5MzI3NjE2MA==&mid=2650237082&idx=1&sn=73d02232c981d1565bcb2dbe5b10a681&scene=23&srcid=0917SscEyH3EiTM2RASAGJis#rd
  *
- * ----【ValueAnimator】：是整个属性动画机制当中最核心的一个类，属性动画的运行机制是通过不断地对值进行操作来实现的，
- * 而初始值和结束值之间的动画过渡就是由ValueAnimator这个类来负责计算的。它的内
- * 部使用一种时间循环的机制来计算值与值之间的动画过渡，我们只需要将初始值和结束
- * 值提供给ValueAnimator，并且告诉它动画所需运行的时长，那么ValueAnimator就会
- * 自动帮我们完成从初始值平滑地过渡到结束值这样的效果。除此之外，ValueAnimator
- * 还负责管理动画的播放次数、播放模式、以及对动画设置监听器等
- * ----【ObjectAnimator】：可以直接对任意对象的任意属性进行动画操作的，比如说View的alpha属性
+ * ----【ValueAnimator】：属性动画机制当中最核心的一个类;
+ * 属性动画的运行机制是通过不断地对值进行操作来实现的，
+ * 初始值和结束值之间的动画过渡就是由ValueAnimator这个类来负责计算的。
+ * 内部使用一种时间循环的机制来计算值与值之间的动画过渡。
+ * 负责管理动画的播放次数、播放模式、以及对动画设置监听器等
+ *
+ * ----【ObjectAnimator】：可以直接对任意对象的任意属性进行动画操作的，
+ * 比如说View的alpha属性
  * <p/>
  * ----【AnimatorSet】 这个类提供了一个play()方法，如果我们向这个方法中传入一个Animator对象
  * (ValueAnimator或ObjectAnimator)将会返回一个AnimatorSet.Builder的实例，
@@ -46,40 +49,41 @@ import java.util.List;
  *
  *  除了set，还可以以下方式：
  * 用ValuesHolder  ------->
- *                 PropertyValuesHolder pvhX = PropertyValuesHolder.ofFloat("rotationX", 0f, 360f);
- *                 PropertyValuesHolder pvhY = PropertyValuesHolder.ofFloat("scaleX", 1f, 0f, 1f);
- *                 PropertyValuesHolder pvhZ = PropertyValuesHolder.ofFloat("scaleY", 1f, 0f, 1f);
- *                 ObjectAnimator holderAnim = {@link ObjectAnimator}ObjectAnimator.ofPropertyValuesHolder(view, pvhX, pvhY, pvhZ);
- *                 holderAnim.setDuration(5000);
- *                 holderAnim.setRepeatCount(100);
- *                 holderAnim.start();
+ *         PropertyValuesHolder pvhX = PropertyValuesHolder.ofFloat("rotationX", 0f, 360f);
+ *         PropertyValuesHolder pvhY = PropertyValuesHolder.ofFloat("scaleX", 1f, 0f, 1f);
+ *         PropertyValuesHolder pvhZ = PropertyValuesHolder.ofFloat("scaleY", 1f, 0f, 1f);
+ *         ObjectAnimator holderAnim = {@link ObjectAnimator}ObjectAnimator.ofPropertyValuesHolder(view, pvhX, pvhY, pvhZ);
+ *         holderAnim.setDuration(5000);
+ *         holderAnim.setRepeatCount(100);
+ *         holderAnim.start();
+ *
  * addUpdateListener ------->
- *                 ObjectAnimator anim = ObjectAnimator.ofFloat(mTextView, "kingz", 1.0F, 0.0F);//自定义属性名
- *                 anim.setDuration(5000);
- *                 anim.setRepeatCount(100);
- *                 anim.start();
- *                 anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
- *                     public void onAnimationUpdate(ValueAnimator animation) {
- *                         float cVal = (Float) animation.getAnimatedValue();
- *                        mTextView.setAlpha(cVal);
- *                        mTextView.setScaleX(cVal);
- *                        mTextView.setScaleY(cVal);
- *                    }
- *                 });
+ *         ObjectAnimator anim = ObjectAnimator.ofFloat(mTextView, "kingz", 1.0F, 0.0F);//自定义属性名
+ *         anim.setDuration(5000);
+ *         anim.setRepeatCount(100);
+ *         anim.start();
+ *         anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+ *             public void onAnimationUpdate(ValueAnimator animation) {
+ *                 float cVal = (Float) animation.getAnimatedValue();
+ *                mTextView.setAlpha(cVal);
+ *                mTextView.setScaleX(cVal);
+ *                mTextView.setScaleY(cVal);
+ *            }
+ *         });
  * <p/>
- * ----【AnimatorListener】：在很多时候，我们希望可以监听到动画的各种事件，比如动画何时开始，何时结束，
- * 然后在开始或者结束的时候去执行一些逻辑处理。这个功能是完全可以实现的，
- * Animator类当中提供了一个addListener()方法，这个方法接收一个AnimatorListener，
- * 我们只需要去实现这个AnimatorListener就可以监听动画的各种事件了。
+ * ----【AnimatorListener】：监听动画的各种事件，比如动画何时开始，何时结束，
+ * Animator类当中提供了一个addListener()方法，
+ * 这个方法接收一个AnimatorListener，
+ * 只需要去实现这个AnimatorListener就可以监听动画的各种事件了。
  */
 public class PropertyAnimationsActivity extends BaseActivity implements AdapterView.OnItemClickListener {
 
     public static final String TAG = "PropertyAnimationsActivity";
     protected PropertyAdapter propertyAdapter;
+    @BindView(R.id.anmations_list_id)
     protected ListView mListView;
-    protected TextView mTextView;
+    @BindView(R.id.animation_show_text_id)
     protected TextView mRightText;
-    protected int backgroundId;
     List<String> datas;
 
     AnimatorSet animatorSet;
@@ -110,11 +114,9 @@ public class PropertyAnimationsActivity extends BaseActivity implements AdapterV
     private void initViews() {
         datas = Arrays.asList(strs);
         propertyAdapter = new PropertyAdapter(this, datas);
-        mListView = findViewById(R.id.anmations_list_id);
         mListView.setAdapter(propertyAdapter);
         mListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         mListView.setOnItemClickListener(this);
-        mRightText = findViewById(R.id.animation_show_text_id);
         initAnimator();
     }
 
@@ -146,8 +148,8 @@ public class PropertyAnimationsActivity extends BaseActivity implements AdapterV
     }
 
     private void changeAnimation(View view, int position) {
-        mTextView = (TextView) view.findViewById(R.id.list_item);
-        changeListItemStyle(view, position);
+        TextView textView = (TextView) view.findViewById(R.id.list_item);
+        changeListItemStyle(view, textView, position);
 
         //String clickedtype = (String) propertyAdapter.getItem(position);
         //ZLog.i(TAG, "onItemClick： chooseTpye = " + clickedtype);
@@ -182,19 +184,19 @@ public class PropertyAnimationsActivity extends BaseActivity implements AdapterV
         }
     }
 
-    private void changeListItemStyle(View view, int position) {
+    private void changeListItemStyle(View view, TextView textView, int position) {
+        int textColor;
+        int bkgColor;
         if (mListView.isItemChecked(position)) {
-            setListItemStyle(view, R.color.deepskyblue, R.color.suncolor);
+            bkgColor = R.color.deepskyblue;
+            textColor = R.color.suncolor;
         } else {
-            setListItemStyle(view, R.drawable.listview_unchecked, R.color.lightskyblue);
+            bkgColor = R.drawable.listview_unchecked;
+            textColor = R.color.lightskyblue;
         }
-    }
-
-    private void setListItemStyle(View view, int backgroundId, int textColor) {
-        this.backgroundId = backgroundId;
-        mTextView.setTextColor(getResources().getColor(textColor));
-        Drawable background = this.getResources().getDrawable(backgroundId);
+        Drawable background = this.getResources().getDrawable(bkgColor);
         view.setBackground(background);
+        textView.setTextColor(getResources().getColor(textColor));
     }
 
     public void setFloatAnimation(ObjectAnimator animator, String name, int setRepeatCount, float... values) {

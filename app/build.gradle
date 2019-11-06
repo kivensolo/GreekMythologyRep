@@ -32,7 +32,7 @@ android {
         //unit test
         testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
         signingConfig signingConfigs.ZekeSigned
-        minSdkVersion 19
+        minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion 24
         buildConfigField("String", "APP_NAME", "\"STARCOR\"")
     }
@@ -120,6 +120,10 @@ dependencies {
     implementation 'com.android.support:support-v4:27.1.1'
     implementation 'com.android.support:recyclerview-v7:27.1.1'
     implementation 'com.android.support:appcompat-v7:27.1.1'
+
+    // butterknife 框架
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
     //for local tests
     testImplementation 'junit:junit:4.12'

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.kingz.adapter.CommonListAdapter;
 import com.kingz.customdemo.R;
 import com.kingz.holder.BaseViewHolder;
@@ -53,7 +54,7 @@ public class FileListAdapter extends CommonListAdapter<File> {
         imgView  = commonViewHolder.getView(R.id.file_img);
 
         porocessDirAndFile(position);
-        return commonViewHolder.getmConvertView();
+        return commonViewHolder.getInflateView();
     }
 
     @Override

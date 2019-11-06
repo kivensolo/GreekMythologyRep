@@ -3,10 +3,17 @@ package com.base;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.App;
+
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * author：KingZ
@@ -14,11 +21,22 @@ import com.App;
  * description：基类的Fragment
  */
 public abstract class BaseFragment extends Fragment {
+    private Unbinder unbinder;
     protected Activity mActivity;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    protected void bindButterKnife(View view){
+        unbinder = ButterKnife.bind(this,view);
     }
 
     @Override
@@ -36,6 +54,15 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        //解绑ButterKnife
+        if(unbinder != null){
+            unbinder.unbind();
+        }
     }
 
     @Override

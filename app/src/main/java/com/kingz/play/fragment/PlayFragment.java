@@ -115,6 +115,7 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
         playerUiSwitcher.setOnClickListener(this);
         playerUiSwitcher.setOnSeekBarChangeListener(playPresenter.seekBarChangeListener);
         playPresenter.onCreateView();
+        bindButterKnife(rootView);
         return rootView;
     }
 

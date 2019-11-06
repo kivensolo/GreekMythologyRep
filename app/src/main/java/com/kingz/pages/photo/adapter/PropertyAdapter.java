@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.kingz.adapter.CommonListAdapter;
 import com.kingz.customdemo.R;
 import com.kingz.holder.BaseViewHolder;
@@ -16,6 +17,7 @@ import java.util.List;
  * description：
  */
 public class PropertyAdapter extends CommonListAdapter<String> {
+
     private TextView nameItem;
     public PropertyAdapter(Context contex, List<String> datas) {
         super(contex, datas);
@@ -28,7 +30,7 @@ public class PropertyAdapter extends CommonListAdapter<String> {
         Object o = mData.get(position);
         String text = (String) o;
         nameItem.setText(text);
-        return commonViewHolder.getmConvertView();
+        return commonViewHolder.getInflateView();
     }
 
     @Override

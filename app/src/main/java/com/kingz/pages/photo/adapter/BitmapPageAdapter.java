@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.kingz.adapter.CommonListAdapter;
 import com.kingz.customdemo.R;
 import com.kingz.holder.BaseViewHolder;
@@ -30,7 +31,7 @@ public class BitmapPageAdapter extends CommonListAdapter<PhotosActivity.ItemInfo
         PhotosActivity.ItemInfo itemInfo = mData.get(position);
         String text = itemInfo != null ? itemInfo.getName() : "";
         nameItem.setText(text);
-        return commonViewHolder.getmConvertView();
+        return commonViewHolder.getInflateView();
     }
 
     @Override

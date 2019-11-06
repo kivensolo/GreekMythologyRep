@@ -8,9 +8,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import com.kingz.utils.ZLog;
+
+import butterknife.ButterKnife;
 
 /**
  * author: King.Z
@@ -26,6 +30,29 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         Log.i(TAG,"BaseActivity onCreate()");
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void setContentView(View view) {
+        super.setContentView(view);
+        bindButterKnife();
+    }
+
+
+    @Override
+    public void setContentView(View view, ViewGroup.LayoutParams params) {
+        super.setContentView(view, params);
+        bindButterKnife();
+    }
+
+    @Override
+    public void setContentView(int layoutResID) {
+        super.setContentView(layoutResID);
+        bindButterKnife();
+    }
+
+    private void bindButterKnife() {
+        ButterKnife.bind(this);
     }
 
     @Override
