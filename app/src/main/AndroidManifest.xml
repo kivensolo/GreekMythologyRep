@@ -419,6 +419,13 @@
             android:exported="false">
         </service>
 
+        <service android:name="com.kingz.four_components.service.LocalService"
+                 android:exported= "true">
+            <intent-filter>
+                <action android:name="com.kingz.action.local"/>
+            </intent-filter>
+        </service>
+
         <!--内容提供者-->
         <provider
             android:name="com.kingz.four_components.provider.ThetisProvider"

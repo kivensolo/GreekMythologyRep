@@ -6,7 +6,6 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.MainActivity;
-import com.kingz.customdemo.R;
 import com.kingz.utils.NetTools;
 import com.kingz.utils.ZLog;
 
@@ -22,9 +21,16 @@ import static junit.framework.TestCase.assertEquals;
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  * JUnit4中常用的几个注解：
- * <code>@BeforeClass</code> 测试类里所有用例运行之前，运行一次这个方法。方法必须是public static void
- * <code>@AfterClass</code> 与BeforeClass对应
- * <code>@After</code> 与Before对应
+ * <code>@Befor</code>
+ *      在每个测试方法之前都会运行一次，只需声明成public
+ * <code>@After</code>
+ *      与Before对应
+ *
+ * <code>@BeforeClass</code>
+ *      测试类里所有用例运行之前，运行一次这个方法(只运行一次)。
+ *      方法必须是public static,因为运行的时候测试类还没实例化
+ * <code>@AfterClass</code>
+ *      与BeforeClass对应
  * <code>@Test</code> 指定该方法为测试方法，方法必须是public void
  */
 @RunWith(AndroidJUnit4.class)
