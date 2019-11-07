@@ -419,17 +419,6 @@
             android:exported="false">
         </service>
 
-
-        <service
-            android:name="com.baidu.location.f"
-            android:enabled="true"
-            android:process=":remote">
-            <intent-filter>
-                <action android:name="com.baidu.location.service_v2.2">
-                </action>
-            </intent-filter>
-        </service>
-
         <!--内容提供者-->
         <provider
             android:name="com.kingz.four_components.provider.ThetisProvider"

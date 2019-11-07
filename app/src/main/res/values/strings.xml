@@ -102,21 +102,21 @@
     <string name="content_desc_are" translatable="false">影片内容描述区域</string>
     <string name="episode" translatable="false">剧集</string>
     <string name="video_desc" translatable="false">简介</string>
-    <string name="gusture_tip_icon">手势展示图标</string>
+    <string name="gusture_tip_icon" translatable="false">手势展示图标</string>
 
     <!--点播界面  被格式化的参数索引%1$s和%2$s分别表示第一位和第二位占位符，$s表示是字符串 -->
-    <string name="txt_desc">简介</string>
-    <string name="txt_episode">剧集</string>
-    <string name="txt_guess_like">猜你喜欢</string>
-    <string name="txt_variety_content">第%1$s期: %2$s</string>
-    <string name="txt_variety_new_episode">更新至%1$s期</string>
-    <string name="txt_tv_new_episode">更新至%1$s集</string>
-    <string name="txt_variety_new">更新至%1$s期 / %2$s期全</string>
-    <string name="txt_tv_new">更新至%1$s集 / %2$s集全</string>
-    <string name="txt_actor">主演:%1$s</string>
-    <string name="txt_director">导演:%1$s</string>
-    <string name="txt_detail">简介:%1$s </string>
-    <string name="txt_test_int">评分:%1$d </string>
+    <string name="txt_desc" translatable="false">简介</string>
+    <string name="txt_episode" translatable="false">剧集</string>
+    <string name="txt_guess_like" translatable="false">猜你喜欢</string>
+    <string name="txt_variety_content" translatable="false">第%1$s期: %2$s</string>
+    <string name="txt_variety_new_episode" translatable="false">更新至%1$s期</string>
+    <string name="txt_tv_new_episode" translatable="false">更新至%1$s集</string>
+    <string name="txt_variety_new" translatable="false">更新至%1$s期 / %2$s期全</string>
+    <string name="txt_tv_new" translatable="false">更新至%1$s集 / %2$s集全</string>
+    <string name="txt_actor" translatable="false">主演:%1$s</string>
+    <string name="txt_director" translatable="false">导演:%1$s</string>
+    <string name="txt_detail" translatable="false">简介:%1$s </string>
+    <string name="txt_test_int" translatable="false">评分:%1$d </string>
 
 
 </resources>
