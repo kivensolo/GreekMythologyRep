@@ -24,21 +24,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dip"
-        android:text="请输入用户名"
+        android:text="@string/pls_input_name"
     />
 
-    <EditText android:id="@+id/pw"
+    <EditText android:id="@+id/user_name_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clickable="true"
         android:singleLine="true"
-        android:password="true"
-    />
+        android:inputType="text"/>
 
-    <Button android:id="@+id/login"
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="登录"
-    />
+        android:text="@string/login"
+        android:onClick="login"/>
 
 </LinearLayout>

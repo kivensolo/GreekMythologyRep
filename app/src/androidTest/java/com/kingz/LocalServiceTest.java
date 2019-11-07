@@ -23,6 +23,21 @@ import static org.junit.Assert.assertEquals;
  * author：KingZ
  * date：2019/11/7
  * description：{@link com.kingz.four_components.service.LocalService} 单元测试类
+ *
+ * JUnit4中常用的几个注解：
+ *  <code>@Befor</code>
+ *      在每个测试方法之前都会运行一次，只需声明成public
+ *  <code>@After</code>
+ *      与Before对应
+ *
+ *  <code>@BeforeClass</code>
+ *      测试类里所有用例运行之前，运行一次这个方法(只运行一次)。
+ *      方法必须是public static,因为运行的时候测试类还没实例化
+ *  <code>@AfterClass</code>
+ *      与BeforeClass对应
+ *
+ *  <code>@Test</code>
+ *      指定该方法为测试方法，方法必须是public void
  */
 @MediumTest
 @RunWith(AndroidJUnit4.class)

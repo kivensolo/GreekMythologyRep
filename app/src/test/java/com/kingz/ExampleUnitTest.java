@@ -1,6 +1,5 @@
 package com.kingz;
 
-import com.kingz.utils.NetTools;
 
 import org.junit.Test;
 
