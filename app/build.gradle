@@ -1,9 +1,7 @@
-apply {
-    plugin 'com.android.application'
-    from 'version.gradle'
-    from 'compile.gradle'
-    from "../config.gradle"
-}
+apply plugin: 'com.android.application'
+apply from: 'version.gradle'
+apply from: 'compile.gradle'
+apply from: '../config.gradle'
 
 def keystorePropertiesFile = rootProject.file("keystore.properties")
 // Initialize a new Properties() object
@@ -23,39 +21,21 @@ android {
     compileSdkVersion android.compileSdkVersion
     buildToolsVersion android.buildToolsVersion
 
-    //The default configuration, inherited by all product flavors(if any are defined)
     defaultConfig {
         applicationId 'com.kingz.customdemo'
         multiDexEnabled false
         versionCode android.versionCode
         versionName android.versionName
-        //unit test
-        testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
         signingConfig signingConfigs.ZekeSigned
         minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion 24
         buildConfigField("String", "APP_NAME", "\"STARCOR\"")
-    }
 
-    // Specifies one flavor dimension.
-    flavorDimensions "version"
-//    productFlavors{
-//        demo {
-//            // Assigns this product flavor to the "version" flavor dimension.
-//            // This property is optional if you are using only one dimension.
-//            dimension "version"
-//            applicationIdSuffix ".demo"
-//            versionNameSuffix "-2019"
-//            versionCode appVersionCode
-//            versionName appVersionName
-//            buildConfigField("String", "APP_NAME", "\"STARCOR\"")
-//            buildConfigField 'String','MAIN_URL','"http://www.starcor.com"'
-//        }
-//    }
+        testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+    }
 
     buildTypes {
         debug {
-//            buildConfigField("String", "n1_a_1", "\"www.baidu.com2\"")
             buildConfigField("boolean", "SPLSH_DEBUG", "false")
             zipAlignEnabled true
         }
@@ -87,10 +67,6 @@ android {
     }
 }
 
-configurations.all {
-    resolutionStrategy.force 'com.android.support:support-annotations:27.1.1'
-}
-
 dependencies {
     implementation project(path: ':views-library')
     implementation project(path: ':player-library')
@@ -120,38 +96,39 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:27.1.1'
     implementation 'com.android.support:appcompat-v7:27.1.1'
 
-    // butterknife 框架
+    // Tutterknife library
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
-    //for local tests
+    // Test library
     testImplementation 'junit:junit:4.12'
-
-    androidTestImplementation 'com.android.support:support-annotations:25.3.1'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test:rules:1.0.2'
+    androidTestImplementation 'com.android.support:support-annotations:27.1.1'
 }
 
-gradle.taskGraph.whenReady {
-    graph ->  println('>>>>>> taskGraph is ready! Config finished.')
-}
-
-gradle.buildFinished {
-    result -> println('>>>>>> all buildFinished!.')
-}
-
-/**
- * 表示所有的模块都已经配置完
- * 可以准备执行task
- */
-project.afterEvaluate {
-    logger.log(LogLevel.ERROR,'>>>>> Evaluate End')
-    logger.log(LogLevel.ERROR, assemble.getTaskDependencies().toString())
-    logger.log(LogLevel.ERROR, assemble.getTaskDependencies().getDependencies().toString())
-    /** 遍历构建遍历 可以根据构建类型进行任务处理 */
-//    android.libraryVariants.each{ variant ->
+//gradle.taskGraph.whenReady {
+//    graph ->  println('>>>>>> taskGraph is ready! Config finished.')
+//}
 //
-//    }
-}
-
-logger.log(LogLevel.DEBUG, ">>>>>>>>>>> app config End")
+//gradle.buildFinished {
+//    result -> println('>>>>>> all buildFinished!.')
+//}
+//
+///**
+// * 表示所有的模块都已经配置完
+// * 可以准备执行task
+// */
+//project.afterEvaluate {
+//    logger.log(LogLevel.ERROR,'>>>>> Evaluate End')
+//    logger.log(LogLevel.ERROR, assemble.getTaskDependencies().toString())
+//    logger.log(LogLevel.ERROR, assemble.getTaskDependencies().getDependencies().toString())
+//    /** 遍历构建遍历 可以根据构建类型进行任务处理 */
+////    android.libraryVariants.each{ variant ->
+////
+////    }
+//}
+//
+//logger.log(LogLevel.DEBUG, ">>>>>>>>>>> app config End")
 
 
