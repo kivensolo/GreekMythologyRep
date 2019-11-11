@@ -40,11 +40,11 @@ import com.kingz.view.animation.PropertyAnimationsActivity;
 import com.kingz.view.animation.ShakeAnimation;
 import com.kingz.view.animation.ViewFlipperAnimation;
 import com.kingz.view.surface.DrawRectWithSurface;
-import com.kingz.widgets.AnimatedExpandableListView;
 import com.kingz.widgets.android_src.BasicControlsActivity;
 import com.kingz.widgets.android_src.NativeProgressBar;
 import com.kingz.widgets.android_src.OriginViewPager;
 import com.kingz.widgets.android_src.SpansDemo;
+import com.module.views.animation.AnimatedExpandableListView;
 import com.mplayer.ApolloMediaPlayer;
 import com.mplayer.exo_player.DetailPageActivty;
 

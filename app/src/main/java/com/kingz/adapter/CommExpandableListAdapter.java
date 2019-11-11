@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.kingz.customdemo.R;
 import com.kingz.mode.ListBillData;
-import com.kingz.widgets.AnimatedExpandableListView;
+import com.module.views.animation.AnimatedExpandableListView;
 
 import java.util.ArrayList;
 import java.util.List;

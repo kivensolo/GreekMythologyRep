@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.kingz.widgets;
+package com.module.views.animation;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

@@ -14,14 +14,15 @@
 		android:background="@color/black"
 		android:listSelector="@color/mediumseagreen">
     </ListView>-->
-	<com.kingz.widgets.AnimatedExpandableListView android:layout_width="match_parent"
-                                                  android:layout_height="match_parent"
-                                                  android:id="@android:id/list"
-                                                  android:dividerHeight="1dp"
-                                                  android:divider="@color/lightskyblue"
-                                                  android:background="@color/black"
-                                                  android:cacheColorHint="@color/cornflowerblue"
-                                                  android:groupIndicator="@null">
-	</com.kingz.widgets.AnimatedExpandableListView>
+	<com.module.views.animation.AnimatedExpandableListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@android:id/list"
+        android:dividerHeight="1dp"
+        android:divider="@color/lightskyblue"
+        android:background="@color/black"
+        android:cacheColorHint="@color/cornflowerblue"
+        android:groupIndicator="@null">
+	</com.module.views.animation.AnimatedExpandableListView>
 
 </LinearLayout>
