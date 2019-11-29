@@ -15,7 +15,6 @@ import android.net.Uri;
 import android.text.TextUtils;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.security.MessageDigest;
@@ -102,28 +101,13 @@ public class AppInfoUtils {
      * 安装apk
      *
      * @param context 上下文
-     * @param file    APK文件
+     * @param uri    APK文件uri
      */
-    public static void installApk(Context context, File file) {
+    public static void installApk(Context context, Uri uri) {
         Intent intent = new Intent();
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setAction(Intent.ACTION_VIEW);
-        intent.setDataAndType(Uri.fromFile(file),
-                "application/vnd.android.package-archive");
-        context.startActivity(intent);
-    }
-
-    /**
-     * 安装apk
-     *
-     * @param context 上下文
-     * @param file    APK文件uri
-     */
-    public static void installApk(Context context, Uri file) {
-        Intent intent = new Intent();
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setAction(Intent.ACTION_VIEW);
-        intent.setDataAndType(file, "application/vnd.android.package-archive");
+        intent.setDataAndType(uri, "application/vnd.android.package-archive");
         context.startActivity(intent);
     }
 

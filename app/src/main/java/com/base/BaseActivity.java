@@ -1,10 +1,18 @@
 package com.base;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Application;
 import android.content.ComponentCallbacks;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -12,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
+import com.kingz.utils.AppInfoUtils;
 import com.kingz.utils.ZLog;
 
 import butterknife.ButterKnife;
@@ -23,6 +32,8 @@ import butterknife.ButterKnife;
 public abstract class BaseActivity extends AppCompatActivity {
 
     private static final String TAG = BaseActivity.class.getSimpleName();
+    public static final int GET_UNKNOWN_APP_SOURCES = 0x10000;
+    public static final int INSTALL_PACKAGES_REQUESTCODE = 0x10001;
     public boolean isLoadding =false;
     protected boolean isShow;
 
@@ -175,5 +186,61 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     private void setWindows(int flags, int mask){
         getWindow().setFlags(flags,mask);
+    }
+
+
+    /**
+     * Android 8.0 中，Google移除掉了容易被滥用的“允许位置来源”应用的开关，
+     * 在安装 Play Store 之外的第三方来源的 Android 应用的时候，没有了“允许未知来源”的检查框，
+     * 如果你还是想要安装某个被自己所信任的开发者的 app，则需要在每一次都手动授予“安装未知应用”的许可。
+     * @param uri 安装文件Url
+     */
+    protected void installApk(Uri uri){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            //判断是否可以安装未知来源的应用 首次应该是false
+            boolean can = getPackageManager().canRequestPackageInstalls();
+            if(can){
+                AppInfoUtils.installApk(this, uri);
+            }else{
+                //请求安装未知应用来源的权限
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.REQUEST_INSTALL_PACKAGES},
+                        INSTALL_PACKAGES_REQUESTCODE);
+            }
+        }else{
+            AppInfoUtils.installApk(this, uri);
+        }
+    }
+
+    protected void onInstallPackagesPermissionOk(){
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case INSTALL_PACKAGES_REQUESTCODE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    onInstallPackagesPermissionOk();
+                } else {
+                    // 引导至安装未知应用界面
+                    Intent intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES);
+                    startActivityForResult(intent, GET_UNKNOWN_APP_SOURCES);
+                }
+                break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case GET_UNKNOWN_APP_SOURCES:
+//                installApk(Uri uri);
+                break;
+            default:
+                break;
+        }
     }
 }
