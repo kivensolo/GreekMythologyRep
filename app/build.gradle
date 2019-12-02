@@ -49,6 +49,29 @@ android {
         }
     }
 
+    // Specifies flavor dimensions.
+    flavorDimensions "area","devices"
+
+    productFlavors{
+        ChengDu{
+            dimension "area"
+            applicationId 'com.demo.chengdu'
+        }
+
+        SanYa{
+            dimension "area"
+            applicationId 'com.demo.chongqing'
+        }
+
+        CH{
+            dimension "devices"
+        }
+
+        TCL{
+            dimension "devices"
+        }
+    }
+
     configurations {
     }
 
@@ -82,8 +105,8 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxandroid:${lib_versions.rxandroid}"
 
     implementation "com.squareup.retrofit2:retrofit:${lib_versions.rtf2}"
-    compile "com.squareup.retrofit2:converter-gson:${lib_versions.rtf2_2gson}"
-    compile "com.squareup.retrofit2:adapter-rxjava2:${lib_versions.rtf2_adapter}"
+    implementation "com.squareup.retrofit2:converter-gson:${lib_versions.rtf2_2gson}"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:${lib_versions.rtf2_adapter}"
 
     //OkHttp3 & okio
     implementation "com.squareup.okhttp3:okhttp:${lib_versions.okhttp}"
@@ -91,10 +114,10 @@ dependencies {
     // --------------- 网络框架 ---- END --------------
 
     implementation "com.android.support.constraint:constraint-layout:${lib_versions.cons_layout}"
-    implementation "com.android.support:design:${lib_versions.support}"
-    implementation "com.android.support:support-v4:${lib_versions.support}"
-    implementation "com.android.support:recyclerview-v7:${lib_versions.support}"
-    implementation "com.android.support:appcompat-v7:${lib_versions.support}"
+    implementation "com.android.support:design:${supports.version}"
+    implementation "com.android.support:support-v4:${supports.version}"
+    implementation "com.android.support:recyclerview-v7:${supports.version}"
+    implementation "com.android.support:appcompat-v7:${supports.version}"
 
 
     // Tutterknife library
@@ -108,6 +131,11 @@ dependencies {
     androidTestImplementation "com.android.support.test.espresso:espresso-core:${lib_versions.es_core}"
     androidTestImplementation "com.android.support:support-annotations:${lib_versions.support}"
 }
+
+//
+//android.applicationVariants.all{variant ->
+//    println('pppppp:' + variant.flavorName)
+//}
 
 //gradle.taskGraph.whenReady {
 //    graph ->  println('>>>>>> taskGraph is ready! Config finished.')

@@ -1,12 +1,13 @@
 apply plugin: 'com.android.library'
+apply from: 'player_config.gradle'
 
 android {
-    compileSdkVersion rootProject.ext.android.compileSdkVersion
-    buildToolsVersion rootProject.ext.android.buildToolsVersion
+    compileSdkVersion android.compileSdkVersion
+    buildToolsVersion android.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion rootProject.ext.android.minSdkVersion
-        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        minSdkVersion android.minSdkVersion
+        targetSdkVersion android.targetSdkVersion
         versionCode 1
         versionName "1.0"
     }
@@ -22,15 +23,15 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    api 'com.google.android.exoplayer:exoplayer:2.7.3'
+    api "com.google.android.exoplayer:exoplayer:${lib_versions.exo}"
 
-    api 'tv.danmaku.ijk.media:ijkplayer-java:0.8.4'
-    api 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.8.4'
-    api 'tv.danmaku.ijk.media:ijkplayer-armv5:0.8.4'
-    api 'tv.danmaku.ijk.media:ijkplayer-x86:0.8.4'
-    api 'tv.danmaku.ijk.media:ijkplayer-exo:0.8.4'
+    api "tv.danmaku.ijk.media:ijkplayer-java:${lib_versions.ijk}"
+    api "tv.danmaku.ijk.media:ijkplayer-armv7a:${lib_versions.ijk}"
+    api "tv.danmaku.ijk.media:ijkplayer-armv5:${lib_versions.ijk}"
+    api "tv.danmaku.ijk.media:ijkplayer-x86:${lib_versions.ijk}"
+    api "tv.danmaku.ijk.media:ijkplayer-exo:${lib_versions.ijk}"
 
-    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation "com.android.support:appcompat-v7:${lib_versions.support}"
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
 }
