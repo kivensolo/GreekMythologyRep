@@ -1,6 +1,18 @@
-include ':app', ':views-library', ':player-library'
+include ':app'
 
 gradle.beforeProject {
     project -> println(">>>>>> A Project Ready to config !")
 }
+
+def rootDir = settingsDir
+def modulePrefix = ':'
+// 自定义lib库Project
+include modulePrefix + 'library'
+include modulePrefix + 'library-player'
+include modulePrefix + 'library-views'
+
+project(modulePrefix+ 'library').projectDir = new File(rootDir, 'library/all')
+project(modulePrefix+ 'library-player').projectDir = new File(rootDir, 'library/player')
+project(modulePrefix+ 'library-views').projectDir = new File(rootDir, 'library/ui')
+
 println ">>> settings end ]"

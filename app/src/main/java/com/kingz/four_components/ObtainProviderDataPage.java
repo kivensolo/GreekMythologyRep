@@ -27,10 +27,14 @@ import java.util.List;
  * 用于测试其他应用提供的数据
  */
 public class ObtainProviderDataPage extends BaseActivity {
-
+//    public static final String CONTENT_URI_USER_INFO = "content://stbconfig/stbconfig_authentication/username";
+//    public static final String CONTENT_URI_COMMON_INFO = "content://stbconfig/stbconfig_authentication/user_token";
+//    public static final String CONTENT_URI_EPGURL = "content://stbconfig/stbconfig_authentication/epg_server";
     public static final String CONTENT_URI_USER_INFO = "content://stbconfig/authentication/username";
     public static final String CONTENT_URI_COMMON_INFO = "content://stbconfig/authentication/user_token";
     public static final String CONTENT_URI_EPGURL = "content://stbconfig/authentication/epg_server";
+    public static final String CONTENT_URI_AREACODE = "content://stbconfig/authentication/areaID";
+    public static final String TAG = "ObtainProviderDataPage";
     private ArrayAdapter<String> adapter = null;
     private List<String> contactaList;
     ContentChangeListener contentChangeListener;
@@ -70,7 +74,7 @@ public class ObtainProviderDataPage extends BaseActivity {
                             String name = mCursor.getString(mCursor.getColumnIndex("value"));
 //                            String id = mCursor.getString(mCursor.getColumnIndex("user_id"));
 //                            String token = mCursor.getString(mCursor.getColumnIndex("user_webtoken"));
-                            ZLog.d("ObtainProviderDataPage", "name = " + name);
+                            ZLog.d(TAG, "name = " + name);
                         }
                         mCursor.close();
                     }
@@ -83,7 +87,7 @@ public class ObtainProviderDataPage extends BaseActivity {
                             String value = c2.getString(c2.getColumnIndex("value"));
 //                            String version = c2.getString(c2.getColumnIndex("app_version"));
 //                            String mac = c2.getString(c2.getColumnIndex("device_mac"));
-                            ZLog.d("ObtainProviderDataPage", "token = " + value);
+                            ZLog.d(TAG, "token = " + value);
                         }
                         c2.close();
                     }
@@ -94,9 +98,20 @@ public class ObtainProviderDataPage extends BaseActivity {
                     if (c3 != null) {
                         while (c3.moveToNext()) {
                             String value = c3.getString(c3.getColumnIndex("value"));
-                            ZLog.d("ObtainProviderDataPage", "epg_url = " + value);
+                            ZLog.d(TAG, "epg_url = " + value);
                         }
                         c3.close();
+                    }
+
+                    Uri ur4 = Uri.parse(CONTENT_URI_AREACODE);
+                    //uri.withAppendedPath(uri, "");
+                    Cursor c4 = baseResolver.query(ur4, null, null, null, null);
+                    if (c4 != null) {
+                        while (c4.moveToNext()) {
+                            String value = c4.getString(c4.getColumnIndex("value"));
+                            ZLog.d(TAG, "AREACODE = " + value);
+                        }
+                        c4.close();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

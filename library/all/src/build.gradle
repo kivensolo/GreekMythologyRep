@@ -1,0 +1,22 @@
+apply from: '../../config.gradle'
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion android.compileSdkVersion
+    buildToolsVersion android.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion android.minSdkVersion
+        targetSdkVersion android.targetSdkVersion
+    }
+}
+
+dependencies {
+    api project(modulePrefix + 'library-player')
+    api project(modulePrefix + 'library-views')
+}
+
+ext {
+    releaseArtifact = 'exoplayer'
+    releaseDescription = 'The ExoPlayer library (all modules).'
+}
