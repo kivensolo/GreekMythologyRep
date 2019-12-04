@@ -7,6 +7,7 @@ import android.content.Intent;
 /**
  * @author: KingZ
  * @Description: 列表页面数据Bean封装
+ * @deprecated
  */
 public class ListBillData {
 

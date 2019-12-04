@@ -1,0 +1,211 @@
+[
+  {
+    "name": "Animation",
+    "desc": "ViewAimation",
+    "samples": [
+      {
+        "name": "Property Animation",
+        "class": "com.kingz.view.animation.PropertyAnimationsActivity"
+      },
+      {
+        "name": "Shake Animation",
+        "class": "com.kingz.view.animation.ShakeAnimation"
+      },
+      {
+        "name": "ViewFlipper Animation",
+        "class": "com.kingz.view.animation.ViewFlipperAnimation"
+      },
+      {
+        "name": "Interpolator Animation",
+        "class": "com.kingz.view.animation.InterpolatorAnimation"
+      },
+      {
+        "name": "Crossfading Two Views",
+        "class": "com.kingz.view.animation.CrossfadeActivity"
+      }
+    ]
+  },
+  {
+    "name": "AboutText",
+    "desc": "文字处理相关",
+    "samples": [
+      {
+        "name": "FontMetrics",
+        "class": "com.kingz.text.metrics.FontMetricsDemoActivity"
+      },
+      {
+        "name": "TextViewOfLanguages",
+        "class": "com.kingz.text.metrics.TextViewOfLanguages"
+      },
+      {
+        "name": "LableText",
+        "class": "com.kingz.text.metrics.LableTextViewPage"
+      },
+      {
+        "name": "SpanLable",
+        "class": "com.kingz.text.metrics.SpansDemo"
+      }
+    ]
+  },
+  {
+    "name": "Original",
+    "desc": "原生基本控件",
+    "samples": [
+      {
+        "name": "BasicControls",
+        "class": "com.kingz.widgets.android_src.BasicControlsActivity"
+      },
+      {
+        "name": "ProgressBar",
+        "class": "com.kingz.widgets.android_src.NativeProgressBar"
+      },
+      {
+        "name": "SrcLayout",
+        "class": "com.kingz.widgets.android_src.LayoutPage"
+      },
+      {
+        "name": "Four major components",
+        "class": "com.kingz.widgets.android_src.FourComponentPage"
+      },
+      {
+        "name": "ViewPager",
+        "class": "com.kingz.widgets.android_src.OriginViewPager"
+      },
+      {
+        "name": "SurfaceDraw",
+        "class": "com.kingz.widgets.android_src.DrawRectWithSurface"
+      }
+    ]
+  },
+  {
+    "name": "Graphics",
+    "samples": [
+      {
+        "name": "BitMapOverall",
+        "class": "com.kingz.pages.photo.BitmapPhotosActivity"
+      },
+      {
+        "name": "ColorMatrix",
+        "class": "com.kingz.pages.photo.colormatrix.ColorMatrixDemo"
+      },
+      {
+        "name": "Arcs",
+        "class": "com.kingz.graphics.Arcs"
+      },
+      {
+        "name": "PathEffects",
+        "class": "com.kingz.graphics.PathEffects"
+      },
+      {
+        "name": "MemoryCheck",
+        "class": "com.kingz.pages.photo.memory.MemoryCheck"
+      }
+    ]
+  },
+  {
+    "name": "Custom controls",
+    "desc": "自定义控件",
+    "samples": [
+      {
+        "name": "Custom controls",
+        "class": "com.kingz.pages.CustomViewsPage"
+      }
+    ]
+  },
+  {
+    "name": "File",
+    "samples": [
+      {
+        "name": "File Test",
+        "class": "com.kingz.file.FileAndPicTestACT"
+      },
+      {
+        "name": "DownloadFile",
+        "class": "com.kingz.file.DownloadAPPActivity"
+      },
+      {
+        "name": "ExternalStorage",
+        "class": "com.apiDemo.content.ExternalStorage"
+      }
+    ]
+  },
+  {
+    "name": "Net",
+    "samples": [
+      {
+        "name": "JsonParseAndPicLru",
+        "class": "com.asynctask_jsontest.LruPicListViewActivity"
+      },
+      {
+        "name": "FilmsList",
+        "class": "com.kingz.pages.photo.filmlist.FilmsListActivity"
+      }
+    ]
+  },
+  {
+    "name": "Mediaplayer",
+    "samples": [
+      {
+        "name": "Media",
+        "class": "com.mplayer.ApolloMediaPlayer"
+      },
+      {
+        "name": "Exo-Player",
+        "class": "com.mplayer.exo_player.DetailPageActivty"
+      }
+    ]
+  },
+  {
+    "name": "Other",
+    "samples": [
+      {
+        "name": "FileManager",
+        "class": "com.kingz.filemanager.FileManagerActivity"
+      },
+      {
+        "name": "Iflytek",
+        "class": "com.iflytek.synthesizer.VoiceActivity"
+      }
+    ]
+  },
+  {
+    "name": "Communication",
+    "desc": "通信",
+    "samples": [
+      {
+        "name": "HML_Deep",
+        "class": "com.kingz.communicat.HMLActuivity"
+      }
+    ]
+  },
+  {
+    "name": "Meterial Design",
+    "desc": "Meterial Design",
+    "samples": [
+      {
+        "name": "DragRecyclerView",
+        "class": "com.kingz.recyclerview.MusicPosterPages"
+      }
+    ]
+  },
+  {
+    "name": "BasicApi",
+    "desc": "BaseApiUnderStand",
+    "samples": [
+      {
+        "name": "Canvas",
+        "class": "com.kingz.basic_api.CanvasApiActivity"
+      }
+    ]
+  },
+  {
+    "name": "NewFeatures",
+    "desc": "新特性",
+    "samples": [
+      {
+        "name": "NewFeature of UI",
+        "class": "com.kingz.newfeatures.NewFeaturesMainActivity"
+      }
+    ]
+  }
+]
