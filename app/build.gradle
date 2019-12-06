@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply from: 'version.gradle'
 apply from: 'compile.gradle'
 apply from: '../config.gradle'
+apply from: '../utils.gradle'
 
 def keystorePropertiesFile = rootProject.file("keystore.properties")
 // Initialize a new Properties() object
@@ -18,6 +19,7 @@ android {
             storePassword keystoreProperties['storePassword']
         }
     }
+
     compileSdkVersion android.compileSdkVersion
     buildToolsVersion android.buildToolsVersion
 
@@ -39,6 +41,7 @@ android {
             buildConfigField("boolean", "SPLSH_DEBUG", "false")
             zipAlignEnabled true
         }
+
         release {
             buildConfigField("boolean", "SPLSH_DEBUG", "true")
             zipAlignEnabled true
@@ -87,6 +90,22 @@ android {
     packagingOptions {
         doNotStrip '*/mips/*.so'
         doNotStrip '*/mips64/*.so'
+    }
+
+
+    applicationVariants.all { variant ->
+        def prefix = 'Greek'
+        def versionName = 'V' + variant.getVersionName()
+        def versionCode = 'VC' + variant.getVersionCode()
+
+        variant.outputs.all { output ->
+            if(output.outputFile != null && output.outputFile.name.endsWith('.apk')){
+                def oName = output.outputFile.name
+                logger.log(LogLevel.DEBUG, "output Name=" +  oName)
+                outputFileName = "${prefix}_${versionName}_${versionCode}" +
+                        "_${variant.flavorName}_${variant.buildType.name}.apk"
+            }
+        }
     }
 }
 
@@ -150,15 +169,15 @@ dependencies {
 // * 表示所有的模块都已经配置完
 // * 可以准备执行task
 // */
-//project.afterEvaluate {
-//    logger.log(LogLevel.ERROR,'>>>>> Evaluate End')
-//    logger.log(LogLevel.ERROR, assemble.getTaskDependencies().toString())
-//    logger.log(LogLevel.ERROR, assemble.getTaskDependencies().getDependencies().toString())
-//    /** 遍历构建遍历 可以根据构建类型进行任务处理 */
-////    android.libraryVariants.each{ variant ->
-////
-////    }
-//}
+project.afterEvaluate {
+    logger.log(LogLevel.ERROR,'>>>>> Evaluate End')
+    logger.log(LogLevel.ERROR, assemble.getTaskDependencies().toString())
+    logger.log(LogLevel.ERROR, assemble.getTaskDependencies().getDependencies().toString())
+    /** 遍历构建遍历 可以根据构建类型进行任务处理 */
+    android.libraryVariants.each{ variant ->
+
+    }
+}
 //
 //logger.log(LogLevel.DEBUG, ">>>>>>>>>>> app config End")
 
