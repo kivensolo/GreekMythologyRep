@@ -117,9 +117,9 @@
     <string name="txt_director" translatable="false">导演:%1$s</string>
     <string name="txt_detail" translatable="false">简介:%1$s </string>
     <string name="txt_test_int" translatable="false">评分:%1$d </string>
-    <string name="pls_input_name">请输入用户名</string>
-    <string name="login">登录</string>
-    <string name="user_error_tips">User Name Error!</string>
+    <string name="pls_input_name" translatable="false">请输入用户名</string>
+    <string name="login" translatable="false">登录</string>
+    <string name="user_error_tips" translatable="false">User Name Error!</string>
 
 
 </resources>

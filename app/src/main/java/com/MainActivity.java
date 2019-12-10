@@ -177,6 +177,9 @@ public class MainActivity extends ExpandableListActivity implements OnItemClickL
                         }
                         reader.endArray();
                         break;
+                    case "desc":
+                        reader.nextString();
+                        break;
                     default:
                         throw new ParserException("Unsupported name: " + name);
                 }

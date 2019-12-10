@@ -45,7 +45,7 @@ public class App extends Application {
         initLog();
         initAPPScreenParms();
         initCacheCenter();
-        //initFpsDebugView();
+//        initFpsDebugView();
         initStrictListenner();
         //Bmob.initialize(this, "fea19b87f0795833b30de91f46f1465c");
     }
@@ -54,6 +54,7 @@ public class App extends Application {
         //Takt.stock(this).size(20f).play();
         FpsTools.init(this)
                 .size(30f)
+                .interval(2000)
                 .color(Color.WHITE)
                 .play();
     }
@@ -88,7 +89,7 @@ public class App extends Application {
     @Override
     public void onTerminate() {
         //Takt.finish();
-        //FpsTools.finish();
+        FpsTools.finish();
         super.onTerminate();
     }
 

@@ -35,7 +35,7 @@ static def getGradleUserHome(){
 }
 
 def releaseTime() {
-    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+    return new Date().format("yyyy-MM-dd_HH-mm").toString()
 }
 
 

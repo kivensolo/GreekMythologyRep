@@ -6,7 +6,7 @@
 
     <com.kingz.customviews.chart.FramesCurveChartView
             android:id="@+id/takt_chart"
-            android:background="#667B0E0E"
+            android:background="#2630343c"
             android:layout_height="550dp"
             android:layout_width="700dp"/>
     <TextView

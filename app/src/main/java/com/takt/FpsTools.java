@@ -39,10 +39,10 @@ public class FpsTools {
         program.stop();
     }
 
-    @SuppressWarnings("WeakerAccess")
     public static class Program {
-        private GrapherFramesCallback metronome;
+        private MetronomeCallback metronome;
         private boolean show = true;
+
         private WindowManager wm;
         private View stageView;
         private TextView fpsText;
@@ -51,7 +51,7 @@ public class FpsTools {
         private final DecimalFormat decimal = new DecimalFormat("#.0\' fps\'");
 
         private Program prepare(Application application) {
-            this.metronome = new GrapherFramesCallback();
+            this.metronome = new MetronomeCallback();
             this.params = new WindowManager.LayoutParams();
             this.params.width = WindowManager.LayoutParams.WRAP_CONTENT;
             this.params.height = WindowManager.LayoutParams.WRAP_CONTENT;
@@ -63,19 +63,18 @@ public class FpsTools {
             this.wm = WindowManager.class.cast(application.getSystemService(Context.WINDOW_SERVICE));
             LayoutInflater inflater = LayoutInflater.from(application);
             this.stageView = inflater.inflate(R.layout.stage,null);
-            this.fpsChart = (FramesCurveChartView)this.stageView.findViewById(R.id.takt_chart);
-            this.fpsText = (TextView)this.stageView.findViewById(R.id.takt_fps);
+            this.fpsChart = (FramesCurveChartView)stageView.findViewById(R.id.takt_chart);
+            this.fpsText = (TextView)stageView.findViewById(R.id.takt_fps);
             this.listener(new IAudience() {
                 public void heartbeat(double fps) {
-                    if(Program.this.fpsText != null) {
-                        Program.this.fpsText.setText(Program.this.decimal.format(fps));
+                    if(fpsText != null) {
+                        fpsText.setText(decimal.format(fps));
                     }
                 }
 
                 @Override
                 public void heartstop(long times,long delayDiff) {
                     //ZLog.e(TAG,"Droped_Frame!! times:" + times + "  delayDiff:"+delayDiff);
-                    //LogMonitor.getInstance().startMonitor();
                     fpsChart.addYData(delayDiff);
                 }
             });
@@ -107,6 +106,9 @@ public class FpsTools {
             return this;
         }
 
+        /*
+        * alpha from = 0.0, to = 1.0
+        */
         public Program alpha(float alpha) {
             this.fpsText.setAlpha(alpha);
             return this;
@@ -128,33 +130,34 @@ public class FpsTools {
         }
 
         public Program seat(Seats seat) {
-            switch(seat.ordinal()) {
-            case 1:
-                this.params.gravity = Gravity.START;
-                break;
-            case 2:
-                this.params.gravity = Gravity.TOP|Gravity.START;
-                break;
-            case 3:
-                this.params.gravity = Gravity.TOP|Gravity.CENTER;
-                break;
-            case 4:
-                this.params.gravity = Gravity.CENTER;
-                break;
-            case 5:
-                this.params.gravity = Gravity.CENTER | Gravity.END;
-                break;
-            case 6:
-                this.params.gravity = Gravity.START | Gravity.CENTER;
-                break;
-            case 7:
-                this.params.gravity = Gravity.BOTTOM | Gravity.END;
-                break;
-            case 8:
-                this.params.gravity = Gravity.BOTTOM | Gravity.START;
-                break;
-            case 9:
-                this.params.gravity = Gravity.BOTTOM|Gravity.CENTER;
+            switch (seat) {
+                case TOP_RIGHT:
+                    params.gravity = Gravity.TOP | Gravity.END;
+                    break;
+                case TOP_LEFT:
+                    params.gravity = Gravity.TOP | Gravity.START;
+                    break;
+                case TOP_CENTER:
+                    params.gravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
+                    break;
+                case CENTER:
+                    params.gravity = Gravity.CENTER;
+                    break;
+                case RIGHT_CENTER:
+                    params.gravity = Gravity.END | Gravity.CENTER_VERTICAL;
+                    break;
+                case LEFT_CENTER:
+                    params.gravity = Gravity.START | Gravity.CENTER_VERTICAL;
+                    break;
+                case BOTTOM_RIGHT:
+                    params.gravity = Gravity.BOTTOM | Gravity.END;
+                    break;
+                case BOTTOM_LEFT:
+                    params.gravity = Gravity.BOTTOM | Gravity.START;
+                    break;
+                case BOTTOM_CENTER:
+                    params.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
+                    break;
             }
             return this;
         }

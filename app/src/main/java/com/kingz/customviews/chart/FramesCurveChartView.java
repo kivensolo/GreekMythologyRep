@@ -1,13 +1,17 @@
 package com.kingz.customviews.chart;
 
 import android.content.Context;
-import android.graphics.*;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.CornerPathEffect;
+import android.graphics.Paint;
+import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.View;
+
 import com.kingz.utils.ZLog;
 import com.module.tools.ScreenTools;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -24,6 +28,8 @@ import java.util.List;
  *             Time
  *  In the graph view,the y-axis displays the frame time in milliseconds,
  *  The x-axis shows the time elapsed.
+ *
+ *  FIXME 目前的绘制对性能消耗较大  需优化
  */
 public class FramesCurveChartView extends View {
 
@@ -94,7 +100,7 @@ public class FramesCurveChartView extends View {
         coordinateLinePaint.setColor(Color.parseColor("#adff2f"));
         coordinateLinePaint.setStrokeWidth(3f);
         coordinateLinePaint.setStyle(Paint.Style.FILL);
-        pointX = new ArrayList<>(Frame_Latency);
+        pointX = new LinkedList<>();
         pointY = new LinkedList<>();
         curvePath = new Path();
     }
@@ -132,12 +138,13 @@ public class FramesCurveChartView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         if(!hasDrawLine){
+//            hasDrawLine = true;
             drawYCoordinateValue(canvas);
             drawYCoordinateLine(canvas);
             drawXCoordinateText(canvas);
             drawCoordinate(canvas);
         }
-        drawCurveChart(canvas);
+//        drawCurveChart(canvas);
         super.onDraw(canvas);
     }
 
