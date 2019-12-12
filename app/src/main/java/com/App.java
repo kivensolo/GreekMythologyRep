@@ -47,6 +47,10 @@ public class App extends Application {
         initCacheCenter();
 //        initFpsDebugView();
         initStrictListenner();
+//        STCFrameChecker.getInstance()
+//                .setLogFileSize(50)
+//                .setFrameThreshold(2)
+//                .start();
         //Bmob.initialize(this, "fea19b87f0795833b30de91f46f1465c");
     }
 
