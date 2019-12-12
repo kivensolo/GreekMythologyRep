@@ -1,21 +1,13 @@
 package com.kingz.utils;
 
 import android.content.Context;
-import android.graphics.Color;
+import android.os.Build;
 import android.util.Log;
-import android.util.TypedValue;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.MarginLayoutParams;
 import android.view.ViewParent;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.kingz.customdemo.R;
 import com.module.tools.ScreenTools;
 
 import java.lang.reflect.Method;
@@ -89,36 +81,6 @@ public class UITools {
         params.bottomMargin = bottomMargin;
     }
 
-    public final static void ShowCustomToast(Context context, String str) {
-        LinearLayout root = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.linearlayout_test, null);//id随便写的
-        root.setBackgroundResource(R.drawable.android_shape_define); //id随便写的
-        ImageView mIcon = (ImageView) root.findViewById(R.id.image_local); //id随便写的
-        LinearLayout.LayoutParams mIconParams = (LinearLayout.LayoutParams) mIcon.getLayoutParams();
-        mIconParams.width = ScreenTools.Operation(32);
-        mIconParams.height = ScreenTools.Operation(32);
-        mIconParams.bottomMargin = ScreenTools.Operation(5);
-        mIconParams.topMargin = ScreenTools.Operation(5);
-        mIconParams.leftMargin = ScreenTools.Operation(15);
-
-        mIcon.setLayoutParams(mIconParams);
-
-        TextView txtContent = (TextView) root.findViewById(android.R.id.message);
-        txtContent.setTextSize(TypedValue.COMPLEX_UNIT_PX, ScreenTools.Operation(24));
-        txtContent.setMaxEms(20);
-        txtContent.setShadowLayer(3, 1, 1, Color.BLACK);
-        txtContent.setText(str);
-        txtContent.setSingleLine();
-        LinearLayout.LayoutParams mtxtParams = (LinearLayout.LayoutParams) txtContent.getLayoutParams();
-        mtxtParams.rightMargin = ScreenTools.Operation(15);
-
-        Toast toast = new Toast(context.getApplicationContext());
-        toast.setGravity(Gravity.CENTER_VERTICAL, ScreenTools.Operation(0), ScreenTools.Operation(50));
-        toast.setDuration(Toast.LENGTH_SHORT);
-        toast.setView(root);
-        toast.show();
-    }
-
-
     /**
      * 通过系统反射方法强制隐藏状态栏
      * 适用系统应该是:
@@ -128,6 +90,9 @@ public class UITools {
      * @param context
      */
     public void hindStatuBarByInvoke(Context context) {
+        if(Build.VERSION.SDK_INT <  Build.VERSION_CODES.LOLLIPOP){
+            return;
+        }
         try {
             Class<?> localClass2 = Class.forName("android.os.SystemProperties");
             Method localMethod2 = localClass2.getMethod("set", String.class,
@@ -135,7 +100,6 @@ public class UITools {
             String arg1 = "sys.statusbar.forcehide";
             String arg2 = "true";
             localMethod2.invoke(null, arg1, arg2);
-            ZLog.i(TAG, "强制隐藏状态栏");
             Object localObject = context.getSystemService("statusbar");
             Class<?> localClass1 = localObject.getClass();
             int i = localClass1.getField("DISABLE_MASK").getInt(null);

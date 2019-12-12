@@ -10,33 +10,35 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.App;
 import com.base.BaseActivity;
 import com.core.logic.GlobalCacheCenter;
-import com.kingz.FileDownloader;
 import com.kingz.customdemo.R;
 import com.kingz.customviews.grogress.HorizontalProgressBarView;
 import com.kingz.utils.NetTools;
 import com.kingz.utils.ToastTools;
 import com.kingz.utils.ZLog;
+import com.kingz.work.FileDownloadWorker;
+import com.kingz.work.FileDownloader;
 import com.module.tools.ScreenTools;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import static com.kingz.FileDownloader.ERROR;
-import static com.kingz.FileDownloader.FINISHED;
-import static com.kingz.FileDownloader.PROGRESSING;
-import static com.kingz.FileDownloader.RECIVING;
-import static com.kingz.FileDownloader.STARTING;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
+
+import static com.kingz.work.FileDownloader.ERROR;
+import static com.kingz.work.FileDownloader.FINISHED;
+import static com.kingz.work.FileDownloader.PROGRESSING;
+import static com.kingz.work.FileDownloader.RECIVING;
+import static com.kingz.work.FileDownloader.STARTING;
 
 /**
  * Created by KingZ on 2015/11/3.
@@ -48,16 +50,12 @@ public class DownloadAPPActivity extends BaseActivity implements View.OnClickLis
     public static final String TAG = "DownloadAPPActivity";
     public static final int PAGE_ID = R.layout.bitmap_demo_layout;
     public static final int TIMEOUT_MILLIS = 10 * 1000;         //网络超时时间阀值
-    private Button btn_NetPic;
-    private Button btn_LocalPic;
     private Button btn_downLoad;
-    private ImageView imgNetPic, imgResPic;
     private FileDownloader _downloader;
     private Context context;
     private String appUrlPath = "http://gyxza3.eymlz.com/yq/yx_lm1/gat5sjb.apk";
     private HttpURLConnection urlConnection;
     private InputStream downloadIs = null;
-    private OutputStream downloadOs = null;
     private File downloadFile;
     private HorizontalProgressBarView mProgressBarView;
     private float percent;
@@ -71,14 +69,8 @@ public class DownloadAPPActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void initviews() {
-        btn_NetPic = (Button) findViewById(R.id.loadpic_btn);
-        btn_LocalPic = (Button) findViewById(R.id.localpic_btn);
-        imgNetPic = (ImageView) findViewById(R.id.image_net);
-        imgResPic = (ImageView) findViewById(R.id.image_local);
         btn_downLoad = (Button) findViewById(R.id.btn_down_app);
 
-        btn_NetPic.setOnClickListener(this);
-        btn_LocalPic.setOnClickListener(this);
         btn_downLoad.setOnClickListener(this);
 
         String configPathPrx = GlobalCacheCenter.getInstance().getAppConfigPath();
@@ -94,9 +86,6 @@ public class DownloadAPPActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.loadpic_btn:
-
-                break;
             case R.id.btn_down_app:
                 ToastTools.getInstance().showMgtvWaringToast(context, "开始下载....");
                 initProgressView();
@@ -150,8 +139,13 @@ public class DownloadAPPActivity extends BaseActivity implements View.OnClickLis
         }
 //        Java方式连接网络
 //        connectByJava(url);
-
         downloadFile = createFileDir(); //确定文件保存路径
+
+        OneTimeWorkRequest fileDownloadRequest = new OneTimeWorkRequest
+                .Builder(FileDownloadWorker.class)
+                .build();
+        WorkManager.getInstance().enqueue(fileDownloadRequest);
+
         _downloader = new FileDownloader();
         _downloader.start(url, downloadFile, true, new Handler(new Handler.Callback() {
             @Override

@@ -31,7 +31,7 @@ android {
         signingConfig signingConfigs.ZekeSigned
         minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion 24
-        buildConfigField("String", "APP_NAME", "\"STARCOR\"")
+        buildConfigField("String", "APP_NAME", "\"Greek\"")
 
         testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
     }
@@ -92,7 +92,6 @@ android {
         doNotStrip '*/mips64/*.so'
     }
 
-
     applicationVariants.all { variant ->
         def prefix = 'Greek'
         def versionName = 'V' + variant.getVersionName()
@@ -149,6 +148,10 @@ dependencies {
     androidTestImplementation "com.android.support.test:rules:${lib_versions.tr}"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:${lib_versions.es_core}"
     androidTestImplementation "com.android.support:support-annotations:${lib_versions.support}"
+
+
+    // WorkManager (Java only)
+    implementation "android.arch.work:work-runtime:$lib_versions.work_version"
 }
 
 //
