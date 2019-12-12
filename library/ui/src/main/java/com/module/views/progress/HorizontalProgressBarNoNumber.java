@@ -1,5 +1,6 @@
-package com.kingz.customviews.grogress;
+package com.module.views.progress;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -9,20 +10,19 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
 import android.view.View;
-import com.App;
+
 import com.module.tools.ScreenTools;
 
-import java.lang.ref.WeakReference;
+import java.util.concurrent.Executors;
 
 /**
  * author: King.Z <br>
  * date:  2016/6/30 17:56 <br>
  * description: Horizontal progressBar customView <br>
  */
-public class HorizontalProgressBarView extends View {
+public class HorizontalProgressBarNoNumber extends View {
 
-    private static final String TAG = HorizontalProgressBarView.class.getSimpleName();
-    private static final int MSG_NUM = 0x6029;
+    private static final int MSG_NUM = 0x0001;
     private boolean isRunning = false;
     private boolean isComplete;
     private Paint innerPaint;        //内部画笔
@@ -51,25 +51,21 @@ public class HorizontalProgressBarView extends View {
         this.listener = listener;
     }
 
-    public HorizontalProgressBarView(Context context) {
+    public HorizontalProgressBarNoNumber(Context context) {
         super(context);
         initViews();
     }
 
-    public HorizontalProgressBarView(Context context, AttributeSet attrs) {
+    public HorizontalProgressBarNoNumber(Context context, AttributeSet attrs) {
         super(context, attrs);
         initViews();
     }
 
-    private class UIHandler extends Handler {
-        private WeakReference<Context> mContext;
-
-        UIHandler(Context c) {
-            mContext = new WeakReference<Context>(c);
-        }
+    @SuppressLint("HandlerLeak")
+    private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-             switch (msg.what) {
+            switch (msg.what) {
                 case MSG_NUM:
                     refreshProgress();
                     break;
@@ -78,8 +74,7 @@ public class HorizontalProgressBarView extends View {
             }
         }
 
-    }
-    private Handler mHandler = new UIHandler(App.getAppInstance().getAppContext());
+    };
 
     private void initViews() {
         isRunning = true;
@@ -171,7 +166,7 @@ public class HorizontalProgressBarView extends View {
     }
 
     public void beginDraw() {
-        new Thread() {
+        Executors.newCachedThreadPool().execute(new Runnable() {
             @Override
             public void run() {
                 while (isRunning) {
@@ -183,6 +178,6 @@ public class HorizontalProgressBarView extends View {
                     }
                 }
             }
-        }.start();
+        });
     }
 }

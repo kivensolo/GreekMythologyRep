@@ -16,13 +16,13 @@ import com.App;
 import com.base.BaseActivity;
 import com.core.logic.GlobalCacheCenter;
 import com.kingz.customdemo.R;
-import com.kingz.customviews.grogress.HorizontalProgressBarView;
 import com.kingz.utils.NetTools;
 import com.kingz.utils.ToastTools;
 import com.kingz.utils.ZLog;
 import com.kingz.work.FileDownloadWorker;
 import com.kingz.work.FileDownloader;
 import com.module.tools.ScreenTools;
+import com.module.views.progress.HorizontalProgressBarNoNumber;
 
 import java.io.File;
 import java.io.IOException;
@@ -57,7 +57,7 @@ public class DownloadAPPActivity extends BaseActivity implements View.OnClickLis
     private HttpURLConnection urlConnection;
     private InputStream downloadIs = null;
     private File downloadFile;
-    private HorizontalProgressBarView mProgressBarView;
+    private HorizontalProgressBarNoNumber mProgressBarView;
     private float percent;
 
     @Override
@@ -69,8 +69,8 @@ public class DownloadAPPActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void initviews() {
+        initProgressView();
         btn_downLoad = (Button) findViewById(R.id.btn_down_app);
-
         btn_downLoad.setOnClickListener(this);
 
         String configPathPrx = GlobalCacheCenter.getInstance().getAppConfigPath();
@@ -88,13 +88,7 @@ public class DownloadAPPActivity extends BaseActivity implements View.OnClickLis
         switch (v.getId()) {
             case R.id.btn_down_app:
                 ToastTools.getInstance().showMgtvWaringToast(context, "开始下载....");
-                initProgressView();
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        startDownLoadFile(appUrlPath);
-                    }
-                });
+                startDownLoadFile(appUrlPath);
                 break;
             default:
                 break;
@@ -105,11 +99,11 @@ public class DownloadAPPActivity extends BaseActivity implements View.OnClickLis
      * 进度条初始化
      */
     private void initProgressView() {
-        mProgressBarView = new HorizontalProgressBarView(context);
+        mProgressBarView = new HorizontalProgressBarNoNumber(context);
         mProgressBarView.setTotalWidth(ScreenTools.SCREEN_WIDTH / 2);
         mProgressBarView.setInnerPaintColor(0xFF9dbaf2);
         mProgressBarView.setOuterPaintColor(0x19ffffff);
-        mProgressBarView.setProgressCompleteListener(new HorizontalProgressBarView.ProgressCompleteListener() {
+        mProgressBarView.setProgressCompleteListener(new HorizontalProgressBarNoNumber.ProgressCompleteListener() {
             @Override
             public void onComplete() {
                 ToastTools.getInstance().showMgtvWaringToast(context, "Done!!");
@@ -144,8 +138,10 @@ public class DownloadAPPActivity extends BaseActivity implements View.OnClickLis
         OneTimeWorkRequest fileDownloadRequest = new OneTimeWorkRequest
                 .Builder(FileDownloadWorker.class)
                 .build();
-        WorkManager.getInstance().enqueue(fileDownloadRequest);
+        WorkManager.getInstance()
+                .enqueue(fileDownloadRequest);
 
+        //TODO 替换 FileDownloader
         _downloader = new FileDownloader();
         _downloader.start(url, downloadFile, true, new Handler(new Handler.Callback() {
             @Override

@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.kingz.net.OkHttpClientManager;
 import com.kingz.utils.ExecutorServiceHelper;
+import com.kingz.utils.UriUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -160,7 +161,7 @@ public class FileDownloader implements Runnable {
     public void run() {
         try {
             Log.d(TAG, "start downloading... " + download_url);
-            if (isUrlInValid()) {
+            if (UriUtils.isValid(new URI(download_url))) {
                 return;
             }
 
@@ -282,19 +283,5 @@ public class FileDownloader implements Runnable {
         return okClient.getAsyn(request.build());
     }
 
-    /**
-     * 检查url地址是否是无效的
-     *
-     * @return true 无效
-     * @throws URISyntaxException URI语法异常
-     */
-    private boolean isUrlInValid() throws URISyntaxException {
-        URI uri = new URI(download_url);
-        if (uri.getHost() == null || uri.getPath() == null) {
-            Log.e(TAG, "URI no host/path error!! " + download_url);
-            this.sendMessage(ERROR,MSG_URL_INVALID);
-            return true;
-        }
-        return false;
-    }
+
 }
