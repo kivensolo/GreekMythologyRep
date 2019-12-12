@@ -16,7 +16,7 @@
          <!--All customizations that are NOT specific to a particular API-level can go here.-->
     </style>
 
-    <style name="NoTitleBarTheme" parent="@android:style/Theme.Light.NoTitleBar"/>
+    <style name="NoActionBarTheme" parent="Theme.AppCompat.Light.NoActionBar"/>
 
 
     <style name="Lollipop_NoActionBar" parent="AppBaseTheme">
@@ -85,7 +85,7 @@
         <item name="android:contentDescription">@string/exo_controls_pause_description</item>
     </style>
 
-    <style name="PlayTheme" parent="NoTitleBarTheme">
+    <style name="PlayTheme" parent="NoActionBarTheme">
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>

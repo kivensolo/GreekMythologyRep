@@ -72,7 +72,7 @@
             android:icon="@drawable/m"
             android:label="Geek分身入口"
             android:targetActivity="com.SplashActivity"
-            android:theme="@style/NoTitleBarTheme">
+            android:theme="@style/NoActionBarTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -87,7 +87,7 @@
             android:icon="@drawable/raspberry_pi_logo"
             android:label="双12"
             android:targetActivity="com.SplashActivity"
-            android:theme="@style/NoTitleBarTheme">
+            android:theme="@style/NoActionBarTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -100,7 +100,7 @@
         <activity
             android:name="com.MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/NoTitleBarTheme">
+            android:theme="@style/NoActionBarTheme">
             <!--<intent-filter>-->
             <!--<action android:name="android.intent.action.MAIN" />-->
             <!--<category android:name="android.intent.category.LAUNCHER"/>-->
@@ -134,49 +134,49 @@
         <!-- 原生SeekBar -->
         <activity
             android:name="com.kingz.widgets.android_src.NativeSeekBar"
-            android:theme="@style/NoTitleBarTheme"/>
+            android:theme="@style/NoActionBarTheme"/>
 
         <!-- 自定义 SeekBar -->
         <activity
             android:name="com.bling.pages.UsingCustomSeekBar"
-            android:theme="@style/NoTitleBarTheme"/>
+            android:theme="@style/NoActionBarTheme"/>
         <activity
             android:name="com.kingz.view.shape.ShapeDrawOval"
-            android:theme="@style/NoTitleBarTheme"/>
+            android:theme="@style/NoActionBarTheme"/>
 
         <activity
             android:name="com.kingz.view.surface.DrawRectWithSurface"
-            android:theme="@style/NoTitleBarTheme"/>
+            android:theme="@style/NoActionBarTheme"/>
 
         <!-- progressBar -->
         <activity
             android:name="com.kingz.widgets.android_src.NativeProgressBar"
-            android:theme="@style/NoTitleBarTheme"/>
+            android:theme="@style/NoActionBarTheme"/>
 
 
         <!-- 原生布局汇总页面 -->
         <activity
             android:name="com.kingz.pages.LayoutPage"
-            android:theme="@style/NoTitleBarTheme"/>
+            android:theme="@style/NoActionBarTheme"/>
 
         <activity
             android:name="com.kingz.four_components.activity.news.NewsActivity"
             android:screenOrientation="landscape"
-            android:theme="@style/NoTitleBarTheme"/>
+            android:theme="@style/NoActionBarTheme"/>
 
         <!--常用控件集合-->
         <activity
             android:name="com.kingz.widgets.android_src.BasicControlsActivity"
-            android:theme="@style/NoTitleBarTheme"/>
+            android:theme="@style/NoActionBarTheme"/>
         <activity
             android:name="com.kingz.widgets.android_src.AppsGridView"
-            android:theme="@style/NoTitleBarTheme"/>
+            android:theme="@style/NoActionBarTheme"/>
 
         <!-- 自定义控件的ListView-->
         <activity
             android:name="com.kingz.pages.CustomViewsPage"
             android:screenOrientation="portrait"
-            android:theme="@style/NoTitleBarTheme"/>
+            android:theme="@style/NoActionBarTheme"/>
 
         <activity
             android:name="com.kingz.text.LableTextViewPage"
@@ -185,7 +185,7 @@
         <activity
             android:name="com.kingz.text.metrics.FontMetricsDemoActivity"
             android:screenOrientation="landscape"
-            android:theme="@style/NoTitleBarTheme"/>
+            android:theme="@style/NoActionBarTheme"/>
 
         <activity
             android:name="com.kingz.text.langs.TextViewOfLanguages"
@@ -194,11 +194,11 @@
         <!-- 四大组件的listview -->
         <activity
             android:name="com.kingz.pages.FourComponentPage"
-            android:theme="@style/NoTitleBarTheme"/>
+            android:theme="@style/NoActionBarTheme"/>
 
         <activity
             android:name="com.kingz.four_components.ServiceComponentsACT"
-            android:theme="@style/NoTitleBarTheme"/>
+            android:theme="@style/NoActionBarTheme"/>
 
         <activity
             android:name="com.kingz.four_components.ObtainProviderDataPage"
@@ -207,72 +207,72 @@
         <!--文件及bitmap操作的activity-->
         <activity
             android:name="com.kingz.file.FileAndPicTestACT"
-            android:theme="@style/NoTitleBarTheme"/>
+            android:theme="@style/NoActionBarTheme"/>
         <activity
             android:name="com.apiDemo.content.ExternalStorage"
-            android:theme="@style/NoTitleBarTheme"/>
+            android:theme="@style/NoActionBarTheme"/>
 
         <activity
             android:name="com.kingz.pages.SaveDataByFilePage"
-            android:theme="@style/NoTitleBarTheme"/>
+            android:theme="@style/NoActionBarTheme"/>
 
 
         <!--BitmapDemo页面-->
         <activity
             android:name="com.kingz.file.DownloadAPPActivity"
-            android:theme="@style/NoTitleBarTheme"/>
+            android:theme="@style/NoActionBarTheme"/>
 
         <!--图片缓存测试页面-->
         <activity
             android:name="com.asynctask_jsontest.LruPicListViewActivity"
-            android:theme="@style/NoTitleBarTheme"/>
+            android:theme="@style/NoActionBarTheme"/>
 
         <!--图片缓存测试页面-->
 
         <!--BitMap测试页面-->
         <activity
             android:name="com.kingz.pages.photo.BitmapPhotosActivity"
-            android:theme="@style/NoTitleBarTheme"/>
+            android:theme="@style/NoActionBarTheme"/>
 
         <activity
             android:name="com.kingz.pages.photo.memory.MemoryCheck"
             android:screenOrientation="landscape"
-            android:theme="@style/NoTitleBarTheme"/>
+            android:theme="@style/NoActionBarTheme"/>
 
         <!--ColorMatrix-->
         <activity
             android:name="com.kingz.pages.photo.colormatrix.ColorMatrixDemo"
-            android:theme="@style/NoTitleBarTheme"
+            android:theme="@style/NoActionBarTheme"
             tools:targetApi="lollipop"/>
 
         <!--文件管理页面-->
         <activity
             android:name="com.kingz.filemanager.FileManagerActivity"
-            android:theme="@style/NoTitleBarTheme"/>
+            android:theme="@style/NoActionBarTheme"/>
 
         <!--文件管理页面-->
         <activity
             android:name="com.kingz.communicat.HMLActuivity"
-            android:theme="@style/NoTitleBarTheme"/>
+            android:theme="@style/NoActionBarTheme"/>
 
         <!-- ProgressViewsActivity -->
         <activity
             android:name="com.bling.pages.ProgressViewsActivity"
-            android:theme="@style/NoTitleBarTheme"/>
+            android:theme="@style/NoActionBarTheme"/>
 
         <!--webAppActivity-->
         <activity
             android:name="com.kingz.view.webview.WebViewActivity"
-            android:theme="@style/NoTitleBarTheme"/>
+            android:theme="@style/NoActionBarTheme"/>
 
         <!-- 自定义显示的listView -->
         <activity
             android:name="com.kingz.view.listview.CustomListViewActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/NoTitleBarTheme"/>
+            android:theme="@style/NoActionBarTheme"/>
         <activity
             android:name="com.kingz.recyclerview.MusicPosterPages"
-            android:theme="@style/NoTitleBarTheme"
+            android:theme="@style/NoActionBarTheme"
             android:screenOrientation="portrait"/>
 
         <!-- 可左右滑动的ListView -->
@@ -283,37 +283,37 @@
         <!-- WZViewPagerActicity -->
         <activity
             android:name="com.kingz.scroll.view_pager.WZViewPagerActicity"
-            android:theme="@style/NoTitleBarTheme"/>
+            android:theme="@style/NoActionBarTheme"/>
         <!-- WaveLoadingActivity -->
         <activity
             android:name="com.bling.pages.WaveLoadingActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/NoTitleBarTheme"/>
+            android:theme="@style/NoActionBarTheme"/>
         <activity
             android:name="com.kingz.scroll.SoapFlingActivity"
-            android:theme="@style/NoTitleBarTheme"/>
+            android:theme="@style/NoActionBarTheme"/>
 
         <!-- OriginViewPager -->
         <activity
             android:name="com.kingz.widgets.android_src.OriginViewPager"
-            android:theme="@style/NoTitleBarTheme"/>
+            android:theme="@style/NoActionBarTheme"/>
 
         <!-- 百度地图View -->
 
         <!-- FilmList -->
         <activity
             android:name="com.kingz.pages.photo.filmlist.FilmsListActivity"
-            android:theme="@style/NoTitleBarTheme"/>
+            android:theme="@style/NoActionBarTheme"/>
 
         <!-- Span页面 -->
         <activity
             android:name="com.kingz.widgets.android_src.SpansDemo"
-            android:theme="@style/NoTitleBarTheme"/>
+            android:theme="@style/NoActionBarTheme"/>
 
         <!-- 讯飞语音页面 -->
         <activity
             android:name="com.iflytek.synthesizer.VoiceActivity"
-            android:theme="@style/NoTitleBarTheme"/>
+            android:theme="@style/NoActionBarTheme"/>
 
 
         <!-- ************ 媒体 *********** -->
