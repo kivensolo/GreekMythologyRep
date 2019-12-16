@@ -34,6 +34,20 @@ android {
         buildConfigField("String", "APP_NAME", "\"Greek\"")
 
         testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+
+//        ndk{
+//            abiFilters 'x86','x86_64','armeabi-v7a','armeabi','armea64-v8a'
+//        }
+
+        externalNativeBuild {
+            cmake {
+                cppFlags "-std=c++11 -frtti -fexceptions"
+                abiFilters 'armeabi-v7a','x86'
+
+                version "3.6"
+                //  .externalNativeBuild/cmake/debug/{abi}/cmake_build_command.txt
+            }
+        }
     }
 
     buildTypes {
@@ -52,27 +66,35 @@ android {
         }
     }
 
+    // Use this block to link Gradle to your CMake or ndk-build script.
+    externalNativeBuild {
+        cmake {
+            // Provides a relative path to your CMake build script.
+            path "CMakeLists.txt"
+        }
+    }
+
     // Specifies flavor dimensions.
-    flavorDimensions "area","devices"
+    flavorDimensions "area"
 
     productFlavors{
         ChengDu{
             dimension "area"
             applicationId 'com.demo.chengdu'
         }
-
-        SanYa{
-            dimension "area"
-            applicationId 'com.demo.chongqing'
-        }
-
-        CH{
-            dimension "devices"
-        }
-
-        TCL{
-            dimension "devices"
-        }
+//
+//        SanYa{
+//            dimension "area"
+//            applicationId 'com.demo.sanya'
+//        }
+//
+//        CH{
+//            dimension "devices"
+//        }
+//
+//        TCL{
+//            dimension "devices"
+//        }
     }
 
     configurations {

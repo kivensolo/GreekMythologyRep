@@ -2,7 +2,7 @@ ext {
     modulePrefix = ':'
 
     android = [compileSdkVersion: 27,
-               buildToolsVersion: '27.0.1',
+               buildToolsVersion: '28.0.3', //AGP 3.2.1以后默认最低28.0.3
                minSdkVersion    : 17,
                targetSdkVersion : 27,
                versionCode      : 1,

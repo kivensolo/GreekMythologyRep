@@ -41,6 +41,11 @@ public class MainActivity extends ExpandableListActivity implements OnItemClickL
     private CommExpandableListAdapter expandAdapter;
     private AnimatedExpandableListView listView;
 
+
+    static {
+        System.loadLibrary("testNative-lib");
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +56,8 @@ public class MainActivity extends ExpandableListActivity implements OnItemClickL
         listView.setOnGroupClickListener(new ImpOnGroupClickListener());
 //		getExpandableListView().setIndicatorBounds(UITools.SCREEN_WIDTH - 60, UITools.SCREEN_WIDTH - 27);
 
+        String fromJNI = stringFromJNI();
+        ZLog.d(TAG,"fromJNI = " + fromJNI);
         String[] uris;
         ArrayList<String> uriList = new ArrayList<>();
         AssetManager assetManager = getAssets();
@@ -232,4 +239,7 @@ public class MainActivity extends ExpandableListActivity implements OnItemClickL
         }
         expandAdapter.setSampleGroups(groups);
     }
+
+
+    public native String stringFromJNI();
 }
