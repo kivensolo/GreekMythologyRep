@@ -5,7 +5,21 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
-import android.graphics.*;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Camera;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.PixelFormat;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
+import android.graphics.Shader;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -107,6 +121,7 @@ public class BitMapUtils {
      * Don't let anyone instantiate this class.
      */
     private BitMapUtils() {
+        // Utility class.
         throw new UnsupportedOperationException("cannot be instantiated");
     }
 
@@ -1024,6 +1039,13 @@ public class BitMapUtils {
      */
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public static int getBitmapByteSize(Bitmap bitmap) {
+        // The return value of getAllocationByteCount silently changes for recycled bitmaps from the
+        // internal buffer size to row bytes * height. To avoid random inconsistencies in caches, we
+        // instead assert here.
+        if (bitmap.isRecycled()) {
+            throw new IllegalStateException("Cannot obtain size for recycled Bitmap: " + bitmap
+                    + "[" + bitmap.getWidth() + "x" + bitmap.getHeight() + "] " + bitmap.getConfig());
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             // Workaround for KitKat initial release NPE in Bitmap, fixed in MR1. See issue #148.
             try {
