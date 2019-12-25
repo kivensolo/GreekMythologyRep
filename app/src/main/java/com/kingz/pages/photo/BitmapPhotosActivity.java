@@ -10,6 +10,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.kingz.customdemo.R;
 import com.kingz.utils.BitMapUtils;
 import com.kingz.utils.ScreenShotUtils;
@@ -52,6 +55,7 @@ public class BitmapPhotosActivity extends PhotosActivity {
 
         datas.add(new ItemInfo("加投影",srcBitmap));
         datas.add(new ItemInfo("截屏", srcBitmap));
+        datas.add(new ItemInfo("GIF", null));
 
         //datas.add("高斯模糊",BitMapUtils.guassBlur(srcBitmap,this,15.5f));
         super.onCreate(savedInstanceState);
@@ -66,6 +70,19 @@ public class BitmapPhotosActivity extends PhotosActivity {
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         super.onItemClick(parent, view, position, id);
+        if(datas.get(position).getName().equals("GIF")){
+            RequestOptions requestOptions = new RequestOptions()
+                    .placeholder(R.drawable.android) //设置“加载中”状态时显示的图片
+                    .override(200, 200)
+                    .centerCrop()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)   //既缓存全尺寸又缓存其他尺寸
+                    .error(R.drawable.alert_dialog_icon); //设置“加载失败”状态时显示的图片
+
+            Glide.with(this)
+                    .load("http://p1.pstatp.com/large/166200019850062839d3")
+                    .apply(requestOptions)
+                    .into(img1);
+        }
         setShowBitMap(datas.get(position).dstBitmap);
         if(datas.get(position).getName().equals("加投影")){
             Paint paint = new Paint();
