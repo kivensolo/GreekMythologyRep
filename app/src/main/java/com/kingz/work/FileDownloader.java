@@ -6,7 +6,7 @@ import android.util.Log;
 
 import com.kingz.net.OkHttpClientManager;
 import com.kingz.utils.ExecutorServiceHelper;
-import com.kingz.utils.UriUtils;
+import com.zeke.kangaroo.utils.UriUtils;
 
 import java.io.File;
 import java.io.IOException;

@@ -2,7 +2,8 @@ package com.kingz.inject;
 
 import android.app.Activity;
 import android.view.View;
-import com.kingz.utils.ZLog;
+
+import com.zeke.kangaroo.utils.ZLog;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;

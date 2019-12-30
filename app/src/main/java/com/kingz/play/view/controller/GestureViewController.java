@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.App;
 import com.kingz.customdemo.R;
-import com.kingz.utils.TimeUtils;
+import com.zeke.kangaroo.utils.TimeUtils;
 
 /**
  * author：KingZ

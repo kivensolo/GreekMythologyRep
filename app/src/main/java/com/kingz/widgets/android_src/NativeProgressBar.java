@@ -9,6 +9,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
 import com.kingz.customdemo.R;
 import com.mplayer.view.ApolloSeekBar;
 

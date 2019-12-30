@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
+
 import com.kingz.customdemo.R;
 
 import java.util.ArrayList;

@@ -3,7 +3,7 @@ package com.kingz.work;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.kingz.utils.ZLog;
+import com.zeke.kangaroo.utils.ZLog;
 
 import androidx.work.Data;
 import androidx.work.Worker;

@@ -1,13 +1,18 @@
 package com.kingz.communicat;
 
 import android.app.Activity;
-import android.os.*;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.os.MessageQueue;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
 import com.kingz.customdemo.R;
-import com.kingz.utils.ZLog;
+import com.zeke.kangaroo.utils.ZLog;
 
 /**
  * author: King.Z <br>

@@ -26,8 +26,8 @@ import com.kingz.play.presenter.PlayPresenter;
 import com.kingz.play.view.BasePlayPop;
 import com.kingz.play.view.IPlayerView;
 import com.kingz.play.view.controller.PlayerUiSwitcher;
-import com.kingz.utils.VolumeTools;
 import com.module.tools.ScreenTools;
+import com.zeke.kangaroo.utils.VolumeUtils;
 
 /**
  * author：KingZ
@@ -330,7 +330,7 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
         @Override
         public void onGestureRightTB(float ratio) {
 //            ZLog.d(TAG,"onGesture RightTB ratio=" + ratio);
-            VolumeTools.setStreamMusicVolume(getContext(),ratio);
+            VolumeUtils.setStreamMusicVolume(getContext(),ratio);
             playerUiSwitcher.updateVolume(ratio);
         }
 

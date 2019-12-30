@@ -9,11 +9,12 @@ import android.graphics.RectF;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
+
 import com.App;
 import com.kingz.customdemo.R;
-import com.kingz.utils.ZLog;
 import com.kingz.widgets.text.LogTextBox;
 import com.module.tools.ScreenTools;
+import com.zeke.kangaroo.utils.ZLog;
 
 /**
  * author: King.Z

@@ -10,6 +10,7 @@ import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.LinearLayout;
+
 import com.kingz.view.ViewsActivity;
 
 /**

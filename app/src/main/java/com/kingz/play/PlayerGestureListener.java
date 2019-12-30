@@ -6,9 +6,9 @@ import android.view.MotionEvent;
 import android.view.ViewConfiguration;
 
 import com.kingz.play.gesture.IGestureCallBack;
-import com.kingz.utils.VolumeTools;
-import com.kingz.utils.ZLog;
 import com.module.tools.ScreenTools;
+import com.zeke.kangaroo.utils.VolumeUtils;
+import com.zeke.kangaroo.utils.ZLog;
 
 import java.util.concurrent.TimeUnit;
 
@@ -49,7 +49,7 @@ public class PlayerGestureListener extends GestureDetector.SimpleOnGestureListen
         density = context.getResources().getDisplayMetrics().density;
 
         brightnessValue = ScreenTools.getScreenBrightnessValue(context) / 255f;
-        volumeValue = VolumeTools.getCurrentVolumePrecent(context);
+        volumeValue = VolumeUtils.getCurrentVolumePrecent(context);
 
         //默认的视频宽高dp值
         dpVideoWidth = 1920 / density;
@@ -85,7 +85,7 @@ public class PlayerGestureListener extends GestureDetector.SimpleOnGestureListen
         scrollMode = ScrollMode.NONE;
         timeStamp = System.currentTimeMillis();
         totalDuration = 0;
-        volumeValue = VolumeTools.getCurrentVolumePrecent(this.context);
+        volumeValue = VolumeUtils.getCurrentVolumePrecent(this.context);
         if (listener != null) {
             listener.onGestureDown();
         }

@@ -8,8 +8,9 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+
 import com.kingz.customdemo.R;
-import com.kingz.utils.ZLog;
+import com.zeke.kangaroo.utils.ZLog;
 
 /**
  * Created by KingZ on 2016/1/24.

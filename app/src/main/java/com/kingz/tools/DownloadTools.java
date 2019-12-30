@@ -6,12 +6,16 @@ import android.os.Message;
 import android.os.StatFs;
 import android.text.format.Formatter;
 import android.util.Log;
-import com.App;
-import com.kingz.utils.EncryptTools;
-import com.kingz.utils.NetTools;
-import com.kingz.utils.ZLog;
 
-import java.io.*;
+import com.App;
+import com.zeke.kangaroo.utils.EncryptTools;
+import com.zeke.kangaroo.utils.ZLog;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -44,11 +48,11 @@ public class DownloadTools {
         OutputStream outputStream;
         URLConnection connection;
 
-        if (!NetTools.isConnect()) {
-            sendNetMessage(handler,FLAG_ERROR);
-            ZLog.i(TAG, "网络未连接");
-            return;
-        }
+//        if (!NetTools.isConnect()) {
+//            sendNetMessage(handler,FLAG_ERROR);
+//            ZLog.i(TAG, "网络未连接");
+//            return;
+//        }
         try {
             URL url = new URL(urlString);
             connection = url.openConnection();

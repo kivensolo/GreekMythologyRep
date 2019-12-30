@@ -9,8 +9,8 @@ import android.util.Log;
 
 import com.core.logic.GlobalCacheCenter;
 import com.kingz.customdemo.BuildConfig;
-import com.kingz.utils.ZLog;
 import com.takt.FpsTools;
+import com.zeke.kangaroo.utils.ZLog;
 
 /**
  * author: King.Z

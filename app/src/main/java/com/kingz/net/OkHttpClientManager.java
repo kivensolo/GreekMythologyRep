@@ -12,7 +12,7 @@ import com.google.gson.Gson;
 import com.google.gson.internal.$Gson$Types;
 import com.kingz.customdemo.R;
 import com.kingz.net.interceptors.LoggingInterceptor;
-import com.kingz.utils.ZLog;
+import com.zeke.kangaroo.utils.ZLog;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

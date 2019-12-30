@@ -10,7 +10,7 @@ import com.App;
 import com.kingz.customdemo.R;
 import com.kingz.net.OkHttpClientManager;
 import com.kingz.recyclerview.data.MgPosterBean;
-import com.kingz.utils.ZLog;
+import com.zeke.kangaroo.utils.ZLog;
 
 import java.util.ArrayList;
 import java.util.Calendar;

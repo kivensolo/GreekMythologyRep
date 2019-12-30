@@ -9,6 +9,7 @@ import android.os.Message;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+
 import com.kingz.customdemo.R;
 import com.kingz.customviews.text.ColorTrackView;
 import com.module.views.loading.Win10LoaddingView;

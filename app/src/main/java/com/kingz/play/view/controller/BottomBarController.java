@@ -7,8 +7,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.kingz.customdemo.R;
-import com.kingz.utils.TimeUtils;
 import com.module.tools.ViewUtils;
+import com.zeke.kangaroo.utils.TimeUtils;
 
 /**
  * author：KingZ

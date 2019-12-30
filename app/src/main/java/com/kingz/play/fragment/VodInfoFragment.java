@@ -19,8 +19,8 @@ import com.kingz.customdemo.R;
 import com.kingz.play.VideoInfo;
 import com.kingz.play.presenter.VodInfoPresenter;
 import com.kingz.play.view.IPlayerView;
-import com.kingz.utils.ZLog;
 import com.mplayer.exo_player.DetailPageActivty;
+import com.zeke.kangaroo.utils.ZLog;
 
 /**
  * author：KingZ

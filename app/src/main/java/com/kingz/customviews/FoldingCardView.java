@@ -11,9 +11,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
 import com.kingz.customdemo.R;
-import com.kingz.utils.ZLog;
 import com.module.tools.ScreenTools;
+import com.zeke.kangaroo.utils.ZLog;
 
 import java.util.ArrayList;
 

@@ -6,10 +6,11 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+
 import com.kingz.customdemo.R;
-import com.kingz.utils.NetTools;
-import com.kingz.utils.ToastTools;
 import com.kingz.widgets.text.LogTextBox;
+import com.zeke.kangaroo.utils.NetUtils;
+import com.zeke.kangaroo.utils.ToastUtils;
 
 /**
  * Copyright(C) 2016, 北京视达科科技有限公司
@@ -73,8 +74,8 @@ public class TextViewOfLanguages extends Activity {
     }
 
     private void sendMsg2Ui() {
-        if (!NetTools.isConnect()) {
-            ToastTools.getInstance().showMgtvWaringToast(TextViewOfLanguages.this, "网络连接超时，请检查网络后再试");
+        if (!NetUtils.isConnect(this)) {
+            ToastUtils.show(this, "网络连接超时，请检查网络后再试");
             Log.e(TAG, "网络连接超时，请检查网络后再试。");
         }
     }

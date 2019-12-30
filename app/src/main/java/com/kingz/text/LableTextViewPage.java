@@ -2,6 +2,7 @@ package com.kingz.text;
 
 import android.app.Activity;
 import android.os.Bundle;
+
 import com.kingz.customdemo.R;
 
 /**

@@ -17,10 +17,10 @@ import android.widget.TextView;
 import com.base.BaseActivity;
 import com.kingz.customdemo.R;
 import com.kingz.utils.ToastTools;
-import com.kingz.utils.ZLog;
 import com.mplayer.adapter.ChanellListAdapter;
 import com.mplayer.view.ApolloSeekBar;
 import com.provider.ChannelData;
+import com.zeke.kangaroo.utils.ZLog;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;

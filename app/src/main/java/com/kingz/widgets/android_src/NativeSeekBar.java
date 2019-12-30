@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
 import com.kingz.customdemo.R;
 
 /**

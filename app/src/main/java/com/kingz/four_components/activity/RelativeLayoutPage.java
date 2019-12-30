@@ -3,6 +3,7 @@ package com.kingz.four_components.activity;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
+
 import com.kingz.customdemo.R;
 
 /**

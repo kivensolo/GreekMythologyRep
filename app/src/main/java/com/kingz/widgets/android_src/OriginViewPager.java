@@ -9,10 +9,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
 import com.kingz.animation.ViewpageTransformerAnimation;
 import com.kingz.customdemo.R;
 import com.kingz.scroll.view_pager.sc_pagerinfo.DotsView;
-import com.kingz.utils.BitMapUtils;
+import com.zeke.kangaroo.utils.BitMapUtils;
 
 import java.util.ArrayList;
 import java.util.List;

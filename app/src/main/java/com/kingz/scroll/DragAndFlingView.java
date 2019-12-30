@@ -15,8 +15,8 @@ import android.view.animation.BounceInterpolator;
 import android.widget.Scroller;
 
 import com.kingz.customdemo.R;
-import com.kingz.utils.ZLog;
 import com.module.tools.ScreenTools;
+import com.zeke.kangaroo.utils.ZLog;
 
 /**
  * author: King.Z <br>

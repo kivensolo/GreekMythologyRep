@@ -14,8 +14,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.kingz.customdemo.R;
-import com.kingz.utils.BitMapUtils;
-import com.kingz.utils.ScreenShotUtils;
+import com.zeke.kangaroo.utils.BitMapUtils;
+import com.zeke.kangaroo.utils.ScreenShotUtils;
 
 import java.util.ArrayList;
 
@@ -91,7 +91,10 @@ public class BitmapPhotosActivity extends PhotosActivity {
             paint.setAntiAlias(true);
             paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DARKEN));
             paint.setColor(0xFF00ff00);
-            BitMapUtils.addShadow(new Canvas(datas.get(position).dstBitmap),20,0x00FF00,50,50,datas.get(position).dstBitmap,paint);
+            BitMapUtils.setShadow(datas.get(position).dstBitmap,
+                    new Canvas(datas.get(position).dstBitmap), paint,
+                    20, 0x00FF00,
+                    50, 50);
         }else if(datas.get(position).getName().equals("截屏")){
             setShowBitMap(ScreenShotUtils.screenShot(getWindow().getDecorView()));
         }

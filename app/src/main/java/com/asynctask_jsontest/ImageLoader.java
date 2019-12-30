@@ -9,6 +9,7 @@ import android.util.Log;
 import android.util.LruCache;
 import android.view.View;
 import android.widget.ImageView;
+
 import com.kingz.customdemo.R;
 
 import java.io.BufferedInputStream;

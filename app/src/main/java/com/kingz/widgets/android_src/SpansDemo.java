@@ -14,6 +14,7 @@ import android.text.style.TypefaceSpan;
 import android.text.style.URLSpan;
 import android.text.style.UnderlineSpan;
 import android.widget.TextView;
+
 import com.kingz.customdemo.R;
 
 /**

@@ -8,9 +8,10 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+
 import com.kingz.customdemo.R;
-import com.kingz.utils.ZLog;
 import com.module.tools.ScreenTools;
+import com.zeke.kangaroo.utils.ZLog;
 
 /**
  * Copyright(C) 2015, 北京视达科科技有限公司

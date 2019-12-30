@@ -4,7 +4,8 @@ import android.graphics.Bitmap;
 import android.util.Log;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import com.kingz.utils.ZLog;
+
+import com.zeke.kangaroo.utils.ZLog;
 
 /**
  * Copyright(C) 2015, 北京视达科科技有限公司

@@ -17,13 +17,14 @@ import com.App;
 import com.base.BaseActivity;
 import com.core.logic.GlobalCacheCenter;
 import com.kingz.customdemo.R;
-import com.kingz.utils.NetTools;
 import com.kingz.utils.ToastTools;
-import com.kingz.utils.ZLog;
 import com.kingz.work.FileDownloadWorker;
 import com.kingz.work.FileDownloader;
 import com.module.tools.ScreenTools;
 import com.module.views.progress.HorizontalProgressBarNoNumber;
+import com.zeke.kangaroo.utils.NetUtils;
+import com.zeke.kangaroo.utils.ToastUtils;
+import com.zeke.kangaroo.utils.ZLog;
 
 import java.io.File;
 import java.io.IOException;
@@ -88,7 +89,7 @@ public class DownloadAPPActivity extends BaseActivity implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_down_app:
-                ToastTools.getInstance().showMgtvWaringToast(context, "开始下载....");
+                ToastUtils.show(context, "开始下载....");
                 startDownLoadFile(appUrlPath);
                 break;
             default:
@@ -127,7 +128,7 @@ public class DownloadAPPActivity extends BaseActivity implements
             ToastTools.getInstance().showToast(context, "url is empty!");
             return;
         }
-        if (!NetTools.isConnect()) {
+        if (!NetUtils.isConnect(context)) {
             Log.e(TAG, "网络未连接,无法进一步下载");
             ToastTools.getInstance().showMgtvWaringToast(context, "url is empty!");
             return;

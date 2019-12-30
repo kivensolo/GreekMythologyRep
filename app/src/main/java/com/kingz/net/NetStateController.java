@@ -9,7 +9,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 import com.App;
-import com.kingz.utils.NetTools;
+import com.zeke.kangaroo.utils.NetUtils;
 
 /**
  * author：KingZ
@@ -40,9 +40,9 @@ public class NetStateController {
         NetworkInfo mNetworkInfo = _connectivityManager.getActiveNetworkInfo();
         if (mNetworkInfo != null && mNetworkInfo.isAvailable()) {
             //判断是有线连接还是Wifi
-            if (NetTools.isConnect(_connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_ETHERNET))) {
+            if (NetUtils.isConnect(_connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_ETHERNET))) {
                 //有线网络已连接
-            } else if (NetTools.isConnect(_connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI))) {
+            } else if (NetUtils.isConnect(_connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI))) {
                 //WIfi网络已连接
             } else {
                 //其他网络已连接

@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+
 import com.kingz.customdemo.R;
 
 public class LogininView extends LinearLayout {

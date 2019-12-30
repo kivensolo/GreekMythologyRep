@@ -8,8 +8,9 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.text.TextUtils;
+
 import com.App;
-import com.kingz.utils.ZLog;
+import com.zeke.kangaroo.utils.ZLog;
 
 import java.util.List;
 

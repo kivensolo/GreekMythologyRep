@@ -29,7 +29,7 @@ import com.kingz.net.retrofit.RetrofitServiceManager;
 import com.kingz.pages.photo.filmlist.MyItemDecoration;
 import com.kingz.recyclerview.data.MgPosterBean;
 import com.kingz.recyclerview.data.MgResponseBean;
-import com.kingz.utils.ZLog;
+import com.zeke.kangaroo.utils.ZLog;
 
 import java.util.ArrayList;
 import java.util.Calendar;

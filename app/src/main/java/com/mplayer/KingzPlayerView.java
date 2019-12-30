@@ -13,7 +13,7 @@ import android.widget.FrameLayout;
 
 import com.kingz.library.player.internal.AndroidMediaPlayerListeners;
 import com.kingz.utils.ToastTools;
-import com.kingz.utils.ZLog;
+import com.zeke.kangaroo.utils.ZLog;
 
 import java.io.IOException;
 

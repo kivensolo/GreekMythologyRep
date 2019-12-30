@@ -1,12 +1,17 @@
 package com.kingz.text.metrics;
 
 import android.content.Context;
-import android.graphics.*;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.View;
+
 import com.kingz.customdemo.R;
-import com.kingz.utils.ZLog;
 import com.module.tools.ScreenTools;
+import com.zeke.kangaroo.utils.ZLog;
 
 /**
  * Copyright(C) 2016, 北京视达科科技有限公司

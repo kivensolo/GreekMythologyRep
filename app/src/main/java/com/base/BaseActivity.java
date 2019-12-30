@@ -20,8 +20,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
-import com.kingz.utils.AppInfoUtils;
-import com.kingz.utils.ZLog;
+import com.zeke.kangaroo.utils.AppInfoUtils;
+import com.zeke.kangaroo.utils.ZLog;
 
 import butterknife.ButterKnife;
 
