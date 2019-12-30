@@ -168,6 +168,8 @@ dependencies {
 
     // WorkManager (Java only)
     implementation "android.arch.work:work-runtime:$lib_versions.work_version"
+
+    implementation 'com.github.zeke:kangaroo:1.0.0'
 }
 
 //
