@@ -1,10 +1,11 @@
 package com.kingz.file;
 
+import android.arch.lifecycle.LifecycleOwner;
+import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
-import android.os.Message;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -30,22 +31,22 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import androidx.work.Constraints;
+import androidx.work.Data;
 import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
-
-import static com.kingz.work.FileDownloader.ERROR;
-import static com.kingz.work.FileDownloader.FINISHED;
-import static com.kingz.work.FileDownloader.PROGRESSING;
-import static com.kingz.work.FileDownloader.RECIVING;
-import static com.kingz.work.FileDownloader.STARTING;
 
 /**
  * Created by KingZ on 2015/11/3.
  * Discription:图片/文件下载测试
  * //TODO 需要重构
  */
-public class DownloadAPPActivity extends BaseActivity implements View.OnClickListener {
+public class DownloadAPPActivity extends BaseActivity implements
+        View.OnClickListener,LifecycleOwner {
 
     public static final String TAG = "DownloadAPPActivity";
     public static final int PAGE_ID = R.layout.bitmap_demo_layout;
@@ -135,40 +136,69 @@ public class DownloadAPPActivity extends BaseActivity implements View.OnClickLis
 //        connectByJava(url);
         downloadFile = createFileDir(); //确定文件保存路径
 
+        Constraints constraints = new Constraints.Builder()
+                .setRequiresCharging(true)
+                .setRequiresStorageNotLow(true)
+                .build();
+
+        Data urlData = new Data.Builder()
+                .putString(FileDownloadWorker.KEY_ADDR_URI,url)
+                .build();
+
         OneTimeWorkRequest fileDownloadRequest = new OneTimeWorkRequest
                 .Builder(FileDownloadWorker.class)
+                .setInitialDelay(2,TimeUnit.SECONDS) // 设置执行延迟
+                .setConstraints(constraints) //设置约束
+                .setInputData(urlData) // 设置输入参数(最大10KB)
+                .addTag("download")  // 设置Worker的Tag
                 .build();
-        WorkManager.getInstance()
-                .enqueue(fileDownloadRequest);
+        WorkManager.getInstance().enqueue(fileDownloadRequest);
+
+        WorkManager.getInstance().getWorkInfosByTagLiveData("download")
+                .observe(this, new Observer<List<WorkInfo>>() {
+                    @Override
+                    public void onChanged(@Nullable List<WorkInfo> workInfos) {
+                        if (workInfos == null ||  workInfos.size() == 0) {
+                            return;
+                        }
+                        WorkInfo workInfo = workInfos.get(0);
+                        Data outputData = workInfo.getOutputData();
+
+                        if(workInfo.getState() == WorkInfo.State.SUCCEEDED){
+                            ToastTools.getInstance().showMgtvWaringToast(context, outputData.getString("result"));
+                        }
+                    }
+                    // 目前1.0.1的版本不支持观察worker工作进程中的功能。 在2.3.0-alpha01版本才支持
+                });
 
         //TODO 替换 FileDownloader
-        _downloader = new FileDownloader();
-        _downloader.start(url, downloadFile, true, new Handler(new Handler.Callback() {
-            @Override
-            public boolean handleMessage(Message msg) {
-                Log.i(TAG, "msg.what = " + msg.what +"; obj = " + msg.obj);
-                switch (msg.what){
-                    case STARTING:
-                        break;
-                    case RECIVING:
-                        break;
-                    case PROGRESSING:
-                        percent = (float) msg.obj;
-                        if(percent >= 0.9){
-                            percent = (float) 1.0;
-                        }
-                        mProgressBarView.setWidth((int) (percent * 600));
-                        break;
-                    case ERROR:
-                        break;
-                    case FINISHED:
-                        break;
-                    default:
-                        break;
-                }
-                return false;
-            }
-        }));
+//        _downloader = new FileDownloader();
+//        _downloader.start(url, downloadFile, true, new Handler(new Handler.Callback() {
+//            @Override
+//            public boolean handleMessage(Message msg) {
+//                Log.i(TAG, "msg.what = " + msg.what +"; obj = " + msg.obj);
+//                switch (msg.what){
+//                    case STARTING:
+//                        break;
+//                    case RECIVING:
+//                        break;
+//                    case PROGRESSING:
+//                        percent = (float) msg.obj;
+//                        if(percent >= 0.9){
+//                            percent = (float) 1.0;
+//                        }
+//                        mProgressBarView.setWidth((int) (percent * 600));
+//                        break;
+//                    case ERROR:
+//                        break;
+//                    case FINISHED:
+//                        break;
+//                    default:
+//                        break;
+//                }
+//                return false;
+//            }
+//        }));
     }
 
     private File createFileDir() {

@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 
 import com.kingz.utils.ZLog;
 
+import androidx.work.Data;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
@@ -15,6 +16,8 @@ import androidx.work.WorkerParameters;
  */
 
 public class FileDownloadWorker extends Worker {
+    public static final String KEY_ADDR_URI = "";
+    private String addURL = "";
     public FileDownloadWorker(
             @NonNull Context context,
             @NonNull WorkerParameters workerParams) {
@@ -24,15 +27,18 @@ public class FileDownloadWorker extends Worker {
     @NonNull
     @Override
     public Result doWork() {
-        // Do the work here--in this case, upload the images.
-//        uploadImages()
+        addURL = getInputData().getString(KEY_ADDR_URI);
+
         ZLog.d("FileDownloadWorker","doWork in :" + Thread.currentThread().getName());
         // Indicate whether the task finished successfully with the Result
-        return Result.success();
+
+        // Create the output of the work
+        Data outputData = new Data.Builder()
+                .putString("result", "Work finished!")
+                .build();
+        return Result.success(outputData);
         // finished successfully via Result.success()
         // failed via Result.failure()
         // needs to be retried at a later time via Result.retry()
     }
-
-
 }
