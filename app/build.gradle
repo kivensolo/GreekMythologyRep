@@ -118,27 +118,19 @@ android {
 }
 
 dependencies {
-//    implementation project(path: ':xxx-library')
     implementation project(':library-player')
     implementation project(':library-views')
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-
-    //FAB
     implementation 'com.getbase:floatingactionbutton:1.10.1'
 
-    // --------------- 图片框架 ---- START --------------
-    implementation 'com.github.bumptech.glide:glide:4.5.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.5.0'
-    implementation 'com.github.bumptech.glide:okhttp3-integration:4.3.1'
+    implementation "com.github.bumptech.glide:glide:${lib_versions.glide}"
+    annotationProcessor "com.github.bumptech.glide:compiler:${lib_versions.glide_c}"
+    implementation "com.github.bumptech.glide:okhttp3-integration:${lib_versions.glide_okhttp}"
 
-    // --------------- 图片框架 ---- END --------------
-
-    // --------------- 网络框架 ---- START --------------
     //RxJava
     implementation "io.reactivex.rxjava2:rxjava:${lib_versions.rxJava}"
     //RxAndroid
     implementation "io.reactivex.rxjava2:rxandroid:${lib_versions.rxandroid}"
-
     implementation "com.squareup.retrofit2:retrofit:${lib_versions.rtf2}"
     implementation "com.squareup.retrofit2:converter-gson:${lib_versions.rtf2_2gson}"
     implementation "com.squareup.retrofit2:adapter-rxjava2:${lib_versions.rtf2_adapter}"
@@ -146,7 +138,6 @@ dependencies {
     //OkHttp3 & okio
     implementation "com.squareup.okhttp3:okhttp:${lib_versions.okhttp}"
     implementation "com.squareup.okio:okio:${lib_versions.okio}"
-    // --------------- 网络框架 ---- END --------------
 
     implementation "com.android.support.constraint:constraint-layout:${lib_versions.cons_layout}"
     implementation "com.android.support:design:${supports.version}"
@@ -165,11 +156,10 @@ dependencies {
     androidTestImplementation "com.android.support.test.espresso:espresso-core:${lib_versions.es_core}"
     androidTestImplementation "com.android.support:support-annotations:${lib_versions.support}"
 
-
     // WorkManager (Java only)
     implementation "android.arch.work:work-runtime:$lib_versions.work_version"
 
-    implementation 'com.github.zeke:kangaroo:1.0.0'
+    //    implementation 'com.github.zeke:kangaroo:1.0.0'
 }
 
 //

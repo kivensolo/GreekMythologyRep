@@ -14,7 +14,7 @@
 		android:background="@color/black"
 		android:listSelector="@color/mediumseagreen">
     </ListView>-->
-	<com.module.views.animation.AnimatedExpandableListView
+	<com.zeke.kangaroo.view.animation.AnimatedExpandableListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@android:id/list"
@@ -23,6 +23,6 @@
         android:background="@color/black"
         android:cacheColorHint="@color/cornflowerblue"
         android:groupIndicator="@null">
-	</com.module.views.animation.AnimatedExpandableListView>
+	</com.zeke.kangaroo.view.animation.AnimatedExpandableListView>
 
 </LinearLayout>

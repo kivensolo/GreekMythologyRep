@@ -113,7 +113,7 @@ public class PropertyAnimationsActivity extends BaseActivity implements AdapterV
 
     private void initViews() {
         datas = Arrays.asList(strs);
-        propertyAdapter = new PropertyAdapter(this, datas);
+        propertyAdapter = new PropertyAdapter(datas);
         mListView.setAdapter(propertyAdapter);
         mListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         mListView.setOnItemClickListener(this);

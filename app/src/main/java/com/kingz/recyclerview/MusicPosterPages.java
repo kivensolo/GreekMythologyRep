@@ -1,10 +1,8 @@
 package com.kingz.recyclerview;
 
 import android.animation.ValueAnimator;
-import android.app.Service;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,14 +10,11 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.base.BaseActivity;
-import com.kingz.adapter.CommonRecyclerAdapter;
 import com.kingz.adapter.MgPosterAdapter;
 import com.kingz.customdemo.R;
 import com.kingz.mode.RecycleDataInfo;
@@ -58,16 +53,17 @@ public class MusicPosterPages extends BaseActivity {
     private RecyclerView view;
     private ItemTouchHelper mItemTouchHelper;
     private MgPosterAdapter mAdapter;
-    private Vibrator vibrator;
-    private final String url = "http://pianku.api.mgtv.com/rider/tag-data?ticket=&device_id=173365c356c6f97b69bca90a60009d6f4b8f7c97&tagId=222&net_id=&type=3&version=5.9.501.200.3.MGTV_TVAPP.0.0_Debug&uuid=mgtvmac020000445566&platform=ott&mac_id=02-00-00-44-55-66&license=ZgOOgo5MjkyOTA4FqqoghzuqhyA7IL8NBZkgDZk7lQ0GlSAGBgYNeyC%2FtJl8vwU7DQUFjkyOTI5MZgOOgg%3D%3D&_support=00100101011&pc=200&buss_id=1000014&pn=1";
-
+    private final String url = "http://pianku.api.mgtv.com/rider/tag-data?ticket=&" +
+            "device_id=173365c356c6f97b69bca90a60009d6f4b8f7c97&tagId=222&net_id=&" +
+            "type=3&version=5.9.501.200.3.MGTV_TVAPP.0.0_Debug&uuid=mgtvmac020000445566&" +
+            "platform=ott&mac_id=02-00-00-44-55-66&" +
+            "license=ZgOOgo5MjkyOTA4FqqoghzuqhyA7IL8NBZkgDZk7lQ0GlSAGBgYNeyC%2FtJl8vwU7DQUFjkyOTI5MZgOOgg%3D%3D&" +
+            "_support=00100101011&pc=200&buss_id=1000014&pn=1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recyclerview_demo);
-        //获取系统震动服务
-        vibrator = (Vibrator) MusicPosterPages.this.getSystemService(Service.VIBRATOR_SERVICE);
         initRecyclerView();
         initItemTouchHelper();
 
@@ -155,27 +151,7 @@ public class MusicPosterPages extends BaseActivity {
     }
 
     private void setRecyclerAdapter() {
-        mAdapter = new MgPosterAdapter(getBaseContext());
-        mAdapter.setItemClickListener(new CommonRecyclerAdapter.IItemClickListener(){
-
-            @Override
-            public void onItemClick(CommonRecyclerAdapter.ViewHolder holder, View v) {
-                int pos = holder.getLayoutPosition();
-                Toast.makeText(MusicPosterPages.this, pos + " click", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onItemLongClick(CommonRecyclerAdapter.ViewHolder holder, View v) {
-                if (holder.getLayoutPosition() != 1) {
-                    if(vibrator != null){
-                        vibrator.vibrate(70); //震动70毫秒
-                    }
-                    mItemTouchHelper.startDrag(holder);
-                }else{
-                    Toast.makeText(MusicPosterPages.this, "这是固定的Item", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        mAdapter = new MgPosterAdapter();
         view.setAdapter(mAdapter);
     }
 

@@ -2,11 +2,13 @@ package com.kingz.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.kingz.customdemo.R;
 import com.kingz.mode.ListBillData;
+import com.zeke.kangaroo.adapter.CommonRecyclerAdapter;
 
 import java.util.ArrayList;
 
@@ -20,7 +22,7 @@ public class PageListAdapter extends CommonRecyclerAdapter<ListBillData> {
 
 
     public PageListAdapter(Context context) {
-        super(context, new ArrayList<ListBillData>());
+        super(new ArrayList<ListBillData>());
     }
 
     @Override
@@ -41,8 +43,20 @@ public class PageListAdapter extends CommonRecyclerAdapter<ListBillData> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ListBillData data = mData.get(position);
+        ListBillData data = getItem(position);
         ((TextView)holder.itemView).setText(data.getItemName());
-        setHolderListeners(holder);
+
+        holder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        holder.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return false;
+            }
+        });
     }
 }

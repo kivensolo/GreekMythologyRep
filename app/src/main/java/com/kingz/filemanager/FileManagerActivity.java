@@ -155,7 +155,7 @@ public class FileManagerActivity extends BaseActivity implements AdapterView.OnI
                     filePathsList.add(f.getPath());
                 }
             }
-            fileAdapter = new FileListAdapter(this, currentPageFilesList,isRoot);
+            fileAdapter = new FileListAdapter(currentPageFilesList,isRoot);
             fileListView.setAdapter(fileAdapter);
         }else{
             Log.e(TAG, "无外置储存卡");

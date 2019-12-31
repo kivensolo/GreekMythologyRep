@@ -1,15 +1,20 @@
 package com.kingz.adapter;
 
+import android.app.Service;
 import android.content.Context;
+import android.os.Vibrator;
 import android.support.annotation.NonNull;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.App;
 import com.kingz.customdemo.R;
 import com.kingz.net.OkHttpClientManager;
 import com.kingz.recyclerview.data.MgPosterBean;
+import com.zeke.kangaroo.adapter.CommonRecyclerAdapter;
 import com.zeke.kangaroo.utils.ZLog;
 
 import java.util.ArrayList;
@@ -29,18 +34,18 @@ public class MgPosterAdapter extends CommonRecyclerAdapter<MgPosterBean> {
     //瀑布流模拟高度数据
     private List<Integer> mHeights;
 
-    public MgPosterAdapter(Context context) {
-        super(context, new ArrayList<MgPosterBean>());
+    public MgPosterAdapter() {
+        super(new ArrayList<MgPosterBean>());
         mHeights = new ArrayList<>();
     }
 
-    public MgPosterAdapter(Context context, ArrayList<MgPosterBean> dataModels) {
-        super(context, dataModels);
+    public MgPosterAdapter(ArrayList<MgPosterBean> dataModels) {
+        super(dataModels);
         mHeights = new ArrayList<>();
     }
 
     public void attachData(ArrayList<MgPosterBean> dataModels) {
-        mData.addAll(dataModels);
+        addAll(dataModels);
     }
 
     @Override
@@ -62,12 +67,38 @@ public class MgPosterAdapter extends CommonRecyclerAdapter<MgPosterBean> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ViewHolder viewHolder = super.onCreateViewHolder(parent, viewType);
+        final Context context = parent.getContext();
+        final ViewHolder holder = super.onCreateViewHolder(parent, viewType);
         if (viewType == TYPE_DEFAULT) {
-            ImageView img = viewHolder.itemView.findViewById(R.id.recom_poster);
+            ImageView img = holder.itemView.findViewById(R.id.recom_poster);
             img.setBackground(App.getAppInstance().getAppContext().getResources().getDrawable(R.drawable.bg1));
         }
-        return viewHolder;
+        holder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int pos = holder.getLayoutPosition();
+                Toast.makeText(context, pos + " click", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        final Vibrator vibrator = (Vibrator) context.getSystemService(Service.VIBRATOR_SERVICE);
+        holder.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (holder.getLayoutPosition() != 1) {
+                    if(vibrator != null){
+                        vibrator.vibrate(70); //震动70毫秒
+                    }
+                    //TODO 进行优化
+//                    mItemTouchHelper.startDrag(holder);
+                }else{
+                    Toast.makeText(context, "这是固定的Item", Toast.LENGTH_SHORT).show();
+                }
+                return true;
+            }
+        });
+
+        return holder;
     }
 
     /**
@@ -86,7 +117,7 @@ public class MgPosterAdapter extends CommonRecyclerAdapter<MgPosterBean> {
 //        lp.height = mHeights.get(position);
 //        holder.getTvLabel().setLayoutParams(lp);
 
-        MgPosterBean data = mData.get(position);
+        MgPosterBean data = getItem(position);
         TextView tvLabel = holder.getView(R.id.item_text);
         tvLabel.setText(data.getTitle());
         TextView dateTime = holder.getView(R.id.item_date);
@@ -94,7 +125,19 @@ public class MgPosterAdapter extends CommonRecyclerAdapter<MgPosterBean> {
         ImageView posterView = holder.getView(R.id.recom_poster);
         //TODO 获取缓存
         OkHttpClientManager.displayImage(posterView, data.getImg());
-        setHolderListeners(holder);
+
+        holder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        holder.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return false;
+            }
+        });
     }
 
 
@@ -102,13 +145,13 @@ public class MgPosterAdapter extends CommonRecyclerAdapter<MgPosterBean> {
         MgPosterBean data = new MgPosterBean();
         data.setTitle("测试数据" + position);
         data.setUpdateInfo("即将更新");
-        mData.add(position, data);
+        addItem(data,position);
         //应该会触发重新布局  部分view应该是dirty view
         notifyItemInserted(position);
     }
 
     public void removeData(int position) {
-        mData.remove(position);
+        remove(position);
         notifyItemRemoved(position);
     }
 

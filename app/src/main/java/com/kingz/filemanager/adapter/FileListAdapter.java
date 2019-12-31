@@ -1,6 +1,5 @@
 package com.kingz.filemanager.adapter;
 
-import android.content.Context;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -9,9 +8,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.kingz.adapter.CommonListAdapter;
+import com.App;
 import com.kingz.customdemo.R;
-import com.kingz.holder.BaseViewHolder;
+import com.kingz.holder.CommonViewHolder;
+import com.zeke.kangaroo.adapter.CommonListAdapter;
 
 import java.io.File;
 import java.text.DecimalFormat;
@@ -38,28 +38,23 @@ public class FileListAdapter extends CommonListAdapter<File> {
     private String  itemFileName;     //文件名
 
 
-    public FileListAdapter(Context mContex, ArrayList<File> filesList, boolean isRoot) {
-        super(mContex,filesList);
+    public FileListAdapter(ArrayList<File> filesList, boolean isRoot) {
+        super(filesList);
         this.isRoot = isRoot;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        commonViewHolder = BaseViewHolder.getHolder(mContex,convertView,parent,R.layout.filemanager_list_item,position);
-        nameView = commonViewHolder.getView(R.id.file_name);
-        sizeView = commonViewHolder.getView(R.id.file_size);
-        typeView = commonViewHolder.getView(R.id.file_type);
-        dataView = commonViewHolder.getView(R.id.file_date);
-        imgView  = commonViewHolder.getView(R.id.file_img);
-
+        CommonViewHolder holder = CommonViewHolder.create(position,
+                convertView,parent,R.layout.filemanager_list_item);
+        nameView = holder.getView(R.id.file_name);
+        sizeView = holder.getView(R.id.file_size);
+        typeView = holder.getView(R.id.file_type);
+        dataView = holder.getView(R.id.file_date);
+        imgView  = holder.getView(R.id.file_img);
         porocessDirAndFile(position);
-        return commonViewHolder.getInflateView();
-    }
-
-    @Override
-    protected void fillData(CommonViewHolder holder, int position) {
-
+        return holder.getInflateView();
     }
 
     private void porocessDirAndFile(int position) {
@@ -71,7 +66,8 @@ public class FileListAdapter extends CommonListAdapter<File> {
             dataView.setVisibility(View.GONE);
             nameView.setText("返回上一级");
             nameView.setTextSize(28);
-            nameView.setTextColor(mContex.getResources().getColor(R.color.qianpurple));
+            nameView.setTextColor(App.getAppInstance().getAppContext()
+                    .getResources().getColor(R.color.qianpurple));
             nameView.setGravity(Gravity.START|Gravity.CENTER);
             nameView.setLayoutParams(new LinearLayout.LayoutParams(-1,-1));
         }else{

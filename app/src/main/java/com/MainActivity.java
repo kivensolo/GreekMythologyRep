@@ -15,13 +15,13 @@ import android.widget.Toast;
 
 import com.google.android.exoplayer2.ParserException;
 import com.google.android.exoplayer2.util.Util;
-import com.kingz.adapter.CommExpandableListAdapter;
+import com.kingz.adapter.MainPageExpandableAdapter;
 import com.kingz.config.DemoSample;
 import com.kingz.config.Sample;
 import com.kingz.config.SampleGroup;
 import com.kingz.customdemo.R;
-import com.module.views.animation.AnimatedExpandableListView;
 import com.zeke.kangaroo.utils.ZLog;
+import com.zeke.kangaroo.view.animation.AnimatedExpandableListView;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -38,7 +38,7 @@ import java.util.List;
 public class MainActivity extends ExpandableListActivity implements OnItemClickListener {
 
     private static String TAG = MainActivity.class.getSimpleName();
-    private CommExpandableListAdapter expandAdapter;
+    private MainPageExpandableAdapter expandAdapter;
     private AnimatedExpandableListView listView;
 
 
@@ -51,7 +51,7 @@ public class MainActivity extends ExpandableListActivity implements OnItemClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         listView = (AnimatedExpandableListView) findViewById(android.R.id.list);
-        expandAdapter = new CommExpandableListAdapter(this);
+        expandAdapter = new MainPageExpandableAdapter(this);
         listView.setAdapter(expandAdapter);
         listView.setOnGroupClickListener(new ImpOnGroupClickListener());
 //		getExpandableListView().setIndicatorBounds(UITools.SCREEN_WIDTH - 60, UITools.SCREEN_WIDTH - 27);

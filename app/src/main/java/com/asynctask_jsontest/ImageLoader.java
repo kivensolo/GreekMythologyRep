@@ -48,7 +48,7 @@ public class ImageLoader {
 
     public ImageLoader(View view) {
         this.view = view;
-        taskCollection = new HashSet<GetNetImageTask>();
+        taskCollection = new HashSet<>();
 
         int maxMemory = (int) Runtime.getRuntime().maxMemory();  //获取程序最大可用内存
         Log.d(TAG,"得到可用的最大的内存为："+maxMemory);

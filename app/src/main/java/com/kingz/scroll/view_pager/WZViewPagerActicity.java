@@ -9,7 +9,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.kingz.customdemo.R;
-import com.kingz.scroll.view_pager.sc_pagerinfo.DotsView;
+import com.kingz.scroll.view_pager.sc_pagerinfo.ImageIndicatorView;
 import com.kingz.scroll.view_pager.sc_pagerinfo.SCPositionAnimation;
 import com.kingz.scroll.view_pager.sc_pagerinfo.SCViewAnimation;
 import com.kingz.scroll.view_pager.sc_pagerinfo.SCViewAnimationUtil;
@@ -29,7 +29,7 @@ public class WZViewPagerActicity extends FragmentActivity {
 
     private SCViewPager mViewPager;
     private SCViewPagerAdapter mPageAdapter;
-    private DotsView mDotsView;
+    private ImageIndicatorView mDotsView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +40,9 @@ public class WZViewPagerActicity extends FragmentActivity {
         setContentView(R.layout.wz_viewpagger);
 
         mViewPager = (SCViewPager) findViewById(R.id.viewpager_main_activity);
-        mDotsView = (DotsView) findViewById(R.id.dotsview_main);
+        mDotsView = (ImageIndicatorView) findViewById(R.id.dotsview_main);
         mDotsView.setDotRessource(R.drawable.dot_selected, R.drawable.dot_unselected);
-        mDotsView.setNumberOfPage(NUM_PAGES);
+        mDotsView.setDots(NUM_PAGES);
 
         mPageAdapter = new SCViewPagerAdapter(getSupportFragmentManager());
         mPageAdapter.setNumberOfPage(NUM_PAGES);

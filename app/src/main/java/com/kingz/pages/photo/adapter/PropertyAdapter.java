@@ -1,13 +1,12 @@
 package com.kingz.pages.photo.adapter;
 
-import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.kingz.adapter.CommonListAdapter;
 import com.kingz.customdemo.R;
-import com.kingz.holder.BaseViewHolder;
+import com.kingz.holder.CommonViewHolder;
+import com.zeke.kangaroo.adapter.CommonListAdapter;
 
 import java.util.List;
 
@@ -19,22 +18,18 @@ import java.util.List;
 public class PropertyAdapter extends CommonListAdapter<String> {
 
     private TextView nameItem;
-    public PropertyAdapter(Context contex, List<String> datas) {
-        super(contex, datas);
+    public PropertyAdapter(List<String> datas) {
+        super(datas);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        commonViewHolder = BaseViewHolder.getHolder(mContex,convertView,parent, R.layout.simplelist_every_item,position);
-        nameItem = commonViewHolder.getView(R.id.list_item);
+        CommonViewHolder holder = CommonViewHolder.create(position,convertView,
+                parent, R.layout.simplelist_every_item);
+        nameItem = holder.getView(R.id.list_item);
         Object o = mData.get(position);
         String text = (String) o;
         nameItem.setText(text);
-        return commonViewHolder.getInflateView();
-    }
-
-    @Override
-    protected void fillData(CommonViewHolder holder, int position) {
-
+        return holder.getInflateView();
     }
 }

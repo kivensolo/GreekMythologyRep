@@ -1,6 +1,5 @@
 package com.kingz.widgets.android_src;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.PagerTabStrip;
@@ -10,16 +9,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.kingz.animation.ViewpageTransformerAnimation;
+import com.base.BaseActivity;
+import com.kingz.animation.ViewpagesTransformerAnimation;
 import com.kingz.customdemo.R;
-import com.kingz.scroll.view_pager.sc_pagerinfo.DotsView;
+import com.kingz.scroll.view_pager.sc_pagerinfo.ImageIndicatorView;
 import com.zeke.kangaroo.utils.BitMapUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Copyright(C) 2016, 北京视达科科技有限公司
  * All rights reserved. <br>
  * author: King.Z <br>
  * date:  2016/4/10 23:53 <br>
@@ -32,12 +31,12 @@ import java.util.List;
  *      FragmentPagerAdapter和FragmentStatePagerAdapter类供
  *      Fragment中的ViewPager使用。
  */
-public class OriginViewPager extends Activity{
+public class OriginViewPager extends BaseActivity{
 
     public static final String TAG = "OriginViewPager";
     public static final int PAGE_NUMBER = 4;
     private ViewPager pager = null;
-    private  DotsView mDotsView;
+    private ImageIndicatorView mDotsView;
     private List<ImageView> imageViewList = new ArrayList<>();
 
     @Override
@@ -78,14 +77,9 @@ public class OriginViewPager extends Activity{
     }
 
     private void initDotsView() {
-        mDotsView = (DotsView) findViewById(R.id.dotsview_main);
-        mDotsView.setDotRessource(R.drawable.dot_selected, R.drawable.dot_unselected);
-        mDotsView.setNumberOfPage(PAGE_NUMBER);
-        mDotsView.setOnItemclickListenner(new DotsView.IItemClickedListenner() {
-            @Override
-            public void onItemClicked() {
-            }
-        });
+        mDotsView = (ImageIndicatorView) findViewById(R.id.dotsview_main);
+        mDotsView.setDotRessource(R.drawable.dot_selected, R.drawable.dot_unselected)
+                .setDots(PAGE_NUMBER);
     }
 
     private void initPagerTabStrip() {
@@ -98,7 +92,7 @@ public class OriginViewPager extends Activity{
 
     private void initViewPager() {
         pager = (ViewPager) this.findViewById(R.id.original_viewpager);
-        pager.setPageTransformer(true, new ViewpageTransformerAnimation());
+        pager.setPageTransformer(true, new ViewpagesTransformerAnimation());
         pager.setOffscreenPageLimit(3);
         int pagerWidth= (int) (getResources().getDisplayMetrics().widthPixels*3.0f/5.0f);
         ViewGroup.LayoutParams lp = pager.getLayoutParams();
@@ -117,7 +111,7 @@ public class OriginViewPager extends Activity{
         });
 
         pager.setAdapter(new UserAdapter());
-        pager.setOnPageChangeListener(new PageChangeListener());
+        pager.addOnPageChangeListener(new PageChangeListener());
     }
 
     private void initAdapterData() {

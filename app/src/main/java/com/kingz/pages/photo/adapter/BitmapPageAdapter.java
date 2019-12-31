@@ -1,14 +1,13 @@
 package com.kingz.pages.photo.adapter;
 
-import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.kingz.adapter.CommonListAdapter;
 import com.kingz.customdemo.R;
-import com.kingz.holder.BaseViewHolder;
+import com.kingz.holder.CommonViewHolder;
 import com.kingz.pages.photo.PhotosActivity;
+import com.zeke.kangaroo.adapter.CommonListAdapter;
 
 import java.util.List;
 
@@ -20,22 +19,18 @@ import java.util.List;
  */
 public class BitmapPageAdapter extends CommonListAdapter<PhotosActivity.ItemInfo> {
 
-    public BitmapPageAdapter(Context contex, List<PhotosActivity.ItemInfo> mDatas) {
-        super(contex, mDatas);
+    public BitmapPageAdapter( List<PhotosActivity.ItemInfo> mDatas) {
+        super( mDatas);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        commonViewHolder = BaseViewHolder.getHolder(mContex,convertView,parent, R.layout.simplelist_every_item,position);
-        TextView nameItem = commonViewHolder.getView(R.id.list_item);
+        CommonViewHolder holder = CommonViewHolder.create(position,convertView,
+                parent, R.layout.simplelist_every_item);
+        TextView nameItem = holder.getView(R.id.list_item);
         PhotosActivity.ItemInfo itemInfo = mData.get(position);
         String text = itemInfo != null ? itemInfo.getName() : "";
         nameItem.setText(text);
-        return commonViewHolder.getInflateView();
-    }
-
-    @Override
-    protected void fillData(CommonViewHolder holder, int position) {
-
+        return holder.getInflateView();
     }
 }

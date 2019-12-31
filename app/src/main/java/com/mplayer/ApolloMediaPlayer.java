@@ -162,7 +162,7 @@ public class ApolloMediaPlayer extends BaseActivity {
     private void initChannelListView() {
         leftListView = (ListView) findViewById(R.id.leftchanellView);
         if (channelLists != null) {
-            chanellListAdapter = new ChanellListAdapter(this, channelLists);
+            chanellListAdapter = new ChanellListAdapter(channelLists);
             leftListView.setAdapter(chanellListAdapter);
             leftListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override

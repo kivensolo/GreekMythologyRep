@@ -26,7 +26,11 @@ ext {
             work_version:'1.0.1',
 
             ijk : '0.8.4',
-            exo :'2.7.3'
+            exo :'2.7.3',
+
+            glide:'4.5.0',
+            glide_c:'4.5.0',
+            glide_okhttp:'4.3.1'
     ]
 
     supports = [version:'27.1.1']

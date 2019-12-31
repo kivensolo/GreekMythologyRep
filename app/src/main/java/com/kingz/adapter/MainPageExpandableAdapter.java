@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.kingz.config.SampleGroup;
 import com.kingz.customdemo.R;
-import com.module.views.animation.AnimatedExpandableListView;
+import com.zeke.kangaroo.view.animation.AnimatedExpandableListView;
 
 import java.util.Collections;
 import java.util.List;
@@ -18,16 +18,15 @@ import java.util.List;
 /**
  * author: King.Z <br>
  * date:  2016/8/10 19:02 <br>
- * description: 公共可收缩伸展列表适配器 <br>
+ * description: 首页可收缩伸展列表适配器 <br>
  */
-public class CommExpandableListAdapter extends AnimatedExpandableListView.AnimatedExpandableListAdapter {
+public class MainPageExpandableAdapter extends AnimatedExpandableListView.AnimatedExpandableListAdapter {
 
-    private static String TAG = CommExpandableListAdapter.class.getSimpleName();
     private Context mContext = null;
     private LayoutInflater mInflater;
     private List<SampleGroup> sampleGroups = null;
 
-    public CommExpandableListAdapter(Context mContext) {
+    public MainPageExpandableAdapter(Context mContext) {
         this.mContext = mContext;
         sampleGroups = Collections.emptyList();
         mInflater = LayoutInflater.from(mContext);

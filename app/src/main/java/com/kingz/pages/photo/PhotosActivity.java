@@ -40,7 +40,7 @@ public abstract class PhotosActivity extends BaseActivity implements AdapterView
     }
 
     private void initViews() {
-        bitmapAdapter = new BitmapPageAdapter(this, datas);
+        bitmapAdapter = new BitmapPageAdapter(datas);
         mListView = findViewById(R.id.type_change_id);
         mListView.setAdapter(bitmapAdapter);
         mListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
