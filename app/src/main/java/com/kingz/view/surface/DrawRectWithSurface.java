@@ -14,8 +14,6 @@ import android.widget.LinearLayout;
 import com.kingz.view.ViewsActivity;
 
 /**
- * Copyright(C) 2016, 北京视达科科技有限公司
- * All rights reserved. <br>
  * author: King.Z <br>
  * date:  2016/9/8 13:53 <br>
  * description: SurfaceView测试类 <br>

@@ -8,8 +8,6 @@ import android.webkit.WebViewClient;
 import com.zeke.kangaroo.utils.ZLog;
 
 /**
- * Copyright(C) 2015, 北京视达科科技有限公司
- * All rights reserved.
  * author: King.Z
  * date:  2016/9/28 21:48
  * description:练习抽象类思想  也可以实现接口  自己控制需要实现的方法

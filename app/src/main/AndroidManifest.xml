@@ -307,12 +307,6 @@
             android:name="com.kingz.widgets.android_src.SpansDemo"
             android:theme="@style/NoActionBarTheme"/>
 
-        <!-- 讯飞语音页面 -->
-        <activity
-            android:name="com.iflytek.synthesizer.VoiceActivity"
-            android:theme="@style/NoActionBarTheme"/>
-
-
         <!-- ************ 媒体 *********** -->
         <activity
             android:name="com.mplayer.ApolloMediaPlayer"
