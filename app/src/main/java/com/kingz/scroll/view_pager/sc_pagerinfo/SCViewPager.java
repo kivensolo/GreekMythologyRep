@@ -6,22 +6,18 @@ import android.util.AttributeSet;
 
 import java.util.ArrayList;
 
-/**
- * Created by Samuel on 2015-06-04.
- */
-
 public class SCViewPager extends ViewPager {
 
     private ArrayList<SCViewAnimation> mViewAnimation;
 
     public SCViewPager(Context context) {
         super(context);
-        this.mViewAnimation = new ArrayList<SCViewAnimation>();
+        this.mViewAnimation = new ArrayList<>();
     }
 
     public SCViewPager(Context context, AttributeSet attr) {
         super(context, attr);
-        this.mViewAnimation = new ArrayList<SCViewAnimation>();
+        this.mViewAnimation = new ArrayList<>();
     }
 
     public void addAnimation(SCViewAnimation inViewAnimation) {

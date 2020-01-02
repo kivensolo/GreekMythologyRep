@@ -21,7 +21,7 @@
 
     </android.support.v4.view.ViewPager>
 
-    <com.kingz.scroll.view_pager.sc_pagerinfo.ImageIndicatorView
+    <com.zeke.kangaroo.view.ImageIndicatorView
         android:id="@+id/dotsview_main"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

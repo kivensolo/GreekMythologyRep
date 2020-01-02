@@ -12,7 +12,7 @@
         android:layout_height="match_parent">
     </com.kingz.scroll.view_pager.sc_pagerinfo.SCViewPager>
 
-    <com.kingz.scroll.view_pager.sc_pagerinfo.ImageIndicatorView
+    <com.zeke.kangaroo.view.ImageIndicatorView
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

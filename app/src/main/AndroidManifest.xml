@@ -122,9 +122,6 @@
             android:name="com.kingz.view.animation.CrossfadeActivity"
             android:screenOrientation="landscape"/>
         <activity
-            android:name="com.kingz.view.animation.ShakeAnimation"
-            android:screenOrientation="portrait"/>
-        <activity
             android:name="com.kingz.view.animation.ViewFlipperAnimation"
             android:screenOrientation="portrait"/>
         <activity

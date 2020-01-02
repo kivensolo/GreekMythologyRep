@@ -12,8 +12,8 @@ import android.widget.ImageView;
 import com.base.BaseActivity;
 import com.kingz.animation.ViewpagesTransformerAnimation;
 import com.kingz.customdemo.R;
-import com.kingz.scroll.view_pager.sc_pagerinfo.ImageIndicatorView;
 import com.zeke.kangaroo.utils.BitMapUtils;
+import com.zeke.kangaroo.view.ImageIndicatorView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ import java.util.List;
  * All rights reserved. <br>
  * author: King.Z <br>
  * date:  2016/4/10 23:53 <br>
- * description: 原生的Viewpager
+ * description: 原生的Viewpager使用
  *
  * 1）ViewPager类直接继承了ViewGroup类，所有它是一个容器类，可以在其中添加其他的view类
  * 2）ViewPager类需要一个PagerAdapter适配器类给它提供数据。

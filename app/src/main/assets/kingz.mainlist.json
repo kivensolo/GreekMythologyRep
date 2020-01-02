@@ -8,10 +8,6 @@
         "class": "com.kingz.view.animation.PropertyAnimationsActivity"
       },
       {
-        "name": "Shake Animation",
-        "class": "com.kingz.view.animation.ShakeAnimation"
-      },
-      {
         "name": "ViewFlipper Animation",
         "class": "com.kingz.view.animation.ViewFlipperAnimation"
       },

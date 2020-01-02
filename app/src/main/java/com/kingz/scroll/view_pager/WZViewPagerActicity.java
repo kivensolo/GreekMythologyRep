@@ -9,16 +9,14 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.kingz.customdemo.R;
-import com.kingz.scroll.view_pager.sc_pagerinfo.ImageIndicatorView;
 import com.kingz.scroll.view_pager.sc_pagerinfo.SCPositionAnimation;
 import com.kingz.scroll.view_pager.sc_pagerinfo.SCViewAnimation;
 import com.kingz.scroll.view_pager.sc_pagerinfo.SCViewAnimationUtil;
 import com.kingz.scroll.view_pager.sc_pagerinfo.SCViewPager;
 import com.kingz.scroll.view_pager.sc_pagerinfo.SCViewPagerAdapter;
+import com.zeke.kangaroo.view.ImageIndicatorView;
 
 /**
- * Copyright(C) 2016, 北京视达科科技有限公司
- * All rights reserved. <br>
  * author: King.Z <br>
  * date:  2016/4/10 0:25 <br>
  * description: XXXXXXX <br>
