@@ -2,7 +2,6 @@ package com.kingz.pages.photo;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
@@ -10,10 +9,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.kingz.customdemo.R;
+import com.kingz.graphics.GlideApp;
 import com.zeke.kangaroo.utils.BitMapUtils;
 import com.zeke.kangaroo.utils.ScreenShotUtils;
 
@@ -24,7 +23,7 @@ import java.util.ArrayList;
  * All rights reserved.
  * author: King.Z
  * date:  2016/8/6 23:05
- * description: Listview显示的页面
+ * description:
  * //TODO 解决listView的复用问题
  */
 public class BitmapPhotosActivity extends PhotosActivity {
@@ -75,10 +74,10 @@ public class BitmapPhotosActivity extends PhotosActivity {
                     .placeholder(R.drawable.android) //设置“加载中”状态时显示的图片
                     .override(200, 200)
                     .centerCrop()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)   //既缓存全尺寸又缓存其他尺寸
+                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                     .error(R.drawable.alert_dialog_icon); //设置“加载失败”状态时显示的图片
 
-            Glide.with(this)
+            GlideApp.with(this)
                     .load("http://p1.pstatp.com/large/166200019850062839d3")
                     .apply(requestOptions)
                     .into(img1);
@@ -104,13 +103,27 @@ public class BitmapPhotosActivity extends PhotosActivity {
         if (bitmap == null) {
             return;
         }
-        runOnUiThread(new Runnable() {
+
+        RequestOptions ros = new RequestOptions()
+                .placeholder(R.drawable.android) //设置“加载中”状态时显示的图片
+//                .override(200, 200)
+                .centerCrop()
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                .error(R.drawable.alert_dialog_icon); //设置“加载失败”状态时显示的图片
+
+        GlideApp.with(this)
+                .asBitmap()
+                .load(bitmap)
+                .apply(ros)
+                .into(img1);
+
+      /*  runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 img1.setBackgroundColor(Color.TRANSPARENT);
                 img1.setImageBitmap(bitmap);
             }
-        });
+        });*/
     }
 }
 

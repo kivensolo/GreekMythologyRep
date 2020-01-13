@@ -74,9 +74,9 @@ public class DownloadTools {
         File directory = Environment.getExternalStorageDirectory();
         String savePAth = directory.getAbsolutePath() + "/DownFile";
         StatFs sf = new  StatFs(directory.getAbsolutePath());
-        int  blockSize = sf.getBlockSize();
-        int  blockCount = sf.getBlockCount();
-        int  availCount = sf.getAvailableBlocks();
+        long  blockSize = sf.getBlockSizeLong();
+        long  blockCount = sf.getBlockCountLong();
+        long  availCount = sf.getAvailableBlocksLong();
 
         String msg = String.format("\n block大小: %d bytes  block数目: %d个  磁盘总容量：%s \n 当前磁盘剩余block:%d个,剩余容量：%s"
                 , blockSize, blockCount, Formatter.formatFileSize(App.getAppInstance().getAppContext(), blockCount * blockSize)

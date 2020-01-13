@@ -186,7 +186,6 @@
                     android:layout_below="@+id/btn_gridView"
                     android:layout_marginTop="3dp"
                     android:layout_marginStart="10dp"
-                    android:onClick="showPopupWindow"
                     android:text="@string/popwin"
                     android:background="@drawable/selector_radius_buttons"/>
 

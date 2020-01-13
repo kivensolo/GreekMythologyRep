@@ -237,7 +237,6 @@ public class BasicControlsActivity extends Activity implements View.OnClickListe
 //        popupWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.drawable_loading));
 //        popupWindow.showAsDropDown(view);
 
-
         CommonPopupWindow commonPopupWindow = new CommonPopupWindow.Builder(this)
                 .setView(R.id.commonadapter_item_text)
                 .setFocusable(true)
