@@ -18,6 +18,7 @@ allprojects {
         google()
         maven{
             url 'https://dl.bintray.com/kivensolo/maven'
+            //查看有哪些版本可以下载 https://dl.bintray.com/kivensolo/maven/com/github/zeke/kangaroo/
         }
     }
 

@@ -10,6 +10,7 @@ def keystoreProperties = new Properties()
 // Load keystore.properties file into the keystoreProperties object.
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
+
 android {
     signingConfigs {
         ZekeSigned {
@@ -30,7 +31,7 @@ android {
         versionName android.versionName
         signingConfig signingConfigs.ZekeSigned
         minSdkVersion rootProject.ext.android.minSdkVersion
-        targetSdkVersion 24
+        targetSdkVersion android.targetSdkVersion
         buildConfigField("String", "APP_NAME", "\"Greek\"")
 
         testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
@@ -101,6 +102,12 @@ android {
         doNotStrip '*/mips64/*.so'
     }
 
+    repositories{
+        flatDir{
+            dirs 'libs'
+        }
+    }
+
     applicationVariants.all { variant ->
         def prefix = 'Greek'
         def versionName = 'V' + variant.getVersionName()
@@ -120,8 +127,9 @@ android {
 dependencies {
     implementation project(':library-player')
     implementation project(':library-views')
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation fileTree(include: ['*.jar','*.aar'], dir: 'libs')
     implementation 'com.getbase:floatingactionbutton:1.10.1'
+
 
     implementation "com.github.bumptech.glide:glide:${lib_versions.glide}"
     annotationProcessor "com.github.bumptech.glide:compiler:${lib_versions.glide_c}"
@@ -159,7 +167,7 @@ dependencies {
     // WorkManager (Java only)
     implementation "android.arch.work:work-runtime:$lib_versions.work_version"
 
-    //    implementation 'com.github.zeke:kangaroo:1.0.0'
+//    implementation 'com.github.zeke:kangaroo:1.0.1@aar'
 }
 
 //

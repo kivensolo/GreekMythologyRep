@@ -69,7 +69,7 @@
         <activity-alias
             android:name="com.kingz.pages.Test11"
             android:enabled="true"
-            android:icon="@drawable/m"
+            android:icon="@drawable/raspberry_pi_logo"
             android:label="Geek分身入口"
             android:targetActivity="com.SplashActivity"
             android:theme="@style/NoActionBarTheme">
@@ -80,21 +80,6 @@
             </intent-filter>
 
         </activity-alias>
-
-        <activity-alias
-            android:name="com.Test12"
-            android:enabled="false"
-            android:icon="@drawable/raspberry_pi_logo"
-            android:label="双12"
-            android:targetActivity="com.SplashActivity"
-            android:theme="@style/NoActionBarTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-                <!--<category android:name="android.intent.category.HOME"/>-->
-            </intent-filter>
-        </activity-alias>
-
 
         <!-- 主Activity -->
         <activity
@@ -229,6 +214,7 @@
         <!--BitMap测试页面-->
         <activity
             android:name="com.kingz.pages.photo.BitmapPhotosActivity"
+            android:screenOrientation="landscape"
             android:theme="@style/NoActionBarTheme"/>
 
         <activity

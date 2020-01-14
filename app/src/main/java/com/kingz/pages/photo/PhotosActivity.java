@@ -1,6 +1,5 @@
 package com.kingz.pages.photo;
 
-import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
@@ -20,17 +19,15 @@ import java.util.List;
  * date:  2016/9/2 17:21 <br>
  * description: 图片展示基类页面 <br>
  */
-public abstract class PhotosActivity extends BaseActivity implements AdapterView.OnItemClickListener {
+public abstract class PhotosActivity extends BaseActivity
+        implements AdapterView.OnItemClickListener {
 
     protected BitmapPageAdapter bitmapAdapter;
     protected ListView mListView;
     protected TextView mTextView;
-    protected Bitmap srcBitmap;
-    protected Bitmap waterMark;
     protected int backgroundId;
-    protected ImageView img1;
-    List<ItemInfo> datas;
-
+    protected ImageView picView;
+    List<String> datas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +42,7 @@ public abstract class PhotosActivity extends BaseActivity implements AdapterView
         mListView.setAdapter(bitmapAdapter);
         mListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         mListView.setOnItemClickListener(this);
-        img1 = findViewById(R.id.normal_pic);
+        picView = findViewById(R.id.normal_pic);
     }
 
     @Override
@@ -72,21 +69,7 @@ public abstract class PhotosActivity extends BaseActivity implements AdapterView
     protected void onDestroy() {
         super.onDestroy();
         if(datas != null){
-            datas.clear();
             datas = null;
-        }
-    }
-
-    public class ItemInfo {
-        private String name = "";
-        public Bitmap dstBitmap;
-
-        public ItemInfo(String name, Bitmap dstBitmap) {
-            this.name = name;
-            this.dstBitmap = dstBitmap;
-        }
-        public String getName(){
-            return name;
         }
     }
 }
