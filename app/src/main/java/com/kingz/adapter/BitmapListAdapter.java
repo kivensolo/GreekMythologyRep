@@ -1,5 +1,6 @@
 package com.kingz.adapter;
 
+import android.content.res.Resources;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -45,10 +46,13 @@ public class BitmapListAdapter extends CommonListAdapter<String> {
             viewHolder = (CommonViewHolder) convertView.getTag();
         }
         TextView nameItem = viewHolder.getView(R.id.list_item);
+        Resources resources = parent.getContext().getResources();
         if (currentItemPostion == position) {
-            convertView.setBackgroundColor(parent.getContext().getResources().getColor(R.color.tan));
+            convertView.setBackgroundColor(resources.getColor(R.color.deepskyblue));
+            nameItem.setTextColor(resources.getColor(R.color.suncolor));
         }else{
-            convertView.setBackgroundColor(parent.getContext().getResources().getColor(R.color.transparent));
+            convertView.setBackgroundColor(resources.getColor(R.color.transparent));
+            nameItem.setTextColor(resources.getColor(R.color.lightskyblue));
         }
         String itemInfo = mData.get(position);
         String text = itemInfo != null ? itemInfo : "";

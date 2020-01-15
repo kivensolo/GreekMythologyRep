@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.kingz.customdemo.R;
 import com.kingz.graphics.GlideApp;
@@ -67,8 +68,8 @@ public class BitmapPhotosActivity extends PhotosActivity {
     private void setImageView() {
         picView.setImageBitmap(srcBitmap);
 
-        changeSizeBitmap = BitMapUtils.setZoomImg(srcBitmap, UIUtils.dip2px(this, 160),
-                UIUtils.dip2px(this, 90));
+        changeSizeBitmap = BitMapUtils.setZoomImg(srcBitmap, UIUtils.dip2px(this, 190),
+                UIUtils.dip2px(this, 120));
         rotate180_Bitmap = BitMapUtils.setRotateImage(180, srcBitmap);
         rotateYZ_Bitmap = BitMapUtils.setRotateImage_XYZ(0f, 20f, 10f, srcBitmap);
         Rounded_Bitmap = BitMapUtils.setRoundCorner(srcBitmap, 45);
@@ -103,7 +104,7 @@ public class BitmapPhotosActivity extends PhotosActivity {
         }
         String name = datas.get(position);
         ZLog.d(TAG, "onItemClick(): position=" + position + ";name=" + name);
-        if (TextUtils.equals(name, fakeData[position])) {
+        if (TextUtils.equals(name, "Source Pic")) {
             setShowBitMap(srcBitmap);
         } else if (TextUtils.equals(name, "Change Size")) {
             setShowBitMap(changeSizeBitmap);
@@ -126,7 +127,9 @@ public class BitmapPhotosActivity extends PhotosActivity {
         } else if (TextUtils.equals(name, "GuassBlur")) {
 //            setShowBitMap(BitMapUtils.guassBlur(srcBitmap, this, 15.5f));
         } else if (TextUtils.equals(name, "GIF")) {
-            showGif("http://p1.pstatp.com/large/166200019850062839d3");
+//            showGif("http://p1.pstatp.com/large/166200019850062839d3");  // 烟花gif 无法加载
+            showGif("http://5b0988e595225.cdn.sohucs.com/images/20181224/19b7010333504f64a6e7b278f2c42bd4.gif");  // 正常加载
+//            showGif("http://hbimg.b0.upaiyun.com/6f0a29b41f7cd9fc2daf075f53be1960208ca650fb20b-tr4Abg_fw658"); // 死神gif 正常加载
         }
     }
 
@@ -146,16 +149,17 @@ public class BitmapPhotosActivity extends PhotosActivity {
 
     private void showGif(String url) {
         RequestOptions requestOptions = new RequestOptions()
-                .placeholder(R.drawable.android) //设置“加载中”状态时显示的图片
-                .override(200, 200) // TODO 设置图形大小后  感觉是设置的imageview
-                .centerCrop()
-                // 将解码前的原图与解码后的数据都缓存  下次使用就不用再次请求数据
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                .placeholder(R.drawable.android) //设置“加载中”状态时显示的图片
+                .override(UIUtils.dip2px(this, 350),
+                        UIUtils.dip2px(this, 240))
+                .fitCenter()
+                .diskCacheStrategy(DiskCacheStrategy.DATA)
                 .error(R.drawable.alert_dialog_icon); //设置“加载失败”状态时显示的图片
 
         GlideApp.with(this)
                 .load(url)
                 .apply(requestOptions)
+                .transition(DrawableTransitionOptions.withCrossFade(600))
                 .into(picView);
     }
 
