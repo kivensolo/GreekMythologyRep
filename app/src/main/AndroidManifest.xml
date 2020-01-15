@@ -102,6 +102,7 @@
 
         <activity
             android:name="com.kingz.view.animation.PropertyAnimationsActivity"
+            android:theme="@style/NoActionBarTheme"
             android:screenOrientation="landscape"/>
         <activity
             android:name="com.kingz.view.animation.CrossfadeActivity"

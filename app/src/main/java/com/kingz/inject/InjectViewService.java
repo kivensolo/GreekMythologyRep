@@ -25,7 +25,7 @@ public class InjectViewService {
                 int id = injectView.id();
                 if (id != 0) {
                     try {
-                        Method method = object.getMethod("findViewById", int.class);
+                        Method method = object.getMethod("findViewById", Integer.class);
                         //调用方法，指定参数  获取到view对象
                         Object viewObject = method.invoke(activity, id);
                         field.set(activity, viewObject); //给成员属性赋值

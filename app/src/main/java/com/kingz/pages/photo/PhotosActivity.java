@@ -1,6 +1,5 @@
 package com.kingz.pages.photo;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -9,10 +8,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.base.BaseActivity;
+import com.kingz.adapter.BitmapListAdapter;
 import com.kingz.customdemo.R;
-import com.kingz.pages.photo.adapter.BitmapPageAdapter;
 
 import java.util.List;
+
+import butterknife.BindView;
 
 /**
  * author: King.Z <br>
@@ -22,10 +23,12 @@ import java.util.List;
 public abstract class PhotosActivity extends BaseActivity
         implements AdapterView.OnItemClickListener {
 
-    protected BitmapPageAdapter bitmapAdapter;
+    protected BitmapListAdapter bitmapAdapter;
+    @BindView(R.id.type_change_id)
     protected ListView mListView;
     protected TextView mTextView;
     protected int backgroundId;
+    @BindView(R.id.normal_pic)
     protected ImageView picView;
     List<String> datas;
 
@@ -37,33 +40,16 @@ public abstract class PhotosActivity extends BaseActivity
     }
 
     private void initViews() {
-        bitmapAdapter = new BitmapPageAdapter(datas);
-        mListView = findViewById(R.id.type_change_id);
+        bitmapAdapter = new BitmapListAdapter(datas);
         mListView.setAdapter(bitmapAdapter);
-        mListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         mListView.setOnItemClickListener(this);
-        picView = findViewById(R.id.normal_pic);
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        bitmapAdapter.setCurrentItemPostion(position);
         bitmapAdapter.notifyDataSetChanged();
-        setItemState(view, position);
     }
-
-    private void setItemState(View view, int position) {
-        mTextView = (TextView) view.findViewById(R.id.list_item);
-        if (mListView.isItemChecked(position)) {
-            backgroundId = R.color.deepskyblue;
-            mTextView.setTextColor(getResources().getColor(R.color.suncolor));
-        } else {
-            backgroundId = R.drawable.listview_unchecked;
-            mTextView.setTextColor(getResources().getColor(R.color.lightskyblue));
-        }
-        Drawable background = this.getResources().getDrawable(backgroundId);
-        view.setBackground(background);
-    }
-
 
     @Override
     protected void onDestroy() {

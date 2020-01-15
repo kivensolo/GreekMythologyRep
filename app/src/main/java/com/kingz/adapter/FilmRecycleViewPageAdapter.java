@@ -1,4 +1,4 @@
-package com.kingz.pages.photo.adapter;
+package com.kingz.adapter;
 
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
