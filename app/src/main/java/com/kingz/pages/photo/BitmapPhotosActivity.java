@@ -103,7 +103,7 @@ public class BitmapPhotosActivity extends PhotosActivity {
         }
         String name = datas.get(position);
         ZLog.d(TAG, "onItemClick(): position=" + position + ";name=" + name);
-        if (TextUtils.equals(name, "Source Pic")) {
+        if (TextUtils.equals(name, fakeData[position])) {
             setShowBitMap(srcBitmap);
         } else if (TextUtils.equals(name, "Change Size")) {
             setShowBitMap(changeSizeBitmap);
