@@ -9,7 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView style="?android:textAppearanceMedium"
+        <TextView
+            android:id="@+id/lorem_ipsum_view"
+            style="?android:textAppearanceMedium"
             android:lineSpacingMultiplier="1.2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

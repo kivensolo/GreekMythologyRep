@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
+import com.kingz.GreekLifeCycle;
 import com.zeke.kangaroo.utils.AppInfoUtils;
 import com.zeke.kangaroo.utils.ZLog;
 
@@ -41,6 +42,14 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         Log.i(TAG,"BaseActivity onCreate()");
         super.onCreate(savedInstanceState);
+
+        getLifecycle().addObserver(new GreekLifeCycle(TAG));
+//        getLifecycle().addObserver(new GenericLifecycleObserver() {
+//            @Override
+//            public void onStateChanged(LifecycleOwner source, Lifecycle.Event event) {
+//                ZLog.d(TAG, "onStateChanged: event ="+event);
+//            }
+//        });
     }
 
     @Override

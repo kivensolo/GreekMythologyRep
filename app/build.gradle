@@ -167,6 +167,15 @@ dependencies {
     // WorkManager (Java only)
     implementation "android.arch.work:work-runtime:$lib_versions.work_version"
 
+
+    // ViewModel and LiveData
+    implementation "android.arch.lifecycle:extensions:$lib_versions.lifecycle"
+//  just ViewModel
+//  implementation "android.arch.lifecycle:viewmodel:1.1.0"
+//  just LiveData
+//  implementation "android.arch.lifecycle:livedata:1.1.0"
+
+
 //    implementation 'com.github.zeke:kangaroo:1.0.1@aar'
 }
 

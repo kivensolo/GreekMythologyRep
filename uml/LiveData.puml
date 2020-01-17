@@ -1,0 +1,15 @@
+@startuml
+'ClassA <-- ClassB:关联
+'ClassA <.. ClassB : 依赖
+'ClassA o-- ClassB:聚集
+'ClassA <|-- ClassB:泛化
+'ClassA <|.. ClassB:实现
+
+abstract class LiveData
+LiveData <|-- MutableLiveData
+MutableLiveData <|-- MediatorLiveData
+
+class MutableLiveData
+note left: 常用,常与ViewModel结合
+
+@enduml

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.App;
+import com.kingz.GreekLifeCycle;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -21,12 +22,14 @@ import butterknife.Unbinder;
  * description：基类的Fragment
  */
 public abstract class BaseFragment extends Fragment {
+    private static final String TAG = BaseFragment.class.getSimpleName();
     private Unbinder unbinder;
     protected Activity mActivity;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getLifecycle().addObserver(new GreekLifeCycle(TAG));
     }
 
     @Nullable
