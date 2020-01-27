@@ -1,3 +1,4 @@
+
 ext {
     modulePrefix = ':'
 
@@ -12,29 +13,31 @@ ext {
             targetCompatibility: JavaVersion.VERSION_1_7]
 
     lib_versions = [
-            rxJava : '2.2.2',
-            rxandroid: '2.1.0',
-            rtf2: '2.6.1',
-            rtf2_2gson: '2.0.0',
-            rtf2_adapter: '2.2.0',
-            okhttp: '3.12.1',
-            okio: '2.1.0',
-            cons_layout:'1.1.3',
-            bkf:'8.8.1',
-            tr:'1.0.2',
-            es_core:'3.0.2',
-            work_version:'1.0.1',
+            rxJava          :'2.2.2',
+            rxandroid       :'2.1.0',
+            rtf2            :'2.6.1',
+            rtf2_2gson      :'2.0.0',
+            rtf2_adapter    :'2.2.0',
+            okhttp          :'3.12.1',
+            okio            :'2.1.0',
+            cons_layout     :'1.1.3',
+            bkf             :'8.8.1',
+            tr              :'1.0.2',
+            es_core         :'3.0.2',
+            work_version    :'1.0.1',
 
-            ijk : '0.8.4',
-            exo :'2.7.3',
+            ijk             :'0.8.4',
+            exo             :'2.7.3',
 
-            glide:'4.5.0',
-            glide_c:'4.5.0',
-            glide_okhttp:'4.3.1',
+            glide           :'4.5.0',
+            glide_c         :'4.5.0',
+            glide_okhttp    :'4.3.1',
 
-            lifecycle:'1.1.0'
+            lifecycle       :'1.1.0'
     ]
 
-    supports = [version:'27.1.1']
+    supports = [
+            version         :'27.1.1'
+    ]
 
 }
