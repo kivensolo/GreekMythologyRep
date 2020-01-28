@@ -15,6 +15,7 @@ import android.view.View;
 /**
  * author：KingZ
  * date：2019/7/30
+ * desc: 描述播放器产品的公共接口
  */
 public abstract class AbstractMediaPlayer implements IMediaPlayer,
         SurfaceHolder.Callback,

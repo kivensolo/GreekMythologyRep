@@ -9,7 +9,7 @@ import com.kingz.library.player.internal.AndroidMediaPlayer;
 /**
  * author：KingZ
  * date：2019/7/30
- * description：媒体播放器工厂类
+ * description：媒体播放器简单工厂类
  */
 @SuppressWarnings("WeakerAccess")
 public class MediaPlayerFactory {
