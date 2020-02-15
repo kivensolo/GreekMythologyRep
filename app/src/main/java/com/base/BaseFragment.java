@@ -10,8 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.App;
 import com.kingz.GreekLifeCycle;
+import com.zeke.ktx.App;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -70,7 +70,7 @@ public abstract class BaseFragment extends Fragment {
 
     @Override
     public Context getContext() {
-        return mActivity == null ? App.getAppInstance().getAppContext(): mActivity.getBaseContext();
+        return mActivity == null ? App.Companion.getInstance().getApplicationContext(): mActivity.getBaseContext();
     }
 
     public boolean onBackPressed() {

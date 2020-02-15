@@ -18,10 +18,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SeekBar;
 
-import com.App;
 import com.kingz.customdemo.R;
 import com.module.tools.ScreenTools;
 import com.zeke.kangaroo.utils.ZLog;
+import com.zeke.ktx.App;
 
 /**
  * Copyright(C) 2016, 北京视达科科技有限公司
@@ -97,8 +97,8 @@ public class ColorMartixImageView extends ViewGroup {
         mContext = context;
         ZLog.d(TAG, "SampleView()");
         setBackgroundColor(context.getResources().getColor(R.color.theme_100));
-        viewWidth = App.SCREEN_WIDTH;
-        viewHeight = App.SCREEN_HEIGHT;
+        viewWidth = App.Companion.getSCREEN_WIDTH();
+        viewHeight = App.Companion.getSCREEN_HEIGHT();
 
         lps = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         setNumberOfSeekBar(context,SEEKBAR_NUMS);

@@ -72,7 +72,8 @@ public class SCViewPagerAdapter extends FragmentStatePagerAdapter {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             LinearLayout view = new LinearLayout(getActivity());
-            view.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+            view.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.MATCH_PARENT));
             view.setOrientation(LinearLayout.VERTICAL);
             view.setBackgroundColor(getResources().getColor(this.color));
             return view;

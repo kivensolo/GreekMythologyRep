@@ -101,7 +101,7 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void openMainPage() {
-        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+        Intent intent = new Intent(SplashActivity.this, com.zeke.ktx.MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
         startActivity(intent);
         finish();

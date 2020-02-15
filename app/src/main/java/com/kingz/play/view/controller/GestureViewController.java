@@ -6,9 +6,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.App;
 import com.kingz.customdemo.R;
 import com.zeke.kangaroo.utils.TimeUtils;
+import com.zeke.ktx.App;
 
 /**
  * author：KingZ
@@ -29,7 +29,7 @@ public class GestureViewController extends BaseController{
         imageView = rootView.findViewById(R.id.gesture_tip_img);
         textView = rootView.findViewById(R.id.seek_time_preview);
 
-        Resources resources = App.getAppInstance().getResources();
+        Resources resources = App.Companion.getInstance().getApplicationContext().getResources();
         brightnessDrawable = resources.getDrawable(R.drawable.brightness_icon);
         volumeDrable = resources.getDrawable(R.drawable.volume_icon);
     }

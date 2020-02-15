@@ -7,9 +7,9 @@ import android.os.StatFs;
 import android.text.format.Formatter;
 import android.util.Log;
 
-import com.App;
 import com.zeke.kangaroo.utils.EncryptTools;
 import com.zeke.kangaroo.utils.ZLog;
+import com.zeke.ktx.App;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -79,8 +79,8 @@ public class DownloadTools {
         long  availCount = sf.getAvailableBlocksLong();
 
         String msg = String.format("\n block大小: %d bytes  block数目: %d个  磁盘总容量：%s \n 当前磁盘剩余block:%d个,剩余容量：%s"
-                , blockSize, blockCount, Formatter.formatFileSize(App.getAppInstance().getAppContext(), blockCount * blockSize)
-                , availCount, Formatter.formatFileSize(App.getAppInstance().getAppContext(), availCount * blockSize));
+                , blockSize, blockCount, Formatter.formatFileSize(App.Companion.getInstance().getApplicationContext(), blockCount * blockSize)
+                , availCount, Formatter.formatFileSize(App.Companion.getInstance().getApplicationContext(), availCount * blockSize));
         Log.d(TAG ,msg);
 
         int downedFileLength = 0;

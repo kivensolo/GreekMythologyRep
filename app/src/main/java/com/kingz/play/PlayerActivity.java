@@ -12,9 +12,9 @@ import android.view.MotionEvent;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
-import com.App;
 import com.base.BaseActivity;
 import com.kingz.customdemo.R;
+import com.zeke.ktx.App;
 
 import java.util.concurrent.TimeUnit;
 
@@ -65,7 +65,7 @@ public abstract class PlayerActivity extends BaseActivity {
         portraitParams = (LinearLayout.LayoutParams) findViewById(R.id.player_content).getLayoutParams();
 
         final int autoRotation = Settings.System.getInt(getContentResolver(), Settings.System.ACCELEROMETER_ROTATION, 0);
-        App.getAppInstance().postDelayToMainLooper(new Runnable() {
+        App.Companion.getInstance().postDelayToMainLooper(new Runnable() {
             @Override
             public void run() {
                 if (!isFinishing() && autoRotation == 1) {

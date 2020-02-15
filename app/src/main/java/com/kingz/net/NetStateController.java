@@ -8,8 +8,8 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import com.App;
 import com.zeke.kangaroo.utils.NetUtils;
+import com.zeke.ktx.App;
 
 /**
  * author：KingZ
@@ -28,12 +28,12 @@ public class NetStateController {
     };
 
     public NetStateController() {
-        _connectivityManager = (ConnectivityManager) App.getAppInstance().getSystemService(Application.CONNECTIVITY_SERVICE);
+        _connectivityManager = (ConnectivityManager) App.Companion.getInstance().getApplicationContext().getSystemService(Application.CONNECTIVITY_SERVICE);
         checkConnectivityState();
 
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-        App.getAppInstance().registerReceiver(_networkStateReceiver, intentFilter);
+        App.Companion.getInstance().getApplicationContext().registerReceiver(_networkStateReceiver, intentFilter);
     }
 
     private void checkConnectivityState() {

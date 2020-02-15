@@ -1,7 +1,7 @@
 package com.parse.xml;
 
-import com.App;
 import com.zeke.kangaroo.utils.ZLog;
+import com.zeke.ktx.App;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -22,7 +22,7 @@ public class ParserXmlByPull {
 
     public static void parserFromAssetsFile(String path) {
         try {
-            InputStream dataIns = App.getAppInstance().getAppContext().getResources().getAssets().open(path);
+            InputStream dataIns = App.Companion.getInstance().getAssets().open(path);
             XmlPullParser xmlPullParser = XmlPullParserFactory.newInstance().newPullParser();
             xmlPullParser.setInput(dataIns, "UTF-8");
             //Returns the type of the current event (START_TAG, END_TAG, TEXT, etc.)

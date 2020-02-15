@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
-import com.App;
 import com.base.BaseActivity;
 import com.core.logic.GlobalCacheCenter;
 import com.kingz.customdemo.R;
@@ -25,6 +24,7 @@ import com.module.views.progress.HorizontalProgressBarNoNumber;
 import com.zeke.kangaroo.utils.NetUtils;
 import com.zeke.kangaroo.utils.ToastUtils;
 import com.zeke.kangaroo.utils.ZLog;
+import com.zeke.ktx.App;
 
 import java.io.File;
 import java.io.IOException;
@@ -65,7 +65,7 @@ public class DownloadAPPActivity extends BaseActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        context = App.getAppInstance().getAppContext();
+        context = App.Companion.getInstance().getApplicationContext();
         setContentView(PAGE_ID);
         initviews();
     }

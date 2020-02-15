@@ -49,7 +49,7 @@ public class MainActivity extends ExpandableListActivity implements OnItemClickL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.fragment_all_demo);
         listView = (AnimatedExpandableListView) findViewById(android.R.id.list);
         expandAdapter = new MainPageExpandableAdapter(this);
         listView.setAdapter(expandAdapter);
@@ -237,7 +237,7 @@ public class MainActivity extends ExpandableListActivity implements OnItemClickL
             Toast.makeText(getApplicationContext(), "One or more page lists failed to load.", Toast.LENGTH_LONG)
                     .show();
         }
-        expandAdapter.setSampleGroups(groups);
+//        expandAdapter.setSampleGroups(groups);
     }
 
 

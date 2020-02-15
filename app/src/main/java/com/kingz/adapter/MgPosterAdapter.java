@@ -10,17 +10,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.App;
 import com.kingz.customdemo.R;
 import com.kingz.net.OkHttpClientManager;
 import com.kingz.recyclerview.data.MgPosterBean;
 import com.zeke.kangaroo.adapter.CommonRecyclerAdapter;
 import com.zeke.kangaroo.utils.ZLog;
+import com.zeke.ktx.App;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 /**
  * author: King.Z
@@ -31,17 +30,17 @@ public class MgPosterAdapter extends CommonRecyclerAdapter<MgPosterBean> {
 
     private static final String TAG = "MgPosterAdapter";
     private static final int TYPE_DEFAULT = 1; // 默认海报
-    //瀑布流模拟高度数据
-    private List<Integer> mHeights;
+//    //瀑布流模拟高度数据
+//    private List<Integer> mHeights;
 
     public MgPosterAdapter() {
         super(new ArrayList<MgPosterBean>());
-        mHeights = new ArrayList<>();
+//        mHeights = new ArrayList<>();
     }
 
     public MgPosterAdapter(ArrayList<MgPosterBean> dataModels) {
         super(dataModels);
-        mHeights = new ArrayList<>();
+//        mHeights = new ArrayList<>();
     }
 
     public void attachData(ArrayList<MgPosterBean> dataModels) {
@@ -71,7 +70,7 @@ public class MgPosterAdapter extends CommonRecyclerAdapter<MgPosterBean> {
         final ViewHolder holder = super.onCreateViewHolder(parent, viewType);
         if (viewType == TYPE_DEFAULT) {
             ImageView img = holder.itemView.findViewById(R.id.recom_poster);
-            img.setBackground(App.getAppInstance().getAppContext().getResources().getDrawable(R.drawable.bg1));
+            img.setBackground(App.Companion.getInstance().getApplicationContext().getResources().getDrawable(R.drawable.bg1));
         }
         holder.setOnClickListener(new View.OnClickListener() {
             @Override

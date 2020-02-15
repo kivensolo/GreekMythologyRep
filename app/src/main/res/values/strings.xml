@@ -124,6 +124,12 @@
     <string name="pls_input_name" translatable="false">请输入用户名</string>
     <string name="login" translatable="false">登录</string>
     <string name="user_error_tips" translatable="false">User Name Error!</string>
+    <string name="bottom_demo">Demo学习</string>
+    <string name="fuli">福利</string>
+    <string name="no_use">暂未开发</string>
+    <string name="tips_data_empty">数据为空</string>
+    <string name="content_view_desc">页面内容显示页面根View</string>
+    <string name="networl_error">网络错误</string>
 
 
 </resources>

@@ -16,7 +16,6 @@ import android.view.ViewConfiguration;
 import android.view.WindowManager;
 import android.widget.Scroller;
 
-import com.App;
 
 /**
  * author: King.Z <br>
@@ -48,8 +47,8 @@ public class CustomScrollerItem extends View {
      * 是否滑动
      */
     private boolean isSlider = false;
-    private  int itemWidth = App.ScreenAdjuest(50);
-    private  int itemHeight = App.ScreenAdjuest(100);
+    private  int itemWidth = 50;
+    private  int itemHeight = 100;
     private int startPoint_Y;       //手指按下Y的坐标
     private int startPoint_X;       //手指按下点的X坐标
     private int[] speedArr;

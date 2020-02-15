@@ -8,10 +8,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.App;
 import com.kingz.customdemo.R;
 import com.kingz.holder.CommonViewHolder;
 import com.zeke.kangaroo.adapter.CommonListAdapter;
+import com.zeke.ktx.App;
 
 import java.io.File;
 import java.text.DecimalFormat;
@@ -66,7 +66,7 @@ public class FileListAdapter extends CommonListAdapter<File> {
             dataView.setVisibility(View.GONE);
             nameView.setText("返回上一级");
             nameView.setTextSize(28);
-            nameView.setTextColor(App.getAppInstance().getAppContext()
+            nameView.setTextColor(App.Companion.getInstance().getApplicationContext()
                     .getResources().getColor(R.color.qianpurple));
             nameView.setGravity(Gravity.START|Gravity.CENTER);
             nameView.setLayoutParams(new LinearLayout.LayoutParams(-1,-1));

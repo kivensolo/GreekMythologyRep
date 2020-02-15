@@ -10,11 +10,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.App;
 import com.kingz.customdemo.R;
 import com.kingz.widgets.text.LogTextBox;
 import com.module.tools.ScreenTools;
 import com.zeke.kangaroo.utils.ZLog;
+import com.zeke.ktx.App;
 
 /**
  * author: King.Z
@@ -120,8 +120,8 @@ public class Arcs extends Activity {
 
         @Override
         protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-            int width = ScreenTools.Operation(ScreenTools.getScreenWidth(App.getAppInstance().getAppContext()));
-            int height = ScreenTools.Operation(ScreenTools.getScreenHeight(App.getAppInstance().getAppContext()));
+            int width = ScreenTools.Operation(ScreenTools.getScreenWidth(App.Companion.getInstance().getApplicationContext()));
+            int height = ScreenTools.Operation(ScreenTools.getScreenHeight(App.Companion.getInstance().getApplicationContext()));
             setMeasuredDimension(width,height);
             ZLog.d("onMeasure kingz","width="+width+";height="+height);
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);

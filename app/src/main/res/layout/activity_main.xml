@@ -1,28 +1,25 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			  android:layout_width="match_parent"
-			  android:layout_height="match_parent"
-			  android:id="@+id/root_view"
-			  android:orientation="vertical" android:weightSum="1">
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:background="@color/tab_bg"
+    tools:context="com.zeke.ktx.MainActivity">
 
-    <!--<ListView
-		android:dividerHeight="2dp"
-		android:id="@+id/list_view"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:layout_gravity="center_horizontal"
-		android:divider="@color/lightskyblue"
-		android:background="@color/black"
-		android:listSelector="@color/mediumseagreen">
-    </ListView>-->
-	<com.zeke.kangaroo.view.animation.AnimatedExpandableListView
+    <FrameLayout
+        android:contentDescription="@string/content_view_desc"
+        android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@android:id/list"
-        android:dividerHeight="1dp"
-        android:divider="@color/lightskyblue"
-        android:background="@color/black"
-        android:cacheColorHint="@color/cornflowerblue"
-        android:groupIndicator="@null">
-	</com.zeke.kangaroo.view.animation.AnimatedExpandableListView>
+        android:layout_above="@id/main_bottom_layout"
+        android:background="@android:color/white"/>
 
-</LinearLayout>
+    <!-- 底部Layout -->
+    <include
+        android:id="@+id/main_bottom_layout"
+        layout="@layout/main_bottom_layout" />
+
+</RelativeLayout>

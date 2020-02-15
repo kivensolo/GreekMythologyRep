@@ -18,10 +18,10 @@ import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.App;
 import com.kingz.customdemo.R;
 import com.kingz.utils.ToastTools;
 import com.kingz.widgets.android_src.popwindow.CommonPopupWindow;
+import com.zeke.ktx.App;
 
 /**
  * Created by KingZ.
@@ -52,7 +52,7 @@ public class BasicControlsActivity extends Activity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.basic_controls);
-        context = App.getAppInstance().getAppContext();
+        context = App.Companion.getInstance().getApplicationContext();
         initViews();
         initListeners();
     }

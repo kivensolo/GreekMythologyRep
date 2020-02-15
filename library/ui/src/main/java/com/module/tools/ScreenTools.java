@@ -20,6 +20,7 @@ import android.view.WindowManager;
  * Created by KingZ on 2016/1/5.
  * Discription: 屏幕相关的辅助类
  */
+@Deprecated
 public class ScreenTools {
 
     public static final int DESIGN_WIDTH = 1280;

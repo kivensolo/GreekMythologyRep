@@ -8,9 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.kingz.config.SampleGroup;
 import com.kingz.customdemo.R;
 import com.zeke.kangaroo.view.animation.AnimatedExpandableListView;
+import com.zeke.ktx.player.entity.DemoGroup;
 
 import java.util.Collections;
 import java.util.List;
@@ -24,7 +24,7 @@ public class MainPageExpandableAdapter extends AnimatedExpandableListView.Animat
 
     private Context mContext = null;
     private LayoutInflater mInflater;
-    private List<SampleGroup> sampleGroups = null;
+    private List<DemoGroup> sampleGroups = null;
 
     public MainPageExpandableAdapter(Context mContext) {
         this.mContext = mContext;
@@ -32,7 +32,7 @@ public class MainPageExpandableAdapter extends AnimatedExpandableListView.Animat
         mInflater = LayoutInflater.from(mContext);
     }
 
-    public void setSampleGroups(List<SampleGroup> sampleGroups) {
+    public void setSampleGroups(List<DemoGroup> sampleGroups) {
         this.sampleGroups = sampleGroups;
         notifyDataSetChanged();
     }
@@ -98,7 +98,7 @@ public class MainPageExpandableAdapter extends AnimatedExpandableListView.Animat
         viewHolder.itemText.setTextSize(20);
         viewHolder.itemText.setGravity(Gravity.CENTER_VERTICAL | Gravity.START);
 //        viewHolder.itemText.setText(groupList.get(groupPosition));
-        viewHolder.itemText.setText(sampleGroups.get(groupPosition).title);
+        viewHolder.itemText.setText(sampleGroups.get(groupPosition).getTitle());
         if (isExpanded) {
             convertView.setBackground(mContext.getResources().getDrawable(R.color.fruitpurple));
             viewHolder.itemText.setTextColor(mContext.getResources().getColor(R.color.darkturquoise));
@@ -127,7 +127,7 @@ public class MainPageExpandableAdapter extends AnimatedExpandableListView.Animat
         }
         viewHolder.itemText.setTextSize(20);
         viewHolder.itemText.setGravity(Gravity.CENTER_VERTICAL | Gravity.START);
-        viewHolder.itemText.setText(sampleGroups.get(groupPosition).getSampleByIndex(childPosition).name);
+        viewHolder.itemText.setText(sampleGroups.get(groupPosition).getSampleByIndex(childPosition).getName());
         return convertView;
     }
 
@@ -136,7 +136,7 @@ public class MainPageExpandableAdapter extends AnimatedExpandableListView.Animat
         if (groupPosition >= sampleGroups.size()) {
             return 0;
         }
-        return sampleGroups.get(groupPosition).samples.size();
+        return sampleGroups.get(groupPosition).getSamples().size();
     }
 
     /**
@@ -144,7 +144,7 @@ public class MainPageExpandableAdapter extends AnimatedExpandableListView.Animat
      */
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return sampleGroups.get(groupPosition).samples.get(childPosition);
+        return sampleGroups.get(groupPosition).getSamples().get(childPosition);
     }
 
     @Override

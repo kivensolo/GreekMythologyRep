@@ -28,16 +28,18 @@
     <!--保持CPU 运转，屏幕和键盘灯有可能是关闭的,用于文件上传和下载 -->
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- 震动权限 -->
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <!--Android 8.0 apk安装权限-->
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
 
     <uses-permission android:name="com.starcor.xinjiang.ReadUserinfo"/>
+
     <permission android:name="com.starcor.xinjiang.ReadUserinfo"/>
 
     <application
-        android:name="com.App"
+        android:name="com.zeke.ktx.App"
         android:allowBackup="true"
         android:enabled="true"
         android:icon="@mipmap/ic_launcher"
@@ -45,6 +47,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <!--应用元素据设置-->
+        <meta-data
+            android:name="design_width"
+            android:value="1080"/>
+        <meta-data
+            android:name="design_height"
+            android:value="1920"/>
+
 
         <!--<uses-library android:name="android.test.AndroidTestRunner"/>-->
 
@@ -72,7 +83,7 @@
             android:icon="@drawable/raspberry_pi_logo"
             android:label="Geek分身入口"
             android:targetActivity="com.SplashActivity"
-            android:theme="@style/NoActionBarTheme">
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -83,14 +94,16 @@
 
         <!-- 主Activity -->
         <activity
-            android:name="com.MainActivity"
+            android:name="com.zeke.ktx.MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/NoActionBarTheme">
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN" />-->
-            <!--<category android:name="android.intent.category.LAUNCHER"/>-->
-            <!--<category android:name="android.intent.category.HOME"/>-->
-            <!--</intent-filter>-->
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+                <!--<category android:name="android.intent.category.HOME"/>-->
+            </intent-filter>
         </activity>
 
         <!---->
@@ -102,8 +115,8 @@
 
         <activity
             android:name="com.kingz.view.animation.PropertyAnimationsActivity"
-            android:theme="@style/NoActionBarTheme"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme"/>
         <activity
             android:name="com.kingz.view.animation.CrossfadeActivity"
             android:screenOrientation="landscape"/>
@@ -117,49 +130,49 @@
         <!-- 原生SeekBar -->
         <activity
             android:name="com.kingz.widgets.android_src.NativeSeekBar"
-            android:theme="@style/NoActionBarTheme"/>
+            android:theme="@style/AppTheme"/>
 
         <!-- 自定义 SeekBar -->
         <activity
             android:name="com.bling.pages.UsingCustomSeekBar"
-            android:theme="@style/NoActionBarTheme"/>
+            android:theme="@style/AppTheme"/>
         <activity
             android:name="com.kingz.view.shape.ShapeDrawOval"
-            android:theme="@style/NoActionBarTheme"/>
+            android:theme="@style/AppTheme"/>
 
         <activity
             android:name="com.kingz.view.surface.DrawRectWithSurface"
-            android:theme="@style/NoActionBarTheme"/>
+            android:theme="@style/AppTheme"/>
 
         <!-- progressBar -->
         <activity
             android:name="com.kingz.widgets.android_src.NativeProgressBar"
-            android:theme="@style/NoActionBarTheme"/>
+            android:theme="@style/AppTheme"/>
 
 
         <!-- 原生布局汇总页面 -->
         <activity
             android:name="com.kingz.pages.LayoutPage"
-            android:theme="@style/NoActionBarTheme"/>
+            android:theme="@style/AppTheme"/>
 
         <activity
             android:name="com.kingz.four_components.activity.news.NewsActivity"
             android:screenOrientation="landscape"
-            android:theme="@style/NoActionBarTheme"/>
+            android:theme="@style/AppTheme"/>
 
         <!--常用控件集合-->
         <activity
             android:name="com.kingz.widgets.android_src.BasicControlsActivity"
-            android:theme="@style/NoActionBarTheme"/>
+            android:theme="@style/AppTheme"/>
         <activity
             android:name="com.kingz.widgets.android_src.AppsGridView"
-            android:theme="@style/NoActionBarTheme"/>
+            android:theme="@style/AppTheme"/>
 
         <!-- 自定义控件的ListView-->
         <activity
             android:name="com.kingz.pages.CustomViewsPage"
             android:screenOrientation="portrait"
-            android:theme="@style/NoActionBarTheme"/>
+            android:theme="@style/AppTheme"/>
 
         <activity
             android:name="com.kingz.text.LableTextViewPage"
@@ -168,7 +181,7 @@
         <activity
             android:name="com.kingz.text.metrics.FontMetricsDemoActivity"
             android:screenOrientation="landscape"
-            android:theme="@style/NoActionBarTheme"/>
+            android:theme="@style/AppTheme"/>
 
         <activity
             android:name="com.kingz.text.langs.TextViewOfLanguages"
@@ -177,11 +190,11 @@
         <!-- 四大组件的listview -->
         <activity
             android:name="com.kingz.pages.FourComponentPage"
-            android:theme="@style/NoActionBarTheme"/>
+            android:theme="@style/AppTheme"/>
 
         <activity
             android:name="com.kingz.four_components.ServiceComponentsACT"
-            android:theme="@style/NoActionBarTheme"/>
+            android:theme="@style/AppTheme"/>
 
         <activity
             android:name="com.kingz.four_components.ObtainProviderDataPage"
@@ -190,25 +203,25 @@
         <!--文件及bitmap操作的activity-->
         <activity
             android:name="com.kingz.file.FileAndPicTestACT"
-            android:theme="@style/NoActionBarTheme"/>
+            android:theme="@style/AppTheme"/>
         <activity
             android:name="com.apiDemo.content.ExternalStorage"
-            android:theme="@style/NoActionBarTheme"/>
+            android:theme="@style/AppTheme"/>
 
         <activity
             android:name="com.kingz.pages.SaveDataByFilePage"
-            android:theme="@style/NoActionBarTheme"/>
+            android:theme="@style/AppTheme"/>
 
 
         <!--BitmapDemo页面-->
         <activity
             android:name="com.kingz.file.DownloadAPPActivity"
-            android:theme="@style/NoActionBarTheme"/>
+            android:theme="@style/AppTheme"/>
 
         <!--图片缓存测试页面-->
         <activity
             android:name="com.asynctask_jsontest.LruPicListViewActivity"
-            android:theme="@style/NoActionBarTheme"/>
+            android:theme="@style/AppTheme"/>
 
         <!--图片缓存测试页面-->
 
@@ -216,48 +229,48 @@
         <activity
             android:name="com.kingz.pages.photo.BitmapPhotosActivity"
             android:screenOrientation="landscape"
-            android:theme="@style/NoActionBarTheme"/>
+            android:theme="@style/AppTheme"/>
 
         <activity
             android:name="com.kingz.pages.photo.memory.MemoryCheck"
             android:screenOrientation="landscape"
-            android:theme="@style/NoActionBarTheme"/>
+            android:theme="@style/AppTheme"/>
 
         <!--ColorMatrix-->
         <activity
             android:name="com.kingz.pages.photo.colormatrix.ColorMatrixDemo"
-            android:theme="@style/NoActionBarTheme"
+            android:theme="@style/AppTheme"
             tools:targetApi="lollipop"/>
 
         <!--文件管理页面-->
         <activity
             android:name="com.kingz.filemanager.FileManagerActivity"
-            android:theme="@style/NoActionBarTheme"/>
+            android:theme="@style/AppTheme"/>
 
         <!--文件管理页面-->
         <activity
             android:name="com.kingz.communicat.HMLActuivity"
-            android:theme="@style/NoActionBarTheme"/>
+            android:theme="@style/AppTheme"/>
 
         <!-- ProgressViewsActivity -->
         <activity
             android:name="com.bling.pages.ProgressViewsActivity"
-            android:theme="@style/NoActionBarTheme"/>
+            android:theme="@style/AppTheme"/>
 
         <!--webAppActivity-->
         <activity
             android:name="com.kingz.view.webview.WebViewActivity"
-            android:theme="@style/NoActionBarTheme"/>
+            android:theme="@style/AppTheme"/>
 
         <!-- 自定义显示的listView -->
         <activity
             android:name="com.kingz.view.listview.CustomListViewActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/NoActionBarTheme"/>
+            android:theme="@style/AppTheme"/>
         <activity
             android:name="com.kingz.recyclerview.MusicPosterPages"
-            android:theme="@style/NoActionBarTheme"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"/>
 
         <!-- 可左右滑动的ListView -->
         <activity
@@ -267,32 +280,32 @@
         <!-- WZViewPagerActicity -->
         <activity
             android:name="com.kingz.scroll.view_pager.WZViewPagerActicity"
-            android:theme="@style/NoActionBarTheme"/>
+            android:theme="@style/AppTheme"/>
         <!-- WaveLoadingActivity -->
         <activity
             android:name="com.bling.pages.WaveLoadingActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/NoActionBarTheme"/>
+            android:theme="@style/AppTheme"/>
         <activity
             android:name="com.kingz.scroll.SoapFlingActivity"
-            android:theme="@style/NoActionBarTheme"/>
+            android:theme="@style/AppTheme"/>
 
         <!-- OriginViewPager -->
         <activity
             android:name="com.kingz.widgets.android_src.OriginViewPager"
-            android:theme="@style/NoActionBarTheme"/>
+            android:theme="@style/AppTheme"/>
 
         <!-- 百度地图View -->
 
         <!-- FilmList -->
         <activity
             android:name="com.kingz.pages.photo.filmlist.FilmsListActivity"
-            android:theme="@style/NoActionBarTheme"/>
+            android:theme="@style/AppTheme"/>
 
         <!-- Span页面 -->
         <activity
             android:name="com.kingz.widgets.android_src.SpansDemo"
-            android:theme="@style/NoActionBarTheme"/>
+            android:theme="@style/AppTheme"/>
 
         <!-- ************ 媒体 *********** -->
         <activity
@@ -302,10 +315,10 @@
 
         <activity
             android:name="com.mplayer.exo_player.DetailPageActivty"
-            android:theme="@style/PlayTheme"
+            android:configChanges="locale|screenSize|keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:configChanges="locale|screenSize|keyboardHidden|orientation"
+            android:theme="@style/PlayTheme"
             android:windowSoftInputMode="stateAlwaysHidden"/>
 
         <!-- ************ API Demos 页面 ************ -->
@@ -399,8 +412,9 @@
             android:exported="false">
         </service>
 
-        <service android:name="com.kingz.four_components.service.LocalService"
-                 android:exported= "true">
+        <service
+            android:name="com.kingz.four_components.service.LocalService"
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.kingz.action.local"/>
             </intent-filter>

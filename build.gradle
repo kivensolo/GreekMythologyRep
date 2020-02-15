@@ -1,13 +1,17 @@
-apply from: "config.gradle"
+//apply from: "config.gradle"
 
 buildscript {
+    apply from: 'config.gradle'
     repositories {
         jcenter()
 //      maven { url uri('D:/repos')}  //local repositories
         google()
+        //阿里云镜像
+        maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
     }
     dependencies { //Identifies the Android plugin
         classpath 'com.android.tools.build:gradle:3.2.1'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 //        classpath 'com.starcor.plugin:pluginrepo:1.0.0'
     }
 }
@@ -20,6 +24,7 @@ allprojects {
             url 'https://dl.bintray.com/kivensolo/maven'
             //查看有哪些版本可以下载 https://dl.bintray.com/kivensolo/maven/com/github/zeke/kangaroo/
         }
+        maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/' }
     }
 
 }
@@ -30,7 +35,7 @@ task clean(type: Delete) {
 
 //监听task的创建
 tasks.whenTaskAdded { task ->
-    task.ext.srcDir = "src/main/java"
+//    task.ext.srcDir = "src/main/java"
 }
 
 //监听整个task关系图的创建

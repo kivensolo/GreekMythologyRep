@@ -63,7 +63,6 @@ public class MyItemDecoration extends RecyclerView.ItemDecoration {
     private void drawHorizontal(Canvas c, RecyclerView parent) {
 
         final int childCount = parent.getChildCount();
-        //在每一个子控件的底部画线
         for (int i = 0; i < childCount; i++) {
             final View child = parent.getChildAt(i);
 

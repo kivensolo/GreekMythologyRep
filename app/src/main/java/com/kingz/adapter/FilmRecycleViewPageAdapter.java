@@ -7,13 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.App;
 import com.kingz.mode.PosterGroupInfo;
 import com.kingz.net.OkHttpClientManager;
 import com.kingz.pages.photo.filmlist.FilmListRecyclerViewHolder;
 import com.zeke.kangaroo.utils.EncryptTools;
 import com.zeke.kangaroo.utils.FileUtils;
 import com.zeke.kangaroo.utils.ZLog;
+import com.zeke.ktx.App;
 
 import java.io.File;
 import java.util.List;
@@ -71,7 +71,7 @@ public class FilmRecycleViewPageAdapter extends RecyclerView.Adapter<FilmListRec
 
     public FilmRecycleViewPageAdapter(List<PosterGroupInfo.Poster> posterList) {
         //指定缓存路径\路径名
-        dataPath = new File(App.getAppInstance().getAppContext().getCacheDir().getPath(), FILMIMG_PATH_NAME);
+        dataPath = new File(App.Companion.getInstance().getApplicationContext().getCacheDir().getPath(), FILMIMG_PATH_NAME);
         if (!dataPath.exists()) {
             dataPath.mkdirs();
         } else if (dataPath.isFile()) {

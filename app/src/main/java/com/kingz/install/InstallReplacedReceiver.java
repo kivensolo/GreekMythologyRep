@@ -9,8 +9,8 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.text.TextUtils;
 
-import com.App;
 import com.zeke.kangaroo.utils.ZLog;
+import com.zeke.ktx.App;
 
 import java.util.List;
 
@@ -48,7 +48,7 @@ public class InstallReplacedReceiver extends BroadcastReceiver {
     }
 
      public static  boolean startApp(String packageName) {
-        Context appContext = App.getAppInstance();
+        Context appContext = App.Companion.getInstance().getApplicationContext();
         PackageInfo packageinfo = null;
         try {
             packageinfo = appContext.getPackageManager().getPackageInfo(packageName, 0);
