@@ -84,7 +84,11 @@ android {
     flavorDimensions "area"
 
     productFlavors{
+        // 开发测试阶段
         ChengDu{
+            //运行在Android 5.0以上版本的设备中，
+            //使用ART-supported格式生成multidex的速度要快很多
+//            minSdkVersion 21
             dimension "area"
             applicationId 'com.demo.chengdu'
         }
@@ -191,7 +195,6 @@ dependencies {
 //  implementation "android.arch.lifecycle:viewmodel:1.1.0"
 //  just LiveData
 //  implementation "android.arch.lifecycle:livedata:1.1.0"
-
 
 //    implementation 'com.github.zeke:kangaroo:1.0.1@aar'
 }

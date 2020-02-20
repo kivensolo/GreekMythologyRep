@@ -1,4 +1,4 @@
-package com.zeke.ktx.fragments
+package com.zeke.ktx.fragments.demos
 
 import android.app.ActivityOptions
 import android.view.View
@@ -88,8 +88,8 @@ class ExpandableDemoFragment : BaseFragment()
         val intent = data.buildIntent(activity!!)
         if (intent == null) {
             Toast.makeText(activity,
-                    "Target page resolve failed.",
-                    Toast.LENGTH_LONG)
+                    "Target page resolve failed.Please confirm class path!",
+                    Toast.LENGTH_SHORT)
                     .show()
         } else {
             startActivity(intent, opts.toBundle())

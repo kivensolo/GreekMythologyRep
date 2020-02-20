@@ -385,6 +385,8 @@
         </activity>
         <!--  ************ Android >=5.0 新特性展示  End ************ -->
 
+        <activity
+            android:name="com.zeke.ktx.activities.indicator.ScrollableTabExampleActivity"/>
 
         <!--服务 exported:外部是否可访问  process:为服务设置不同进程-->
         <service

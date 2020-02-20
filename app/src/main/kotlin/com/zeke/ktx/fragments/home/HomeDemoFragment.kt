@@ -3,8 +3,9 @@ package com.zeke.ktx.fragments.home
 import android.util.Log
 import com.kingz.customdemo.R
 import com.zeke.ktx.base.BaseActivity
-import com.zeke.ktx.fragments.ExpandableDemoFragment
 import com.zeke.ktx.fragments.HomeBaseFragment
+import com.zeke.ktx.fragments.demos.ExpandableDemoFragment
+import com.zeke.ktx.fragments.demos.MagicIndicatorDemoFragment
 import com.zeke.ktx.player.contract.DemoContract
 import com.zeke.ktx.player.entity.DemoGroup
 import com.zeke.ktx.player.presenter.DemoPresenter
@@ -31,7 +32,7 @@ class HomeDemoFragment : HomeBaseFragment<DemoPresenter>(),
         fragmentList.clear()
         titleList.clear()
 
-        val titleData = arrayOf("Android Demo","第二页","第三页")
+        val titleData = arrayOf("Android Demo","MagicIndicator Demo","第三页")
         titleList.addAll(titleData)
         //TODO 创建Demo列表的Fragment数据
         // 遍历数据  itleList.add(live.name)
@@ -39,6 +40,8 @@ class HomeDemoFragment : HomeBaseFragment<DemoPresenter>(),
 
         val demoFragment = ExpandableDemoFragment()
         fragmentList.add(demoFragment)
+        val indicatorFragment = MagicIndicatorDemoFragment()
+        fragmentList.add(indicatorFragment)
 //        val demoFragment2 = ExpandableDemoFragment()
 //        fragmentList.add(demoFragment2)
 //        val demoFragment3 = ExpandableDemoFragment()
@@ -61,9 +64,9 @@ class HomeDemoFragment : HomeBaseFragment<DemoPresenter>(),
 
     override fun initView() {
         super.initView()
-        tableLayout?.setSelectedTabIndicatorColor(resources.getColor(R.color.colorAccent))
+        tableLayout?.setSelectedTabIndicatorColor(resources.getColor(R.color.hub_yellow))
         val normalColor = resources.getColor(android.R.color.white)
-        val selectedColor = resources.getColor(R.color.colorAccent)
+        val selectedColor = resources.getColor(R.color.hub_yellow)
         tableLayout?.setTabTextColors(normalColor, selectedColor)
     }
 

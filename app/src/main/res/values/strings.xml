@@ -131,5 +131,15 @@
     <string name="content_view_desc">页面内容显示页面根View</string>
     <string name="networl_error">网络错误</string>
 
+    <!--MagicIndicatorDemo相关-->
+    <string name="scrollable_tab">Scrollable tab</string>
+    <string name="fixed_tab">Fixed tab</string>
+    <string name="dynamic_tab">Dynamic tab</string>
+    <string name="no_tab_only_indicator">No tab, only indicator</string>
+    <string name="work_with_fragment_container">Work with fragment container</string>
+    <string name="tab_with_badge_view">Tab with badge view</string>
+    <string name="custom_navigator">Custom navigator</string>
+    <string name="random_page">Random page</string>
+    <string name="tab_with_custom_layout">Load custom layout</string>
 
 </resources>

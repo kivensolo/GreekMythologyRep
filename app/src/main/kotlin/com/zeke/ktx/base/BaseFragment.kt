@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import com.zeke.ktx.App
 import com.zeke.ktx.AppLifeCycle
 
@@ -81,4 +80,5 @@ abstract class BaseFragment : Fragment() {
 
     /** 设置监听*/
     open fun setListener() {}
+
 }
