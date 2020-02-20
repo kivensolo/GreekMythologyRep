@@ -35,7 +35,7 @@
       },
       {
         "name": "LableText",
-        "class": "com.kingz.text.metrics.LableTextViewPage"
+        "class": "com.kingz.text.LableTextViewPage"
       },
       {
         "name": "SpanLable",

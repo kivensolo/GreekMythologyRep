@@ -503,6 +503,10 @@
         {
              "name": "其他",
              "isTitle": true   
+        },{
+           "name":"聚鲨环球精选",
+            "icon":"",
+            "live":"http://vst.c16.live.sharkselection.com/ghs.m3u8?banFragment=eyJiYW5GcmFnbWVudCI6W3sic3RhcnRUaW1lIjowLCJoZWlnaHQiOi0xLCJ3aWR0aCI6LTEsInBpYyI6Imh0dHA6Ly9kb3duLnhpYW93ZWl6aGliby5jb20veHcvdXBsb2FkLzIwMTkwOC8zMC85L2U4NDUxNTc0ZDhhNWNmMDhlYmQ2YTc2NWIxMGExMTE2LnBuZyIsImVuZFRpbWUiOi0xLCJ0eXBlIjoyLCJ5IjoiMCIsIngiOiIwIn1dfQ%3D%3D"
         },
         {
             "name": "HBO强档",
