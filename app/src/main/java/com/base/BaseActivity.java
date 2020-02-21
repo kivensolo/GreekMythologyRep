@@ -30,6 +30,7 @@ import butterknife.ButterKnife;
  * author: King.Z
  * date: 2016 2016/3/27 18:26
  */
+@Deprecated
 public abstract class BaseActivity extends AppCompatActivity {
 
     private static final String TAG = BaseActivity.class.getSimpleName();

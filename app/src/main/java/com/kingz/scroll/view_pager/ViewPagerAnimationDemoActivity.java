@@ -21,7 +21,7 @@ import com.zeke.kangaroo.view.ImageIndicatorView;
  * date:  2016/4/10 0:25 <br>
  * description: XXXXXXX <br>
  */
-public class WZViewPagerActicity extends FragmentActivity {
+public class ViewPagerAnimationDemoActivity extends FragmentActivity {
 
     private static final int NUM_PAGES = 5;
 

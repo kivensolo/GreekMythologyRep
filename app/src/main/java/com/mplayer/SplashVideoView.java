@@ -26,7 +26,6 @@ public class SplashVideoView extends VideoView {
         if (widthMode == MeasureSpec.EXACTLY && heightMode == MeasureSpec.EXACTLY) {
             setMeasuredDimension(widthSize, heightSize);
         } else{
-
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         }
     }

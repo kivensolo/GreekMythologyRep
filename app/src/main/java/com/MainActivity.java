@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.google.android.exoplayer2.ParserException;
 import com.google.android.exoplayer2.util.Util;
-import com.kingz.adapter.MainPageExpandableAdapter;
+import com.kingz.adapter.DemoFragmentExpandableListAdapter;
 import com.kingz.config.DemoSample;
 import com.kingz.config.Sample;
 import com.kingz.config.SampleGroup;
@@ -34,11 +34,13 @@ import java.util.List;
  * author: KingZ
  * Data: 2015年10月4日下午11:40:26
  * Description: Demo首页
+ * 老版本首页  已标记过时
  */
+@Deprecated
 public class MainActivity extends ExpandableListActivity implements OnItemClickListener {
 
     private static String TAG = MainActivity.class.getSimpleName();
-    private MainPageExpandableAdapter expandAdapter;
+    private DemoFragmentExpandableListAdapter expandAdapter;
     private AnimatedExpandableListView listView;
 
 
@@ -51,7 +53,7 @@ public class MainActivity extends ExpandableListActivity implements OnItemClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_all_demo);
         listView = (AnimatedExpandableListView) findViewById(android.R.id.list);
-        expandAdapter = new MainPageExpandableAdapter(this);
+        expandAdapter = new DemoFragmentExpandableListAdapter(this);
         listView.setAdapter(expandAdapter);
         listView.setOnGroupClickListener(new ImpOnGroupClickListener());
 //		getExpandableListView().setIndicatorBounds(UITools.SCREEN_WIDTH - 60, UITools.SCREEN_WIDTH - 27);

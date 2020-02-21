@@ -7,35 +7,35 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
 
-import com.base.BaseActivity;
 import com.kingz.customdemo.BuildConfig;
 import com.kingz.customdemo.R;
-import com.kingz.view.LogininView;
+import com.zeke.ktx.MainActivity;
+import com.zeke.ktx.base.BaseActivity;
+import com.zeke.ktx.view.LogininView;
 
 /**
  * author: King.Z <br>
  * date:  2016/9/29 19:03 <br>
- * description: 应用欢迎页面 <br>
+ * description: 应用启动欢迎页面 <br>
  */
-public class SplashActivity extends BaseActivity implements View.OnClickListener {
+public class SplashActivity extends BaseActivity
+        implements View.OnClickListener {
 
     private VideoView mVideoView;
     private InputType inputType = InputType.NONE;
     private Button buttonLeft, buttonRight;
     private LogininView formView;
-    private ViewGroup contianer;
-    private TextView logoNameView;
+    private TextView logoView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setStatusTranslucent();
+//        setStatusTranslucent();
         setContentView(R.layout.splash_activity);
         findView();
         initView();
@@ -52,9 +52,8 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
         mVideoView = (VideoView) findViewById(R.id.videoView);
         buttonLeft = (Button) findViewById(R.id.buttonLeft);
         buttonRight = (Button) findViewById(R.id.buttonRight);
-        contianer = (ViewGroup) findViewById(R.id.container);
         formView = (LogininView) findViewById(R.id.loginView);
-        logoNameView = (TextView) findViewById(R.id.appName);
+        logoView = (TextView) findViewById(R.id.appName);
         formView.post(new Runnable() {
             @Override
             public void run() {
@@ -84,7 +83,7 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void playAnim() {
-        ObjectAnimator anim = ObjectAnimator.ofFloat(logoNameView, "alpha", 0,1);
+        ObjectAnimator anim = ObjectAnimator.ofFloat(logoView, "alpha", 0,1);
         anim.setDuration(4000);
         anim.setRepeatCount(1);
         anim.setRepeatMode(ObjectAnimator.REVERSE);
@@ -92,16 +91,16 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
         anim.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                if(logoNameView.getVisibility() != View.INVISIBLE ){
-                    logoNameView.setVisibility(View.INVISIBLE);
-                    openMainPage();
+                if(logoView.getVisibility() != View.INVISIBLE ){
+                    logoView.setVisibility(View.INVISIBLE);
                 }
             }
         });
     }
 
     private void openMainPage() {
-        Intent intent = new Intent(SplashActivity.this, com.zeke.ktx.MainActivity.class);
+        Intent intent = new Intent(SplashActivity.this,
+                MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
         startActivity(intent);
         finish();
@@ -131,10 +130,9 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
                 }
                 break;
             case LOGIN:
-
                 formView.animate().translationY(-1 * delta).alpha(0).setDuration(500).start();
                 if (view == buttonLeft) {
-                    logoNameView.setVisibility(View.INVISIBLE);
+                    logoView.setVisibility(View.INVISIBLE);
                     openMainPage();
                     return;
                 }

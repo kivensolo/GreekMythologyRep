@@ -18,15 +18,15 @@ import java.util.List;
 /**
  * author: King.Z <br>
  * date:  2016/8/10 19:02 <br>
- * description: 首页可收缩伸展列表适配器 <br>
+ * description: 可收缩伸展列表适配器 <br>
  */
-public class MainPageExpandableAdapter extends AnimatedExpandableListView.AnimatedExpandableListAdapter {
+public class DemoFragmentExpandableListAdapter extends AnimatedExpandableListView.AnimatedExpandableListAdapter {
 
     private Context mContext = null;
     private LayoutInflater mInflater;
     private List<DemoGroup> sampleGroups = null;
 
-    public MainPageExpandableAdapter(Context mContext) {
+    public DemoFragmentExpandableListAdapter(Context mContext) {
         this.mContext = mContext;
         sampleGroups = Collections.emptyList();
         mInflater = LayoutInflater.from(mContext);
@@ -100,8 +100,8 @@ public class MainPageExpandableAdapter extends AnimatedExpandableListView.Animat
 //        viewHolder.itemText.setText(groupList.get(groupPosition));
         viewHolder.itemText.setText(sampleGroups.get(groupPosition).getTitle());
         if (isExpanded) {
-            convertView.setBackground(mContext.getResources().getDrawable(R.color.fruitpurple));
-            viewHolder.itemText.setTextColor(mContext.getResources().getColor(R.color.darkturquoise));
+            convertView.setBackground(mContext.getResources().getDrawable(R.color.hub_yellow_light));
+            viewHolder.itemText.setTextColor(mContext.getResources().getColor(R.color.black));
             viewHolder.indictorImg.setBackground(mContext.getResources().getDrawable(R.drawable.down_arrow));
         } else {
             convertView.setBackground(mContext.getResources().getDrawable(R.color.transparent));

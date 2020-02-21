@@ -4,7 +4,7 @@ import android.app.ActivityOptions
 import android.view.View
 import android.widget.ExpandableListView
 import android.widget.Toast
-import com.kingz.adapter.MainPageExpandableAdapter
+import com.kingz.adapter.DemoFragmentExpandableListAdapter
 import com.kingz.customdemo.R
 import com.zeke.kangaroo.utils.ZLog
 import com.zeke.kangaroo.view.animation.AnimatedExpandableListView
@@ -18,19 +18,19 @@ import com.zeke.ktx.player.presenter.DemoPresenter
 /**
  * author：KingZ
  * date：2020/2/15
- * description：扩展列表的Demo样例Fragment
+ * description：动画伸缩扩展列表的Demo样例Fragment
  */
 class ExpandableDemoFragment : BaseFragment()
         , DemoContract.View
         , ExpandableListView.OnChildClickListener
         , View.OnClickListener {
 
-    var mPresenter: DemoPresenter = DemoPresenter(this)
-    private var expandAdapter: MainPageExpandableAdapter? = null
+    private var mPresenter: DemoPresenter = DemoPresenter(this)
+    private var expandAdapter: DemoFragmentExpandableListAdapter? = null
     private var listView: AnimatedExpandableListView? = null
 
     companion object {
-        //FIX 如何去加载so库？
+        //FIXME 如何去加载so库？
         // System.loadLibrary("testNative-lib")
     }
 
@@ -59,7 +59,7 @@ class ExpandableDemoFragment : BaseFragment()
 
     override fun initView() {
         listView = rootView.findViewById(android.R.id.list)
-        expandAdapter = MainPageExpandableAdapter(context)
+        expandAdapter = DemoFragmentExpandableListAdapter(context)
         listView!!.setAdapter(expandAdapter)
         listView!!.setOnGroupClickListener(ImpOnGroupClickListener())
         listView!!.setOnChildClickListener(this)

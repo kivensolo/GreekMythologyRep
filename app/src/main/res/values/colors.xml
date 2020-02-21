@@ -169,7 +169,6 @@
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#FF4081</color>
 
-
     <!--wzviewpager所需颜色-->
     <color name="theme_500">#607D8B</color>
     <color name="theme_100">#CFD8DC</color>
@@ -190,8 +189,8 @@
     <color name="bg_main_vod_searchbar">#cc30343c</color>
     <color name="bg_main_vod_search_text">#55050505</color>
 
-
     <color name="tab_bg">#30343c</color>
+    <!--Hub 主题颜色-->
     <color name="hub_yellow">#F79817</color>
     <color name="hub_yellow_light">#F9BA62</color>
 </resources>

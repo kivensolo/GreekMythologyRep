@@ -35,7 +35,6 @@
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
 
     <uses-permission android:name="com.starcor.xinjiang.ReadUserinfo"/>
-
     <permission android:name="com.starcor.xinjiang.ReadUserinfo"/>
 
     <application
@@ -277,11 +276,10 @@
             android:name="com.kingz.scroll.SliderListViewActivity"
             android:screenOrientation="portrait"/>
 
-        <!-- WZViewPagerActicity -->
         <activity
-            android:name="com.kingz.scroll.view_pager.WZViewPagerActicity"
+            android:name="com.kingz.scroll.view_pager.ViewPagerAnimationDemoActivity"
             android:theme="@style/AppTheme"/>
-        <!-- WaveLoadingActivity -->
+
         <activity
             android:name="com.bling.pages.WaveLoadingActivity"
             android:screenOrientation="portrait"

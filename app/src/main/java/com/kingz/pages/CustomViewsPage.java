@@ -18,7 +18,7 @@ import com.kingz.customdemo.R;
 import com.kingz.mode.ListBillData;
 import com.kingz.scroll.SliderListViewActivity;
 import com.kingz.scroll.SoapFlingActivity;
-import com.kingz.scroll.view_pager.WZViewPagerActicity;
+import com.kingz.scroll.view_pager.ViewPagerAnimationDemoActivity;
 import com.kingz.view.listview.CustomListViewActivity;
 import com.kingz.view.shape.ShapeDrawOval;
 import com.kingz.view.webview.WebViewActivity;
@@ -56,7 +56,7 @@ public class CustomViewsPage extends  Activity implements OnItemClickListener{
 		mAdapter.add(new ListBillData(this,"View 的Drag & Fling",new Intent(this,SoapFlingActivity.class)));
 		mAdapter.add(new ListBillData(this,"PopupWindow",new Intent(this,CommonPopupWindow.class)));
 		mAdapter.add(new ListBillData(this,"WebAPP测试",new Intent(this,WebViewActivity.class)));
-		mAdapter.add(new ListBillData(this,"WZViewPager",new Intent(this,WZViewPagerActicity.class)));
+		mAdapter.add(new ListBillData(this,"WZViewPager",new Intent(this,ViewPagerAnimationDemoActivity.class)));
 		mAdapter.add(new ListBillData(this,"贝塞尔水波曲线",new Intent(this,WaveLoadingActivity.class)));
 	}
 
