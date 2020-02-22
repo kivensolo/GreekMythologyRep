@@ -50,7 +50,7 @@ class HomeLiveFragment : HomeBaseFragment<LivePresenter>(), LiveContract.View {
     }
 
     override fun showLiveInfo(data: MutableList<Live>?) {
-        Log.d("HomeLive", "showDemoInfo onResult.")
+        Log.d("HomeLive", "showRecomInfo onResult.")
         fragmentList.clear()
         titleList.clear()
         val groupList:ArrayList<Live> = ArrayList()

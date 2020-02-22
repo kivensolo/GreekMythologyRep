@@ -10,8 +10,8 @@ import com.kingz.customdemo.R
 import com.zeke.ktx.base.BaseActivity
 import com.zeke.ktx.base.BaseFragment
 import com.zeke.ktx.components.MainBottomController
-import com.zeke.ktx.fragments.home.HomeDemoFragment
 import com.zeke.ktx.fragments.home.HomeLiveFragment
+import com.zeke.ktx.fragments.home.HomeRecomFragment
 import com.zeke.ktx.fragments.home.ISwitcher
 
 /**
@@ -20,7 +20,7 @@ import com.zeke.ktx.fragments.home.ISwitcher
  */
 class MainActivity : BaseActivity(), ISwitcher {
 
-    private var homeVodFragment: HomeDemoFragment? = null
+    private var homeVodFragment: HomeRecomFragment? = null
     private var homeLiveFragment: HomeLiveFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,7 +35,7 @@ class MainActivity : BaseActivity(), ISwitcher {
     private fun initFragment() {
         val fragmentManager = supportFragmentManager
         val fragmentTS = fragmentManager.beginTransaction()
-        homeVodFragment = HomeDemoFragment()
+        homeVodFragment = HomeRecomFragment()
         homeLiveFragment = HomeLiveFragment()
         fragmentTS.add(R.id.content, homeVodFragment)
                 .show(homeVodFragment)

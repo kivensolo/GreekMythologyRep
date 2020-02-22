@@ -1,4 +1,4 @@
-package com.zeke.ktx.player.service
+package com.zeke.ktx.api
 
 import android.content.Context
 import android.content.res.AssetManager
@@ -9,9 +9,10 @@ import com.google.android.exoplayer2.ParserException
 import com.google.android.exoplayer2.util.Util
 import com.kingz.config.SampleGroup
 import com.zeke.kangaroo.utils.ZLog
+import com.zeke.ktx.api.callback.IDataResponse
 import com.zeke.ktx.player.entity.DemoGroup
 import com.zeke.ktx.player.entity.DemoSample
-import com.zeke.ktx.player.service.DataApiService.IDataCallback
+import org.jetbrains.annotations.NotNull
 import java.io.IOException
 import java.io.InputStreamReader
 import java.util.*
@@ -22,19 +23,19 @@ import java.util.*
  * description：Demo样例数据的数据提供实现类，
  * 负责Demo数据配置文件解析和数据返回
  */
-class DemoApiServiceImpl constructor() : DataApiService<DemoGroup> {
+class AndroidDemoProvider constructor() : DataApiService<MutableList<DemoGroup>> {
     companion object {
-        private val TAG = DemoApiServiceImpl::class.java.simpleName
-        private lateinit var mCallBack: IDataCallback<DemoGroup>
+        private val TAG = AndroidDemoProvider::class.java.simpleName
+        private lateinit var mCallBack: IDataResponse<MutableList<DemoGroup>>
 
     }
 
     /**
      * 获取Demo展示数据信息
      * @param context Context
-     * @param callback DataApiService.IDataCallback
+     * @param callback DataApiService.IDataResponse
      */
-    override fun requestData(context: Context, callback: IDataCallback<DemoGroup>) {
+    override fun requestData(context: Context,@NotNull callback: IDataResponse<MutableList<DemoGroup>>) {
         mCallBack = callback
         val assetManager = context.assets
         val uris: Array<String>
@@ -42,7 +43,7 @@ class DemoApiServiceImpl constructor() : DataApiService<DemoGroup> {
         checkMainList(assetManager, uriList, context)
         // 显式指定数组的长度，数组元素全部被初始化为null。
         // 相当于Java数组的动态初始化。
-//        uris = arrayOfNulls<String?>(uriList.size)
+        // uris = arrayOfNulls<String?>(uriList.size)
         uris = uriList.toTypedArray()
         // 同java  Arrays.sort(uris);
         uris.sort()
@@ -70,7 +71,8 @@ class DemoApiServiceImpl constructor() : DataApiService<DemoGroup> {
         }
     }
 
-    class SampleListLoader(var ctx:Context): AsyncTask<String, Void, MutableList<DemoGroup>>() {
+    class SampleListLoader(var ctx:Context)
+        : AsyncTask<String, Void, MutableList<DemoGroup>>() {
         private var sawError: Boolean = false
 
         override fun doInBackground(vararg parms: String?): MutableList<DemoGroup> {
@@ -169,10 +171,9 @@ class DemoApiServiceImpl constructor() : DataApiService<DemoGroup> {
         }
 
 
-        override fun onPostExecute(result: MutableList<DemoGroup>?) {
+        override fun onPostExecute(result: MutableList<DemoGroup>) {
             super.onPostExecute(result)
-            //TODO 处理完毕返回数据
-            mCallBack.onResult(result)
+            mCallBack.onSucess(result)
         }
 
     }

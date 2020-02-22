@@ -1,11 +1,12 @@
 package com.zeke.ktx.player.presenter
 
 import android.content.Context
+import com.zeke.ktx.api.DataApiService
+import com.zeke.ktx.api.LiveDataProvider
+import com.zeke.ktx.api.callback.LiveDataResponse
 import com.zeke.ktx.player.contract.LiveContract
 import com.zeke.ktx.player.entity.Live
 import com.zeke.ktx.player.entity.TimeTableData
-import com.zeke.ktx.player.service.DataApiService
-import com.zeke.ktx.player.service.LiveApiServiceImpl
 
 /**
  * author：KingZ
@@ -16,9 +17,9 @@ import com.zeke.ktx.player.service.LiveApiServiceImpl
  */
 class LivePresenter(var mView: LiveContract.View) :
         LiveContract.Presenter,
-        DataApiService.IDataCallback<Live>{
+        LiveDataResponse {
 
-    var mService: DataApiService<Live> = LiveApiServiceImpl()
+    var mService: DataApiService<MutableList<Live>> = LiveDataProvider()
 
 
     override fun getLiveInfo(context: Context) {
@@ -31,8 +32,12 @@ class LivePresenter(var mView: LiveContract.View) :
         mView.hideLoading()
     }
 
-    override fun onResult(data: MutableList<Live>?) {
+    override fun onSucess(data: MutableList<Live>) {
         mView.showLiveInfo(data)
+    }
+
+    override fun onError(code: Int, msg: String, data: MutableList<Live>) {
+//        mView.showError()
     }
 
     override fun onTimeTables(data: MutableList<TimeTableData>?) {

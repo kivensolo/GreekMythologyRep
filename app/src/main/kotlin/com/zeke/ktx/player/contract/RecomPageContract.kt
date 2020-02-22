@@ -3,21 +3,20 @@ package com.zeke.ktx.player.contract
 import android.content.Context
 import com.zeke.ktx.base.presenter.IPresenter
 import com.zeke.ktx.base.view.IView
-import com.zeke.ktx.player.entity.DemoGroup
+import com.zeke.ktx.player.entity.HomeRecomData
 
 /**
- * author：KingZ
- * date：2020/2/22
- * description：demo数据的连接层
+ * @description： Contract 将View和Present顶层进行连接
  */
-interface DemoContract {
+interface RecomPageContract {
+
     interface View : IView {// 定义特殊业务需要的UI交互接口
         /** 显示获取到的首页推荐信息 */
-        fun showDemoInfo(data: MutableList<DemoGroup>)
+        fun showRecomInfo(data: MutableList<HomeRecomData>?)
     }
 
     interface Presenter : IPresenter {
         /** 获取页面详情信息 */
-        fun getDemoInfo(context: Context)
+        fun getPageContent(context: Context)
     }
 }

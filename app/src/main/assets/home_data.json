@@ -1,0 +1,55 @@
+[
+  {
+    "id":"home_index_0",
+    "name":"推荐",
+    "type":"recom",
+    "extends":"无扩展数据",
+    "page_content":[
+      {
+        "id":"templete_one",
+        "type":"banner",
+        "name": "推荐banner",
+        "thumb": "",
+        "background_img": "",
+        "import_id": "",
+        "recom_asset_id": "",
+        "recom_category_id": ""
+      }
+    ]
+  },{
+    "id":"home_index_1",
+    "name":"安卓Demo展示",
+    "type":"demo",
+    "extends":"无扩展数据",
+    "page_content":[
+      {
+        "id":"templete_one",
+        "type":"banner",
+        "name": "推荐banner",
+        "thumb": "",
+        "background_img": "",
+        "import_id": "",
+        "recom_asset_id": "",
+        "recom_category_id": ""
+      }
+    ]
+  },
+  {
+    "id":"home_index_2",
+    "name":"MagicIndicator Demo",
+    "type":"magicIndicator",
+    "extends":"无扩展数据",
+    "page_content":[
+      {
+        "id":"home_page_Indicator_1",
+        "page": 1,
+        "name": "假数据假数据",
+        "thumb": "",
+        "background_img": "",
+        "import_id": "",
+        "recom_asset_id": "",
+        "recom_category_id": ""
+      }
+    ]
+  }
+]

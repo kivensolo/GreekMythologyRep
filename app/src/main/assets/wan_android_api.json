@@ -1,0 +1,13 @@
+{
+  "API_Host":"https://www.wanandroid.com",
+  "API": [
+    {
+      "name": "api_banner",
+      "url": "/banner/json"
+    },
+    {
+      "name": "hot_key",
+      "url": "//hotkey/json"
+    }
+  ]
+}

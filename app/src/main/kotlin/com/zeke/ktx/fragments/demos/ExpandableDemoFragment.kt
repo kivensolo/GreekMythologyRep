@@ -42,16 +42,12 @@ class ExpandableDemoFragment : BaseFragment()
     override fun showLoading() {}
 
     override fun showError(listener: View.OnClickListener) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun showEmpty(listener: View.OnClickListener) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun showMessage(tips: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun showMessage(tips: String) {}
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_all_demo
@@ -66,8 +62,8 @@ class ExpandableDemoFragment : BaseFragment()
     }
 
 
-    override fun showDemoInfo(data: MutableList<DemoGroup>?) {
-        ZLog.d(TAG, "showDemoInfo()~~")
+    override fun showDemoInfo(data: MutableList<DemoGroup>) {
+        ZLog.d(TAG, "showRecomInfo()~~")
         expandAdapter!!.setSampleGroups(data!!)
     }
 
@@ -77,7 +73,6 @@ class ExpandableDemoFragment : BaseFragment()
     }
 
     override fun onClick(v: View?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onChildClick(parent: ExpandableListView?, v: View?, groupPosition: Int, childPosition: Int, id: Long): Boolean {

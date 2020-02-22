@@ -6,46 +6,43 @@ import com.zeke.ktx.base.BaseActivity
 import com.zeke.ktx.fragments.HomeBaseFragment
 import com.zeke.ktx.fragments.demos.ExpandableDemoFragment
 import com.zeke.ktx.fragments.demos.MagicIndicatorDemoFragment
-import com.zeke.ktx.player.contract.DemoContract
-import com.zeke.ktx.player.entity.DemoGroup
-import com.zeke.ktx.player.presenter.DemoPresenter
+import com.zeke.ktx.player.contract.RecomPageContract
+import com.zeke.ktx.player.entity.HomeRecomData
+import com.zeke.ktx.player.presenter.RecomPresenter
 
 /**
  * author：KingZ
  * date：2019/12/29
- * description：首页-Demo展示的Fragemnt
+ * description：首页-推荐页展示的Fragemnt
  */
-class HomeDemoFragment : HomeBaseFragment<DemoPresenter>(),
-        DemoContract.View {
+class HomeRecomFragment : HomeBaseFragment<RecomPresenter>(),RecomPageContract.View {
 
     init {
-        mPresenter = DemoPresenter(this)
+        mPresenter = RecomPresenter(this)
     }
 
 
     override fun initData() {
-        mPresenter.getDemoInfo(activity!!)
+        mPresenter.getPageContent(activity!!)
     }
 
-    override fun showDemoInfo(data: MutableList<DemoGroup>?) {
+    override fun showRecomInfo(data: MutableList<HomeRecomData>?) {
         Log.d(TAG, "showDemoPageInfo onResult.")
+        if(data == null || data.size == 0){
+            //TODO 显示空数据
+            return
+        }
         fragmentList.clear()
         titleList.clear()
 
-        val titleData = arrayOf("Android Demo","MagicIndicator Demo","第三页")
-        titleList.addAll(titleData)
-        //TODO 创建Demo列表的Fragment数据
-        // 遍历数据  itleList.add(live.name)
-        // fragmentList.add(homeVodItemFragment)
-
-        val demoFragment = ExpandableDemoFragment()
-        fragmentList.add(demoFragment)
-        val indicatorFragment = MagicIndicatorDemoFragment()
-        fragmentList.add(indicatorFragment)
-//        val demoFragment2 = ExpandableDemoFragment()
-//        fragmentList.add(demoFragment2)
-//        val demoFragment3 = ExpandableDemoFragment()
-//        fragmentList.add(demoFragment3)
+        data.forEach lit@ {
+            titleList.add(it.name)
+            when(it.type) {
+                "recom" -> fragmentList.add(MagicIndicatorDemoFragment()) //TODO 换成推荐的页面
+                "demo" -> fragmentList.add(ExpandableDemoFragment())
+                "magicIndicator" -> fragmentList.add(MagicIndicatorDemoFragment())
+            }
+        }
         refreshViewPagerData()
     }
 

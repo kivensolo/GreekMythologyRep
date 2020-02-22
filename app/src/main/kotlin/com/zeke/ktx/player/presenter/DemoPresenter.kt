@@ -1,39 +1,36 @@
 package com.zeke.ktx.player.presenter
 
 import android.content.Context
-import com.zeke.kangaroo.utils.ZLog
+import android.view.View
+import com.zeke.ktx.api.AndroidDemoProvider
+import com.zeke.ktx.api.DataApiService
+import com.zeke.ktx.api.callback.IDataResponse
 import com.zeke.ktx.player.contract.DemoContract
 import com.zeke.ktx.player.entity.DemoGroup
-import com.zeke.ktx.player.entity.TimeTableData
-import com.zeke.ktx.player.service.DataApiService
-import com.zeke.ktx.player.service.DemoApiServiceImpl
 
 /**
  * author：KingZ
- * date：2020/2/8
- * description：首页Demo模块Presenter
- *
- * 构造函数：Bind View和Presenter的关系
+ * date：2020/2/22
+ * description：Android Demo页面的Presenter
  */
 class DemoPresenter(var mView: DemoContract.View) :
-        DemoContract.Presenter,
-        DataApiService.IDataCallback<DemoGroup>{
-    var mService: DataApiService<DemoGroup> = DemoApiServiceImpl()
+        DemoContract.Presenter, IDataResponse<MutableList<DemoGroup>> {
 
-    override fun getDemoInfo(context: Context) {
-        mView.showLoading()
-        mService.requestData(context,this)
-    }
+    var provider: DataApiService<MutableList<DemoGroup>> = AndroidDemoProvider()
 
-    override fun onResult(data: MutableList<DemoGroup>?) {
-        ZLog.d("Kingz onResult=" + data?.size)
+    override fun onSucess(data: MutableList<DemoGroup>) {
         mView.showDemoInfo(data)
     }
 
-    override fun onTimeTables(data: MutableList<TimeTableData>?) {
+    override fun onError(code: Int, msg: String,
+                         data: MutableList<DemoGroup>) {
+        mView.showError(View.OnClickListener {
+
+        })
     }
 
-    override fun onPlayUrl(url: String) {
+    override fun getDemoInfo(context: Context) {
+        mView.showLoading()
+        provider.requestData(context,this)
     }
-
 }
