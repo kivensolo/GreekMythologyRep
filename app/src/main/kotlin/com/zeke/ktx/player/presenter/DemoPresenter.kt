@@ -1,7 +1,6 @@
 package com.zeke.ktx.player.presenter
 
 import android.content.Context
-import android.view.View
 import com.zeke.ktx.api.AndroidDemoProvider
 import com.zeke.ktx.api.DataApiService
 import com.zeke.ktx.api.callback.IDataResponse
@@ -24,9 +23,7 @@ class DemoPresenter(var mView: DemoContract.View) :
 
     override fun onError(code: Int, msg: String,
                          data: MutableList<DemoGroup>) {
-        mView.showError(View.OnClickListener {
-
-        })
+        mView.showError()
     }
 
     override fun getDemoInfo(context: Context) {

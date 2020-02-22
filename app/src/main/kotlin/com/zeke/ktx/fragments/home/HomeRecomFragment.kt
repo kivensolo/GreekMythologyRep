@@ -3,9 +3,10 @@ package com.zeke.ktx.fragments.home
 import android.util.Log
 import com.kingz.customdemo.R
 import com.zeke.ktx.base.BaseActivity
+import com.zeke.ktx.fragments.CommonPageFragment
+import com.zeke.ktx.fragments.ExpandableDemoFragment
 import com.zeke.ktx.fragments.HomeBaseFragment
-import com.zeke.ktx.fragments.demos.ExpandableDemoFragment
-import com.zeke.ktx.fragments.demos.MagicIndicatorDemoFragment
+import com.zeke.ktx.fragments.MagicIndicatorDemoFragment
 import com.zeke.ktx.player.contract.RecomPageContract
 import com.zeke.ktx.player.entity.HomeRecomData
 import com.zeke.ktx.player.presenter.RecomPresenter
@@ -29,16 +30,16 @@ class HomeRecomFragment : HomeBaseFragment<RecomPresenter>(),RecomPageContract.V
     override fun showRecomInfo(data: MutableList<HomeRecomData>?) {
         Log.d(TAG, "showDemoPageInfo onResult.")
         if(data == null || data.size == 0){
-            //TODO 显示空数据
+            showEmpty()
             return
         }
         fragmentList.clear()
         titleList.clear()
 
-        data.forEach lit@ {
+        data?.forEach lit@ {
             titleList.add(it.name)
             when(it.type) {
-                "recom" -> fragmentList.add(MagicIndicatorDemoFragment()) //TODO 换成推荐的页面
+                "recom" -> fragmentList.add(CommonPageFragment())
                 "demo" -> fragmentList.add(ExpandableDemoFragment())
                 "magicIndicator" -> fragmentList.add(MagicIndicatorDemoFragment())
             }

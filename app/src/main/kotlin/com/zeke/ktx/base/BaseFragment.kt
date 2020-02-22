@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.zeke.ktx.App
 import com.zeke.ktx.AppLifeCycle
+import com.zeke.ktx.view.LoadStatusView
 
 
 /**
@@ -20,6 +21,8 @@ abstract class BaseFragment : Fragment() {
     }
     private var mActivity: Activity? = null
     protected lateinit var rootView: View
+    // 加载状态View
+    protected var loadStatusView: LoadStatusView? = null
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)

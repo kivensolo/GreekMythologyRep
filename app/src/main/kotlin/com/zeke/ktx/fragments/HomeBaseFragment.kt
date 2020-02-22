@@ -11,7 +11,6 @@ import com.kingz.customdemo.R
 import com.zeke.ktx.base.BaseFragment
 import com.zeke.ktx.base.presenter.IPresenter
 import com.zeke.ktx.base.view.IView
-import com.zeke.ktx.view.LoadStatusView
 import java.util.*
 
 /**
@@ -27,8 +26,6 @@ open class HomeBaseFragment<T : IPresenter> : BaseFragment(), IView {
     protected var viewPager: ViewPager? = null
     protected var currentFragment: Fragment? = null
     protected var viewPagerAdapter: ViewPagerAdapter? = null
-    // 加载状态View
-    protected var loadStatusView: LoadStatusView? = null
 
     // 每页内容的Fragment
     protected var fragmentList: MutableList<Fragment> = ArrayList()
@@ -73,16 +70,14 @@ open class HomeBaseFragment<T : IPresenter> : BaseFragment(), IView {
         coverView?.visibility = View.VISIBLE
     }
 
-    override fun showError(listener: View.OnClickListener) {
-        loadStatusView?.showError(listener)
+    override fun showError() {
         tableLayout?.visibility = View.GONE
+        loadStatusView?.showError()
     }
 
-    override fun showEmpty(listener: View.OnClickListener) {
-        loadStatusView?.showEmpty(R.string.tips_data_empty,
-                R.drawable.tooltip_frame_dark,
-                listener)
+    override fun showEmpty() {
         tableLayout?.visibility = View.GONE
+        loadStatusView?.showEmpty()
     }
 
     override fun showMessage(tips: String) {

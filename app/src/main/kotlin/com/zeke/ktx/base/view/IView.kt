@@ -1,7 +1,5 @@
 package com.zeke.ktx.base.view
 
-import android.view.View
-
 /**
  * View顶层抽象层
  */
@@ -25,12 +23,12 @@ interface IView {
     /**
      * 错误显示
      */
-    fun showError(listener: View.OnClickListener)
+    fun showError()
 
     /**
      * 空数据
      */
-    fun showEmpty(listener: View.OnClickListener)
+    fun showEmpty()
 
     /**
      * 弹出吐司

@@ -1,4 +1,4 @@
-package com.zeke.ktx.fragments.demos
+package com.zeke.ktx.fragments
 
 import android.content.Intent
 import android.os.Bundle

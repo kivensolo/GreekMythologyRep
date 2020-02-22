@@ -1,4 +1,4 @@
-package com.zeke.ktx.fragments.demos
+package com.zeke.ktx.fragments
 
 import android.app.ActivityOptions
 import android.view.View
@@ -41,10 +41,10 @@ class ExpandableDemoFragment : BaseFragment()
 
     override fun showLoading() {}
 
-    override fun showError(listener: View.OnClickListener) {
+    override fun showError() {
     }
 
-    override fun showEmpty(listener: View.OnClickListener) {
+    override fun showEmpty() {
     }
 
     override fun showMessage(tips: String) {}

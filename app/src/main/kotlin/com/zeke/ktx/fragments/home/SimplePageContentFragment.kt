@@ -45,10 +45,10 @@ class SimplePageContentFragment : BaseFragment(), IView, View.OnClickListener {
     override fun hideLoading() {
     }
 
-    override fun showError(listener: View.OnClickListener) {
+    override fun showError() {
     }
 
-    override fun showEmpty(listener: View.OnClickListener) {
+    override fun showEmpty() {
 
     }
 
