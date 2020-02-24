@@ -2,14 +2,21 @@ package com.kingz;
 
 import android.content.Intent;
 import android.os.IBinder;
+import android.os.RemoteException;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.MediumTest;
 import android.support.test.rule.ServiceTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.kingz.four_components.service.LocalService;
+import com.kingz.four_components.service.MyComponentsOfService;
+import com.zeke.kangaroo.utils.ZLog;
 
+import junit.framework.Assert;
+
+import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,7 +29,8 @@ import static org.junit.Assert.assertEquals;
 /**
  * author：KingZ
  * date：2019/11/7
- * description：{@link com.kingz.four_components.service.LocalService} 单元测试类
+ * description：{@link LocalService} 和
+ * {@link MyComponentsOfService}的单元测试样例类
  *
  * JUnit4中常用的几个注解：
  *  <code>@Befor</code>
@@ -42,13 +50,17 @@ import static org.junit.Assert.assertEquals;
 @MediumTest
 @RunWith(AndroidJUnit4.class)
 public class LocalServiceTest {
+    private static final String TAG = "TestRunner";
     private Intent serviceIntent;
+    private Intent serviceIntent_2;
+
     @Rule
     public final ServiceTestRule mServiceRule = new ServiceTestRule();
 
     @Before
     public void setup() throws Exception {
         serviceIntent = new Intent(InstrumentationRegistry.getTargetContext(), LocalService.class);
+        serviceIntent_2 = new Intent(InstrumentationRegistry.getTargetContext(), MyComponentsOfService.class);
     }
 
     @Test
@@ -64,4 +76,19 @@ public class LocalServiceTest {
         LocalService service =  ((LocalService.LocalBinder)binder).getService();
         assertTrue(service.getRandomNumber() <= 100);
     }
+
+
+    @Test
+    public void testWithYourService() throws TimeoutException, RemoteException {
+        IBinder binder = mServiceRule.bindService(serviceIntent_2);
+        MyComponentsOfService service =  ((MyComponentsOfService.LocalServiceBinder)binder).getService();
+        int currentNum = service.getCurrentNum();
+        ZLog.d(TAG,"testWithYourService getCurrentNum = " + currentNum);
+        Assert.assertEquals(1, currentNum);
+    }
+
+
+    @After
+    @Ignore("not implemented yet")
+    public void testDone(){}
 }
