@@ -15,7 +15,6 @@ def keystoreProperties = new Properties()
 // Load keystore.properties file into the keystoreProperties object.
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
-
 android {
     signingConfigs {
         ZekeSigned {

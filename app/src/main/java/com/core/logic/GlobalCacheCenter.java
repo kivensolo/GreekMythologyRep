@@ -8,11 +8,10 @@ import com.zeke.kangaroo.utils.ZLog;
 import java.io.File;
 
 /**
- * Copyright(C) 2016, 北京视达科科技有限公司
- * All rights reserved. <br>
  * author: King.Z <br>
  * date:  2016/9/7 17:10 <br>
  * description: 全局缓存控制中心 <br>
+ *     @deprecated
  */
 public class GlobalCacheCenter {
     private static final String TAG = "GlobalCacheCenter";

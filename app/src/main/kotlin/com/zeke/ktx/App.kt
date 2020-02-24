@@ -9,10 +9,13 @@ import android.os.StrictMode
 import android.support.multidex.MultiDexApplication
 import android.util.Log
 import com.core.logic.GlobalCacheCenter
+import com.github.xulcache.CacheDomain
 import com.kingz.customdemo.BuildConfig
 import com.takt.FpsTools
 import com.zeke.kangaroo.utils.ZLog
 import com.zhy.autolayout.config.AutoLayoutConifg
+import java.io.InputStream
+import java.util.concurrent.TimeUnit
 
 
 /**
@@ -26,6 +29,13 @@ class App : MultiDexApplication() {
     val TAG = "Application"
     private var _appMainHandler: Handler? = null
     private val STRICT_MODE = false
+
+
+    // 全局缓存设置
+    private val CACHE_DOMAIN_ID_APP = 0x1001
+    private val CACHE_MAX_SIZE = 128 * 1024 * 1024L    // 最大保存128M
+    private val CACHE_LIFETIME = TimeUnit.DAYS.toMillis(7)    // 最多保存7天
+    protected var _xulCacheDomain: CacheDomain? = null
 
 
     val BDApiKey = "467e6d8f8b06b8811b7a6fb939c8ad5e"
@@ -82,10 +92,6 @@ class App : MultiDexApplication() {
     }
 
 
-    private fun initCacheCenter() {
-        GlobalCacheCenter.getInstance().init(applicationContext)
-    }
-
     private fun initStrictListenner() {
         if (STRICT_MODE) {
             //https://blog.csdn.net/meegomeego/article/details/45746721
@@ -138,6 +144,33 @@ class App : MultiDexApplication() {
     fun postDelayToMainLooper(runnable: Runnable, ms: Long) {
         _appMainHandler?.postDelayed(runnable, ms)
     }
+
+    // --------------------全局缓存---------------------- Start
+    private fun initCacheCenter() {
+        GlobalCacheCenter.getInstance().init(applicationContext)
+
+//        CacheCenter.setRevision(AppInfoUtils.getVersionCode(instance.applicationContext))
+//        CacheCenter.setVersion("test_version")
+//
+//        _xulCacheDomain = CacheCenter.buildCacheDomain(CACHE_DOMAIN_ID_APP)
+//                .setDomainFlags(CacheCenter.CACHE_FLAG_FILE
+//                        or CacheCenter.CACHE_FLAG_REVISION_LOCAL)
+//                .setLifeTime(CACHE_LIFETIME)
+//                .setMaxFileSize(CACHE_MAX_SIZE)
+//                .build()
+    }
+
+    fun xulStoreCachedData(path: String, stream: InputStream): Boolean {
+        _xulCacheDomain?.put(path, stream)
+        return true
+    }
+
+    fun xulLoadCachedData(path: String): InputStream {
+        return _xulCacheDomain!!.getAsStream(path)
+    }
+
+
+    // --------------------全局缓存---------------------- End
 
     /**
      * 自己监测生命周期，辅助判断应用是否在前台
