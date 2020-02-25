@@ -9,10 +9,10 @@ import android.os.StrictMode
 import android.support.multidex.MultiDexApplication
 import android.util.Log
 import com.core.logic.GlobalCacheCenter
+import com.github.xulcache.CacheCenter
 import com.github.xulcache.CacheDomain
 import com.kingz.customdemo.BuildConfig
 import com.takt.FpsTools
-import com.zeke.kangaroo.utils.ZLog
 import com.zhy.autolayout.config.AutoLayoutConifg
 import java.io.InputStream
 import java.util.concurrent.TimeUnit
@@ -35,7 +35,7 @@ class App : MultiDexApplication() {
     private val CACHE_DOMAIN_ID_APP = 0x1001
     private val CACHE_MAX_SIZE = 128 * 1024 * 1024L    // 最大保存128M
     private val CACHE_LIFETIME = TimeUnit.DAYS.toMillis(7)    // 最多保存7天
-    protected var _xulCacheDomain: CacheDomain? = null
+    protected var _appCacheDomain: CacheDomain? = null
 
 
     val BDApiKey = "467e6d8f8b06b8811b7a6fb939c8ad5e"
@@ -54,10 +54,10 @@ class App : MultiDexApplication() {
         super.onCreate()
         instance = this
         _appMainHandler = Handler(mainLooper)
+        initCacheCenter()
         initAPPScreenParms()
         init()
         initLog()
-        initCacheCenter()
 //        initFpsDebugView()
         initStrictListenner()
         //        STCFrameChecker.getInstance()
@@ -93,6 +93,7 @@ class App : MultiDexApplication() {
 
 
     private fun initStrictListenner() {
+        @Suppress("ConstantConditionIf")
         if (STRICT_MODE) {
             //https://blog.csdn.net/meegomeego/article/details/45746721
             //https://www.jianshu.com/p/113b9c54b5d1
@@ -149,28 +150,34 @@ class App : MultiDexApplication() {
     private fun initCacheCenter() {
         GlobalCacheCenter.getInstance().init(applicationContext)
 
-//        CacheCenter.setRevision(AppInfoUtils.getVersionCode(instance.applicationContext))
-//        CacheCenter.setVersion("test_version")
-//
-//        _xulCacheDomain = CacheCenter.buildCacheDomain(CACHE_DOMAIN_ID_APP)
-//                .setDomainFlags(CacheCenter.CACHE_FLAG_FILE
-//                        or CacheCenter.CACHE_FLAG_REVISION_LOCAL)
-//                .setLifeTime(CACHE_LIFETIME)
-//                .setMaxFileSize(CACHE_MAX_SIZE)
-//                .build()
+        CacheCenter.setRevision(AppInfoUtils.getVersionCode(instance.applicationContext))
+        CacheCenter.setVersion("test_version")
+
+        _appCacheDomain = CacheCenter.buildCacheDomain(CACHE_DOMAIN_ID_APP,instance.applicationContext)
+                .setDomainFlags(CacheCenter.CACHE_FLAG_FILE
+                        or CacheCenter.CACHE_FLAG_REVISION_LOCAL)
+                .setLifeTime(CACHE_LIFETIME)
+                .setMaxFileSize(CACHE_MAX_SIZE)
+                .build()
     }
 
-    fun xulStoreCachedData(path: String, stream: InputStream): Boolean {
-        _xulCacheDomain?.put(path, stream)
+    /**
+     * 缓存app全局数据
+     */
+    fun storeCachedData(path: String, stream: InputStream): Boolean {
+        _appCacheDomain?.put(path, stream)
         return true
     }
 
-    fun xulLoadCachedData(path: String): InputStream {
-        return _xulCacheDomain!!.getAsStream(path)
+    /**
+     * 根据指定key,获取app全局缓存数据
+     */
+    fun loadCachedData(path: String): InputStream {
+        return _appCacheDomain!!.getAsStream(path)
     }
-
-
     // --------------------全局缓存---------------------- End
+
+
 
     /**
      * 自己监测生命周期，辅助判断应用是否在前台
@@ -179,13 +186,12 @@ class App : MultiDexApplication() {
     internal inner class LifecycleHandler : Application.ActivityLifecycleCallbacks {
         var visibleActivityNum = 0
             private set
+        var aliveActivityNum = 0
+            private set
 
         override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
             aliveActivityNum++
         }
-
-        var aliveActivityNum = 0
-            private set
 
         override fun onActivityStarted(activity: Activity) {
             visibleActivityNum++

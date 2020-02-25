@@ -196,6 +196,7 @@ dependencies {
 //  implementation "android.arch.lifecycle:livedata:1.1.0"
 
 //    implementation 'com.github.zeke:kangaroo:1.0.1@aar'
+    implementation 'com.github.xul:cache:1.0.0'
 }
 
 //
