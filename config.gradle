@@ -5,7 +5,7 @@ ext {
     android = [compileSdkVersion: 27,
                buildToolsVersion: '28.0.3', //AGP 3.2.1以后默认最低28.0.3
                minSdkVersion    : 18,
-               targetSdkVersion : 24,
+               targetSdkVersion : 22,
                versionCode      : 1,
                versionName      : "1.0"]
 
