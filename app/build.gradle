@@ -44,15 +44,15 @@ android {
 //            abiFilters 'x86','x86_64','armeabi-v7a','armeabi','armea64-v8a'
 //        }
 
-        externalNativeBuild {
-            cmake {
-                cppFlags "-std=c++11 -frtti -fexceptions"
-                abiFilters 'armeabi-v7a','x86'
-
-                version "3.6"
-                //  .externalNativeBuild/cmake/debug/{abi}/cmake_build_command.txt
-            }
-        }
+//        externalNativeBuild {
+//            cmake {
+//                cppFlags "-std=c++11 -frtti -fexceptions"
+//                abiFilters 'armeabi-v7a','x86'
+//
+//                version "3.6"
+//                //  .externalNativeBuild/cmake/debug/{abi}/cmake_build_command.txt
+//            }
+//        }
     }
 
     buildTypes {
@@ -72,12 +72,12 @@ android {
     }
 
     // Use this block to link Gradle to your CMake or ndk-build script.
-    externalNativeBuild {
-        cmake {
-            // Provides a relative path to your CMake build script.
-            path "CMakeLists.txt"
-        }
-    }
+//    externalNativeBuild {
+//        cmake {
+//            // Provides a relative path to your CMake build script.
+//            path "CMakeLists.txt"
+//        }
+//    }
 
     // Specifies flavor dimensions.
     flavorDimensions "area"
@@ -105,10 +105,10 @@ android {
     adbOptions{
     }
 
-    packagingOptions {
-        doNotStrip '*/mips/*.so'
-        doNotStrip '*/mips64/*.so'
-    }
+//    packagingOptions {
+//        doNotStrip '*/mips/*.so'
+//        doNotStrip '*/mips64/*.so'
+//    }
 
     repositories{
         flatDir{
@@ -121,16 +121,29 @@ android {
     }
 
     applicationVariants.all { variant ->
-        def prefix = 'Greek'
+        def flavorName = variant.flavorName
+        //判断是release还是debug版本
+        def buildType = variant.buildType.name
+
         def versionName = 'V' + variant.getVersionName()
         def versionCode = 'VC' + variant.getVersionCode()
 
-        variant.outputs.all { output ->
-            if(output.outputFile != null && output.outputFile.name.endsWith('.apk')){
-                def oName = output.outputFile.name
+//        variant.outputs.all { output ->
+//            if(output.outputFile != null &&
+//                    output.outputFile.name.endsWith('.apk')){
+//                def oName = output.outputFile.name
+//                logger.log(LogLevel.DEBUG, "output Name=" +  oName)
+//                def fileName = "Greek_${versionName}_${versionCode}_${flavorName}_${buildType}_${releaseTime()}.apk"
+//                output.outputFileName = fileName
+//            }
+//        }
+        variant.outputs.each  {
+            if(it.outputFile != null &&
+                    it.outputFile.name.endsWith('.apk')){
+                def oName = it.outputFile.name
                 logger.log(LogLevel.DEBUG, "output Name=" +  oName)
-                outputFileName = "${prefix}_${versionName}_${versionCode}" +
-                        "_${variant.flavorName}_${variant.buildType.name}_${releaseTime()}.apk"
+                def fileName = "Greek_${versionName}_${versionCode}_${flavorName}_${buildType}_${releaseTime()}.apk"
+                it.outputFileName = fileName
             }
         }
     }
@@ -195,7 +208,7 @@ dependencies {
 //  just LiveData
 //  implementation "android.arch.lifecycle:livedata:1.1.0"
 
-//    implementation 'com.github.zeke:kangaroo:1.0.1@aar'
+    implementation 'com.github.zeke:kangaroo:1.0.2'
     implementation 'com.github.xul:cache:1.0.0'
 }
 

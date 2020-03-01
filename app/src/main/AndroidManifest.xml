@@ -75,21 +75,6 @@
             </intent-filter>
         </activity>
 
-        <!-- activity-alias这个属性可以用于创建多个不同的入口 -->
-        <activity-alias
-            android:name="com.kingz.pages.Test11"
-            android:enabled="true"
-            android:icon="@drawable/raspberry_pi_logo"
-            android:label="Geek分身入口"
-            android:targetActivity="com.SplashActivity"
-            android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-                <!--<category android:name="android.intent.category.HOME"/>-->
-            </intent-filter>
-
-        </activity-alias>
 
         <!-- 主Activity -->
         <activity
@@ -106,11 +91,6 @@
         </activity>
 
         <!---->
-
-
-        <activity
-            android:name="com.kingz.pages.Test11"
-            android:screenOrientation="landscape"/>
 
         <activity
             android:name="com.kingz.view.animation.PropertyAnimationsActivity"
@@ -206,11 +186,6 @@
         <activity
             android:name="com.apiDemo.content.ExternalStorage"
             android:theme="@style/AppTheme"/>
-
-        <activity
-            android:name="com.kingz.pages.SaveDataByFilePage"
-            android:theme="@style/AppTheme"/>
-
 
         <!--BitmapDemo页面-->
         <activity
