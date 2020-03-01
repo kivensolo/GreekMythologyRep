@@ -1,6 +1,5 @@
 package com.kingz.basic_api;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -13,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
 import com.zeke.kangaroo.utils.ZLog;
+import com.zeke.ktx.base.BaseActivity;
 
 /**
  * author: King.Z <br>
@@ -26,7 +26,7 @@ import com.zeke.kangaroo.utils.ZLog;
  *  再translate到(-px,-py)点,实际上已经是tarnslate(- sx * px, -sy * py)。
  *
  */
-public class CanvasApiActivity extends Activity {
+public class CanvasApiActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

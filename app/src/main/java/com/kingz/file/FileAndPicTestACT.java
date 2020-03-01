@@ -1,6 +1,5 @@
 package com.kingz.file;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -12,7 +11,6 @@ import android.widget.Toast;
 
 import com.base.BaseActivity;
 import com.kingz.customdemo.R;
-import com.kingz.pages.SaveDataByFilePage;
 
 import java.io.File;
 
@@ -68,10 +66,8 @@ public class FileAndPicTestACT extends BaseActivity implements View.OnClickListe
         TextView tv = (TextView) findViewById(R.id.show_text);
         infoEditText = (EditText) findViewById(R.id.file_edittext);
         Button defaultFileSbtn = (Button) findViewById(R.id.default_filepath_btn);
-        Button intoFileSavePageBtn = (Button) findViewById(R.id.btn_intoFileSavePage);
 
         defaultFileSbtn.setOnClickListener(this);
-        intoFileSavePageBtn.setOnClickListener(this);
         getFileFloderPath();
     }
 
@@ -106,15 +102,7 @@ public class FileAndPicTestACT extends BaseActivity implements View.OnClickListe
             case R.id.default_filepath_btn:
                 getDefaultFilePath();
                 break;
-            case R.id.btn_intoFileSavePage:
-                intoFileSavePage();
             default:
         }
     }
-    private void intoFileSavePage(){
-        Intent intent = new Intent();
-        intent.setClass(this, SaveDataByFilePage.class);
-        startActivity(intent);
-    }
-
 }

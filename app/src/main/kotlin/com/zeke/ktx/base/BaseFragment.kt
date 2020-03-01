@@ -36,7 +36,7 @@ abstract class BaseFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(getLayoutId(), null)
-        initOperate()
+        onCreateViewReady()
         return rootView
     }
 
@@ -73,7 +73,7 @@ abstract class BaseFragment : Fragment() {
     abstract fun getLayoutId(): Int
 
     /** 进行初始化操作，在onCreateView中调用*/
-    open fun initOperate() {}
+    open fun onCreateViewReady() {}
 
     /** 初始化视图*/
     abstract fun initView()

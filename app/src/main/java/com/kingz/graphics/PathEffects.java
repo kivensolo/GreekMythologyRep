@@ -15,7 +15,7 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 
-import com.base.BaseActivity;
+import com.zeke.ktx.base.BaseActivity;
 
 /**
  * Copyright(C) 2015, 北京视达科科技有限公司
@@ -41,7 +41,7 @@ import com.base.BaseActivity;
         【SumPathEffect】:叠加效果 但与ComposePathEffect不同的是，在表现时，会分别对两个参数的效果各自独立进行表现，然后将两个效果简单的重叠在一起显示出来。
          对象形状的PathEffect的改变会影响到形状的区域。这就能够保证应用到相同形状的填充效果将会绘制到新的边界中。
  */
-public class PathEffects extends BaseActivity{
+public class PathEffects extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

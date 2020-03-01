@@ -25,7 +25,7 @@ import android.graphics.drawable.shapes.Shape;
  * A data structure that holds a Shape and various properties that can be used to define
  * how the shape is drawn.
  * 着色器的Holder，可变参数：
- *   X、Y、Shape、Color、RadialGradient、Alpha、Width、Height、Paint
+ * X、Y、Shape、Color、RadialGradient、Alpha、Width、Height、Paint
  */
 public class ShapeHolder {
     private ShapeDrawable shape;
@@ -42,6 +42,7 @@ public class ShapeHolder {
     public void setPaint(Paint value) {
         paint = value;
     }
+
     public Paint getPaint() {
         return paint;
     }
@@ -49,43 +50,53 @@ public class ShapeHolder {
     public void setX(float value) {
         x = value;
     }
+
     public float getX() {
         return x;
     }
+
     public void setY(float value) {
         y = value;
     }
+
     public float getY() {
         return y;
     }
+
     public void setShape(ShapeDrawable value) {
         shape = value;
     }
+
     public ShapeDrawable getShape() {
         return shape;
     }
+
     public int getColor() {
         return color;
     }
+
     public void setColor(int value) {
         shape.getPaint().setColor(value);
         color = value;
     }
+
     public void setGradient(RadialGradient value) {
         gradient = value;
     }
+
     public RadialGradient getGradient() {
         return gradient;
     }
 
     public void setAlpha(float alpha) {
         this.alpha = alpha;
-        shape.setAlpha((int)((alpha * 255f) + .5f));
+        shape.setAlpha((int) ((alpha * 255f) + .5f));
     }
 
     public float getWidth() {
         return shape.getShape().getWidth();
     }
+
     public void setWidth(float width) {
         Shape s = shape.getShape();
         s.resize(width, s.getHeight());
@@ -94,6 +105,7 @@ public class ShapeHolder {
     public float getHeight() {
         return shape.getShape().getHeight();
     }
+
     public void setHeight(float height) {
         Shape s = shape.getShape();
         s.resize(s.getWidth(), height);

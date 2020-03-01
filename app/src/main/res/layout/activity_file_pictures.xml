@@ -35,11 +35,5 @@
             android:text="@string/save_data"
             android:id="@+id/save_data"
             android:layout_below="@+id/file_edittext" android:layout_alignParentLeft="true"/>
-    <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="文件方式储存"
-            android:id="@+id/btn_intoFileSavePage"
-            android:layout_below="@+id/save_data" android:layout_alignParentLeft="true"/>
 
 </RelativeLayout>
