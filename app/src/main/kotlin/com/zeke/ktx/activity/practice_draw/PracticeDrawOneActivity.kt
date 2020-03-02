@@ -55,7 +55,7 @@ class PracticeDrawOneActivity : BaseActivity() {
         tabLayout = findViewById<View>(R.id.tab_layout) as TabLayout
         val normalColor = resources.getColor(android.R.color.white)
         val selectedColor = resources.getColor(R.color.hub_yellow)
-        tabLayout?.setPadding(0, 0, 0, 0)
+        tabLayout?.tabMode = TabLayout.MODE_SCROLLABLE
         tabLayout?.setTabTextColors(normalColor, selectedColor)
         tabLayout?.setupWithViewPager(pager)
     }

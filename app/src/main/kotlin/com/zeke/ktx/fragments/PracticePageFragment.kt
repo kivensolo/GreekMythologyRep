@@ -2,12 +2,13 @@ package com.zeke.ktx.fragments
 
 import android.os.Bundle
 import android.support.annotation.StringRes
-import android.view.ViewStub
 import android.widget.LinearLayout
 import com.kingz.customdemo.R
 import com.zeke.ktx.activity.practice_draw.Practice1DrawColorView
+import com.zeke.ktx.activity.practice_draw.Practice2DrawCircleView
+import com.zeke.ktx.activity.practice_draw.Practice3DrawRectView
+import com.zeke.ktx.activity.practice_draw.Practice4DrawPointView
 import com.zeke.ktx.base.BaseFragment
-import com.zeke.ktx.view.LoadStatusView
 
 /**
  * author：KingZ
@@ -45,13 +46,11 @@ class PracticePageFragment : BaseFragment() {
         super.onCreateViewReady()
         val contentLayout = rootView.findViewById(R.id.content_practice) as LinearLayout
         when(pageId){
-            R.string.title_1 -> contentLayout.addView(Practice1DrawColorView(context))
+            R.string.title_1 -> contentLayout.addView(Practice1DrawColorView(context!!))
+            R.string.title_2 -> contentLayout.addView(Practice2DrawCircleView(context!!))
+            R.string.title_3 -> contentLayout.addView(Practice3DrawRectView(context!!))
+            R.string.title_4 -> contentLayout.addView(Practice4DrawPointView(context!!))
         }
-        // 填充load_state View
-        val loadStateStub = rootView.findViewById(R.id.load_state) as ViewStub
-        loadStateStub.layoutResource = R.layout.load_status
-        loadStateStub.inflatedId = R.id.load_state_view
-        loadStatusView = loadStateStub.inflate() as LoadStatusView
     }
 
     override fun initView() {
