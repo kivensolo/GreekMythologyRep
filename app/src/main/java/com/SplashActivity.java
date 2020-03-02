@@ -37,12 +37,11 @@ public class SplashActivity extends BaseActivity
         super.onCreate(savedInstanceState);
 //        setStatusTranslucent();
         setContentView(R.layout.splash_activity);
-        findView();
-        initView();
-
         if(!BuildConfig.SPLSH_DEBUG){
             openMainPage();
         }else{
+            findView();
+            initView();
             playVideo();
             playAnim();
         }
@@ -109,7 +108,9 @@ public class SplashActivity extends BaseActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mVideoView.stopPlayback();
+        if(mVideoView != null){
+            mVideoView.stopPlayback();
+        }
     }
 
     @Override
