@@ -132,14 +132,28 @@
     <string name="networl_error">网络错误</string>
 
     <!--MagicIndicatorDemo相关-->
-    <string name="scrollable_tab">Scrollable tab</string>
-    <string name="fixed_tab">Fixed tab</string>
-    <string name="dynamic_tab">Dynamic tab</string>
-    <string name="no_tab_only_indicator">No tab, only indicator</string>
-    <string name="work_with_fragment_container">Work with fragment container</string>
-    <string name="tab_with_badge_view">Tab with badge view</string>
-    <string name="custom_navigator">Custom navigator</string>
-    <string name="random_page">Random page</string>
-    <string name="tab_with_custom_layout">Load custom layout</string>
+    <string name="scrollable_tab" translatable="false">Scrollable tab</string>
+    <string name="fixed_tab" translatable="false">Fixed tab</string>
+    <string name="dynamic_tab" translatable="false">Dynamic tab</string>
+    <string name="no_tab_only_indicator" translatable="false">No tab, only indicator</string>
+    <string name="work_with_fragment_container" translatable="false">Work with fragment container</string>
+    <string name="tab_with_badge_view" translatable="false">Tab with badge view</string>
+    <string name="custom_navigator" translatable="false">Custom navigator</string>
+    <string name="random_page" translatable="false">Random page</string>
+    <string name="tab_with_custom_layout" translatable="false">Load custom layout</string>
+
+
+<!--    练习绘制页面-->
+    <string name="title_1" translatable="false">drawColor()</string>
+    <string name="title_2" translatable="false">drawCircle()</string>
+    <string name="title_3" translatable="false">drawRect()</string>
+    <string name="title_4" translatable="false">drawPoint()</string>
+    <string name="title_5" translatable="false">drawOval()</string>
+    <string name="title_6" translatable="false">drawLine()</string>
+    <string name="title_7" translatable="false">drawRoundRect()</string>
+    <string name="title_8" translatable="false">drawArc()</string>
+    <string name="title_9" translatable="false">drawPath()</string>
+    <string name="title_10" translatable="false">直方图()</string>
+    <string name="title_11" translatable="false">饼图()</string>
 
 </resources>

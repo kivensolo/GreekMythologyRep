@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
+    <LinearLayout
+        android:id="@+id/content_practice"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical" />
@@ -13,11 +13,5 @@
         android:id="@+id/load_state"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-
-    <ViewStub
-        android:id="@+id/fbtn_go_top"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:inflatedId="@+id/app_fab_btn" />
 
 </FrameLayout>

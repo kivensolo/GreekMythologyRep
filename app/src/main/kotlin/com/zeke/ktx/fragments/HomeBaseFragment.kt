@@ -38,7 +38,7 @@ open class HomeBaseFragment<T : IPresenter> : BaseFragment(), IView {
 
     override fun initView() {
         viewPagerAdapter = ViewPagerAdapter(childFragmentManager)
-        tableLayout = rootView.findViewById(R.id.tb)
+        tableLayout = rootView.findViewById(R.id.tab_layout)
         tableLayout!!.setPadding(0, 0, 0, 0)
         tableLayout!!.visibility = View.GONE
 

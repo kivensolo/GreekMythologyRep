@@ -10,7 +10,7 @@
         android:layout_height="wrap_content">
 
         <android.support.design.widget.TabLayout
-            android:id="@+id/tb"
+            android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="100px"
             android:background="@color/tab_bg"
@@ -31,7 +31,7 @@
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/tb"
+            android:layout_below="@id/tab_layout"
             android:overScrollMode="never"/>
     </RelativeLayout>
 
