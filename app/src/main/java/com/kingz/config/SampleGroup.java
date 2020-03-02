@@ -8,6 +8,7 @@ import java.util.List;
  * date：2019/12/4
  * description：
  */
+@Deprecated
 public final class SampleGroup {
 
     public final String title;

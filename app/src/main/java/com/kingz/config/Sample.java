@@ -8,6 +8,7 @@ import android.content.Intent;
  * date：2019/12/4
  * description：
  */
+@Deprecated
 public abstract class Sample {
     public final String name;
 

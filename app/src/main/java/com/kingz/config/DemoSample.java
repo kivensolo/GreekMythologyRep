@@ -7,7 +7,7 @@ import java.util.HashMap;
  * date：2019/12/4
  * description：
  */
-
+@Deprecated
 public class DemoSample extends Sample {
     public final String clazz;
     private HashMap<String,Class> cacheClass = new HashMap<>();
