@@ -195,6 +195,16 @@
     ]
   },
   {
+    "name": "Custom View PracticeDraw",
+    "desc": "自定义View绘制练习",
+    "samples": [
+      {
+        "name": "PracticeDraw1 - 绘制基础",
+        "class": "com.zeke.ktx.activity.practice_draw.PracticeDrawOneActivity"
+      }
+    ]
+  },
+  {
     "name": "NewFeatures",
     "desc": "新特性",
     "samples": [
