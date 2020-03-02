@@ -45,7 +45,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
 
         <!--应用元素据设置-->
         <meta-data
@@ -360,6 +361,9 @@
 
         <activity
             android:name="com.zeke.ktx.activities.indicator.ScrollableTabExampleActivity"/>
+
+        <activity android:name="com.zeke.ktx.activity.practice_draw.PracticeDrawOneActivity"
+            android:theme="@style/AppTheme"/>
 
         <!--服务 exported:外部是否可访问  process:为服务设置不同进程-->
         <service
