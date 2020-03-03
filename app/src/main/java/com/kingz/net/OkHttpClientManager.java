@@ -404,7 +404,7 @@ public class OkHttpClientManager {
                         setErrorResId(view, errorResId);
                         return;
                     }
-//                    File filePath = new File(App.Companion.getInstance().getApplicationContext().getAppContext().getCacheDir().getPath(), "FilmPageDir");
+//                    File filePath = new File(App.instance.getApplicationContext().getAppContext().getCacheDir().getPath(), "FilmPageDir");
 //                    File file = new File(filePath, EncryptTools.MD5(url));
 //                    FileUtils.saveBitmapWithPath(file, bm, Bitmap.CompressFormat.PNG, 90);
 //                    FileUtils.dealPathFilesWithOldDate(filePath.toString(), System.currentTimeMillis() - TimeUnit.DAYS.toMillis(3));

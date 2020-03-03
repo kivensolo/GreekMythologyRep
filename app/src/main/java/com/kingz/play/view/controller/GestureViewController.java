@@ -29,7 +29,7 @@ public class GestureViewController extends BaseController{
         imageView = rootView.findViewById(R.id.gesture_tip_img);
         textView = rootView.findViewById(R.id.seek_time_preview);
 
-        Resources resources = App.Companion.getInstance().getApplicationContext().getResources();
+        Resources resources = App.instance.getApplicationContext().getResources();
         brightnessDrawable = resources.getDrawable(R.drawable.brightness_icon);
         volumeDrable = resources.getDrawable(R.drawable.volume_icon);
     }

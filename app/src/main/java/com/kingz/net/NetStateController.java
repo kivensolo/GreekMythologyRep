@@ -28,12 +28,12 @@ public class NetStateController {
     };
 
     public NetStateController() {
-        _connectivityManager = (ConnectivityManager) App.Companion.getInstance().getApplicationContext().getSystemService(Application.CONNECTIVITY_SERVICE);
+        _connectivityManager = (ConnectivityManager) App.instance.getApplicationContext().getSystemService(Application.CONNECTIVITY_SERVICE);
         checkConnectivityState();
 
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-        App.Companion.getInstance().getApplicationContext().registerReceiver(_networkStateReceiver, intentFilter);
+        App.instance.getApplicationContext().registerReceiver(_networkStateReceiver, intentFilter);
     }
 
     private void checkConnectivityState() {

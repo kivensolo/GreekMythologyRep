@@ -70,7 +70,7 @@ public class MgPosterAdapter extends CommonRecyclerAdapter<MgPosterBean> {
         final ViewHolder holder = super.onCreateViewHolder(parent, viewType);
         if (viewType == TYPE_DEFAULT) {
             ImageView img = holder.itemView.findViewById(R.id.recom_poster);
-            img.setBackground(App.Companion.getInstance().getApplicationContext().getResources().getDrawable(R.drawable.bg1));
+            img.setBackground(App.instance.getApplicationContext().getResources().getDrawable(R.drawable.bg1));
         }
         holder.setOnClickListener(new View.OnClickListener() {
             @Override

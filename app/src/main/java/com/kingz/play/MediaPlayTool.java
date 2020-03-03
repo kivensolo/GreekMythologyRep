@@ -25,7 +25,7 @@ public class MediaPlayTool {
      * 获取 IMediaPlayer 实例
      */
     public IMediaPlayer getMediaPlayerCore() {
-        return MediaPlayerFactory.newInstance(App.Companion.getInstance().getApplicationContext(),
+        return MediaPlayerFactory.newInstance(App.instance.getApplicationContext(),
                 MediaPlayerFactory.FLAG_EXO, null);
     }
 }

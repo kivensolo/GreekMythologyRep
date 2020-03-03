@@ -97,8 +97,8 @@ public class ColorMartixImageView extends ViewGroup {
         mContext = context;
         ZLog.d(TAG, "SampleView()");
         setBackgroundColor(context.getResources().getColor(R.color.theme_100));
-        viewWidth = App.Companion.getSCREEN_WIDTH();
-        viewHeight = App.Companion.getSCREEN_HEIGHT();
+        viewWidth = App.SCREEN_WIDTH;
+        viewHeight = App.SCREEN_HEIGHT;
 
         lps = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         setNumberOfSeekBar(context,SEEKBAR_NUMS);

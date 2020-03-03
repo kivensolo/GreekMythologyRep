@@ -52,7 +52,7 @@ public class BasicControlsActivity extends Activity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.basic_controls);
-        context = App.Companion.getInstance().getApplicationContext();
+        context = App.instance.getApplicationContext();
         initViews();
         initListeners();
     }

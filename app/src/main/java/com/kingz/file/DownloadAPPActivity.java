@@ -65,7 +65,7 @@ public class DownloadAPPActivity extends BaseActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        context = App.Companion.getInstance().getApplicationContext();
+        context = App.instance.getApplicationContext();
         setContentView(PAGE_ID);
         initviews();
     }

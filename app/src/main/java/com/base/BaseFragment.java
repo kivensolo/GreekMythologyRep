@@ -70,7 +70,7 @@ public abstract class BaseFragment extends Fragment {
 
     @Override
     public Context getContext() {
-        return mActivity == null ? App.Companion.getInstance().getApplicationContext(): mActivity.getBaseContext();
+        return mActivity == null ? App.instance.getApplicationContext(): mActivity.getBaseContext();
     }
 
     public boolean onBackPressed() {

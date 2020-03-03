@@ -66,7 +66,7 @@ public class FileListAdapter extends CommonListAdapter<File> {
             dataView.setVisibility(View.GONE);
             nameView.setText("返回上一级");
             nameView.setTextSize(28);
-            nameView.setTextColor(App.Companion.getInstance().getApplicationContext()
+            nameView.setTextColor(App.instance.getApplicationContext()
                     .getResources().getColor(R.color.qianpurple));
             nameView.setGravity(Gravity.START|Gravity.CENTER);
             nameView.setLayoutParams(new LinearLayout.LayoutParams(-1,-1));

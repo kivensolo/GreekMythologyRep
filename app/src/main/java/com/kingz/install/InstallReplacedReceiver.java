@@ -48,7 +48,7 @@ public class InstallReplacedReceiver extends BroadcastReceiver {
     }
 
      public static  boolean startApp(String packageName) {
-        Context appContext = App.Companion.getInstance().getApplicationContext();
+        Context appContext = App.instance.getApplicationContext();
         PackageInfo packageinfo = null;
         try {
             packageinfo = appContext.getPackageManager().getPackageInfo(packageName, 0);

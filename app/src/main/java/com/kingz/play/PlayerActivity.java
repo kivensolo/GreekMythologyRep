@@ -65,7 +65,7 @@ public abstract class PlayerActivity extends BaseActivity {
         portraitParams = (LinearLayout.LayoutParams) findViewById(R.id.player_content).getLayoutParams();
 
         final int autoRotation = Settings.System.getInt(getContentResolver(), Settings.System.ACCELEROMETER_ROTATION, 0);
-        App.Companion.getInstance().postDelayToMainLooper(new Runnable() {
+        App.instance.postDelayToMainLooper(new Runnable() {
             @Override
             public void run() {
                 if (!isFinishing() && autoRotation == 1) {

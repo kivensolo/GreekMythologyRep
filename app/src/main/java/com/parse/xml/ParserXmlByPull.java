@@ -22,7 +22,7 @@ public class ParserXmlByPull {
 
     public static void parserFromAssetsFile(String path) {
         try {
-            InputStream dataIns = App.Companion.getInstance().getAssets().open(path);
+            InputStream dataIns = App.instance.getAssets().open(path);
             XmlPullParser xmlPullParser = XmlPullParserFactory.newInstance().newPullParser();
             xmlPullParser.setInput(dataIns, "UTF-8");
             //Returns the type of the current event (START_TAG, END_TAG, TEXT, etc.)

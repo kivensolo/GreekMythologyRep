@@ -13,6 +13,8 @@ import com.github.xulcache.CacheCenter
 import com.github.xulcache.CacheDomain
 import com.kingz.customdemo.BuildConfig
 import com.takt.FpsTools
+import com.zeke.kangaroo.utils.AppInfoUtils
+import com.zeke.kangaroo.utils.ZLog
 import com.zhy.autolayout.config.AutoLayoutConifg
 import java.io.InputStream
 import java.util.concurrent.TimeUnit
@@ -41,10 +43,9 @@ class App : MultiDexApplication() {
     val BDApiKey = "467e6d8f8b06b8811b7a6fb939c8ad5e"
 
     companion object {
-        //        var instance: App? = null
-        lateinit var instance: App
-        var SCREEN_WIDTH = 1280
-        var SCREEN_HEIGHT = 720
+        @JvmField var instance: App? = null
+        @JvmField var SCREEN_WIDTH = 1280
+        @JvmField var SCREEN_HEIGHT = 720
     }
 
     val aliveAcNum: Int
@@ -150,10 +151,11 @@ class App : MultiDexApplication() {
     private fun initCacheCenter() {
         GlobalCacheCenter.getInstance().init(applicationContext)
 
-        CacheCenter.setRevision(AppInfoUtils.getVersionCode(instance.applicationContext))
+        CacheCenter.setRevision(AppInfoUtils.getAppVersion(instance?.applicationContext,BuildConfig.APPLICATION_ID))
+        CacheCenter.setRevision(1)
         CacheCenter.setVersion("test_version")
 
-        _appCacheDomain = CacheCenter.buildCacheDomain(CACHE_DOMAIN_ID_APP,instance.applicationContext)
+        _appCacheDomain = CacheCenter.buildCacheDomain(CACHE_DOMAIN_ID_APP,instance?.applicationContext)
                 .setDomainFlags(CacheCenter.CACHE_FLAG_FILE
                         or CacheCenter.CACHE_FLAG_REVISION_LOCAL)
                 .setLifeTime(CACHE_LIFETIME)
