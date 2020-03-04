@@ -12,6 +12,9 @@ import com.core.logic.GlobalCacheCenter
 import com.github.xulcache.CacheCenter
 import com.github.xulcache.CacheDomain
 import com.kingz.customdemo.BuildConfig
+import com.kingz.net.retrofit.mannager.ApiManager
+import com.kingz.net.retrofit.service.GitHubService
+import com.kingz.net.retrofit.service.WeatherService
 import com.takt.FpsTools
 import com.zeke.kangaroo.utils.AppInfoUtils
 import com.zeke.kangaroo.utils.ZLog
@@ -66,6 +69,15 @@ class App : MultiDexApplication() {
 //                .setFrameThreshold(2)
 //                .start();
         //Bmob.initialize(this, "fea19b87f0795833b30de91f46f1465c");
+        initApiManager()
+    }
+
+    /**
+     * 初始化app网络管理器
+     */
+    private fun initApiManager() {
+        ApiManager.i().registServer(GitHubService::class.java)
+        ApiManager.i().registServer(WeatherService::class.java)
     }
 
     private fun init() {

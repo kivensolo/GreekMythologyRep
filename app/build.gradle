@@ -169,7 +169,7 @@ dependencies {
     // Tools Lib
     implementation "com.google.code.gson:gson:$lib_versions.gson"
 
-    //RxJava && RxAndroid
+    //RxJava2(RxAndroid) + retrofit2 + okhttp3
     implementation "io.reactivex.rxjava2:rxjava:${lib_versions.rxJava}"
     implementation "io.reactivex.rxjava2:rxandroid:${lib_versions.rxandroid}"
     implementation "com.squareup.retrofit2:retrofit:${lib_versions.rtf2}"

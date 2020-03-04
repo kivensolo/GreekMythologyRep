@@ -7,12 +7,18 @@ import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.view.View
 import com.kingz.customdemo.R
+import com.kingz.net.model.GitHubUserInfo
+import com.kingz.net.retrofit.mannager.ApiManager
+import com.kingz.net.retrofit.service.GitHubService
+import com.zeke.kangaroo.utils.ZLog
 import com.zeke.ktx.base.BaseActivity
 import com.zeke.ktx.base.BaseFragment
 import com.zeke.ktx.components.MainBottomController
 import com.zeke.ktx.fragments.home.HomeLiveFragment
 import com.zeke.ktx.fragments.home.HomeRecomFragment
 import com.zeke.ktx.fragments.home.ISwitcher
+import io.reactivex.Observer
+import io.reactivex.disposables.Disposable
 
 /**
  * KT版本首页
@@ -30,6 +36,28 @@ class MainActivity : BaseActivity(), ISwitcher {
         initFragment()
         initBottom()
         permissionCheck()
+
+        //Test Code
+        val apiManager = ApiManager.i()
+        val gitHubService = apiManager.getService(GitHubService::class.java)
+        val userInfoObservable = gitHubService.getUserInfo("kivensolo")
+        apiManager.setSubscribe(userInfoObservable, object :Observer<GitHubUserInfo>{
+            override fun onSubscribe(d: Disposable) {
+
+            }
+
+            override fun onNext(userInfo: GitHubUserInfo) {
+                ZLog.d("userInfo=$userInfo")
+            }
+
+            override fun onError(e: Throwable) {
+                ZLog.e("user onError")
+            }
+
+            override fun onComplete() {
+                ZLog.d("onComplete")
+            }
+        })
     }
 
     private fun initFragment() {

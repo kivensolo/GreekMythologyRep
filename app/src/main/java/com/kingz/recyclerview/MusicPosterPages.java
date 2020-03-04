@@ -19,8 +19,6 @@ import com.kingz.adapter.MgPosterAdapter;
 import com.kingz.customdemo.R;
 import com.kingz.mode.RecycleDataInfo;
 import com.kingz.net.OkHttpClientManager;
-import com.kingz.net.retrofit.GitRepo;
-import com.kingz.net.retrofit.RetrofitServiceManager;
 import com.kingz.pages.photo.filmlist.MyItemDecoration;
 import com.kingz.recyclerview.data.MgPosterBean;
 import com.kingz.recyclerview.data.MgResponseBean;
@@ -32,8 +30,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
 import okhttp3.Request;
 
 /**
@@ -79,31 +75,6 @@ public class MusicPosterPages extends BaseActivity {
                 ZLog.d(TAG, "onResponse");
                 mAdapter.attachData(response.getData().getHitDocs());
                 mAdapter.notifyDataSetChanged();
-            }
-        });
-
-        RetrofitServiceManager.listRepos("kivensolo", new Observer<List<GitRepo>>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-
-            }
-
-            @Override
-            public void onNext(List<GitRepo> gitRepos) {
-                ZLog.d("onNext");
-                if (gitRepos == null) return;
-                String repoName = gitRepos.get(0).getName();
-                ZLog.d("first repo name :" + repoName);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onComplete() {
-                ZLog.d("onComplete");
             }
         });
     }

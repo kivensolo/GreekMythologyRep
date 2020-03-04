@@ -1,8 +1,8 @@
-package com.kingz.net.retrofit;
+package com.kingz.net.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class GitRepo {
+public class GitHubRepo {
 
     /**
      * id : 132935648
