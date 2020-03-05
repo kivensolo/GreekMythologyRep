@@ -1,0 +1,73 @@
+@startuml
+abstract class AbsMediaPlayerReceiverActivity<IMediaPlayerReceiverPresenter>
+note right: 播放器公共事件抽象层\n广播、案件、用户状态变更
+AppCompatActivity <|-- AbsMediaPlayerReceiverActivity
+IMediaPlayerReceiverView <|.. AbsMediaPlayerReceiverActivity
+
+interface UhdMediaPlayerContract.IView
+note top:抽象视图控制层
+interface UhdMediaPlayerContract.IPresenter
+note top:抽象播控行为层
+interface UhdMediaPlayerContract.IModel
+note top:抽象播放数据层
+
+abstract class UhdMediaPlayerActivity
+note right: 播放器Base页面
+AbsMediaPlayerReceiverActivity <|-- UhdMediaPlayerActivity
+UhdMediaPlayerContract.IView <|.. UhdMediaPlayerActivity
+
+interface SelectionsContract
+note left: 抽象选择控制行为层
+interface SelectionsContract.IView
+note left: 抽象Selections视图控制层
+interface SelectionsContract.IPresenter
+note left: 抽象Selections视图行为层
+interface SelectionsContract.IModel
+
+abstract class AbsSelectionsActivity
+note left: [抽象菜单行为控制层]
+UhdMediaPlayerActivity <|-- AbsSelectionsActivity
+SelectionsContract.IView <|.. AbsSelectionsActivity
+
+abstract class UhdMediaPlayerPresenter{
+    initVideoListener() // 播放器初始化及监听设置
+}
+note right: 具体播控行为层
+AbsMediaPlayerReceiverPresenter <|-- UhdMediaPlayerPresenter
+IMediaPlayerReceiverPresenter <|.. AbsMediaPlayerReceiverPresenter
+
+abstract class UhdMenuPlayerActivity
+' UHDMenuPlayerActivity
+AbsSelectionsActivity <|-- UhdMenuPlayerActivity
+
+abstract class UhdSelectionsActivity
+AbsSelectionsActivity <|-- UhdSelectionsActivity
+
+abstract class XgimiSelectionsActivity
+UhdSelectionsActivity <|-- XgimiSelectionsActivity
+
+' CIBN
+interface CIBNPlayContract
+note left: CIBN 抽象行为控制层
+interface CIBNPlayContract.IView
+'interface CIBNPlayContract.IPresenter
+'interface CIBNPlayContract.IModel
+UhdMenuPlayerActivity <|-- CIBNPlayActivity
+CIBNPlayContract.IView <|.. CIBNPlayActivity
+
+abstract class XgimiMenuActivity
+UhdMenuPlayerActivity <|-- XgimiMenuActivity
+
+' 义方教育
+XgimiMenuActivity <|-- YiFangPlayActivity
+
+XgimiMenuActivity <|-- KnowledgePlayActivity
+
+' 4K健身
+XgimiMenuActivity <|-- Garden4KPlayActivity
+Garden4KPlayActivity <|-- GardenFitPlayActivity
+Garden4KPlayActivity <|-- GardenLivePlayActivity
+
+
+
+@enduml

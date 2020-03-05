@@ -1,0 +1,38 @@
+@startuml
+interface IDetailsDataView
+
+abstract class BaseDetailsView
+note left: 详情页顶层View\n初始化焦点处理\n focuse事件传递
+class BaseDetailsView extends FrameLayout
+abstract class AbsDetailsAuthView
+note right: 抽象详情页鉴权逻辑层鉴权区域View\n(播放、试看、会员购买)
+abstract class AbsDetailsDataView extends BaseDetailsView
+abstract class AbsDetailsDataView implements IDetailsDataView
+
+interface IPlayVideoView
+note left: 播控行为UI抽象层
+abstract class AbsDetailsAuthView extends AbsDetailsDataView
+abstract class AbsDetailsAuthView implements IPlayVideoView
+abstract class AbsDetailsAuthView implements View.OnClickListener
+
+abstract class AbsDetailsSelectedView
+note left: 抽象详情页选中效果的View层
+abstract class AbsDetailsSelectedView extends AbsDetailsAuthView
+abstract class AbsDetailsSelectedView implements BaseTVListShowView.OnSelectedTVNumListener
+
+abstract class XGimiDetailsView
+abstract class XGimiDetailsView extends AbsDetailsSelectedView
+
+abstract class FkDetailsView
+note left: 详情具体UI层\n布局填充及UI元素的初始化
+abstract class FkDetailsView extends XGimiDetailsView
+
+class Garden4KPlayVideoView
+note left: 具体业务层
+class Garden4KPlayVideoView extends FkDetailsView
+
+class YiFangHeaderView
+note right: 具体业务层
+class YiFangHeaderView extends FkDetailsView
+
+@enduml
