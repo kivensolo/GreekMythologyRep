@@ -8,7 +8,6 @@ import android.os.Handler
 import android.os.StrictMode
 import android.support.multidex.MultiDexApplication
 import android.util.Log
-import com.core.logic.GlobalCacheCenter
 import com.github.xulcache.CacheCenter
 import com.github.xulcache.CacheDomain
 import com.kingz.customdemo.BuildConfig
@@ -19,7 +18,6 @@ import com.takt.FpsTools
 import com.zeke.kangaroo.utils.AppInfoUtils
 import com.zeke.kangaroo.utils.ZLog
 import com.zhy.autolayout.config.AutoLayoutConifg
-import java.io.InputStream
 import java.util.concurrent.TimeUnit
 
 
@@ -28,27 +26,23 @@ import java.util.concurrent.TimeUnit
  * date:  2016/5/10 23:25
  * Rfactor in 2020/2/15 by kotlin.
  */
-class App : MultiDexApplication() {
+open class App : MultiDexApplication() {
     private var lifecycleHandler: LifecycleHandler? = null
 
-    val TAG = "Application"
     private var _appMainHandler: Handler? = null
     private val STRICT_MODE = false
 
-
-    // 全局缓存设置
-    private val CACHE_DOMAIN_ID_APP = 0x1001
-    private val CACHE_MAX_SIZE = 128 * 1024 * 1024L    // 最大保存128M
-    private val CACHE_LIFETIME = TimeUnit.DAYS.toMillis(7)    // 最多保存7天
-    protected var _appCacheDomain: CacheDomain? = null
-
-
-    val BDApiKey = "467e6d8f8b06b8811b7a6fb939c8ad5e"
-
     companion object {
+        const val TAG = "Application"
         @JvmField var instance: App? = null
         @JvmField var SCREEN_WIDTH = 1280
         @JvmField var SCREEN_HEIGHT = 720
+
+        // 全局缓存设置
+        const val CACHE_DOMAIN_ID_APP = 0x1001
+        const val CACHE_MAX_SIZE = 128 * 1024 * 1024L    // 最大保存128M
+        val CACHE_LIFETIME = TimeUnit.DAYS.toMillis(7)    // 最多保存7天
+        var appCacheDomain: CacheDomain? = null
     }
 
     val aliveAcNum: Int
@@ -161,13 +155,11 @@ class App : MultiDexApplication() {
 
     // --------------------全局缓存---------------------- Start
     private fun initCacheCenter() {
-        GlobalCacheCenter.getInstance().init(applicationContext)
-
         CacheCenter.setRevision(AppInfoUtils.getAppVersion(instance?.applicationContext,BuildConfig.APPLICATION_ID))
         CacheCenter.setRevision(1)
         CacheCenter.setVersion("test_version")
 
-        _appCacheDomain = CacheCenter.buildCacheDomain(CACHE_DOMAIN_ID_APP,instance?.applicationContext)
+        appCacheDomain = CacheCenter.buildCacheDomain(CACHE_DOMAIN_ID_APP,instance?.applicationContext)
                 .setDomainFlags(CacheCenter.CACHE_FLAG_FILE
                         or CacheCenter.CACHE_FLAG_REVISION_LOCAL)
                 .setLifeTime(CACHE_LIFETIME)
@@ -175,20 +167,20 @@ class App : MultiDexApplication() {
                 .build()
     }
 
-    /**
-     * 缓存app全局数据
-     */
-    fun storeCachedData(path: String, stream: InputStream): Boolean {
-        _appCacheDomain?.put(path, stream)
-        return true
-    }
-
-    /**
-     * 根据指定key,获取app全局缓存数据
-     */
-    fun loadCachedData(path: String): InputStream {
-        return _appCacheDomain!!.getAsStream(path)
-    }
+    // /**
+    //  * 缓存app全局数据
+    //  */
+    // fun storeCachedData(path: String, stream: InputStream): Boolean {
+    //     appCacheDomain?.put(path, stream)
+    //     return true
+    // }
+    //
+    // /**
+    //  * 根据指定key,获取app全局缓存数据
+    //  */
+    // fun loadCachedData(path: String): InputStream {
+    //     return appCacheDomain!!.getAsStream(path)
+    // }
     // --------------------全局缓存---------------------- End
 
 

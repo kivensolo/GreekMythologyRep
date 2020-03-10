@@ -13,8 +13,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
+import androidx.work.Constraints;
+import androidx.work.Data;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkInfo;
+import androidx.work.WorkManager;
+
 import com.base.BaseActivity;
-import com.core.logic.GlobalCacheCenter;
 import com.kingz.customdemo.R;
 import com.kingz.utils.ToastTools;
 import com.kingz.work.FileDownloadWorker;
@@ -23,7 +28,6 @@ import com.module.tools.ScreenTools;
 import com.module.views.progress.HorizontalProgressBarNoNumber;
 import com.zeke.kangaroo.utils.NetUtils;
 import com.zeke.kangaroo.utils.ToastUtils;
-import com.zeke.kangaroo.utils.ZLog;
 import com.zeke.ktx.App;
 
 import java.io.File;
@@ -34,12 +38,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
-import androidx.work.Constraints;
-import androidx.work.Data;
-import androidx.work.OneTimeWorkRequest;
-import androidx.work.WorkInfo;
-import androidx.work.WorkManager;
 
 /**
  * Created by KingZ on 2015/11/3.
@@ -74,15 +72,6 @@ public class DownloadAPPActivity extends BaseActivity implements
         initProgressView();
         btn_downLoad = (Button) findViewById(R.id.btn_down_app);
         btn_downLoad.setOnClickListener(this);
-
-        String configPathPrx = GlobalCacheCenter.getInstance().getAppConfigPath();
-        String configPath = configPathPrx + File.separator + "kingz" + File.separator + "mytest.dat";
-        ZLog.d(TAG,"获取到的configPath:" + configPath);
-        File file = new File(configPath);
-        if(!file.exists() && !file.isDirectory()){
-            //不存在就创建多级目录及文件
-            file.mkdirs();
-        }
     }
 
     @Override
