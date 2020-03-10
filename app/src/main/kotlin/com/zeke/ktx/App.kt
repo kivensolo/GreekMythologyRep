@@ -155,8 +155,7 @@ open class App : MultiDexApplication() {
 
     // --------------------全局缓存---------------------- Start
     private fun initCacheCenter() {
-        CacheCenter.setRevision(AppInfoUtils.getAppVersion(instance?.applicationContext,BuildConfig.APPLICATION_ID))
-        CacheCenter.setRevision(1)
+        CacheCenter.setRevision(AppInfoUtils.getAppVersion(instance?.applicationContext))
         CacheCenter.setVersion("test_version")
 
         appCacheDomain = CacheCenter.buildCacheDomain(CACHE_DOMAIN_ID_APP,instance?.applicationContext)
