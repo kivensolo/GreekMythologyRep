@@ -1,15 +1,13 @@
 package com.zeke.ktx.fragments.home
 
 import android.support.annotation.IntDef
-import java.lang.annotation.Retention
-import java.lang.annotation.RetentionPolicy
 
 /**
  * description：Fragment切换的接口
  */
 interface ISwitcher {
 
-    @Retention(RetentionPolicy.SOURCE)
+    @kotlin.annotation.Retention(AnnotationRetention.SOURCE)
     @Target(AnnotationTarget.VALUE_PARAMETER)
     @IntDef(TYPE_VOD,TYPE_LIVE,
             TYPE_VIP,TYPE_MINE)
