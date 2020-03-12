@@ -1,13 +1,10 @@
-package com.zeke.ktx.fragments
+package com.zeke.ktx.activity.glide
 
 import android.os.Bundle
-import android.support.annotation.StringRes
 import android.widget.LinearLayout
 import com.kingz.customdemo.R
-import com.zeke.ktx.activity.practice_draw.Practice1DrawColorView
+import com.zeke.kangaroo.utils.ToastUtils
 import com.zeke.ktx.activity.practice_draw.Practice2DrawCircleView
-import com.zeke.ktx.activity.practice_draw.Practice3DrawRectView
-import com.zeke.ktx.activity.practice_draw.Practice4DrawPointView
 import com.zeke.ktx.base.BaseFragment
 
 /**
@@ -15,19 +12,18 @@ import com.zeke.ktx.base.BaseFragment
  * date：2020/2/22
  * description：练习绘制页面的Fragment
  */
-class PracticePageFragment : BaseFragment() {
+class GlideDemoFragment : BaseFragment() {
 
-    @StringRes
-    var pageId: Int = 0
+    var pageId: String = ""
     override fun getLayoutId(): Int {
         return R.layout.fragment_practice_draw
     }
 
     companion object{
-        fun newInstance(@StringRes page_id: Int): PracticePageFragment {
-            val fragment = PracticePageFragment()
+        fun newInstance(page_id: String): GlideDemoFragment {
+            val fragment = GlideDemoFragment()
             val args = Bundle()
-            args.putInt("page_id", page_id)
+            args.putString("page_id", page_id)
             fragment.arguments = args
             return fragment
         }
@@ -38,7 +34,7 @@ class PracticePageFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
         val args = arguments
         if (args != null) {
-            pageId = args.getInt("page_id")
+            pageId = args.getString("page_id","")
         }
     }
 
@@ -46,10 +42,11 @@ class PracticePageFragment : BaseFragment() {
         super.onCreateViewReady()
         val contentLayout = rootView.findViewById(R.id.content_practice) as LinearLayout
         when(pageId){
-            R.string.title_1 -> contentLayout.addView(Practice1DrawColorView(context!!))
-            R.string.title_2 -> contentLayout.addView(Practice2DrawCircleView(context!!))
-            R.string.title_3 -> contentLayout.addView(Practice3DrawRectView(context!!))
-            R.string.title_4 -> contentLayout.addView(Practice4DrawPointView(context!!))
+            getString(R.string.glide_circle) -> contentLayout.addView(GlideCircleView(context!!))
+            getString(R.string.glide_round) -> contentLayout.addView(Practice2DrawCircleView(context!!))
+            getString(R.string.glide_round_with_border) -> ToastUtils.show(context,"此效果还未实现")
+            getString(R.string.glide_blur) -> ToastUtils.show(context,"此效果还未实现")
+            getString(R.string.glide_load_fade) -> ToastUtils.show(context,"此效果还未实现")
         }
     }
 

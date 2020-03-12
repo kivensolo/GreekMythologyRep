@@ -95,6 +95,10 @@
       {
         "name": "MemoryCheck",
         "class": "com.kingz.pages.photo.memory.MemoryCheck"
+      },
+      {
+        "name": "Glide",
+        "class": "com.zeke.ktx.activity.glide.GlideDemoActivity"
       }
     ]
   },

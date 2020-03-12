@@ -319,7 +319,10 @@
             android:theme="@android:style/Theme.Holo.Light"/>
         <activity
             android:name="com.kingz.graphics.PathEffects"
-            android:theme="@android:style/Theme.Holo.Light"/>
+            android:theme="@style/AppTheme"/>
+        <activity
+            android:name="com.zeke.ktx.activity.glide.GlideDemoActivity"
+            android:theme="@style/AppTheme"/>
 
 
         <!--  ************ 图形方面  End ************ -->

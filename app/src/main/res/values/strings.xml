@@ -156,4 +156,10 @@
     <string name="title_10" translatable="false">直方图()</string>
     <string name="title_11" translatable="false">饼图()</string>
 
+    <!--Glide 效果测试页面-->
+    <string name="glide_circle" translatable="false">circle</string>
+    <string name="glide_round" translatable="false">round</string>
+    <string name="glide_blur" translatable="false">blur</string>
+    <string name="glide_round_with_border" translatable="false">round_with_border</string>
+    <string name="glide_load_fade" translatable="false">load_fade</string>
 </resources>

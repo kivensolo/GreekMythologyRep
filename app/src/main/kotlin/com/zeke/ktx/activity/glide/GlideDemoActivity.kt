@@ -1,4 +1,4 @@
-package com.zeke.ktx.activity.practice_draw
+package com.zeke.ktx.activity.glide
 
 import android.os.Bundle
 import android.support.design.widget.TabLayout
@@ -9,27 +9,20 @@ import android.view.Menu
 import android.view.View
 import com.kingz.customdemo.R
 import com.zeke.ktx.base.BaseActivity
-import com.zeke.ktx.fragments.PracticePageFragment
 import java.util.*
 
 //TODO 抽离
-class PracticeDrawOneActivity : BaseActivity() {
+class GlideDemoActivity : BaseActivity() {
     var tabLayout: TabLayout? = null
     var pager: ViewPager? = null
     private var pageModels: MutableList<PageModel> = ArrayList()
 
     private fun initPageModels() {
-        pageModels.add(PageModel(R.string.title_1))
-        pageModels.add(PageModel(R.string.title_2))
-        pageModels.add(PageModel(R.string.title_3))
-        pageModels.add(PageModel(R.string.title_4))
-        pageModels.add(PageModel(R.string.title_5))
-        pageModels.add(PageModel(R.string.title_6))
-        pageModels.add(PageModel(R.string.title_7))
-        pageModels.add(PageModel(R.string.title_8))
-        pageModels.add(PageModel(R.string.title_9))
-        pageModels.add(PageModel(R.string.title_10))
-        pageModels.add(PageModel(R.string.title_11))
+        pageModels.add(PageModel(getString(R.string.glide_circle)))
+        pageModels.add(PageModel(getString(R.string.glide_round)))
+        pageModels.add(PageModel(getString(R.string.glide_round_with_border)))
+        pageModels.add(PageModel(getString(R.string.glide_blur)))
+        pageModels.add(PageModel(getString(R.string.glide_load_fade)))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,7 +34,7 @@ class PracticeDrawOneActivity : BaseActivity() {
 
             override fun getItem(position: Int): Fragment {
                 val pageModel = pageModels[position]
-                return PracticePageFragment.newInstance(pageModel.titleRes)
+                return GlideDemoFragment.newInstance(pageModel.title)
             }
 
             override fun getCount(): Int {
@@ -49,7 +42,7 @@ class PracticeDrawOneActivity : BaseActivity() {
             }
 
             override fun getPageTitle(position: Int): CharSequence? {
-                return getString(pageModels[position].titleRes)
+                return pageModels[position].title
             }
         }
 
@@ -66,5 +59,5 @@ class PracticeDrawOneActivity : BaseActivity() {
     }
 
     private inner class PageModel internal constructor(
-            internal var titleRes: Int)
+            internal var title: String)
 }
