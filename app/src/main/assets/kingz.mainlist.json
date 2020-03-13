@@ -98,7 +98,7 @@
       },
       {
         "name": "Glide",
-        "class": "com.zeke.ktx.activity.glide.GlideDemoActivity"
+        "class": "com.zeke.ktx.demo.glide.GlideCardDemoActivity"
       }
     ]
   },

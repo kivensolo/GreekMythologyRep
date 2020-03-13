@@ -185,6 +185,7 @@ dependencies {
     implementation "com.android.support:support-v4:${supports.version}"
     implementation "com.android.support:recyclerview-v7:${supports.version}"
     implementation "com.android.support:appcompat-v7:${supports.version}"
+    implementation "com.android.support:cardview-v7:${supports.version}"
 
     // Tutterknife library
     implementation "com.jakewharton:butterknife:${lib_versions.bkf}"

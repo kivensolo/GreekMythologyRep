@@ -25,11 +25,11 @@ class SimplePageContentFragment : BaseFragment(), IView, View.OnClickListener {
         get() = false
 
     override fun getLayoutId(): Int {
-        return R.layout.fragment_vod_item
+        return R.layout.single_recyclerview
     }
 
     override fun initView() {
-        mRecycleView = rootView.findViewById<RecyclerView>(R.id.vod_content_recycler)
+        mRecycleView = rootView.findViewById(R.id.content_recycler)
         mRecycleView.setHasFixedSize(true)
         mRecycleView.layoutManager = GridLayoutManager(activity!!,2)
         mRecycleView.adapter = mRV

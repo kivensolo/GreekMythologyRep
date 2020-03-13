@@ -56,10 +56,6 @@ abstract class BaseFragment : Fragment() {
         mActivity = null
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-    }
-
     override fun getContext(): Context? {
         return if (mActivity == null) App.instance else mActivity
     }
@@ -67,7 +63,6 @@ abstract class BaseFragment : Fragment() {
     fun onBackPressed(): Boolean {
         return true
     }
-
 
     /** 设置布局id*/
     abstract fun getLayoutId(): Int

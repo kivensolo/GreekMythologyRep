@@ -11,6 +11,7 @@ import android.util.Log;
  * date：2020/1/17
  * description：
  */
+@Deprecated
 public class GreekLifeCycle implements LifecycleObserver {
     private static String TAG = "Lifecycle";
 

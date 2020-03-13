@@ -1,41 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest package="com.kingz.customdemo"
-          xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
-    <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
-    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
-    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
 
-    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION"/>
-    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS"/>
-    <uses-permission android:name="android.permission.BROADCAST_STICKY"/>
-    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES"/>
-    <uses-permission android:name="android.permission.READ_CONTACTS"/>
-    <uses-permission android:name="android.permission.WRITE_CONTACTS"/>
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
     <!--保持CPU 运转，屏幕和键盘灯有可能是关闭的,用于文件上传和下载 -->
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <!-- 震动权限 -->
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <!--Android 8.0 apk安装权限-->
-    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
-    <uses-permission android:name="com.starcor.xinjiang.ReadUserinfo"/>
-    <permission android:name="com.starcor.xinjiang.ReadUserinfo"/>
+    <uses-permission android:name="com.starcor.xinjiang.ReadUserinfo" />
+
+    <permission android:name="com.starcor.xinjiang.ReadUserinfo" />
 
     <application
         android:name="com.zeke.ktx.App"
@@ -51,18 +52,17 @@
         <!--应用元素据设置-->
         <meta-data
             android:name="design_width"
-            android:value="1080"/>
+            android:value="1080" />
         <meta-data
             android:name="design_height"
-            android:value="1920"/>
+            android:value="1920" />
 
 
         <!--<uses-library android:name="android.test.AndroidTestRunner"/>-->
 
         <provider
             android:name="com.kingz.four_components.provider.KingZProvider"
-            android:authorities="${packageName}">
-        </provider>
+            android:authorities="${packageName}"></provider>
 
         <!--android:authorities="${packageName}.BmobContentProvider">-->
 
@@ -70,9 +70,20 @@
             android:name="com.SplashActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
                 <!--<category android:name="android.intent.category.HOME"/>-->
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="http"
+                    android:host="asd"
+                    android:pathPrefix="/asds" />
             </intent-filter>
         </activity>
 
@@ -85,8 +96,8 @@
             android:windowSoftInputMode="stateAlwaysHidden"
             android:theme="@style/AppTheme">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
                 <!--<category android:name="android.intent.category.HOME"/>-->
             </intent-filter>
         </activity>
@@ -96,107 +107,107 @@
         <activity
             android:name="com.kingz.view.animation.PropertyAnimationsActivity"
             android:screenOrientation="landscape"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
         <activity
             android:name="com.kingz.view.animation.CrossfadeActivity"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape" />
         <activity
             android:name="com.kingz.view.animation.ViewFlipperAnimation"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.kingz.view.animation.InterpolatorAnimation"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <!-- 原生SeekBar -->
         <activity
             android:name="com.kingz.widgets.android_src.NativeSeekBar"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
 
         <!-- 自定义 SeekBar -->
         <activity
             android:name="com.bling.pages.UsingCustomSeekBar"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
         <activity
             android:name="com.kingz.view.shape.ShapeDrawOval"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
 
         <activity
             android:name="com.kingz.view.surface.DrawRectWithSurface"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
 
         <!-- progressBar -->
         <activity
             android:name="com.kingz.widgets.android_src.NativeProgressBar"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
 
 
         <!-- 原生布局汇总页面 -->
         <activity
             android:name="com.kingz.pages.LayoutPage"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
 
         <activity
             android:name="com.kingz.four_components.activity.news.NewsActivity"
             android:screenOrientation="landscape"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
 
         <!--常用控件集合-->
         <activity
             android:name="com.kingz.widgets.android_src.BasicControlsActivity"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
         <activity
             android:name="com.kingz.widgets.android_src.AppsGridView"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
 
         <!-- 自定义控件的ListView-->
         <activity
             android:name="com.kingz.pages.CustomViewsPage"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
 
         <activity
             android:name="com.kingz.text.LableTextViewPage"
-            android:theme="@android:style/Theme.DeviceDefault"/>
+            android:theme="@android:style/Theme.DeviceDefault" />
 
         <activity
             android:name="com.kingz.text.metrics.FontMetricsDemoActivity"
             android:screenOrientation="landscape"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
 
         <activity
             android:name="com.kingz.text.langs.TextViewOfLanguages"
-            android:theme="@android:style/Theme.DeviceDefault"/>
+            android:theme="@android:style/Theme.DeviceDefault" />
 
         <!-- 四大组件的listview -->
         <activity
             android:name="com.kingz.pages.FourComponentPage"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
 
         <activity
             android:name="com.kingz.four_components.ServiceComponentsACT"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
 
         <activity
             android:name="com.kingz.four_components.ObtainProviderDataPage"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
 
         <!--文件及bitmap操作的activity-->
         <activity
             android:name="com.kingz.file.FileAndPicTestACT"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
         <activity
             android:name="com.apiDemo.content.ExternalStorage"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
 
         <!--BitmapDemo页面-->
         <activity
             android:name="com.kingz.file.DownloadAPPActivity"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
 
         <!--图片缓存测试页面-->
         <activity
             android:name="com.asynctask_jsontest.LruPicListViewActivity"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
 
         <!--图片缓存测试页面-->
 
@@ -204,88 +215,88 @@
         <activity
             android:name="com.kingz.pages.photo.BitmapPhotosActivity"
             android:screenOrientation="landscape"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
 
         <activity
             android:name="com.kingz.pages.photo.memory.MemoryCheck"
             android:screenOrientation="landscape"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
 
         <!--ColorMatrix-->
         <activity
             android:name="com.kingz.pages.photo.colormatrix.ColorMatrixDemo"
             android:theme="@style/AppTheme"
-            tools:targetApi="lollipop"/>
+            tools:targetApi="lollipop" />
 
         <!--文件管理页面-->
         <activity
             android:name="com.kingz.filemanager.FileManagerActivity"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
 
         <!--文件管理页面-->
         <activity
             android:name="com.kingz.communicat.HMLActuivity"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
 
         <!-- ProgressViewsActivity -->
         <activity
             android:name="com.bling.pages.ProgressViewsActivity"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
 
         <!--webAppActivity-->
         <activity
             android:name="com.kingz.view.webview.WebViewActivity"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
 
         <!-- 自定义显示的listView -->
         <activity
             android:name="com.kingz.view.listview.CustomListViewActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
         <activity
             android:name="com.kingz.recyclerview.MusicPosterPages"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
 
         <!-- 可左右滑动的ListView -->
         <activity
             android:name="com.kingz.scroll.SliderListViewActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="com.kingz.scroll.view_pager.ViewPagerAnimationDemoActivity"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
 
         <activity
             android:name="com.bling.pages.WaveLoadingActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
         <activity
             android:name="com.kingz.scroll.SoapFlingActivity"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
 
         <!-- OriginViewPager -->
         <activity
             android:name="com.kingz.widgets.android_src.OriginViewPager"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
 
         <!-- 百度地图View -->
 
         <!-- FilmList -->
         <activity
             android:name="com.kingz.pages.photo.filmlist.FilmsListActivity"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
 
         <!-- Span页面 -->
         <activity
             android:name="com.kingz.widgets.android_src.SpansDemo"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
 
         <!-- ************ 媒体 *********** -->
         <activity
             android:name="com.mplayer.ApolloMediaPlayer"
             android:screenOrientation="landscape"
-            android:theme="@style/PlayTheme"/>
+            android:theme="@style/PlayTheme" />
 
         <activity
             android:name="com.mplayer.exo_player.DetailPageActivty"
@@ -293,36 +304,36 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/PlayTheme"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+            android:windowSoftInputMode="stateAlwaysHidden" />
 
         <!-- ************ API Demos 页面 ************ -->
 
         <activity
             android:name="com.apiDemo.AlarmServiceActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Black"/>
+            android:theme="@android:style/Theme.Black" />
 
         <!-- ************ AIDL 测试页面 ************ -->
         <activity
             android:name="com.kingz.ipcdemo.AIDLActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Black"/>
+            android:theme="@android:style/Theme.Black" />
 
         <!-- ************ Acticity-alias 测试页面 ************ -->
         <activity
             android:name="com.kingz.four_components.activity.AttrOfAliasAct"
-            android:theme="@android:style/Theme.Holo.Light"/>
+            android:theme="@android:style/Theme.Holo.Light" />
 
         <!--  ************ 图形方面  Start ************ -->
         <activity
             android:name="com.kingz.graphics.Arcs"
-            android:theme="@android:style/Theme.Holo.Light"/>
+            android:theme="@android:style/Theme.Holo.Light" />
         <activity
             android:name="com.kingz.graphics.PathEffects"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
         <activity
-            android:name="com.zeke.ktx.activity.glide.GlideDemoActivity"
-            android:theme="@style/AppTheme"/>
+            android:name="com.zeke.ktx.demo.glide.GlideCardDemoActivity"
+            android:theme="@style/AppTheme" />
 
 
         <!--  ************ 图形方面  End ************ -->
@@ -331,59 +342,57 @@
         <!--  ************ Android 基本API效果展示  Start ************ -->
         <activity
             android:name="com.kingz.basic_api.CanvasApiActivity"
-            android:theme="@android:style/Theme.Holo.Light"/>
+            android:theme="@android:style/Theme.Holo.Light" />
         <!--  ************ Android 基本API效果展示  End ************ -->
 
         <!--  ************ Android >=5.0 新特性展示  Start ************ -->
         <activity
             android:name="com.kingz.newfeatures.NewFeaturesMainActivity"
-            android:theme="@style/Lollipop_NoActionBar"/>
+            android:theme="@style/Lollipop_NoActionBar" />
         <activity
             android:name="com.kingz.newfeatures.FadeAnim"
-            android:theme="@style/Lollipop_NoActionBar"/>
+            android:theme="@style/Lollipop_NoActionBar" />
         <activity
             android:name="com.kingz.newfeatures.DecomposeAnim"
-            android:theme="@style/Lollipop_NoActionBar"/>
+            android:theme="@style/Lollipop_NoActionBar" />
         <activity
             android:name="com.kingz.newfeatures.SlideAnim"
-            android:theme="@style/Lollipop_NoActionBar"/>
+            android:theme="@style/Lollipop_NoActionBar" />
         <activity
             android:name="com.kingz.newfeatures.SharedAnim"
-            android:theme="@style/Lollipop_NoActionBar"/>
+            android:theme="@style/Lollipop_NoActionBar" />
         <activity
             android:name="com.kingz.newfeatures.PermissionActivity"
-            android:theme="@style/Lollipop_NoActionBar"/>
+            android:theme="@style/Lollipop_NoActionBar" />
         <activity
             android:name="com.kingz.newfeatures.PinpActivity"
             android:configChanges="screenLayout|orientation"
             android:supportsPictureInPicture="true"
             android:theme="@style/Lollipop_NoActionBar"
-            tools:targetApi="n">
-        </activity>
+            tools:targetApi="n"></activity>
         <!--  ************ Android >=5.0 新特性展示  End ************ -->
 
-        <activity
-            android:name="com.zeke.ktx.activities.indicator.ScrollableTabExampleActivity"/>
+        <activity android:name="com.zeke.ktx.activities.indicator.ScrollableTabExampleActivity" />
 
-        <activity android:name="com.zeke.ktx.activity.practice_draw.PracticeDrawOneActivity"
-            android:theme="@style/AppTheme"/>
+        <activity
+            android:name="com.zeke.ktx.activity.practice_draw.PracticeDrawOneActivity"
+            android:theme="@style/AppTheme" />
 
         <!--服务 exported:外部是否可访问  process:为服务设置不同进程-->
         <service
             android:name="com.kingz.four_components.service.MyComponentsOfService"
             android:enabled="true"
-            android:exported="true"/>
+            android:exported="true" />
 
         <!-- aidl测试 start -->
-        <service android:name="com.kingz.four_components.service.BoundServiceDemo">
-        </service>
+        <service android:name="com.kingz.four_components.service.BoundServiceDemo"></service>
 
         <service
             android:name="com.kingz.ipcdemo.AIDLService"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.kingz.aidl"/>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="com.kingz.aidl" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </service>
         <!-- aidl测试 End -->
@@ -391,14 +400,13 @@
 
         <service
             android:name="com.kingz.four_components.IntentServicDemo"
-            android:exported="false">
-        </service>
+            android:exported="false"></service>
 
         <service
             android:name="com.kingz.four_components.service.LocalService"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.kingz.action.local"/>
+                <action android:name="com.kingz.action.local" />
             </intent-filter>
         </service>
 
@@ -406,8 +414,7 @@
         <provider
             android:name="com.kingz.four_components.provider.ThetisProvider"
             android:authorities="com.kingz.four_components.myprovider"
-            android:exported="true">
-        </provider>
+            android:exported="true"></provider>
 
         <!--7.0 fileprovider-->
         <provider
@@ -417,29 +424,29 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"/>
+                android:resource="@xml/file_paths" />
         </provider>
 
 
         <receiver android:name="com.kingz.four_components.receiver.OtherAppInstalledOrRemoveReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_ADDED"/>
-                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
 
-                <data android:scheme="package"/>
+                <data android:scheme="package" />
             </intent-filter>
         </receiver>
 
         <receiver android:name="com.kingz.four_components.receiver.OtherAppReplacedReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_REPLACED"/>
-                <data android:scheme="package"/>
+                <action android:name="android.intent.action.PACKAGE_REPLACED" />
+                <data android:scheme="package" />
             </intent-filter>
         </receiver>
 
         <receiver android:name="com.kingz.four_components.brodcast.PaySucessBroadcast">
             <intent-filter>
-                <action android:name="com.starcor.xinjiang.kork.pay"/>
+                <action android:name="com.starcor.xinjiang.kork.pay" />
             </intent-filter>
         </receiver>
 
