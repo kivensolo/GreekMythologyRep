@@ -329,9 +329,6 @@
             android:name="com.kingz.graphics.Arcs"
             android:theme="@android:style/Theme.Holo.Light" />
         <activity
-            android:name="com.kingz.graphics.PathEffects"
-            android:theme="@style/AppTheme" />
-        <activity
             android:name="com.zeke.ktx.demo.glide.GlideCardDemoActivity"
             android:theme="@style/AppTheme" />
 
@@ -375,7 +372,7 @@
         <activity android:name="com.zeke.ktx.activities.indicator.ScrollableTabExampleActivity" />
 
         <activity
-            android:name="com.zeke.ktx.activity.practice_draw.PracticeDrawOneActivity"
+            android:name="com.zeke.ktx.demo.draw.PracticeDrawActivity"
             android:theme="@style/AppTheme" />
 
         <!--服务 exported:外部是否可访问  process:为服务设置不同进程-->

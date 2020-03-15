@@ -18,7 +18,7 @@ class MagicIndicatorDemoFragment: BaseFragment(){
         return R.layout.fragment_indicator_demo_main_layout
     }
 
-    override fun initView() {
+    override fun onViewCreated() {
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -31,8 +31,6 @@ class MagicIndicatorDemoFragment: BaseFragment(){
     }
 
 
-
-    override fun initData() {}
 
     fun onClick(v: View?) {
         when (v!!.id){

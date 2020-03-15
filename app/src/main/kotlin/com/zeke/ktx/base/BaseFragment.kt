@@ -42,8 +42,7 @@ abstract class BaseFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initView()
-        initData()
+        onViewCreated()
         setListener()
     }
 
@@ -70,11 +69,7 @@ abstract class BaseFragment : Fragment() {
     /** 进行初始化操作，在onCreateView中调用*/
     open fun onCreateViewReady() {}
 
-    /** 初始化视图*/
-    abstract fun initView()
-
-    /** 初始化数据*/
-    abstract fun initData()
+    abstract fun onViewCreated()
 
     /** 设置监听*/
     open fun setListener() {}

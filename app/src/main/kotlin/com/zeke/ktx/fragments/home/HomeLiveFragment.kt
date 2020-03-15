@@ -36,16 +36,17 @@ class HomeLiveFragment : HomeBaseFragment<LivePresenter>(), LiveContract.View {
         return R.layout.fragment_live_tab
     }
 
-    override fun initView() {
-        super.initView() // 有公共控件可以复用 调用一次super
+    override fun onViewCreated() {
+        super.onViewCreated() // 有公共控件可以复用 调用一次super
         // 具体子页面对公共View组件的设置
         tableLayout!!.tabMode = TabLayout.MODE_SCROLLABLE
         tableLayout!!.setSelectedTabIndicatorColor(resources.getColor(R.color.text_blue))
         tableLayout!!.setTabTextColors(resources.getColor(android.R.color.white),
                 resources.getColor(R.color.text_blue))
+        fetchLiveInfo()
     }
 
-    override fun initData() {
+    private fun fetchLiveInfo() {
         mPresenter.getLiveInfo(activity!!)
     }
 

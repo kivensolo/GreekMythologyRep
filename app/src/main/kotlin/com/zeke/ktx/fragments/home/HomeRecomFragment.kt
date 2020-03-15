@@ -23,10 +23,6 @@ class HomeRecomFragment : HomeBaseFragment<RecomPresenter>(),RecomPageContract.V
     }
 
 
-    override fun initData() {
-        mPresenter.getPageContent(activity!!)
-    }
-
     override fun showRecomInfo(data: MutableList<HomeRecomData>?) {
         Log.d(TAG, "showDemoPageInfo onResult.")
         if(data == null || data.size == 0){
@@ -60,12 +56,14 @@ class HomeRecomFragment : HomeBaseFragment<RecomPresenter>(),RecomPageContract.V
         get() = activity != null && (activity as BaseActivity)
                 .isActivityShow && isVisible
 
-    override fun initView() {
-        super.initView()
+    override fun onViewCreated() {
+        super.onViewCreated()
         tableLayout?.setSelectedTabIndicatorColor(resources.getColor(R.color.hub_yellow))
         val normalColor = resources.getColor(android.R.color.white)
         val selectedColor = resources.getColor(R.color.hub_yellow)
         tableLayout?.setTabTextColors(normalColor, selectedColor)
+
+        mPresenter.getPageContent(activity!!)
     }
 
 }

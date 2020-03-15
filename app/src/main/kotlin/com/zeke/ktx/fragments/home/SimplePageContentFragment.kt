@@ -28,15 +28,11 @@ class SimplePageContentFragment : BaseFragment(), IView, View.OnClickListener {
         return R.layout.single_recyclerview
     }
 
-    override fun initView() {
+    override fun onViewCreated() {
         mRecycleView = rootView.findViewById(R.id.content_recycler)
         mRecycleView.setHasFixedSize(true)
         mRecycleView.layoutManager = GridLayoutManager(activity!!,2)
         mRecycleView.adapter = mRV
-    }
-
-    override fun initData() {
-
     }
 
     override fun showLoading() {

@@ -5,24 +5,24 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
 import android.view.Menu
 import com.kingz.customdemo.R
-import com.zeke.ktx.activity.practice_draw.Practice1DrawColorView
-import com.zeke.ktx.activity.practice_draw.Practice2DrawCircleView
-import com.zeke.ktx.activity.practice_draw.Practice3DrawRectView
 import com.zeke.ktx.demo.BaseDemoActivity
-import com.zeke.ktx.demo.CardItemData
 import com.zeke.ktx.demo.CardVerticalDemoFragment
+import com.zeke.ktx.demo.draw.base_api.Practice1ColorView
+import com.zeke.ktx.demo.draw.base_api.Practice2CircleView
+import com.zeke.ktx.demo.draw.base_api.Practice3RectView
+import com.zeke.ktx.demo.modle.CardItemModle
 import com.zeke.ktx.demo.modle.DemoContentModel
 
 class GlideCardDemoActivity : BaseDemoActivity() {
 
-    private var cardDatas: MutableList<CardItemData>? = null
+    private var cardDatas: MutableList<CardItemModle>? = null
 
     override fun initPageModels() {
         // 创建卡片数据
         cardDatas = ArrayList()
-        cardDatas?.add(CardItemData("Circle", Practice1DrawColorView(this)))
-        cardDatas?.add(CardItemData("Round", Practice2DrawCircleView(this)))
-        cardDatas?.add(CardItemData("Round_with_border", Practice3DrawRectView(this)))
+        cardDatas?.add(CardItemModle("Circle", Practice1ColorView(this)))
+        cardDatas?.add(CardItemModle("Round", Practice2CircleView(this)))
+        cardDatas?.add(CardItemModle("Round_with_border", Practice3RectView(this)))
 
         // 初始化Page数据
         pageModels.add(DemoContentModel(getString(R.string.glide_circle), cardDatas))
@@ -33,7 +33,9 @@ class GlideCardDemoActivity : BaseDemoActivity() {
         super.initPagerAdapter()
         pager?.adapter = object : FragmentPagerAdapter(supportFragmentManager) {
             override fun getItem(position: Int): Fragment {
-                return CardVerticalDemoFragment.newInstance(pageModels[position])
+                val fragment = CardVerticalDemoFragment()
+                fragment.initData(pageModels[position])
+                return fragment
             }
 
             override fun getCount(): Int {

@@ -24,8 +24,6 @@ import com.zeke.kangaroo.utils.ZLog;
 import com.zeke.ktx.App;
 
 /**
- * Copyright(C) 2016, 北京视达科科技有限公司
- * All rights reserved. <br>
  * author: King.Z <br>
  * date:  2017/5/26 23:12 <br>
  *      * description: ColorMatrix的使用 <br>

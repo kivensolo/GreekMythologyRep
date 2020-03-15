@@ -53,12 +53,14 @@ class ExpandableDemoFragment : BaseFragment()
         return R.layout.fragment_all_demo
     }
 
-    override fun initView() {
+    override fun onViewCreated() {
         listView = rootView.findViewById(android.R.id.list)
         expandAdapter = DemoFragmentExpandableListAdapter(context)
         listView!!.setAdapter(expandAdapter)
         listView!!.setOnGroupClickListener(ImpOnGroupClickListener())
         listView!!.setOnChildClickListener(this)
+
+        mPresenter.getDemoInfo(activity!!)
     }
 
 
@@ -67,10 +69,6 @@ class ExpandableDemoFragment : BaseFragment()
         expandAdapter!!.setSampleGroups(data!!)
     }
 
-
-    override fun initData() {
-        mPresenter.getDemoInfo(activity!!)
-    }
 
     override fun onClick(v: View?) {
     }

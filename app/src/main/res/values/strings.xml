@@ -124,12 +124,12 @@
     <string name="pls_input_name" translatable="false">请输入用户名</string>
     <string name="login" translatable="false">登录</string>
     <string name="user_error_tips" translatable="false">User Name Error!</string>
-    <string name="bottom_demo">Demo学习</string>
-    <string name="fuli">福利</string>
-    <string name="no_use">暂未开发</string>
-    <string name="tips_data_empty">数据为空</string>
-    <string name="content_view_desc">页面内容显示页面根View</string>
-    <string name="networl_error">网络错误</string>
+    <string name="bottom_demo" translatable="false">Demo学习</string>
+    <string name="fuli" translatable="false">福利</string>
+    <string name="no_use" translatable="false">暂未开发</string>
+    <string name="tips_data_empty" translatable="false">数据为空</string>
+    <string name="content_view_desc" translatable="false">页面内容显示页面根View</string>
+    <string name="networl_error" translatable="false">网络错误</string>
 
     <!--MagicIndicatorDemo相关-->
     <string name="scrollable_tab" translatable="false">Scrollable tab</string>
@@ -143,18 +143,12 @@
     <string name="tab_with_custom_layout" translatable="false">Load custom layout</string>
 
 
-<!--    练习绘制页面-->
-    <string name="title_1" translatable="false">drawColor()</string>
-    <string name="title_2" translatable="false">drawCircle()</string>
-    <string name="title_3" translatable="false">drawRect()</string>
-    <string name="title_4" translatable="false">drawPoint()</string>
-    <string name="title_5" translatable="false">drawOval()</string>
-    <string name="title_6" translatable="false">drawLine()</string>
-    <string name="title_7" translatable="false">drawRoundRect()</string>
-    <string name="title_8" translatable="false">drawArc()</string>
-    <string name="title_9" translatable="false">drawPath()</string>
-    <string name="title_10" translatable="false">直方图()</string>
-    <string name="title_11" translatable="false">饼图()</string>
+    <!--    练习绘制页面-->
+    <string name="draw_1_1" translatable="false">1.1 BaseApi</string>
+    <string name="draw_paint_effect" translatable="false">1.2 Paint(效果)</string>
+    <string name="draw_paint_color" translatable="false">1.2 Paint(基本颜色)</string>
+    <string name="draw_paint_text" translatable="false">1.2 Paint(Text)</string>
+    <string name="draw_paint_init" translatable="false">1.2 Paint(初始化)</string>
 
     <!--Glide 效果测试页面-->
     <string name="glide_circle" translatable="false">Glide预览</string>

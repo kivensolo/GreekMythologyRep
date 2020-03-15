@@ -89,10 +89,6 @@
         "class": "com.kingz.graphics.Arcs"
       },
       {
-        "name": "PathEffects",
-        "class": "com.kingz.graphics.PathEffects"
-      },
-      {
         "name": "MemoryCheck",
         "class": "com.kingz.pages.photo.memory.MemoryCheck"
       },
@@ -199,12 +195,12 @@
     ]
   },
   {
-    "name": "Custom View PracticeDraw",
+    "name": "PracticeDraw",
     "desc": "自定义View绘制练习",
     "samples": [
       {
-        "name": "PracticeDraw1 - 绘制基础",
-        "class": "com.zeke.ktx.activity.practice_draw.PracticeDrawOneActivity"
+        "name": "PracticeDrawDemo",
+        "class": "com.zeke.ktx.demo.draw.PracticeDrawActivity"
       }
     ]
   },

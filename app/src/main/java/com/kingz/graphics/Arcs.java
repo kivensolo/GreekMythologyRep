@@ -1,6 +1,5 @@
 package com.kingz.graphics;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -15,13 +14,16 @@ import com.kingz.widgets.text.LogTextBox;
 import com.module.tools.ScreenTools;
 import com.zeke.kangaroo.utils.ZLog;
 import com.zeke.ktx.App;
+import com.zeke.ktx.base.BaseActivity;
 
 /**
  * author: King.Z
  * date:  2016/10/25 21:33
  * description: 弧形的使用
+ *
+ * FIXME 有严重的性能损耗
  */
-public class Arcs extends Activity {
+public class Arcs extends BaseActivity {
     private LogTextBox logView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

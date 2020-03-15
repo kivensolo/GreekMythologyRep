@@ -10,6 +10,7 @@ import com.kingz.customdemo.R
 import com.zeke.kangaroo.adapter.CommonRecyclerAdapter
 import com.zeke.kangaroo.utils.ZLog
 import com.zeke.ktx.base.BaseFragment
+import com.zeke.ktx.demo.modle.CardItemModle
 import com.zeke.ktx.demo.modle.DemoContentModel
 
 /**
@@ -26,45 +27,49 @@ import com.zeke.ktx.demo.modle.DemoContentModel
  *
  */
 class CardVerticalDemoFragment : BaseFragment() {
+
+    private var pageModel: DemoContentModel? = null
     private lateinit var mRecycleView: RecyclerView
     var mRV: RVAdapter = RVAdapter()
-
-    var pageId: String = ""
 
     override fun getLayoutId(): Int {
         return R.layout.single_recyclerview
     }
 
-    override fun initView() {
-        pageModel?.demoData?.forEach {
-            mRV.addItem(it)
-        }
-        mRecycleView = rootView.findViewById(R.id.content_recycler)
-        mRecycleView.setHasFixedSize(true)
-        mRecycleView.layoutManager = LinearLayoutManager(activity!!,LinearLayoutManager.VERTICAL, false)
-        mRecycleView.adapter = mRV
+    fun initData(pageData: DemoContentModel?) {
+        pageModel = pageData
     }
 
-    companion object {
-        var pageModel: DemoContentModel? = null
-        fun newInstance(pageData: DemoContentModel): CardVerticalDemoFragment {
-            pageModel = pageData
-            return CardVerticalDemoFragment()
-        }
+    override fun onCreateViewReady() {
+        super.onCreateViewReady()
+        mRecycleView = rootView.findViewById(R.id.content_recycler)
+        mRecycleView.setHasFixedSize(true)
+        mRecycleView.layoutManager = LinearLayoutManager(activity!!, LinearLayoutManager.VERTICAL, false)
+        mRecycleView.adapter = mRV
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val args = arguments
-        if (args != null) {
-            pageId = args.getString("page_id", "")
+        if(mRV.itemCount == 0){ // 防止多次初始化数据
+            ZLog.d(TAG,"数据为空,进行数据添加")
+            pageModel?.demoData?.forEach {
+                mRV.addItem(it)
+            }
         }
     }
 
-    override fun initData() {
+    override fun onViewCreated() {
     }
 
-    inner class RVAdapter : CommonRecyclerAdapter<CardItemData>() {
+    /**
+     * 被PagerAdapter销毁时，会被调用
+     */
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        ZLog.d(TAG,"onSaveInstanceState")
+    }
+
+    inner class RVAdapter : CommonRecyclerAdapter<CardItemModle>() {
 
         override fun getItemLayout(type: Int): Int {
             return R.layout.demo_card_item
@@ -73,15 +78,21 @@ class CardVerticalDemoFragment : BaseFragment() {
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             super.onBindViewHolder(holder, position)
             val data = getItem(position)
-            val cardItemData = data as CardItemData
+            val cardItemData = data as CardItemModle
             // CardView的Title
             holder.getView<TextView>(R.id.card_title_text).text = cardItemData.title
 
             // CardView的Content
             val cardContentLayout = holder.getView<LinearLayout>(R.id.card_content_layout)
             if (cardItemData.content != null) {
-                cardContentLayout.addView(cardItemData.content)
-                ZLog.d("cardContentLayout.addView +1")
+                try {
+                    if (cardContentLayout.childCount == 0) {
+                        ZLog.d("cardContentLayout.addView +1")
+                        cardContentLayout.addView(cardItemData.content)
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
             } else {
                 cardContentLayout.setBackgroundColor(Color.GRAY)
             }

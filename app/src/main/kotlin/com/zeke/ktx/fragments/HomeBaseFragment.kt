@@ -36,7 +36,7 @@ open class HomeBaseFragment<T : IPresenter> : BaseFragment(), IView {
         return R.layout.fragment_tab
     }
 
-    override fun initView() {
+    override fun onViewCreated() {
         viewPagerAdapter = ViewPagerAdapter(childFragmentManager)
         tableLayout = rootView.findViewById(R.id.tab_layout)
         tableLayout!!.setPadding(0, 0, 0, 0)
@@ -52,9 +52,6 @@ open class HomeBaseFragment<T : IPresenter> : BaseFragment(), IView {
 
         loadStatusView = rootView.findViewById(R.id.load_status)
         loadStatusView!!.showProgress()
-    }
-
-    override fun initData() {
     }
 
     override val isShown: Boolean

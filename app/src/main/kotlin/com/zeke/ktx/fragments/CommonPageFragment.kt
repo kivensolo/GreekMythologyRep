@@ -49,10 +49,7 @@ class CommonPageFragment: BaseFragment(){
         fabButton = fabStub.inflate() as FloatingActionButton
     }
 
-    override fun initView() {
-    }
-
-    override fun initData() {
+    override fun onViewCreated() {
         loadStatusView?.showEmpty()
     }
 
