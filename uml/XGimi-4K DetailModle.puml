@@ -2,10 +2,10 @@
 interface IDetailsDataView
 
 abstract class BaseDetailsView
-note left: 详情页顶层View\n初始化焦点处理\n focuse事件传递
+note left: 详情页顶层View \n1.初始化焦点处理\n2.focuse事件传递
 class BaseDetailsView extends FrameLayout
 abstract class AbsDetailsAuthView
-note right: 抽象详情页鉴权逻辑层鉴权区域View\n(播放、试看、会员购买)
+note right: implements View.OnClickListener\n鉴权逻辑及统一业务处理层\n(播放、试看、会员购买按钮处理)
 abstract class AbsDetailsDataView extends BaseDetailsView
 abstract class AbsDetailsDataView implements IDetailsDataView
 
@@ -13,18 +13,25 @@ interface IPlayVideoView
 note left: 播控行为UI抽象层
 abstract class AbsDetailsAuthView extends AbsDetailsDataView
 abstract class AbsDetailsAuthView implements IPlayVideoView
-abstract class AbsDetailsAuthView implements View.OnClickListener
 
 abstract class AbsDetailsSelectedView
-note left: 抽象详情页选中效果的View层
+note left: 【选集控件交互层】\n 添加选集控件到视图中！！\n 设置选集控件的初始index
 abstract class AbsDetailsSelectedView extends AbsDetailsAuthView
-abstract class AbsDetailsSelectedView implements BaseTVListShowView.OnSelectedTVNumListener
+abstract class AbsDetailsSelectedView implements BaseTVListShowView.OnSelectedTVNumListener{
+    # initView()
+    # addSerialsView()
+}
 
 abstract class XGimiDetailsView
-abstract class XGimiDetailsView extends AbsDetailsSelectedView
+abstract class XGimiDetailsView extends AbsDetailsSelectedView{
+
+   # setData(DATA data)
+   # abstract initData()
+
+}
 
 abstract class FkDetailsView
-note left: 详情具体UI层\n布局填充及UI元素的初始化
+note left: 影片详情UI层，上半部分的\n布局填充及UI元素的初始化
 abstract class FkDetailsView extends XGimiDetailsView
 
 class Garden4KPlayVideoView
@@ -32,7 +39,7 @@ note left: 具体业务层
 class Garden4KPlayVideoView extends FkDetailsView
 
 class YiFangHeaderView
-note right: 具体业务层
+note right: 具体业务层\n选集控件serialsView初始化\n和TitleText设置
 class YiFangHeaderView extends FkDetailsView
 
 @enduml
