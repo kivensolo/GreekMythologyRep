@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
 import android.view.Menu
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import com.kingz.customdemo.R
 import com.zeke.ktx.demo.BaseDemoActivity
 import com.zeke.ktx.demo.CardVerticalDemoFragment
@@ -22,10 +23,10 @@ class PracticeDrawActivity : BaseDemoActivity() {
     override fun initPageModels() {
         // 1-1 基础api展示数据
         val cardData1: MutableList<CardItemModle> = ArrayList()
-        cardData1.add(CardItemModle("canvas.drawColor(Color.YELLOW)",Practice1ColorView(this)))
+        cardData1.add(CardItemModle("canvas.drawColor(Color.YELLOW)", Practice1ColorView(this)))
         cardData1.add(CardItemModle("drawCircle", Practice2CircleView(this)))
         cardData1.add(CardItemModle("drawRect", Practice3RectView(this)))
-        cardData1.add(CardItemModle("drawPoint: ROUND、BUTT、SQUARE",Practice4PointView(this)))
+        cardData1.add(CardItemModle("drawPoint: ROUND、BUTT、SQUARE", Practice4PointView(this)))
         cardData1.add(CardItemModle("drawOval", Practice5OvalView(this)))
         cardData1.add(CardItemModle("drawLine", Practice6LineView(this)))
         cardData1.add(CardItemModle("drawArc", Practice7ArcView(this)))
@@ -41,6 +42,9 @@ class PracticeDrawActivity : BaseDemoActivity() {
         val cardData3: MutableList<CardItemModle> = ArrayList()
         cardData3.add(CardItemModle("简单效果使用", Paint6NormalEffectView(this)))
         cardData3.add(CardItemModle("PathEffect", Paint7PathEffectView(this)))
+        cardData3.add(CardItemModle("ShadowLayer(在下面附加效果)", Paint8ShadowLayerView(this)))
+        cardData3.add(CardItemModle("MaskFilter(在上面附加效果)", Paint9MaskFilterView(this)))
+        cardData3.add(CardItemModle("getPath", Paint10GetPathView(this)))
 
         // 初始化Page数据
         pageModels.add(DemoContentModel(getString(R.string.draw_1_1), cardData1))
@@ -66,6 +70,12 @@ class PracticeDrawActivity : BaseDemoActivity() {
             }
 
             override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
+                val rootRecycleView = (`object` as Fragment).view
+                val contentView = rootRecycleView?.findViewById<LinearLayout>(R.id.card_content_layout)
+                if (contentView != null && contentView.childCount > 0) {
+                    contentView.removeAllViews()
+                }
+
                 // 将所有Fragment的视图保存下来
                 // super.destroyItem(container, position, `object`)
             }

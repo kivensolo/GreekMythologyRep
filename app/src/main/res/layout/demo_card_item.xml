@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="25px"
         android:layout_marginTop="30px"
+        android:layout_marginBottom="10px"
         android:layout_marginRight="25px"
         android:paddingBottom="30px"
         app:cardBackgroundColor="@color/white"
