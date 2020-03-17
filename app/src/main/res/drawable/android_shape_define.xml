@@ -1,12 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-<!--【【形状属性】】-->
-    <!-- 1.梯度 -->
+    <!--【【形状属性】】-->
+    <!-- 1.梯度  angle(必须是45的倍数): 0 从左到右 90: 从下往上 180: 从右往左 270: 从上往下-->
     <gradient
-            android:centerColor="#FF00FF00"
-            android:endColor="#FF0000FF"
-            android:startColor="#FFFF0000"
-            android:type="linear"/>
+        android:angle="270"
+        android:centerColor="#FF00FF00"
+        android:endColor="#FF0000FF"
+        android:startColor="#FFFF0000"
+        android:type="linear"/>
+    <!-- 其他属性:
+            android:centerX="integer"
+            android:centerY="integer"
+                centerX和centerY，这两个属性只有在type不为linear情况下起作用
+            android:gradientRadius="integer"
+                Float. 渐变颜色的半径，单位应该是像素点。需要 android:type="radial"。
+            android:useLevel=["true" | "false"]
+                使用LevelListDrawable时就要设置为true，设为false时才有渐变效果。 -->
+    <!--    android:type=["linear" | "radial" | "sweep"]/>-->
+
     <size android:height="2dp"/>
 
     <!--2.圆角 radius：弧度-->
@@ -21,7 +32,7 @@
         android:color="#ff19a2ff" />
 
     <!-- 5.边距 -->
-     <padding
+    <padding
         android:bottom="1dip"
         android:left="1dip"
         android:right="1dip"
