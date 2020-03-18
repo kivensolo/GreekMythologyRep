@@ -153,6 +153,6 @@ class Paint7PathEffectView @JvmOverloads constructor(
 
 
     override fun getViewHeight(): Int {
-        return 840
+        return 880
     }
 }

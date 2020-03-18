@@ -21,6 +21,7 @@ open class BasePracticeView @JvmOverloads constructor(
         super.onDraw(canvas)
         paint.textSize = UIUtils.dip2px(context,defaulFontSize).toFloat()
         paint.isAntiAlias = true
+        paint.isDither = true
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
