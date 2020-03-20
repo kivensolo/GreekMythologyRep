@@ -23,55 +23,7 @@ import butterknife.BindView;
 /**
  * author: King.Z
  * date:  2016/9/17 20:59
- * description: 属性动画
- * <p>
- * http://mp.weixin.qq.com/s?__biz=MzA5MzI3NjE2MA==&mid=2650237082&idx=1&sn=73d02232c981d1565bcb2dbe5b10a681&scene=23&srcid=0917SscEyH3EiTM2RASAGJis#rd
- * <p>
- * ----【ValueAnimator】：属性动画机制当中最核心的一个类;
- * 属性动画的运行机制是通过不断地对值进行操作来实现的，
- * 初始值和结束值之间的动画过渡就是由ValueAnimator这个类来负责计算的。
- * 内部使用一种时间循环的机制来计算值与值之间的动画过渡。
- * 负责管理动画的播放次数、播放模式、以及对动画设置监听器等
- * <p>
- * ----【ObjectAnimator】：可以直接对任意对象的任意属性进行动画操作的，
- * 比如说View的alpha属性
- * <p/>
- * ----【AnimatorSet】 这个类提供了一个play()方法，如果我们向这个方法中传入一个Animator对象
- * (ValueAnimator或ObjectAnimator)将会返回一个AnimatorSet.Builder的实例，
- * AnimatorSet.Builder中包括以下四个方法：
- * after(Animator anim) 将现有动画插入到传入的动画之后执行
- * after(long delay) 将现有动画延迟指定毫秒后执行
- * before(Animator anim) 将现有动画插入到传入的动画之前执行
- * with(Animator anim) 将现有动画和传入的动画同时执行
- * <p>
- * 除了set，还可以以下方式：
- * 用ValuesHolder  ------->
- * PropertyValuesHolder pvhX = PropertyValuesHolder.ofFloat("rotationX", 0f, 360f);
- * PropertyValuesHolder pvhY = PropertyValuesHolder.ofFloat("scaleX", 1f, 0f, 1f);
- * PropertyValuesHolder pvhZ = PropertyValuesHolder.ofFloat("scaleY", 1f, 0f, 1f);
- * ObjectAnimator holderAnim = {@link ObjectAnimator}ObjectAnimator.ofPropertyValuesHolder(view, pvhX, pvhY, pvhZ);
- * holderAnim.setDuration(5000);
- * holderAnim.setRepeatCount(100);
- * holderAnim.start();
- * <p>
- * addUpdateListener ------->
- * ObjectAnimator anim = ObjectAnimator.ofFloat(mTextView, "kingz", 1.0F, 0.0F);//自定义属性名
- * anim.setDuration(5000);
- * anim.setRepeatCount(100);
- * anim.start();
- * anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
- * public void onAnimationUpdate(ValueAnimator animation) {
- * float cVal = (Float) animation.getAnimatedValue();
- * mTextView.setAlpha(cVal);
- * mTextView.setScaleX(cVal);
- * mTextView.setScaleY(cVal);
- * }
- * });
- * <p/>
- * ----【AnimatorListener】：监听动画的各种事件，比如动画何时开始，何时结束，
- * Animator类当中提供了一个addListener()方法，
- * 这个方法接收一个AnimatorListener，
- * 只需要去实现这个AnimatorListener就可以监听动画的各种事件了。
+ * description: 属性动画展示
  */
 public class PropertyAnimationsActivity extends BaseActivity implements AdapterView.OnItemClickListener {
 

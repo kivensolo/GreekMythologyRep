@@ -2,36 +2,23 @@
 <project version="4">
   <component name="AndroidLayouts">
     <shared>
-      <config />
+      <config>
+        <device id="pixel" />
+        <target>android-23</target>
+      </config>
     </shared>
   </component>
   <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="calculateInSampleSize" />
     <option name="TOOL_WINDOW_LOG_LEVEL" value="verbose" />
-    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
     <option name="TOOL_WINDOW_REGEXP_FILTER" value="false" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a3cec3bb-8d42-4c40-9c2b-c5c51d3e7453" name="Default" comment="title(update): add okhttp 3.X manager.&#10;reason: update&#10;effect: none.">
-      <change afterPath="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/activity/practice_draw/Practice1DrawColorView.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/activity/practice_draw/PracticeDrawOneActivity.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/app_floating_action_button.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/common_recyclerview.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/load_status.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+    <list default="true" id="a3cec3bb-8d42-4c40-9c2b-c5c51d3e7453" name="Default" comment="title(update): Init CacheCenter Revision.&#10;reason: update&#10;effect: none.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/assets/kingz.mainlist.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/assets/kingz.mainlist.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/kingz/config/DemoSample.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/kingz/config/DemoSample.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/kingz/config/Sample.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/kingz/config/Sample.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/kingz/config/SampleGroup.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/kingz/config/SampleGroup.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/App.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/fragments/CommonPageFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/fragments/CommonPageFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/fragments/HomeBaseFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/fragments/HomeBaseFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/fragments/home/HomeRecomFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/fragments/home/HomeRecomFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_common_page.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_common_page.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_live_tab.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_live_tab.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_tab.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_tab.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/kingz/view/animation/PropertyAnimationsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/kingz/view/animation/PropertyAnimationsActivity.java" afterDir="false" />
     </list>
     <list id="689b234f-84af-43b7-9676-297885eb3599" name="Ignore List" comment="Ignore List">
       <change afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
@@ -95,87 +82,26 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/activity/practice_draw/PracticeDrawOneActivity.kt">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/kingz/view/shape/ShapeDrawOval.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="33">
-              <caret line="20" column="32" selection-start-line="20" selection-start-column="32" selection-end-line="20" selection-end-column="32" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/local.properties">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="242">
-              <caret line="11" selection-start-line="11" selection-end-line="11" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://D:/Android/sdk/platforms/android-27/data/res/values/colors.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="770">
-              <caret line="35" selection-start-line="35" selection-end-line="36" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.support/design/27.1.1/6e10c7f954f63690f7846fb22352375cf1b9fbb4/design-27.1.1-sources.jar!/android/support/design/widget/TabLayout.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="14256">
-              <caret line="739" column="48" selection-start-line="739" selection-start-column="37" selection-end-line="739" selection-end-column="48" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/fragments/home/HomeRecomFragment.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="704">
-              <caret line="42" column="72" selection-start-line="42" selection-start-column="72" selection-end-line="42" selection-end-column="72" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.support/recyclerview-v7/27.1.1/ad225a74247e675db0b05ea4f8b17202acbb7f9d/recyclerview-v7-27.1.1-sources.jar!/android/support/v7/widget/RecyclerView.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="10868">
-              <caret line="584" column="11" selection-start-line="584" selection-start-column="11" selection-end-line="584" selection-end-column="11" />
+            <state relative-caret-position="-219">
+              <caret line="91" column="33" selection-start-line="91" selection-start-column="33" selection-end-line="91" selection-end-column="33" />
               <folding>
-                <element signature="e#24812#24813#0" expanded="true" />
-                <element signature="e#24847#24848#0" expanded="true" />
+                <element signature="e#4165#4166#0" expanded="true" />
+                <element signature="e#4209#4210#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_tab.xml">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/kingz/view/animation/PropertyAnimationsActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="660">
-              <caret line="30" column="24" selection-start-line="30" selection-start-column="24" selection-end-line="30" selection-end-column="24" />
-            </state>
-          </provider>
-          <provider editor-type-id="android-designer2" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/fragments/CommonPageFragment.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="220">
-              <caret line="20" column="26" selection-start-line="20" selection-start-column="26" selection-end-line="20" selection-end-column="26" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/base/BaseFragment.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="968">
-              <caret line="53" column="17" selection-start-line="53" selection-start-column="17" selection-end-line="53" selection-end-column="17" />
+            <state>
+              <caret line="72" selection-start-line="72" selection-end-line="72" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -185,50 +111,59 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="layoutResourceFile_vertical" />
-        <option value="Class" />
         <option value="layoutResourceFile" />
+        <option value="Interface" />
+        <option value="Kotlin Interface" />
+        <option value="Class" />
+        <option value="layoutResourceFile_vertical" />
+        <option value="Kotlin Object" />
+        <option value="Kotlin File" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>testNative-lib</find>
-      <find>AppInfoUtils</find>
-      <find>getVersionCode</find>
-      <find>baidu_main</find>
-      <find>main.xml</find>
-      <find>ANIMATION_DURATION</find>
-      <find>backgroundId</find>
-      <find>getPackageApplication</find>
-      <find>companion</find>
+      <find>mEffects</find>
+      <find>makeFollowPath</find>
+      <find>DashPathEffect</find>
       <find>initView</find>
-      <find>2131231032</find>
-      <find>inflatedId</find>
-      <find>mInflatedId</find>
-      <find>replaceSelfWithView</find>
-      <find>MyShapeView</find>
-      <find>openFileInput</find>
-      <find>BufferedReader</find>
-      <find>.append</find>
-      <find>intoFileSavePage</find>
-      <find>.setAdapter</find>
-      <find>R.id.tb</find>
-      <find>WeakReference</find>
-      <find>MATCH_PARENT</find>
-      <find>newInstance</find>
-      <find>practiceLayoutRes</find>
-      <find>No adapter attached</find>
-      <find>onCreate</find>
-      <find>class.getSimpleName</find>
-      <find>getResources</find>
-      <find>pageModels</find>
+      <find>pageModel</find>
+      <find>onViewCreated</find>
+      <find>onCreateViewReady</find>
+      <find>RVAdapter</find>
+      <find>mRV</find>
+      <find>FragmentPagerAdapter</find>
+      <find>PracticeDrawActivity</find>
+      <find>canvas.drawBitmap</find>
+      <find>mPath</find>
+      <find>android:hardwareAccelerated</find>
+      <find>Prac</find>
+      <find>drawBitmap</find>
+      <find>getBitmapThumbnail</find>
+      <find>inSampleSize</find>
+      <find>reqWidth</find>
+      <find>getBitmapByteSize</find>
+      <find>ArrayObjectAdapter</find>
+      <find>AbsDetailsAuthView</find>
+      <find>动画</find>
+      <find>ValueAnimator</find>
+      <find>mListener</find>
+      <find>ObjectAnimator</find>
+      <find>·</find>
+      <find>animate</find>
+      <find>Animation</find>
+      <find>gitem</find>
     </findStrings>
     <replaceStrings>
       <replace>implementation</replace>
       <replace>com.module.views.progress.HorizontalProgressBarWithNumber</replace>
       <replace>zhi</replace>
       <replace>contentLayoutRes</replace>
+      <replace>paint</replace>
+      <replace>App.instance</replace>
+      <replace>CacheCenter</replace>
+      <replace>v</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -244,65 +179,64 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.support/support-annotations/27.1.1/46bebf5bd40146178cb33c7678f3782a09dea6e4/support-annotations-27.1.1-sources.jar!/android/support/annotation/VisibleForTesting.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/kingz/adapter/DemoRecyclerAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/kingz/adapter/MgPosterRecyclerAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/kingz/adapter/CommonRecyclerAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/kingz/adapter/MgPosterAdapter.java" />
-        <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.support/support-annotations/27.1.1/46bebf5bd40146178cb33c7678f3782a09dea6e4/support-annotations-27.1.1-sources.jar!/android/support/annotation/NonNull.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/kingz/posterfilm/MusicPosterPages.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/kingz/adapter/CommonAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/photoitem_recycler_view.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/kingz/adapter/CommonListAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/kingz/adapter/CommExpandableListAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/kingz/scroll/CustomScrollerItem.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/kingz/widgets/text/LogTextBox.java" />
-        <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.support/appcompat-v7/27.1.1/21d073509c5f8d25a1bf274067fa729a1fba8d75/appcompat-v7-27.1.1-sources.jar!/android/support/v7/widget/AppCompatTextView.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/kingz/widgets/text/EllipsizingTextView.java" />
-        <option value="$PROJECT_DIR$/app/build/generated/aidl_source_output_dir/ChengDuDebug/compileChengDuDebugAidl/out/com/kingz/ipcdemo/IBookManager.java" />
-        <option value="$PROJECT_DIR$/gradle.properties" />
-        <option value="$PROJECT_DIR$/config.gradle" />
-        <option value="$PROJECT_DIR$/build.gradle" />
-        <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/App.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/demo/draw/paint/ComposeShader.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/demo/draw/paint/Paint3ShaderView.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/kingz/customviews/ColorMartixImageView.java" />
+        <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/demo/draw/paint/Paint4XfermodeView.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/demo/draw/paint/Paint3ComposeShaderView.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/demo/draw/paint/Paint5XfermodeView.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/demo/draw/paint/Paint1ShaderView.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/demo/draw/paint/Paint6EffectView.kt" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/kingz/graphics/PathEffects.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_all_demo.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/api/AndroidDemoProvider.kt" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/kingz/pages/photo/PhotosActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/base/BaseFragment.kt" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/loading_status.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/common_recyclerview.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/load_status.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/app_floating_action_button.xml" />
-        <option value="$PROJECT_DIR$/app/build.gradle" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/kingz/basic_api/CanvasApiActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/kingz/view/shape/ShapeDrawOval.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/kingz/view/shape/ShapeHolder.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_file_pictures.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/kingz/file/FileAndPicTestACT.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/kingz/config/DemoSample.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/kingz/config/Sample.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/kingz/config/SampleGroup.java" />
-        <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/fragments/HomeBaseFragment.kt" />
-        <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/activity/practice_draw/Practice1DrawColorView.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_common_page.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/activity/practice_draw/PracticeDrawOneActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/assets/kingz.mainlist.json" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_live_tab.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_tab.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/fragments/home/HomeRecomFragment.kt" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/base/BaseFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/demo/draw/paint/Paint7PathEffect_1_View.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/demo/draw/base_api/8PracticePathView.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/demo/draw/base_api/`Practice8PathView`.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/demo/draw/base_api/1PracticeColorView.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/demo/draw/base_api/Practice1ColorView.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/demo/draw/base_api/3PracticeRectView.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/demo/draw/base_api/Practice3RectView.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/demo/draw/base_api/2PracticeCircleView.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/demo/draw/base_api/Practice2CircleView.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/demo/draw/base_api/4PracticePointView.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/demo/draw/base_api/Practice4PointView.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/demo/draw/base_api/5PracticeOvalView.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/demo/draw/base_api/Practice5OvalView.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/demo/draw/base_api/6PracticeLineView.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/demo/draw/base_api/Practice6LineView.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/demo/draw/base_api/7PracticeArcView.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/demo/draw/base_api/Practice7ArcView.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/fragments/home/SimplePageContentFragment.kt" />
         <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/fragments/CommonPageFragment.kt" />
-        <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/activity/practice_draw/PracticeDrawOneActivity.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/fragments/ExpandableDemoFragment.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/fragments/HomeBaseFragment.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/fragments/home/HomeLiveFragment.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/fragments/home/HomeRecomFragment.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/fragments/MagicIndicatorDemoFragment.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/demo/draw/paint/Paint2BitmapShaderView.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/base/BaseFragment.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/demo/draw/paint/Paint6NormalEffectView.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/demo/CardVerticalDemoFragment.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/assets/kingz.mainlist.json" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/demo_card_item.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/demo/draw/paint/Paint7PathEffectView.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/demo/draw/PracticeDrawActivity.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/demo/draw/BasePracticeView.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/demo/draw/paint/Paint10GetPathView.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/demo/draw/paint/Paint4ColorFilterView.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/demo/draw/paint/Paint9MaskFilterView.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/demo/draw/paint/Paint8ShadowLayerView.kt" />
+        <option value="$PROJECT_DIR$/uml/XGimi-4K DetailModle.puml" />
+        <option value="$PROJECT_DIR$/app/build.gradle" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/kingz/view/animation/PropertyAnimationsActivity.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="505" />
-    <option name="y" value="49" />
-    <option name="width" value="1354" />
-    <option name="height" value="873" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="1" />
+    <option name="width" value="1936" />
+    <option name="height" value="1047" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -313,7 +247,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -324,11 +258,6 @@
             <path>
               <item name="GreekMythologyRep" type="b2602c69:ProjectViewProjectNode" />
               <item name="GreekMythologyRep" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name=".gradle" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="GreekMythologyRep" type="b2602c69:ProjectViewProjectNode" />
-              <item name="GreekMythologyRep" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
             </path>
             <path>
@@ -350,7 +279,7 @@
               <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="kotlin" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="GreekMythologyRep" type="b2602c69:ProjectViewProjectNode" />
@@ -358,8 +287,8 @@
               <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="kotlin" type="462c0819:PsiDirectoryNode" />
-              <item name="ktx" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="GreekMythologyRep" type="b2602c69:ProjectViewProjectNode" />
@@ -367,32 +296,48 @@
               <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="kotlin" type="462c0819:PsiDirectoryNode" />
-              <item name="ktx" type="462c0819:PsiDirectoryNode" />
-              <item name="practice_draw" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="kingz" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="GreekMythologyRep" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="GreekMythologyRep" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="kingz" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="GreekMythologyRep" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Gradle: com.github.zeke:kangaroo:1.0.2@aar" type="70bed36:NamedLibraryElementNode" />
+              <item name="GreekMythologyRep" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="kingz" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+              <item name="animation" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="AndroidView" />
       <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="ChangesTree.GroupingKeys" value="directory&#10;module" />
-    <property name="DEBUGGABLE_DEVICE" value="huawei-nexus_6p-CVH7N16109003750" />
-    <property name="DEBUGGABLE_PROCESS" value="com.kingz.customdemo" />
+    <property name="DEBUGGABLE_DEVICE" value="agm-agm_x1-5dd1d693" />
+    <property name="DEBUGGABLE_PROCESS" value="com.demo.chengdu" />
     <property name="DEBUGGER_ID" value="Auto" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="5dd1d693" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2020-03-13T16:06:55.949Z" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SHOW_ALL_PROCESSES" value="false" />
     <property name="SearchEverywhereHistoryKey" value="deta&#9;FILE&#9;file://E:/androidCode/GithubCode/GreekMythologyRep/app/src/main/java/com/mplayer/exo_player/DetailPageActivty.java&#10;Binder&#9;FILE&#9;file://D:/Android/sdk/sources/android-22/android/os/Binder.java&#10;ActivityManagerService&#9;FILE&#9;file://D:/Android/sdk/sources/android-22/com/android/server/am/ActivityManagerService.java" />
@@ -402,12 +347,12 @@
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
     <property name="device.picker.selection" value="5dd1d693" />
     <property name="extract.method.default.visibility" value="private" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/src/main/res/layout" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/src/main/doc/paint" />
     <property name="not.eligible.for.single.variant.sync" value="true" />
     <property name="project.structure.last.edited" value="SDK Location" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="terminal" />
+    <property name="settings.editor.selected.configurable" value="settings.github" />
     <property name="show.migrate.to.gradle.popup" value="false" />
     <property name="sync.plugin.last.upgrade.timestamp" value="1519747059449" />
   </component>
@@ -416,28 +361,45 @@
     <option name="LAST_EDITED_SIGNING_CONFIG" value="ZekeSigned" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="com.zeke.ktx.demo.draw.paint" />
+      <recent name="com.zeke.ktx.demo.draw.base_api" />
+      <recent name="com.zeke.ktx.demo.modle" />
+      <recent name="com.zeke.ktx.demo.glide" />
+      <recent name="com.zeke.ktx.demo" />
+    </key>
+    <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="com.zeke.ktx.demo.draw.paint" />
+      <recent name="com.zeke.ktx.activity" />
+      <recent name="com.zeke.ktx.activity.glide" />
+      <recent name="com.zeke.ktx.util" />
+      <recent name="com.zeke.ktx.fragments" />
+    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.module.views" />
       <recent name="com.grovvy.pluginrepo" />
       <recent name="com" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="E:\androidCode\GithubCode\GreekMythologyRep\app\src\main\res\layout" />
-      <recent name="E:\androidCode\GithubCode\GreekMythologyRep\app\src\main\doc" />
-      <recent name="E:\androidCode\GithubCode\GreekMythologyRep\views-library\src\main\java\com\module\views" />
-      <recent name="E:\androidCode\GithubCode\GreekMythologyRep\views-library\src\main\res\drawable" />
-      <recent name="E:\androidCode\GithubCode\GreekMythologyRep\app\src\main\res\drawable-mdpi" />
+      <recent name="E:\androidCode\GithubCode\GreekMythologyRep\app\src\main\doc\paint" />
+      <recent name="E:\androidCode\GithubCode\GreekMythologyRep\app\src\main\res\drawable" />
+      <recent name="E:\androidCode\GithubCode\GreekMythologyRep\app\src\main\doc\draw" />
+      <recent name="E:\androidCode\GithubCode\GreekMythologyRep\app\src\main\kotlin\com\zeke\ktx\cache" />
+      <recent name="E:\androidCode\GithubCode\GreekMythologyRep\app\src\main\kotlin\com\zeke\ktx\provider" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.zeke.ktx.rxjava" />
+      <recent name="com.kingz.net.retrofit.mannager" />
       <recent name="com.zeke.ktx.activity.practice_draw" />
       <recent name="com.kingz.utils" />
       <recent name="com.module.views.progress" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\androidCode\GithubCode\GreekMythologyRep\app\src\main\doc\paint" />
+      <recent name="E:\androidCode\GithubCode\GreekMythologyRep\app\src\main\doc\draw" />
+      <recent name="E:\androidCode\GithubCode\GreekMythologyRep\app\src\main\doc" />
+      <recent name="E:\androidCode\GithubCode\GreekMythologyRep\app\src\main\doc\porterduffxfer" />
       <recent name="E:\androidCode\GithubCode\GreekMythologyRep\views-library" />
-      <recent name="E:\androidCode\GithubCode\GreekMythologyRep\views-library\src\main\res\drawable" />
-      <recent name="E:\androidCode\GithubCode\GreekMythologyRep\pluginrepo\src\main\grovvy\com" />
-      <recent name="E:\androidCode\GithubCode\GreekMythologyRep\plugin\src\main\java" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -1011,76 +973,6 @@
       <option name="presentableId" value="Default" />
       <updated>1468250537323</updated>
     </task>
-    <task id="LOCAL-00001" summary="update gitIgnor file">
-      <created>1530541946680</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1530541946680</updated>
-    </task>
-    <task id="LOCAL-00002" summary="update gitIgnor file">
-      <created>1530543344997</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1530543344997</updated>
-    </task>
-    <task id="LOCAL-00003" summary="adjust targetSdkVersion from 26 to 22">
-      <created>1530543436914</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1530543436914</updated>
-    </task>
-    <task id="LOCAL-00004" summary="title: [gradleConfig]  add ’apply from‘ in build.gradle&#10;reason: 模块化gradle">
-      <created>1531045066277</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1531045066277</updated>
-    </task>
-    <task id="LOCAL-00005" summary="title: add keep.xml&#10;reason: buildTypes 打开了 shrinkResources">
-      <created>1531045142440</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1531045142440</updated>
-    </task>
-    <task id="LOCAL-00006" summary="title: update setting.gradle&#10;reason: 添加一些gradle的配置模块">
-      <created>1531066623569</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1531066623569</updated>
-    </task>
-    <task id="LOCAL-00007" summary="title(Gradle Plugin): add gradle plugin demo&#10;reason: gradle practice">
-      <created>1531411703292</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1531411703292</updated>
-    </task>
-    <task id="LOCAL-00008" summary="title(Gradle Log): print gradle file init logs&#10;reason: show life cycle">
-      <created>1531411827110</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1531411827110</updated>
-    </task>
-    <task id="LOCAL-00009" summary="title(Gradle Plugin): use custom plugin in moudle[:app]&#10;reason: use  custom plugin.">
-      <created>1531412389143</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1531412389143</updated>
-    </task>
-    <task id="LOCAL-00010" summary="title(Gradle Plugin):update explain info&#10;reason: none">
-      <created>1531413466593</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1531413466593</updated>
-    </task>
     <task id="LOCAL-00011" summary="提升项目编译版本为25，删除本地引用的V7和V4包，使用compile的方式远程依赖。&#10;整理有问题的类">
       <created>1541511716556</created>
       <option name="number" value="00011" />
@@ -1277,7 +1169,154 @@
       <option name="project" value="LOCAL" />
       <updated>1583043455951</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="title(deprecated): deprecated to old MainPage Demo Bean.&#10;reason: deprecated&#10;effect: none.">
+      <created>1583160186202</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1583160186202</updated>
+    </task>
+    <task id="LOCAL-00040" summary="title(manifest): add GoogleAppIndexingWarning ignore attribute.&#10;reason: add manifest attribute.&#10;effect: none.">
+      <created>1583160302926</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1583160302926</updated>
+    </task>
+    <task id="LOCAL-00041" summary="title(add layout): 新增三个独立view的layout文件，便于viewstub引用。&#10;reason: update&#10;effect: none.">
+      <created>1583160811189</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1583160811189</updated>
+    </task>
+    <task id="LOCAL-00042" summary="title(update): add hub_white color.&#10;reason: update&#10;effect: none.">
+      <created>1583161004485</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1583161004485</updated>
+    </task>
+    <task id="LOCAL-00043" summary="title(update): add demo config fake data.&#10;reason: update&#10;effect: none.">
+      <created>1583161105117</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1583161105117</updated>
+    </task>
+    <task id="LOCAL-00044" summary="title(splash): 启动页优化&#10;reason: update&#10;effect: none.">
+      <created>1583163447664</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1583163447664</updated>
+    </task>
+    <task id="LOCAL-00045" summary="title(update): add practiceDrawPage.&#10;reason: update&#10;effect: none.">
+      <created>1583163702761</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1583163702761</updated>
+    </task>
+    <task id="LOCAL-00046" summary="title(update): add practice 1~4 view.&#10;reason: update&#10;effect: none.">
+      <created>1583165034180</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1583165034180</updated>
+    </task>
+    <task id="LOCAL-00047" summary="title(update): 给app的伴随对象中的变量使用@JvmField  是之对外暴露.&#10;reason: update&#10;effect: none.">
+      <created>1583246532123</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1583246532123</updated>
+    </task>
+    <task id="LOCAL-00048" summary="title(update): add practiceDraw code.&#10;reason: update&#10;effect: none.">
+      <created>1583248754294</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1583248754294</updated>
+    </task>
+    <task id="LOCAL-00049" summary="title(update): update retrofit2 &amp; rxJava code.&#10;reason: update&#10;effect: none.">
+      <created>1583331441531</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1583331441531</updated>
+    </task>
+    <task id="LOCAL-00050" summary="title(delete): delete Old GlobalCacheCenter modle.&#10;reason: Replace by AppCacheManager.&#10;effect: none.">
+      <created>1583847101374</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1583847101374</updated>
+    </task>
+    <task id="LOCAL-00051" summary="title(add): add AppCacheManager modle.&#10;reason: update&#10;effect: none.">
+      <created>1583847137530</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1583847137530</updated>
+    </task>
+    <task id="LOCAL-00052" summary="title(update): update gitignore.&#10;reason: update&#10;effect: none.">
+      <created>1583847227727</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1583847227727</updated>
+    </task>
+    <task id="LOCAL-00053" summary="title(update): Init CacheCenter Revision.&#10;reason: update&#10;effect: none.">
+      <created>1583847582464</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1583847582465</updated>
+    </task>
+    <task id="LOCAL-00054" summary="title(update): Change ISwitcher java annotation Retention to kotlin.annotation.Retention.&#10;reason: update&#10;effect: none.">
+      <created>1584022248680</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1584022248680</updated>
+    </task>
+    <task id="LOCAL-00055" summary="title(update): add glide test code.&#10;reason: update&#10;effect: none.">
+      <created>1584028475140</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1584028475140</updated>
+    </task>
+    <task id="LOCAL-00056" summary="title(update): Add Card demo style.&#10;reason: update&#10;effect: none.">
+      <created>1584118747975</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1584118747976</updated>
+    </task>
+    <task id="LOCAL-00057" summary="title(update): Update custom draw practice.&#10;reason: update&#10;effect: none.">
+      <created>1584278505420</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1584278505421</updated>
+    </task>
+    <task id="LOCAL-00058" summary="title(update): close hardwareAccelerated in DrawPracticeActivity.&#10;reason: update&#10;effect: none.">
+      <created>1584459771264</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1584459771265</updated>
+    </task>
+    <task id="LOCAL-00059" summary="title(update): update gimi-4k uml file&#10;reason: update&#10;effect: none.">
+      <created>1584459787370</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1584459787370</updated>
+    </task>
+    <option name="localTasksCounter" value="60" />
     <servers />
   </component>
   <component name="TodoView" selected-index="1">
@@ -1290,50 +1329,50 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="1" y="30" width="1936" height="724" extended-state="0" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4861111" visible="true" weight="0.17697228" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.48997772" visible="true" weight="0.16897655" />
       <window_info id="Structure" order="1" weight="0.25" />
-      <window_info id="Captures" order="2" sideWeight="0.5138889" side_tool="true" visible="true" weight="0.17697228" />
+      <window_info id="Captures" order="2" sideWeight="0.5100223" side_tool="true" weight="0.17697228" />
       <window_info id="Image Layers" order="3" />
       <window_info id="Capture Tool" order="4" />
       <window_info id="Favorites" order="5" side_tool="true" weight="0.32976446" />
       <window_info id="Palette&#9;" order="6" />
-      <window_info id="Resources Explorer" order="7" />
+      <window_info id="Resources Explorer" order="7" weight="0.21901709" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49785408" weight="0.32628062" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49260274" weight="0.5178174" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.24" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.65618336" weight="0.42650333" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49260274" weight="0.3051225" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.1792873" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49946696" weight="0.33184856" />
       <window_info anchor="bottom" id="Gradle Console" order="7" sideWeight="0.34136987" side_tool="true" weight="0.2865297" />
-      <window_info anchor="bottom" id="Android Profiler" order="8" show_stripe_button="false" sideWeight="0.49946696" weight="0.32962137" />
+      <window_info anchor="bottom" id="Android Profiler" order="8" show_stripe_button="false" sideWeight="0.4989339" weight="0.83184856" />
       <window_info anchor="bottom" id="Android Monitor" order="9" sideWeight="0.49785867" weight="0.4556541" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="10" sideWeight="0.49946696" visible="true" weight="0.83964366" />
-      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.1391258" side_tool="true" weight="0.34823528" />
-      <window_info anchor="bottom" id="Logcat" order="12" sideWeight="0.49626866" weight="0.33073497" />
-      <window_info anchor="bottom" id="Version Control" order="13" sideWeight="0.4968017" weight="0.311804" />
+      <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.4989339" visible="true" weight="0.94699645" />
+      <window_info active="true" anchor="bottom" id="Event Log" order="11" sideWeight="0.5010661" side_tool="true" visible="true" weight="0.94699645" />
+      <window_info anchor="bottom" id="Logcat" order="12" sideWeight="0.49626866" weight="0.28607276" />
+      <window_info anchor="bottom" id="Version Control" order="13" sideWeight="0.4968017" weight="0.6173526" />
       <window_info anchor="bottom" id="Messages" order="14" sideWeight="0.65863013" weight="0.2625571" />
-      <window_info anchor="bottom" id="Build" order="15" sideWeight="0.8608742" weight="0.24721603" />
+      <window_info anchor="bottom" id="Build" order="15" sideWeight="0.8598081" weight="0.2594655" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="PlantUML" order="3" />
+      <window_info anchor="right" id="PlantUML" order="3" weight="0.45042643" />
       <window_info anchor="right" id="Gradle" order="4" sideWeight="0.49543378" weight="0.3067138" />
       <window_info anchor="right" id="Build Variants" order="5" sideWeight="0.5045662" weight="0.23452055" />
       <window_info anchor="right" id="DrawableViewer" order="6" weight="0.32908705" />
       <window_info anchor="right" id="Capture Analysis" order="7" />
       <window_info anchor="right" id="Flutter Inspector" order="8" />
       <window_info anchor="right" id="Flutter Outline" order="9" />
-      <window_info anchor="right" id="Word Book" order="10" side_tool="true" />
+      <window_info anchor="right" id="Word Book" order="10" side_tool="true" weight="0.32995737" />
       <window_info anchor="right" id="Android Model" order="11" sideWeight="0.5045662" side_tool="true" weight="0.32976446" />
       <window_info anchor="right" id="Theme Preview" order="12" />
       <window_info anchor="right" id="Designer" order="13" />
-      <window_info anchor="right" id="Device File Explorer" order="14" side_tool="true" weight="0.32976446" />
+      <window_info anchor="right" id="Device File Explorer" order="14" side_tool="true" weight="0.43435448" />
       <window_info anchor="right" id="Preview" order="15" weight="0.6070664" />
-      <window_info anchor="right" id="Drawable Viewer" order="16" />
-      <window_info anchor="right" id="Assistant" order="17" weight="0.5870727" />
+      <window_info anchor="right" id="Drawable Viewer" order="16" weight="0.32995737" />
+      <window_info anchor="right" id="Assistant" order="17" weight="0.44136462" />
     </layout>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -1388,43 +1427,37 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="SHOW_UNVERSIONED_FILES_WHILE_COMMIT" value="false" />
-    <MESSAGE value="转移SliderDeleteListView到views-library中" />
-    <MESSAGE value="转移ViewTools到views-library中" />
-    <MESSAGE value="转移BorderTextView到views-library中" />
-    <MESSAGE value="删除无效的控件" />
-    <MESSAGE value="删除重复的signingConfigs block" />
-    <MESSAGE value="删除无效文件" />
-    <MESSAGE value="增加UI工具类" />
-    <MESSAGE value="更新build.gradle的配置版本到AGP3.0.1" />
-    <MESSAGE value="新增反射工具类方法" />
-    <MESSAGE value="更新recyclerView的布局设置" />
-    <MESSAGE value="1.修改recyclerdemo的布局为ConstraintLayout&#10;2.启动页面增加 borderlessButtonStyle" />
-    <MESSAGE value="view-library的工具类优化" />
-    <MESSAGE value="title: change code of SoapFlingActivity.&#10;reason: onTouch learn." />
-    <MESSAGE value="title(update): 完善“扔肥皂”的自定义View。&#10;reason: learn.&#10;effect: none." />
-    <MESSAGE value="title(update): move custom progressview from app to view-library.&#10;reason: refactor&#10;effect: none." />
-    <MESSAGE value="title(update): add bmob service support.&#10;reason: use service.&#10;effect: none." />
-    <MESSAGE value="title(update): add okhttp 3.X manager.&#10;reason: update&#10;effect: none." />
-    <MESSAGE value="title(update): 更新新版本播放器代码&#10;reason: update&#10;effect: none." />
-    <MESSAGE value="回复向下箭头图标" />
-    <MESSAGE value="title(update): 更改顶级适配器的代码.&#10;reason: 抽离顶级公共适配器用法。&#10;effect: none." />
-    <MESSAGE value="title(update): 将CommonViewHolder改为CommonListAdapter的内部类。&#10;reason: update&#10;effect: none." />
     <MESSAGE value="title(update): 调整部分文件的文档注释和继承类。&#10;reason: update&#10;effect: none." />
     <MESSAGE value="title(update): delete unused file.&#10;reason: unused.&#10;effect: none." />
     <MESSAGE value="title(doc): add jetpack pic.&#10;reason: update&#10;effect: none." />
     <MESSAGE value="title(update): 替换部分类的BaseActivity.&#10;reason: 替换为kotlin的代码&#10;effect: none." />
-    <option name="LAST_COMMIT_MESSAGE" value="title(update): 替换部分类的BaseActivity.&#10;reason: 替换为kotlin的代码&#10;effect: none." />
+    <MESSAGE value="title(deprecated): deprecated to old MainPage Demo Bean.&#10;reason: deprecated&#10;effect: none." />
+    <MESSAGE value="title(manifest): add GoogleAppIndexingWarning ignore attribute.&#10;reason: add manifest attribute.&#10;effect: none." />
+    <MESSAGE value="title(add layout): 新增三个独立view的layout文件，便于viewstub引用。&#10;reason: update&#10;effect: none." />
+    <MESSAGE value="title(update): add hub_white color.&#10;reason: update&#10;effect: none." />
+    <MESSAGE value="title(update): add demo config fake data.&#10;reason: update&#10;effect: none." />
+    <MESSAGE value="title(splash): 启动页优化&#10;reason: update&#10;effect: none." />
+    <MESSAGE value="title(update): add practiceDrawPage.&#10;reason: update&#10;effect: none." />
+    <MESSAGE value="title(update): add practice 1~4 view.&#10;reason: update&#10;effect: none." />
+    <MESSAGE value="title(update): 给app的伴随对象中的变量使用@JvmField  是之对外暴露.&#10;reason: update&#10;effect: none." />
+    <MESSAGE value="title(update): add practiceDraw code.&#10;reason: update&#10;effect: none." />
+    <MESSAGE value="title(update): update retrofit2 &amp; rxJava code.&#10;reason: update&#10;effect: none." />
+    <MESSAGE value="title(delete): delete Old GlobalCacheCenter modle.&#10;reason: Replace by AppCacheManager.&#10;effect: none." />
+    <MESSAGE value="title(add): add AppCacheManager modle.&#10;reason: update&#10;effect: none." />
+    <MESSAGE value="title(update): update gitignore.&#10;reason: update&#10;effect: none." />
+    <MESSAGE value="title(update): Init CacheCenter Revision.&#10;reason: update&#10;effect: none." />
+    <MESSAGE value="title(update): Change ISwitcher java annotation Retention to kotlin.annotation.Retention.&#10;reason: update&#10;effect: none." />
+    <MESSAGE value="title(update): add glide test code.&#10;reason: update&#10;effect: none." />
+    <MESSAGE value="title(update): Add Card demo style.&#10;reason: update&#10;effect: none." />
+    <MESSAGE value="title(update): Update custom draw practice.&#10;reason: update&#10;effect: none." />
+    <MESSAGE value="title(update): close hardwareAccelerated in DrawPracticeActivity.&#10;reason: update&#10;effect: none." />
+    <MESSAGE value="title(update): update gimi-4k uml file&#10;reason: update&#10;effect: none." />
+    <option name="LAST_COMMIT_MESSAGE" value="title(update): update gimi-4k uml file&#10;reason: update&#10;effect: none." />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/SplashActivity.java</url>
-          <line>60</line>
-          <properties />
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/kingz/scroll/DragAndFlingView.java</url>
           <line>218</line>
@@ -1510,28 +1543,144 @@
           <option name="timeStamp" value="25" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/activity/practice_draw/Practice1DrawColorView.java</url>
-          <line>11</line>
+          <url>jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.xul/cache/1.0.0/dd26c2ce6d1515ee4a5c0a592497b4ce015d4f94/cache-1.0.0-sources.jar!/com/github/xulcache/cacheimplement/FileCache.java</url>
+          <line>321</line>
           <properties />
-          <option name="timeStamp" value="30" />
+          <option name="timeStamp" value="37" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.xul/cache/1.0.0/dd26c2ce6d1515ee4a5c0a592497b4ce015d4f94/cache-1.0.0-sources.jar!/com/github/xulcache/CacheDomain.java</url>
+          <line>222</line>
+          <properties />
+          <option name="timeStamp" value="39" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.xul/cache/1.0.0/dd26c2ce6d1515ee4a5c0a592497b4ce015d4f94/cache-1.0.0-sources.jar!/com/github/xulcache/CacheDomain.java</url>
+          <line>230</line>
+          <properties />
+          <option name="timeStamp" value="40" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.xul/cache/1.0.0/dd26c2ce6d1515ee4a5c0a592497b4ce015d4f94/cache-1.0.0-sources.jar!/com/github/xulcache/CacheDomain.java</url>
+          <line>218</line>
+          <properties />
+          <option name="timeStamp" value="41" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.xul/cache/1.0.0/dd26c2ce6d1515ee4a5c0a592497b4ce015d4f94/cache-1.0.0-sources.jar!/com/github/xulcache/cacheimplement/FileCache.java</url>
+          <line>118</line>
+          <properties />
+          <option name="timeStamp" value="42" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.xul/cache/1.0.0/dd26c2ce6d1515ee4a5c0a592497b4ce015d4f94/cache-1.0.0-sources.jar!/com/github/xulcache/CacheDomain.java</url>
+          <line>89</line>
+          <properties />
+          <option name="timeStamp" value="45" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.xul/cache/1.0.0/dd26c2ce6d1515ee4a5c0a592497b4ce015d4f94/cache-1.0.0-sources.jar!/com/github/xulcache/stream/XulMemoryOutputStream.java</url>
+          <line>108</line>
+          <properties />
+          <option name="timeStamp" value="47" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.xul/cache/1.0.0/dd26c2ce6d1515ee4a5c0a592497b4ce015d4f94/cache-1.0.0-sources.jar!/com/github/xulcache/stream/XulMemoryOutputStream.java</url>
+          <line>115</line>
+          <properties />
+          <option name="timeStamp" value="48" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.xul/cache/1.0.0/dd26c2ce6d1515ee4a5c0a592497b4ce015d4f94/cache-1.0.0-sources.jar!/com/github/xulcache/stream/XulMemoryOutputStream.java</url>
+          <line>124</line>
+          <properties />
+          <option name="timeStamp" value="49" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://D:/Android/sdk/sources/android-27/android/view/ViewGroup.java</url>
+          <line>4697</line>
+          <properties />
+          <option name="timeStamp" value="63" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.zeke/kangaroo/1.0.2/3ca3787a9126e42acb407397513447bc8ee2199a/kangaroo-1.0.2-sources.jar!/com/zeke/kangaroo/utils/BitMapUtils.java</url>
+          <line>1106</line>
+          <properties />
+          <option name="timeStamp" value="68" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.zeke/kangaroo/1.0.2/3ca3787a9126e42acb407397513447bc8ee2199a/kangaroo-1.0.2-sources.jar!/com/zeke/kangaroo/utils/BitMapUtils.java</url>
+          <line>1074</line>
+          <properties />
+          <option name="timeStamp" value="72" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.zeke/kangaroo/1.0.2/3ca3787a9126e42acb407397513447bc8ee2199a/kangaroo-1.0.2-sources.jar!/com/zeke/kangaroo/utils/BitMapUtils.java</url>
+          <line>1080</line>
+          <properties />
+          <option name="timeStamp" value="73" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="kotlin-line">
-          <url>file://$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/fragments/CommonPageFragment.kt</url>
-          <line>79</line>
+          <url>file://$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/activity/glide/GlideDemoView.kt</url>
+          <line>35</line>
           <properties />
-          <option name="timeStamp" value="29" />
+          <option name="timeStamp" value="50" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="kotlin-line">
-          <url>file://$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/activity/practice_draw/PracticeDrawOneActivity.kt</url>
-          <line>38</line>
+          <url>file://$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/activity/glide/GlideDemoView.kt</url>
+          <line>24</line>
           <properties />
-          <option name="timeStamp" value="31" />
+          <option name="timeStamp" value="57" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/demo/draw/base_api/Practice2CircleView.kt</url>
+          <line>16</line>
+          <properties />
+          <option name="timeStamp" value="58" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/demo/draw/base_api/Practice2CircleView.kt</url>
+          <line>41</line>
+          <properties />
+          <option name="timeStamp" value="66" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/demo/draw/paint/Paint9MaskFilterView.kt</url>
+          <line>47</line>
+          <properties />
+          <option name="timeStamp" value="71" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-field">
+          <url>jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.xul/cache/1.0.0/dd26c2ce6d1515ee4a5c0a592497b4ce015d4f94/cache-1.0.0-sources.jar!/com/github/xulcache/stream/XulMemoryOutputStream.java</url>
+          <line>110</line>
+          <properties field="_dataBuf" />
+          <option name="timeStamp" value="38" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="evaluateExpression">
+      <expression>
+        <expression-string>MeasureSpec.AT_MOST</expression-string>
+        <language-id>kotlin</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>holder.itemView</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>cardItemData.content</expression-string>
+        <language-id>kotlin</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>cardItemData.content.parent</expression-string>
+        <language-id>kotlin</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>context.getResources()</expression-string>
         <language-id>JAVA</language-id>
@@ -1560,369 +1709,386 @@
         <custom-info>import com.zhy.autolayout.AutoFrameLayout</custom-info>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
-      <expression>
-        <expression-string>rootView.findViewById(R.id.load_state)</expression-string>
-        <language-id>kotlin</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/Pictures/bing/837C2720B021D8BA0D59D128D66D5451.jpg">
+    <entry file="file://$PROJECT_DIR$/app/src/main/doc/paint/PathDashPathEffect.Style.jpg">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://D:/Android/sdk/sources/android-27/android/content/ContextWrapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="282">
-          <caret line="198" column="28" selection-start-line="198" selection-start-column="28" selection-end-line="198" selection-end-column="28" />
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/app/src/main/doc/fragment_lifecycle.png">
+      <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.zeke/kangaroo/1.0.2/3ca3787a9126e42acb407397513447bc8ee2199a/kangaroo-1.0.2-sources.jar!/com/zeke/kangaroo/utils/FileUtils.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/relativelayout_page.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="226">
-          <caret line="867" column="40" lean-forward="true" selection-start-line="867" selection-start-column="40" selection-end-line="867" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_file_pictures.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="37" lean-forward="true" selection-start-line="37" selection-end-line="37" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/kingz/file/FileAndPicTestACT.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="142">
-          <caret line="54" column="10" lean-forward="true" selection-start-line="54" selection-start-column="10" selection-end-line="54" selection-end-column="10" />
+        <state relative-caret-position="22">
+          <caret line="33" column="32" selection-start-line="33" selection-start-column="32" selection-end-line="33" selection-end-column="32" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#2091#2112#0" expanded="true" />
           </folding>
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/kingz/pages/SaveDataByFilePage.java" />
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/kingz/pages/Test11.java" />
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/raspberry_pi_logo.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/kingz/config/DemoSample.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="9" column="11" selection-start-line="9" selection-start-column="11" selection-end-line="9" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/kingz/config/Sample.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="12" column="29" selection-start-line="12" selection-start-column="29" selection-end-line="12" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/kingz/config/SampleGroup.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="11" column="32" selection-start-line="11" selection-start-column="32" selection-end-line="11" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4180">
-          <caret line="220" column="26" selection-start-line="220" selection-start-column="26" selection-end-line="220" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/kingz/newfeatures/SlideAnim.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="25" column="37" selection-start-line="25" selection-start-column="37" selection-end-line="25" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_slide_anim.xml">
-      <provider selected="true" editor-type-id="text-editor" />
       <provider editor-type-id="android-designer2" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/kingz/newfeatures/SharedAnim.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="17" column="35" selection-start-line="17" selection-start-column="35" selection-end-line="17" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/kingz/newfeatures/FadeAnim.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.support/appcompat-v7/27.1.1/21d073509c5f8d25a1bf274067fa729a1fba8d75/appcompat-v7-27.1.1-sources.jar!/android/support/v7/app/AppCompatActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="484">
-          <caret line="60" column="13" selection-start-line="60" selection-start-column="13" selection-end-line="60" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/view/LoadStatusView.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="23" column="6" selection-start-line="23" selection-start-column="6" selection-end-line="23" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/view/LogininView.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="13" column="6" selection-start-line="13" selection-start-column="6" selection-end-line="13" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/MainActivity.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="236">
-          <caret line="27" column="38" lean-forward="true" selection-start-line="27" selection-start-column="38" selection-end-line="27" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-      <provider editor-type-id="android-designer2" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/fragments/HomeBaseFragment.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="227">
-          <caret line="40" column="59" selection-start-line="40" selection-start-column="59" selection-end-line="40" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/kingz/architecture/viewmodels/NameViewModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/kingz/communicat/HMLActuivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1706">
-          <caret line="27" column="45" lean-forward="true" selection-start-line="27" selection-start-column="45" selection-end-line="27" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/kingz/db/ConfigColums.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/apiDemo/AlarmClock_Service.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="282">
-          <caret line="44" column="13" selection-start-line="44" selection-start-column="13" selection-end-line="44" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/kingz/basic_api/CanvasApiActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="814">
-          <caret line="49" column="17" selection-start-line="49" selection-start-column="10" selection-end-line="49" selection-end-column="17" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Android/sdk/sources/android-27/java/util/List.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="11924">
-          <caret line="565" column="6" selection-start-line="565" selection-start-column="6" selection-end-line="565" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/apiDemo/AlarmServiceActivity.java">
+    <entry file="file://D:/Android/sdk/sources/android-27/com/android/settingslib/graph/BatteryMeterDrawableBase.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="286">
-          <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/assets/kingz.mainlist.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="314">
-          <caret line="201" column="39" lean-forward="true" selection-start-line="201" selection-start-column="39" selection-end-line="201" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_live_tab.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="31" column="48" selection-start-line="31" selection-start-column="48" selection-end-line="31" selection-end-column="48" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_common_page.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="6" column="20" selection-start-line="6" selection-start-column="20" selection-end-line="6" selection-end-column="20" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2" />
-    </entry>
-    <entry file="file://D:/Android/sdk/sources/android-27/android/view/ViewGroup.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="3936" selection-start-line="3936" selection-end-line="3936" />
-          <folding>
-            <element signature="e#183428#183429#0" expanded="true" />
-            <element signature="e#183462#183463#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/kingz/GreekLifeCycle.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="259">
-          <caret line="47" column="49" lean-forward="true" selection-start-line="47" selection-start-column="49" selection-end-line="47" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Android/sdk/sources/android-27/android/view/View.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="3577" selection-start-line="3577" selection-end-line="3577" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Android/sdk/sources/android-22/android/view/View.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="3576" column="51" selection-start-line="3576" selection-start-column="51" selection-end-line="3576" selection-end-column="51" />
+          <caret line="85" column="45" lean-forward="true" selection-start-line="85" selection-start-column="45" selection-end-line="85" selection-end-column="45" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="294">
+          <caret line="375" column="35" selection-start-line="375" selection-start-column="35" selection-end-line="375" selection-end-column="35" />
+        </state>
+      </provider>
       <provider editor-type-id="android-manifest" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/arduino.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://D:/Android/sdk/sources/android-27/android/graphics/Canvas.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="15" column="53" selection-start-line="15" selection-start-column="53" selection-end-line="15" selection-end-column="53" />
+        <state relative-caret-position="241">
+          <caret line="618" column="16" selection-start-line="618" selection-start-column="16" selection-end-line="618" selection-end-column="16" />
         </state>
       </provider>
     </entry>
-    <entry file="file://D:/Android/sdk/sources/android-27/android/content/Context.java">
+    <entry file="file://D:/Android/sdk/sources/android-27/android/graphics/Bitmap.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="442" column="30" selection-start-line="442" selection-start-column="30" selection-end-line="442" selection-end-column="30" />
+        <state relative-caret-position="279">
+          <caret line="285" column="14" selection-start-line="285" selection-start-column="14" selection-end-line="285" selection-end-column="14" />
           <folding>
-            <element signature="e#23482#23483#0" expanded="true" />
-            <element signature="e#23536#23537#0" expanded="true" />
+            <element signature="e#10596#10597#0" expanded="true" />
+            <element signature="e#10656#10657#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/activity/practice_draw/Practice1DrawColorView.java">
+    <entry file="file://D:/Android/sdk/sources/android-27/android/graphics/Paint.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
+        <state relative-caret-position="249">
+          <caret line="2592" column="16" selection-start-line="2592" selection-start-column="16" selection-end-line="2592" selection-end-column="16" />
           <folding>
-            <element signature="e#318#319#0" expanded="true" />
-            <element signature="e#348#349#0" expanded="true" />
+            <element signature="e#31188#31189#0" expanded="true" />
+            <element signature="e#31244#31245#0" expanded="true" />
+            <element signature="e#50155#50156#0" expanded="true" />
+            <element signature="e#50207#50208#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/base/BaseFragment.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/demo/draw/PracticeDrawActivity.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="24" column="50" selection-start-line="24" selection-start-column="38" selection-end-line="24" selection-end-column="50" />
+        <state relative-caret-position="358">
+          <caret line="37" column="54" selection-start-line="37" selection-start-column="51" selection-end-line="37" selection-end-column="54" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/SplashActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/bg3.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/cat_m.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/demo/draw/paint/Paint6NormalEffectView.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="60" selection-start-line="60" selection-end-line="60" />
+        <state relative-caret-position="804">
+          <caret line="49" selection-start-line="49" selection-end-line="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/demo/draw/paint/Paint7PathEffectView.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="351">
+          <caret line="85" column="5" lean-forward="true" selection-start-line="85" selection-start-column="5" selection-end-line="85" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/zy_smile.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/demo/draw/base_api/Practice2CircleView.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="836">
+          <caret line="44" column="1" lean-forward="true" selection-start-line="44" selection-start-column="1" selection-end-line="44" selection-end-column="1" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="628">
-          <caret line="192" column="19" lean-forward="true" selection-start-line="192" selection-start-column="19" selection-end-line="192" selection-end-column="19" />
+        <state relative-caret-position="237">
+          <caret line="141" column="17" selection-start-line="141" selection-start-column="17" selection-end-line="141" selection-end-column="17" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/activity/practice_draw/PracticeDrawOneActivity.kt">
+    <entry file="file://D:/Android/sdk/sources/android-27/android/support/v17/leanback/widget/ArrayObjectAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="33">
-          <caret line="20" column="32" selection-start-line="20" selection-start-column="32" selection-end-line="20" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/local.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="11" selection-start-line="11" selection-end-line="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Android/sdk/platforms/android-27/data/res/values/colors.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="770">
-          <caret line="35" selection-start-line="35" selection-end-line="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.support/design/27.1.1/6e10c7f954f63690f7846fb22352375cf1b9fbb4/design-27.1.1-sources.jar!/android/support/design/widget/TabLayout.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="14256">
-          <caret line="739" column="48" selection-start-line="739" selection-start-column="37" selection-end-line="739" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/fragments/home/HomeRecomFragment.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="704">
-          <caret line="42" column="72" selection-start-line="42" selection-start-column="72" selection-end-line="42" selection-end-column="72" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.support/recyclerview-v7/27.1.1/ad225a74247e675db0b05ea4f8b17202acbb7f9d/recyclerview-v7-27.1.1-sources.jar!/android/support/v7/widget/RecyclerView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="10868">
-          <caret line="584" column="11" selection-start-line="584" selection-start-column="11" selection-end-line="584" selection-end-column="11" />
+        <state>
           <folding>
-            <element signature="e#24812#24813#0" expanded="true" />
-            <element signature="e#24847#24848#0" expanded="true" />
+            <element signature="e#0#10139#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_tab.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/demo/draw/paint/Paint9MaskFilterView.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="660">
-          <caret line="30" column="24" selection-start-line="30" selection-start-column="24" selection-end-line="30" selection-end-column="24" />
+        <state relative-caret-position="836">
+          <caret line="44" column="61" selection-start-line="44" selection-start-column="61" selection-end-line="44" selection-end-column="61" />
         </state>
       </provider>
-      <provider editor-type-id="android-designer2" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/fragments/CommonPageFragment.kt">
+    <entry file="file://$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/demo/draw/paint/Paint8ShadowLayerView.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="26" column="3" selection-start-line="26" selection-start-column="3" selection-end-line="26" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.zeke/kangaroo/1.0.2/3ca3787a9126e42acb407397513447bc8ee2199a/kangaroo-1.0.2-sources.jar!/com/zeke/kangaroo/utils/BitMapUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1980">
+          <caret line="128" column="21" selection-start-line="128" selection-start-column="21" selection-end-line="128" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/demo/draw/BasePracticeView.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="13" column="8" selection-start-line="13" selection-start-column="8" selection-end-line="13" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Android/sdk/sources/android-27/android/graphics/BitmapFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="11594">
+          <caret line="557" column="25" selection-start-line="557" selection-start-column="25" selection-end-line="557" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/demo/draw/paint/Paint5XfermodeView.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="20" column="25" selection-start-line="20" selection-start-column="7" selection-end-line="20" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/demo/draw/paint/Paint4ColorFilterView.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="726">
+          <caret line="38" column="75" selection-start-line="38" selection-start-column="67" selection-end-line="38" selection-end-column="75" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/demo/draw/paint/Paint10GetPathView.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="638">
+          <caret line="37" selection-start-line="37" selection-end-line="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/uml/XGimi-4K DetailModle.puml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="66">
+          <caret line="3" column="30" lean-forward="true" selection-start-line="3" selection-start-column="30" selection-end-line="3" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-660">
+          <caret line="3" column="31" selection-start-line="3" selection-start-column="31" selection-end-line="3" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-189" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="127" column="54" selection-start-line="127" selection-start-column="54" selection-end-line="127" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/kingz/pages/CustomViewsPage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="173">
+          <caret line="50" column="77" lean-forward="true" selection-start-line="50" selection-start-column="77" selection-end-line="50" selection-end-column="77" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Android/sdk/sources/android-27/android/graphics/RadialGradient.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="22" column="13" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Android/sdk/sources/android-27/android/graphics/drawable/shapes/OvalShape.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="249">
+          <caret line="32" column="11" selection-start-line="32" selection-start-column="11" selection-end-line="32" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/kingz/view/shape/ShapeHolder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="263">
+          <caret line="70" column="21" lean-forward="true" selection-start-line="70" selection-start-column="21" selection-end-line="70" selection-end-column="21" />
+          <folding>
+            <element signature="e#1336#1337#0" expanded="true" />
+            <element signature="e#1365#1366#0" expanded="true" />
+            <element signature="e#1767#1768#0" expanded="true" />
+            <element signature="e#1795#1796#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Android/sdk/sources/android-27/android/graphics/drawable/ShapeDrawable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="241">
+          <caret line="229" column="16" selection-start-line="229" selection-start-column="16" selection-end-line="229" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Android/sdk/sources/android-27/android/animation/TimeAnimator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Android/sdk/sources/android-27/android/animation/Animator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="123">
+          <caret line="524" column="8" selection-start-line="524" selection-start-column="8" selection-end-line="524" selection-end-column="8" />
+          <folding>
+            <element signature="e#2074#2858#0" />
+            <element signature="e#2864#3358#0" />
+            <element signature="e#3364#3747#0" />
+            <element signature="e#3753#4677#0" />
+            <element signature="e#4683#5570#0" />
+            <element signature="e#19231#19843#0" />
+            <element signature="e#19983#20659#0" />
+            <element signature="e#20795#20927#0" />
+            <element signature="e#20988#21222#0" />
+            <element signature="e#21281#21521#0" />
+            <element signature="e#21583#21731#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Android/sdk/sources/android-27/android/animation/ValueAnimator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="249">
+          <caret line="898" column="66" selection-start-line="898" selection-start-column="16" selection-end-line="898" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Android/sdk/sources/android-27/android/animation/ObjectAnimator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="95">
+          <caret line="434" column="27" selection-start-line="434" selection-start-column="27" selection-end-line="434" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/Program Files/Java/jdk1.8.0_121/src.zip!/javax/swing/text/View.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-242">
+          <caret line="159" column="44" lean-forward="true" selection-start-line="159" selection-start-column="44" selection-end-line="159" selection-end-column="44" />
+          <folding>
+            <element signature="e#0#53045#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/kingz/view/ViewsActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="220">
-          <caret line="20" column="26" selection-start-line="20" selection-start-column="26" selection-end-line="20" selection-end-column="26" />
+          <caret line="15" column="32" lean-forward="true" selection-start-line="15" selection-start-column="32" selection-end-line="15" selection-end-column="32" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/base/BaseFragment.kt">
+    <entry file="file://D:/Android/sdk/sources/android-27/android/view/View.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="968">
-          <caret line="53" column="17" selection-start-line="53" selection-start-column="17" selection-end-line="53" selection-end-column="17" />
+        <state relative-caret-position="309">
+          <caret line="24781" column="36" selection-start-line="24781" selection-start-column="36" selection-end-line="24781" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Android/sdk/sources/android-27/android/view/ViewPropertyAnimator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1099">
+          <caret line="255" lean-forward="true" selection-start-line="255" selection-end-line="255" />
+          <folding>
+            <element signature="e#0#49726#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/library/ui/src/main/java/com/module/views/progress/SpiralProgressView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="326">
+          <caret line="344" column="7" lean-forward="true" selection-start-line="344" selection-start-column="7" selection-end-line="344" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/base/BaseActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="206">
+          <caret line="46" column="39" selection-start-line="46" selection-start-column="39" selection-end-line="46" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/base/BaseFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="353">
+          <caret line="31" column="47" selection-start-line="31" selection-start-column="47" selection-end-line="31" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/kingz/GreekLifeCycle.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="213">
+          <caret line="14" column="56" selection-start-line="14" selection-start-column="39" selection-end-line="14" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/android.arch.lifecycle/common/1.1.0/72f6113534923e49e8c032107ca638b97775c61b/common-1.1.0-sources.jar!/android/arch/lifecycle/LifecycleObserver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="25" column="34" selection-start-line="25" selection-start-column="17" selection-end-line="25" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/kotlin/com/zeke/ktx/AppLifeCycle.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="155">
+          <caret line="12" column="44" lean-forward="true" selection-start-line="12" selection-start-column="44" selection-end-line="12" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/kingz/view/animation/PropertyAnimationsActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="72" selection-start-line="72" selection-end-line="72" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/kingz/view/shape/ShapeDrawOval.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-219">
+          <caret line="91" column="33" selection-start-line="91" selection-start-column="33" selection-end-line="91" selection-end-column="33" />
+          <folding>
+            <element signature="e#4165#4166#0" expanded="true" />
+            <element signature="e#4209#4210#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -127,24 +127,20 @@ android {
 
         def versionName = 'V' + variant.getVersionName()
         def versionCode = 'VC' + variant.getVersionCode()
+        variant.outputs.all  { item ->
+            // 使用 item.outputFile 会导致以下警告：
+            //  API 'variantOutput.getPackageApplication()' is obsolete and has been replaced with
+            // 'variant.getPackageApplicationProvider()'.
 
-//        variant.outputs.all { output ->
-//            if(output.outputFile != null &&
-//                    output.outputFile.name.endsWith('.apk')){
-//                def oName = output.outputFile.name
-//                logger.log(LogLevel.DEBUG, "output Name=" +  oName)
-//                def fileName = "Greek_${versionName}_${versionCode}_${flavorName}_${buildType}_${releaseTime()}.apk"
-//                output.outputFileName = fileName
-//            }
-//        }
-        variant.outputs.each  {
-            if(it.outputFile != null &&
-                    it.outputFile.name.endsWith('.apk')){
-                def oName = it.outputFile.name
-                logger.log(LogLevel.DEBUG, "output Name=" +  oName)
-                def fileName = "Greek_${versionName}_${versionCode}_${flavorName}_${buildType}_${releaseTime()}.apk"
-                it.outputFileName = fileName
-            }
+            // def optFile = item.outputFile
+            // if(optFile != null && optFile.name.endsWith('.apk')){
+            //     // 对后缀为.apk的文件做命名修改处理
+            //     logger.log(LogLevel.DEBUG, "output Name: ${optFile.name}")
+            //     def fileName = "Greek_${versionName}_${versionCode}_${flavorName}_${buildType}_${releaseTime()}.apk"
+            //     item.outputFileName = fileName
+            // }
+            def fileName = "Greek_${versionName}_${versionCode}_${flavorName}_${buildType}_${releaseTime()}.apk"
+            outputFileName = fileName
         }
     }
 }
