@@ -24,4 +24,5 @@
     <string name="button_cancel_login">Cancel Login</string>
     <string name="button_confirm_signup">Confirm Sign Up</string>
     <string name="guess_you_lisk">Guess you like</string>
+    <string name="aidl_deleteData">Delete Data From Service</string>
 </resources>

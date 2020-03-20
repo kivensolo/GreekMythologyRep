@@ -83,6 +83,7 @@
     <string name="crimtitle">Enter a title for the crime</string>
     <string name="aidl_addData">Add Data To Service</string>
     <string name="aidl_getData">Get Data From Service</string>
+    <string name="aidl_deleteData">Delete Data From Service</string>
 
     <string name="bkg_poster">海报背景图</string>
     <string name="label_desc">Test Text</string>

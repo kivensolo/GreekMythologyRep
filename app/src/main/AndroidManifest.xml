@@ -49,7 +49,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <!--应用元素据设置-->
+        <!--应用元数据设置-->
         <meta-data
             android:name="design_width"
             android:value="1080" />
@@ -62,8 +62,8 @@
 
         <provider
             android:name="com.kingz.four_components.provider.KingZProvider"
-            android:authorities="${packageName}"></provider>
-
+            android:authorities="${packageName}"
+            android:exported="false" />
         <!--android:authorities="${packageName}.BmobContentProvider">-->
 
         <activity
@@ -295,14 +295,14 @@
         <!-- ************ 媒体 *********** -->
         <activity
             android:name="com.mplayer.ApolloMediaPlayer"
-            android:screenOrientation="landscape"
+            android:screenOrientation="fullSensor"
             android:theme="@style/PlayTheme" />
 
         <activity
             android:name="com.mplayer.exo_player.DetailPageActivty"
             android:configChanges="locale|screenSize|keyboardHidden|orientation"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"
+            android:screenOrientation="fullSensor"
             android:theme="@style/PlayTheme"
             android:windowSoftInputMode="stateAlwaysHidden" />
 
@@ -366,7 +366,7 @@
             android:configChanges="screenLayout|orientation"
             android:supportsPictureInPicture="true"
             android:theme="@style/Lollipop_NoActionBar"
-            tools:targetApi="n"></activity>
+            tools:targetApi="n"/>
         <!--  ************ Android >=5.0 新特性展示  End ************ -->
 
         <activity android:name="com.zeke.ktx.activities.indicator.ScrollableTabExampleActivity" />
@@ -382,23 +382,24 @@
             android:enabled="true"
             android:exported="true" />
 
-        <!-- aidl测试 start -->
-        <service android:name="com.kingz.four_components.service.BoundServiceDemo"></service>
-
         <service
-            android:name="com.kingz.ipcdemo.AIDLService"
+            android:name="com.kingz.ipcdemo.BookShopService"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.kingz.aidl" />
+                <action android:name="com.kingz.action.bookshop" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </service>
+
+        <!-- aidl测试 start -->
+        <service android:name="com.kingz.four_components.service.BoundServiceDemo"></service>
+
         <!-- aidl测试 End -->
 
 
         <service
             android:name="com.kingz.four_components.IntentServicDemo"
-            android:exported="false"></service>
+            android:exported="false"/>
 
         <service
             android:name="com.kingz.four_components.service.LocalService"
@@ -412,7 +413,7 @@
         <provider
             android:name="com.kingz.four_components.provider.ThetisProvider"
             android:authorities="com.kingz.four_components.myprovider"
-            android:exported="true"></provider>
+            android:exported="true"/>
 
         <!--7.0 fileprovider-->
         <provider
