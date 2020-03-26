@@ -1,0 +1,88 @@
+@startuml
+abstract class AbsMediaPlayerReceiverActivity<IMediaPlayerReceiverPresenter>
+note right: 播放器公共事件抽象层\n广播、案件、用户状态变更
+AppCompatActivity <|-- AbsMediaPlayerReceiverActivity
+IMediaPlayerReceiverView <|.. AbsMediaPlayerReceiverActivity
+
+
+interface UhdMediaPlayerContract.IPresenter
+note top:抽象播控行为层
+interface UhdMediaPlayerContract.IModel
+note top:抽象播放数据层
+interface UhdMediaPlayerContract.IView
+note top:抽象视图控制层\n定义播放器内视图控件行为
+
+abstract class UhdMediaPlayerActivity
+note right: 播放器Base页面
+AbsMediaPlayerReceiverActivity <|-- UhdMediaPlayerActivity
+UhdMediaPlayerContract.IView <|.. UhdMediaPlayerActivity
+
+
+interface SelectionsContract.IPresenter
+note top: 抽象Selections视图行为层
+interface SelectionsContract.IModel
+interface SelectionsContract.IView
+note top: 抽象Selections视图控制层
+
+abstract class AbsSelectionsActivity
+note left: [抽象菜单行为控制层]
+UhdMediaPlayerActivity <|-- AbsSelectionsActivity
+SelectionsContract.IView <|.. AbsSelectionsActivity
+
+
+
+node "P层" {
+abstract class UhdMediaPlayerPresenter{
+    initVideoListener() // 播放器初始化及监听设置
+}
+note right: 具体播控行为层
+AbsMediaPlayerReceiverPresenter <|-- UhdMediaPlayerPresenter
+
+IMediaPlayerReceiverPresenter <|.. AbsMediaPlayerReceiverPresenter
+UhdMediaPlayerPresenter<|--AbsSelectionsPresenter
+AbsSelectionsPresenter<|--CIBNPlayPresenter
+AbsSelectionsPresenter<|--Garden4KPlayPresenter
+AbsSelectionsPresenter<|--KnowledgePlayPresenter
+AbsSelectionsPresenter<|--YiFangPlayPresenter
+Garden4KPlayPresenter<|--GardenFitPlayPresenter
+Garden4KPlayPresenter<|--GardenLivePlayPresenter
+}
+
+
+abstract class UhdMenuPlayerActivity
+' UHDMenuPlayerActivity
+AbsSelectionsActivity <|-- UhdMenuPlayerActivity
+
+abstract class UhdSelectionsActivity
+AbsSelectionsActivity <|-- UhdSelectionsActivity
+
+abstract class XgimiSelectionsActivity
+UhdSelectionsActivity <|-- XgimiSelectionsActivity
+
+' CIBN
+interface CIBNPlayContract.IView
+note top: CIBN 抽象试图控制层
+interface CIBNPlayContract.IPresenter
+interface CIBNPlayContract.IModel
+
+abstract class XgimiMenuActivity
+UhdMenuPlayerActivity <|-- XgimiMenuActivity
+
+package "业务层页面" {
+    UhdMenuPlayerActivity <|-- CIBNPlayActivity
+    CIBNPlayActivity ..|> CIBNPlayContract.IView
+
+    ' 义方教育
+    XgimiMenuActivity <|-- YiFangPlayActivity
+
+    XgimiMenuActivity <|-- KnowledgePlayActivity
+
+    ' 4K健身
+    XgimiMenuActivity <|-- Garden4KPlayActivity
+    Garden4KPlayActivity <|-- GardenFitPlayActivity
+    Garden4KPlayActivity <|-- GardenLivePlayActivity
+}
+
+
+
+@enduml
