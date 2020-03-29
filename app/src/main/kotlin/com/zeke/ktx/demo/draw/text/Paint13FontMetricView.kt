@@ -27,6 +27,7 @@ import com.zeke.ktx.demo.modle.CardItemConst
  * 获取height ： mPaint.ascent() + mPaint.descent()
  * 获取width ： mPaint.measureText(text)
  */
+@Suppress("DEPRECATION")
 class Paint13FontMetricView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
     : BasePracticeView(context, attrs, defStyleAttr) {
