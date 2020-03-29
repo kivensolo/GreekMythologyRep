@@ -170,11 +170,6 @@
             android:theme="@android:style/Theme.DeviceDefault" />
 
         <activity
-            android:name="com.kingz.text.metrics.FontMetricsDemoActivity"
-            android:screenOrientation="landscape"
-            android:theme="@style/AppTheme" />
-
-        <activity
             android:name="com.kingz.text.langs.TextViewOfLanguages"
             android:theme="@android:style/Theme.DeviceDefault" />
 

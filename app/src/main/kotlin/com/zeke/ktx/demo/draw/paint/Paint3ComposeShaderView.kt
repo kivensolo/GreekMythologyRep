@@ -28,7 +28,7 @@ class Paint3ComposeShaderView @JvmOverloads constructor(
     private var shader1: BitmapShader = BitmapShader(bitmap1, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
 
 
-    private var shaderCLAMP:LinearGradient = LinearGradient(380f, 45f, 600f, 550f,
+    private var shader2:LinearGradient = LinearGradient(380f, 45f, 600f, 550f,
             Color.parseColor("#5FCDDA"),Color.parseColor("#FED094"),
             Shader.TileMode.CLAMP)
 
@@ -40,7 +40,7 @@ class Paint3ComposeShaderView @JvmOverloads constructor(
      * shader1: dst
      * shader2: src
      */
-    private var composeShader: ComposeShader = ComposeShader(shader1, shaderCLAMP, PorterDuff.Mode.SRC_OVER)
+    private var composeShader: ComposeShader = ComposeShader(shader1, shader2, PorterDuff.Mode.SRC_OVER)
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)

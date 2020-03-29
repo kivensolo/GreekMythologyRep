@@ -28,15 +28,6 @@ class Paint1ShaderView @JvmOverloads constructor(
 ) : BasePracticeView(context, attrs, defStyleAttr) {
 
     val radius: Float = 200f
-    private var shaderCLAMP:LinearGradient = LinearGradient(0f, 150f, 250f, 550f,
-            Color.parseColor("#E91E63"),Color.parseColor("#2196F3"),
-            Shader.TileMode.CLAMP)
-    private var shaderMIRROR:LinearGradient = LinearGradient(550f, 150f, 1000f, 550f,
-            Color.parseColor("#E91E63"),Color.parseColor("#2196F3"),
-            Shader.TileMode.MIRROR)
-    private var shaderREPEAT:LinearGradient = LinearGradient(500f, 150f, 800f, 550f,
-            Color.parseColor("#E91E63"),Color.parseColor("#2196F3"),
-            Shader.TileMode.REPEAT)
 
     val content:String
         get() = "Paint.setColor/ARGB()和Shader 都可设置颜色"

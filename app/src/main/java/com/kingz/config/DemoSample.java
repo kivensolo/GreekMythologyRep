@@ -1,5 +1,7 @@
 package com.kingz.config;
 
+import com.kingz.customdemo.R;
+
 import java.util.HashMap;
 
 /**

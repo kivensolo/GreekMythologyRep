@@ -26,12 +26,8 @@
     "desc": "文字处理相关",
     "samples": [
       {
-        "name": "FontMetrics",
-        "class": "com.kingz.text.metrics.FontMetricsDemoActivity"
-      },
-      {
         "name": "TextViewOfLanguages",
-        "class": "com.kingz.text.metrics.TextViewOfLanguages"
+        "class": "com.kingz.text.langs.TextViewOfLanguages"
       },
       {
         "name": "LableText",

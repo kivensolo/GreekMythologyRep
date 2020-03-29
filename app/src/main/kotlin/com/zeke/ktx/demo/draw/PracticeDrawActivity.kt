@@ -11,6 +11,7 @@ import com.zeke.ktx.demo.BaseDemoActivity
 import com.zeke.ktx.demo.CardVerticalDemoFragment
 import com.zeke.ktx.demo.draw.base_api.*
 import com.zeke.ktx.demo.draw.paint.*
+import com.zeke.ktx.demo.draw.text.*
 import com.zeke.ktx.demo.modle.CardItemModle
 import com.zeke.ktx.demo.modle.DemoContentModel
 import java.util.*
@@ -46,10 +47,18 @@ class PracticeDrawActivity : BaseDemoActivity() {
         cardData3.add(CardItemModle("MaskFilter(在上面附加效果)", Paint9MaskFilterView(this)))
         cardData3.add(CardItemModle("getPath", Paint10GetPathView(this)))
 
+        val cardData4: MutableList<CardItemModle> = ArrayList()
+        cardData4.add(CardItemModle("文字效果绘制API", Paint11TextEffecsView(this)))
+        cardData4.add(CardItemModle("文字尺寸绘制API", Paint12TextDimensionView(this)))
+        cardData4.add(CardItemModle("FontMetric", Paint13FontMetricView(this)))
+        cardData4.add(CardItemModle("drawTextOnPath()", Paint14TextOnPathView(this)))
+        cardData4.add(CardItemModle("文字换行绘制 StaticLayout", Paint15TextStaticLayoutView(this)))
+
         // 初始化Page数据
         pageModels.add(DemoContentModel(getString(R.string.draw_1_1), cardData1))
         pageModels.add(DemoContentModel(getString(R.string.draw_paint_color), cardData2))
         pageModels.add(DemoContentModel(getString(R.string.draw_paint_effect), cardData3))
+        pageModels.add(DemoContentModel(getString(R.string.draw_text), cardData4))
     }
 
     override fun initPagerAdapter() {

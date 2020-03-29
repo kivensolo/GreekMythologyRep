@@ -1,8 +1,7 @@
 package com.zeke.ktx.demo.draw
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Paint
+import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
 import com.zeke.kangaroo.utils.UIUtils
@@ -13,6 +12,16 @@ open class BasePracticeView @JvmOverloads constructor(
 ) : View(context, attrs, defStyleAttr) {
     var paint = Paint()
 
+    // Demo统一的LinearGradient效果
+    var shaderMIRROR: LinearGradient = LinearGradient(10f, 10f, 1000f, 350f,
+            Color.parseColor("#E91E63"), Color.parseColor("#2196F3"),
+            Shader.TileMode.REPEAT)
+    var shaderCLAMP:LinearGradient = LinearGradient(0f, 150f, 250f, 550f,
+            Color.parseColor("#E91E63"),Color.parseColor("#2196F3"),
+            Shader.TileMode.CLAMP)
+    var shaderREPEAT:LinearGradient = LinearGradient(500f, 150f, 800f, 550f,
+            Color.parseColor("#E91E63"),Color.parseColor("#2196F3"),
+            Shader.TileMode.REPEAT)
     companion object{
         const val defaulFontSize :Float = 16f
     }

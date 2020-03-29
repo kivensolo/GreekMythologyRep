@@ -23,9 +23,6 @@ import com.zeke.ktx.demo.modle.CardItemConst
 class Paint6NormalEffectView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : BasePracticeView(context, attrs, defStyleAttr) {
-    private var shaderMIRROR:LinearGradient = LinearGradient(10f, 10f, 1000f, 350f,
-            Color.parseColor("#E91E63"),Color.parseColor("#2196F3"),
-            Shader.TileMode.REPEAT)
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     @SuppressLint("DrawAllocation")
