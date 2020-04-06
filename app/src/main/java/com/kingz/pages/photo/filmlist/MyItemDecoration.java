@@ -11,8 +11,6 @@ import android.widget.LinearLayout;
 import com.kingz.customdemo.R;
 
 /**
- * Copyright(C) 2015, 北京视达科科技有限公司
- * All rights reserved.
  * author: King.Z
  * date:  2016/8/7 22:55
  * description:
@@ -24,15 +22,15 @@ public class MyItemDecoration extends RecyclerView.ItemDecoration {
     private Drawable mDivider;
     private int mOrientation;
 
-    public MyItemDecoration(Context context,int orientation) {
-        //final TypedArray array = context.obtainStyledAttributes(ATTRS);
-        //mDivider = array.getDrawable(0);
-        //array.recycle();
-        mDivider = context.getResources().getDrawable(R.drawable.listview_divider);
-        mOrientation = orientation;
-
-    }
-
+    /**
+     * getItemOffsets 是针对每一个 ItemView。
+     * onDraw 方法是针对 RecyclerView 本身。
+     * 所以在 onDraw 方法中需要遍历屏幕上可见的 ItemView，
+     * 分别获取它们的位置信息，然后分别的绘制对应的分割线。
+     * @param c Canvas
+     * @param parent RecyclerView
+     * @param state RecyclerView.State
+     */
     @Override
     public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
         //ZLog.i("recyclerview - itemdecoration", "onDraw() +1");
@@ -46,7 +44,49 @@ public class MyItemDecoration extends RecyclerView.ItemDecoration {
         }
     }
 
-    // Item之间的留白
+    public MyItemDecoration(Context context,int orientation) {
+        //final TypedArray array = context.obtainStyledAttributes(ATTRS);
+        //mDivider = array.getDrawable(0);
+        //array.recycle();
+        mDivider = context.getResources().getDrawable(R.drawable.listview_divider);
+        mOrientation = orientation;
+
+    }
+
+
+    /**
+     * onDrawOver的使用方法和onDraw类似，只是绘制的顺序不同。
+     * getItemOffsets会覆盖onD
+     * raw的绘制，onDrawOver则会绘制在最上面。
+     * 可用于给itemView加角标等功能。
+     * @param c  Canvas
+     * @param parent RecyclerView
+     * @param state RecyclerView.State
+     */
+    @Override
+    public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
+        super.onDrawOver(c, parent, state);
+
+    }
+
+    /**
+     * 设置ItemView的内嵌偏移长度 inset (outRect矩形与ItemView的间隔.);
+     * 默认的情况下，top、left、right、bottom都是0，所以矩形和ItemView就重叠了。
+     *
+     * (left,top)
+     *     ┌--------------┐
+     *     | ┌----------┐ |
+     *     | | ItemView | |
+     *     | └----------┘ |
+     *     |OutRect       |
+     *     └--------------┘
+     *              (right,bottom)
+     *
+     *  源码分析:
+     *  ---- RecyclerView.LayoutManager.measureChild
+     *   ---> mRecyclerView.getItemDecorInsetsForChild(childView)
+     *  测量所有的子view的宽和高，得到子view的Rect。然后就能得到这一块真正的宽和高(包括padding的值)。
+     */
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         //设置绘制范围

@@ -4,17 +4,16 @@ package com.kingz.pages.photo.filmlist;
 import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Toast;
+import android.widget.LinearLayout;
 
-import com.base.BaseActivity;
 import com.kingz.adapter.FilmRecycleViewPageAdapter;
 import com.kingz.customdemo.R;
 import com.kingz.mode.PosterGroupInfo;
+import com.zeke.ktx.base.BaseActivity;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -28,6 +27,7 @@ import java.util.ArrayList;
  * author: King.Z
  * date: 2016 2016/4/2 16:49
  * description: 影片列表页
+ * FIXME 数据还有显示问题 需修正
  */
 public class FilmsListActivity extends BaseActivity {
 
@@ -60,19 +60,18 @@ public class FilmsListActivity extends BaseActivity {
         //LayoutManager--------->GridLayoutManager(网格)/LinearLayoutManager(线性)/StaggeredGridLayoutManager(错列网格)
         // 错列网格布局 spanCount：方向垂直:列数  方向水平:行数
         //recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        //recyclerView.setLayoutManager(new GridLayoutManager(this,3));
-        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(5, StaggeredGridLayoutManager.VERTICAL));
+        recyclerView.setLayoutManager(new GridLayoutManager(this,5));
+        // recyclerView.setLayoutManager(new StaggeredGridLayoutManager(5, StaggeredGridLayoutManager.VERTICAL));
     }
 
     private void initRecyclerAdapter(RecyclerView recyclerView) {
         FilmRecycleViewPageAdapter mFilmRecycleViewPageAdapter = new FilmRecycleViewPageAdapter(posterList);
-        mFilmRecycleViewPageAdapter.setOnItemClickLinstener(new OnRecycleViewItemClickLitener());
         recyclerView.setAdapter(mFilmRecycleViewPageAdapter);
     }
 
     private void initItemDecoration(RecyclerView recyclerView) {
         //调用addItemDecoration()方法添加decoration的时候，RecyclerView在绘制的时候，会去绘制decorator，即调用该类的onDraw和onDrawOver方法，
-        recyclerView.addItemDecoration(new MyItemDecoration(this, -1));
+        recyclerView.addItemDecoration(new MyItemDecoration(this, LinearLayout.VERTICAL));
     }
 
     private void initItemAnimator(RecyclerView recyclerView) {
@@ -82,19 +81,6 @@ public class FilmsListActivity extends BaseActivity {
         deleteAnimation.setDuration(300);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAnimation(deleteAnimation);
-    }
-
-    public class OnRecycleViewItemClickLitener implements FilmRecycleViewPageAdapter.OnItemClickListener {
-        @Override
-        public void onItemClick(View view, int position) {
-            Toast.makeText(FilmsListActivity.this, position + " click", Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        public void onItemLongClick(View view, int position) {
-            Toast.makeText(FilmsListActivity.this, position + "long click", Toast.LENGTH_SHORT).show();
-//            mAdapter.removeData(position);
-        }
     }
 
     /**

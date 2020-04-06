@@ -5,7 +5,8 @@ android:shape="rectangle">
         android:startColor="#FFFF0000"
         android:centerColor="#FF00FF00"
         android:endColor="#FF0000FF"
-            android:type="linear"/>
-    <size android:height="2dp"/>
+        android:type="linear"/>
+    <size android:height="@dimen/poster_margin_b"
 
+        android:width="@dimen/activity_horizontal_margin"/>
 </shape>
