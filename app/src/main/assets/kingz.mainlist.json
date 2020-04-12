@@ -209,5 +209,15 @@
         "class": "com.kingz.newfeatures.NewFeaturesMainActivity"
       }
     ]
+  },
+  {
+    "name": "AAC",
+    "desc": "Android Architecture Components",
+    "samples": [
+      {
+        "name": "协程练习",
+        "class": "com.zeke.ktx.aac.CoroutineTestActivity"
+      }
+    ]
   }
 ]

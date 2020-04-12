@@ -370,6 +370,7 @@
             android:name="com.zeke.ktx.demo.draw.PracticeDrawActivity"
             android:hardwareAccelerated="false"
             android:theme="@style/AppTheme" />
+        <activity android:name="com.zeke.ktx.aac.CoroutineTestActivity" />
 
         <!--服务 exported:外部是否可访问  process:为服务设置不同进程-->
         <service
