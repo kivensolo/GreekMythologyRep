@@ -11,6 +11,7 @@ import com.zeke.ktx.demo.modle.DemoContentModel
 
 /**
  * Demo练习页面的抽象基类
+ * 由TabLayout和ViewPager组成的页面
  */
 abstract class BaseDemoActivity : BaseActivity() {
     open var tabLayout: TabLayout? = null

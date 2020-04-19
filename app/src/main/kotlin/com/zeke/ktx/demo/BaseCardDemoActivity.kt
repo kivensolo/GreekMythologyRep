@@ -7,9 +7,11 @@ import com.zeke.ktx.demo.modle.CardItemModel
 /**
  * author: King.Z <br>
  * date:  2020/4/19 11:32 <br>
- * description: 卡片式Demo页面基类 <br>
+ * description: 卡片式Demo页面基类
+ * 实现类只需要进行cardList和pageModels的数据装载即可。
+ * <br>
  */
-open class BaseCardDemoActivity : BaseDemoActivity() {
+abstract class BaseCardDemoActivity : BaseDemoActivity() {
     val cardList: MutableList<CardItemModel> by lazy { ArrayList<CardItemModel>() }
 
     override fun initPageModels() {}
