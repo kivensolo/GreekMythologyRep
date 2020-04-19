@@ -7,4 +7,5 @@ import android.view.View
  * @param title CardView 标题
  * @param content CardView 内容View对象
  */
-class CardItemModle(var title: String, var content: View?) : BaseDemoData()
+data class CardItemModel(var title: String,
+                    var content: View?) : BaseDemoData()

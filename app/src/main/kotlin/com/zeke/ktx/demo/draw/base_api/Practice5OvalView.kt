@@ -7,7 +7,7 @@ import android.graphics.RectF
 import android.os.Build
 import android.support.annotation.RequiresApi
 import android.util.AttributeSet
-import com.zeke.ktx.demo.draw.BasePracticeView
+import com.zeke.ktx.demo.BasePracticeView
 
 class Practice5OvalView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0

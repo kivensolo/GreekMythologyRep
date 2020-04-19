@@ -6,7 +6,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
 import com.zeke.kangaroo.utils.UIUtils
-import com.zeke.ktx.demo.draw.BasePracticeView
+import com.zeke.ktx.demo.BasePracticeView
 
 class Practice2CircleView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0

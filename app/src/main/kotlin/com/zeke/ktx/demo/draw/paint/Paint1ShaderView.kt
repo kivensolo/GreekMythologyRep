@@ -2,11 +2,8 @@ package com.zeke.ktx.demo.draw.paint
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.LinearGradient
-import android.graphics.Shader
 import android.util.AttributeSet
-import com.zeke.ktx.demo.draw.BasePracticeView
+import com.zeke.ktx.demo.BasePracticeView
 import com.zeke.ktx.demo.modle.CardItemConst
 
 /**

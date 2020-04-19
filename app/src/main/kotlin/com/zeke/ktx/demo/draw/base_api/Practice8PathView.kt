@@ -6,7 +6,7 @@ import android.graphics.Color
 import android.graphics.Path
 import android.os.Build
 import android.util.AttributeSet
-import com.zeke.ktx.demo.draw.BasePracticeView
+import com.zeke.ktx.demo.BasePracticeView
 import com.zeke.ktx.demo.modle.CardItemConst
 
 class Practice8PathView @JvmOverloads constructor(

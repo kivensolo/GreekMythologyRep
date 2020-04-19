@@ -1,8 +1,10 @@
 package com.zeke.ktx.demo.draw.text
 import android.content.Context
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.Paint
+import android.graphics.Path
 import android.util.AttributeSet
-import com.zeke.ktx.demo.draw.BasePracticeView
+import com.zeke.ktx.demo.BasePracticeView
 
 /**
  * author: King.Z <br>

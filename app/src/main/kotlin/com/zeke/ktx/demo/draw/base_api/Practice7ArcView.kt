@@ -6,7 +6,7 @@ import android.graphics.Paint
 import android.os.Build
 import android.support.annotation.RequiresApi
 import android.util.AttributeSet
-import com.zeke.ktx.demo.draw.BasePracticeView
+import com.zeke.ktx.demo.BasePracticeView
 import com.zeke.ktx.demo.modle.CardItemConst
 
 class Practice7ArcView @JvmOverloads constructor(

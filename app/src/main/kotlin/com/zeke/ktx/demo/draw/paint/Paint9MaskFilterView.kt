@@ -6,7 +6,7 @@ import android.os.Build
 import android.util.AttributeSet
 import com.kingz.customdemo.R
 import com.zeke.kangaroo.utils.BitMapUtils
-import com.zeke.ktx.demo.draw.BasePracticeView
+import com.zeke.ktx.demo.BasePracticeView
 
 
 /**

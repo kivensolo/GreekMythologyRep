@@ -12,7 +12,7 @@ import com.zeke.ktx.demo.CardVerticalDemoFragment
 import com.zeke.ktx.demo.draw.base_api.*
 import com.zeke.ktx.demo.draw.paint.*
 import com.zeke.ktx.demo.draw.text.*
-import com.zeke.ktx.demo.modle.CardItemModle
+import com.zeke.ktx.demo.modle.CardItemModel
 import com.zeke.ktx.demo.modle.DemoContentModel
 import java.util.*
 
@@ -23,36 +23,36 @@ class PracticeDrawActivity : BaseDemoActivity() {
 
     override fun initPageModels() {
         // 1-1 基础api展示数据
-        val cardData1: MutableList<CardItemModle> = ArrayList()
-        cardData1.add(CardItemModle("canvas.drawColor(Color.YELLOW)", Practice1ColorView(this)))
-        cardData1.add(CardItemModle("drawCircle", Practice2CircleView(this)))
-        cardData1.add(CardItemModle("drawRect", Practice3RectView(this)))
-        cardData1.add(CardItemModle("drawPoint: ROUND、BUTT、SQUARE", Practice4PointView(this)))
-        cardData1.add(CardItemModle("drawOval", Practice5OvalView(this)))
-        cardData1.add(CardItemModle("drawLine", Practice6LineView(this)))
-        cardData1.add(CardItemModle("drawArc", Practice7ArcView(this)))
-        cardData1.add(CardItemModle("drawPath", Practice8PathView(this)))
+        val cardData1: MutableList<CardItemModel> = ArrayList()
+        cardData1.add(CardItemModel("canvas.drawColor(Color.YELLOW)", Practice1ColorView(this)))
+        cardData1.add(CardItemModel("drawCircle", Practice2CircleView(this)))
+        cardData1.add(CardItemModel("drawRect", Practice3RectView(this)))
+        cardData1.add(CardItemModel("drawPoint: ROUND、BUTT、SQUARE", Practice4PointView(this)))
+        cardData1.add(CardItemModel("drawOval", Practice5OvalView(this)))
+        cardData1.add(CardItemModel("drawLine", Practice6LineView(this)))
+        cardData1.add(CardItemModel("drawArc", Practice7ArcView(this)))
+        cardData1.add(CardItemModel("drawPath", Practice8PathView(this)))
 
-        val cardData2: MutableList<CardItemModle> = ArrayList()
-        cardData2.add(CardItemModle("线性着色器展示", Paint1ShaderView(this)))
-        cardData2.add(CardItemModle("BitmapShader", Paint2BitmapShaderView(this)))
-        cardData2.add(CardItemModle("ComposeShader(未生效)", Paint3ComposeShaderView(this)))
-        cardData2.add(CardItemModle("ColorFilter", Paint4ColorFilterView(this)))
-        cardData2.add(CardItemModle("Xfermode(离屏缓冲 未生效)", Paint5XfermodeView(this)))
+        val cardData2: MutableList<CardItemModel> = ArrayList()
+        cardData2.add(CardItemModel("线性着色器展示", Paint1ShaderView(this)))
+        cardData2.add(CardItemModel("BitmapShader", Paint2BitmapShaderView(this)))
+        cardData2.add(CardItemModel("ComposeShader(未生效)", Paint3ComposeShaderView(this)))
+        cardData2.add(CardItemModel("ColorFilter", Paint4ColorFilterView(this)))
+        cardData2.add(CardItemModel("Xfermode(离屏缓冲 未生效)", Paint5XfermodeView(this)))
 
-        val cardData3: MutableList<CardItemModle> = ArrayList()
-        cardData3.add(CardItemModle("简单效果使用", Paint6NormalEffectView(this)))
-        cardData3.add(CardItemModle("PathEffect", Paint7PathEffectView(this)))
-        cardData3.add(CardItemModle("ShadowLayer(在下面附加效果)", Paint8ShadowLayerView(this)))
-        cardData3.add(CardItemModle("MaskFilter(在上面附加效果)", Paint9MaskFilterView(this)))
-        cardData3.add(CardItemModle("getPath", Paint10GetPathView(this)))
+        val cardData3: MutableList<CardItemModel> = ArrayList()
+        cardData3.add(CardItemModel("简单效果使用", Paint6NormalEffectView(this)))
+        cardData3.add(CardItemModel("PathEffect", Paint7PathEffectView(this)))
+        cardData3.add(CardItemModel("ShadowLayer(在下面附加效果)", Paint8ShadowLayerView(this)))
+        cardData3.add(CardItemModel("MaskFilter(在上面附加效果)", Paint9MaskFilterView(this)))
+        cardData3.add(CardItemModel("getPath", Paint10GetPathView(this)))
 
-        val cardData4: MutableList<CardItemModle> = ArrayList()
-        cardData4.add(CardItemModle("文字效果绘制API", Paint11TextEffecsView(this)))
-        cardData4.add(CardItemModle("文字尺寸绘制API", Paint12TextDimensionView(this)))
-        cardData4.add(CardItemModle("FontMetric", Paint13FontMetricView(this)))
-        cardData4.add(CardItemModle("drawTextOnPath()", Paint14TextOnPathView(this)))
-        cardData4.add(CardItemModle("文字换行绘制 StaticLayout", Paint15TextStaticLayoutView(this)))
+        val cardData4: MutableList<CardItemModel> = ArrayList()
+        cardData4.add(CardItemModel("文字效果绘制API", Paint11TextEffecsView(this)))
+        cardData4.add(CardItemModel("文字尺寸绘制API", Paint12TextDimensionView(this)))
+        cardData4.add(CardItemModel("FontMetric", Paint13FontMetricView(this)))
+        cardData4.add(CardItemModel("drawTextOnPath()", Paint14TextOnPathView(this)))
+        cardData4.add(CardItemModel("文字换行绘制 StaticLayout", Paint15TextStaticLayoutView(this)))
 
         // 初始化Page数据
         pageModels.add(DemoContentModel(getString(R.string.draw_1_1), cardData1))

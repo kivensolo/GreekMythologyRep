@@ -5,7 +5,7 @@ import android.graphics.*
 import android.os.Build
 import android.util.AttributeSet
 import com.kingz.customdemo.R
-import com.zeke.ktx.demo.draw.BasePracticeView
+import com.zeke.ktx.demo.BasePracticeView
 import com.zeke.ktx.demo.modle.CardItemConst
 
 /**

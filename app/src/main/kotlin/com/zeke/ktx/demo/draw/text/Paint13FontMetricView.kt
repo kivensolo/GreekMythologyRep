@@ -6,7 +6,7 @@ import android.util.AttributeSet
 import com.kingz.customdemo.R
 import com.zeke.kangaroo.utils.UIUtils
 import com.zeke.kangaroo.utils.ZLog
-import com.zeke.ktx.demo.draw.BasePracticeView
+import com.zeke.ktx.demo.BasePracticeView
 import com.zeke.ktx.demo.modle.CardItemConst
 
 /**

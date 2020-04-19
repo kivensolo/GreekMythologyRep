@@ -1,4 +1,4 @@
-package com.zeke.ktx.demo.draw
+package com.zeke.ktx.demo
 
 import android.content.Context
 import android.graphics.*
@@ -23,14 +23,17 @@ open class BasePracticeView @JvmOverloads constructor(
             Color.parseColor("#E91E63"),Color.parseColor("#2196F3"),
             Shader.TileMode.REPEAT)
     companion object{
-        const val defaulFontSize :Float = 16f
+        const val defaultFontSize :Float = 16f
+    }
+
+    init{
+        paint.textSize = UIUtils.dip2px(context, defaultFontSize).toFloat()
+        paint.isAntiAlias = true
+        paint.isDither = true
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        paint.textSize = UIUtils.dip2px(context,defaulFontSize).toFloat()
-        paint.isAntiAlias = true
-        paint.isDither = true
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {

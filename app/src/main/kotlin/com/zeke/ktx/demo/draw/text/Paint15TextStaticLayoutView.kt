@@ -2,14 +2,12 @@ package com.zeke.ktx.demo.draw.text
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.Path
 import android.text.Layout
 import android.text.StaticLayout
 import android.text.TextPaint
 import android.util.AttributeSet
 import com.zeke.kangaroo.utils.UIUtils
-import com.zeke.ktx.demo.draw.BasePracticeView
+import com.zeke.ktx.demo.BasePracticeView
 import com.zeke.ktx.demo.modle.CardItemConst
 
 

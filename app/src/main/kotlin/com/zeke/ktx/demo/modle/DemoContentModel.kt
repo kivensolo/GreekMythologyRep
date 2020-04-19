@@ -7,4 +7,4 @@ package com.zeke.ktx.demo.modle
  *     包括当前页标题和当前页content数据集合
  */
 class DemoContentModel internal constructor(var title: String,
-        var  demoData:MutableList<CardItemModle>?)
+        var  demoData:MutableList<CardItemModel>?)

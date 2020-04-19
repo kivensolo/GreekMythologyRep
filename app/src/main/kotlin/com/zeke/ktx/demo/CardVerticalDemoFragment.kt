@@ -10,7 +10,7 @@ import com.kingz.customdemo.R
 import com.zeke.kangaroo.adapter.CommonRecyclerAdapter
 import com.zeke.kangaroo.utils.ZLog
 import com.zeke.ktx.base.BaseFragment
-import com.zeke.ktx.demo.modle.CardItemModle
+import com.zeke.ktx.demo.modle.CardItemModel
 import com.zeke.ktx.demo.modle.DemoContentModel
 
 /**
@@ -69,7 +69,7 @@ class CardVerticalDemoFragment : BaseFragment() {
         ZLog.d(TAG,"onSaveInstanceState")
     }
 
-    inner class RVAdapter : CommonRecyclerAdapter<CardItemModle>() {
+    inner class RVAdapter : CommonRecyclerAdapter<CardItemModel>() {
 
         override fun getItemLayout(type: Int): Int {
             return R.layout.demo_card_item
@@ -78,7 +78,7 @@ class CardVerticalDemoFragment : BaseFragment() {
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             super.onBindViewHolder(holder, position)
             val data = getItem(position)
-            val cardItemData = data as CardItemModle
+            val cardItemData = data as CardItemModel
             // CardView的Title
             holder.getView<TextView>(R.id.card_title_text).text = cardItemData.title
 

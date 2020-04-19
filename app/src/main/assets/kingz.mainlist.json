@@ -101,6 +101,10 @@
       {
         "name": "Custom controls",
         "class": "com.kingz.pages.CustomViewsPage"
+      },
+      {
+        "name": "Custom controls newV2",
+        "class": "com.zeke.ktx.demo.customview.CustomViewsDemoActivity"
       }
     ]
   },

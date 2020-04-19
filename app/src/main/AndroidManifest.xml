@@ -270,12 +270,19 @@
             android:name="com.kingz.scroll.SoapFlingActivity"
             android:theme="@style/AppTheme" />
 
+        <!--自定义View Start-->
+        <activity
+            android:name="com.zeke.ktx.demo.customview.CustomViewsDemoActivity"
+            android:hardwareAccelerated="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <!--自定义View End-->
+
         <!-- OriginViewPager -->
         <activity
             android:name="com.kingz.widgets.android_src.OriginViewPager"
             android:theme="@style/AppTheme" />
 
-        <!-- 百度地图View -->
 
         <!-- FilmList -->
         <activity
