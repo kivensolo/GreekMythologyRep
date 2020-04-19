@@ -10,8 +10,10 @@ import android.graphics.Paint
 import android.graphics.RectF
 import android.support.annotation.Keep
 import android.util.AttributeSet
+import android.util.TypedValue
 import android.view.View
 import android.view.animation.LinearInterpolator
+import com.module.views.R
 import java.util.*
 
 /**
@@ -30,38 +32,68 @@ class ChartMusicView @JvmOverloads constructor(context: Context,
     var offset_y2:Float = 0f
     @Keep
     var offset_y3:Float = 0f
+    var columnColor:Int = 0
 
-    private var rectA = RectF(0f, Y_OFFSET_MAX, columnWidth, height.toFloat())
+    var pauseTime:Long = 200
+    var duration:Long = 1800
+    var delayStartOfColumnA:Long = duration / 6  //这个除6 不能变
+    private var offsetYMAX:Float = 200f
+    private var offsetYMID:Float = 100f
+    private var offsetYMIN:Float = 0f
+
+    var columnWidth:Float = 20f
+    var columnMargin:Float = 20f
+    var columnRightOffset:Float = columnWidth + columnMargin
+
+    private var rectA = RectF(0f, offsetYMAX, columnWidth, height.toFloat())
     private var rectB = RectF(rectA)
     private var rectC = RectF(rectA)
     var paint = Paint()
 
     init {
+        getCustomArray(context, attrs, defStyleAttr)
         init()
     }
 
-    companion object{
-        const val RESTART_DELAY:Long = 200
-        const val DURATION:Long = 1800
-        const val DELAY_COLUMN_A:Long = DURATION / 6
-        const val Y_OFFSET_MAX:Float = 200f
-        const val Y_OFFSET_MID:Float = 100f
-        const val Y_OFFSET_MIN:Float = 0f
-
-       const val columnWidth:Float = 20f
-       const val columnMargin:Float = 20f
-       const val columnRightOffset:Float = columnWidth + columnMargin
+    private fun getCustomArray(context: Context, attrs: AttributeSet?, defStyle: Int) {
+        val typedArray = context.theme.obtainStyledAttributes(attrs, R.styleable.chartMusicView, defStyle, 0)
+        val typeCount = typedArray.indexCount
+        for (i in 0 until typeCount) {
+            when(val attr = typedArray.getIndex(i)){
+                R.styleable.chartMusicView_columnWidth -> {
+                    columnWidth = typedArray.getDimension(attr,
+                            TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX,20f, resources.displayMetrics)
+                    )
+                }
+                R.styleable.chartMusicView_columnMargin -> {
+                    columnMargin = typedArray.getDimension(attr,
+                            TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX,20f, resources.displayMetrics)
+                    )
+                }
+                R.styleable.chartMusicView_columnColor ->{
+                    columnColor = typedArray.getColor(attr, Color.RED)
+                }
+                R.styleable.chartMusicView_duration -> {
+                    duration = typedArray.getInteger(attr, 1800).toLong()
+                }
+                R.styleable.chartMusicView_pauseTime -> {
+                    pauseTime = typedArray.getInteger(attr, 200).toLong()
+                }
+            }
+        }
+        typedArray.recycle()
     }
 
+
     private fun init() {
-        paint.color = Color.RED
+        paint.color = columnColor
         paint.isAntiAlias = true
         paint.isDither = true
         setBackgroundColor(Color.TRANSPARENT)
 
-        val vHolder1 = PropertyValuesHolder.ofFloat("offset_y", Y_OFFSET_MAX, Y_OFFSET_MIN, Y_OFFSET_MAX, Y_OFFSET_MAX)
+        val vHolder1 = PropertyValuesHolder.ofFloat("offset_y", offsetYMAX, offsetYMIN, offsetYMAX, offsetYMAX)
         aniColumnA = ObjectAnimator.ofPropertyValuesHolder(this, vHolder1)
-        aniColumnA?.duration = DURATION
+        aniColumnA?.duration = duration
         aniColumnA?.interpolator = LinearInterpolator()
         // lengthAnimation?.repeatMode = ValueAnimator.RESTART
         // lengthAnimation?.repeatCount = ValueAnimator.INFINITE
@@ -69,7 +101,7 @@ class ChartMusicView @JvmOverloads constructor(context: Context,
             override fun onAnimationRepeat(animation: Animator?) {
             }
             override fun onAnimationEnd(animation: Animator?) {
-                postDelayed({ aniColumnA?.start() },RESTART_DELAY)
+                postDelayed({ aniColumnA?.start() },pauseTime)
             }
 
             override fun onAnimationCancel(animation: Animator?) {}
@@ -77,32 +109,34 @@ class ChartMusicView @JvmOverloads constructor(context: Context,
 
         })
 
-        val vHolder2 = PropertyValuesHolder.ofFloat("offset_y2", Y_OFFSET_MAX, Y_OFFSET_MID, Y_OFFSET_MID, Y_OFFSET_MAX)
+        val vHolder2 = PropertyValuesHolder.ofFloat("offset_y2", offsetYMAX, offsetYMID, offsetYMID, offsetYMAX)
         aniColumnB = ObjectAnimator.ofPropertyValuesHolder(this, vHolder2)
-        aniColumnB?.duration = DURATION
+        aniColumnB?.duration = duration
         aniColumnB?.interpolator = LinearInterpolator()
         aniColumnB?.addListener(object : Animator.AnimatorListener {
             override fun onAnimationRepeat(animation: Animator?) {}
             override fun onAnimationEnd(animation: Animator?) {
-                postDelayed({ aniColumnB?.start() },RESTART_DELAY)
+                postDelayed({ aniColumnB?.start() },pauseTime)
             }
             override fun onAnimationCancel(animation: Animator?) {}
             override fun onAnimationStart(animation: Animator?) {}
 
         })
 
-        val vHolder3 = PropertyValuesHolder.ofFloat("offset_y3", Y_OFFSET_MAX, Y_OFFSET_MIN, Y_OFFSET_MAX, Y_OFFSET_MAX)
+        val vHolder3 = PropertyValuesHolder.ofFloat("offset_y3", offsetYMAX, offsetYMIN, offsetYMAX, offsetYMAX)
         aniColumnC = ObjectAnimator.ofPropertyValuesHolder(this, vHolder3)
-        aniColumnC?.duration = DURATION
+        aniColumnC?.duration = duration
         aniColumnC?.interpolator = LinearInterpolator()
         aniColumnC?.addListener(object : Animator.AnimatorListener {
             override fun onAnimationRepeat(animation: Animator?) {}
             override fun onAnimationEnd(animation: Animator?) {
-                postDelayed({ aniColumnC?.start() },RESTART_DELAY)
+                postDelayed({ aniColumnC?.start() },pauseTime)
             }
             override fun onAnimationCancel(animation: Animator?) {}
             override fun onAnimationStart(animation: Animator?) {}
         })
+
+        // 自动启动动画
         start()
     }
 
@@ -140,7 +174,7 @@ class ChartMusicView @JvmOverloads constructor(context: Context,
     }
 
     fun start(){
-        postDelayed({aniColumnA?.start()},DELAY_COLUMN_A)
+        postDelayed({aniColumnA?.start()},delayStartOfColumnA)
         aniColumnB?.start()
         aniColumnC?.start()
     }

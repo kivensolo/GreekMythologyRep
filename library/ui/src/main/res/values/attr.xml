@@ -19,6 +19,14 @@
 -->
 <resources>
 
+    <declare-styleable name="chartMusicView">
+        <attr name="columnWidth" format="dimension" desc="每列宽度"/>
+        <attr name="columnMargin" format="dimension" desc="每列间距"/>
+        <attr name="columnColor" format="color" desc="每列颜色"/>
+        <attr name="duration" format="integer" desc="动画持续时长"/>
+        <attr name="pauseTime" format="integer" desc="动画完成后停留效果时间"/>
+    </declare-styleable>
+
     <declare-styleable name="circleView">
         <attr name="innerColor" format="color"/>
         <attr name="outerColor" format="color"/>
