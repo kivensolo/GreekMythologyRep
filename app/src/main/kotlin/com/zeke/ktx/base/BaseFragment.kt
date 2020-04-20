@@ -17,7 +17,7 @@ import com.zeke.ktx.view.LoadStatusView
  */
 abstract class BaseFragment : Fragment() {
     companion object {
-        val TAG = BaseFragment::class.java.simpleName
+        val TAG: String = BaseFragment::class.java.simpleName
     }
     private var mActivity: Activity? = null
     protected lateinit var rootView: View

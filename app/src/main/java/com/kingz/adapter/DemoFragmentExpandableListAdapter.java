@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.kingz.customdemo.R;
 import com.zeke.kangaroo.view.animation.AnimatedExpandableListView;
-import com.zeke.ktx.player.entity.DemoGroup;
+import com.zeke.ktx.modules.player.entity.DemoGroup;
 
 import java.util.Collections;
 import java.util.List;

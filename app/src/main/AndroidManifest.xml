@@ -91,7 +91,7 @@
         <!-- 主Activity -->
         <activity
             android:name="com.zeke.ktx.MainActivity"
-            android:screenOrientation="portrait"
+            android:screenOrientation="fullSensor"
             android:launchMode="singleTop"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:theme="@style/AppTheme">
@@ -107,16 +107,19 @@
         <activity
             android:name="com.kingz.view.animation.PropertyAnimationsActivity"
             android:screenOrientation="landscape"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme"
+            tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name="com.kingz.view.animation.CrossfadeActivity"
-            android:screenOrientation="landscape" />
+            android:name="com.zeke.ktx.modules.aac.ViewModelDemoActivity"
+            android:screenOrientation="fullSensor"/>
         <activity
             android:name="com.kingz.view.animation.ViewFlipperAnimation"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="fullSensor"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name="com.kingz.view.animation.InterpolatorAnimation"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="fullSensor"
+            tools:ignore="LockedOrientationActivity" />
 
         <!-- 原生SeekBar -->
         <activity
@@ -148,7 +151,7 @@
 
         <activity
             android:name="com.kingz.four_components.activity.news.NewsActivity"
-            android:screenOrientation="landscape"
+            android:screenOrientation="fullSensor"
             android:theme="@style/AppTheme" />
 
         <!--常用控件集合-->
@@ -162,7 +165,7 @@
         <!-- 自定义控件的ListView-->
         <activity
             android:name="com.kingz.pages.CustomViewsPage"
-            android:screenOrientation="portrait"
+            android:screenOrientation="fullSensor"
             android:theme="@style/AppTheme" />
 
         <activity
@@ -209,12 +212,12 @@
         <!--BitMap测试页面-->
         <activity
             android:name="com.kingz.pages.photo.BitmapPhotosActivity"
-            android:screenOrientation="landscape"
+            android:screenOrientation="fullSensor"
             android:theme="@style/AppTheme" />
 
         <activity
             android:name="com.kingz.pages.photo.memory.MemoryCheck"
-            android:screenOrientation="landscape"
+            android:screenOrientation="fullSensor"
             android:theme="@style/AppTheme" />
 
         <!--ColorMatrix-->
@@ -246,17 +249,17 @@
         <!-- 自定义显示的listView -->
         <activity
             android:name="com.kingz.view.listview.CustomListViewActivity"
-            android:screenOrientation="portrait"
+            android:screenOrientation="fullSensor"
             android:theme="@style/AppTheme" />
         <activity
             android:name="com.kingz.recyclerview.MusicPosterPages"
-            android:screenOrientation="portrait"
+            android:screenOrientation="fullSensor"
             android:theme="@style/AppTheme" />
 
         <!-- 可左右滑动的ListView -->
         <activity
             android:name="com.kingz.scroll.SliderListViewActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="fullSensor" />
 
         <activity
             android:name="com.kingz.scroll.view_pager.ViewPagerAnimationDemoActivity"
@@ -264,7 +267,7 @@
 
         <activity
             android:name="com.bling.pages.WaveLoadingActivity"
-            android:screenOrientation="portrait"
+            android:screenOrientation="fullSensor"
             android:theme="@style/AppTheme" />
         <activity
             android:name="com.kingz.scroll.SoapFlingActivity"
@@ -274,7 +277,7 @@
         <activity
             android:name="com.zeke.ktx.demo.customview.CustomViewsDemoActivity"
             android:hardwareAccelerated="false"
-            android:screenOrientation="portrait"
+            android:screenOrientation="fullSensor"
             android:theme="@style/AppTheme" />
         <!--自定义View End-->
 
@@ -312,13 +315,13 @@
 
         <activity
             android:name="com.apiDemo.AlarmServiceActivity"
-            android:screenOrientation="portrait"
+            android:screenOrientation="fullSensor"
             android:theme="@android:style/Theme.Black" />
 
         <!-- ************ AIDL 测试页面 ************ -->
         <activity
             android:name="com.kingz.ipcdemo.AIDLActivity"
-            android:screenOrientation="portrait"
+            android:screenOrientation="fullSensor"
             android:theme="@android:style/Theme.Black" />
 
         <!-- ************ Acticity-alias 测试页面 ************ -->
@@ -377,17 +380,20 @@
             android:name="com.zeke.ktx.demo.draw.PracticeDrawActivity"
             android:hardwareAccelerated="false"
             android:theme="@style/AppTheme" />
-        <activity android:name="com.zeke.ktx.aac.CoroutineTestActivity" />
+        <activity android:name="com.zeke.ktx.modules.aac.CoroutineTestActivity"
+            android:screenOrientation="fullSensor" />
 
         <!--服务 exported:外部是否可访问  process:为服务设置不同进程-->
         <service
             android:name="com.kingz.four_components.service.MyComponentsOfService"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="true"
+            tools:ignore="ExportedService" />
 
         <service
             android:name="com.kingz.ipcdemo.BookShopService"
-            android:exported="true">
+            android:exported="true"
+            tools:ignore="ExportedService">
             <intent-filter>
                 <action android:name="com.kingz.action.bookshop" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -406,7 +412,8 @@
 
         <service
             android:name="com.kingz.four_components.service.LocalService"
-            android:exported="true">
+            android:exported="true"
+            tools:ignore="ExportedService">
             <intent-filter>
                 <action android:name="com.kingz.action.local" />
             </intent-filter>
@@ -416,7 +423,8 @@
         <provider
             android:name="com.kingz.four_components.provider.ThetisProvider"
             android:authorities="com.kingz.four_components.myprovider"
-            android:exported="true"/>
+            android:exported="true"
+            tools:ignore="ExportedContentProvider" />
 
         <!--7.0 fileprovider-->
         <provider

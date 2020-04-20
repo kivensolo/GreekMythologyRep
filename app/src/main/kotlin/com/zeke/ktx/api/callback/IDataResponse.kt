@@ -6,6 +6,6 @@ package com.zeke.ktx.api.callback
  * description：数据层回调接口
  */
 interface IDataResponse<T> {
-    fun onSucess(data: T)
+    fun onSuccess(data: T)
     fun onError(code: Int, msg: String, data: T)
 }

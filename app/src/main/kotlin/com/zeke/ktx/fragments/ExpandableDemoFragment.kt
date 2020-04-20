@@ -10,10 +10,10 @@ import com.zeke.kangaroo.utils.ZLog
 import com.zeke.kangaroo.view.animation.AnimatedExpandableListView
 import com.zeke.ktx.base.BaseActivity
 import com.zeke.ktx.base.BaseFragment
-import com.zeke.ktx.player.contract.DemoContract
-import com.zeke.ktx.player.entity.DemoGroup
-import com.zeke.ktx.player.entity.DemoSample
-import com.zeke.ktx.player.presenter.DemoPresenter
+import com.zeke.ktx.modules.player.contract.DemoContract
+import com.zeke.ktx.modules.player.entity.DemoGroup
+import com.zeke.ktx.modules.player.entity.DemoSample
+import com.zeke.ktx.modules.player.presenter.DemoPresenter
 
 /**
  * author：KingZ

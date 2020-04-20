@@ -10,6 +10,7 @@ import android.util.Log;
  * author：KingZ
  * date：2020/1/17
  * description：
+ * replace by {@link com.zeke.ktx.AppLifeCycle}
  */
 @Deprecated
 public class GreekLifeCycle implements LifecycleObserver {

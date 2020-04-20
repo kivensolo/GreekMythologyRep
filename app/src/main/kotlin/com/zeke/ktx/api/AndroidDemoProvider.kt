@@ -10,8 +10,8 @@ import com.google.android.exoplayer2.util.Util
 import com.kingz.config.SampleGroup
 import com.zeke.kangaroo.utils.ZLog
 import com.zeke.ktx.api.callback.IDataResponse
-import com.zeke.ktx.player.entity.DemoGroup
-import com.zeke.ktx.player.entity.DemoSample
+import com.zeke.ktx.modules.player.entity.DemoGroup
+import com.zeke.ktx.modules.player.entity.DemoSample
 import org.jetbrains.annotations.NotNull
 import java.io.IOException
 import java.io.InputStreamReader
@@ -173,7 +173,7 @@ class AndroidDemoProvider constructor() : DataApiService<MutableList<DemoGroup>>
 
         override fun onPostExecute(result: MutableList<DemoGroup>) {
             super.onPostExecute(result)
-            mCallBack.onSucess(result)
+            mCallBack.onSuccess(result)
         }
 
     }

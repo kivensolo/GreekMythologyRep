@@ -45,12 +45,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         getLifecycle().addObserver(new GreekLifeCycle(TAG));
-//        getLifecycle().addObserver(new GenericLifecycleObserver() {
-//            @Override
-//            public void onStateChanged(LifecycleOwner source, Lifecycle.Event event) {
-//                ZLog.d(TAG, "onStateChanged: event ="+event);
-//            }
-//        });
     }
 
     @Override

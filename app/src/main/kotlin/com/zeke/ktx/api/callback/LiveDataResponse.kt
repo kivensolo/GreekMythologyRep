@@ -1,7 +1,7 @@
 package com.zeke.ktx.api.callback
 
-import com.zeke.ktx.player.entity.Live
-import com.zeke.ktx.player.entity.TimeTableData
+import com.zeke.ktx.modules.player.entity.Live
+import com.zeke.ktx.modules.player.entity.TimeTableData
 
 /**
  * author：KingZ

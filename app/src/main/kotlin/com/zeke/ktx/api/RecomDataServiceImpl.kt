@@ -6,8 +6,8 @@ import android.util.JsonReader
 import android.widget.Toast
 import com.starcor.ui.performance.utils.ZLog
 import com.zeke.ktx.api.callback.IDataResponse
-import com.zeke.ktx.player.entity.HomeRecomData
-import com.zeke.ktx.player.entity.PageContent
+import com.zeke.ktx.modules.player.entity.HomeRecomData
+import com.zeke.ktx.modules.player.entity.PageContent
 import java.io.IOException
 import java.io.InputStreamReader
 import java.util.*
@@ -140,7 +140,7 @@ class RecomDataServiceImpl constructor() : DataApiService<MutableList<HomeRecomD
             super.onPostExecute(result)
             //TODO 处理完毕返回数据
 
-            mCallBack.onSucess(result)
+            mCallBack.onSuccess(result)
         }
 
     }

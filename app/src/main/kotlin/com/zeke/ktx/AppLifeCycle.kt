@@ -9,11 +9,16 @@ import android.arch.lifecycle.OnLifecycleEvent
  * date：2020/1/27
  * description：应用的 LifeCycle
  *  也可使用自带的：GenericLifecycleObserver
+ *
+ * // getLifecycle().addObserver(new GenericLifecycleObserver() {
+ * //     @Override
+ * //     public void onStateChanged(LifecycleOwner source, Lifecycle.Event event) {
+ * //         ZLog.d(TAG, "onStateChanged: event ="+event);
+ * //     }
+ * // });
  */
 class AppLifeCycle(var TAG:String) : LifecycleObserver {
-    companion object {
-        var TAG = "Lifecycle"
-    }
+    companion object { var TAG = "Lifecycle" }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun onCreate(){

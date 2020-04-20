@@ -3,8 +3,8 @@ package com.zeke.ktx.api
 import android.content.Context
 import com.google.gson.Gson
 import com.zeke.ktx.api.callback.IDataResponse
-import com.zeke.ktx.player.entity.Live
-import com.zeke.ktx.player.entity.LiveDataDto
+import com.zeke.ktx.modules.player.entity.Live
+import com.zeke.ktx.modules.player.entity.LiveDataDto
 
 /**
  * @description：直播数据服务获取的实现类
@@ -32,7 +32,7 @@ class LiveDataProvider constructor() : DataApiService<MutableList<Live>> {
         val json = String(byteArray)
         val data = Gson().fromJson(json, LiveDataDto::class.java)
         if (data.lives != null) {
-            callback.onSucess(data.lives)
+            callback.onSuccess(data.lives)
         }
     }
 

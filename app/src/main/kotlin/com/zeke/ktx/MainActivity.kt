@@ -13,10 +13,10 @@ import com.kingz.net.retrofit.service.GitHubService
 import com.zeke.kangaroo.utils.ZLog
 import com.zeke.ktx.base.BaseActivity
 import com.zeke.ktx.base.BaseFragment
-import com.zeke.ktx.components.MainBottomController
-import com.zeke.ktx.fragments.home.HomeLiveFragment
-import com.zeke.ktx.fragments.home.HomeRecomFragment
-import com.zeke.ktx.fragments.home.ISwitcher
+import com.zeke.ktx.modules.home.MainBottomController
+import com.zeke.ktx.modules.home.fragments.HomeLiveFragment
+import com.zeke.ktx.modules.home.fragments.HomeRecomFragment
+import com.zeke.ktx.modules.home.fragments.ISwitcher
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 
@@ -76,7 +76,8 @@ class MainActivity : BaseActivity(), ISwitcher {
      * 初始化底部相关
      */
     private fun initBottom() {
-        val bottomController = MainBottomController(findViewById<View>(R.id.main_bottom_layout))
+        val bottomController =
+                MainBottomController(findViewById<View>(R.id.main_bottom_layout))
         bottomController.setListener(this)
 
     }

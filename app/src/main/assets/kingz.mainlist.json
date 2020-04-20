@@ -220,7 +220,11 @@
     "samples": [
       {
         "name": "协程练习",
-        "class": "com.zeke.ktx.aac.CoroutineTestActivity"
+        "class": "com.zeke.ktx.modules.aac.CoroutineTestActivity"
+      },
+      {
+        "name": "ViewModel Demo",
+        "class": "com.zeke.ktx.modules.aac.ViewModelDemoActivity"
       }
     ]
   }
