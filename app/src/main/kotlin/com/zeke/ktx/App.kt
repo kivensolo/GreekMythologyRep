@@ -12,11 +12,11 @@ import com.github.xulcache.CacheCenter
 import com.github.xulcache.CacheDomain
 import com.kingz.customdemo.BuildConfig
 import com.kingz.net.retrofit.mannager.ApiManager
-import com.kingz.net.retrofit.service.GitHubService
 import com.kingz.net.retrofit.service.WeatherService
 import com.takt.FpsTools
 import com.zeke.kangaroo.utils.AppInfoUtils
 import com.zeke.kangaroo.utils.ZLog
+import com.zeke.ktx.api.GitHubService
 import com.zhy.autolayout.config.AutoLayoutConifg
 import java.util.concurrent.TimeUnit
 

@@ -146,8 +146,9 @@ android {
 }
 
 dependencies {
-    implementation project(':library-player')
-    implementation project(':library-views')
+//    implementation project(':library-player')
+//    implementation project(':library-views')
+    implementation project(':library')
     implementation fileTree(include: ['*.jar','*.aar'], dir: 'libs')
 //    implementation 'com.getbase:floatingactionbutton:1.10.1'
     implementation 'com.android.support:multidex:1.0.3'
@@ -173,9 +174,6 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:${lib_versions.rtf2}"
     implementation "com.squareup.retrofit2:converter-gson:${lib_versions.rtf2_2gson}"
     implementation "com.squareup.retrofit2:adapter-rxjava2:${lib_versions.rtf2_adapter}"
-    //OkHttp3 & okio
-    implementation "com.squareup.okhttp3:okhttp:${lib_versions.okhttp}"
-    implementation "com.squareup.okio:okio:${lib_versions.okio}"
 
     implementation "com.android.support.constraint:constraint-layout:${lib_versions.cons_layout}"
     implementation "com.android.support:design:${supports.version}"

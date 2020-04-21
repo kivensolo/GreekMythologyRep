@@ -7,16 +7,16 @@ import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.view.View
 import com.kingz.customdemo.R
-import com.kingz.net.model.GitHubUserInfo
 import com.kingz.net.retrofit.mannager.ApiManager
-import com.kingz.net.retrofit.service.GitHubService
 import com.zeke.kangaroo.utils.ZLog
+import com.zeke.ktx.api.GitHubService
 import com.zeke.ktx.base.BaseActivity
 import com.zeke.ktx.base.BaseFragment
 import com.zeke.ktx.modules.home.MainBottomController
 import com.zeke.ktx.modules.home.fragments.HomeLiveFragment
 import com.zeke.ktx.modules.home.fragments.HomeRecomFragment
 import com.zeke.ktx.modules.home.fragments.ISwitcher
+import com.zeke.ktx.modules.home.model.GitHubUserInfo
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 
@@ -39,7 +39,7 @@ class MainActivity : BaseActivity(), ISwitcher {
 
         //Test Code
         val apiManager = ApiManager.i()
-        val gitHubService = apiManager.getService(GitHubService::class.java)
+        val gitHubService = apiManager.setApi(GitHubService::class.java)
         val userInfoObservable = gitHubService.getUserInfo("kivensolo")
         apiManager.setSubscribe(userInfoObservable, object :Observer<GitHubUserInfo>{
             override fun onSubscribe(d: Disposable) {

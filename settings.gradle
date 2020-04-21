@@ -10,9 +10,12 @@ def modulePrefix = ':'
 include modulePrefix + 'library'
 include modulePrefix + 'library-player'
 include modulePrefix + 'library-views'
+include modulePrefix + 'library-network'
 
 project(modulePrefix+ 'library').projectDir = new File(rootDir, 'library/all')
 project(modulePrefix+ 'library-player').projectDir = new File(rootDir, 'library/player')
 project(modulePrefix+ 'library-views').projectDir = new File(rootDir, 'library/ui')
+project(modulePrefix+ 'library-network').projectDir = new File(rootDir, 'library/lib-network')
 
 println ">>> settings end ]"
+include ':lib-network'

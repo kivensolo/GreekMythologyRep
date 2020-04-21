@@ -1,4 +1,4 @@
-package com.gfd.player.service
+package com.zeke.ktx.api
 
 import com.zeke.ktx.modules.player.entity.VideoItemData
 

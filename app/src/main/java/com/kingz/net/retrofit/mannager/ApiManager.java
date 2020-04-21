@@ -68,7 +68,7 @@ public class ApiManager {
         return SingletonHolder.INSTANCE;
     }
 
-    public <T> T getService(Class<T> clz) {
+    public <T> T setApi(Class<T> clz) {
         Retrofit retrofit = mServiceHashMap.get(clz);
         if (retrofit != null) {
             return retrofit.create(clz);
