@@ -4,9 +4,9 @@ import android.content.Context
 import com.zeke.kangaroo.utils.ZLog
 import com.zeke.ktx.api.DataApiService
 import com.zeke.ktx.api.RecomDataServiceImpl
-import com.zeke.ktx.api.callback.IDataResponse
 import com.zeke.ktx.modules.player.contract.RecomPageContract
 import com.zeke.ktx.modules.player.entity.HomeRecomData
+import com.zeke.network.response.IRequestResponse
 
 /**
  * author：KingZ
@@ -16,7 +16,7 @@ import com.zeke.ktx.modules.player.entity.HomeRecomData
  * 构造函数：Bind View和Presenter的关系
  */
 class RecomPresenter(var mView: RecomPageContract.View) :
-        RecomPageContract.Presenter, IDataResponse<MutableList<HomeRecomData>> {
+        RecomPageContract.Presenter, IRequestResponse<MutableList<HomeRecomData>> {
 
 //    var mService: DataApiService<DemoGroup> = AndroidDemoProvider()
     var mService: DataApiService<MutableList<HomeRecomData>> = RecomDataServiceImpl()

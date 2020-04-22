@@ -9,9 +9,9 @@ import com.google.android.exoplayer2.ParserException
 import com.google.android.exoplayer2.util.Util
 import com.kingz.config.SampleGroup
 import com.zeke.kangaroo.utils.ZLog
-import com.zeke.ktx.api.callback.IDataResponse
 import com.zeke.ktx.modules.player.entity.DemoGroup
 import com.zeke.ktx.modules.player.entity.DemoSample
+import com.zeke.network.response.IRequestResponse
 import org.jetbrains.annotations.NotNull
 import java.io.IOException
 import java.io.InputStreamReader
@@ -26,7 +26,7 @@ import java.util.*
 class AndroidDemoProvider constructor() : DataApiService<MutableList<DemoGroup>> {
     companion object {
         private val TAG = AndroidDemoProvider::class.java.simpleName
-        private lateinit var mCallBack: IDataResponse<MutableList<DemoGroup>>
+        private lateinit var mCallBack: IRequestResponse<MutableList<DemoGroup>>
 
     }
 
@@ -35,7 +35,7 @@ class AndroidDemoProvider constructor() : DataApiService<MutableList<DemoGroup>>
      * @param context Context
      * @param callback DataApiService.IDataResponse
      */
-    override fun requestData(context: Context,@NotNull callback: IDataResponse<MutableList<DemoGroup>>) {
+    override fun requestData(context: Context,@NotNull callback: IRequestResponse<MutableList<DemoGroup>>) {
         mCallBack = callback
         val assetManager = context.assets
         val uris: Array<String>

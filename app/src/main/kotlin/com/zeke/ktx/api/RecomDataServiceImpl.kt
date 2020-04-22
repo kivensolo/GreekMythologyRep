@@ -5,9 +5,9 @@ import android.os.AsyncTask
 import android.util.JsonReader
 import android.widget.Toast
 import com.starcor.ui.performance.utils.ZLog
-import com.zeke.ktx.api.callback.IDataResponse
 import com.zeke.ktx.modules.player.entity.HomeRecomData
 import com.zeke.ktx.modules.player.entity.PageContent
+import com.zeke.network.response.IRequestResponse
 import java.io.IOException
 import java.io.InputStreamReader
 import java.util.*
@@ -20,12 +20,12 @@ import java.util.*
 class RecomDataServiceImpl constructor() : DataApiService<MutableList<HomeRecomData>> {
     companion object {
         private val TAG = RecomDataServiceImpl::class.java.simpleName
-        private lateinit var mCallBack: IDataResponse<MutableList<HomeRecomData>>
+        private lateinit var mCallBack: IRequestResponse<MutableList<HomeRecomData>>
 
     }
 
     override fun requestData(context: Context,
-                             callback: IDataResponse<MutableList<HomeRecomData>>) {
+                             callback: IRequestResponse<MutableList<HomeRecomData>>) {
         mCallBack = callback
         val assetManager = context.assets
         val uris: Array<String>

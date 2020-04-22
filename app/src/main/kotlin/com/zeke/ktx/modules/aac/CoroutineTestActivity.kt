@@ -38,19 +38,23 @@ class CoroutineTestActivity:BaseActivity() {
      */
     private fun apiConcurrentRequest(){
         // 创建协程代码
-        GlobalScope.launch {
+        // 默认创建 Dispatchers.Default 线程组,此处指明Main线程
+        GlobalScope.launch(Dispatchers.Main) {
+
             /** measureTimeMillis返回给定的block代码的执行时间*/
             val time = measureTimeMillis {
                 // 开启io线程  withContext 是谁的Context ? CoroutineContext，协程上下文，
                 val sum = withContext(Dispatchers.IO) {
-                    val asyncA = async { api_1000() }
-                    val asyncB = async { api_1500() }
+                    // withContext 是真正切线程的
+                    val asyncA = async { ioCode1000() }
+                    val asyncB = async { ioCode1500() }
                     asyncA.await() + asyncB.await()
                 }
                 ZLog.d("两个方法返回值的和：${sum}")
             }
-            ZLog.d("执行耗时(Max(API_1,API_2))：${time}")
+            uiCode1(time) //自动切回主线程
         }
+
         ZLog.d("--------apiConcurrent start-------->")
     }
 
@@ -64,13 +68,14 @@ class CoroutineTestActivity:BaseActivity() {
             /** measureTimeMillis返回给定的block代码的执行时间*/
             val time = measureTimeMillis {
                 val sum = withContext(Dispatchers.IO) {
-                    val resultA = api_1000()
-                    val resultB = api_1500(resultA)
+                    val resultA = ioCode1000()
+                    val resultB = ioCode1500(resultA)
                     resultA + resultB
                 }
                 ZLog.d("两个方法返回值的和：${sum}")
             }
             ZLog.d("执行耗时(API_1 + API_2)：${time}")
+            uiCode2()
         }
         ZLog.d("--------apiLinkRequest start--------")
     }
@@ -88,7 +93,7 @@ class CoroutineTestActivity:BaseActivity() {
      * 可挂起方法1
      * 模拟获取用户信息
      */
-    private suspend fun api_1000():Int{
+    private suspend fun ioCode1000():Int{
         ZLog.d("api_1000()")
         delay(1000)
         return 1
@@ -99,15 +104,18 @@ class CoroutineTestActivity:BaseActivity() {
      * 可挂起方法2
      * 模拟获取详情信息
      */
-    private suspend fun api_1500(): Int {
+    private suspend fun ioCode1500(int:Int = 0): Int {
         ZLog.d("api_1500()")
         delay(1500)
-        return 2
+        return 2+int
     }
 
-    private suspend fun api_1500(int:Int): Int {
-        ZLog.d("api_1500(int:Int)")
-        delay(1500)
-        return 2 + int
+    private fun  uiCode1(time:Long){
+        ZLog.d("执行耗时(Max(API_1,API_2))：${time}")
+        print("Coroutines Camp ui1 ${Thread.currentThread().name}")
+    }
+
+    private fun  uiCode2(){
+        print("Coroutines Camp ui2 ${Thread.currentThread().name}")
     }
 }

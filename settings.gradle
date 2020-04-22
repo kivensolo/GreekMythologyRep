@@ -1,9 +1,4 @@
 include ':app'
-
-gradle.beforeProject {
-    project -> println(">>>>>> A Project Ready to config !")
-}
-
 def rootDir = settingsDir
 def modulePrefix = ':'
 // 自定义lib库Project
@@ -15,7 +10,13 @@ include modulePrefix + 'library-network'
 project(modulePrefix+ 'library').projectDir = new File(rootDir, 'library/all')
 project(modulePrefix+ 'library-player').projectDir = new File(rootDir, 'library/player')
 project(modulePrefix+ 'library-views').projectDir = new File(rootDir, 'library/ui')
-project(modulePrefix+ 'library-network').projectDir = new File(rootDir, 'library/lib-network')
+project(modulePrefix+ 'library-network').projectDir = new File(rootDir, 'library/network')
 
-println ">>> settings end ]"
-include ':lib-network'
+gradle.beforeProject {
+    project -> println(">>>>>> A Project Ready to config !")
+}
+
+gradle.afterProject {
+    println "<<<<<<  settings end.]"
+}
+

@@ -6,6 +6,10 @@ ext {
     kotlin_version = '1.3.50'
     kangaroo_v = '1.0.2'
 
+    supports = [
+            version         :'27.1.1'
+    ]
+
     lib_versions = [
             okhttp          :'3.12.1',
             okio            :'2.1.0',
