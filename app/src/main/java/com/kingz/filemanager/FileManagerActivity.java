@@ -14,9 +14,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.base.BaseActivity;
 import com.kingz.customdemo.R;
 import com.kingz.filemanager.adapter.FileListAdapter;
+import com.kingz.module.common.base.BaseActivity;
 import com.zeke.kangaroo.utils.FileUtils;
 import com.zeke.kangaroo.utils.ZLog;
 

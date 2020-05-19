@@ -1,10 +1,11 @@
 package com.kingz.adapter;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 
 import com.kingz.customdemo.R;
 import com.kingz.mode.ListBillData;

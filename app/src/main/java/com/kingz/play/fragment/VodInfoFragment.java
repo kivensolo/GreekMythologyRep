@@ -1,21 +1,20 @@
 package com.kingz.play.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.base.BaseActivity;
-import com.base.BaseFragment;
-import com.base.IPresenter;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.kingz.customdemo.R;
+import com.kingz.module.common.base.BaseActivity;
+import com.kingz.module.common.base.BaseFragment;
+import com.kingz.module.common.base.IPresenter;
 import com.kingz.play.VideoInfo;
 import com.kingz.play.presenter.VodInfoPresenter;
 import com.kingz.play.view.IPlayerView;
@@ -27,7 +26,7 @@ import com.zeke.kangaroo.utils.ZLog;
  * date：2019/7/30
  * description：影片简单样式详情的Fragment
  */
-public class VodInfoFragment extends BaseFragment implements IPlayerView,View.OnClickListener{
+public class VodInfoFragment extends BaseFragment implements IPlayerView{
     private static final String TAG = "VodInfoFragment";
     private VodInfoPresenter vodInfoPresenter;
     private ScrollView mScrollView;
@@ -46,16 +45,6 @@ public class VodInfoFragment extends BaseFragment implements IPlayerView,View.On
         super.onCreate(savedInstanceState);
         vodInfoPresenter = new VodInfoPresenter(this);
         vodInfoPresenter.onCreate();
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.detailpage_vodinfo_layout, container, false);
-        initViews(rootView);
-        onPresenterCreateView();
-        bindButterKnife(rootView);
-        return rootView;
     }
 
     private void initViews(View rootView) {
@@ -185,6 +174,16 @@ public class VodInfoFragment extends BaseFragment implements IPlayerView,View.On
     }
 
     @Override
+    public void showPlayBufferTips() {
+
+    }
+
+    @Override
+    public void dismissPlayBufferTips() {
+
+    }
+
+    @Override
     public void showPlayCompleteTips(String tips) {
 
     }
@@ -237,5 +236,21 @@ public class VodInfoFragment extends BaseFragment implements IPlayerView,View.On
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.detailpage_vodinfo_layout;
+    }
+
+    @Override
+    public void onCreateViewReady() {
+        super.onCreateViewReady();
+        initViews(rootView);
+        onPresenterCreateView();
+    }
+
+    @Override
+    public void onViewCreated() {
     }
 }

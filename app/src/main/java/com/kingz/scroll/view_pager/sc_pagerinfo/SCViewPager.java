@@ -1,8 +1,9 @@
 package com.kingz.scroll.view_pager.sc_pagerinfo;
 
 import android.content.Context;
-import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+
+import androidx.viewpager.widget.ViewPager;
 
 import java.util.ArrayList;
 

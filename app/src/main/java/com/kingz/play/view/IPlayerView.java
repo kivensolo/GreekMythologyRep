@@ -2,7 +2,7 @@ package com.kingz.play.view;
 
 import android.view.View;
 
-import com.base.IAppView;
+import com.kingz.module.common.base.IAppView;
 
 /**
  * date：2019/7/30

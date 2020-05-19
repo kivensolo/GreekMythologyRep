@@ -7,13 +7,14 @@ import android.content.res.Configuration;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.support.annotation.Nullable;
 import android.view.MotionEvent;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
-import com.base.BaseActivity;
+import androidx.annotation.Nullable;
+
 import com.kingz.customdemo.R;
+import com.kingz.module.common.base.BaseActivity;
 import com.zeke.ktx.App;
 
 import java.util.concurrent.TimeUnit;

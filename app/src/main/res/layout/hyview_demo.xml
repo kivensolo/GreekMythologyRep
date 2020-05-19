@@ -24,7 +24,7 @@
                 zhi:titleText="3333"
                 zhi:titleSize="40sp" />-->
 
-    <com.zeke.ktx.demo.draw.CustomOnMeasureView
+    <com.zeke.demo.draw.CustomOnMeasureView
             android:layout_width="440dp"
             android:layout_height="330dp"
             android:padding="50dp"

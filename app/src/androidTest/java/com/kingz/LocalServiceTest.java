@@ -3,10 +3,11 @@ package com.kingz;
 import android.content.Intent;
 import android.os.IBinder;
 import android.os.RemoteException;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.filters.MediumTest;
-import android.support.test.rule.ServiceTestRule;
-import android.support.test.runner.AndroidJUnit4;
+
+import androidx.test.InstrumentationRegistry;
+import androidx.test.filters.MediumTest;
+import androidx.test.rule.ServiceTestRule;
+import androidx.test.runner.AndroidJUnit4;
 
 import com.kingz.four_components.service.LocalService;
 import com.kingz.four_components.service.MyComponentsOfService;

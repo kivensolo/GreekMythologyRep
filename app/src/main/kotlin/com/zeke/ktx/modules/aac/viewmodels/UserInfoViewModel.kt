@@ -1,7 +1,7 @@
 package com.zeke.ktx.modules.aac.viewmodels
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 
 /**
  * date：2020/1/17

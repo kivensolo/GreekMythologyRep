@@ -1,6 +1,6 @@
 package com.zeke.ktx.api
 
-import com.zeke.ktx.modules.player.entity.VideoItemData
+import com.zeke.home.entity.VideoItemData
 
 interface PlayService {
     fun getVideoUrl(url: String,callBack: GetVideoUrlCallBack)

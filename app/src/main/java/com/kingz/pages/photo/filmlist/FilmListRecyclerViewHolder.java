@@ -1,8 +1,9 @@
 package com.kingz.pages.photo.filmlist;
 
-import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.View;
 import android.widget.ImageView;
+
+import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
 import com.kingz.customdemo.R;
 

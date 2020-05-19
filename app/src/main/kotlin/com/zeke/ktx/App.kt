@@ -4,20 +4,13 @@ import android.app.Activity
 import android.app.Application
 import android.graphics.Color
 import android.os.Bundle
-import android.os.Handler
 import android.os.StrictMode
-import android.support.multidex.MultiDexApplication
 import android.util.Log
 import com.github.xulcache.CacheCenter
 import com.github.xulcache.CacheDomain
-import com.kingz.customdemo.BuildConfig
-import com.kingz.net.retrofit.mannager.ApiManager
-import com.kingz.net.retrofit.service.WeatherService
+import com.kingz.module.common.CommonApp
 import com.takt.FpsTools
 import com.zeke.kangaroo.utils.AppInfoUtils
-import com.zeke.kangaroo.utils.ZLog
-import com.zeke.ktx.api.GitHubService
-import com.zhy.autolayout.config.AutoLayoutConifg
 import java.util.concurrent.TimeUnit
 
 
@@ -26,17 +19,16 @@ import java.util.concurrent.TimeUnit
  * date:  2016/5/10 23:25
  * Rfactor in 2020/2/15 by kotlin.
  */
-open class App : MultiDexApplication() {
+open class App : CommonApp() {
     private var lifecycleHandler: LifecycleHandler? = null
 
-    private var _appMainHandler: Handler? = null
     private val STRICT_MODE = false
 
     companion object {
         const val TAG = "Application"
-        @JvmField var instance: App? = null
         @JvmField var SCREEN_WIDTH = 1280
         @JvmField var SCREEN_HEIGHT = 720
+        @JvmField var instance:App?= null
 
         // 全局缓存设置
         const val CACHE_DOMAIN_ID_APP = 0x1001
@@ -51,11 +43,9 @@ open class App : MultiDexApplication() {
     override fun onCreate() {
         super.onCreate()
         instance = this
-        _appMainHandler = Handler(mainLooper)
         initCacheCenter()
         initAPPScreenParms()
         init()
-        initLog()
 //        initFpsDebugView()
         initStrictListenner()
         //        STCFrameChecker.getInstance()
@@ -63,23 +53,12 @@ open class App : MultiDexApplication() {
 //                .setFrameThreshold(2)
 //                .start();
         //Bmob.initialize(this, "fea19b87f0795833b30de91f46f1465c");
-        initApiManager()
     }
 
-    /**
-     * 初始化app网络管理器
-     */
-    private fun initApiManager() {
-        ApiManager.i().registServer(GitHubService::class.java)
-        ApiManager.i().registServer(WeatherService::class.java)
-    }
 
     private fun init() {
         lifecycleHandler = LifecycleHandler()
         registerActivityLifecycleCallbacks(lifecycleHandler)
-        AutoLayoutConifg.getInstance()
-                .useDeviceSize()
-                .init(applicationContext)
     }
 
     private fun initFpsDebugView() {
@@ -127,12 +106,6 @@ open class App : MultiDexApplication() {
         }
     }
 
-    private fun initLog() {
-        if (BuildConfig.DEBUG) {
-            ZLog.isDebug = true
-        }
-    }
-
 
     fun hasActivities(): Boolean {
         return lifecycleHandler!!.visibleActivityNum > 0
@@ -145,20 +118,12 @@ open class App : MultiDexApplication() {
         super.onTerminate()
     }
 
-    fun postToMainLooper(runnable: Runnable) {
-        _appMainHandler?.post(runnable)
-    }
-
-    fun postDelayToMainLooper(runnable: Runnable, ms: Long) {
-        _appMainHandler?.postDelayed(runnable, ms)
-    }
-
     // --------------------全局缓存---------------------- Start
     private fun initCacheCenter() {
-        CacheCenter.setRevision(AppInfoUtils.getAppVersion(instance?.applicationContext))
+        CacheCenter.setRevision(AppInfoUtils.getAppVersion(applicationContext))
         CacheCenter.setVersion("test_version")
 
-        appCacheDomain = CacheCenter.buildCacheDomain(CACHE_DOMAIN_ID_APP,instance?.applicationContext)
+        appCacheDomain = CacheCenter.buildCacheDomain(CACHE_DOMAIN_ID_APP,applicationContext)
                 .setDomainFlags(CacheCenter.CACHE_FLAG_FILE
                         or CacheCenter.CACHE_FLAG_REVISION_LOCAL)
                 .setLifeTime(CACHE_LIFETIME)

@@ -14,8 +14,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.base.BaseActivity;
 import com.kingz.customdemo.R;
+import com.kingz.module.common.base.BaseActivity;
 import com.kingz.utils.ToastTools;
 import com.mplayer.adapter.ChanellListAdapter;
 import com.mplayer.view.ApolloSeekBar;

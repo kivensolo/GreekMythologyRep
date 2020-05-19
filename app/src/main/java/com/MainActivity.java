@@ -15,11 +15,11 @@ import android.widget.Toast;
 
 import com.google.android.exoplayer2.ParserException;
 import com.google.android.exoplayer2.util.Util;
-import com.kingz.adapter.DemoFragmentExpandableListAdapter;
 import com.kingz.config.DemoSample;
 import com.kingz.config.Sample;
 import com.kingz.config.SampleGroup;
 import com.kingz.customdemo.R;
+import com.zeke.home.adapter.DemoFragmentExpandableListAdapter;
 import com.zeke.kangaroo.utils.ZLog;
 import com.zeke.kangaroo.view.animation.AnimatedExpandableListView;
 

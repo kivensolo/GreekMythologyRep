@@ -16,7 +16,7 @@ import com.module.tools.ViewUtils;
  * description: 一个可编辑并且带默认滚动条的文本控件 <br>
  */
 
-public class LogTextBox extends android.support.v7.widget.AppCompatTextView {
+public class LogTextBox extends androidx.appcompat.widget.AppCompatTextView {
     private boolean borderFlag = false;
     private Paint  borderPaint = new Paint();
     public LogTextBox(Context context) {

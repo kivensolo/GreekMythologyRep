@@ -3,8 +3,8 @@ package com.zeke.ktx.modules.aac
 import android.os.Bundle
 import android.view.View
 import com.kingz.customdemo.R
+import com.kingz.module.common.BaseActivity
 import com.zeke.kangaroo.utils.ZLog
-import com.zeke.ktx.base.BaseActivity
 import kotlinx.coroutines.*
 import kotlin.system.measureTimeMillis
 
@@ -13,7 +13,7 @@ import kotlin.system.measureTimeMillis
  * date:  2020/4/12 20:39 <br>
  * description: 协程练习 <br>
  */
-class CoroutineTestActivity:BaseActivity() {
+class CoroutineTestActivity: BaseActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

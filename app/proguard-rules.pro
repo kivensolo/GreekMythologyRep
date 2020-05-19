@@ -62,6 +62,7 @@
 #Fragment不需要在AndroidManifest.xml中注册，需要额外保护下
 -keep public class * extends android.support.v4.app.Fragment
 -keep public class * extends android.app.Fragment
+-keep public class * extends androidx.fragment.app.Fragment
 
 -dontnote android.support.**
 -dontwarn android.support.**
@@ -69,6 +70,8 @@
 -keep public class * extends android.support.v4.**
 -keep public class * extends android.support.v7.**
 -keep public class * extends android.support.annotation.**
+-keep public class * extends androidx.appcompat.**
+-keep public class * extends androidx.annotation.**
 
 # 保留R下面的资源
 -keep class **.R$* {*;}

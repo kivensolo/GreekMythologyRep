@@ -1,17 +1,18 @@
 package com.kingz.widgets.android_src;
 
 import android.os.Bundle;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.PagerTabStrip;
-import android.support.v4.view.ViewPager;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.base.BaseActivity;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.PagerTabStrip;
+import androidx.viewpager.widget.ViewPager;
+
 import com.kingz.animation.ViewpagesTransformerAnimation;
 import com.kingz.customdemo.R;
+import com.kingz.module.common.base.BaseActivity;
 import com.zeke.kangaroo.utils.BitMapUtils;
 import com.zeke.kangaroo.view.ImageIndicatorView;
 

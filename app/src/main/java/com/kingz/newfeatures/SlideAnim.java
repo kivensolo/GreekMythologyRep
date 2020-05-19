@@ -3,11 +3,12 @@ package com.kingz.newfeatures;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.transition.Slide;
 import android.view.Window;
 import android.view.animation.AnticipateInterpolator;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.kingz.customdemo.R;
 

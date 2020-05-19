@@ -10,15 +10,13 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.base.BaseActivity;
 import com.kingz.adapter.PropertyAdapter;
 import com.kingz.customdemo.R;
+import com.kingz.module.common.base.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import butterknife.BindView;
 
 /**
  * author: King.Z
@@ -29,9 +27,7 @@ public class PropertyAnimationsActivity extends BaseActivity implements AdapterV
 
     public static final String TAG = "PropertyAnimationsActivity";
     protected PropertyAdapter propertyAdapter;
-    @BindView(R.id.anmations_list_id)
     protected ListView mListView;
-    @BindView(R.id.animation_show_text_id)
     protected TextView mRightText;
     List<String> datas;
 
@@ -57,6 +53,8 @@ public class PropertyAnimationsActivity extends BaseActivity implements AdapterV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.multi_screen_layout);
+        mListView = findViewById(R.id.anmations_list_id);
+        mRightText = findViewById(R.id.animation_show_text_id);
         initViews();
     }
 

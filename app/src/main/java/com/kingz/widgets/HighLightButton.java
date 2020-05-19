@@ -3,11 +3,12 @@ package com.kingz.widgets;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Rect;
-import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
+
+import androidx.appcompat.widget.AppCompatButton;
 
 import com.kingz.customdemo.R;
 import com.zeke.kangaroo.utils.UIUtils;

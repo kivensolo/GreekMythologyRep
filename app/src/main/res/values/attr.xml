@@ -23,15 +23,6 @@
         <enum name="center" value="1"/>
     </attr>
 
-    <declare-styleable name="testView">
-        <attr name="titleText" format="string"/>
-        <attr name="titleColor" format="color"/>
-        <attr name="titleSize" format="dimension"/>
-        <attr name="myImage" format="reference"/>
-        <attr name="imageWidth" format="dimension"/>
-        <attr name="imageHeight" format="dimension"/>
-        <attr name="imageScaleType"/>
-    </declare-styleable>
 
     <declare-styleable name="RainView">
         <attr name="rainNum" format="integer"/>

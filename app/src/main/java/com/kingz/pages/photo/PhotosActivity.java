@@ -8,11 +8,9 @@ import android.widget.ListView;
 
 import com.kingz.adapter.BitmapListAdapter;
 import com.kingz.customdemo.R;
-import com.zeke.ktx.base.BaseActivity;
+import com.kingz.module.common.BaseActivity;
 
 import java.util.List;
-
-import butterknife.BindView;
 
 /**
  * author: King.Z <br>
@@ -24,9 +22,7 @@ public abstract class PhotosActivity extends BaseActivity
         implements AdapterView.OnItemClickListener {
 
     protected BitmapListAdapter bitmapAdapter;
-    @BindView(R.id.type_change_id)
     protected ListView mListView;
-    @BindView(R.id.normal_pic)
     protected ImageView picView;
     List<String> datas;
 
@@ -34,6 +30,8 @@ public abstract class PhotosActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.photos_activity);
+        mListView = findViewById(R.id.type_change_id);
+        picView = findViewById(R.id.normal_pic);
         initViews();
     }
 

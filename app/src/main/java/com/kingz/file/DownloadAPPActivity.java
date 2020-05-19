@@ -1,11 +1,8 @@
 package com.kingz.file;
 
-import android.arch.lifecycle.LifecycleOwner;
-import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -13,14 +10,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
+import androidx.annotation.Nullable;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
 import androidx.work.Constraints;
 import androidx.work.Data;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
-import com.base.BaseActivity;
 import com.kingz.customdemo.R;
+import com.kingz.module.common.base.BaseActivity;
 import com.kingz.utils.ToastTools;
 import com.kingz.work.FileDownloadWorker;
 import com.kingz.work.FileDownloader;

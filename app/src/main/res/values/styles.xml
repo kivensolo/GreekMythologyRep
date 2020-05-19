@@ -98,10 +98,7 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <style name="custom_tab_layout_style" parent="TextAppearance.Design.Tab">
-        <item name="textAllCaps">false</item>
-        <item name="android:textSize">15sp</item>
-    </style>
+
 
 
     <style name="hub_round_btn_style">

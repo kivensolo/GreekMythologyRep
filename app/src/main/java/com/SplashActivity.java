@@ -14,8 +14,8 @@ import android.widget.VideoView;
 
 import com.kingz.customdemo.BuildConfig;
 import com.kingz.customdemo.R;
-import com.zeke.ktx.MainActivity;
-import com.zeke.ktx.base.BaseActivity;
+import com.kingz.module.common.BaseActivity;
+import com.zeke.home.MainActivity;
 import com.zeke.ktx.view.LogininView;
 
 /**

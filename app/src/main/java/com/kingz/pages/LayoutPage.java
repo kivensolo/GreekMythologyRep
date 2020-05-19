@@ -2,19 +2,20 @@ package com.kingz.pages;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.base.BaseActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.kingz.adapter.PageListAdapter;
 import com.kingz.customdemo.R;
 import com.kingz.four_components.activity.news.NewsActivity;
 import com.kingz.mode.ListBillData;
+import com.kingz.module.common.base.BaseActivity;
 
 public class LayoutPage extends BaseActivity{
 

@@ -1,0 +1,55 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    
+    implementation rootProject.ext.dependencies["appcompat"]
+    testImplementation rootProject.ext.test["junit"]
+    androidTestImplementation rootProject.ext.test["test-ext-junit"]
+    androidTestImplementation rootProject.ext.test["support-test-espresso"]
+
+    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+
+    compileOnly "com.squareup.retrofit2:retrofit:${lib_versions.rtf2}"
+    compileOnly "com.squareup.retrofit2:converter-gson:${lib_versions.rtf2_2gson}"
+    compileOnly "com.squareup.retrofit2:adapter-rxjava2:${lib_versions.rtf2_adapter}"
+
+    compileOnly "io.reactivex.rxjava2:rxjava:${lib_versions.rxJava}"
+    compileOnly "io.reactivex.rxjava2:rxandroid:${lib_versions.rxandroid}"
+    compileOnly 'com.zhy:autolayout:1.4.5'
+//    compileOnly rootProject.ext.dependencies["kangaroo"]
+
+    compileOnly 'com.google.android.material:material:1.1.0'
+
+    // 网络库和工具库由Common引出
+    api project(':library-network' )
+    api project(":library-views")
+    api project(":kangaroo")
+
+}

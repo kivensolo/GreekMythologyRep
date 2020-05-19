@@ -1,5 +1,7 @@
 package com.base;
 
+import com.kingz.module.common.base.IAppView;
+
 /**
  * author：KingZ
  * date：2019/7/30

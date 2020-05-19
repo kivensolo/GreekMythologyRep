@@ -3,7 +3,8 @@ package com.kingz.four_components.provider;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.Nullable;
 
 /**
  * Copyright(C) 2015, 北京视达科科技有限公司

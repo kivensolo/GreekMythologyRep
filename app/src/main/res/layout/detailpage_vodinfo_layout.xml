@@ -138,7 +138,7 @@
                     tools:text="更新至14集" />
 
                 <!-- 剧集列表-->
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/episode_recycler"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -175,7 +175,7 @@
                     android:textStyle="bold"
                     tools:ignore="RtlSymmetry"/>
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recommend_recycler"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

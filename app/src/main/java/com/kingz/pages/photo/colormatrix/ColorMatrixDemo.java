@@ -2,8 +2,8 @@ package com.kingz.pages.photo.colormatrix;
 
 import android.os.Bundle;
 
-import com.base.BaseActivity;
 import com.kingz.customdemo.R;
+import com.kingz.module.common.base.BaseActivity;
 
 /**
  * Copyright(C) 2016, 北京视达科科技有限公司

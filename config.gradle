@@ -2,7 +2,7 @@
 ext {
     modulePrefix = ':'
 
-    android = [compileSdkVersion: 27,
+    android = [compileSdkVersion: 28,
                buildToolsVersion: '28.0.3', //AGP 3.2.1以后默认最低28.0.3
                minSdkVersion    : 18,
                targetSdkVersion : 22,
@@ -37,9 +37,9 @@ ext {
             ijk             :'0.8.4',
             exo             :'2.7.3',
 
-            glide           :'4.5.0',
-            glide_c         :'4.5.0',
-            glide_okhttp    :'4.3.1',
+            glide           :'4.8.0',
+            glide_c         :'4.8.0',
+            glide_okhttp    :'4.8.0',
 
             lifecycle       :'1.1.0',
             gson            :'2.8.5'
@@ -49,7 +49,26 @@ ext {
             version         :'27.1.1'
     ]
 
+    test = [
+            "junit"                : 'junit:junit:4.12',
+
+            // Core library
+            "test-core"            : 'androidx.test:core:1.0.0',
+            // AndroidJUnitRunner and JUnit Rules
+            "test-runner"          : 'androidx.test:runner:1.1.0',
+            "test-rules"           : 'androidx.test:rules:1.1.0',
+
+            // Assertions
+            "test-ext-junit"       : 'androidx.test.ext:junit:1.1.1',
+            "test-ext-truth"       : 'androidx.test.ext:truth:1.1.1',
+
+            // Espresso dependencies
+            "support-test-espresso": 'androidx.test.espresso:espresso-core:3.2.0',
+    ]
+
     dependencies = [
+            "appcompat"              : "androidx.appcompat:appcompat:$rootProject.ext.androidx",
+
             // Kotlin
             "kotlin"                 : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$rootProject.ext.kotlin_version",
             "kotlin-reflect"         : "org.jetbrains.kotlin:kotlin-reflect:$rootProject.ext.kotlin_version",
@@ -69,7 +88,7 @@ ext {
 //            "paging-runtime-ktx"     : "androidx.paging:paging-runtime-ktx:${rootProject.ext.paging_version}",
 
             //My lib
-            "kangaroo"               : "com.github.zeke:kangaroo:1.0.2",
+            "kangaroo"               : "com.github.zeke:kangaroo:1.0.3",
             "xul_cache"              : "com.github.xul:cache:1.0.0"
     ]
 

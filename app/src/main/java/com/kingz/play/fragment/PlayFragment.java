@@ -1,23 +1,23 @@
 package com.kingz.play.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.view.GestureDetector;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.PopupWindow;
 
-import com.base.BaseActivity;
-import com.base.BaseFragment;
-import com.base.IPresenter;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.kingz.customdemo.R;
 import com.kingz.library.player.IMediaPlayer;
+import com.kingz.module.common.base.BaseActivity;
+import com.kingz.module.common.base.BaseFragment;
+import com.kingz.module.common.base.IPresenter;
 import com.kingz.play.MediaParams;
 import com.kingz.play.MediaPlayTool;
 import com.kingz.play.PlayerGestureListener;
@@ -77,12 +77,16 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
         }
     }
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.player_view_controller_basic_new, container, false);
+    public int getLayoutId() {
+        return R.layout.player_view_controller_basic_new;
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    @Override
+    public void onViewCreated() {
         playView = rootView.findViewById(R.id.play_view);
-//        playView.setOnClickListener(this);
+        //        playView.setOnClickListener(this);
         playView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -115,9 +119,8 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
         playerUiSwitcher.setOnClickListener(this);
         playerUiSwitcher.setOnSeekBarChangeListener(playPresenter.seekBarChangeListener);
         playPresenter.onCreateView();
-        bindButterKnife(rootView);
-        return rootView;
     }
+
 
     @Override
     public void onClick(View v) {
@@ -199,17 +202,17 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
      * @return 是否成功切换
      */
     public boolean switchScreenMode(boolean isFull) {
-        if (mActivity != null && !playerUiSwitcher.isLocked()) {
-            final int autoRotation = Settings.System.getInt(mActivity.getContentResolver(),
+        if (getMActivity() != null && !playerUiSwitcher.isLocked()) {
+            final int autoRotation = Settings.System.getInt(getMActivity().getContentResolver(),
                     Settings.System.ACCELEROMETER_ROTATION, 0);
             int orientation = isFull ? ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE : ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
-            mActivity.setRequestedOrientation(orientation);
+            getMActivity().setRequestedOrientation(orientation);
             playView.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     //2秒后，横竖屏在由重力感应决定
                     if (isShown() && autoRotation == 1 && !playerUiSwitcher.isLocked()) {
-                        mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+                        getMActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
                     }
                 }
             }, ORIENTATION_CHANGE_DELAY_MS);
@@ -255,6 +258,16 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
     @Override
     public void showPlayingView() {
         playerUiSwitcher.showPlayingView();
+    }
+
+    @Override
+    public void showPlayBufferTips() {
+
+    }
+
+    @Override
+    public void dismissPlayBufferTips() {
+
     }
 
     @Override

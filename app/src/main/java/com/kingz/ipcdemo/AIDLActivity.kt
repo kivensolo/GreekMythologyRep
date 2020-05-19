@@ -9,8 +9,8 @@ import android.os.IBinder
 import android.view.View
 import android.widget.Toast
 import com.kingz.customdemo.R
+import com.kingz.module.common.BaseActivity
 import com.zeke.kangaroo.utils.ZLog
-import com.zeke.ktx.base.BaseActivity
 
 /**
  * author: King.Z <br></br>

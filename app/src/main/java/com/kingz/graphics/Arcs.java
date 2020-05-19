@@ -10,11 +10,11 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.kingz.customdemo.R;
+import com.kingz.module.common.BaseActivity;
 import com.kingz.widgets.text.LogTextBox;
 import com.module.tools.ScreenTools;
 import com.zeke.kangaroo.utils.ZLog;
 import com.zeke.ktx.App;
-import com.zeke.ktx.base.BaseActivity;
 
 /**
  * author: King.Z

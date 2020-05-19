@@ -1,18 +1,17 @@
 package com.kingz.play.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.base.BaseFragment;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+
 import com.kingz.customdemo.R;
+import com.kingz.module.common.base.BaseFragment;
 import com.kingz.play.VideoInfo;
 import com.mplayer.exo_player.DetailPageActivty;
 
@@ -46,10 +45,15 @@ public class VodDetailFragment extends BaseFragment implements View.OnClickListe
         super.onCreate(savedInstanceState);
     }
 
-    @Nullable
+
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_vod_detail, container, false);
+    public int getLayoutId() {
+        return R.layout.fragment_vod_detail;
+    }
+
+    @Override
+    public void onCreateViewReady() {
+        super.onCreateViewReady();
         nameScoreTextview = rootView.findViewById(R.id.tv_name_video);
         newEpisodeTv = rootView.findViewById(R.id.tv_episode_desc);
         actorTv = rootView.findViewById(R.id.tv_actor);
@@ -57,8 +61,6 @@ public class VodDetailFragment extends BaseFragment implements View.OnClickListe
         detailTv = rootView.findViewById(R.id.video_detail);
         rootView.findViewById(R.id.arrow_down).setOnClickListener(this);
         showUI();
-        bindButterKnife(rootView);
-        return rootView;
     }
 
     private void showUI() {
@@ -88,5 +90,10 @@ public class VodDetailFragment extends BaseFragment implements View.OnClickListe
                 }
                 break;
         }
+    }
+
+    @Override
+    public void onViewCreated() {
+
     }
 }

@@ -1,6 +1,6 @@
 package com.kingz.play.presenter;
 
-import com.base.IPresenter;
+import com.kingz.module.common.base.IPresenter;
 
 /**
  * author：KingZ

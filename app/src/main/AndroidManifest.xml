@@ -90,7 +90,7 @@
 
         <!-- 主Activity -->
         <activity
-            android:name="com.zeke.ktx.MainActivity"
+            android:name="com.zeke.home.MainActivity"
             android:screenOrientation="fullSensor"
             android:launchMode="singleTop"
             android:windowSoftInputMode="stateAlwaysHidden"
@@ -275,7 +275,7 @@
 
         <!--自定义View Start-->
         <activity
-            android:name="com.zeke.ktx.demo.customview.CustomViewsDemoActivity"
+            android:name="com.zeke.demo.customview.CustomViewsDemoActivity"
             android:hardwareAccelerated="false"
             android:screenOrientation="fullSensor"
             android:theme="@style/AppTheme" />
@@ -334,7 +334,7 @@
             android:name="com.kingz.graphics.Arcs"
             android:theme="@android:style/Theme.Holo.Light" />
         <activity
-            android:name="com.zeke.ktx.demo.glide.GlideCardDemoActivity"
+            android:name="com.zeke.demo.glide.GlideCardDemoActivity"
             android:theme="@style/AppTheme" />
 
 
@@ -374,10 +374,10 @@
             tools:targetApi="n"/>
         <!--  ************ Android >=5.0 新特性展示  End ************ -->
 
-        <activity android:name="com.zeke.ktx.activities.indicator.ScrollableTabExampleActivity" />
+        <activity android:name="com.zeke.home.ScrollableTabExampleActivity" />
 
         <activity
-            android:name="com.zeke.ktx.demo.draw.PracticeDrawActivity"
+            android:name="com.zeke.demo.draw.PracticeDrawActivity"
             android:hardwareAccelerated="false"
             android:theme="@style/AppTheme" />
         <activity android:name="com.zeke.ktx.modules.aac.CoroutineTestActivity"
@@ -428,7 +428,7 @@
 
         <!--7.0 fileprovider-->
         <provider
-            android:name="android.support.v4.content.FileProvider"
+            android:name="androidx.core.content.FileProvider"
             android:authorities="com.kingz.newfeatures.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">

@@ -1,6 +1,6 @@
 package com.zeke.ktx.modules.player.contract
 
-import com.zeke.ktx.base.presenter.IPresenter
+import com.kingz.module.common.base.IPresenter
 
 interface GithubContract {
     interface Presenter : IPresenter {

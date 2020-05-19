@@ -33,10 +33,19 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "com.android.support:appcompat-v7:${supports.version}"
+    implementation "androidx.appcompat:appcompat:1.1.0"
+
+
+    //RxJava2(RxAndroid) + retrofit2
+    implementation "io.reactivex.rxjava2:rxjava:2.2.2"
+    implementation "io.reactivex.rxjava2:rxandroid:2.1.0"
+    implementation "com.squareup.retrofit2:retrofit:2.6.1"
+    implementation "com.squareup.retrofit2:converter-gson:2.0.0"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:2.2.0"
 
     //OkHttp3 & okio
     implementation lib_dependencies["okHttp3"]
     implementation lib_dependencies["okio"]
-    implementation lib_dependencies["kangaroo"]
+//    implementation lib_dependencies["kangaroo"]
+    implementation project(":kangaroo")
 }

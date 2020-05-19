@@ -1,16 +1,22 @@
 include ':app'
-def rootDir = settingsDir
-def modulePrefix = ':'
-// 自定义lib库Project
-include modulePrefix + 'library'
-include modulePrefix + 'library-player'
-include modulePrefix + 'library-views'
-include modulePrefix + 'library-network'
+include ':module-Common'
+include ':module-Home'
+include ':module-Demo'
 
-project(modulePrefix+ 'library').projectDir = new File(rootDir, 'library/all')
-project(modulePrefix+ 'library-player').projectDir = new File(rootDir, 'library/player')
-project(modulePrefix+ 'library-views').projectDir = new File(rootDir, 'library/ui')
-project(modulePrefix+ 'library-network').projectDir = new File(rootDir, 'library/network')
+def rootDir = settingsDir
+// 自定义lib库Project
+include ':library'
+include ':library-player'
+include ':library-views'
+include ':library-network'
+
+project(':library').projectDir = new File(rootDir, 'library/all')
+project(':library-player').projectDir = new File(rootDir, 'library/player')
+project(':library-views').projectDir = new File(rootDir, 'library/ui')
+project(':library-network').projectDir = new File(rootDir, 'library/network')
+
+include ':kangaroo'
+project(':kangaroo').projectDir = new File("F:\\github\\kviensolo\\AKangaroo\\app")
 
 gradle.beforeProject {
     project -> println(">>>>>> A Project Ready to config !")

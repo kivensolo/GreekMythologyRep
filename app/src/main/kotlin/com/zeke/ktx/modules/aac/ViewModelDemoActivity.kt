@@ -2,13 +2,13 @@ package com.zeke.ktx.modules.aac
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.kingz.customdemo.R
+import com.kingz.module.common.BaseActivity
 import com.zeke.kangaroo.utils.ZLog
-import com.zeke.ktx.base.BaseActivity
 import com.zeke.ktx.modules.aac.viewmodels.User
 import com.zeke.ktx.modules.aac.viewmodels.UserInfoViewModel
 import kotlinx.android.synthetic.main.activity_crossfade.*

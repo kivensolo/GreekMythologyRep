@@ -6,20 +6,20 @@
               android:clipChildren="false"
               android:orientation="vertical">
 
-    <android.support.v4.view.ViewPager
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/original_viewpager"
         android:layout_width="wrap_content"
         android:layout_height="450dp"
         android:layout_gravity="center"
         android:clipChildren="false">
 
-        <android.support.v4.view.PagerTabStrip
+        <androidx.viewpager.widget.PagerTabStrip
             android:id="@+id/tabstrip"
             android:layout_width="wrap_content"
             android:layout_height="50dip"
             android:gravity="center"/>
 
-    </android.support.v4.view.ViewPager>
+    </androidx.viewpager.widget.ViewPager>
 
     <com.zeke.kangaroo.view.ImageIndicatorView
         android:id="@+id/dotsview_main"

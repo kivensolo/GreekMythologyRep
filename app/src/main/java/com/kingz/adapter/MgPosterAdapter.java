@@ -3,12 +3,13 @@ package com.kingz.adapter;
 import android.app.Service;
 import android.content.Context;
 import android.os.Vibrator;
-import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import com.kingz.customdemo.R;
 import com.kingz.net.OkHttpClientManager;

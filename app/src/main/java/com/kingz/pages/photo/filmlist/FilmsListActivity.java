@@ -3,17 +3,18 @@ package com.kingz.pages.photo.filmlist;
 
 import android.animation.ValueAnimator;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.kingz.adapter.FilmRecycleViewPageAdapter;
 import com.kingz.customdemo.R;
 import com.kingz.mode.PosterGroupInfo;
-import com.zeke.ktx.base.BaseActivity;
+import com.kingz.module.common.BaseActivity;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;

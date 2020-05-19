@@ -3,10 +3,11 @@ package com.kingz.newfeatures;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.transition.Fade;
 import android.view.Window;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.kingz.customdemo.R;
 import com.kingz.newfeatures.utils.CustomChangeBounds;

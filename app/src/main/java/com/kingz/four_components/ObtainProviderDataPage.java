@@ -13,9 +13,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.base.BaseActivity;
 import com.kingz.customdemo.R;
 import com.kingz.four_components.provider.ContentChangeListener;
+import com.kingz.module.common.base.BaseActivity;
 import com.zeke.kangaroo.utils.ZLog;
 
 import java.util.ArrayList;

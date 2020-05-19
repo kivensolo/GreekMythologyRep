@@ -5,14 +5,15 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
+import androidx.annotation.Nullable;
+
+import com.kingz.module.common.BaseActivity;
 import com.zeke.kangaroo.utils.ZLog;
-import com.zeke.ktx.base.BaseActivity;
 
 /**
  * author: King.Z <br>

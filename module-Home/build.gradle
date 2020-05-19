@@ -1,0 +1,43 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation rootProject.ext.dependencies["appcompat"]
+    testImplementation rootProject.ext.test["junit"]
+    androidTestImplementation rootProject.ext.test["test-ext-junit"]
+    androidTestImplementation rootProject.ext.test["support-test-espresso"]
+
+    implementation project(':module-Common')
+    implementation 'com.google.android.material:material:1.1.0'
+
+    implementation "com.google.code.gson:gson:$lib_versions.gson"
+
+//    compileOnly rootProject.ext.dependencies["kangaroo"]
+//    compileOnly project(":module-Demo")
+}

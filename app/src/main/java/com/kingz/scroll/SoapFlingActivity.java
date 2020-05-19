@@ -3,8 +3,8 @@ package com.kingz.scroll;
 import android.os.Bundle;
 import android.view.ViewGroup;
 
-import com.base.BaseActivity;
 import com.kingz.customdemo.R;
+import com.kingz.module.common.base.BaseActivity;
 
 /**
  * author: King.Z <br>

@@ -28,7 +28,7 @@ dependencies {
     api "tv.danmaku.ijk.media:ijkplayer-x86:${lib_versions.ijk}"
     api "tv.danmaku.ijk.media:ijkplayer-exo:${lib_versions.ijk}"
 
-    implementation "com.android.support:appcompat-v7:${supports.version}"
+    implementation "androidx.appcompat:appcompat:1.1.0"
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
 }

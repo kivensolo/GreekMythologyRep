@@ -1,0 +1,34 @@
+<resources>
+    <!--
+【resource】是根标签，可以在里面定义若干个【declare-styleable】
+  <declare-styleable name="XXXXX">中name定义了变量的名称，下面可以再自定义多个属性attr
+  对于<attr name="progress_unreached_color" format="dimension"/>来说，
+  其属性的名称为"progress_unreached_color"， format指定了该属性类型为dimension，只能表示字体的大小。
+  format还可以指定其他的类型比如:
+    reference   表示引用，参考某一资源ID
+    string   表示字符串
+    color   表示颜色值
+    dimension   表示尺寸值
+    boolean   表示布尔值
+    integer   表示整型值
+    float   表示浮点值
+    fraction   表示百分数
+    enum   表示枚举值
+    flag   表示位运算
+-->
+
+    <!--定义字体、字体颜色、字体大小。 format是值的取值类型 -->
+    <attr name="imageScaleType">
+        <enum name="match" value="0" />
+        <enum name="center" value="1" />
+    </attr>
+    <declare-styleable name="testView">
+        <attr name="titleText" format="string" />
+        <attr name="titleColor" format="color" />
+        <attr name="titleSize" format="dimension" />
+        <attr name="myImage" format="reference" />
+        <attr name="imageWidth" format="dimension" />
+        <attr name="imageHeight" format="dimension" />
+        <attr name="imageScaleType" />
+    </declare-styleable>
+</resources>

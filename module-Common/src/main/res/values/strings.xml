@@ -1,0 +1,5 @@
+<resources>
+    <string name="networl_error" translatable="false">网络错误</string>
+    <string name="tips_data_empty" translatable="false">数据为空</string>
+
+</resources>
