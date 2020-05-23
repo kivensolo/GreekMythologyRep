@@ -5,9 +5,9 @@ import android.net.Uri;
 import android.util.Log;
 import android.widget.SeekBar;
 
-import com.kingz.library.player.IMediaPlayer;
-import com.kingz.library.player.IMediaPlayerCallBack;
-import com.kingz.library.player.exo.ExoMediaPlayer;
+import com.kingz.library.player.IPlayer;
+import com.kingz.library.player.IPlayerEventsCallBack;
+import com.kingz.library.player.exo.ExoPlayer;
 import com.kingz.play.view.IPlayerView;
 
 import static com.google.android.exoplayer2.Player.REPEAT_MODE_ALL;
@@ -20,14 +20,14 @@ import static com.google.android.exoplayer2.Player.REPEAT_MODE_ALL;
  * 视频地址：http://www.zhiboo.net/
  * TODO 画面模式调整，
  */
-public class PlayPresenter extends AbsBasePresenter implements IMediaPlayerCallBack {
+public class PlayPresenter extends AbsBasePresenter implements IPlayerEventsCallBack {
     private IPlayerView playerView;
-    private IMediaPlayer mPlayer;
+    private IPlayer mPlayer;
     public PlaySeekBarChangeListener seekBarChangeListener;
     private boolean isDraggingSeekBar; //是否正在拖动进度条
 
 
-    public PlayPresenter(IMediaPlayer player, IPlayerView playerView) {
+    public PlayPresenter(IPlayer player, IPlayerView playerView) {
         this.mPlayer = player;
         this.playerView = playerView;
         seekBarChangeListener = new PlaySeekBarChangeListener();
@@ -46,8 +46,8 @@ public class PlayPresenter extends AbsBasePresenter implements IMediaPlayerCallB
 //        Uri testPlayUri = Uri.parse("http://video.chinanews.com/flv/2019/04/23/400/111773_web.mp4");
 //        Uri testPlayUri = Uri.parse("http://cctvtxyh5c.liveplay.myqcloud.com/wstv/dongfang_2/index.m3u8");
         mPlayer.setPlayURI(testPlayUri);
-        if (mPlayer instanceof ExoMediaPlayer) {
-            ((ExoMediaPlayer) mPlayer).setRepeatMode(REPEAT_MODE_ALL);
+        if (mPlayer instanceof ExoPlayer) {
+            ((ExoPlayer) mPlayer).setRepeatMode(REPEAT_MODE_ALL);
         }
         play();
     }
@@ -115,43 +115,43 @@ public class PlayPresenter extends AbsBasePresenter implements IMediaPlayerCallB
     }
 
     @Override
-    public void onPrepared(IMediaPlayer player) {
+    public void onPrepared() {
         Log.d(TAG, "onPrepared()");
         playerView.showPlayingView();
     }
 
     @Override
-    public void onPlay(IMediaPlayer player) {
+    public void onPlay() {
 
     }
 
     @Override
-    public boolean onError(IMediaPlayer player, int what, int extra) {
+    public boolean onError(int what, int extra) {
         return false;
     }
 
     @Override
-    public void onBufferStart(IMediaPlayer player) {
+    public void onBufferStart() {
 
     }
 
     @Override
-    public void onBufferEnd(IMediaPlayer player) {
+    public void onBufferEnd() {
 
     }
 
     @Override
-    public void onBufferingUpdate(IMediaPlayer player, int percent) {
+    public void onBufferingUpdate(int percent) {
 
     }
 
     @Override
-    public void onCompletion(IMediaPlayer player) {
+    public void onCompletion() {
 
     }
 
     @Override
-    public void onSeekComplete(IMediaPlayer player) {
+    public void onSeekComplete() {
 
     }
 
@@ -167,13 +167,13 @@ public class PlayPresenter extends AbsBasePresenter implements IMediaPlayerCallB
     }
 
     @Override
-    public boolean onInfo(IMediaPlayer player, int what, int extra) {
+    public boolean onInfo(int what, int extra) {
         Log.d(TAG, "onInfo what=" + what + "; extra=" + extra);
         return false;
     }
 
     @Override
-    public void onTimedText(IMediaPlayer player, TimedText text) {
+    public void onTimedText(TimedText text) {
 
     }
 

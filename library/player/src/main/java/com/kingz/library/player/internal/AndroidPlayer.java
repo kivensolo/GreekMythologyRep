@@ -7,22 +7,25 @@ import android.media.TimedText;
 import android.net.Uri;
 import android.util.Log;
 import android.view.Surface;
+import android.view.SurfaceHolder;
 
-import com.kingz.library.player.AbstractMediaPlayer;
-import com.kingz.library.player.IMediaPlayer;
+import com.kingz.library.player.AbstractPlayer;
+import com.kingz.library.player.IPlayer;
+
+import java.lang.reflect.Array;
 
 /**
  * author：KingZ
  * date：2019/7/30
  * description：Android原生播放器
  */
-public class AndroidMediaPlayer extends AbstractMediaPlayer implements AndroidMediaPlayerListeners {
+public class AndroidPlayer extends AbstractPlayer implements AndroidMediaPlayerListeners {
     // Seek 保护时间
     private static final int SEEK_PROTECT_TIME_MS = 10 * 1000;
     private MediaPlayer mInternalMediaPlayer;
     private int bufferPercent;   //当前缓冲的百分比
 
-    public AndroidMediaPlayer(Context context) {
+    public AndroidPlayer(Context context) {
         this.mContext = context;
         mInternalMediaPlayer = new MediaPlayer();
         attachListener();
@@ -36,7 +39,7 @@ public class AndroidMediaPlayer extends AbstractMediaPlayer implements AndroidMe
         } catch (Exception e) {
             Log.e(TAG, "play error:" + e.getMessage());
             if (playCallBack != null) {
-                playCallBack.onError(this, MEDIA_ERROR_PLAY_STATUS, -1);
+                playCallBack.onError(MEDIA_ERROR_PLAY_STATUS, -1);
             }
         }
     }
@@ -49,7 +52,7 @@ public class AndroidMediaPlayer extends AbstractMediaPlayer implements AndroidMe
         } catch (Exception e) {
             Log.e(TAG, "pause error:" + e.getMessage());
             if (playCallBack != null) {
-                playCallBack.onError(this, MEDIA_ERROR_PAUSE_STATUS, -1);
+                playCallBack.onError(MEDIA_ERROR_PAUSE_STATUS, -1);
             }
         }
     }
@@ -78,14 +81,14 @@ public class AndroidMediaPlayer extends AbstractMediaPlayer implements AndroidMe
     public void onBufferingUpdate(MediaPlayer mp, int percent) {
         this.bufferPercent = percent;
         if (playCallBack != null) {
-            playCallBack.onBufferingUpdate(this, percent);
+            playCallBack.onBufferingUpdate(percent);
         }
     }
 
     @Override
     public void onCompletion(MediaPlayer mp) {
         if (playCallBack != null) {
-            playCallBack.onCompletion(this);
+            playCallBack.onCompletion();
         }
         mainHandler.removeCallbacksAndMessages(null);
     }
@@ -107,7 +110,7 @@ public class AndroidMediaPlayer extends AbstractMediaPlayer implements AndroidMe
                 break;
         }
         if (playCallBack != null) {
-            playCallBack.onError(this, what, extra);
+            playCallBack.onError(what, extra);
         }
         mainHandler.removeCallbacksAndMessages(null);
         //mInternalMediaPlayer.reset();//重用Error状态的MediaPlayer对象
@@ -121,16 +124,16 @@ public class AndroidMediaPlayer extends AbstractMediaPlayer implements AndroidMe
             case MEDIA_INFO_BUFFERING_START:
                 isBufferIng = true;
                 if (playCallBack != null) {
-                    playCallBack.onBufferStart(this);
+                    playCallBack.onBufferStart();
                 }
                 break;
             case MEDIA_INFO_BUFFERING_END:
                 isBufferIng = false;
-                playCallBack.onBufferEnd(this);
+                playCallBack.onBufferEnd();
                 break;
             default:
                 if (playCallBack != null) {
-                    playCallBack.onInfo(this, what, extra);
+                    playCallBack.onInfo(what, extra);
                 }
                 break;
         }
@@ -141,29 +144,34 @@ public class AndroidMediaPlayer extends AbstractMediaPlayer implements AndroidMe
     public void onPrepared(MediaPlayer mp) {
         isPrepared = true;
         if (playCallBack != null) {
-            playCallBack.onPrepared(this);
+            playCallBack.onPrepared();
         }
     }
 
     @Override
     public void onSeekComplete(MediaPlayer mp) {
         if (playCallBack != null) {
-            playCallBack.onSeekComplete(this);
+            playCallBack.onSeekComplete();
         }
     }
 
     @Override
     public void onTimedText(MediaPlayer mp, TimedText text) {
         if (playCallBack != null) {
-            playCallBack.onTimedText(this, text);
+            playCallBack.onTimedText(text);
         }
     }
 
     @Override
-    protected void setSurface(Surface surface) {
+    public void setSurface(Surface surface) {
         if (playCallBack != null) {
-            playCallBack.onSeekComplete(this);
+            playCallBack.onSeekComplete();
         }
+    }
+
+    @Override
+    public Array getAudioTrack() {
+        return null;
     }
 
     @Override
@@ -197,7 +205,7 @@ public class AndroidMediaPlayer extends AbstractMediaPlayer implements AndroidMe
         } catch (Exception e) {
             Log.e(TAG, "seek error:" + e.getMessage());
             if (playCallBack != null) {
-                playCallBack.onError(this, MEDIA_ERROR_SEEK_STATUS, -1);
+                playCallBack.onError(MEDIA_ERROR_SEEK_STATUS, -1);
             }
         }
     }
@@ -237,9 +245,19 @@ public class AndroidMediaPlayer extends AbstractMediaPlayer implements AndroidMe
         } catch (Exception e) {
             Log.e(TAG, "set play uri error:" + e.getMessage());
             if (playCallBack != null) {
-                playCallBack.onError(this, MEDIA_ERROR_CUSTOM_ERROR, -1);
+                playCallBack.onError(MEDIA_ERROR_CUSTOM_ERROR, -1);
             }
         }
+    }
+
+    @Override
+    public void selectAudioTrack(int audioTrackIndex) {
+
+    }
+
+    @Override
+    public void setDisplayHolder(SurfaceHolder holder) {
+        //TODO
     }
 
     @Override
@@ -255,7 +273,7 @@ public class AndroidMediaPlayer extends AbstractMediaPlayer implements AndroidMe
     }
 
     @Override
-    public IMediaPlayer getMediaPlayer() {
+    public IPlayer getMediaPlayer() {
         return this;
     }
 }

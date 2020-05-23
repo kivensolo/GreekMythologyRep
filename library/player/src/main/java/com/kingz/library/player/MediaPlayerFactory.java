@@ -2,9 +2,9 @@ package com.kingz.library.player;
 
 import android.content.Context;
 
-import com.kingz.library.player.exo.ExoMediaPlayer;
-import com.kingz.library.player.ijk.IJKMediaPlayer;
-import com.kingz.library.player.internal.AndroidMediaPlayer;
+import com.kingz.library.player.exo.ExoPlayer;
+import com.kingz.library.player.ijk.IJKPlayer;
+import com.kingz.library.player.internal.AndroidPlayer;
 
 /**
  * author：KingZ
@@ -21,11 +21,11 @@ public class MediaPlayerFactory {
     private MediaPlayerFactory() {
     }
 
-    public static IMediaPlayer newInstance(Context context) {
+    public static IPlayer newInstance(Context context) {
         return createIJK(context);
     }
 
-    public static IMediaPlayer newInstance(Context context, int flag, Object args) {
+    public static IPlayer newInstance(Context context, int flag, Object args) {
         switch (flag) {
             case FLAG_SYS:
                 return createSys(context);
@@ -38,15 +38,15 @@ public class MediaPlayerFactory {
         }
     }
 
-    private static IMediaPlayer createExo(Context context, Object config) {
-        return new ExoMediaPlayer(context);
+    private static IPlayer createExo(Context context, Object config) {
+        return new ExoPlayer(context);
     }
 
-    private static IMediaPlayer createSys(Context context) {
-        return new AndroidMediaPlayer(context);
+    private static IPlayer createSys(Context context) {
+        return new AndroidPlayer(context);
     }
 
-    private static IMediaPlayer createIJK(Context context) {
-        return new IJKMediaPlayer(context);
+    private static IPlayer createIJK(Context context) {
+        return new IJKPlayer(context);
     }
 }

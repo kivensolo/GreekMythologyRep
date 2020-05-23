@@ -14,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.kingz.customdemo.R;
-import com.kingz.library.player.IMediaPlayer;
+import com.kingz.library.player.IPlayer;
 import com.kingz.module.common.base.BaseActivity;
 import com.kingz.module.common.base.BaseFragment;
 import com.kingz.module.common.base.IPresenter;
@@ -112,7 +112,7 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
             }
         });
 
-        IMediaPlayer mediaPlayer = MediaPlayTool.getInstance().getMediaPlayerCore();
+        IPlayer mediaPlayer = MediaPlayTool.getInstance().getMediaPlayerCore();
 
         playPresenter = new PlayPresenter(mediaPlayer,this);
         playerUiSwitcher = new PlayerUiSwitcher(playPresenter, rootView);

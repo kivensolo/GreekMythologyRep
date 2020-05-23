@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Surface;
+import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.TextureView;
 
@@ -49,11 +50,12 @@ import com.google.android.exoplayer2.upstream.HttpDataSource;
 import com.google.android.exoplayer2.upstream.TransferListener;
 import com.google.android.exoplayer2.util.EventLogger;
 import com.google.android.exoplayer2.util.Util;
-import com.kingz.library.player.AbstractMediaPlayer;
-import com.kingz.library.player.IMediaPlayer;
+import com.kingz.library.player.AbstractPlayer;
+import com.kingz.library.player.IPlayer;
 import com.kingz.library.player.helper.TrackSelectionHelper;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.CookiePolicy;
@@ -73,21 +75,125 @@ import java.util.UUID;
  * }</pre>
  *
  * <p>关于Player.EventListene接口：
- * 两个最重要的是{@link #onPlayerStateChanged}和{@link #onPlayerError}
+ * 两个最重要的是{@link ExoPlayerEvents#onPlayerStateChanged}和{@link ExoPlayerEvents#onPlayerError}
  * 具体的参见<a herf="https://exoplayer.dev/doc/reference/com/google/android/exoplayer2/Player.EventListener.html">JavaDoc</>
  */
 
-public class ExoMediaPlayer extends AbstractMediaPlayer implements Player.EventListener {
-    private static final String TAG = ExoMediaPlayer.class.getSimpleName();
+public class ExoPlayer extends AbstractPlayer {
+    private static final String TAG = ExoPlayer.class.getSimpleName();
     private static final DefaultBandwidthMeter BANDWIDTH_METER = new DefaultBandwidthMeter();
     private static final CookieManager DEFAULT_COOKIE_MANAGER = new CookieManager();
 
+    class ExoPlayerEvents implements Player.EventListener{
+
+        @Override
+        public void onTimelineChanged(Timeline timeline, Object manifest, int reason) {
+            logout("播放器回调 onTimelineChanged() " + timeline);
+        }
+
+        @Override
+        public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) {
+            logout("播放器回调 onTracksChanged() " + trackGroups + " " + trackSelections);
+        }
+
+        /**
+         * Called when the player starts or stops loading the source.
+         */
+        @Override
+        public void onLoadingChanged(boolean isLoading) {
+            logout("播放器回调 onLoadingChanged " + isLoading);
+        }
+
+        /**
+         * 当 <a herf="https://exoplayer.dev/doc/reference/com/google/android/exoplayer2/Player.html#getPlayWhenReady--">Player.getPlayWhenReady()</>
+         * 或者<a herf="https://exoplayer.dev/doc/reference/com/google/android/exoplayer2/Player.html#getPlaybackState--">Player.getPlaybackState()</>
+         * 的返回值改变的时候被调用.
+         * <p>
+         * playbackState一共有四个状态:
+         * Player.STATE_IDLE : 初始化状态，当播放器stopped或者playback失败的时候，
+         * Player.STATE_BUFFERING: 缓冲状态
+         * Player.STATE_READY: 播放器能够立即从当前位置开始播放
+         * Player.STATE_ENDED：播放器播完了所有媒体资源
+         * <p>
+         * playWhenReady的flag是为了表示用户的播放意图，
+         * 播放器只有在playWhenReady=true和状态为Player.STATE_READY时才能播放。
+         */
+        @Override
+        public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
+            String stateString;
+            switch (playbackState) {
+                case Player.STATE_BUFFERING:
+                    stateString = "ExoPlayer.STATE_BUFFERING -";
+                    onInfo(AbstractPlayer.MEDIA_INFO_BUFFERING_START);
+                    break;
+                case Player.STATE_ENDED:
+                    stateString = "ExoPlayer.STATE_ENDED     -";
+                    onCompletion();
+                    break;
+                case Player.STATE_IDLE:
+                    stateString = "ExoPlayer.STATE_IDLE      -";
+                    break;
+                case Player.STATE_READY:
+                    stateString = "ExoPlayer.STATE_READY     -";
+                    if (!isPrepared()) {
+                        isPrepared = true;
+                        onPrepared();
+                    }
+                    if (isBuffering()) {
+                        onInfo(AbstractPlayer.MEDIA_INFO_BUFFERING_END);
+                    }
+                    break;
+                default:
+                    stateString = "UNKNOWN_STATE             -";
+                    break;
+            }
+            Log.d(TAG, "changed state to " + stateString + " playWhenReady: " + playWhenReady);
+        }
+
+        @Override
+        public void onRepeatModeChanged(int repeatMode) {
+
+        }
+
+        @Override
+        public void onShuffleModeEnabledChanged(boolean shuffleModeEnabled) {
+
+        }
+
+        @Override
+        public void onPlayerError(ExoPlaybackException error) {
+            error.printStackTrace();
+            logout("播放器回调 onPlayerError()" + error.getMessage());
+            isPrepared = false;
+            isPaused = false;
+            isBufferIng = false;
+            if (playCallBack != null) {
+                playCallBack.onError(IPlayer.MEDIA_ERROR_CUSTOM_ERROR, 0);
+            }
+        }
+
+        @Override
+        public void onPositionDiscontinuity(int reason) {
+            logout("播放器回调 onPositionDiscontinuity()" + reason);
+        }
+
+        @Override
+        public void onPlaybackParametersChanged(PlaybackParameters playbackParameters) {
+
+        }
+
+        @Override
+        public void onSeekProcessed() {
+
+        }
+    }
     static {
         DEFAULT_COOKIE_MANAGER.setCookiePolicy(CookiePolicy.ACCEPT_ORIGINAL_SERVER);
         CookieHandler.setDefault(DEFAULT_COOKIE_MANAGER);
     }
 
     private SimpleExoPlayer player;
+    private ExoPlayerEvents eventListener;
     private EventLogger eventLogger;
     private DefaultTrackSelector trackSelector;
     private DataSource.Factory mediaDataSourceFactory;
@@ -100,114 +206,18 @@ public class ExoMediaPlayer extends AbstractMediaPlayer implements Player.EventL
     private Uri[] uris;
     private String[] extensions;
 
-    public ExoMediaPlayer(Context context) {
+    public ExoPlayer(Context context) {
         mContext = context;
         autoPlay = true;
         mediaDataSourceFactory = buildDataSourceFactory(BANDWIDTH_METER);
-    }
-
-    @Override
-    public void onTimelineChanged(Timeline timeline, Object manifest, int reason) {
-        logout("播放器回调 onTimelineChanged() " + timeline);
-    }
-
-    @Override
-    public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) {
-        logout("播放器回调 onTracksChanged() " + trackGroups + " " + trackSelections);
-    }
-
-    /**
-     * Called when the player starts or stops loading the source.
-     */
-    @Override
-    public void onLoadingChanged(boolean isLoading) {
-        logout("播放器回调 onLoadingChanged " + isLoading);
-    }
-
-    /**
-     * 当 <a herf="https://exoplayer.dev/doc/reference/com/google/android/exoplayer2/Player.html#getPlayWhenReady--">Player.getPlayWhenReady()</>
-     * 或者<a herf="https://exoplayer.dev/doc/reference/com/google/android/exoplayer2/Player.html#getPlaybackState--">Player.getPlaybackState()</>
-     * 的返回值改变的时候被调用.
-     * <p>
-     * playbackState一共有四个状态:
-     * Player.STATE_IDLE : 初始化状态，当播放器stopped或者playback失败的时候，
-     * Player.STATE_BUFFERING: 缓冲状态
-     * Player.STATE_READY: 播放器能够立即从当前位置开始播放
-     * Player.STATE_ENDED：播放器播完了所有媒体资源
-     * <p>
-     * playWhenReady的flag是为了表示用户的播放意图，
-     * 播放器只有在playWhenReady=true和状态为Player.STATE_READY时才能播放。
-     */
-    @Override
-    public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
-        String stateString;
-        switch (playbackState) {
-            case Player.STATE_BUFFERING:
-                stateString = "ExoPlayer.STATE_BUFFERING -";
-                onInfo(AbstractMediaPlayer.MEDIA_INFO_BUFFERING_START);
-                break;
-            case Player.STATE_ENDED:
-                stateString = "ExoPlayer.STATE_ENDED     -";
-                onCompletion();
-                break;
-            case Player.STATE_IDLE:
-                stateString = "ExoPlayer.STATE_IDLE      -";
-                break;
-            case Player.STATE_READY:
-                stateString = "ExoPlayer.STATE_READY     -";
-                if (!isPrepared()) {
-                    isPrepared = true;
-                    onPrepared();
-                }
-                if (isBuffering()) {
-                    onInfo(AbstractMediaPlayer.MEDIA_INFO_BUFFERING_END);
-                }
-                break;
-            default:
-                stateString = "UNKNOWN_STATE             -";
-                break;
-        }
-        Log.d(TAG, "changed state to " + stateString + " playWhenReady: " + playWhenReady);
+        eventListener = new ExoPlayerEvents();
     }
 
     private void onPrepared(){
         isPrepared = true;
         if (playCallBack != null) {
-            playCallBack.onPrepared(this);
+            playCallBack.onPrepared();
         }
-    }
-
-    @Override
-    public void onRepeatModeChanged(int repeatMode) {
-    }
-
-    @Override
-    public void onShuffleModeEnabledChanged(boolean shuffleModeEnabled) {
-    }
-
-    @Override
-    public void onPlayerError(ExoPlaybackException error) {
-        error.printStackTrace();
-        logout("播放器回调 onPlayerError()" + error.getMessage());
-        isPrepared = false;
-        isPaused = false;
-        isBufferIng = false;
-        if (playCallBack != null) {
-            playCallBack.onError(this, IMediaPlayer.MEDIA_ERROR_CUSTOM_ERROR, 0);
-        }
-    }
-
-    @Override
-    public void onPositionDiscontinuity(int reason) {
-        logout("播放器回调 onPositionDiscontinuity()" + reason);
-    }
-
-    @Override
-    public void onPlaybackParametersChanged(PlaybackParameters playbackParameters) {
-    }
-
-    @Override
-    public void onSeekProcessed() {
     }
 
     @Override
@@ -230,6 +240,58 @@ public class ExoMediaPlayer extends AbstractMediaPlayer implements Player.EventL
         initializePlayer();
     }
 
+    @Override
+    public void selectAudioTrack(int audioTrackIndex) {
+        setSelectedTrack(RendererType.AUDIO, audioTrackIndex, 0);
+    }
+
+    private void setSelectedTrack(RendererType type, int groupIndex, int trackIndex) {
+        // Retrieves the available tracks
+       /* val mappedTrackInfo = trackSelector.getCurrentMappedTrackInfo();
+        val tracksInfo = getExoPlayerTracksInfo(type, groupIndex, mappedTrackInfo)
+        val trackGroupArray =
+        if (tracksInfo.rendererTrackIndex == C.INDEX_UNSET || mappedTrackInfo == null)
+            null
+        else
+            mappedTrackInfo.getTrackGroups(tracksInfo.rendererTrackIndex)
+        if (trackGroupArray == null || trackGroupArray.length == 0 || trackGroupArray.length <= tracksInfo.rendererTrackGroupIndex) {
+            return
+        }
+
+        // Finds the requested group
+        val group = trackGroupArray.get(tracksInfo.rendererTrackGroupIndex)
+        if (group == null || group.length <= trackIndex) {
+            return
+        }
+
+        val parametersBuilder = trackSelector.buildUponParameters()
+        for (rendererTrackIndex in tracksInfo.rendererTrackIndexes) {
+            parametersBuilder.clearSelectionOverrides(rendererTrackIndex)
+            if (tracksInfo.rendererTrackIndex == rendererTrackIndex) {
+                // Specifies the correct track to use
+                parametersBuilder.setSelectionOverride(
+                        rendererTrackIndex, trackGroupArray,
+                        DefaultTrackSelector.SelectionOverride(
+                                tracksInfo.rendererTrackGroupIndex,
+                                trackIndex
+                        )
+                )
+                // make sure renderer is enabled
+                parametersBuilder.setRendererDisabled(rendererTrackIndex, false)
+            } else {
+                // disable other renderers of the same type to avoid playback errors
+                parametersBuilder.setRendererDisabled(rendererTrackIndex, true)
+            }
+        }
+        trackSelector.setParameters(parametersBuilder)*/
+    }
+
+
+    @Override
+    public void setDisplayHolder(SurfaceHolder holder) {
+        player.setVideoSurfaceHolder(holder);
+    }
+
     private void initializePlayer() {
         if (player == null) {
             DefaultRenderersFactory renderersFactory = createRenderersFactoryWithDRM();
@@ -244,7 +306,7 @@ public class ExoMediaPlayer extends AbstractMediaPlayer implements Player.EventL
                     new DefaultTrackSelector(), // 默认的轨道选择器（DefaultTrackSelector）
                     new DefaultLoadControl());  // 默认的加载
 
-            player.addListener(this);
+            player.addListener(eventListener);
             addEventLoggerWithPlayer();
 
             setSurface(null);
@@ -254,12 +316,12 @@ public class ExoMediaPlayer extends AbstractMediaPlayer implements Player.EventL
 
         if (playerNeedsSource) {
             if (uris == null || uris.length <= 0) {
-                onPlayerError(ExoPlaybackException.createForSource(new IOException("no uris")));
+                eventListener.onPlayerError(ExoPlaybackException.createForSource(new IOException("no uris")));
                 return;
             }
             MediaSource[] mediaSources = new MediaSource[uris.length];
             for (int i = 0; i < uris.length; i++) {
-                mediaSources[i] = buildMediaSource(uris[i], extensions[i], mainHandler, eventLogger);
+                mediaSources[i] = createMediaSource(uris[i], extensions[i], mainHandler, eventLogger);
             }
             MediaSource mediaSource = mediaSources.length == 1 ? mediaSources[0]
                     : new ConcatenatingMediaSource(mediaSources);
@@ -297,7 +359,7 @@ public class ExoMediaPlayer extends AbstractMediaPlayer implements Player.EventL
                 drmSessionManager = buildDrmSessionManager(drmSchemeUuid, drmLicenseUrl);
             } catch (UnsupportedDrmException e) {
                 e.printStackTrace();
-                onPlayerError(ExoPlaybackException.createForSource(new IOException("drmSessionManager == null")));
+                eventListener.onPlayerError(ExoPlaybackException.createForSource(new IOException("drmSessionManager == null")));
                 return null;
             }
         }
@@ -321,10 +383,10 @@ public class ExoMediaPlayer extends AbstractMediaPlayer implements Player.EventL
      * @param overrideExtension 扩展参数
      * @return 创建的MediaSource对象
      */
-    private MediaSource buildMediaSource(Uri uri,
-                                         String overrideExtension,
-                                         @Nullable Handler handler,
-                                         @Nullable MediaSourceEventListener listener) {
+    private MediaSource createMediaSource(Uri uri,
+                                          String overrideExtension,
+                                          @Nullable Handler handler,
+                                          @Nullable MediaSourceEventListener listener) {
         @C.ContentType int type;
         if (TextUtils.isEmpty(overrideExtension)) {
             type = Util.inferContentType(uri);
@@ -384,7 +446,7 @@ public class ExoMediaPlayer extends AbstractMediaPlayer implements Player.EventL
     }
 
     @Override
-    protected void setSurface(Surface surface) {
+    public void setSurface(Surface surface) {
         if (player != null) {
             this.player.addTextOutput(null);
             this.player.setVideoSurface(surface);
@@ -397,6 +459,11 @@ public class ExoMediaPlayer extends AbstractMediaPlayer implements Player.EventL
     }
 
     @Override
+    public Array getAudioTrack() {
+        return null;
+    }
+
+    @Override
     protected void attachListener() {
 
     }
@@ -404,13 +471,14 @@ public class ExoMediaPlayer extends AbstractMediaPlayer implements Player.EventL
     @Override
     protected void detachListener() {
         if (player != null) {
-            player.removeListener(this);
+            player.removeListener(eventListener);
         }
     }
 
     private DataSource.Factory buildDataSourceFactory(TransferListener<? super DataSource> bandwidthMeter) {
-        return new DefaultDataSourceFactory(mContext.getApplicationContext(), bandwidthMeter,
+        return new DefaultDataSourceFactory(mContext, bandwidthMeter,
                 buildHttpDataSourceFactory(bandwidthMeter));
+        //DefaultDataSourceFactory(context, Util.getUserAgent(context, context.packageName))
     }
 
     private HttpDataSource.Factory buildHttpDataSourceFactory(TransferListener<? super DataSource> bandwidthMeter) {
@@ -493,7 +561,7 @@ public class ExoMediaPlayer extends AbstractMediaPlayer implements Player.EventL
     public void onCompletion() {
         release();
         if (playCallBack != null) {
-            playCallBack.onCompletion(this);
+            playCallBack.onCompletion();
         }
     }
 
@@ -507,18 +575,18 @@ public class ExoMediaPlayer extends AbstractMediaPlayer implements Player.EventL
             case MEDIA_INFO_BUFFERING_START:
                 isBufferIng = true;
                 if (playCallBack != null) {
-                    playCallBack.onBufferStart(this);
+                    playCallBack.onBufferStart();
                 }
                 break;
             case MEDIA_INFO_BUFFERING_END:
                 isBufferIng = false;
                 if (playCallBack != null) {
-                    playCallBack.onBufferEnd(this);
+                    playCallBack.onBufferEnd();
                 }
                 break;
             default:
                 if (playCallBack != null) {
-                    playCallBack.onInfo(this, what, -1);
+                    playCallBack.onInfo(what, -1);
                 }
                 break;
         }
@@ -560,7 +628,38 @@ public class ExoMediaPlayer extends AbstractMediaPlayer implements Player.EventL
     }
 
     @Override
-    public IMediaPlayer getMediaPlayer() {
+    public IPlayer getMediaPlayer() {
         return this;
     }
+
+  /*  private fun getExoMediaRendererType(exoPlayerTrackType: Int): RendererType? {
+        return when (exoPlayerTrackType) {
+            C.TRACK_TYPE_AUDIO -> RendererType.AUDIO
+            C.TRACK_TYPE_VIDEO -> RendererType.VIDEO
+            C.TRACK_TYPE_TEXT -> RendererType.CLOSED_CAPTION
+            C.TRACK_TYPE_METADATA -> RendererType.METADATA
+            else -> null
+        }
+    }*/
+
+   /* override fun getAudioTrack(): IntArray {
+        val mappedTrackInfo = trackSelector.currentMappedTrackInfo
+
+        if (mappedTrackInfo != null)
+            for (exoPlayerTrackIndex in getExoPlayerTracksInfo(
+                    RendererType.AUDIO,
+                    0,
+                    mappedTrackInfo
+            ).rendererTrackIndexes) {
+                val trackGroupArray = mappedTrackInfo.getTrackGroups(exoPlayerTrackIndex!!)
+                trackGroupArray?.apply {
+                    val audioTrackArray = IntArray(trackGroupArray.length)
+                    for (i in 0 until trackGroupArray.length) {
+                        audioTrackArray[i] = i
+                    }
+                    return audioTrackArray
+                }
+            }
+        return IntArray(0)
+    }*/
 }

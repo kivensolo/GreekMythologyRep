@@ -25,7 +25,7 @@ import com.google.android.exoplayer2.trackselection.MappingTrackSelector;
 import com.google.android.exoplayer2.trackselection.MappingTrackSelector.MappedTrackInfo;
 import com.google.android.exoplayer2.trackselection.TrackSelection;
 import com.google.android.exoplayer2.util.MimeTypes;
-import com.kingz.library.player.exo.ExoMediaPlayer;
+import com.kingz.library.player.exo.ExoPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +38,7 @@ public final class TrackSelectionHelper {
 
 
     private TrackGroupArray trackGroups;
+    //renderer track index
     private int rendererIndex;
     private MappingTrackSelector selector;
     private TrackSelection.Factory adaptiveTrackSelectionFactory;
@@ -48,25 +49,25 @@ public final class TrackSelectionHelper {
         this.adaptiveTrackSelectionFactory = adaptiveTrackSelectionFactory;
     }
 
-    public void set(ExoMediaPlayer.ExoBit exobit) {
+    public void set(ExoPlayer.ExoBit exobit) {
         MappingTrackSelector.SelectionOverride override =
                 new MappingTrackSelector.SelectionOverride(adaptiveTrackSelectionFactory, exobit.groupIndex, exobit.trackIndex);
         selector.setSelectionOverride(rendererIndex, trackGroups, override);
     }
 
-    public List<ExoMediaPlayer.ExoBit> get(MappedTrackInfo trackInfo, int rendererIndex) {
+    public List<ExoPlayer.ExoBit> get(MappedTrackInfo trackInfo, int rendererIndex) {
         this.rendererIndex = rendererIndex;
         trackGroups = trackInfo.getTrackGroups(rendererIndex);
 
 
-        List<ExoMediaPlayer.ExoBit> exobits = new ArrayList<>();
+        List<ExoPlayer.ExoBit> exobits = new ArrayList<>();
 
         for (int groupIndex = 0; groupIndex < trackGroups.length; groupIndex++) {
             TrackGroup group = trackGroups.get(groupIndex);
             for (int trackIndex = 0; trackIndex < group.length; trackIndex++) {
                 if (trackInfo.getTrackFormatSupport(rendererIndex, groupIndex, trackIndex)
                         == RendererCapabilities.FORMAT_HANDLED) {
-                    exobits.add(new ExoMediaPlayer.ExoBit(buildTrackName(group.getFormat(trackIndex)), groupIndex, trackIndex));
+                    exobits.add(new ExoPlayer.ExoBit(buildTrackName(group.getFormat(trackIndex)), groupIndex, trackIndex));
                 }
             }
         }

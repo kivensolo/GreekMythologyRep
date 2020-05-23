@@ -43,13 +43,13 @@ dependencies {
     compileOnly "io.reactivex.rxjava2:rxjava:${lib_versions.rxJava}"
     compileOnly "io.reactivex.rxjava2:rxandroid:${lib_versions.rxandroid}"
     compileOnly 'com.zhy:autolayout:1.4.5'
-//    compileOnly rootProject.ext.dependencies["kangaroo"]
 
     compileOnly 'com.google.android.material:material:1.1.0'
 
     // 网络库和工具库由Common引出
     api project(':library-network' )
     api project(":library-views")
-    api project(":kangaroo")
+//    api project(":kangaroo")
+    api rootProject.ext.dependencies["kangaroo"]
 
 }

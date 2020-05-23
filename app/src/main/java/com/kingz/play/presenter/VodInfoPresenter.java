@@ -2,8 +2,7 @@ package com.kingz.play.presenter;
 
 import android.media.TimedText;
 
-import com.kingz.library.player.IMediaPlayer;
-import com.kingz.library.player.IMediaPlayerCallBack;
+import com.kingz.library.player.IPlayerEventsCallBack;
 import com.kingz.play.fragment.VodInfoFragment;
 
 /**
@@ -12,7 +11,7 @@ import com.kingz.play.fragment.VodInfoFragment;
  * description：影片信息Presenter  用于处理影片信息获取业务
  */
 
-public class VodInfoPresenter extends AbsBasePresenter implements IMediaPlayerCallBack {
+public class VodInfoPresenter extends AbsBasePresenter implements IPlayerEventsCallBack {
     private VodInfoFragment vodInfoFragment;
 
     public VodInfoPresenter(VodInfoFragment vodInfoFragment) {
@@ -30,42 +29,42 @@ public class VodInfoPresenter extends AbsBasePresenter implements IMediaPlayerCa
     }
 
     @Override
-    public void onPrepared(IMediaPlayer player) {
+    public void onPrepared() {
 
     }
 
     @Override
-    public void onPlay(IMediaPlayer player) {
+    public void onPlay() {
 
     }
 
     @Override
-    public boolean onError(IMediaPlayer player, int what, int extra) {
+    public boolean onError(int what, int extra) {
         return false;
     }
 
     @Override
-    public void onBufferStart(IMediaPlayer player) {
+    public void onBufferStart() {
 
     }
 
     @Override
-    public void onBufferEnd(IMediaPlayer player) {
+    public void onBufferEnd() {
 
     }
 
     @Override
-    public void onBufferingUpdate(IMediaPlayer player, int percent) {
+    public void onBufferingUpdate(int percent) {
 
     }
 
     @Override
-    public void onCompletion(IMediaPlayer player) {
+    public void onCompletion() {
 
     }
 
     @Override
-    public void onSeekComplete(IMediaPlayer player) {
+    public void onSeekComplete() {
 
     }
 
@@ -75,12 +74,12 @@ public class VodInfoPresenter extends AbsBasePresenter implements IMediaPlayerCa
     }
 
     @Override
-    public boolean onInfo(IMediaPlayer player, int what, int extra) {
+    public boolean onInfo(int what, int extra) {
         return false;
     }
 
     @Override
-    public void onTimedText(IMediaPlayer player, TimedText text) {
+    public void onTimedText(TimedText text) {
 
     }
 

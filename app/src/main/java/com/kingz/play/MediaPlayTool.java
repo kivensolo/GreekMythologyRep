@@ -1,6 +1,6 @@
 package com.kingz.play;
 
-import com.kingz.library.player.IMediaPlayer;
+import com.kingz.library.player.IPlayer;
 import com.kingz.library.player.MediaPlayerFactory;
 import com.zeke.ktx.App;
 
@@ -24,7 +24,7 @@ public class MediaPlayTool {
     /**
      * 获取 IMediaPlayer 实例
      */
-    public IMediaPlayer getMediaPlayerCore() {
+    public IPlayer getMediaPlayerCore() {
         return MediaPlayerFactory.newInstance(App.instance.getApplicationContext(),
                 MediaPlayerFactory.FLAG_EXO, null);
     }

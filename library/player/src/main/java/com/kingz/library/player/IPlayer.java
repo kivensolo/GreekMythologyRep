@@ -2,15 +2,19 @@ package com.kingz.library.player;
 
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.view.Surface;
+import android.view.SurfaceHolder;
 import android.view.View;
+
+import java.lang.reflect.Array;
 
 /**
  * author：KingZ
  * date：2019/7/30
  * description：播放器对象顶层接口
  */
-public interface IMediaPlayer {
-    String TAG = IMediaPlayer.class.getSimpleName();
+public interface IPlayer {
+    String TAG = IPlayer.class.getSimpleName();
     int MEDIA_ERROR_SEEK_STATUS = 0x1001;
     int MEDIA_ERROR_PLAY_STATUS = 0x1002;
     int MEDIA_ERROR_PAUSE_STATUS = 0x1003;
@@ -31,7 +35,11 @@ public interface IMediaPlayer {
 
     void setPlayerView(View playView);
     void setPlayURI(Uri uri);
-    void setPlayerEventCallBack(IMediaPlayerCallBack callBack);
+    void setPlayerEventCallBack(IPlayerEventsCallBack callBack);
+    void selectAudioTrack(int audioTrackIndex);
+    void setDisplayHolder(SurfaceHolder holder);
+    void setSurface(Surface surface);
+    Array getAudioTrack();
 
     /**
      * 设置播放速率
@@ -83,6 +91,6 @@ public interface IMediaPlayer {
      */
     Bitmap getCurrentThumb();
 
-    IMediaPlayer getMediaPlayer();
+    IPlayer getMediaPlayer();
 
 }

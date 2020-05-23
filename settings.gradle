@@ -15,8 +15,8 @@ project(':library-player').projectDir = new File(rootDir, 'library/player')
 project(':library-views').projectDir = new File(rootDir, 'library/ui')
 project(':library-network').projectDir = new File(rootDir, 'library/network')
 
-include ':kangaroo'
-project(':kangaroo').projectDir = new File("F:\\github\\kviensolo\\AKangaroo\\app")
+//include ':kangaroo'
+//project(':kangaroo').projectDir = new File("F:\\github\\kviensolo\\AKangaroo\\app")
 
 gradle.beforeProject {
     project -> println(">>>>>> A Project Ready to config !")

@@ -5,8 +5,12 @@ import android.graphics.SurfaceTexture;
 import android.net.Uri;
 import android.util.Log;
 import android.view.Surface;
+import android.view.SurfaceHolder;
 
-import com.kingz.library.player.AbstractMediaPlayer;
+import com.kingz.library.player.AbstractPlayer;
+import com.kingz.library.player.IPlayer;
+
+import java.lang.reflect.Array;
 
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
@@ -18,12 +22,12 @@ import tv.danmaku.ijk.media.player.IjkTimedText;
  * description：IJK 媒体播放器
  */
 
-public class IJKMediaPlayer extends AbstractMediaPlayer implements IJKMediaPlayerListeners {
+public class IJKPlayer extends AbstractPlayer implements IJKMediaPlayerListeners {
     private IjkMediaPlayer player;
     private int bufferSize;         //缓冲区大小，单位kb
     private long currentPosition;   //ijk 在暂停之后恢复播放的第一秒 时间不准，在缓冲的时候进度也一直在跑
     
-    public IJKMediaPlayer(Context context) {
+    public IJKPlayer(Context context) {
         this.mContext = context;
         player = new IjkMediaPlayer();
         attachListener();
@@ -56,10 +60,15 @@ public class IJKMediaPlayer extends AbstractMediaPlayer implements IJKMediaPlaye
     
 
     @Override
-    protected void setSurface(Surface surface) {
+    public void setSurface(Surface surface) {
         if (player != null) {
             player.setSurface(surface);
         }
+    }
+
+    @Override
+    public Array getAudioTrack() {
+        return null;
     }
 
 
@@ -95,9 +104,19 @@ public class IJKMediaPlayer extends AbstractMediaPlayer implements IJKMediaPlaye
         } catch (Exception e) {
             Log.e(TAG, "set play uri error:" + e.getMessage());
             if (playCallBack != null) {
-                playCallBack.onError(this, MEDIA_ERROR_CUSTOM_ERROR, -1);
+                playCallBack.onError(MEDIA_ERROR_CUSTOM_ERROR, -1);
             }
         }
+    }
+
+    @Override
+    public void selectAudioTrack(int audioTrackIndex) {
+
+    }
+
+    @Override
+    public void setDisplayHolder(SurfaceHolder holder) {
+        player.setDisplay(holder);
     }
 
     @Override
@@ -116,7 +135,7 @@ public class IJKMediaPlayer extends AbstractMediaPlayer implements IJKMediaPlaye
     @Override
     public void onBufferingUpdate(IMediaPlayer iMediaPlayer, int percent) {
         if (playCallBack != null) {
-            playCallBack.onBufferingUpdate(this, percent);
+            playCallBack.onBufferingUpdate(percent);
         }
     }
 
@@ -125,11 +144,11 @@ public class IJKMediaPlayer extends AbstractMediaPlayer implements IJKMediaPlaye
         if (currentPosition < getDuration() - 5000) {
             //解决播放过程中断网的情况下 回调的onCompletion  不是onError
             if (playCallBack != null) {
-                playCallBack.onError(this, -10000, -1);
+                playCallBack.onError(-10000, -1);
             }
         } else {
             if (playCallBack != null) {
-                playCallBack.onCompletion(this);
+                playCallBack.onCompletion();
             }
         }
         mainHandler.removeCallbacksAndMessages(null);
@@ -142,7 +161,7 @@ public class IJKMediaPlayer extends AbstractMediaPlayer implements IJKMediaPlaye
         isPaused = false;
         isBufferIng = false;
         if (playCallBack != null) {
-            playCallBack.onError(this, what, extra);
+            playCallBack.onError(what, extra);
         }
         mainHandler.removeCallbacksAndMessages(null);
         return false;
@@ -155,16 +174,16 @@ public class IJKMediaPlayer extends AbstractMediaPlayer implements IJKMediaPlaye
             case MEDIA_INFO_BUFFERING_START:
                 isBufferIng = true;
                 if (playCallBack != null) {
-                    playCallBack.onBufferStart(this);
+                    playCallBack.onBufferStart();
                 }
                 break;
             case MEDIA_INFO_BUFFERING_END:
                 isBufferIng = false;
-                playCallBack.onBufferEnd(this);
+                playCallBack.onBufferEnd();
                 break;
             default:
                 if (playCallBack != null) {
-                    playCallBack.onInfo(this, what, extra);
+                    playCallBack.onInfo(what, extra);
                 }
                 break;
         }
@@ -175,21 +194,21 @@ public class IJKMediaPlayer extends AbstractMediaPlayer implements IJKMediaPlaye
     public void onPrepared(IMediaPlayer iMediaPlayer) {
         isPrepared = true;
         if (playCallBack != null) {
-            playCallBack.onPrepared(this);
+            playCallBack.onPrepared();
         }
     }
 
     @Override
     public void onSeekComplete(IMediaPlayer iMediaPlayer) {
         if (playCallBack != null) {
-            playCallBack.onSeekComplete(this);
+            playCallBack.onSeekComplete();
         }
     }
 
     @Override
     public void onTimedText(IMediaPlayer iMediaPlayer, IjkTimedText ijkTimedText) {
         if (playCallBack != null) {
-            playCallBack.onTimedText(this, null);
+            playCallBack.onTimedText(null);
         }
     }
     @Override
@@ -248,7 +267,7 @@ public class IJKMediaPlayer extends AbstractMediaPlayer implements IJKMediaPlaye
     }
 
     @Override
-    public com.kingz.library.player.IMediaPlayer getMediaPlayer() {
+    public IPlayer getMediaPlayer() {
         return this;
     }
 }

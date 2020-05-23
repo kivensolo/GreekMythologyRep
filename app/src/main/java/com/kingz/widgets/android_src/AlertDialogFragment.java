@@ -16,8 +16,6 @@ import com.kingz.customdemo.R;
 import com.zeke.kangaroo.utils.ZLog;
 
 /**
- * Copyright(C) 2016, 北京视达科科技有限公司
- * All rights reserved.
  * author: King.Z
  * date:  2016/6/10 18:42
  * description:

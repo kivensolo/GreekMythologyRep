@@ -17,16 +17,17 @@ import android.view.View;
  * date：2019/7/30
  * desc: 描述播放器产品的公共接口
  */
-public abstract class AbstractMediaPlayer implements IMediaPlayer,
+public abstract class AbstractPlayer implements IPlayer,
         SurfaceHolder.Callback,
         TextureView.SurfaceTextureListener {
 
     protected static final int PLAYER_UPDATE_INTERVAL_MS = 500;
     protected Handler mainHandler = new Handler(Looper.getMainLooper());
-    protected IMediaPlayerCallBack playCallBack;
+    protected IPlayerEventsCallBack playCallBack;
     protected Surface mSurface;
     protected Context mContext;
     protected Uri mUri;
+
     protected boolean isPrepared;
     protected boolean isPaused;
     protected boolean isBufferIng;
@@ -46,8 +47,6 @@ public abstract class AbstractMediaPlayer implements IMediaPlayer,
     public Runnable getLoopRunnable() {
         return loopRunnable;
     }
-
-    protected abstract void setSurface(Surface surface);
 
     protected abstract void attachListener();
 
@@ -109,7 +108,7 @@ public abstract class AbstractMediaPlayer implements IMediaPlayer,
         removeHandler();
         mainHandler.post(getLoopRunnable());
         if (playCallBack != null) {
-            playCallBack.onPlay(this);
+            playCallBack.onPlay();
         }
     }
 
@@ -138,7 +137,7 @@ public abstract class AbstractMediaPlayer implements IMediaPlayer,
     }
 
     @Override
-    public void setPlayerEventCallBack(IMediaPlayerCallBack callBack) {
+    public void setPlayerEventCallBack(IPlayerEventsCallBack callBack) {
         playCallBack = callBack;
     }
 
@@ -193,7 +192,7 @@ public abstract class AbstractMediaPlayer implements IMediaPlayer,
     }
 
     @Override
-    public abstract  IMediaPlayer getMediaPlayer();
+    public abstract IPlayer getMediaPlayer();
 
     private void removeHandler() {
         mainHandler.removeCallbacksAndMessages(null);

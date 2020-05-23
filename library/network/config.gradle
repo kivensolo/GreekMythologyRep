@@ -4,7 +4,7 @@ ext {
             targetCompatibility: JavaVersion.VERSION_1_7]
 
     kotlin_version = '1.3.50'
-    kangaroo_v = '1.0.2'
+    kangaroo_v = '1.0.3'
 
     lib_versions = [
             rxJava          :'2.2.2',
