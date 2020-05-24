@@ -1,5 +1,6 @@
 package com.kingz.module.common.fragments
 
+import android.view.View
 import android.view.ViewStub
 import androidx.recyclerview.widget.RecyclerView
 import com.kingz.module.common.LoadStatusView
@@ -11,8 +12,10 @@ import com.kingz.module.common.base.BaseFragment
  * date：2020/2/22
  * description：公共页面的Fragment
  */
-class CommonPageFragment: BaseFragment(){
+open class CommonPageFragment: BaseFragment(){
     // private var fabButton: FloatingActionButton? = null
+
+    lateinit var mRecyclerView:RecyclerView
 
     companion object{
         const val mContentLayoutResTag:String = "contentLayoutRes"
@@ -33,13 +36,14 @@ class CommonPageFragment: BaseFragment(){
 
     override fun onCreateViewReady() {
         super.onCreateViewReady()
-        val recyclerView = rootView.findViewById(R.id.recycler_view) as RecyclerView
+        initRecyclerView()
 
         // 填充load_state View
         val loadStateStub = rootView.findViewById(R.id.load_state) as ViewStub
         loadStateStub.layoutResource = R.layout.load_status
         loadStateStub.inflatedId = R.id.load_state_view
         loadStatusView = loadStateStub.inflate() as LoadStatusView
+        loadStatusView?.visibility = View.GONE
 
         // 填充FAB View
         val fabStub = rootView.findViewById(R.id.fbtn_go_top) as ViewStub
@@ -48,7 +52,15 @@ class CommonPageFragment: BaseFragment(){
         // fabButton = fabStub.inflate() as FloatingActionButton
     }
 
+    open fun initRecyclerView(){
+        mRecyclerView = rootView.findViewById(R.id.recycler_view) as RecyclerView
+    }
+
     override fun onViewCreated() {
+        showLoadingView()
+    }
+
+    open fun showLoadingView(){
         loadStatusView?.showEmpty()
     }
 
