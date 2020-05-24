@@ -2,7 +2,6 @@ package com.kingz.module.common.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.zeke.kangaroo.adapter.CommonRecyclerAdapter
 
 /**
  * author: King.Z <br>
@@ -16,8 +15,6 @@ interface IDelegateAdapter<T> {
 
     // 用于委托Adapter的onCreateViewHolder方法
     fun onCreateViewHolder(parent: ViewGroup, viewType:Int): RecyclerView.ViewHolder
-
-    fun onCreateViewHolderWithCommon(parent: ViewGroup, viewType:Int): CommonRecyclerAdapter.ViewHolder
 
     // 用于委托Adapter的onBindViewHolder方法
     fun onBindViewHolder(holder: RecyclerView.ViewHolder , position:Int ,dataType: T)

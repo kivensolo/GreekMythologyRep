@@ -88,7 +88,7 @@ ext {
 //            "paging-runtime-ktx"     : "androidx.paging:paging-runtime-ktx:${rootProject.ext.paging_version}",
 
             //My lib
-            "kangaroo"               : "com.github.zeke:kangaroo:1.0.3",
+            "kangaroo"               : "com.github.zeke:kangaroo:1.0.4",
             "xul_cache"              : "com.github.xul:cache:1.0.0"
     ]
 

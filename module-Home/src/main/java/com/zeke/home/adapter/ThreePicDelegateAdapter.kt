@@ -25,11 +25,6 @@ class ThreePicDelegateAdapter: IDelegateAdapter<HomeRecomData> {
         return CommonRecyclerAdapter.ViewHolder(view)
     }
 
-    override fun onCreateViewHolderWithCommon(parent: ViewGroup, viewType: Int): CommonRecyclerAdapter.ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.news_three_pic_item, parent, false)
-        return CommonRecyclerAdapter.ViewHolder(view)
-    }
-
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int, dataType: HomeRecomData) {
         if(holder is CommonRecyclerAdapter.ViewHolder){
             holder.getView<TextView>(R.id.tv_content).text = dataType.name
