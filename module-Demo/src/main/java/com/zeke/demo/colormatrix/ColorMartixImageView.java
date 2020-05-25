@@ -1,4 +1,4 @@
-package com.kingz.customviews;
+package com.zeke.demo.colormatrix;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -19,10 +19,10 @@ import android.widget.SeekBar;
 
 import androidx.annotation.Nullable;
 
-import com.kingz.customdemo.R;
 import com.module.tools.ScreenTools;
+import com.zeke.demo.R;
+import com.zeke.kangaroo.utils.ScreenDisplayUtils;
 import com.zeke.kangaroo.utils.ZLog;
-import com.zeke.ktx.App;
 
 /**
  * author: King.Z <br>
@@ -70,22 +70,21 @@ public class ColorMartixImageView extends ViewGroup {
     private int viewHeight;
     private ColorMatrix mColorMatrix;
     public String mMatrixValues = "default";
-    private float[] mArray = new float[20];    //颜色矩阵
-    private String[] charArry = new String[]{"R","G","B","A"};
+    private float[] mArrayOfColorMatrix = new float[20];    //颜色矩阵
+    private String[] charArray = new String[]{"R","G","B","A"};
     private Paint bitMapPaint;    //图片绘制画笔
     //Canvas绘制换行  不能使用paint的"/n"或者"/r/n"
     private TextPaint matrixValuePaint;
     private StaticLayout textLayout;
     private SeekBar[] mSeekBar;    //控制进度条
     private Bitmap mBitmap;
-    private RectF mTargetRect;
+    private RectF dstRect;
 
     public float mRedFilter = 1f;
     public float mGreenFilter = 1f;
     public float mBlueFilter = 1f;
     public float mAlphaFilter = 1f;
-    ViewGroup.LayoutParams lps;
-    private Context mContext;
+    ViewGroup.LayoutParams mLayoutParams;
 
     public ColorMartixImageView(Context context) {
         this(context, null);
@@ -93,13 +92,13 @@ public class ColorMartixImageView extends ViewGroup {
 
     public ColorMartixImageView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        mContext = context;
         ZLog.d(TAG, "SampleView()");
         setBackgroundColor(context.getResources().getColor(R.color.theme_100));
-        viewWidth = App.SCREEN_WIDTH;
-        viewHeight = App.SCREEN_HEIGHT;
+        viewWidth = ScreenDisplayUtils.getScreenWidth(context);
+        viewHeight = ScreenDisplayUtils.getScreenHeight(context);
 
-        lps = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        mLayoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
         setNumberOfSeekBar(context,SEEKBAR_NUMS);
 
         matrixValuePaint = new TextPaint();
@@ -112,13 +111,8 @@ public class ColorMartixImageView extends ViewGroup {
         bmpOption.inPreferredConfig = Bitmap.Config.ARGB_8888;//也是默认值
         mBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.marvel_qiyi, bmpOption);
 
-        mTargetRect = new RectF(ScreenTools.Operation(20), ScreenTools.Operation(20),
-                                viewWidth - ScreenTools.Operation(20), ScreenTools.Operation(420));
-        int bw = mBitmap.getWidth();
-        int bh = mBitmap.getHeight();
-
+        dstRect = new RectF(20, 20,viewWidth - 20, 420);
         setArgb(mAlphaFilter,mRedFilter,mGreenFilter,mBlueFilter);
-
     }
 
     private void setNumberOfSeekBar(Context context,int num) {
@@ -127,10 +121,10 @@ public class ColorMartixImageView extends ViewGroup {
             SeekBar seekBar = new SeekBar(context);
             seekBar.setProgress(100);
             seekBar.setMax(100);
-            seekBar.setLayoutParams(lps);
-            addView(seekBar,i);
+            seekBar.setLayoutParams(mLayoutParams);
+            addView(seekBar,i);  // 添加到ViewGroup中
             seekBar.setOnSeekBarChangeListener(seekBarChange);
-            seekBar.setTag(charArry[i]);
+            seekBar.setTag(charArray[i]);
             mSeekBar[i] = seekBar;
         }
     }
@@ -149,8 +143,6 @@ public class ColorMartixImageView extends ViewGroup {
         ZLog.d(TAG, "onMeasure");
         //计算出所有的childView的宽高
         measureChildren(widthMeasureSpec, heightMeasureSpec);
-        int width = 0;
-        int height = 0;
         int cCount = getChildCount();
         int cWidth = 0;
         int cHeight = 0;
@@ -181,14 +173,14 @@ public class ColorMartixImageView extends ViewGroup {
         ZLog.d(TAG, "onLayout");
         //MarginLayoutParams mLayoutPms = new MarginLayoutParams(LayoutParams.MATCH_PARENT,MarginLayoutParams.WRAP_CONTENT);
         //mLayoutPms.setMargins(0,ScreenTools.Operation(20),0,0);
-        int y = ScreenTools.Operation(460);
+        int y = 460;
         for (int i = 0; i < getChildCount(); i++) {
             View childView = getChildAt(i);
             childView.setX(0);
             childView.setY(y);
-            childView.setLayoutParams(lps);
-            childView.layout(0,y,viewWidth,y + ScreenTools.Operation(70));
-            y += ScreenTools.Operation(80);
+            childView.setLayoutParams(mLayoutParams);
+            childView.layout(0,y,viewWidth,y + 70);
+            y += 80;
         }
     }
 
@@ -196,19 +188,20 @@ public class ColorMartixImageView extends ViewGroup {
     protected void onDraw(Canvas canvas) {
         ZLog.d(TAG, "onDraw");
         super.onDraw(canvas);
-        canvas.drawBitmap(mBitmap, null, mTargetRect, bitMapPaint);
+        canvas.drawBitmap(mBitmap, null, dstRect, bitMapPaint);
         //canvas.drawText(mMatrixValues,mTargetRect.left,mTargetRect.bottom,matrixValuePaint);
         canvas.save();
-        canvas.translate(mTargetRect.left,mTargetRect.bottom);
+        canvas.translate(dstRect.left, dstRect.bottom);
         textLayout.draw(canvas);
         canvas.restore();
     }
 
     /**
-     * [ 1 0 0 0 0   - red vector
-     *   0 1 0 0 0   - green vector
-     *   0 0 1 0 0   - blue vector
-     *   0 0 0 1 0 ] - alpha vector
+     * 设置ColoMatrix的值
+     * ┌ 1 0 0 0 0 ┐ - red vector
+     * | 0 1 0 0 0 |  - green vector
+     * | 0 0 1 0 0 |  - blue vector
+     * └ 0 0 0 1 0 ┘ - alpha vector
      */
     public void setArgb(float alpha, float red, float green, float blue) {
         mRedFilter = red;
@@ -222,9 +215,14 @@ public class ColorMartixImageView extends ViewGroup {
                                         0, 0, 0, mAlphaFilter, 0,
                                       });
         bitMapPaint.setColorFilter(new ColorMatrixColorFilter(mColorMatrix));
-        mArray = mColorMatrix.getArray();
-        mMatrixValues = colorMatrixToString(mArray);
-        textLayout = new StaticLayout(mMatrixValues,matrixValuePaint,ScreenTools.OperationWidth(400), Layout.Alignment.ALIGN_NORMAL,1.0f, 0.0f, true);
+        mArrayOfColorMatrix = mColorMatrix.getArray();
+
+        mMatrixValues = colorMatrixToString(mArrayOfColorMatrix);
+        textLayout = new StaticLayout(mMatrixValues,matrixValuePaint,
+                400, Layout.Alignment.ALIGN_NORMAL,
+                1.0f,
+                0.0f,
+                true);
     }
 
     private SeekBar.OnSeekBarChangeListener seekBarChange = new SeekBar.OnSeekBarChangeListener() {
@@ -258,11 +256,12 @@ public class ColorMartixImageView extends ViewGroup {
 
     public String colorMatrixToString(float[] array){
          StringBuilder sb = new StringBuilder(128);
-        sb.append("Matrix{");
+        sb.append("Matrix{\n");
         toShortString(sb,array);
-        sb.append('}');
+        sb.append("\n}");
         return sb.toString();
     }
+
      private void toShortString(StringBuilder sb,float[] values) {
         sb.append('[');
         sb.append(values[0]); sb.append(", "); sb.append(values[1]); sb.append(", ");

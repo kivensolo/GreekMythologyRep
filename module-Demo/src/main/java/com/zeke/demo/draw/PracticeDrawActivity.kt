@@ -7,6 +7,7 @@ import android.widget.LinearLayout
 import com.zeke.demo.BaseDemoActivity
 import com.zeke.demo.R
 import com.zeke.demo.draw.base_api.*
+import com.zeke.demo.draw.canvas.CanvasDemoViewGroup
 import com.zeke.demo.draw.paint.*
 import com.zeke.demo.draw.text.*
 import com.zeke.demo.fragments.CardVerticalDemoFragment
@@ -52,11 +53,15 @@ class PracticeDrawActivity : BaseDemoActivity() {
         cardData4.add(CardItemModel("drawTextOnPath()", Paint14TextOnPathView(this)))
         cardData4.add(CardItemModel("文字换行绘制 StaticLayout", Paint15TextStaticLayoutView(this)))
 
+        val cardData5: MutableList<CardItemModel> = ArrayList()
+        cardData5.add(CardItemModel("Canvas练习", CanvasDemoViewGroup(this)))
+
         // 初始化Page数据
         pageModels.add(DemoContentModel(getString(R.string.draw_1_1), cardData1))
         pageModels.add(DemoContentModel(getString(R.string.draw_paint_color), cardData2))
         pageModels.add(DemoContentModel(getString(R.string.draw_paint_effect), cardData3))
         pageModels.add(DemoContentModel(getString(R.string.draw_text), cardData4))
+        pageModels.add(DemoContentModel("1.4 画布练习", cardData5))
     }
 
     override fun initPagerAdapter() {

@@ -23,7 +23,7 @@ class HomeRecomAdapter : CommonRecyclerAdapter<HomeRecomData>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         // 找到对应的委托Adapter 把onCreateViewHolder交给委托Adapter去处理
-        return delegateAdapters[viewType].onCreateViewHolderWithCommon(parent, viewType)
+        return delegateAdapters[viewType].onCreateViewHolder(parent, viewType) as ViewHolder
     }
 
     override fun getItemViewType(position: Int): Int {

@@ -1,18 +1,15 @@
-package com.kingz.pages.photo.colormatrix;
+package com.zeke.demo.colormatrix;
 
 import android.os.Bundle;
 
-import com.kingz.customdemo.R;
-import com.kingz.module.common.base.BaseActivity;
+import com.kingz.module.common.BaseActivity;
+import com.zeke.demo.R;
 
 /**
- * Copyright(C) 2016, 北京视达科科技有限公司
- * All rights reserved. <br>
  * author: King.Z <br>
  * date:  2017/5/26 22:01 <br>
  */
 public class ColorMatrixDemo extends BaseActivity {
-    private static final String TAG = "ColorMatrixDemo";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

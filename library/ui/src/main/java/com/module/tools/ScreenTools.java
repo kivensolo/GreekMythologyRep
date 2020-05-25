@@ -3,14 +3,10 @@ package com.module.tools;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
-import android.content.res.Configuration;
-import android.graphics.Bitmap;
-import android.graphics.Rect;
 import android.os.Build;
 import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.view.Display;
-import android.view.Surface;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.Window;
@@ -19,11 +15,11 @@ import android.view.WindowManager;
 /**
  * Created by KingZ on 2016/1/5.
  * Discription: 屏幕相关的辅助类
+ * 被 ScreenDisplayUtils 代替
  */
 @Deprecated
 public class ScreenTools {
 
-    public static final int DESIGN_WIDTH = 1280;
 	public static final int DESIGN_HEIGHT = 720;
 
     public static int SCREEN_WIDTH = 1280;
@@ -104,44 +100,6 @@ public class ScreenTools {
     }
 
     /**
-     * 获取当前屏幕截图，包含状态栏
-     */
-    public static Bitmap snapShotWithStatusBar(Activity activity) {
-        View view = activity.getWindow().getDecorView();
-        view.setDrawingCacheEnabled(true);
-        view.buildDrawingCache();
-        Bitmap bmp = view.getDrawingCache();
-        int width = getScreenWidth(activity);
-        int height = getScreenHeight(activity);
-        Bitmap bp = null;
-        bp = Bitmap.createBitmap(bmp, 0, 0, width, height);
-        view.destroyDrawingCache();
-        return bp;
-
-    }
-
-    /**
-     * 获取当前屏幕截图，不包含状态栏
-     */
-    public static Bitmap snapShotWithoutStatusBar(Activity activity) {
-        View view = activity.getWindow().getDecorView();
-        view.setDrawingCacheEnabled(true);
-        view.buildDrawingCache();
-        Bitmap bmp = view.getDrawingCache();
-        Rect frame = new Rect();
-        activity.getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
-        int statusBarHeight = frame.top;
-
-        int width = getScreenWidth(activity);
-        int height = getScreenHeight(activity);
-        Bitmap bp = null;
-        bp = Bitmap.createBitmap(bmp, 0, statusBarHeight, width, height
-                - statusBarHeight);
-        view.destroyDrawingCache();
-        return bp;
-    }
-
-    /**
      * 设置全屏,隐藏状态栏和ActionBar
      */
     public static void setFullScreen(Activity activity){
@@ -168,57 +126,6 @@ public class ScreenTools {
         if (actionBar != null) {
             actionBar.hide();
         }
-    }
-
-    /**
-     * 获取当前窗口的旋转角度
-     *
-     * @param activity
-     * @return
-     */
-    public static int getDisplayRotation(Activity activity) {
-        switch (activity.getWindowManager().getDefaultDisplay().getRotation()) {
-            case Surface.ROTATION_0:
-                return 0;
-            case Surface.ROTATION_90:
-                return 90;
-            case Surface.ROTATION_180:
-                return 180;
-            case Surface.ROTATION_270:
-                return 270;
-            default:
-                return 0;
-        }
-    }
-
-    /**
-     * 当前是否是横屏
-     *
-     * @param context
-     * @return
-     */
-    public static boolean isLandscape(Context context) {
-        int orientation = context.getResources().getConfiguration().orientation;
-        return orientation == Configuration.ORIENTATION_LANDSCAPE;
-    }
-
-    public static boolean isLandscape(View view) {
-        int orientation = view.getResources().getConfiguration().orientation;
-        return  orientation == Configuration.ORIENTATION_LANDSCAPE;
-    }
-
-    /**
-     * 当前是否是竖屏
-     * @param context
-     */
-    public static boolean isPortrait(Context context) {
-        int orientation = context.getResources().getConfiguration().orientation;
-        return orientation == Configuration.ORIENTATION_PORTRAIT;
-    }
-
-    public static boolean isPortrait(View view) {
-        int orientation = view.getResources().getConfiguration().orientation;
-        return orientation == Configuration.ORIENTATION_PORTRAIT;
     }
 
     /**

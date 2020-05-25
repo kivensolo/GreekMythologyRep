@@ -1,1 +1,18 @@
-<manifest package="com.zeke.demo" />
+<manifest package="com.zeke.demo"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <application>
+
+        <activity
+            android:name="com.zeke.demo.draw.PracticeDrawActivity"
+            android:hardwareAccelerated="false"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name="com.zeke.demo.colormatrix.ColorMatrixDemo"
+            android:theme="@style/AppTheme"
+            tools:targetApi="lollipop" />
+
+
+    </application>
+</manifest>
