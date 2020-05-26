@@ -2,7 +2,6 @@ package com.zeke.home.fragments
 
 import android.util.Log
 import com.kingz.module.common.BaseActivity
-import com.kingz.module.common.fragments.CommonPageFragment
 import com.kingz.module.home.R
 import com.zeke.home.contract.RecomPageContract
 import com.zeke.home.entity.HomeRecomData
@@ -29,10 +28,10 @@ class HomeRecomFragment : HomeBaseFragment<RecomPresenter>(), RecomPageContract.
         fragmentList.clear()
         titleList.clear()
 
-        data?.forEach lit@ {
+        data.forEach lit@ {
             titleList.add(it.name)
             when(it.type) {
-                "recom" -> fragmentList.add(CommonPageFragment())
+                "recom" -> fragmentList.add(HomeHotPageFragment())
                 "demo" -> fragmentList.add(ExpandableDemoFragment())
                 "magicIndicator" -> fragmentList.add(MagicIndicatorDemoFragment())
             }

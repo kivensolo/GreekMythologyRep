@@ -78,7 +78,7 @@
       },
       {
         "name": "ColorMatrix",
-        "class": "com.kingz.pages.photo.colormatrix.ColorMatrixDemo"
+        "class": "com.zeke.demo.colormatrix.ColorMatrixDemo"
       },
       {
         "name": "Arcs",
@@ -200,7 +200,7 @@
     "samples": [
       {
         "name": "PracticeDrawDemo",
-        "class": "com.zeke.ktx.demo.draw.PracticeDrawActivity"
+        "class": "com.zeke.demo.draw.PracticeDrawActivity"
       }
     ]
   },
