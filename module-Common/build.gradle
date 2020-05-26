@@ -34,7 +34,8 @@ dependencies {
     androidTestImplementation rootProject.ext.test["support-test-espresso"]
 
     implementation 'androidx.multidex:multidex:2.0.1'
-    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation rootProject.ext.dependencies["recyclerView"]
+
 
     compileOnly "com.squareup.retrofit2:retrofit:${lib_versions.rtf2}"
     compileOnly "com.squareup.retrofit2:converter-gson:${lib_versions.rtf2_2gson}"

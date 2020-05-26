@@ -2,6 +2,7 @@ include ':app'
 include ':module-Common'
 include ':module-Home'
 include ':module-Demo'
+include ':module-Mvvm'
 
 def rootDir = settingsDir
 // 自定义lib库Project

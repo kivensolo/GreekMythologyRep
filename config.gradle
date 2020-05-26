@@ -17,8 +17,7 @@ ext {
 
     androidx = '1.1.0'
     activity_ktx_version = '1.1.0-rc02'
-    jetpack_version = '2.2.0-rc02'
-    paging_version = '2.1.0'
+    jetpack_version = '2.2.0'
 
     lib_versions = [
             rxJava          :'2.2.2',
@@ -42,7 +41,11 @@ ext {
             glide_okhttp    :'4.8.0',
 
             lifecycle       :'1.1.0',
-            gson            :'2.8.5'
+            gson            :'2.8.5',
+
+            recycler        :'1.1.0',
+            cardView        :'1.0.0',
+            paging_version  : '2.1.0'
     ]
 
     supports = [
@@ -68,6 +71,7 @@ ext {
 
     dependencies = [
             "appcompat"              : "androidx.appcompat:appcompat:$rootProject.ext.androidx",
+            "core-ktx"               : "androidx.core:core-ktx:$rootProject.ext.androidx",
 
             // Kotlin
             "kotlin"                 : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$rootProject.ext.kotlin_version",
@@ -76,18 +80,25 @@ ext {
             // 协程库支持
             "coroutines-core"        : "org.jetbrains.kotlinx:kotlinx-coroutines-core:$rootProject.ext.coroutines_version",
             "coroutines-android"     : "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.ext.coroutines_version",
-            // mvvm协程支持 TODO 后续切换
-//            "lifecycle-viewmodel-ktx": "androidx.lifecycle:lifecycle-viewmodel-ktx:${rootProject.ext.jetpack_version}",
-//            "lifecycle-livedata-ktx" : "androidx.lifecycle:lifecycle-livedata-ktx:${rootProject.ext.jetpack_version}",
-//            "lifecycle-runtime-ktx"  : "androidx.lifecycle:lifecycle-runtime-ktx:${rootProject.ext.jetpack_version}",
-//            "lifecycle-extensions"   : "androidx.lifecycle:lifecycle-extensions:${rootProject.ext.jetpack_version}",
-            // ActivityKtx TODO 后续替换
-//            "activity-ktx"           : "androidx.activity:activity-ktx:${rootProject.ext.activity_ktx_version}",
-//            "fragment-ktx"           : "androidx.fragment:fragment-ktx:1.1.0",
+            // mvvm协程支持
+            "lifecycle-viewmodel-ktx": "androidx.lifecycle:lifecycle-viewmodel-ktx:${rootProject.ext.jetpack_version}",
+            "lifecycle-livedata-ktx" : "androidx.lifecycle:lifecycle-livedata-ktx:${rootProject.ext.jetpack_version}",
+            "lifecycle-runtime-ktx"  : "androidx.lifecycle:lifecycle-runtime-ktx:${rootProject.ext.jetpack_version}",
+            "lifecycle-extensions"   : "androidx.lifecycle:lifecycle-extensions:${rootProject.ext.jetpack_version}",
+            // ActivityKtx
+            "activity-ktx"           : "androidx.activity:activity-ktx:${rootProject.ext.activity_ktx_version}",
+            "fragment-ktx"           : "androidx.fragment:fragment-ktx:1.1.0",
             // paging
-//            "paging-runtime-ktx"     : "androidx.paging:paging-runtime-ktx:${rootProject.ext.paging_version}",
+            "paging-runtime-ktx"     : "androidx.paging:paging-runtime-ktx:${lib_versions.paging_version}",
 
-            //My lib
+            // 常用控件
+            "recyclerView"           : "androidx.recyclerview:recyclerview:${lib_versions.recycler}",
+            "cardView"               : "androidx.cardview:cardview:${lib_versions.cardView}",
+
+            // 数据解析库
+            "gson"                   : "com.google.code.gson:gson:$lib_versions.gson",
+
+            // My lib
             "kangaroo"               : "com.github.zeke:kangaroo:1.0.4",
             "xul_cache"              : "com.github.xul:cache:1.0.0"
     ]
