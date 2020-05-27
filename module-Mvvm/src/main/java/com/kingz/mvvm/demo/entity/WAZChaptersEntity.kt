@@ -1,4 +1,4 @@
-package com.kingz.mvvm.demo
+package com.kingz.mvvm.demo.entity
 
 /**
  * Demo的数据结构

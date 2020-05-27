@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.kingz.mvvm.R
 import com.kingz.mvvm.adapter.BasePagedListAdapter
-import com.kingz.mvvm.demo.Data
+import com.kingz.mvvm.demo.entity.Data
 import kotlinx.android.synthetic.main.item_page_mock.view.*
 
 /**

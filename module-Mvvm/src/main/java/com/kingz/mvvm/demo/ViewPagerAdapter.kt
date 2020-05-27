@@ -4,7 +4,6 @@ import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import com.kingz.mvvm.R
 import com.kingz.mvvm.adapter.BaseRecyclerAdapter
-import com.xgimi.sample.mvvm.mvvm.ViewPagerNormalHolder
 import kotlinx.coroutines.CoroutineScope
 
 class ViewPagerAdapter<T>(private val scope: CoroutineScope, private val owner: LifecycleOwner) :

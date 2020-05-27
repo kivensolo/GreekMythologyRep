@@ -1,7 +1,7 @@
 package com.kingz.mvvm.paging
 
 import androidx.paging.ItemKeyedDataSource
-import com.kingz.mvvm.demo.Data
+import com.kingz.mvvm.demo.entity.Data
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 

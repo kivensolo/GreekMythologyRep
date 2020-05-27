@@ -7,9 +7,14 @@ import androidx.lifecycle.viewModelScope
 import androidx.viewpager2.widget.ViewPager2
 import com.kingz.mvvm.R
 import com.kingz.mvvm.base.BaseVMActivity
+import com.kingz.mvvm.demo.vm.ChaptersViewModel
 import kotlinx.android.synthetic.main.activity_ui_frame.*
 
-class MvvmActivity : BaseVMActivity<MvvmViewModel>() {
+/**
+ * 文章列表页
+ * 使用了Paging和ViewPager2
+ */
+class ChaptersActivity : BaseVMActivity<ChaptersViewModel>() {
 
     companion object {
         private const val TAG = "SampleActivity"
@@ -17,7 +22,7 @@ class MvvmActivity : BaseVMActivity<MvvmViewModel>() {
 
     override val layoutRes: Int = R.layout.activity_ui_frame
 
-    override lateinit var viewModel: MvvmViewModel //TODo 初始化ViewModel
+    override lateinit var viewModel: ChaptersViewModel //TODo 初始化ViewModel
 
     protected lateinit var adapter: ViewPagerAdapter<String>
 
@@ -38,24 +43,27 @@ class MvvmActivity : BaseVMActivity<MvvmViewModel>() {
         viewModel.viewModelScope.apply {
 
         }
+        // 设置viewModel的监听
         viewModel.apply {
-            adapter = ViewPagerAdapter(
-                    viewModelScope, this@MvvmActivity
-            )
+            adapter = ViewPagerAdapter(viewModelScope, this@ChaptersActivity)
             viewPager.adapter = adapter
-            adapterData.observe(this@MvvmActivity, Observer {
-                it?.also {
-                    adapter.data = it
-                    adapter.notifyDataSetChanged()
-                }
-            })
-            mockData2.observe(this@MvvmActivity, Observer {
+
+            // sampleData.observe(this@ChaptersActivity, Observer {
+            //     it?.also {
+            //         adapter.data = it
+            //         adapter.notifyDataSetChanged()
+            //     }
+            // })
+
+            // 观察mock数据
+            mockData.observe(this@ChaptersActivity, Observer {
                 it?.also {
                     adapter.data = it
                     adapter.notifyDataSetChanged()
                 }
             })
         }
+
         btFetchData.setOnClickListener { viewModel.fetchMockData() }
     }
 

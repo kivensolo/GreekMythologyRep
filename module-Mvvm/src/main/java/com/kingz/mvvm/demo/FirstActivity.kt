@@ -13,7 +13,7 @@ class FirstActivity : AppCompatActivity() {
         setContentView(R.layout.activity_first)
 
         btMVVM.setOnClickListener {
-            startActivity(Intent(this, MvvmActivity::class.java))
+            startActivity(Intent(this, ChaptersActivity::class.java))
         }
     }
 

@@ -1,5 +1,6 @@
 package com.kingz.mvvm.demo
 
+import com.kingz.mvvm.demo.entity.WAZChaptersEntity
 import retrofit2.http.GET
 
 /**

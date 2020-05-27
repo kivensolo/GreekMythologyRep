@@ -50,6 +50,10 @@ dependencies {
     implementation rootProject.ext.dependencies["lifecycle-extensions"]
     implementation rootProject.ext.dependencies["paging-runtime-ktx"]
 
+    // android-ktx
+    implementation ootProject.ext.dependencies["activity-ktx"]
+    implementation ootProject.ext.dependencies["fragment-ktx"]
+
     // UI组件
     implementation rootProject.ext.dependencies["recyclerView"]
     implementation "androidx.viewpager2:viewpager2:1.0.0"
@@ -59,4 +63,6 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:${lib_versions.rtf2}"
     implementation "com.squareup.retrofit2:converter-gson:${lib_versions.rtf2_2gson}"
     implementation "com.squareup.retrofit2:adapter-rxjava2:${lib_versions.rtf2_adapter}"
+
+    implementation 'com.google.android.material:material:1.1.0'
 }

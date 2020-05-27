@@ -1,16 +1,22 @@
-package com.kingz.mvvm.demo
+package com.kingz.mvvm.demo.vm
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
+import androidx.lifecycle.viewModelScope
 import com.kingz.mvvm.base.BaseViewModel
+import com.kingz.mvvm.demo.MvvmRepository
+import com.kingz.mvvm.demo.entity.WAZChaptersEntity
 import com.zeke.kangaroo.utils.ZLog
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
-class MvvmViewModel(private val mockRepository: MvvmRepository) : BaseViewModel() {
+class ChaptersViewModel(private val mockRepository: MvvmRepository) : BaseViewModel() {
 
     // 获取到的数据
-    private val sampleData: LiveData<WAZChaptersEntity> = liveData {
-        when (val result = mockRepository.fetchMockData()) {
+    val sampleData: LiveData<WAZChaptersEntity> = liveData {
+        when (val result = mockRepository.fetchMockLoginData()) {
                 // 获取成功  发射数据 emit(result.data)
                 // 获取失败  exception.postValue(result.throwable)
         }
@@ -28,11 +34,20 @@ class MvvmViewModel(private val mockRepository: MvvmRepository) : BaseViewModel(
     //     }
     // }
 
-    val mockData2: MutableLiveData<MutableList<String>> = MutableLiveData()
+    val mockData: MutableLiveData<MutableList<String>> = MutableLiveData()
 
     fun fetchMockData() {
-        launchIO {
-            ZLog.d("异步执行  获取数据")
+        viewModelScope.launch(Dispatchers.IO) {
+            //模拟假数据返回
+            ZLog.d("MvvmViewModel","异步执行  获取数据....Start")
+            delay(5000)
+            ZLog.d("MvvmViewModel","异步执行  获取数据....End")
+            mockData.postValue(mutableListOf<String>().apply {
+                for(i in 1..5){
+                    add("数据_$i")
+                }
+            })
+
             // when (val result = mockRepository.fetchMockData()) {
             //     is XResult.Success -> {
             //         mockData2.postValue(mutableListOf<String>().apply {
