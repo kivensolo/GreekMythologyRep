@@ -15,6 +15,7 @@ class LoginViewModel(private val mockRepository: MvvmRepository) : BaseViewModel
         launchIO {
             when (val result = mockRepository.fetchMockLoginData()) {
                 else -> {
+                    ZLog.d("MVVM","ViewModel <--- Get MockData. PostValue by LiveData.")
                     loginData.postValue(result)
                 }
             }
