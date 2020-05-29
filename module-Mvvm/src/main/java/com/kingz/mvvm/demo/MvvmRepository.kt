@@ -12,7 +12,7 @@ class MvvmRepository{
         delay(5000)
         ZLog.d("MVVM","DATA <--- fetchMockLoginData End !!")
         return mutableListOf<LoginEntity>().apply {
-            LoginEntity(0,"admin","success")
+            add(LoginEntity(0,"admin","success"))
         }
     }
 }
