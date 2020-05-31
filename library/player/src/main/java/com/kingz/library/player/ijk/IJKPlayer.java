@@ -7,7 +7,7 @@ import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 
-import com.kingz.library.player.AbstractPlayer;
+import com.kingz.library.player.BasePlayer;
 import com.kingz.library.player.IPlayer;
 
 import java.lang.reflect.Array;
@@ -22,7 +22,8 @@ import tv.danmaku.ijk.media.player.IjkTimedText;
  * description：IJK 媒体播放器
  */
 
-public class IJKPlayer extends AbstractPlayer implements IJKMediaPlayerListeners {
+public class IJKPlayer extends BasePlayer implements IJKMediaPlayerListeners {
+    private static final String TAG = IJKPlayer.class.getSimpleName();
     private IjkMediaPlayer player;
     private int bufferSize;         //缓冲区大小，单位kb
     private long currentPosition;   //ijk 在暂停之后恢复播放的第一秒 时间不准，在缓冲的时候进度也一直在跑

@@ -41,7 +41,7 @@ public class PlayPresenter extends AbsBasePresenter implements IPlayerEventsCall
     }
 
     private void playTest() {
-        Uri testPlayUri = Uri.parse("http://play.bgp.kanmv.cn/m3u8/2019/05/25/BEga7dB66DD5stKcyu0e/Ip3vj.m3u8");
+        Uri testPlayUri = Uri.parse("https://vfx.mtime.cn/Video/2020/05/14/mp4/200514070325395613_1080.mp4");
         //嫦娥探月
 //        Uri testPlayUri = Uri.parse("http://video.chinanews.com/flv/2019/04/23/400/111773_web.mp4");
 //        Uri testPlayUri = Uri.parse("http://cctvtxyh5c.liveplay.myqcloud.com/wstv/dongfang_2/index.m3u8");

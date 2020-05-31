@@ -8,7 +8,7 @@ import com.kingz.library.player.IPlayer
  */
 interface IRender {
 
-    var renderCallback: RenderCallback?
+    var renderCallback: SurfaceRenderCallback?
 
     val iPlayer: IPlayer
 

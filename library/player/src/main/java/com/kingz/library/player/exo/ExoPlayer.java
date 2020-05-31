@@ -50,7 +50,7 @@ import com.google.android.exoplayer2.upstream.HttpDataSource;
 import com.google.android.exoplayer2.upstream.TransferListener;
 import com.google.android.exoplayer2.util.EventLogger;
 import com.google.android.exoplayer2.util.Util;
-import com.kingz.library.player.AbstractPlayer;
+import com.kingz.library.player.BasePlayer;
 import com.kingz.library.player.IPlayer;
 import com.kingz.library.player.helper.TrackSelectionHelper;
 
@@ -79,12 +79,12 @@ import java.util.UUID;
  * 具体的参见<a herf="https://exoplayer.dev/doc/reference/com/google/android/exoplayer2/Player.EventListener.html">JavaDoc</>
  */
 
-public class ExoPlayer extends AbstractPlayer {
+public class ExoPlayer extends BasePlayer {
     private static final String TAG = ExoPlayer.class.getSimpleName();
     private static final DefaultBandwidthMeter BANDWIDTH_METER = new DefaultBandwidthMeter();
     private static final CookieManager DEFAULT_COOKIE_MANAGER = new CookieManager();
 
-    class ExoPlayerEvents implements Player.EventListener{
+    private final class ExoPlayerEvents implements Player.EventListener{
 
         @Override
         public void onTimelineChanged(Timeline timeline, Object manifest, int reason) {
@@ -124,7 +124,7 @@ public class ExoPlayer extends AbstractPlayer {
             switch (playbackState) {
                 case Player.STATE_BUFFERING:
                     stateString = "ExoPlayer.STATE_BUFFERING -";
-                    onInfo(AbstractPlayer.MEDIA_INFO_BUFFERING_START);
+                    onInfo(BasePlayer.MEDIA_INFO_BUFFERING_START);
                     break;
                 case Player.STATE_ENDED:
                     stateString = "ExoPlayer.STATE_ENDED     -";
@@ -140,7 +140,7 @@ public class ExoPlayer extends AbstractPlayer {
                         onPrepared();
                     }
                     if (isBuffering()) {
-                        onInfo(AbstractPlayer.MEDIA_INFO_BUFFERING_END);
+                        onInfo(BasePlayer.MEDIA_INFO_BUFFERING_END);
                     }
                     break;
                 default:
@@ -292,6 +292,9 @@ public class ExoPlayer extends AbstractPlayer {
         player.setVideoSurfaceHolder(holder);
     }
 
+    /**
+     * 初始化播放器
+     */
     private void initializePlayer() {
         if (player == null) {
             DefaultRenderersFactory renderersFactory = createRenderersFactoryWithDRM();
@@ -304,10 +307,9 @@ public class ExoPlayer extends AbstractPlayer {
             player = ExoPlayerFactory.newSimpleInstance(
                     new DefaultRenderersFactory(mContext), //默认渲染工厂
                     new DefaultTrackSelector(), // 默认的轨道选择器（DefaultTrackSelector）
-                    new DefaultLoadControl());  // 默认的加载
+                    new DefaultLoadControl());  // 默认的加载控制器
 
-            player.addListener(eventListener);
-            addEventLoggerWithPlayer();
+            addEventListenerWithPlayer();
 
             setSurface(null);
             player.setPlayWhenReady(autoPlay);
@@ -330,7 +332,9 @@ public class ExoPlayer extends AbstractPlayer {
         }
     }
 
-    private void addEventLoggerWithPlayer() {
+    private void addEventListenerWithPlayer() {
+        player.addListener(eventListener);
+
         eventLogger = new EventLogger(trackSelector);
         player.addListener(eventLogger);
         player.addMetadataOutput(eventLogger);

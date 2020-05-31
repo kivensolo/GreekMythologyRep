@@ -12,10 +12,12 @@ import com.kingz.library.player.IPlayer
 @SuppressLint("ViewConstructor")
 class SurfaceViewRender(context: Context,
                         override val iPlayer: IPlayer) :
+        SurfaceView(context),
+        SurfaceHolder.Callback,
+        IRender,
+        IPlayer by iPlayer {
 
-    SurfaceView(context), SurfaceHolder.Callback, IRender, IPlayer by iPlayer {
-
-    override var renderCallback: RenderCallback? = null
+    override var renderCallback: SurfaceRenderCallback? = null
 
     override fun surfaceChanged(holder: SurfaceHolder?, format: Int, width: Int, height: Int) {
         renderCallback?.surfaceChanged(width, height)
@@ -31,6 +33,7 @@ class SurfaceViewRender(context: Context,
     }
 
     init {
+        //SurfaceView.getHolder().addCallback(Callback callback)
         holder.addCallback(this)
     }
 
