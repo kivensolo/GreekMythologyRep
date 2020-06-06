@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
+apply from: 'config.gradle'
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
@@ -39,3 +40,32 @@ dependencies {
 repositories {
     mavenCentral()
 }
+
+//打包源码
+task androidSourcesJar(type: Jar) {
+    archiveClassifier.set('sources')  //设置分类器
+    from android.sourceSets.main.java.srcDirs
+}
+
+artifacts {
+    archives androidSourcesJar
+}
+
+
+//脚本：将Lib打成aar包上传至maven私有库(远程或local)
+//uploadArchives {
+//    repositories {
+//        mavenDeployer {
+//            repository(url: MAVEN_LOCAL_PATH) {
+//                authentication(userName: ACCOUNT, password: PASSWORD)
+//            }
+//            pom.project {
+//                groupId GROUP_ID
+//                artifactId ARTIFACT_ID
+//                version VERSION_NAME
+//                packaging 'aar'
+//            }
+//        }
+//    }
+//
+//}

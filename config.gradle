@@ -33,9 +33,6 @@ ext {
             es_core         :'3.0.2',
             work_version    :'1.0.1',
 
-            ijk             :'0.8.4',
-            exo             :'2.7.3',
-
             glide           :'4.8.0',
             glide_c         :'4.8.0',
             glide_okhttp    :'4.8.0',
