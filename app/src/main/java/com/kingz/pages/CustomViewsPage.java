@@ -22,7 +22,7 @@ import com.kingz.scroll.view_pager.ViewPagerAnimationDemoActivity;
 import com.kingz.view.listview.CustomListViewActivity;
 import com.kingz.view.shape.ShapeDrawOval;
 import com.kingz.view.webview.WebViewActivity;
-import com.kingz.widgets.android_src.popwindow.CommonPopupWindow;
+import com.zeke.kangaroo.view.popwindow.CommonPopupWindow;
 
 /**
  * 自定义View汇总主界面
@@ -54,7 +54,7 @@ public class CustomViewsPage extends  Activity implements OnItemClickListener{
 		mAdapter.add(new ListBillData(this,"自定义ListView",new Intent(this,CustomListViewActivity.class)));
 		mAdapter.add(new ListBillData(this,"ListView-----左右滑动删除",new Intent(this,SliderListViewActivity.class)));
 		mAdapter.add(new ListBillData(this,"View 的Drag & Fling",new Intent(this,SoapFlingActivity.class)));
-		mAdapter.add(new ListBillData(this,"PopupWindow",new Intent(this,CommonPopupWindow.class)));
+		mAdapter.add(new ListBillData(this,"PopupWindow",new Intent(this, CommonPopupWindow.class)));
 		mAdapter.add(new ListBillData(this,"WebAPP测试",new Intent(this,WebViewActivity.class)));
 		mAdapter.add(new ListBillData(this,"WZViewPager",new Intent(this,ViewPagerAnimationDemoActivity.class)));
 		mAdapter.add(new ListBillData(this,"贝塞尔水波曲线",new Intent(this,WaveLoadingActivity.class)));

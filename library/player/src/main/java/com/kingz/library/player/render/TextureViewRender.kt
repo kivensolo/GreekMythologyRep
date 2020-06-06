@@ -17,7 +17,7 @@ class TextureViewRender( context: Context, override val iPlayer: IPlayer) :
         IRender,
         IPlayer by iPlayer {
 
-    override var renderCallback: RenderCallback? = null
+    override var renderCallback: SurfaceRenderCallback? = null
 
     override fun onSurfaceTextureSizeChanged(surface: SurfaceTexture?, width: Int, height: Int) {
         renderCallback?.surfaceChanged(width, height)
@@ -37,6 +37,7 @@ class TextureViewRender( context: Context, override val iPlayer: IPlayer) :
     }
 
     init {
+        // TextureView.setSurfaceTextureListener(SurfaceTextureListener listener)
         surfaceTextureListener = this
     }
 

@@ -20,10 +20,10 @@ project(':library-network').projectDir = new File(rootDir, 'library/network')
 //project(':kangaroo').projectDir = new File("F:\\github\\kviensolo\\AKangaroo\\app")
 
 gradle.beforeProject {
-    project -> println(">>>>>> A Project Ready to config !")
+    project -> println(">>>>>> A Project Ready to config ......${project.name}")
 }
 
 gradle.afterProject {
-    println "<<<<<<  settings end.]"
+    println "Settings end.   <<<<<<]"
 }
 

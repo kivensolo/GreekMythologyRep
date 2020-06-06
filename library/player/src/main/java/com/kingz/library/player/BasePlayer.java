@@ -17,7 +17,7 @@ import android.view.View;
  * date：2019/7/30
  * desc: 描述播放器产品的公共接口
  */
-public abstract class AbstractPlayer implements IPlayer,
+public abstract class BasePlayer implements IPlayer,
         SurfaceHolder.Callback,
         TextureView.SurfaceTextureListener {
 
@@ -28,6 +28,7 @@ public abstract class AbstractPlayer implements IPlayer,
     protected Context mContext;
     protected Uri mUri;
 
+    //TODO 用位运算处理
     protected boolean isPrepared;
     protected boolean isPaused;
     protected boolean isBufferIng;

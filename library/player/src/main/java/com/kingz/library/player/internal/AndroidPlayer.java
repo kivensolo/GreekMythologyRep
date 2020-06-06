@@ -9,7 +9,7 @@ import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 
-import com.kingz.library.player.AbstractPlayer;
+import com.kingz.library.player.BasePlayer;
 import com.kingz.library.player.IPlayer;
 
 import java.lang.reflect.Array;
@@ -19,7 +19,9 @@ import java.lang.reflect.Array;
  * date：2019/7/30
  * description：Android原生播放器
  */
-public class AndroidPlayer extends AbstractPlayer implements AndroidMediaPlayerListeners {
+public class AndroidPlayer extends BasePlayer implements AndroidMediaPlayerListeners {
+    private static final String TAG = AndroidPlayer.class.getSimpleName();
+
     // Seek 保护时间
     private static final int SEEK_PROTECT_TIME_MS = 10 * 1000;
     private MediaPlayer mInternalMediaPlayer;

@@ -3,7 +3,7 @@ package com.kingz.library.player.render
 /**
  * 渲染View回调
  */
-interface RenderCallback {
+interface SurfaceRenderCallback {
 
     fun surfaceChanged(width: Int, height: Int)
 
