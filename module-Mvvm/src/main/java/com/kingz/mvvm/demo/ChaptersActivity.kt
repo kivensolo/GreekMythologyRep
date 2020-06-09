@@ -2,6 +2,7 @@ package com.kingz.mvvm.demo
 
 import android.os.Bundle
 import android.util.Log
+import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
 import androidx.viewpager2.widget.ViewPager2
@@ -78,6 +79,9 @@ class ChaptersActivity : BaseVMActivity<ChaptersViewModel>() {
         viewPager.adapter = null
         finish()
     }
+
+    override val binding: ViewDataBinding?
+        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
 
 
 }
