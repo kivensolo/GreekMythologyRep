@@ -1,0 +1,46 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        minSdkVersion 22
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    implementation rootProject.ext.dependencies["appcompat"]
+    implementation rootProject.ext.dependencies["core-ktx"]
+
+    testImplementation rootProject.ext.test["junit"]
+    androidTestImplementation rootProject.ext.test["test-ext-junit"]
+    androidTestImplementation rootProject.ext.test["support-test-espresso"]
+
+    compileOnly 'androidx.multidex:multidex:2.0.1'
+
+    // Room数据库支持
+    api rootProject.ext.dependencies["room-runtime"]
+    api rootProject.ext.dependencies["room-ktx"]
+    kapt rootProject.ext.dependencies["room-compiler"]
+}

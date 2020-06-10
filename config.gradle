@@ -43,7 +43,8 @@ ext {
 
             recycler        :'1.1.0',
             cardView        :'1.0.0',
-            paging_version  : '2.1.0'
+            paging_version  :'2.1.0',
+            room_version    :'2.2.1'
     ]
 
     supports = [
@@ -90,6 +91,11 @@ ext {
 
             // paging
             "paging-runtime-ktx"     : "androidx.paging:paging-runtime-ktx:${lib_versions.paging_version}",
+
+            // Room数据库
+            "room-runtime"           : "androidx.room:room-runtime:${lib_versions.room_version}",
+            "room-compiler"          : "androidx.room:room-compiler:${lib_versions.room_version}",
+            "room-ktx"               : "androidx.room:room-ktx:${lib_versions.room_version}",
 
             // 常用控件
             "recyclerView"           : "androidx.recyclerview:recyclerview:${lib_versions.recycler}",
