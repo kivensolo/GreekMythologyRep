@@ -1,6 +1,7 @@
 package com.kingz.mvvm
 
 import android.app.Application
+import com.kingz.module.common.BuildConfig
 import com.zeke.kangaroo.utils.ZLog
 
 /**

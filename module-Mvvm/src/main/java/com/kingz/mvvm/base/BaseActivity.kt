@@ -2,6 +2,7 @@ package com.kingz.mvvm.base
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import com.kingz.mvvm.ext.observe
@@ -16,10 +17,15 @@ import kotlinx.coroutines.withContext
 abstract class BaseActivity : AppCompatActivity() {
 
     abstract val layoutRes: Int
+    abstract val binding: ViewDataBinding?
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(layoutRes)
+        if(binding != null){
+            setContentView(binding!!.root)
+        }else{
+            setContentView(layoutRes)
+        }
     }
 
     /**
