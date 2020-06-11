@@ -1,7 +1,7 @@
 package com.kingz.module.common
 
 import android.os.Handler
-import androidx.multidex.MultiDexApplication
+import com.kingz.database.DatabaseApplication
 import com.kingz.module.common.service.GitHubService
 import com.kingz.module.common.service.WeatherService
 import com.zeke.kangaroo.utils.ZLog
@@ -13,7 +13,7 @@ import com.zhy.autolayout.config.AutoLayoutConifg
  * date:  2020/5/17 22:02 <br>
  * description:  <br>
  */
-open class CommonApp: MultiDexApplication(){
+open class CommonApp: DatabaseApplication(){
 
     private var _appMainHandler: Handler? = null
 

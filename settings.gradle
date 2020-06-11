@@ -1,4 +1,5 @@
 include ':app'
+include ':database'
 include ':module-Common'
 include ':module-Home'
 include ':module-Demo'
@@ -26,4 +27,3 @@ gradle.beforeProject {
 gradle.afterProject {
     println "Settings end.   <<<<<<]"
 }
-include ':database'

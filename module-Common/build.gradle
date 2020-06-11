@@ -27,15 +27,21 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    
+
     implementation rootProject.ext.dependencies["appcompat"]
     testImplementation rootProject.ext.test["junit"]
     androidTestImplementation rootProject.ext.test["test-ext-junit"]
     androidTestImplementation rootProject.ext.test["support-test-espresso"]
 
-    implementation 'androidx.multidex:multidex:2.0.1'
     implementation rootProject.ext.dependencies["recyclerView"]
 
+
+    api project(':database')
+    // 网络库和工具库由Common引出
+    api project(':library-network' )
+    api project(":library-views")
+//    api project(":kangaroo")
+    api rootProject.ext.dependencies["kangaroo"]
 
     compileOnly "com.squareup.retrofit2:retrofit:${lib_versions.rtf2}"
     compileOnly "com.squareup.retrofit2:converter-gson:${lib_versions.rtf2_2gson}"
@@ -46,11 +52,4 @@ dependencies {
     compileOnly 'com.zhy:autolayout:1.4.5'
 
     compileOnly 'com.google.android.material:material:1.1.0'
-
-    // 网络库和工具库由Common引出
-    api project(':library-network' )
-    api project(":library-views")
-//    api project(":kangaroo")
-    api rootProject.ext.dependencies["kangaroo"]
-
 }

@@ -9,7 +9,6 @@ open class BaseEntity : Serializable {
     var videoName: String? = null
     var contentPic: String? = null
     var videoId: String = ""
-    var childId: String = ""
     var lastPosition: Long = 0
     var lastIndex: Int = 0
 }
