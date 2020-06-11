@@ -6,7 +6,6 @@ import com.kingz.module.common.service.GitHubService
 import com.kingz.module.common.service.WeatherService
 import com.zeke.kangaroo.utils.ZLog
 import com.zeke.network.retrofit.mannager.ApiManager
-import com.zhy.autolayout.config.AutoLayoutConifg
 
 /**
  * author: King.Z <br>
@@ -32,7 +31,7 @@ open class CommonApp: DatabaseApplication(){
     override fun onCreate() {
         super.onCreate()
         INSTANCE = this
-        _appMainHandler = Handler(mainLooper)
+//        _appMainHandler = Handler(mainLooper)
         initApiManager()
         initLog()
     }
@@ -53,9 +52,9 @@ open class CommonApp: DatabaseApplication(){
     }
 
     private fun initAutoLayout(){
-        AutoLayoutConifg.getInstance()
-                .useDeviceSize()
-                .init(applicationContext)
+//        AutoLayoutConifg.getInstance()
+//                .useDeviceSize()
+//                .init(applicationContext)
     }
 
 

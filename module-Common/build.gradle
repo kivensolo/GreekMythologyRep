@@ -40,8 +40,8 @@ dependencies {
     // 网络库和工具库由Common引出
     api project(':library-network' )
     api project(":library-views")
-//    api project(":kangaroo")
-    api rootProject.ext.dependencies["kangaroo"]
+    api project(":kangaroo")
+//    api rootProject.ext.dependencies["kangaroo"]
 
     compileOnly "com.squareup.retrofit2:retrofit:${lib_versions.rtf2}"
     compileOnly "com.squareup.retrofit2:converter-gson:${lib_versions.rtf2_2gson}"
