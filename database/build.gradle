@@ -4,12 +4,12 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.3"
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion 22
-        targetSdkVersion 29
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
         versionCode 1
         versionName "1.0"
 
@@ -37,7 +37,7 @@ dependencies {
     androidTestImplementation rootProject.ext.test["test-ext-junit"]
     androidTestImplementation rootProject.ext.test["support-test-espresso"]
 
-    implementation 'androidx.multidex:multidex:2.0.1'
+    api 'androidx.multidex:multidex:2.0.1'
 
     // Room数据库支持
     api rootProject.ext.dependencies["room-runtime"]

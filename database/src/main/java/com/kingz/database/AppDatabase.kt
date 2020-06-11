@@ -36,7 +36,7 @@ abstract class AppDatabase : RoomDatabase() {
                             .databaseBuilder(context.applicationContext,
                                     AppDatabase::class.java,
                                     playTableName)      // 创建RoomDatabase实例对象
-//                            .allowMainThreadQueries()   // 允许主线程查询(Room默认不允许在主线程进行数据查询)
+                            .allowMainThreadQueries()   // 允许主线程查询(Room默认不允许在主线程进行数据查询)
                             .fallbackToDestructiveMigration()
                             .build()
                 }
