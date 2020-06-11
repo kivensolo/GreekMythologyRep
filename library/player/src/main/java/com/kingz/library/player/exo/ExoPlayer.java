@@ -10,29 +10,13 @@ import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.TextureView;
-
 import androidx.annotation.Nullable;
-
-import com.google.android.exoplayer2.C;
-import com.google.android.exoplayer2.DefaultLoadControl;
-import com.google.android.exoplayer2.DefaultRenderersFactory;
-import com.google.android.exoplayer2.ExoPlaybackException;
-import com.google.android.exoplayer2.ExoPlayerFactory;
-import com.google.android.exoplayer2.PlaybackParameters;
-import com.google.android.exoplayer2.Player;
-import com.google.android.exoplayer2.SimpleExoPlayer;
-import com.google.android.exoplayer2.Timeline;
-import com.google.android.exoplayer2.drm.DefaultDrmSessionManager;
+import com.google.android.exoplayer2.*;
 import com.google.android.exoplayer2.drm.DrmSessionManager;
 import com.google.android.exoplayer2.drm.FrameworkMediaCrypto;
-import com.google.android.exoplayer2.drm.FrameworkMediaDrm;
 import com.google.android.exoplayer2.drm.HttpMediaDrmCallback;
 import com.google.android.exoplayer2.drm.UnsupportedDrmException;
-import com.google.android.exoplayer2.source.ConcatenatingMediaSource;
-import com.google.android.exoplayer2.source.ExtractorMediaSource;
-import com.google.android.exoplayer2.source.MediaSource;
-import com.google.android.exoplayer2.source.MediaSourceEventListener;
-import com.google.android.exoplayer2.source.TrackGroupArray;
+import com.google.android.exoplayer2.source.*;
 import com.google.android.exoplayer2.source.dash.DashMediaSource;
 import com.google.android.exoplayer2.source.dash.DefaultDashChunkSource;
 import com.google.android.exoplayer2.source.hls.HlsMediaSource;
@@ -42,12 +26,7 @@ import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelection;
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
-import com.google.android.exoplayer2.upstream.DataSource;
-import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
-import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
-import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
-import com.google.android.exoplayer2.upstream.HttpDataSource;
-import com.google.android.exoplayer2.upstream.TransferListener;
+import com.google.android.exoplayer2.upstream.*;
 import com.google.android.exoplayer2.util.EventLogger;
 import com.google.android.exoplayer2.util.Util;
 import com.kingz.library.player.BasePlayer;
@@ -304,10 +283,11 @@ public class ExoPlayer extends BasePlayer {
 
             createTrackSelector();
 //            player = ExoPlayerFactory.newSimpleInstance(renderersFactory, trackSelector);
-            player = ExoPlayerFactory.newSimpleInstance(
-                    new DefaultRenderersFactory(mContext), //默认渲染工厂
-                    new DefaultTrackSelector(), // 默认的轨道选择器（DefaultTrackSelector）
-                    new DefaultLoadControl());  // 默认的加载控制器
+            //FIXME
+//            player = ExoPlayerFactory.newSimpleInstance(
+//                    new DefaultRenderersFactory(mContext), //默认渲染工厂
+//                    new DefaultTrackSelector(), // 默认的轨道选择器（DefaultTrackSelector）
+//                    new DefaultLoadControl());  // 默认的加载控制器
 
             addEventListenerWithPlayer();
 
@@ -323,7 +303,8 @@ public class ExoPlayer extends BasePlayer {
             }
             MediaSource[] mediaSources = new MediaSource[uris.length];
             for (int i = 0; i < uris.length; i++) {
-                mediaSources[i] = createMediaSource(uris[i], extensions[i], mainHandler, eventLogger);
+                //FIXME
+                //mediaSources[i] = createMediaSource(uris[i], extensions[i], mainHandler, eventLogger);
             }
             MediaSource mediaSource = mediaSources.length == 1 ? mediaSources[0]
                     : new ConcatenatingMediaSource(mediaSources);
@@ -336,10 +317,11 @@ public class ExoPlayer extends BasePlayer {
         player.addListener(eventListener);
 
         eventLogger = new EventLogger(trackSelector);
-        player.addListener(eventLogger);
-        player.addMetadataOutput(eventLogger);
-        player.addAudioDebugListener(eventLogger);
-        player.addVideoDebugListener(eventLogger);
+        //FIXME Listener 修改
+        //player.addListener(eventLogger);
+        //player.addMetadataOutput(eventLogger);
+        //player.addAudioDebugListener(eventLogger);
+        //player.addVideoDebugListener(eventLogger);
     }
 
     /**
@@ -427,8 +409,10 @@ public class ExoPlayer extends BasePlayer {
 
         HttpMediaDrmCallback drmCallback = new HttpMediaDrmCallback(licenseUrl, false,
                 buildHttpDataSourceFactory(false ? BANDWIDTH_METER : null));
-        return new DefaultDrmSessionManager<>(uuid,
-                FrameworkMediaDrm.newInstance(uuid), drmCallback, null, mainHandler, eventLogger);
+        //FIXME
+        //return new DefaultDrmSessionManager<>(uuid,
+        //        FrameworkMediaDrm.newInstance(uuid), drmCallback, null, mainHandler, eventLogger);
+        return null;
     }
 
     @Override
@@ -479,13 +463,13 @@ public class ExoPlayer extends BasePlayer {
         }
     }
 
-    private DataSource.Factory buildDataSourceFactory(TransferListener<? super DataSource> bandwidthMeter) {
+    private DataSource.Factory buildDataSourceFactory(TransferListener bandwidthMeter) {
         return new DefaultDataSourceFactory(mContext, bandwidthMeter,
                 buildHttpDataSourceFactory(bandwidthMeter));
         //DefaultDataSourceFactory(context, Util.getUserAgent(context, context.packageName))
     }
 
-    private HttpDataSource.Factory buildHttpDataSourceFactory(TransferListener<? super DataSource> bandwidthMeter) {
+    private HttpDataSource.Factory buildHttpDataSourceFactory(TransferListener bandwidthMeter) {
         return new DefaultHttpDataSourceFactory("kingz_exo_media_player", bandwidthMeter);
     }
 
