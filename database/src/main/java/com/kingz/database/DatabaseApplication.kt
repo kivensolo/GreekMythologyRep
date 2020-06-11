@@ -1,6 +1,7 @@
 package com.kingz.database
 
 import androidx.multidex.MultiDexApplication
+import com.facebook.stetho.Stetho
 import com.kingz.database.dao.AlbumDao
 import com.kingz.database.dao.SongDao
 
@@ -29,8 +30,8 @@ open class DatabaseApplication : MultiDexApplication() {
         super.onCreate()
         INSTANCE = this
 
-// 注册数据库查看器
-//        Stetho.initializeWithDefaults(this)
+        // 注册数据库查看器
+        Stetho.initializeWithDefaults(this)
     }
 
     //------------ DAO 获取函数  可下沉至业务层-----------------//

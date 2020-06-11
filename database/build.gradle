@@ -43,4 +43,11 @@ dependencies {
     api rootProject.ext.dependencies["room-runtime"]
     api rootProject.ext.dependencies["room-ktx"]
     kapt rootProject.ext.dependencies["room-compiler"]
+
+    // Stetho基本调试依赖
+    implementation 'com.facebook.stetho:stetho:1.5.0'
+
+    // 网络操作--有网络操作添加
+//    implementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
+//    implementation 'com.squareup.okhttp3:okhttp:3.9.0'
 }
