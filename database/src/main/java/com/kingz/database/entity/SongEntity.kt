@@ -7,8 +7,8 @@ import androidx.room.PrimaryKey
 @Entity
 class SongEntity(
         @PrimaryKey
-        val id: Long? = null,
-        val name: String = "",
-        val singer: String = "",
+        var id: Long? = null,
+        var name: String = "",
+        var singer: String = "",
         @ColumnInfo(name = "release_year")
-        val releaseYear: Int = 0): BaseEntity()
+        var releaseYear: Int = 0): BaseEntity()
