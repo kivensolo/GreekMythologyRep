@@ -12,8 +12,6 @@ import tv.danmaku.ijk.media.player.IMediaPlayer;
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 import tv.danmaku.ijk.media.player.IjkTimedText;
 
-import java.lang.reflect.Array;
-
 /**
  * author：KingZ
  * date：2019/7/30
@@ -64,12 +62,6 @@ public class IJKPlayer extends BasePlayer implements IJKMediaPlayerListeners {
             player.setSurface(surface);
         }
     }
-
-    @Override
-    public Array getAudioTrack() {
-        return null;
-    }
-
 
     @Override
     public void onSurfaceTextureUpdated(SurfaceTexture surface) {
@@ -156,9 +148,9 @@ public class IJKPlayer extends BasePlayer implements IJKMediaPlayerListeners {
     @Override
     public boolean onError(IMediaPlayer iMediaPlayer, int what, int extra) {
         Log.e(TAG, "play error: what is" + what + ",  extra is " + extra);
-        isPrepared = false;
-        isPaused = false;
-        isBufferIng = false;
+        mIsPrepared = false;
+        mIsPaused = false;
+        mIsBufferIng = false;
         if (playCallBack != null) {
             playCallBack.onError(what, extra);
         }
@@ -171,13 +163,13 @@ public class IJKPlayer extends BasePlayer implements IJKMediaPlayerListeners {
         Log.d(TAG, "onInfo: what is" + what + ",  extra is " + extra);
         switch (what) {
             case MEDIA_INFO_BUFFERING_START:
-                isBufferIng = true;
+                mIsBufferIng = true;
                 if (playCallBack != null) {
                     playCallBack.onBufferStart();
                 }
                 break;
             case MEDIA_INFO_BUFFERING_END:
-                isBufferIng = false;
+                mIsBufferIng = false;
                 playCallBack.onBufferEnd();
                 break;
             default:
@@ -191,7 +183,7 @@ public class IJKPlayer extends BasePlayer implements IJKMediaPlayerListeners {
 
     @Override
     public void onPrepared(IMediaPlayer iMediaPlayer) {
-        isPrepared = true;
+        mIsPrepared = true;
         if (playCallBack != null) {
             playCallBack.onPrepared();
         }

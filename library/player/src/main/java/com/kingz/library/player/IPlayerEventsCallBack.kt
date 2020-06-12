@@ -10,7 +10,7 @@ import android.media.TimedText
 interface IPlayerEventsCallBack {
     /**
      * 开始播放，调用play之后就会回调这方法
-     * 可以再这个回调里面更新外部UI  是否可以去掉？？
+     * 可以在这个回调里面更新外部UI
      */
     fun onPlay()
 
