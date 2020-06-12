@@ -6,15 +6,13 @@ import android.net.Uri;
 import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceHolder;
-
 import com.kingz.library.player.BasePlayer;
 import com.kingz.library.player.IPlayer;
-
-import java.lang.reflect.Array;
-
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 import tv.danmaku.ijk.media.player.IjkTimedText;
+
+import java.lang.reflect.Array;
 
 /**
  * author：KingZ
@@ -27,7 +25,7 @@ public class IJKPlayer extends BasePlayer implements IJKMediaPlayerListeners {
     private IjkMediaPlayer player;
     private int bufferSize;         //缓冲区大小，单位kb
     private long currentPosition;   //ijk 在暂停之后恢复播放的第一秒 时间不准，在缓冲的时候进度也一直在跑
-    
+
     public IJKPlayer(Context context) {
         this.mContext = context;
         player = new IjkMediaPlayer();
@@ -58,7 +56,7 @@ public class IJKPlayer extends BasePlayer implements IJKMediaPlayerListeners {
             }
         }
     };
-    
+
 
     @Override
     public void setSurface(Surface surface) {
@@ -89,7 +87,7 @@ public class IJKPlayer extends BasePlayer implements IJKMediaPlayerListeners {
     }
 
     @Override
-    public void setPlayURI(Uri uri) {
+    public void setDataSource(Uri uri) {
         if (player == null) {
             player = new IjkMediaPlayer();
             player.setSurface(mSurface);

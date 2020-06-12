@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceHolder;
-
 import com.kingz.library.player.BasePlayer;
 import com.kingz.library.player.IPlayer;
 
@@ -229,7 +228,7 @@ public class AndroidPlayer extends BasePlayer implements AndroidMediaPlayerListe
     }
 
     @Override
-    public void setPlayURI(Uri uri) {
+    public void setDataSource(Uri uri) {
         if (uri == null) {
             Log.e(TAG, "video uri can't null.");
             return;

@@ -34,7 +34,7 @@ interface IPlayer {
     // -------------------- 设置api ---------------
     fun setPlayerView(playView: View?)
 
-    fun setPlayURI(uri: Uri?)
+    fun setDataSource(uri: Uri?)
     fun setPlayerEventCallBack(callBack: IPlayerEventsCallBack?)
     fun selectAudioTrack(audioTrackIndex: Int)
     fun setDisplayHolder(holder: SurfaceHolder?)

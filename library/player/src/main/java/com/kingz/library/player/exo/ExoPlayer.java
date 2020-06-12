@@ -3,7 +3,6 @@ package com.kingz.library.player.exo;
 import android.content.Context;
 import android.graphics.SurfaceTexture;
 import android.net.Uri;
-import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Surface;
@@ -12,10 +11,9 @@ import android.view.SurfaceView;
 import android.view.TextureView;
 import androidx.annotation.Nullable;
 import com.google.android.exoplayer2.*;
-import com.google.android.exoplayer2.drm.DrmSessionManager;
-import com.google.android.exoplayer2.drm.FrameworkMediaCrypto;
-import com.google.android.exoplayer2.drm.HttpMediaDrmCallback;
-import com.google.android.exoplayer2.drm.UnsupportedDrmException;
+import com.google.android.exoplayer2.drm.*;
+import com.google.android.exoplayer2.metadata.Metadata;
+import com.google.android.exoplayer2.metadata.MetadataOutput;
 import com.google.android.exoplayer2.source.*;
 import com.google.android.exoplayer2.source.dash.DashMediaSource;
 import com.google.android.exoplayer2.source.dash.DefaultDashChunkSource;
@@ -44,35 +42,28 @@ import java.util.UUID;
 /**
  * author：KingZ
  * date：2019/7/30
- * description：EXO 媒体播放器
- * 使用方式：
- *
- * <pre> {@code
- * ExoMediaPlayer exoPlayer = new ExoMediaPlayer(context);
- * exoPlayer.setPlayerView(playerView);
- * exoPlayer.setPlayURI(playUri);
- * }</pre>
- *
- * <p>关于Player.EventListene接口：
- * 两个最重要的是{@link ExoPlayerEvents#onPlayerStateChanged}和{@link ExoPlayerEvents#onPlayerError}
- * 具体的参见<a herf="https://exoplayer.dev/doc/reference/com/google/android/exoplayer2/Player.EventListener.html">JavaDoc</>
+ * description：EXO
  */
-
 public class ExoPlayer extends BasePlayer {
     private static final String TAG = ExoPlayer.class.getSimpleName();
-    private static final DefaultBandwidthMeter BANDWIDTH_METER = new DefaultBandwidthMeter();
+    private final DefaultBandwidthMeter BANDWIDTH_METER = new DefaultBandwidthMeter.Builder(null).build();
     private static final CookieManager DEFAULT_COOKIE_MANAGER = new CookieManager();
 
+    /**
+     * <p>关于Player.EventListene接口：
+     * 两个最重要的是{@link ExoPlayerEvents#onPlayerStateChanged}和{@link ExoPlayerEvents#onPlayerError}
+     * 具体的参见<a herf="https://exoplayer.dev/doc/reference/com/google/android/exoplayer2/Player.EventListener.html">JavaDoc</>
+     */
     private final class ExoPlayerEvents implements Player.EventListener{
 
         @Override
         public void onTimelineChanged(Timeline timeline, Object manifest, int reason) {
-            logout("播放器回调 onTimelineChanged() " + timeline);
+            logout("PlayerEvent:: onTimelineChanged() " + timeline);
         }
 
         @Override
         public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) {
-            logout("播放器回调 onTracksChanged() " + trackGroups + " " + trackSelections);
+            logout("PlayerEvent:: onTracksChanged() " + trackGroups + " " + trackSelections);
         }
 
         /**
@@ -80,7 +71,7 @@ public class ExoPlayer extends BasePlayer {
          */
         @Override
         public void onLoadingChanged(boolean isLoading) {
-            logout("播放器回调 onLoadingChanged " + isLoading);
+            logout("PlayerEvent:: onLoadingChanged " + isLoading);
         }
 
         /**
@@ -115,7 +106,6 @@ public class ExoPlayer extends BasePlayer {
                 case Player.STATE_READY:
                     stateString = "ExoPlayer.STATE_READY     -";
                     if (!isPrepared()) {
-                        isPrepared = true;
                         onPrepared();
                     }
                     if (isBuffering()) {
@@ -142,7 +132,7 @@ public class ExoPlayer extends BasePlayer {
         @Override
         public void onPlayerError(ExoPlaybackException error) {
             error.printStackTrace();
-            logout("播放器回调 onPlayerError()" + error.getMessage());
+            logout("PlayerEvent:: onPlayerError()" + error.getMessage());
             isPrepared = false;
             isPaused = false;
             isBufferIng = false;
@@ -153,7 +143,7 @@ public class ExoPlayer extends BasePlayer {
 
         @Override
         public void onPositionDiscontinuity(int reason) {
-            logout("播放器回调 onPositionDiscontinuity()" + reason);
+            logout("PlayerEvent:: onPositionDiscontinuity()" + reason);
         }
 
         @Override
@@ -177,8 +167,6 @@ public class ExoPlayer extends BasePlayer {
     private DefaultTrackSelector trackSelector;
     private DataSource.Factory mediaDataSourceFactory;
     private TrackSelectionHelper trackSelectionHelper;
-    private boolean playerNeedsSource;
-    private boolean autoPlay;
 
     private UUID drmSchemeUuid = null;
     private String drmLicenseUrl = null;
@@ -187,9 +175,9 @@ public class ExoPlayer extends BasePlayer {
 
     public ExoPlayer(Context context) {
         mContext = context;
-        autoPlay = true;
         mediaDataSourceFactory = buildDataSourceFactory(BANDWIDTH_METER);
         eventListener = new ExoPlayerEvents();
+        init();
     }
 
     private void onPrepared(){
@@ -213,10 +201,10 @@ public class ExoPlayer extends BasePlayer {
     }
 
     @Override
-    public void setPlayURI(Uri uri) {
+    public void setDataSource(Uri uri) {
         uris = new Uri[]{uri};
         extensions = new String[uris.length];
-        initializePlayer();
+        prepare();
     }
 
     @Override
@@ -274,62 +262,71 @@ public class ExoPlayer extends BasePlayer {
     /**
      * 初始化播放器
      */
-    private void initializePlayer() {
+    private void init() {
         if (player == null) {
-            DefaultRenderersFactory renderersFactory = createRenderersFactoryWithDRM();
-            if (renderersFactory == null) {
-                return;
-            }
-
+            // 默认渲染工厂
+            DefaultRenderersFactory defaultRender = new DefaultRenderersFactory(mContext);
+            // 默认渲染器优先
+            defaultRender.setExtensionRendererMode(DefaultRenderersFactory.EXTENSION_RENDERER_MODE_PREFER);
+            // 创建DRM的渲染工厂
+            //DefaultRenderersFactory renderersFactory = createRenderersFactoryWithDRM();
+            //if (renderersFactory == null) {
+            //    return;
+            //}
             createTrackSelector();
-//            player = ExoPlayerFactory.newSimpleInstance(renderersFactory, trackSelector);
-            //FIXME
-//            player = ExoPlayerFactory.newSimpleInstance(
-//                    new DefaultRenderersFactory(mContext), //默认渲染工厂
-//                    new DefaultTrackSelector(), // 默认的轨道选择器（DefaultTrackSelector）
-//                    new DefaultLoadControl());  // 默认的加载控制器
+            //player = ExoPlayerFactory.newSimpleInstance(mContext,renderersFactory, trackSelector);
+            player = ExoPlayerFactory.newSimpleInstance(mContext,
+                    defaultRender,
+                    trackSelector,
+                    new DefaultLoadControl());  // 默认的加载控制器
 
-            addEventListenerWithPlayer();
+            addListenerWithPlayer();
 
             setSurface(null);
-            player.setPlayWhenReady(autoPlay);
-            playerNeedsSource = true;
-        }
-
-        if (playerNeedsSource) {
-            if (uris == null || uris.length <= 0) {
-                eventListener.onPlayerError(ExoPlaybackException.createForSource(new IOException("no uris")));
-                return;
-            }
-            MediaSource[] mediaSources = new MediaSource[uris.length];
-            for (int i = 0; i < uris.length; i++) {
-                //FIXME
-                //mediaSources[i] = createMediaSource(uris[i], extensions[i], mainHandler, eventLogger);
-            }
-            MediaSource mediaSource = mediaSources.length == 1 ? mediaSources[0]
-                    : new ConcatenatingMediaSource(mediaSources);
-            player.prepare(mediaSource);
-            playerNeedsSource = false;
+            player.setPlayWhenReady(false);
         }
     }
 
-    private void addEventListenerWithPlayer() {
+    private void prepare(){
+        if (uris == null || uris.length <= 0) {
+            eventListener.onPlayerError(ExoPlaybackException.createForSource(new IOException("no uris")));
+            return;
+        }
+        MediaSource[] mediaSources = new MediaSource[uris.length];
+        for (int i = 0; i < uris.length; i++) {
+            mediaSources[i] = createMediaSource(uris[i], extensions[i]);
+            mediaSources[i].addEventListener(mainHandler, new CustomMediaSourceEventListener());
+        }
+        MediaSource mediaSource = mediaSources.length == 1 ? mediaSources[0]
+                : new ConcatenatingMediaSource(mediaSources);
+        player.prepare(mediaSource);
+
+    }
+
+    private void addListenerWithPlayer() {
         player.addListener(eventListener);
 
         eventLogger = new EventLogger(trackSelector);
-        //FIXME Listener 修改
-        //player.addListener(eventLogger);
-        //player.addMetadataOutput(eventLogger);
-        //player.addAudioDebugListener(eventLogger);
-        //player.addVideoDebugListener(eventLogger);
+        player.addMetadataOutput(new MetadataOutput() {
+            @Override
+            public void onMetadata(Metadata metadata) {
+                Log.d(TAG,"onMetadata()  metaData=" + metadata.toString());
+            }
+        });
+        // addAudioDebugListener\addVideoDebugListener ... is deprecated.
+        // Use AnalyticsListener to get more detailed debug information
+        player.addAnalyticsListener(eventLogger);
     }
 
     /**
      * 创建轨道选择器
      */
     private void createTrackSelector() {
-        TrackSelection.Factory adaptiveTrackSelectionFactory = new AdaptiveTrackSelection.Factory(BANDWIDTH_METER);
-        trackSelector = new DefaultTrackSelector(adaptiveTrackSelectionFactory);
+        // 自定义的bandwidth meter需要在ExoPlayerFactory.()的时候传递进去
+        //TrackSelection.Factory adaptiveTrackSelectionFactory = new AdaptiveTrackSelection.Factory(BANDWIDTH_METER);
+
+        TrackSelection.Factory adaptiveTrackSelectionFactory = new AdaptiveTrackSelection.Factory();  //TrackSelection.Factory
+        trackSelector = new DefaultTrackSelector();
         trackSelectionHelper = new TrackSelectionHelper(trackSelector, adaptiveTrackSelectionFactory);
     }
 
@@ -359,20 +356,17 @@ public class ExoPlayer extends BasePlayer {
      * DASH (DashMediaSource),
      * SmoothStreaming (SsMediaSource),
      * HLS (HlsMediaSource)，
-     * 其他的格式使用 (ExtractorMediaSource).
+     * 其他的格式使用 (ExtractorMediaSource(旧)  ProgressiveMediaSource(新)).
      * <p>
      * <a href="https://exoplayer.dev/supported-formats.html">EXOPLAYER Support Formats</a>
      * <p>
-     * MP4格式应该使用ExtractorMediaSource。
+     * MP4格式应该使用 ExtractorMediaSource/ProgressiveMediaSource。
      *
      * @param uri               播放地址的uri
      * @param overrideExtension 扩展参数
      * @return 创建的MediaSource对象
      */
-    private MediaSource createMediaSource(Uri uri,
-                                          String overrideExtension,
-                                          @Nullable Handler handler,
-                                          @Nullable MediaSourceEventListener listener) {
+    private MediaSource createMediaSource(Uri uri, String overrideExtension) {
         @C.ContentType int type;
         if (TextUtils.isEmpty(overrideExtension)) {
             type = Util.inferContentType(uri);
@@ -384,18 +378,24 @@ public class ExoPlayer extends BasePlayer {
                 return new DashMediaSource.Factory(
                         new DefaultDashChunkSource.Factory(mediaDataSourceFactory),
                         buildDataSourceFactory(null))
-                        .createMediaSource(uri, handler, listener);
+                        .createMediaSource(uri);
             case C.TYPE_SS:
                 return new SsMediaSource.Factory(
                         new DefaultSsChunkSource.Factory(mediaDataSourceFactory),
                         buildDataSourceFactory(null))
-                        .createMediaSource(uri, handler, listener);
+                        .createMediaSource(uri);
             case C.TYPE_HLS:
-                return new HlsMediaSource.Factory(mediaDataSourceFactory)
-                        .createMediaSource(uri, handler, listener);
+                return new HlsMediaSource
+                        .Factory(mediaDataSourceFactory)
+                        .createMediaSource(uri);
             case C.TYPE_OTHER:
-                return new ExtractorMediaSource.Factory(mediaDataSourceFactory)
-                        .createMediaSource(uri, handler, listener);
+                // Old
+                // ExtractorMediaSource extractorMediaSource = new ExtractorMediaSource.Factory(mediaDataSourceFactory)
+                //        .createMediaSource(uri);
+                // New
+                return new ProgressiveMediaSource
+                        .Factory(mediaDataSourceFactory)
+                        .createMediaSource(uri);
             default: {
                 throw new IllegalArgumentException("Unsupported type: " + type);
             }
@@ -403,16 +403,19 @@ public class ExoPlayer extends BasePlayer {
     }
 
     private DrmSessionManager<FrameworkMediaCrypto> buildDrmSessionManager(UUID uuid, String licenseUrl) throws UnsupportedDrmException {
-        if (Util.SDK_INT < 18) {
-            return null;
-        }
-
-        HttpMediaDrmCallback drmCallback = new HttpMediaDrmCallback(licenseUrl, false,
+        //if (Util.SDK_INT < 18) {
+        //    return null;
+        //}
+        HttpMediaDrmCallback drmCallback = new HttpMediaDrmCallback(licenseUrl,
+                false,
                 buildHttpDataSourceFactory(false ? BANDWIDTH_METER : null));
-        //FIXME
-        //return new DefaultDrmSessionManager<>(uuid,
-        //        FrameworkMediaDrm.newInstance(uuid), drmCallback, null, mainHandler, eventLogger);
-        return null;
+        return new DefaultDrmSessionManager<>(
+                uuid,
+                FrameworkMediaDrm.newInstance(uuid),
+                drmCallback,
+                null,
+                false,
+                3);
     }
 
     @Override
@@ -475,7 +478,6 @@ public class ExoPlayer extends BasePlayer {
 
     private void releasePlayer() {
         if (player != null) {
-            autoPlay = player.getPlayWhenReady();
             player.release();
             player = null;
             trackSelector = null;
@@ -500,19 +502,17 @@ public class ExoPlayer extends BasePlayer {
     @Override
     public void play() {
         super.play();
-        if (player == null) {
-            return;
+        if (player != null) {
+            player.setPlayWhenReady(true);
         }
-        player.setPlayWhenReady(true);
     }
 
     @Override
     public void pause() {
         super.pause();
-        if (player == null) {
-            return;
+        if (player != null) {
+            player.setPlayWhenReady(false);
         }
-        player.setPlayWhenReady(false);
     }
 
     @Override
@@ -554,9 +554,9 @@ public class ExoPlayer extends BasePlayer {
     }
 
     public void onInfo(int what) {
-        String s = "正在缓冲";
+        String s = "Buffing...";
         if (what == Player.STATE_READY) {
-            s = "缓冲结束";
+            s = "Buff End.";
         }
         logout("onInfo():" + s);
         switch (what) {
@@ -650,4 +650,59 @@ public class ExoPlayer extends BasePlayer {
             }
         return IntArray(0)
     }*/
+
+
+   private class CustomMediaSourceEventListener extends DefaultMediaSourceEventListener{
+       public CustomMediaSourceEventListener() {
+           super();
+       }
+
+       @Override
+       public void onMediaPeriodCreated(int windowIndex, MediaSource.MediaPeriodId mediaPeriodId) {
+           super.onMediaPeriodCreated(windowIndex, mediaPeriodId);
+       }
+
+       @Override
+       public void onMediaPeriodReleased(int windowIndex, MediaSource.MediaPeriodId mediaPeriodId) {
+           super.onMediaPeriodReleased(windowIndex, mediaPeriodId);
+       }
+
+       @Override
+       public void onLoadStarted(int windowIndex, @Nullable MediaSource.MediaPeriodId mediaPeriodId, LoadEventInfo loadEventInfo, MediaLoadData mediaLoadData) {
+           super.onLoadStarted(windowIndex, mediaPeriodId, loadEventInfo, mediaLoadData);
+       }
+
+       @Override
+       public void onLoadCompleted(int windowIndex, @Nullable MediaSource.MediaPeriodId mediaPeriodId, LoadEventInfo loadEventInfo, MediaLoadData mediaLoadData) {
+           super.onLoadCompleted(windowIndex, mediaPeriodId, loadEventInfo, mediaLoadData);
+            //移除监听器，避免重复回调
+            //mediaSource.removeEventListener(this);
+            //long duration = player.getDuration();
+       }
+
+       @Override
+       public void onLoadCanceled(int windowIndex, @Nullable MediaSource.MediaPeriodId mediaPeriodId, LoadEventInfo loadEventInfo, MediaLoadData mediaLoadData) {
+           super.onLoadCanceled(windowIndex, mediaPeriodId, loadEventInfo, mediaLoadData);
+       }
+
+       @Override
+       public void onLoadError(int windowIndex, @Nullable MediaSource.MediaPeriodId mediaPeriodId, LoadEventInfo loadEventInfo, MediaLoadData mediaLoadData, IOException error, boolean wasCanceled) {
+           super.onLoadError(windowIndex, mediaPeriodId, loadEventInfo, mediaLoadData, error, wasCanceled);
+       }
+
+       @Override
+       public void onReadingStarted(int windowIndex, MediaSource.MediaPeriodId mediaPeriodId) {
+           super.onReadingStarted(windowIndex, mediaPeriodId);
+       }
+
+       @Override
+       public void onUpstreamDiscarded(int windowIndex, @Nullable MediaSource.MediaPeriodId mediaPeriodId, MediaLoadData mediaLoadData) {
+           super.onUpstreamDiscarded(windowIndex, mediaPeriodId, mediaLoadData);
+       }
+
+       @Override
+       public void onDownstreamFormatChanged(int windowIndex, @Nullable MediaSource.MediaPeriodId mediaPeriodId, MediaLoadData mediaLoadData) {
+           super.onDownstreamFormatChanged(windowIndex, mediaPeriodId, mediaLoadData);
+       }
+   }
 }

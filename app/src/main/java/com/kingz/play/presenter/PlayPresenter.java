@@ -4,7 +4,6 @@ import android.media.TimedText;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.SeekBar;
-
 import com.kingz.library.player.IPlayer;
 import com.kingz.library.player.IPlayerEventsCallBack;
 import com.kingz.library.player.exo.ExoPlayer;
@@ -45,7 +44,7 @@ public class PlayPresenter extends AbsBasePresenter implements IPlayerEventsCall
         //嫦娥探月
 //        Uri testPlayUri = Uri.parse("http://video.chinanews.com/flv/2019/04/23/400/111773_web.mp4");
 //        Uri testPlayUri = Uri.parse("http://cctvtxyh5c.liveplay.myqcloud.com/wstv/dongfang_2/index.m3u8");
-        mPlayer.setPlayURI(testPlayUri);
+        mPlayer.setDataSource(testPlayUri);
         if (mPlayer instanceof ExoPlayer) {
             ((ExoPlayer) mPlayer).setRepeatMode(REPEAT_MODE_ALL);
         }
