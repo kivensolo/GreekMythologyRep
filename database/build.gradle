@@ -18,6 +18,13 @@ android {
     }
 
     buildTypes {
+        debug{
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            // Android Debug Database Custom PortNumber.
+            resValue("string", "PORT_NUMBER", "9001")
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -50,4 +57,9 @@ dependencies {
     // 网络操作--有网络操作添加
 //    implementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
 //    implementation 'com.squareup.okhttp3:okhttp:3.9.0'
+
+    // Android-Debug-Database
+    debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
+//    debugImplementation 'com.amitshekhar.android:debug-db-encrypt:1.0.6'
+
 }
