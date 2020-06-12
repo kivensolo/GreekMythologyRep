@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FF979797">
+
+    <Button
+            android:id="@+id/full_btn"
+            style="@style/demo_btn_style"
+            android:text="@string/demo_label_full"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.024"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.666" />
+
+    <Button
+            android:id="@+id/play_player"
+            style="@style/demo_btn_style"
+            android:layout_marginStart="12dp"
+            android:text="@string/demo_label_paly"
+            app:layout_anchor="@+id/full_btn"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/full_btn"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.661" />
+
+    <Button
+            android:id="@+id/pause_player"
+            style="@style/demo_btn_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/demo_label_pause"
+            app:layout_anchor="@+id/full_btn"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/full_btn"
+            app:layout_constraintTop_toBottomOf="@+id/play_player"
+            app:layout_constraintVertical_bias="0.128" />
+
+    <Button
+            android:id="@+id/release_player"
+            style="@style/demo_btn_style"
+            android:layout_marginStart="16dp"
+            android:text="@string/demo_label_destory"
+            app:layout_anchor="@+id/full_btn"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/play_player"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.666" />
+
+    <Button
+            android:id="@+id/rebuild_player"
+            style="@style/demo_btn_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/demo_label_rebuild"
+            app:layout_anchor="@+id/full_btn"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/pause_player"
+            app:layout_constraintTop_toBottomOf="@+id/release_player"
+            app:layout_constraintVertical_bias="0.102" />
+
+    <LinearLayout
+        android:id="@+id/videoPlayer_layout"
+        android:layout_width="900px"
+        android:layout_height="600px"
+        android:background="@android:color/holo_blue_dark"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="PxUsage">
+
+        <FrameLayout
+            android:id="@+id/surface_wrapper"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:background="@color/rosybrown"
+            tools:layout_height="500px"
+            tools:layout_width="800px" >
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

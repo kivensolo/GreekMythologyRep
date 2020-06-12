@@ -1,0 +1,86 @@
+<resources>
+    <string name="app_name">SmallPlayer</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <string name="menu_audio">音效模式</string>
+    <string name="menu_episode">播放列表</string>
+    <string name="menu_hd_play">高清</string>
+    <string name="menu_sd_play">标清</string>
+    <string name="menu_speed">倍速播放</string>
+    <string name="menu_super_play">超清</string>
+    <string name="menu_surface">画面比例</string>
+    <string name="menu_vision">清晰度</string>
+
+    <string name="menu_picture">图像模式</string>
+    <string name="menu_img_mode_standard">标准</string>
+    <string name="menu_img_mode_soft">柔和</string>
+    <string name="menu_img_mode_bright">明亮</string>
+    <string name="menu_img_mode_office">办公</string>
+    <string name="menu_img_mode_game">游戏</string>
+    <string name="menu_img_football">足球</string>
+    <string name="menu_img_mode_user">自定义</string>
+    <string name="menu_img_mode_natural">自然</string>
+    <string name="menu_img_mode_light_on">开灯</string>
+
+    <array name="image_mode">
+        <item>"标准"</item>
+        <item>"柔和"</item>
+        <item>"明亮"</item>
+        <item>"办公"</item>
+        <item>"游戏"</item>
+        <item>"足球"</item>
+        <item>"自定义"</item>
+    </array>
+    <array name="image_zoom">
+        <item>"全屏"</item>
+        <item>"16 : 9"</item>
+        <item>"4 : 3"</item>
+        <item>"原始大小"</item>
+    </array>
+    <array name="multi_speed">
+        <item>"0.75X"</item>
+        <item>"1.0X"</item>
+        <item>"1.25X"</item>
+        <item>"1.5X"</item>
+        <item>"2.0X"</item>
+    </array>
+    <array name="audio_mode">
+        <item>"自动"</item>
+        <item>"影院"</item>
+        <item>"音乐"</item>
+    </array>
+
+
+    <!-- 播放器提示文本 -->
+    <string name="network_exception">网络异常，请检查网络后重试</string>
+    <string name="play_video_exception">播放异常</string>
+    <string name="vip_buy_before_play">请在购买会员后播放</string>
+
+
+    <string name="toast_no_next">已是最后一集</string>
+    <string name="toast_playing_next">即将播放下一集</string>
+    <string name="progress_wait_fail">出错啦！</string>
+
+    <string name="toast_play_complete">播放完毕</string>
+    <string name="toast_no_previous">已是第一集</string>
+    <string name="toast_playing_previous">正在为您播放上一集</string>
+
+    <string name="online_playaddress_empty">播放地址获取失败</string>
+
+    <string name="fetch_play_link_failed">视频出了点问题，先看看其他视频也很精彩哦</string>
+    <string name="demo_label_full">FullScreen</string>
+    <string name="demo_label_paly">Play</string>
+    <string name="demo_label_pause">Pause</string>
+    <string name="demo_label_tabout">Stop</string>
+    <string name="demo_label_destory">Release</string>
+    <string name="demo_label_rebuild">Rebuild</string>
+
+</resources>

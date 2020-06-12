@@ -1,4 +1,6 @@
 include ':app'
+include ':app-playerdemo'
+
 include ':database'
 include ':module-Common'
 include ':module-Home'
@@ -25,3 +27,4 @@ gradle.beforeProject {
 gradle.afterProject {
     println "Settings end.   <<<<<<]"
 }
+
