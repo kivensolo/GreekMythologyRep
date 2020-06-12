@@ -125,8 +125,7 @@ public class PlayPresenter extends AbsBasePresenter implements IPlayerEventsCall
     }
 
     @Override
-    public boolean onError(int what, int extra) {
-        return false;
+    public void onError(int what, int extra) {
     }
 
     @Override

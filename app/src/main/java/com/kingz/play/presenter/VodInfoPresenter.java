@@ -1,7 +1,6 @@
 package com.kingz.play.presenter;
 
 import android.media.TimedText;
-
 import com.kingz.library.player.IPlayerEventsCallBack;
 import com.kingz.play.fragment.VodInfoFragment;
 
@@ -39,8 +38,7 @@ public class VodInfoPresenter extends AbsBasePresenter implements IPlayerEventsC
     }
 
     @Override
-    public boolean onError(int what, int extra) {
-        return false;
+    public void onError(int what, int extra) {
     }
 
     @Override
