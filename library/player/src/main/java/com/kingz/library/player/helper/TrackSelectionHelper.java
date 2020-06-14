@@ -16,7 +16,6 @@
 package com.kingz.library.player.helper;
 
 import android.text.TextUtils;
-
 import com.google.android.exoplayer2.Format;
 import com.google.android.exoplayer2.RendererCapabilities;
 import com.google.android.exoplayer2.source.TrackGroup;
@@ -50,9 +49,9 @@ public final class TrackSelectionHelper {
     }
 
     public void set(ExoPlayer.ExoBit exobit) {
-        MappingTrackSelector.SelectionOverride override =
-                new MappingTrackSelector.SelectionOverride(adaptiveTrackSelectionFactory, exobit.groupIndex, exobit.trackIndex);
-        selector.setSelectionOverride(rendererIndex, trackGroups, override);
+        //MappingTrackSelector.SelectionOverride override =
+        //        new MappingTrackSelector.SelectionOverride(adaptiveTrackSelectionFactory, exobit.groupIndex, exobit.trackIndex);
+        //selector.setSelectionOverride(rendererIndex, trackGroups, override);
     }
 
     public List<ExoPlayer.ExoBit> get(MappedTrackInfo trackInfo, int rendererIndex) {

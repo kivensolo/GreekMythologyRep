@@ -1,19 +1,18 @@
 package com.kingz.module.common
 
 import android.os.Handler
-import androidx.multidex.MultiDexApplication
+import com.kingz.database.DatabaseApplication
 import com.kingz.module.common.service.GitHubService
 import com.kingz.module.common.service.WeatherService
 import com.zeke.kangaroo.utils.ZLog
 import com.zeke.network.retrofit.mannager.ApiManager
-import com.zhy.autolayout.config.AutoLayoutConifg
 
 /**
  * author: King.Z <br>
  * date:  2020/5/17 22:02 <br>
  * description:  <br>
  */
-open class CommonApp: MultiDexApplication(){
+open class CommonApp: DatabaseApplication(){
 
     private var _appMainHandler: Handler? = null
 
@@ -32,7 +31,7 @@ open class CommonApp: MultiDexApplication(){
     override fun onCreate() {
         super.onCreate()
         INSTANCE = this
-        _appMainHandler = Handler(mainLooper)
+//        _appMainHandler = Handler(mainLooper)
         initApiManager()
         initLog()
     }
@@ -53,9 +52,9 @@ open class CommonApp: MultiDexApplication(){
     }
 
     private fun initAutoLayout(){
-        AutoLayoutConifg.getInstance()
-                .useDeviceSize()
-                .init(applicationContext)
+//        AutoLayoutConifg.getInstance()
+//                .useDeviceSize()
+//                .init(applicationContext)
     }
 
 

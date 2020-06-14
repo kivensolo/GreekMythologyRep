@@ -6,12 +6,8 @@ import android.net.Uri;
 import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceHolder;
-
 import com.kingz.library.player.BasePlayer;
 import com.kingz.library.player.IPlayer;
-
-import java.lang.reflect.Array;
-
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 import tv.danmaku.ijk.media.player.IjkTimedText;
@@ -27,7 +23,7 @@ public class IJKPlayer extends BasePlayer implements IJKMediaPlayerListeners {
     private IjkMediaPlayer player;
     private int bufferSize;         //缓冲区大小，单位kb
     private long currentPosition;   //ijk 在暂停之后恢复播放的第一秒 时间不准，在缓冲的时候进度也一直在跑
-    
+
     public IJKPlayer(Context context) {
         this.mContext = context;
         player = new IjkMediaPlayer();
@@ -58,7 +54,7 @@ public class IJKPlayer extends BasePlayer implements IJKMediaPlayerListeners {
             }
         }
     };
-    
+
 
     @Override
     public void setSurface(Surface surface) {
@@ -66,12 +62,6 @@ public class IJKPlayer extends BasePlayer implements IJKMediaPlayerListeners {
             player.setSurface(surface);
         }
     }
-
-    @Override
-    public Array getAudioTrack() {
-        return null;
-    }
-
 
     @Override
     public void onSurfaceTextureUpdated(SurfaceTexture surface) {
@@ -89,7 +79,7 @@ public class IJKPlayer extends BasePlayer implements IJKMediaPlayerListeners {
     }
 
     @Override
-    public void setPlayURI(Uri uri) {
+    public void setDataSource(Uri uri) {
         if (player == null) {
             player = new IjkMediaPlayer();
             player.setSurface(mSurface);
@@ -158,9 +148,9 @@ public class IJKPlayer extends BasePlayer implements IJKMediaPlayerListeners {
     @Override
     public boolean onError(IMediaPlayer iMediaPlayer, int what, int extra) {
         Log.e(TAG, "play error: what is" + what + ",  extra is " + extra);
-        isPrepared = false;
-        isPaused = false;
-        isBufferIng = false;
+        mIsPrepared = false;
+        mIsPaused = false;
+        mIsBufferIng = false;
         if (playCallBack != null) {
             playCallBack.onError(what, extra);
         }
@@ -173,13 +163,13 @@ public class IJKPlayer extends BasePlayer implements IJKMediaPlayerListeners {
         Log.d(TAG, "onInfo: what is" + what + ",  extra is " + extra);
         switch (what) {
             case MEDIA_INFO_BUFFERING_START:
-                isBufferIng = true;
+                mIsBufferIng = true;
                 if (playCallBack != null) {
                     playCallBack.onBufferStart();
                 }
                 break;
             case MEDIA_INFO_BUFFERING_END:
-                isBufferIng = false;
+                mIsBufferIng = false;
                 playCallBack.onBufferEnd();
                 break;
             default:
@@ -193,7 +183,7 @@ public class IJKPlayer extends BasePlayer implements IJKMediaPlayerListeners {
 
     @Override
     public void onPrepared(IMediaPlayer iMediaPlayer) {
-        isPrepared = true;
+        mIsPrepared = true;
         if (playCallBack != null) {
             playCallBack.onPrepared();
         }

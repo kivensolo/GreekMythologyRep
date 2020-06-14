@@ -1,0 +1,12 @@
+
+ext {
+    java = [sourceCompatibility: JavaVersion.VERSION_1_8,
+            targetCompatibility: JavaVersion.VERSION_1_8]
+
+    kotlin_version = '1.3.61'
+
+    lib_versions = [
+            ijk             :'0.8.4',
+            exo             :'2.10.5',
+    ]
+}

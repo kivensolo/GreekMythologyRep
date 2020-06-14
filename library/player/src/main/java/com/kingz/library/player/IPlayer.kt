@@ -5,7 +5,6 @@ import android.net.Uri
 import android.view.Surface
 import android.view.SurfaceHolder
 import android.view.View
-import java.lang.reflect.Array
 
 /**
  * author：KingZ
@@ -34,12 +33,13 @@ interface IPlayer {
     // -------------------- 设置api ---------------
     fun setPlayerView(playView: View?)
 
-    fun setPlayURI(uri: Uri?)
+    fun setDataSource(uri: Uri?)
     fun setPlayerEventCallBack(callBack: IPlayerEventsCallBack?)
     fun selectAudioTrack(audioTrackIndex: Int)
     fun setDisplayHolder(holder: SurfaceHolder?)
     fun setSurface(surface: Surface?)
-    val audioTrack: Array?
+    fun getAudioTrack(): IntArray
+
     /**
      * 设置播放速率
      * @param speed 速率 支持0.5-2.0
@@ -53,13 +53,13 @@ interface IPlayer {
      */
     fun setBufferSize(bufferSize: Int)
 
-    // -------------------- 读取api ----------
     val isPrepared: Boolean
-
     val isPlaying: Boolean
     val isBuffering: Boolean
     val isPaused: Boolean
+
     val currentURI: Uri?
+
     /**
      * Gets the duration of the file.
      * @return 流总长度 ms

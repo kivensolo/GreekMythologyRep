@@ -6,11 +6,8 @@ import android.graphics.SurfaceTexture;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
-import android.view.Surface;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
-import android.view.TextureView;
-import android.view.View;
+import android.view.*;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * author：KingZ
@@ -29,9 +26,9 @@ public abstract class BasePlayer implements IPlayer,
     protected Uri mUri;
 
     //TODO 用位运算处理
-    protected boolean isPrepared;
-    protected boolean isPaused;
-    protected boolean isBufferIng;
+    protected boolean mIsPrepared;
+    protected boolean mIsPaused;
+    protected boolean mIsBufferIng;
 
     protected View playView;  //承载播放的view
 
@@ -105,7 +102,7 @@ public abstract class BasePlayer implements IPlayer,
 
     @Override
     public void play() {
-        isPaused = false;
+        mIsPaused = false;
         removeHandler();
         mainHandler.post(getLoopRunnable());
         if (playCallBack != null) {
@@ -115,7 +112,7 @@ public abstract class BasePlayer implements IPlayer,
 
     @Override
     public void pause() {
-        isPaused = true;
+        mIsPaused = true;
         removeHandler();
     }
 
@@ -144,7 +141,7 @@ public abstract class BasePlayer implements IPlayer,
 
     @Override
     public boolean isPrepared() {
-        return isPrepared;
+        return mIsPrepared;
     }
 
     @Override
@@ -154,12 +151,12 @@ public abstract class BasePlayer implements IPlayer,
 
     @Override
     public boolean isBuffering() {
-        return isBufferIng;
+        return mIsBufferIng;
     }
 
     @Override
     public boolean isPaused() {
-        return isPaused;
+        return mIsPaused;
     }
 
     @Override
@@ -192,6 +189,12 @@ public abstract class BasePlayer implements IPlayer,
         return playView instanceof TextureView ? ((TextureView) playView).getBitmap() : null;
     }
 
+    @NotNull
+    @Override
+    public int[] getAudioTrack() {
+        return new int[0];
+    }
+
     @Override
     public abstract IPlayer getMediaPlayer();
 
@@ -201,9 +204,9 @@ public abstract class BasePlayer implements IPlayer,
 
     protected void reset() {
         mUri = null;
-        isPrepared = false;
-        isPaused = false;
-        isBufferIng = false;
+        mIsPrepared = false;
+        mIsPaused = false;
+        mIsBufferIng = false;
         detachListener();
     }
 }

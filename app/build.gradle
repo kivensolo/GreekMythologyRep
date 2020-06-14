@@ -4,7 +4,6 @@ apply {
     plugin 'kotlin-android-extensions'
 
     from 'version.gradle'
-    from 'compile.gradle'
     from '../config.gradle'
     from '../utils.gradle'
 }
@@ -97,9 +96,9 @@ android {
     }
 
     compileOptions {
-        encoding compile_encoding
-        sourceCompatibility compile_source_compatibility
-        targetCompatibility compile_target_compatibility
+        encoding rootProject.ext.java.compile_encoding
+        sourceCompatibility rootProject.ext.java.sourceCompatibility
+        targetCompatibility rootProject.ext.java.targetCompatibility
     }
 
     adbOptions{

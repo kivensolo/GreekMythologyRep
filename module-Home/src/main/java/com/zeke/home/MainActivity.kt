@@ -6,12 +6,14 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import androidx.core.app.ActivityCompat
+import com.kingz.database.entity.BaseEntity
 import com.kingz.module.common.BaseActivity
 import com.kingz.module.common.base.BaseFragment
 import com.kingz.module.home.R
 import com.zeke.home.fragments.HomeLiveFragment
 import com.zeke.home.fragments.HomeRecomFragment
 import com.zeke.home.fragments.ISwitcher
+import com.zeke.home.model.HomeSongModel
 
 /**
  * KT版本首页
@@ -45,6 +47,9 @@ class MainActivity : BaseActivity(), ISwitcher {
         //         ZLog.d("onSuccess  user is ${t.name}")
         //     }
         // })
+
+        //TestCode
+        HomeSongModel<BaseEntity>().testInsertData()
     }
 
     private fun initFragment() {
