@@ -13,18 +13,19 @@ import com.kingz.customdemo.R;
  * description：顶部工具栏Controller
  */
 public class TopBarController extends BaseController{
-    private ImageView backView;     // 返回图标view
+    private ImageView backView;         // 返回图标view
     private TextView titleTxtView;      // 影片TitleView
-    private String titleContent;
+    private ImageView settingView;     // 设置view
 
     public TopBarController(View view) {
         this.rootView = view.findViewById(R.id.player_bar_top);
         this.backView = rootView.findViewById(R.id.back_tv);
         this.titleTxtView = rootView.findViewById(R.id.player_title_name);
+        settingView = rootView.findViewById(R.id.player_setting);
     }
 
     public void setTitle(String txt) {
-        this.titleContent = txt;
+        titleTxtView.setText(txt);
         if (isShown()) {
             refreshTitle();
         }
@@ -32,6 +33,7 @@ public class TopBarController extends BaseController{
 
     public void setOnClickListener(View.OnClickListener listener) {
         backView.setOnClickListener(listener);
+        settingView.setOnClickListener(listener);
     }
 
     @Override
@@ -44,9 +46,11 @@ public class TopBarController extends BaseController{
         int orientation = rootView.getResources().getConfiguration().orientation;
         //横屏才设置文字  竖屏不设置
         if(Configuration.ORIENTATION_LANDSCAPE == orientation){
-            titleTxtView.setText(titleContent);
+            titleTxtView.setVisibility(View.VISIBLE);
+            settingView.setVisibility(View.VISIBLE);
         }else{
-            titleTxtView.setText("");
+            titleTxtView.setVisibility(View.INVISIBLE);
+            settingView.setVisibility(View.INVISIBLE);
         }
     }
 }

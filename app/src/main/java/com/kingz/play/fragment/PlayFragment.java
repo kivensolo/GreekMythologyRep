@@ -117,6 +117,7 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
         playPresenter = new PlayPresenter(mediaPlayer,this);
         playerUiSwitcher = new PlayerUiSwitcher(playPresenter, rootView);
         playerUiSwitcher.setOnClickListener(this);
+        playerUiSwitcher.setVideoTitle("测试影片");
         playerUiSwitcher.setOnSeekBarChangeListener(playPresenter.seekBarChangeListener);
         playPresenter.onCreateView();
     }
@@ -152,6 +153,9 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
             case R.id.play_next:
                 //DO Nothing
                 break;
+            case R.id.player_setting:
+                playerUiSwitcher.makeSettingViewVisible(true);
+                break;
             default:
                 break;
         }
@@ -184,6 +188,10 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
 
     @Override
     public boolean onBackPressed() {
+        if(playerUiSwitcher.isSettingViewShow()){
+            playerUiSwitcher.makeSettingViewVisible(false);
+            return true;
+        }
         switchScreenMode(false);
         return false;
     }
