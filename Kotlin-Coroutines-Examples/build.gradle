@@ -48,7 +48,11 @@ dependencies {
     implementation rootProject.ext.dependencies["appcompat"]
     implementation rootProject.ext.dependencies["core-ktx"]
 
+    //Testing
     testImplementation rootProject.ext.test["junit"]
+    testImplementation rootProject.ext.test["mockito-core"]
+    testImplementation rootProject.ext.test["core-testing"]
+    testImplementation rootProject.ext.test["ktx-coroutines-test"]
     androidTestImplementation rootProject.ext.test["test-ext-junit"]
     androidTestImplementation rootProject.ext.test["support-test-espresso"]
 
@@ -60,7 +64,6 @@ dependencies {
     implementation rootProject.ext.dependencies["lifecycle-runtime-ktx"]
     implementation rootProject.ext.dependencies["lifecycle-extensions"]
     implementation rootProject.ext.dependencies["paging-runtime-ktx"]
-
 
     // android-ktx
     implementation rootProject.ext.dependencies["activity-ktx"]

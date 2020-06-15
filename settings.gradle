@@ -1,11 +1,11 @@
 include ':app'
 include ':app-playerdemo'
+include ':Kotlin-Coroutines-Examples'
 
 include ':database'
 include ':module-Common'
 include ':module-Home'
 include ':module-Demo'
-include ':Kotlin-Coroutines-Examples'
 
 def rootDir = settingsDir
 // 自定义lib库Project
