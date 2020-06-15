@@ -36,6 +36,7 @@ public class PlayPresenter extends AbsBasePresenter implements IPlayerEventsCall
     public void onCreateView() {
         mPlayer.setPlayerView(playerView.getPlayView());
         mPlayer.setPlayerEventCallBack(this);
+        //TODO 进行播放数据模型建立
         playTest();
     }
 

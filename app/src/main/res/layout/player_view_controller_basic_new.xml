@@ -114,21 +114,33 @@
             android:src="@drawable/ic_back_white" />
 
         <TextView
-            android:id="@+id/player_title_name"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginRight="13dp"
-            android:layout_weight="1"
-            android:ellipsize="end"
-            android:gravity="center_vertical|left"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:singleLine="true"
-            android:textColor="@android:color/white"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:text="测试影片"
-            tools:text="测试影片" />
+                android:id="@+id/player_title_name"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="13dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:gravity="center_vertical|left"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:singleLine="true"
+                android:textColor="@android:color/white"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                tools:text="测试影片asdasdasdas"
+                tools:visibility="visible"/>
+
+        <ImageView
+                android:id="@+id/player_setting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/setting_player"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:visibility="invisible"
+                tools:visibility="visible"/>
     </LinearLayout>
 
     <!-- 底部部分 -->

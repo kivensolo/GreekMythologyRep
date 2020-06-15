@@ -26,6 +26,8 @@ public class PlayerUiSwitcher {
     private LockPanelController lockPanelController;
     private CoverPanelController coverPanelController;
     private GestureViewController gestureViewController;
+    private SettingPanelController settingPanelController;
+
     private View bufferLoadView;
     private static final int SCREEN_LANSCAPE = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
     private static final int SCREEN_UNSPECIFIED = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
@@ -53,6 +55,7 @@ public class PlayerUiSwitcher {
         lockPanelController = new LockPanelController(view);
         coverPanelController = new CoverPanelController(view);
         gestureViewController = new GestureViewController(view);
+        settingPanelController = new SettingPanelController(view);
     }
 
     public void setOnClickListener(View.OnClickListener listener) {
@@ -78,7 +81,7 @@ public class PlayerUiSwitcher {
      * 切换全部蒙层的显示效果
      */
     public void switchVisibleState() {
-        Log.d(TAG,"switchVisibleState()");
+        Log.d(TAG, "switchVisibleState()");
         if (isLocked()) {
             showControllerBar(!lockPanelController.isShown(), lockPanelController);
         } else {
@@ -90,11 +93,11 @@ public class PlayerUiSwitcher {
     /**
      * 获取seeking总时长
      */
-    public long getSeekingDurationByGesture(){
+    public long getSeekingDurationByGesture() {
         return gestureViewController.getDurationOffset();
     }
 
-    public void setGestureViewVisible(boolean display){
+    public void setGestureViewVisible(boolean display) {
         showControllerBar(display, gestureViewController);
     }
 
@@ -107,6 +110,7 @@ public class PlayerUiSwitcher {
         }
         if (!isLocked()) {
             showControllerBar(true, topBarController, lockPanelController, bottomBarController);
+            showVideoTitle();
         }
         repostControllersDismissTask(true);
     }
@@ -128,14 +132,14 @@ public class PlayerUiSwitcher {
     /**
      * 手势交互界面是否Visible
      */
-    public boolean isGestureViewVisible(){
+    public boolean isGestureViewVisible() {
         return gestureViewController.isShown();
     }
 
     /**
      * 是否通过手势在Seeking
      */
-    public boolean isSeekingByGesture(){
+    public boolean isSeekingByGesture() {
         return gestureViewController.isInSeekingControl();
     }
 
@@ -151,20 +155,23 @@ public class PlayerUiSwitcher {
      * 显示加载圈
      */
     public void showLoadingView(String tips) {
-        updateTitle();
+        showVideoTitle();
         coverPanelController.showLoading(tips);
     }
 
-    public void updateTitle() {
-        topBarController.setTitle("测试影片");
+    public void showVideoTitle() {
+        topBarController.show();
     }
 
+    public void setVideoTitle(String name) {
+        topBarController.setTitle(name);
+    }
 
     /**
      * 实现播放完成的view
      */
     public void showCompleteView(String tips) {
-        if(isLocked()){
+        if (isLocked()) {
             lockPanelController.switchLockState();
         }
         coverPanelController.showComplete(tips);
@@ -174,7 +181,7 @@ public class PlayerUiSwitcher {
      * 播放错误的展示
      */
     public void showErrorView(String tips) {
-        if(isLocked()){
+        if (isLocked()) {
             lockPanelController.switchLockState();
         }
         coverPanelController.showError(tips);
@@ -199,31 +206,51 @@ public class PlayerUiSwitcher {
      * 播放状态的视图
      */
     public void showPlayingView() {
-        Log.d(TAG,"showPlayingView()");
+        Log.d(TAG, "showPlayingView()");
         bufferLoadView.setVisibility(View.GONE);
-        showControllerBar(false,coverPanelController, gestureViewController);
-        showControllerBar(!isLocked(),topBarController, bottomBarController);
+        showControllerBar(false, coverPanelController, gestureViewController);
+        showControllerBar(!isLocked(), topBarController, bottomBarController);
         bottomBarController.setPosition(_presenter.getCurrentPosition());
         bottomBarController.setDuration(_presenter.getDuration());
         lockPanelController.show();
         repostControllersDismissTask(true);
     }
 
+    public void makeSettingViewVisible(boolean visible) {
+        Log.d(TAG, "makeSettingViewVisible()" + visible);
+        if (visible) {
+            bufferLoadView.setVisibility(View.GONE);
+            showControllerBar(false, topBarController,
+                    lockPanelController,
+                    bottomBarController,
+                    gestureViewController);
+            showControllerBar(true, settingPanelController);
+            repostControllersDismissTask(false);
+        } else {
+            showControllerBar(false, settingPanelController);
+        }
+
+    }
+
+    public boolean isSettingViewShow() {
+        return settingPanelController.isShown();
+    }
 
     /**
      * 更新视频播放的进度显示
      */
-    public void updatePlayProgressView(boolean isDragging,int postion) {
+    public void updatePlayProgressView(boolean isDragging, int postion) {
         bottomBarController.setPosition(isDragging ? postion : _presenter.getCurrentPosition());
         bottomBarController.setDuration(_presenter.getDuration());
     }
 
     /**
      * 更新seek的预览效果
+     *
      * @param duration 松手时需要seek的时长.
      */
-    public void updateSeekTimePreView(long duration){
-        if(!gestureViewController.isShown()){
+    public void updateSeekTimePreView(long duration) {
+        if (!gestureViewController.isShown()) {
             gestureViewController.show();
         }
         gestureViewController.setDuration(duration);
@@ -231,10 +258,11 @@ public class PlayerUiSwitcher {
 
     /**
      * 更新亮度
+     *
      * @param ratio
      */
-    public void updateBrightness(float ratio){
-        if(!gestureViewController.isShown()){
+    public void updateBrightness(float ratio) {
+        if (!gestureViewController.isShown()) {
             gestureViewController.show();
         }
         gestureViewController.setBrightness(ratio);
@@ -242,10 +270,11 @@ public class PlayerUiSwitcher {
 
     /**
      * 更新音量
+     *
      * @param ratio
      */
-    public void updateVolume(float ratio){
-        if(!gestureViewController.isShown()){
+    public void updateVolume(float ratio) {
+        if (!gestureViewController.isShown()) {
             gestureViewController.show();
         }
         gestureViewController.setVolume(ratio);
