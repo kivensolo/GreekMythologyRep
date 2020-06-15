@@ -1,7 +1,8 @@
-package com.kingz.database
+package com.kingz.coroutines.data.local
 
 import android.content.Context
 import androidx.room.Room
+import com.kingz.database.AppDatabase
 
 /**
  * @author zeke.wang
@@ -10,11 +11,11 @@ import androidx.room.Room
  * @desc: DatabaseBuilder
  */
 object DatabaseBuilder {
-    private const val playTableName = "greek-mythology-db"
+    private const val playTableName = "room-demo-db"
 
-    private var INSTANCE: AppDatabase? = null
+    private var INSTANCE: RoomDemoDatabase? = null
 
-    fun getInstance(context: Context): AppDatabase {
+    fun getInstance(context: Context): RoomDemoDatabase {
         if (INSTANCE == null) {
             synchronized(AppDatabase::class) {
                 INSTANCE = buildRoomDB(context)
@@ -26,7 +27,7 @@ object DatabaseBuilder {
     private fun buildRoomDB(context: Context) =
             Room.databaseBuilder(
                     context.applicationContext,
-                    AppDatabase::class.java,
+                    RoomDemoDatabase::class.java,
                     playTableName)
                     .allowMainThreadQueries()
                     .fallbackToDestructiveMigration()

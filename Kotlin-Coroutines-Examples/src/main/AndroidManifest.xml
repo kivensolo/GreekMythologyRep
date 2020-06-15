@@ -23,8 +23,7 @@
         </activity>
 
         <activity
-                android:name="com.kingz.coroutines.learn.MainActivity"
-                android:theme="@style/Theme.AppCompat.NoActionBar">
+                android:name="com.kingz.coroutines.learn.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,9 +31,20 @@
             </intent-filter>
         </activity>
 
+
         <activity
                 android:name="com.kingz.coroutines.learn.retrofit.single.SingleNetworkCallActivity"
                 android:label="@string/single_network_call" />
+        <activity
+            android:name="com.kingz.coroutines.learn.retrofit.series.SeriesNetworkCallsActivity"
+            android:label="@string/series_network_calls" />
+        <activity
+            android:name="com.kingz.coroutines.learn.retrofit.parallel.ParallelNetworkCallsActivity"
+            android:label="@string/parallel_network_calls" />
+
+        <activity
+            android:name="com.kingz.coroutines.learn.room.RoomDBActivity"
+            android:label="@string/parallel_network_calls" />
 
     </application>
 </manifest>

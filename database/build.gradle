@@ -49,6 +49,7 @@ dependencies {
     // Room数据库支持
     api rootProject.ext.dependencies["room-runtime"]
     api rootProject.ext.dependencies["room-ktx"]
+    // 进行room注解编译的工具,不添加的话生成不了AppDatabase_Impl.java文件
     kapt rootProject.ext.dependencies["room-compiler"]
 
     // Stetho基本调试依赖

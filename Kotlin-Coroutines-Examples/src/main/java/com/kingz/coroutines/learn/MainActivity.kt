@@ -4,7 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.kingz.coroutines.learn.retrofit.parallel.ParallelNetworkCallsActivity
+import com.kingz.coroutines.learn.retrofit.series.SeriesNetworkCallsActivity
 import com.kingz.coroutines.learn.retrofit.single.SingleNetworkCallActivity
+import com.kingz.coroutines.learn.room.RoomDBActivity
 import com.zeke.example.coroutines.R
 
 class MainActivity : AppCompatActivity() {
@@ -19,15 +22,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun startSeriesNetworkCallsActivity(view: View) {
-   //     startActivity(Intent(this@MainActivity, SeriesNetworkCallsActivity::class.java))
+        startActivity(Intent(this@MainActivity, SeriesNetworkCallsActivity::class.java))
     }
 
     fun startParallelNetworkCallsActivity(view: View) {
-   //     startActivity(Intent(this@MainActivity, ParallelNetworkCallsActivity::class.java))
+        startActivity(Intent(this@MainActivity, ParallelNetworkCallsActivity::class.java))
     }
 
     fun startRoomDatabaseActivity(view: View) {
-   //     startActivity(Intent(this@MainActivity, RoomDBActivity::class.java))
+        startActivity(Intent(this@MainActivity, RoomDBActivity::class.java))
     }
 
     fun startTimeoutActivity(view: View) {

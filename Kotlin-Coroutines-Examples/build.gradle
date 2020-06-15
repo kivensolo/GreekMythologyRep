@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
@@ -58,6 +59,9 @@ dependencies {
 
     implementation project(':module-Common')
 
+    // Room-compiler
+    kapt rootProject.ext.dependencies["room-compiler"]
+
     // Lifecycle组件
     implementation rootProject.ext.dependencies["lifecycle-viewmodel-ktx"]
     implementation rootProject.ext.dependencies["lifecycle-livedata-ktx"]
@@ -83,4 +87,8 @@ dependencies {
     implementation "com.squareup.retrofit2:adapter-rxjava2:${lib_versions.rtf2_adapter}"
 
     implementation 'com.google.android.material:material:1.1.0'
+
+
+    // Android-Debug-Database
+    debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
 }

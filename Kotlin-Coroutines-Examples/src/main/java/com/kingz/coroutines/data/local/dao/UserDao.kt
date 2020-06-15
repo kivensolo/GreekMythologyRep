@@ -9,7 +9,7 @@ import com.kingz.coroutines.data.local.entity.User
 @Dao
 interface UserDao {
 
-    @Query("SELECT * FROM user")
+    @Query("SELECT * FROM user_info")
     suspend fun getAll(): List<User>
 
     @Insert

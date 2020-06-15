@@ -10,6 +10,9 @@ import com.kingz.coroutines.data.model.ApiUser
 import com.kingz.coroutines.utils.Resource
 import kotlinx.coroutines.launch
 
+/**
+ * 单次网络请求的例子
+ */
 class SingleNetworkCallViewModel(
         private val apiHelper: ApiHelper,
         private val dbHelper: DatabaseHelper
