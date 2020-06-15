@@ -8,6 +8,8 @@ import com.kingz.coroutines.learn.retrofit.parallel.ParallelNetworkCallsActivity
 import com.kingz.coroutines.learn.retrofit.series.SeriesNetworkCallsActivity
 import com.kingz.coroutines.learn.retrofit.single.SingleNetworkCallActivity
 import com.kingz.coroutines.learn.room.RoomDBActivity
+import com.kingz.coroutines.learn.task.onetask.LongRunningTaskActivity
+import com.mindorks.example.coroutines.learn.task.twotasks.TwoLongRunningTasksActivity
 import com.zeke.example.coroutines.R
 
 class MainActivity : AppCompatActivity() {
@@ -50,11 +52,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun startLongRunningTaskActivity(view: View) {
-//        startActivity(Intent(this@MainActivity, LongRunningTaskActivity::class.java))
+        startActivity(Intent(this@MainActivity, LongRunningTaskActivity::class.java))
     }
 
     fun startTwoLongRunningTasksActivity(view: View) {
-//        startActivity(Intent(this@MainActivity, TwoLongRunningTasksActivity::class.java))
+        startActivity(Intent(this@MainActivity, TwoLongRunningTasksActivity::class.java))
     }
 
 }

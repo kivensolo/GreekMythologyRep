@@ -46,5 +46,12 @@
             android:name="com.kingz.coroutines.learn.room.RoomDBActivity"
             android:label="@string/parallel_network_calls" />
 
+         <activity
+            android:name="com.kingz.coroutines.learn.task.onetask.LongRunningTaskActivity"
+            android:label="@string/long_running_task" />
+        <activity
+            android:name="com.mindorks.example.coroutines.learn.task.twotasks.TwoLongRunningTasksActivity"
+            android:label="@string/two_long_running_tasks" />
+
     </application>
 </manifest>
