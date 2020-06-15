@@ -1,8 +1,6 @@
 package com.kingz.database
 
-import android.content.Context
 import androidx.room.Database
-import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.kingz.database.dao.AlbumDao
 import com.kingz.database.dao.SongDao
@@ -22,30 +20,4 @@ abstract class AppDatabase : RoomDatabase() {
 
     abstract fun getAlbumDao(): AlbumDao
 
-
-    companion object {
-
-        private const val playTableName = "GreekDB"
-
-        private var INSTANCE: AppDatabase? = null
-
-        fun getAppDatabase(context: Context): AppDatabase? {
-            if (INSTANCE == null) {
-                synchronized(AppDatabase::class) {
-                    INSTANCE = Room
-                            .databaseBuilder(context.applicationContext,
-                                    AppDatabase::class.java,
-                                    playTableName)      // 创建RoomDatabase实例对象
-                            .allowMainThreadQueries()   // 允许主线程查询(Room默认不允许在主线程进行数据查询)
-                            .fallbackToDestructiveMigration()
-                            .build()
-                }
-            }
-            return INSTANCE
-        }
-
-        fun destroyDatabase() {
-            INSTANCE = null
-        }
-    }
 }

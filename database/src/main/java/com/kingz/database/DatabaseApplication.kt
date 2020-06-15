@@ -36,15 +36,15 @@ open class DatabaseApplication : MultiDexApplication() {
 
     //------------ DAO 获取函数  可下沉至业务层-----------------//
     fun getSongDao(): SongDao {
-        return AppDatabase.getAppDatabase(this)!!.getSongDao()
+        return DatabaseBuilder.getInstance(this)!!.getSongDao()
     }
 
     fun getAlbumDao(): AlbumDao {
-        return AppDatabase.getAppDatabase(this)!!.getAlbumDao()
+        return DatabaseBuilder.getInstance(this)!!.getAlbumDao()
     }
 
     //------------ DAO 获取函数 -----------------//
     fun destroyDatabase() {
-        AppDatabase.destroyDatabase()
+        DatabaseBuilder.destroyDatabase()
     }
 }

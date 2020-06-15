@@ -1,15 +1,18 @@
 package com.kingz.database.entity
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import java.io.Serializable
 
-@Entity(primaryKeys = ["videoId"])
+@Entity(primaryKeys = ["id"])
 open class BaseEntity : Serializable {
+    @ColumnInfo(name = "type")
     var type: String = ""
-    var videoName: String? = null
-    var contentPic: String? = null
-    var videoId: String = ""
-    var lastPosition: Long = 0
-    var lastIndex: Int = 0
+    @ColumnInfo(name = "name")
+    var name: String? = null
+    @ColumnInfo(name = "img_url")
+    var pic: String? = null
+    @ColumnInfo(name = "id")
+    var id: String = ""
 }
 

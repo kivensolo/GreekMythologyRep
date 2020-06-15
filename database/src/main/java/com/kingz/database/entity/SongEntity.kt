@@ -8,10 +8,6 @@ import androidx.room.PrimaryKey
 @Entity
 class SongEntity(
         @PrimaryKey
-        @ColumnInfo(name = "songId")
-        var id: Int? = null,
-
-        var name: String = "",
 
         @ColumnInfo(name = "singer")
         var singer: String = "",
