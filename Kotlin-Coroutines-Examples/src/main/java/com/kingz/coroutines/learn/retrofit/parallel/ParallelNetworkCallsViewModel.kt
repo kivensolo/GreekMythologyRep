@@ -38,14 +38,15 @@ class ParallelNetworkCallsViewModel(
             // coroutineScope is needed, else in case of any network error, it will crash
             try {
                 coroutineScope {
+                    // coroutineScope 若有任何一个网络任务出错，则会触发try_catch
                     val usersFromApiDeferred = async {
                         val usersDeferred = apiHelper.getUsers()
-                        Log.d("ParallelViewModel","All api done.")
+                        Log.d("ParallelViewModel","getUsers api done.")
                         usersDeferred
                     }
                     val moreUsersFromApiDeferred = async {
                         val moreUsersDeferred = apiHelper.getMoreUsers()  // suspend obj
-                        Log.d("ParallelViewModel","All api done.")
+                        Log.d("ParallelViewModel","getMoreUsers api done.")
                         moreUsersDeferred
                     }
 
@@ -60,7 +61,8 @@ class ParallelNetworkCallsViewModel(
                     users.postValue(Resource.success(allUsersFromApi))
                 }
             } catch (e: Exception) {
-                users.postValue(Resource.error("Something Went Wrong", null))
+                Log.e("ParallelViewModel","Something Went Wrong.${e.message}")
+                users.postValue(Resource.error("Something Went Wrong.${e.message}", null))
             }
         }
     }

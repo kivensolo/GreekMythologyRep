@@ -1,4 +1,4 @@
-package com.mindorks.example.coroutines.learn.task.twotasks
+package com.kingz.coroutines.learn.task.twotasks
 
 import android.os.Bundle
 import android.view.View
@@ -12,6 +12,7 @@ import com.kingz.coroutines.data.local.DatabaseBuilder
 import com.kingz.coroutines.data.local.DatabaseHelperImpl
 import com.kingz.coroutines.utils.Status
 import com.kingz.coroutines.utils.ViewModelFactory
+import com.mindorks.example.coroutines.learn.task.twotasks.TwoLongRunningTasksViewModel
 import com.zeke.example.coroutines.R
 import kotlinx.android.synthetic.main.activity_long_running_task.*
 import kotlinx.android.synthetic.main.activity_recycler_view.progressBar
