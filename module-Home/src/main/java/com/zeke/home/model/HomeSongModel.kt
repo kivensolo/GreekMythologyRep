@@ -11,7 +11,7 @@ class HomeSongModel<E : BaseEntity> : AbsDatabaseModel<E>() {
 
     fun testInsertData() {
         val songEntity = SongEntity()
-        songEntity.id = 1000
+        songEntity.id = "9527"
         songEntity.name = "美人鱼"
         songEntity.singer = "林俊杰"
         songEntity.releaseYear = 2020
