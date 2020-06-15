@@ -34,6 +34,8 @@ open class CommonApp: DatabaseApplication(){
 //        _appMainHandler = Handler(mainLooper)
         initApiManager()
         initLog()
+//                CrashReport.initCrashReport(applicationContext, "b0946002d9", false)
+
     }
 
 
