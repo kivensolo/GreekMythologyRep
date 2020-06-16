@@ -1,16 +1,10 @@
-package com.kingz.coroutines.ext
+package com.kingz.module.common.ext
 
 import androidx.annotation.MainThread
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 
-/**
- *  内联函数如何使用？？？
- *  ?????????????
- *  ?????????????
- *  TODO ?????????
- */
 @MainThread
 inline fun <T> LiveData<T>.observe(owner: LifecycleOwner, crossinline onChanged: (T) -> Unit): Observer<T> {
     val wrappedObserver = Observer<T> { t -> onChanged.invoke(t) }

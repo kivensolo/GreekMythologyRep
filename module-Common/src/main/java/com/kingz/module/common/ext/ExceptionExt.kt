@@ -1,4 +1,4 @@
-package com.kingz.module.common.exception
+package com.kingz.module.common.ext
 
 /**
  * @author zeke.wang

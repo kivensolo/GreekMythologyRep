@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import com.kingz.coroutines.ext.observe
+import com.kingz.module.common.ext.observe
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
