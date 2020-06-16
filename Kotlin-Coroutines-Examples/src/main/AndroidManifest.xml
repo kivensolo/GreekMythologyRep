@@ -11,7 +11,7 @@
             android:name="com.kingz.coroutines.DemoApp"
             android:label="@string/app_name"
             android:supportsRtl="true"
-            android:theme="@style/AppTheme">
+            android:theme="@style/DemoTheme">
 
         <activity
                 android:name="com.kingz.coroutines.demo.LoginActivity"
@@ -22,8 +22,7 @@
             </intent-filter>
         </activity>
 
-        <activity
-                android:name="com.kingz.coroutines.learn.MainActivity">
+        <activity android:name="com.kingz.coroutines.learn.CoroutinesDemosActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -36,15 +35,31 @@
                 android:name="com.kingz.coroutines.learn.retrofit.single.SingleNetworkCallActivity"
                 android:label="@string/single_network_call" />
         <activity
-            android:name="com.kingz.coroutines.learn.retrofit.series.SeriesNetworkCallsActivity"
-            android:label="@string/series_network_calls" />
+                android:name="com.kingz.coroutines.learn.retrofit.series.SeriesNetworkCallsActivity"
+                android:label="@string/series_network_calls" />
         <activity
-            android:name="com.kingz.coroutines.learn.retrofit.parallel.ParallelNetworkCallsActivity"
-            android:label="@string/parallel_network_calls" />
+                android:name="com.kingz.coroutines.learn.retrofit.parallel.ParallelNetworkCallsActivity"
+                android:label="@string/parallel_network_calls" />
+        <activity
+                android:name="com.kingz.coroutines.learn.room.RoomDBActivity"
+                android:label="@string/room_database" />
 
         <activity
-            android:name="com.kingz.coroutines.learn.room.RoomDBActivity"
-            android:label="@string/parallel_network_calls" />
+                android:name="com.kingz.coroutines.learn.timeout.TimeoutActivity"
+                android:label="@string/timeout" />
+        <activity
+                android:name="com.kingz.coroutines.learn.task.onetask.LongRunningTaskActivity"
+                android:label="@string/long_running_task" />
+        <activity
+                android:name="com.kingz.coroutines.learn.task.twotasks.TwoLongRunningTasksActivity"
+                android:label="@string/two_long_running_tasks" />
+
+        <activity
+                android:name="com.kingz.coroutines.learn.errorhandling.exceptionhandler.ExceptionHandlerActivity"
+                android:label="@string/exception_handler" />
+        <activity
+                android:name="com.kingz.coroutines.learn.errorhandling.supervisor.IgnoreErrorAndContinueActivity"
+                android:label="@string/ignore_error_and_continue" />
 
     </application>
 </manifest>
