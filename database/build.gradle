@@ -23,6 +23,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
             // Android Debug Database Custom PortNumber.
+            // resValue(): Adds a new generated resource. 相当于在res/values中明确指定一个resource。
             resValue("string", "PORT_NUMBER", "9001")
         }
         release {

@@ -3,7 +3,6 @@ apply {
     plugin 'kotlin-android'
     plugin 'kotlin-android-extensions'
 
-    from 'version.gradle'
     from '../config.gradle'
     from '../utils.gradle'
 }
@@ -33,7 +32,7 @@ android {
         versionCode android.versionCode
         versionName android.versionName
         signingConfig signingConfigs.ZekeSigned
-        minSdkVersion rootProject.ext.android.minSdkVersion
+        minSdkVersion android.minSdkVersion
         targetSdkVersion android.targetSdkVersion
         buildConfigField("String", "APP_NAME", "\"Greek\"")
 
@@ -58,6 +57,17 @@ android {
         debug {
             buildConfigField("boolean", "SPLSH_DEBUG", "false")
             zipAlignEnabled true
+
+            /**
+             * multiDexKeepFile 中指定的文件应该每行包含一个类，并且类采用 com/example/MyClass.class 格式
+             * Gradle 会读取相对于 build.gradle 文件的路径，
+             * 因此如果 multidex-config.txt 与 build.gradle 文件在同一目录中，则以下写法有效。
+             */
+            // multiDexKeepFile file('multidex-config.txt')
+            /**
+             * multiDexKeepProguard 文件使用与 Proguard 相同的格式，并且支持全部 Proguard 语法。
+             */
+            multiDexKeepProguard file('multidex-config.pro')
         }
 
         release {
@@ -65,6 +75,7 @@ android {
             buildConfigField("boolean", "SPLSH_DEBUG", "true")
             minifyEnabled true
             shrinkResources true
+            multiDexKeepProguard file('multidex-config.pro')
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
             signingConfig signingConfigs.ZekeSigned
         }
@@ -84,11 +95,14 @@ android {
     productFlavors{
         // 开发测试阶段
         ChengDu{
-            //运行在Android 5.0以上版本的设备中，
-            //使用ART-supported格式生成multidex的速度要快很多
-//            minSdkVersion 21
+            //运行在Android 5.0以上版本的设备中， 使用ART-supported格式生成multidex的速度要快很多
+            minSdkVersion 21
             dimension "area"
             applicationId 'com.demo.chengdu'
+        }
+
+        Beijing{
+            minSdkVersion android.minSdkVersion
         }
     }
 
