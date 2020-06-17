@@ -2,7 +2,7 @@ package com.kingz.coroutines.base
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
-import com.kingz.coroutines.ext.observe
+import com.kingz.module.common.ext.observe
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

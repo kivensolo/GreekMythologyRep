@@ -17,11 +17,17 @@ object ViewModelFactory {
     /**
      * 这是按照kotlin的写法
      */
-    // TODo reified作用   inline和crossinline的区别及作用
+    // inline 内联函数
+    // crossinline: 修饰lambda表达式，因为如果将lambda表达式作为参数的函数是内联函数，那么return 等局部返回的
+    // 操作也是内联的，且是被允许的。
+    //
+    // 但是⼀些内联函数可能调⽤传给它们的不是直接来⾃函数体、⽽是来⾃另⼀个执⾏上下⽂的lambda 表达式参数，例如来⾃局部对象或嵌套函数。
+    // 在这种情况下，该 lambda 表达式中也不允许⾮局部控制流。
+    // 为了标识这种情况，该 lambda 表达式参数需要⽤ crossinline 修饰符标记:
     inline fun <reified T: ViewModel> build(crossinline createViewModel: () -> T): ViewModelProvider.Factory {
         return object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                @Suppress("UNCHECKED_CAST")
+//                @Suppress("UNCHECKED_CAST")
                 return createViewModel() as T
             }
         }
