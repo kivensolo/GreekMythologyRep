@@ -7,15 +7,15 @@ import androidx.lifecycle.OnLifecycleEvent
 /**
  * author：KingZ
  * date：2020/1/27
- * description：应用的 LifeCycle
+ * description：应用的 LifeCycleObserver
  *  也可使用自带的：GenericLifecycleObserver
  *
- * // getLifecycle().addObserver(new GenericLifecycleObserver() {
- * //     @Override
- * //     public void onStateChanged(LifecycleOwner source, Lifecycle.Event event) {
- * //         ZLog.d(TAG, "onStateChanged: event ="+event);
- * //     }
- * // });
+ * getLifecycle().addObserver(new GenericLifecycleObserver() {
+ *     @Override
+ *     public void onStateChanged(LifecycleOwner source, Lifecycle.Event event) {
+ *         ZLog.d(TAG, "onStateChanged: event ="+event);
+ *     }
+ * });
  */
 class AppLifeCycle(var TAG:String) : LifecycleObserver {
     companion object { var TAG = "Lifecycle" }

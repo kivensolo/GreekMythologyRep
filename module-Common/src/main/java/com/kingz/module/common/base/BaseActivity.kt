@@ -17,8 +17,7 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import com.kingz.module.common.GreekLifeCycle
-import com.kingz.module.common.base.BaseActivity
+import com.kingz.module.common.AppLifeCycle
 import com.zeke.kangaroo.utils.AppInfoUtils
 import com.zeke.kangaroo.utils.ZLog
 
@@ -35,7 +34,7 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         Log.i(TAG, "BaseActivity onCreate()")
         super.onCreate(savedInstanceState)
-        lifecycle.addObserver(GreekLifeCycle(TAG))
+        lifecycle.addObserver(AppLifeCycle(TAG))
     }
 
     override fun setContentView(view: View) {
