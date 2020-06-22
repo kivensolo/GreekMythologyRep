@@ -5,14 +5,14 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitBuilder {
 
-    private const val BASE_URL_MOCK_API = "https://5e510330f2c0d300147c034c.mockapi.io/"
-    private const val BASE_URL_GITHUB_API = "https://api.github.com"
-
-    val apiService: ApiService = buildRetrofit(BASE_URL_MOCK_API)
+    val apiService: ApiService = buildRetrofit(ApiService.BASE_URL)
             .create(ApiService::class.java)
 
-    val githubApiService: GitHubApiService = buildRetrofit(BASE_URL_GITHUB_API)
+    val githubApiService: GitHubApiService = buildRetrofit(GitHubApiService.BASE_URL)
             .create(GitHubApiService::class.java)
+
+    val wAndroidApi:WAndroidApi = buildRetrofit(WAndroidApi.BASE_URL)
+            .create(WAndroidApi::class.java)
 
     private fun buildRetrofit(baseUrl: String): Retrofit {
         return Retrofit.Builder()

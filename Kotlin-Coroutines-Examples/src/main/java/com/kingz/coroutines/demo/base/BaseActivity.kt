@@ -1,4 +1,4 @@
-package com.kingz.coroutines.base
+package com.kingz.coroutines.demo.base
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

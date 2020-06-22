@@ -1,4 +1,4 @@
-package com.kingz.coroutines.base
+package com.kingz.coroutines.demo.base
 
 import kotlinx.coroutines.CoroutineScope
 
@@ -9,7 +9,7 @@ import kotlinx.coroutines.CoroutineScope
  * @copyright 2020 www.xgimi.com Inc. All rights reserved.
  * @desc:
  */
-abstract class BaseVMActivity<VM : BaseViewModel> : BaseActivity() {
+abstract class BaseVMFragment<VM : BaseViewModel> : BaseFragment() {
 
     protected abstract val viewModel: VM
 
@@ -24,5 +24,6 @@ abstract class BaseVMActivity<VM : BaseViewModel> : BaseActivity() {
     fun launchDefault(block: suspend CoroutineScope.() -> Unit) {
         viewModel.launchDefault { block() }
     }
+
 
 }

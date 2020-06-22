@@ -10,7 +10,7 @@ import java.math.BigDecimal
  * 则 LiveData 会认为该观察者处于活跃状态。
  * 以下示例代码说明了如何扩展 LiveData 类： <br>
  */
-class StockLiveData(symbol: String) : LiveData<BigDecimal>() {
+class CustomLiveData(symbol: String) : LiveData<BigDecimal>() {
     private val stockManager = StockManager(symbol)
 
     private val listener = { price: BigDecimal ->

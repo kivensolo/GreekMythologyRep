@@ -11,6 +11,9 @@ import retrofit2.http.Path
  * 让Retrofit创建接口实例类来方便调用
  */
 interface GitHubApiService {
+    companion object{
+        const val BASE_URL = "https://api.github.com"
+    }
 
     @GET("users/{user}")
     suspend fun getUserInfoKt(@Path("user") user: String?): GitHubUserInfo?

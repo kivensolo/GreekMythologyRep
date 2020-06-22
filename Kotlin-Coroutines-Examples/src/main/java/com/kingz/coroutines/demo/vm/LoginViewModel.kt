@@ -1,8 +1,8 @@
 package com.kingz.coroutines.demo.vm
 
 import androidx.lifecycle.MutableLiveData
-import com.kingz.coroutines.base.BaseViewModel
-import com.kingz.coroutines.demo.MvvmRepository
+import com.kingz.coroutines.data.api.WAndroidApi
+import com.kingz.coroutines.demo.base.BaseViewModel
 import com.kingz.coroutines.demo.entity.LoginEntity
 import com.zeke.kangaroo.utils.ZLog
 
@@ -13,7 +13,7 @@ import com.zeke.kangaroo.utils.ZLog
  * 通常情况下会在 ViewModel 中使用 MutableLiveData，
  * 然后 ViewModel 只会向观察者公开不可变的 LiveData 对象。
  */
-class LoginViewModel(private val mockRepository: MvvmRepository) : BaseViewModel() {
+class LoginViewModel(private val wAndroidApi: WAndroidApi) : BaseViewModel() {
     val tipsText = "测试DataBinding的数据连接"
     val result = "登陆成功"
     val loginData: MutableLiveData<MutableList<LoginEntity>> = MutableLiveData()
@@ -21,7 +21,7 @@ class LoginViewModel(private val mockRepository: MvvmRepository) : BaseViewModel
     fun fetchMockData() {
         ZLog.d("MVVM","ViewModel ---> fetchMockData")
         launchIO {
-            when (val result = mockRepository.fetchMockLoginData()) {
+            when (val result = wAndroidApi.fetchMockLoginData()) {
                 else -> {
                     ZLog.d("MVVM","ViewModel <--- Get MockData. PostValue by LiveData.")
                     loginData.postValue(result)

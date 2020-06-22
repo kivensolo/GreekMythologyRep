@@ -1,4 +1,4 @@
-package com.kingz.coroutines.base
+package com.kingz.coroutines.demo.base
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

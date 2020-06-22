@@ -27,12 +27,12 @@ fun Any.tryCatch(func: () -> Unit, error: ((t: Throwable) -> Unit)? = null) {
     }
 }
 
-fun <T> Any.tryCatchForResult(errorParams: T, func: () -> T): T {
+fun <T> Any.tryCatchWithDefault(func: () -> T, defaultValue: T): T {
     return try {
-        func()
+        func() ?: defaultValue
     } catch (t: Throwable) {
         t.printStackTrace()
-        errorParams
+        defaultValue
     }
 }
 

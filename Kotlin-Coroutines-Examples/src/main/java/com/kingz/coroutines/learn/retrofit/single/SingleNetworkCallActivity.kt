@@ -32,6 +32,7 @@ class SingleNetworkCallActivity : BaseNetworkCallsActivity<SingleNetworkCallView
          */
         // @Deprecated
         // viewModel = ViewModelProviders.of(
+
         viewModel = ViewModelProvider(
             this,
             ViewModelFactory.build {

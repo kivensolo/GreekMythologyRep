@@ -1,12 +1,15 @@
 package com.kingz.coroutines.demo
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
-import com.kingz.coroutines.base.BaseVMActivity
+import com.kingz.coroutines.data.api.RetrofitBuilder
+import com.kingz.coroutines.data.api.WAndroidApiImpl
+import com.kingz.coroutines.demo.base.BaseVMActivity
 import com.kingz.coroutines.demo.vm.LoginViewModel
 import com.kingz.coroutines.utils.ViewModelFactory
 import com.zeke.example.coroutines.R
@@ -18,15 +21,14 @@ import kotlinx.android.synthetic.main.activity_login.*
  * @date 2020/5/27
  * @maintainer zeke.wang
  * @copyright 2020 www.xgimi.com Inc. All rights reserved.
- * @desc:
+ * @desc: 模拟登录操作的页面
  */
 class LoginActivity : BaseVMActivity<LoginViewModel>() {
 
     // Use the 'by viewModels()' Kotlin property delegate
-    // override val viewModel: LoginViewModel  by viewModels()
     override val viewModel: LoginViewModel by viewModels {
         ViewModelFactory.build {
-            LoginViewModel(MvvmRepository())
+            LoginViewModel(WAndroidApiImpl(RetrofitBuilder.wAndroidApi))
         }
     }
 
@@ -48,7 +50,8 @@ class LoginActivity : BaseVMActivity<LoginViewModel>() {
             loginData.observe(this@LoginActivity, Observer {
                 it?.apply {
                     ZLog.d("MVVM", "View onChanged --->$this")
-                    tips_view.text = "登录成功"
+                    tips_view.text = "登录成功,可登录"
+                    startActivity(Intent(this@LoginActivity, ChaptersActivity::class.java))
                 }
             })
         }
@@ -56,6 +59,7 @@ class LoginActivity : BaseVMActivity<LoginViewModel>() {
         bt_login.setOnClickListener {
             ZLog.d("MVVM", "View ---> fetchMockData")
             viewModel.fetchMockData()
+            tips_view.text = "登陆中...."
         }
     }
 
