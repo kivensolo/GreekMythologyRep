@@ -85,6 +85,8 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:${lib_versions.rtf2}"
     implementation "com.squareup.retrofit2:converter-gson:${lib_versions.rtf2_2gson}"
     implementation "com.squareup.retrofit2:adapter-rxjava2:${lib_versions.rtf2_adapter}"
+    implementation "com.squareup.okhttp3:logging-interceptor:3.12.1"
+
 
     implementation 'com.google.android.material:material:1.1.0'
 

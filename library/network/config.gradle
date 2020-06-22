@@ -16,6 +16,7 @@ ext {
     lib_dependencies = [
             "okHttp3"                : "com.squareup.okhttp3:okhttp:${lib_versions.okhttp}",
             "okio"                   : "com.squareup.okio:okio:${lib_versions.okio}",
+            "ok_log"                 : "com.squareup.okhttp3:logging-interceptor:${lib_versions.okhttp}",
             "kangaroo"               : "com.github.zeke:kangaroo:$kangaroo_v",
     ]
 
