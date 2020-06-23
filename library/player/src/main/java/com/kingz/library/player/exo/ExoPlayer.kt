@@ -177,6 +177,10 @@ class ExoPlayer(context: Context) : BasePlayer() {
         player?.seekTo(seekTo)
     }
 
+    /**
+     * 设置播放数据源
+     * raw文件为：Uri.parse("rawresource:///" + R.raw.xxx)
+     */
     override fun setDataSource(uri: Uri?) {
         uris = arrayOf(uri)
         extensions = arrayOfNulls(uris!!.size)
@@ -279,7 +283,8 @@ class ExoPlayer(context: Context) : BasePlayer() {
      * @return A MediaSource
      */
     private fun createMediaSource(uri: Uri?, overrideExtension: String?): MediaSource {
-        @C.ContentType val type: Int = if (TextUtils.isEmpty(overrideExtension)) {
+        @C.ContentType
+        val type: Int = if (TextUtils.isEmpty(overrideExtension)) {
             Util.inferContentType(uri)
         } else {
             Util.inferContentType(".$overrideExtension")
@@ -289,6 +294,8 @@ class ExoPlayer(context: Context) : BasePlayer() {
                     DefaultDashChunkSource.Factory(mediaDataSourceFactory),
                     buildDataSourceFactory(null))
                     .createMediaSource(uri)
+//                    DashMediaSource.Factory(mediaDataSourceFactory)
+//                        .createMediaSource(uri)
             C.TYPE_SS -> SsMediaSource.Factory(
                     DefaultSsChunkSource.Factory(mediaDataSourceFactory),
                     buildDataSourceFactory(null))
