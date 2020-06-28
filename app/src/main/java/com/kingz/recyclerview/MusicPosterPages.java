@@ -9,29 +9,22 @@ import android.view.MenuItem;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
-
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.kingz.adapter.MgPosterAdapter;
 import com.kingz.customdemo.R;
 import com.kingz.mode.RecycleDataInfo;
 import com.kingz.module.common.base.BaseActivity;
-import com.kingz.net.OkHttpClientManager;
 import com.kingz.pages.photo.filmlist.MyItemDecoration;
 import com.kingz.recyclerview.data.MgPosterBean;
 import com.kingz.recyclerview.data.MgResponseBean;
 import com.zeke.kangaroo.utils.ZLog;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-
+import com.zeke.network.OkHttpClientManager;
 import okhttp3.Request;
+
+import java.util.*;
 
 /**
  * author: King.Z
