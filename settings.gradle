@@ -27,4 +27,4 @@ gradle.beforeProject {
 gradle.afterProject {
     println "Settings end.   <<<<<<]"
 }
-
+include ':app-libtest'

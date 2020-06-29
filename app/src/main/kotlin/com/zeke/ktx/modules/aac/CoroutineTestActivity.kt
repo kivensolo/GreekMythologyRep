@@ -37,6 +37,9 @@ class CoroutineTestActivity: BaseActivity() {
      * CoroutineScope.async {} 和
      */
     private fun apiConcurrentRequest(){
+        runBlocking {
+
+        }
         // 创建协程代码
         // 默认创建 Dispatchers.Default 线程组,此处指明Main线程
         GlobalScope.launch(Dispatchers.Main) {

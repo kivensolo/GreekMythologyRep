@@ -12,7 +12,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
-
 import com.google.android.exoplayer2.ParserException;
 import com.google.android.exoplayer2.util.Util;
 import com.kingz.config.DemoSample;
@@ -124,11 +123,20 @@ public class MainActivity extends ExpandableListActivity implements OnItemClickL
 
     @Override
     public void onBackPressed() {
-        // 应用保活  使back按键触发的时候，不让系统finish当前Activity
+        // 法2： 使用 Intent 应用保活
+        // 模拟Home按键发送，使back按键触发的时候，不让系统finish当前Activity
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addCategory(Intent.CATEGORY_HOME);
         startActivity(intent);
+
+        // 法2： 使用 Instrumentation
+        //try {
+        //    Instrumentation inst = new Instrumentation();
+        //    inst.sendKeyDownUpSync(KeyEvent.KEYCODE_HOME);
+        //} catch (Exception e) {
+        //    Log.e("Exception when sendPointerSync", e.toString());
+        //}
     }
 
     @Override
