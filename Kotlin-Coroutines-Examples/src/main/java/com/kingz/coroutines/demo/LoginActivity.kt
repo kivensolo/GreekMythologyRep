@@ -2,7 +2,6 @@ package com.kingz.coroutines.demo
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -14,9 +13,9 @@ import com.kingz.coroutines.demo.base.BaseVMActivity
 import com.kingz.coroutines.demo.vm.LoginViewModel
 import com.kingz.coroutines.utils.ViewModelFactory
 import com.zeke.example.coroutines.R
-import com.zeke.kangaroo.utils.ZLog
 import com.zeke.network.OkHttpClientManager
 import com.zeke.network.OkHttpClientManager.getAsyn
+import com.zeke.network.ZLog
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -66,11 +65,12 @@ class LoginActivity : BaseVMActivity<LoginViewModel>() {
 
         bt_login.setOnClickListener {
             ZLog.d("MVVM", "View ---> fetchMockData")
+            ZLog.json("[{\"id\":\"home_index_0\",\"name\":\"推荐\",\"type\":\"recom\",\"extends\":\"无扩展数据\",\"page_content\":[{\"id\":\"templete_one\",\"type\":\"banner\",\"name\":\"推荐banner\",\"thumb\":\"\",\"background_img\":\"\",\"import_id\":\"\",\"recom_asset_id\":\"\",\"recom_category_id\":\"\"}]},{\"id\":\"home_index_1\",\"name\":\"安卓Demo展示\",\"type\":\"demo\",\"extends\":\"无扩展数据\",\"page_content\":[{\"id\":\"templete_one\",\"type\":\"banner\",\"name\":\"推荐banner\",\"thumb\":\"\",\"background_img\":\"\",\"import_id\":\"\",\"recom_asset_id\":\"\",\"recom_category_id\":\"\"}]},{\"id\":\"home_index_2\",\"name\":\"MagicIndicator Demo\",\"type\":\"magicIndicator\",\"extends\":\"无扩展数据\",\"page_content\":[{\"id\":\"home_page_Indicator_1\",\"page\":1,\"name\":\"假数据假数据\",\"thumb\":\"\",\"background_img\":\"\",\"import_id\":\"\",\"recom_asset_id\":\"\",\"recom_category_id\":\"\"}]}]")
 //            viewModel.fetchMockData()
 //            tips_view.text = "登陆中...."\
             GlobalScope.launch(Dispatchers.IO) {
                 val absoluteFile = externalCacheDir.absoluteFile
-                Log.d("kingz", "absoluteFile=$absoluteFile")
+                ZLog.d("absoluteFile=$absoluteFile")
                 OkHttpClientManager.getInstance().setCache(Cache(absoluteFile, 10 * 1024 * 1024))
                 val result = getAsyn("https://publicobject.com/helloworld.txt")
                 withContext(Dispatchers.Main){

@@ -115,7 +115,7 @@ ext {
             "gson"                   : "com.google.code.gson:gson:$lib_versions.gson",
 
             // My lib
-            "kangaroo"               : "com.github.zeke:kangaroo:1.0.5",
+            "kangaroo"               : "com.github.zeke:kangaroo:1.0.6",
             "xul_cache"              : "com.github.xul:cache:1.0.0"
     ]
 

@@ -2,7 +2,7 @@
 ext {
 
     kotlin_version = '1.3.61'
-    kangaroo_v = '1.0.3'
+    kangaroo_v = '1.0.6'
 
     lib_versions = [
             rxJava          :'2.2.2',
