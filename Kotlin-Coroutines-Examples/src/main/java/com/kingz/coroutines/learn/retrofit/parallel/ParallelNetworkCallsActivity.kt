@@ -20,7 +20,7 @@ class ParallelNetworkCallsActivity : BaseNetworkCallsActivity<ParallelNetworkCal
             this,
             ViewModelFactory.build {
                 ParallelNetworkCallsViewModel(
-                        ApiHelperImpl(RetrofitBuilder.apiService),
+                        ApiHelperImpl(RetrofitBuilder.USER_SERVICE_API),
                         DatabaseHelperImpl(DatabaseBuilder.getInstance(applicationContext))
                         )
             }

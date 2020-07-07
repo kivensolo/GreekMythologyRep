@@ -1,6 +1,7 @@
 package com.kingz.coroutines.demo.base
 
-import kotlinx.coroutines.CoroutineScope
+import android.util.Log
+import androidx.lifecycle.Observer
 
 /**
  * @author zeke.wang
@@ -13,15 +14,47 @@ abstract class BaseVMActivity<VM : BaseViewModel> : BaseActivity() {
 
     protected abstract val viewModel: VM
 
-    fun launchMain(block: suspend CoroutineScope.() -> Unit) {
+    override fun setupViewModel() {
+        super.setupViewModel()
+//        viewModel = createViewModel()
+        initViewModelActions()
+    }
+
+    private fun initViewModelActions() {
+        viewModel.statusLiveData.observe(this, Observer { status ->
+            status?.run {
+                when (this) {
+                    CoroutineState.START -> {//协程开始
+                        Log.d("coroutine", "开始")
+                    }
+                    CoroutineState.REFRESH -> {//协程开始&&进度菊花圈
+                        Log.d("coroutine", "刷新")
+                        // ShowLoadding
+                    }
+                    CoroutineState.FINISH -> {//协程结束
+                        Log.d("coroutine", "结束")
+                        // Dismiss Loadding
+                    }
+                    CoroutineState.ERROR -> {//协程异常
+                        // Dismiss Loadding
+                        Log.d("coroutine", "异常")
+                    }
+                }
+            }
+        })
+    }
+
+//    abstract fun createViewModel(): VM
+
+    fun launchMain(block: BlockCode) {
         viewModel.launchMain { block() }
     }
 
-    fun launchIO(block: suspend CoroutineScope.() -> Unit) {
+    fun launchIO(block: BlockCode) {
         viewModel.launchIO { block() }
     }
 
-    fun launchDefault(block: suspend CoroutineScope.() -> Unit) {
+    fun launchDefault(block: BlockCode) {
         viewModel.launchDefault { block() }
     }
 

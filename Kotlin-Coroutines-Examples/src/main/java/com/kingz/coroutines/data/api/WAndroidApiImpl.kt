@@ -1,5 +1,7 @@
 package com.kingz.coroutines.data.api
 
+import com.kingz.coroutines.data.api.wandroid.NewApiHelper
+import com.kingz.coroutines.data.api.wandroid.WAndroidApi
 import com.kingz.coroutines.demo.entity.LoginEntity
 import com.zeke.kangaroo.utils.ZLog
 import kotlinx.coroutines.delay
@@ -10,8 +12,11 @@ import kotlinx.coroutines.delay
  * @maintainer zeke.wang
  * @desc: 玩Android Api接口实现
  */
-class WAndroidApiImpl(private val apiService: WAndroidApi) : WAndroidApi {
-    override suspend fun fetchChapterData() = apiService.fetchChapterData()
+class WAndroidApiImpl(private val apiService: WAndroidApi = RetrofitBuilder.wAndroidApi)
+    : WAndroidApi {
+
+//    override suspend fun fetchChapterData() = apiService.fetchChapterData()
+    override suspend fun fetchChapterData() = NewApiHelper.wanAndroidService.fetchChapterData()
 
     override suspend fun fetchMockLoginData(): MutableList<LoginEntity> {
         ZLog.d("MVVM", "DATA ---> fetchMockLoginData Start ...")

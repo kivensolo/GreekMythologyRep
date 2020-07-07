@@ -14,22 +14,62 @@ import kotlinx.coroutines.*
  * viewModelScope: 与ViewModel绑定的CoroutineScope
  */
 abstract class BaseViewModel: ViewModel() {
+
+    /**
+     * 协程状态管理
+     *
+     * 开始 CoroutineState.START
+     * 刷新 CoroutineState.REFRESH
+     * 结束 CoroutineState.FINISH
+     * 异常 CoroutineState.ERROR
+     */
+    val statusLiveData: MutableLiveData<CoroutineState> by lazy {
+        MutableLiveData<CoroutineState>()
+    }
+
     /**
      * 统一的Throwable
      * 多个订阅该异常时，请注意
      */
     val exception: MutableLiveData<Throwable> = MutableLiveData()
 
-    fun launchMain(block: suspend CoroutineScope.() -> Unit) {
-        viewModelScope.launch(Dispatchers.Main) { block() }
+    fun launchMain(refresh: Boolean = true,
+                   block: suspend CoroutineScope.() -> Unit) {
+        viewModelScope.launch(Dispatchers.Main) {
+            exeBlock(refresh, block)
+        }
     }
 
-    fun launchIO(block: suspend CoroutineScope.() -> Unit) {
-        viewModelScope.launch(Dispatchers.IO) { block() }
+    fun launchIO(refresh: Boolean = true,
+                 block: BlockCode) {
+        viewModelScope.launch(Dispatchers.IO) {
+            exeBlock(refresh, block)
+        }
     }
 
-    fun launchDefault(block: suspend CoroutineScope.() -> Unit) {
-        viewModelScope.launch(Dispatchers.Default) { block() }
+    fun launchDefault(refresh: Boolean = true,
+                      block: BlockCode) {
+        viewModelScope.launch(Dispatchers.Default) {
+            exeBlock(refresh, block)
+        }
+    }
+
+    private suspend fun exeBlock(refresh: Boolean,
+                                 block: BlockCode) {
+        coroutineScope {
+            try {
+                if (refresh) {
+                    statusLiveData.value = CoroutineState.REFRESH
+                } else {
+                    statusLiveData.value = CoroutineState.START
+                }
+                block()
+                statusLiveData.value = CoroutineState.FINISH
+            } catch (e: Exception) {
+                statusLiveData.value = CoroutineState.ERROR
+                //处理协程异常
+            }
+        }
     }
 
     suspend fun switchToIO(block: suspend CoroutineScope.() -> Unit) {
@@ -53,3 +93,16 @@ abstract class BaseViewModel: ViewModel() {
         viewModelScope.cancel()
     }
 }
+
+/**
+ * 协程状态
+ */
+enum class CoroutineState {
+    START,
+    REFRESH,
+    FINISH,
+    ERROR
+}
+
+// Alias
+internal typealias BlockCode = suspend CoroutineScope.() -> Unit

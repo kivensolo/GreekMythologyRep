@@ -9,11 +9,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.kingz.coroutines.data.api.RetrofitBuilder
 import com.kingz.coroutines.data.api.WAndroidApiImpl
 import com.kingz.coroutines.demo.adapter.ChaptersAdapter
 import com.kingz.coroutines.demo.base.BaseVMActivity
-import com.kingz.coroutines.demo.entity.WAZChaptersEntity
+import com.kingz.coroutines.demo.entity.ChaptersEntity
 import com.kingz.coroutines.demo.vm.ChaptersViewModel
 import com.kingz.coroutines.utils.Status
 import com.kingz.coroutines.utils.ViewModelFactory
@@ -27,24 +26,22 @@ class ChaptersActivity : BaseVMActivity<ChaptersViewModel>() {
         private const val TAG = "ChaptersActivity"
     }
 
-    override val layoutRes: Int = R.layout.activity_recycler_view
+    override val layoutOfContent: Int = R.layout.activity_recycler_view
 
     // 使用 'by viewModels()' 的Kotlin属性代理的方式
     override val viewModel: ChaptersViewModel by viewModels {
         ViewModelFactory.build {
-            ChaptersViewModel(WAndroidApiImpl(RetrofitBuilder.wAndroidApi))
+//            ChaptersViewModel(WAndroidApiImpl(RetrofitBuilder.wAndroidApi))
+            ChaptersViewModel(WAndroidApiImpl())
         }
     }
 
     private lateinit var adapter: ChaptersAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setupUI()
-        setupViewModel()
+    override fun initData(savedInstanceState: Bundle?) {
     }
 
-    private fun setupUI() {
+    override fun setupView(savedInstanceState: Bundle?) {
         recyclerView.layoutManager = LinearLayoutManager(this)
         adapter = ChaptersAdapter(arrayListOf())
         recyclerView.addItemDecoration(
@@ -56,7 +53,7 @@ class ChaptersActivity : BaseVMActivity<ChaptersViewModel>() {
         recyclerView.adapter = adapter
     }
 
-    private fun setupViewModel() {
+    override fun setupViewModel() {
         viewModel.viewModelScope.apply {
 
         }
@@ -86,7 +83,7 @@ class ChaptersActivity : BaseVMActivity<ChaptersViewModel>() {
         }
     }
 
-    private fun renderList(data: WAZChaptersEntity) {
+    private fun renderList(data: ChaptersEntity) {
         adapter.addData(data.data)
         adapter.notifyDataSetChanged()
     }

@@ -84,7 +84,7 @@ class IgnoreErrorAndContinueActivity : AppCompatActivity() {
             this,
             ViewModelFactory.build {
                 IgnoreErrorAndContinueViewModel(
-                    ApiHelperImpl(RetrofitBuilder.apiService),
+                    ApiHelperImpl(RetrofitBuilder.USER_SERVICE_API),
                     DatabaseHelperImpl(DatabaseBuilder.getInstance(applicationContext))
                 )
             }

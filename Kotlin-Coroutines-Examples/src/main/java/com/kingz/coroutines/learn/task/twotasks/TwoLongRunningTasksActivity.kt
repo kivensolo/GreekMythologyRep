@@ -59,7 +59,7 @@ class TwoLongRunningTasksActivity : AppCompatActivity() {
             this,
             ViewModelFactory.build {
                 TwoLongRunningTasksViewModel(
-                    ApiHelperImpl(RetrofitBuilder.apiService),
+                    ApiHelperImpl(RetrofitBuilder.USER_SERVICE_API),
                     DatabaseHelperImpl(DatabaseBuilder.getInstance(applicationContext))
                 )
             }

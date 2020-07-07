@@ -1,7 +1,7 @@
 package com.kingz.coroutines.demo.vm
 
 import androidx.lifecycle.MutableLiveData
-import com.kingz.coroutines.data.api.WAndroidApi
+import com.kingz.coroutines.data.api.wandroid.WAndroidApi
 import com.kingz.coroutines.demo.base.BaseViewModel
 import com.kingz.coroutines.demo.entity.LoginEntity
 import com.zeke.kangaroo.utils.ZLog

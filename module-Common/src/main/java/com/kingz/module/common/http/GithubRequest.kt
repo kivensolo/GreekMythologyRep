@@ -2,7 +2,7 @@ package com.kingz.module.common.http
 
 import com.kingz.module.common.model.GitHubUserInfo
 import com.kingz.module.common.service.GitHubService
-import com.zeke.network.retrofit.mannager.ApiManager
+import com.zeke.network.retrofit.mannager.Api
 import io.reactivex.Single
 
 /**
@@ -13,7 +13,7 @@ import io.reactivex.Single
  */
 object GithubRequest {
     //TODO 为每个请求可以自定义BaseUrl
-    private val gitHubService = ApiManager.i().setApi(GitHubService::class.java)
+    private val gitHubService = Api.i().setApi(GitHubService::class.java)
 
     fun getUserInfo(name:String?): Single<GitHubUserInfo>? {
         return gitHubService.getUserInfo(name)

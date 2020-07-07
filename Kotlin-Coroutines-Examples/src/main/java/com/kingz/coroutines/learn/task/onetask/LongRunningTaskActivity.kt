@@ -59,7 +59,7 @@ class LongRunningTaskActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(
             this,
             ViewModelFactory.build {
-                LongRunningTaskViewModel(ApiHelperImpl(RetrofitBuilder.apiService),
+                LongRunningTaskViewModel(ApiHelperImpl(RetrofitBuilder.USER_SERVICE_API),
                     DatabaseHelperImpl(DatabaseBuilder.getInstance(applicationContext))
                 )
             }

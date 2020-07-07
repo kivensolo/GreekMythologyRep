@@ -82,7 +82,7 @@ class ExceptionHandlerActivity : AppCompatActivity() {
             this,
             ViewModelFactory.build {
                 ExceptionHandlerViewModel(
-                    ApiHelperImpl(RetrofitBuilder.apiService),
+                    ApiHelperImpl(RetrofitBuilder.USER_SERVICE_API),
                     DatabaseHelperImpl(DatabaseBuilder.getInstance(applicationContext))
                 )
             }

@@ -16,7 +16,7 @@ import kotlinx.coroutines.withContext
  */
 abstract class BaseActivity : AppCompatActivity() {
 
-    abstract val layoutRes: Int
+    abstract val layoutOfContent: Int
     abstract val binding: ViewDataBinding?
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,9 +24,28 @@ abstract class BaseActivity : AppCompatActivity() {
         if(binding != null){
             setContentView(binding!!.root)
         }else{
-            setContentView(layoutRes)
+            setContentView(layoutOfContent)
         }
+        setupViewModel()
+        initImmersionBar()
+        setupView(savedInstanceState)
+        initData(savedInstanceState)
     }
+
+   private fun initImmersionBar() {
+//        immersionBar {
+//            barColor(R.color.colorPrimary)
+//        }
+    }
+
+    open fun setupViewModel(){
+
+    }
+
+    abstract fun initData(savedInstanceState: Bundle?)
+
+    abstract fun setupView(savedInstanceState: Bundle?)
+
 
     /**
      * 必须在组合挂起函数中使用

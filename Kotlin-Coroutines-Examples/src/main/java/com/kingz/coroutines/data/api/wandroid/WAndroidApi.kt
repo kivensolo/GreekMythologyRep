@@ -1,7 +1,7 @@
-package com.kingz.coroutines.data.api
+package com.kingz.coroutines.data.api.wandroid
 
+import com.kingz.coroutines.demo.entity.ChaptersEntity
 import com.kingz.coroutines.demo.entity.LoginEntity
-import com.kingz.coroutines.demo.entity.WAZChaptersEntity
 import retrofit2.http.GET
 
 /**
@@ -12,8 +12,9 @@ import retrofit2.http.GET
  * @desc:
  */
 interface WAndroidApi {
+
      @GET("wxarticle/chapters/json")
-    suspend fun fetchChapterData(): WAZChaptersEntity
+    suspend fun fetchChapterData(): ChaptersEntity
 
     suspend fun fetchMockLoginData(): MutableList<LoginEntity>
 

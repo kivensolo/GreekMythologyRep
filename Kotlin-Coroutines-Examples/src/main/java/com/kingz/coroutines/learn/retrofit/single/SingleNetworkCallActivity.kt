@@ -37,7 +37,7 @@ class SingleNetworkCallActivity : BaseNetworkCallsActivity<SingleNetworkCallView
             this,
             ViewModelFactory.build {
                 SingleNetworkCallViewModel(
-                        ApiHelperImpl(RetrofitBuilder.apiService),
+                        ApiHelperImpl(RetrofitBuilder.USER_SERVICE_API),
                         DatabaseHelperImpl(DatabaseBuilder.getInstance(applicationContext))
                         )
             }

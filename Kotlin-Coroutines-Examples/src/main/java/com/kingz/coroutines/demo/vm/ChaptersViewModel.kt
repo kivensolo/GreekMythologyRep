@@ -2,9 +2,9 @@ package com.kingz.coroutines.demo.vm
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.kingz.coroutines.data.api.WAndroidApi
+import com.kingz.coroutines.data.api.wandroid.WAndroidApi
 import com.kingz.coroutines.demo.base.BaseViewModel
-import com.kingz.coroutines.demo.entity.WAZChaptersEntity
+import com.kingz.coroutines.demo.entity.ChaptersEntity
 import com.kingz.coroutines.utils.Resource
 import com.zeke.kangaroo.utils.ZLog
 
@@ -12,7 +12,7 @@ class ChaptersViewModel(
         private val wAndroidApi: WAndroidApi
 ): BaseViewModel() {
 
-    private val chaptersData = MutableLiveData<Resource<WAZChaptersEntity>>()
+    private val chaptersData = MutableLiveData<Resource<ChaptersEntity>>()
 
     init {
         launchDefault {
@@ -27,7 +27,7 @@ class ChaptersViewModel(
         }
     }
 
-    fun getChapters(): LiveData<Resource<WAZChaptersEntity>> {
+    fun getChapters(): LiveData<Resource<ChaptersEntity>> {
         return chaptersData
     }
 }

@@ -1,9 +1,9 @@
 package com.kingz.coroutines.demo.entity
 
 /**
- * Demo的数据结构
+ * 推荐文章的数据类
  */
-data class WAZChaptersEntity(
+data class ChaptersEntity(
         val `data`: List<Data>,
         val errorCode: Int,
         val errorMsg: String

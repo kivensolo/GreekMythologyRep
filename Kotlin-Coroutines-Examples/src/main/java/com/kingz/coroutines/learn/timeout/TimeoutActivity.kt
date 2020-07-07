@@ -84,7 +84,7 @@ class TimeoutActivity : AppCompatActivity() {
             this,
             ViewModelFactory.build {
                 TimeoutViewModel(
-                    ApiHelperImpl(RetrofitBuilder.apiService),
+                    ApiHelperImpl(RetrofitBuilder.USER_SERVICE_API),
                     DatabaseHelperImpl(DatabaseBuilder.getInstance(applicationContext))
                 )
             }

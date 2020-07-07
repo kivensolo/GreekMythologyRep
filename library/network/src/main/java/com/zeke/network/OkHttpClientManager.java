@@ -171,6 +171,7 @@ public class OkHttpClientManager {
 
     private void _initWithTimeOut(long connectTimeOut, long readTimeOut, long writeTimeOut) {
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
+                .retryOnConnectionFailure(true)
                 .connectTimeout(connectTimeOut, TimeUnit.MILLISECONDS)
                 .readTimeout(readTimeOut, TimeUnit.MILLISECONDS)
                 .writeTimeout(writeTimeOut, TimeUnit.MILLISECONDS)

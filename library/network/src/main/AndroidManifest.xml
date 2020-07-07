@@ -1,1 +1,10 @@
-<manifest package="com.zeke.network" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+        package="com.zeke.network" >
+    <application android:allowBackup="true">
+
+        <provider
+            android:name=".NetContentProvider"
+            android:authorities="${applicationId}.init_net"
+            android:exported="false" />
+    </application>
+</manifest>

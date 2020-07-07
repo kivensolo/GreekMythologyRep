@@ -17,7 +17,7 @@ class SeriesNetworkCallsActivity : BaseNetworkCallsActivity<SeriesNetworkCallsVi
     override fun setupViewModel() {
         viewModel = ViewModelProvider(this, ViewModelFactory.build {
             SeriesNetworkCallsViewModel(
-                    ApiHelperImpl(RetrofitBuilder.apiService),
+                    ApiHelperImpl(RetrofitBuilder.USER_SERVICE_API),
                     DatabaseHelperImpl(DatabaseBuilder.getInstance(applicationContext))
             )
         }).get(SeriesNetworkCallsViewModel::class.java)

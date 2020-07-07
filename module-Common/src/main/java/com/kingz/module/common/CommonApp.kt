@@ -7,7 +7,7 @@ import com.kingz.module.common.service.GitHubService
 import com.kingz.module.common.service.WeatherService
 import com.tencent.bugly.crashreport.CrashReport
 import com.zeke.kangaroo.utils.ZLog
-import com.zeke.network.retrofit.mannager.ApiManager
+import com.zeke.network.retrofit.mannager.Api
 
 /**
  * author: King.Z <br>
@@ -54,8 +54,8 @@ open class CommonApp: DatabaseApplication(){
      * 初始化app网络管理器
      */
     private fun initApiManager() {
-        ApiManager.i().registeServer(GitHubService::class.java)
-        ApiManager.i().registeServer(WeatherService::class.java)
+        Api.i().registeServer(GitHubService::class.java)
+        Api.i().registeServer(WeatherService::class.java)
     }
 
     private fun initLog() {
