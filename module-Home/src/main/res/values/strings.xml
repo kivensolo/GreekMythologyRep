@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">Home-model</string>
+
+     <!--点播界面  被格式化的参数索引%1$s和%2$s分别表示第一位和第二位占位符，$s表示是字符串 -->
+    <string name="txt_desc" translatable="false">简介</string>
+    <string name="txt_episode" translatable="false">剧集</string>
+    <string name="txt_guess_like" translatable="false">猜你喜欢</string>
+    <string name="txt_variety_content" translatable="false">第%1$s期: %2$s</string>
+    <string name="txt_variety_new_episode" translatable="false">更新至%1$s期</string>
+    <string name="txt_tv_new_episode" translatable="false">更新至%1$s集</string>
+    <string name="txt_variety_new" translatable="false">更新至%1$s期 / %2$s期全</string>
+    <string name="txt_tv_new" translatable="false">更新至%1$s集 / %2$s集全</string>
+    <string name="txt_actor" translatable="false">主演:%1$s</string>
+    <string name="txt_director" translatable="false">导演:%1$s</string>
+    <string name="txt_detail" translatable="false">简介:%1$s </string>
+    <string name="txt_test_int" translatable="false">评分:%1$d </string>
+    <string name="pls_input_name" translatable="false">请输入用户名</string>
+    <string name="login" translatable="false">登录</string>
+    <string name="user_error_tips" translatable="false">User Name Error!</string>
+    <string name="bottom_demo" translatable="false">Demo学习</string>
+    <string name="fuli" translatable="false">福利</string>
+    <string name="no_use" translatable="false">暂未开发</string>
+
+    <!--MagicIndicatorDemo相关-->
+    <string name="scrollable_tab" translatable="false">Scrollable tab</string>
+    <string name="fixed_tab" translatable="false">Fixed tab</string>
+    <string name="dynamic_tab" translatable="false">Dynamic tab</string>
+    <string name="no_tab_only_indicator" translatable="false">No tab, only indicator</string>
+    <string name="work_with_fragment_container" translatable="false">Work with fragment container</string>
+    <string name="tab_with_badge_view" translatable="false">Tab with badge view</string>
+    <string name="custom_navigator" translatable="false">Custom navigator</string>
+    <string name="random_page" translatable="false">Random page</string>
+    <string name="tab_with_custom_layout" translatable="false">Load custom layout</string>
+
+    <string name="content_view_desc" translatable="false">页面内容显示页面根View</string>
+</resources>

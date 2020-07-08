@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <!--Hub 主题颜色-->
+    <color name="hub_white">#ffe8e8e8</color>
+    <color name="hub_yellow">#F79817</color>
+    <color name="hub_yellow_light">#F9BA62</color>
+</resources>

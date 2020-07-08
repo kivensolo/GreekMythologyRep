@@ -160,7 +160,9 @@ android {
 
 dependencies {
     implementation project(':module-Common')
-    implementation project(':module-Home')
+    if (isHomeModule.toBoolean()) {
+        implementation project(':module-Home')
+    }
     implementation project(":module-Demo")
 
     implementation project(':library-player')
@@ -170,9 +172,6 @@ dependencies {
 //    implementation project(':library')
     implementation fileTree(include: ['*.jar','*.aar'], dir: 'libs')
 //    implementation 'com.getbase:floatingactionbutton:1.10.1'
-
-    implementation 'androidx.multidex:multidex:2.0.1'
-    implementation 'com.zhy:autolayout:1.4.5'
 
     // Glide
     implementation "com.github.bumptech.glide:glide:${lib_versions.glide}"
@@ -192,14 +191,11 @@ dependencies {
     implementation rootProject.ext.dependencies["gson"]
 
     //RxJava2(RxAndroid) + retrofit2 + okhttp3
-    implementation "io.reactivex.rxjava2:rxjava:${lib_versions.rxJava}"
-    implementation "io.reactivex.rxjava2:rxandroid:${lib_versions.rxandroid}"
-    implementation "com.squareup.retrofit2:retrofit:${lib_versions.rtf2}"
-    implementation "com.squareup.retrofit2:converter-gson:${lib_versions.rtf2_2gson}"
-    implementation "com.squareup.retrofit2:adapter-rxjava2:${lib_versions.rtf2_adapter}"
-
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'com.google.android.material:material:1.1.0'
+//    implementation "io.reactivex.rxjava2:rxjava:${lib_versions.rxJava}"
+//    implementation "io.reactivex.rxjava2:rxandroid:${lib_versions.rxandroid}"
+//    implementation "com.squareup.retrofit2:retrofit:${lib_versions.rtf2}"
+//    implementation "com.squareup.retrofit2:converter-gson:${lib_versions.rtf2_2gson}"
+//    implementation "com.squareup.retrofit2:adapter-rxjava2:${lib_versions.rtf2_adapter}"
 
     implementation rootProject.ext.dependencies["recyclerView"]
     implementation rootProject.ext.dependencies["cardView"]

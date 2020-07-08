@@ -45,17 +45,11 @@ dependencies {
     androidTestImplementation rootProject.ext.test["test-ext-junit"]
     androidTestImplementation rootProject.ext.test["support-test-espresso"]
 
-    api 'androidx.multidex:multidex:2.0.1'
-
-    // Room数据库支持
-    api rootProject.ext.dependencies["room-runtime"]
-    api rootProject.ext.dependencies["room-ktx"]
+    api project(':base')
     // 进行room注解编译的工具,不添加的话生成不了AppDatabase_Impl.java文件
     kapt rootProject.ext.dependencies["room-compiler"]
-
     // Stetho基本调试依赖
     implementation 'com.facebook.stetho:stetho:1.5.0'
-
     // 网络操作--有网络操作添加
 //    implementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
 //    implementation 'com.squareup.okhttp3:okhttp:3.9.0'
@@ -63,5 +57,4 @@ dependencies {
     // Android-Debug-Database
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
 //    debugImplementation 'com.amitshekhar.android:debug-db-encrypt:1.0.6'
-
 }

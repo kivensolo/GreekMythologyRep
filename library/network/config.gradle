@@ -5,19 +5,29 @@ ext {
     kangaroo_v = '1.0.6'
 
     lib_versions = [
-            rxJava          :'2.2.2',
-            rxandroid       :'2.1.0',
-            rtf2            :'2.6.1',
-            okhttp          :'3.12.1',
-            okio            :'2.1.0',
-            gson            :'2.8.5'
+            rxJava          : '2.2.2',
+            rxandroid       : '2.1.0',
+            rtf2            : '2.6.1',
+            okhttp          : '3.12.1',
+            okio            : '2.1.0',
+            gson            : '2.8.5',
+            retrofit        : '2.9.0'
     ]
 
     lib_dependencies = [
             "okHttp3"                : "com.squareup.okhttp3:okhttp:${lib_versions.okhttp}",
             "okio"                   : "com.squareup.okio:okio:${lib_versions.okio}",
             "ok_log"                 : "com.squareup.okhttp3:logging-interceptor:${lib_versions.okhttp}",
+
+            "rxjava"                 : "io.reactivex.rxjava2:rxjava:2.2.2",
+            "rxandroid"              : "io.reactivex.rxjava2:rxandroid:2.1.0",
+
+            "retrofit2"              : "com.squareup.retrofit2:retrofit:$lib_versions.retrofit",
+            "retrofit2-gson"         : "com.squareup.retrofit2:converter-gson:2.0.0",
+            "retrofit2-rxjava"       : "com.squareup.retrofit2:adapter-rxjava2:2.2.0",
+
             "kangaroo"               : "com.github.zeke:kangaroo:$kangaroo_v",
+
     ]
 
 }

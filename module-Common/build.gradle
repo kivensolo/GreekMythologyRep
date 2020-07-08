@@ -54,11 +54,9 @@ dependencies {
 
     compileOnly "io.reactivex.rxjava2:rxjava:${lib_versions.rxJava}"
     compileOnly "io.reactivex.rxjava2:rxandroid:${lib_versions.rxandroid}"
-    compileOnly 'com.zhy:autolayout:1.4.5'
 
     // Bugly
     api 'com.tencent.bugly:crashreport:3.0.0'
     api 'com.tencent.bugly:nativecrashreport:3.1.0'
 
-    compileOnly 'com.google.android.material:material:1.1.0'
 }

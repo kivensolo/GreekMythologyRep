@@ -54,8 +54,8 @@ open class CommonApp: DatabaseApplication(){
      * 初始化app网络管理器
      */
     private fun initApiManager() {
-        Api.i().registeServer(GitHubService::class.java)
-        Api.i().registeServer(WeatherService::class.java)
+        Api.getInstance().registeServer(GitHubService::class.java)
+        Api.getInstance().registeServer(WeatherService::class.java)
     }
 
     private fun initLog() {

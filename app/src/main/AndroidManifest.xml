@@ -49,14 +49,6 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <!--应用元数据设置-->
-        <meta-data
-            android:name="design_width"
-            android:value="1080" />
-        <meta-data
-            android:name="design_height"
-            android:value="1920" />
-
 
         <!--<uses-library android:name="android.test.AndroidTestRunner"/>-->
 
@@ -89,18 +81,7 @@
 
 
         <!-- 主Activity -->
-        <activity
-            android:name="com.zeke.home.MainActivity"
-            android:screenOrientation="fullSensor"
-            android:launchMode="singleTop"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-                <!--<category android:name="android.intent.category.HOME"/>-->
-            </intent-filter>
-        </activity>
+
 
         <!---->
 
@@ -416,18 +397,6 @@
             android:authorities="com.kingz.four_components.myprovider"
             android:exported="true"
             tools:ignore="ExportedContentProvider" />
-
-        <!--7.0 fileprovider-->
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="com.kingz.newfeatures.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
-        </provider>
-
 
         <receiver android:name="com.kingz.four_components.receiver.OtherAppInstalledOrRemoveReceiver">
             <intent-filter>

@@ -2,6 +2,7 @@ include ':app'
 include ':app-playerdemo'
 include ':Kotlin-Coroutines-Examples'
 
+include ':base'
 include ':database'
 include ':module-Common'
 include ':module-Home'
@@ -28,3 +29,4 @@ gradle.afterProject {
     println "Settings end.   <<<<<<]"
 }
 include ':app-libtest'
+

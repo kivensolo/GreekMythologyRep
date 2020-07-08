@@ -1,1 +1,20 @@
-<manifest package="com.kingz.module.home" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.kingz.module.home">
+
+    <application android:allowBackup="true">
+
+        <activity
+            android:name="com.zeke.home.MainActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="fullSensor"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateAlwaysHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <!--<category android:name="android.intent.category.HOME"/>-->
+            </intent-filter>
+        </activity>
+
+    </application>
+</manifest>

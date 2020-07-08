@@ -1,0 +1,86 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+def root_android = rootProject.ext.android
+def root_dependencies = rootProject.ext.dependencies
+def root_test = rootProject.ext.test
+
+android {
+    compileSdkVersion root_android.compileSdkVersion
+    buildToolsVersion root_android.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion root_android.minSdkVersion
+        targetSdkVersion root_android.targetSdkVersion
+        versionCode root_android.versionCode
+        versionName root_android.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    testImplementation root_test["junit"]
+    testImplementation root_test["ktx-coroutines-test"]
+    androidTestImplementation root_test["test-ext-junit"]
+    androidTestImplementation root_test["support-test-espresso"]
+
+    api root_dependencies["multidex"]
+
+    api root_dependencies["appcompat"]
+    api root_dependencies["kotlin"]
+    api root_dependencies["kotlin-reflect"]
+    api root_dependencies["core-ktx"]
+    api root_dependencies["activity-ktx"]
+    api root_dependencies["fragment-ktx"]
+    api root_dependencies["coroutines-core"]
+    api root_dependencies["coroutines-android"]
+
+    // mvvm + jetPack
+    api root_dependencies["lifecycle-viewmodel-ktx"]
+    api root_dependencies["lifecycle-livedata-ktx"]
+    api root_dependencies["lifecycle-runtime-ktx"]
+    api root_dependencies["lifecycle-extensions"]
+
+    // Room数据库支持
+    api root_dependencies["room-runtime"]
+    api root_dependencies["room-ktx"]
+    api root_dependencies["stetho"]             // Stetho基本调试依赖
+
+    api root_dependencies["paging-runtime-ktx"]
+    api root_dependencies["recyclerView"]
+    api root_dependencies["constraintLayout"]
+    //    api root_dependencies["recyclerView_adapter"]
+    api root_dependencies["cardView"]
+    api root_dependencies["constraintLayout"]
+    api root_dependencies["material"]
+    api root_dependencies["gson"]
+
+    api root_dependencies["gilde"]
+    kapt root_dependencies["glide_compiler"]
+    api root_dependencies["glide_okhttp3"]
+
+    api root_dependencies["autosize"]
+    api root_dependencies["autoLayout"]
+
+    api root_dependencies["leakcanary"]
+    api root_dependencies["leaksentry"]
+
+    api root_dependencies["permissions"]
+
+    api root_dependencies["kangaroo"]
+    api root_dependencies["xul_cache"]
+
+}

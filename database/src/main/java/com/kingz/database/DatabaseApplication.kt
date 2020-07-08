@@ -1,7 +1,7 @@
 package com.kingz.database
 
-import androidx.multidex.MultiDexApplication
 import com.facebook.stetho.Stetho
+import com.kingz.base.BaseApplication
 import com.kingz.database.dao.AlbumDao
 import com.kingz.database.dao.SongDao
 
@@ -12,7 +12,7 @@ import com.kingz.database.dao.SongDao
  * @copyright 2020 www.xgimi.com Inc. All rights reserved.
  * @desc:
  */
-open class DatabaseApplication : MultiDexApplication() {
+open class DatabaseApplication : BaseApplication() {
 
     companion object {
 

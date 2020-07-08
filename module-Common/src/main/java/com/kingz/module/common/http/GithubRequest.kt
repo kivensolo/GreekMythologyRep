@@ -13,9 +13,10 @@ import io.reactivex.Single
  */
 object GithubRequest {
     //TODO 为每个请求可以自定义BaseUrl
-    private val gitHubService = Api.i().setApi(GitHubService::class.java)
+    private val gitHubService = Api.getInstance().registeServer(GitHubService::class.java)
 
     fun getUserInfo(name:String?): Single<GitHubUserInfo>? {
-        return gitHubService.getUserInfo(name)
+//        return gitHubService.getUserInfo(name)
+        return null
     }
 }
