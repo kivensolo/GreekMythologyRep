@@ -1,4 +1,4 @@
-package com.zeke.ktx.view
+package com.zeke.module_login.view
 
 import android.content.Context
 import android.util.AttributeSet
@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.widget.EditText
 import android.widget.LinearLayout
 
-import com.kingz.customdemo.R
+import com.zeke.module_login.R
 
 /**
  * 启动登录页面的用户账号登录视图

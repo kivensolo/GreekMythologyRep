@@ -44,7 +44,7 @@ public class AttrOfAliasAct extends Activity {
 
         pm = getPackageManager();
 
-        final ComponentName defaultCName = new ComponentName(getBaseContext(), "com.SplashActivity");
+        final ComponentName defaultCName = new ComponentName(getBaseContext(), "com.zeke.module_login.SplashActivity");
         final ComponentName mTest11 = new ComponentName(getBaseContext(), "com.kingz.pages.Test11");
         //final ComponentName mTest12 = new ComponentName(getBaseContext(), "com.Test12");
 

@@ -1,0 +1,9 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.zeke.module_login">
+
+
+    <application android:allowBackup="true">
+
+        <activity android:name=".SplashActivityKt" />
+    </application>
+</manifest>

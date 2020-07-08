@@ -28,4 +28,4 @@ gradle.beforeProject {
 gradle.afterProject {
     println "Settings end.   <<<<<<]"
 }
-
+include ':module-login'

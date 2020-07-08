@@ -55,7 +55,6 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField("boolean", "SPLSH_DEBUG", "false")
             zipAlignEnabled true
 
             /**
@@ -72,7 +71,6 @@ android {
 
         release {
             zipAlignEnabled true
-            buildConfigField("boolean", "SPLSH_DEBUG", "true")
             minifyEnabled true
             shrinkResources true
             multiDexKeepProguard file('multidex-config.pro')

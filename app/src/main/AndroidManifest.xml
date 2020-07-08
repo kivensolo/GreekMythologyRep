@@ -58,27 +58,6 @@
             android:exported="false" />
         <!--android:authorities="${packageName}.BmobContentProvider">-->
 
-        <activity
-            android:name="com.SplashActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-                <!--<category android:name="android.intent.category.HOME"/>-->
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:scheme="http"
-                    android:host="asd"
-                    android:pathPrefix="/asds" />
-            </intent-filter>
-        </activity>
-
 
         <!-- 主Activity -->
 
