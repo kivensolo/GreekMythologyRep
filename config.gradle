@@ -40,6 +40,8 @@ ext {
             glide_c               : '4.8.0',
             glide_okhttp          : '4.8.0',
 
+            arouter               : '1.5.0',
+            arouter_compiler      : '1.2.2',
             lifecycle             : '1.1.0',
             gson                  : '2.8.5',
 
@@ -107,6 +109,10 @@ ext {
             "lifecycle-livedata-ktx" : "androidx.lifecycle:lifecycle-livedata-ktx:${rootProject.ext.jetpack_version}",
             "lifecycle-runtime-ktx"  : "androidx.lifecycle:lifecycle-runtime-ktx:${rootProject.ext.jetpack_version}",
             "lifecycle-extensions"   : "androidx.lifecycle:lifecycle-extensions:${rootProject.ext.jetpack_version}",
+
+            // Arouter解耦组件 https://github.com/alibaba/ARouter/blob/master/README_CN.md
+            "arouter"              : "com.alibaba:arouter-api:$lib_versions.arouter",
+            "arouter_compiler"     : "com.alibaba:arouter-compiler:$lib_versions.arouter_compiler",
 
             // paging
             "paging-runtime-ktx"     : "androidx.paging:paging-runtime-ktx:${lib_versions.paging_version}",

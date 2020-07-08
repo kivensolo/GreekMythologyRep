@@ -28,6 +28,12 @@ android {
         }
     }
 
+
+    kapt {
+        arguments {
+            arg("AROUTER_MODULE_NAME", project.getName())
+        }
+    }
 }
 
 dependencies {
@@ -47,6 +53,9 @@ dependencies {
     api root_dependencies["fragment-ktx"]
     api root_dependencies["coroutines-core"]
     api root_dependencies["coroutines-android"]
+
+    api root_dependencies["arouter"]
+    kapt root_dependencies["arouter_compiler"]
 
     // mvvm + jetPack
     api root_dependencies["lifecycle-viewmodel-ktx"]

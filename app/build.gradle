@@ -2,9 +2,11 @@ apply {
     plugin 'com.android.application'
     plugin 'kotlin-android'
     plugin 'kotlin-android-extensions'
+    plugin 'kotlin-kapt'
 
     from '../config.gradle'
     from '../utils.gradle'
+
 }
 
 def keystorePropertiesFile = rootProject.file("keystore.properties")
@@ -12,6 +14,9 @@ def keystorePropertiesFile = rootProject.file("keystore.properties")
 def keystoreProperties = new Properties()
 // Load keystore.properties file into the keystoreProperties object.
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
+def root_android = rootProject.ext.android
+def root_dependencies = rootProject.ext.dependencies
 
 android {
     signingConfigs {
@@ -29,11 +34,11 @@ android {
     defaultConfig {
         applicationId 'com.kingz.customdemo'
         multiDexEnabled true
-        versionCode android.versionCode
-        versionName android.versionName
+        versionCode root_android.versionCode
+        versionName root_android.versionName
         signingConfig signingConfigs.ZekeSigned
-        minSdkVersion android.minSdkVersion
-        targetSdkVersion android.targetSdkVersion
+        minSdkVersion root_android.minSdkVersion
+        targetSdkVersion root_android.targetSdkVersion
         buildConfigField("String", "APP_NAME", "\"Greek\"")
 
 //        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
@@ -157,18 +162,15 @@ android {
 }
 
 dependencies {
+    implementation fileTree(include: ['*.jar','*.aar'], dir: 'libs')
+    kapt root_dependencies["arouter_compiler"]
     implementation project(':module-Common')
-    if (isHomeModule.toBoolean()) {
-        implementation project(':module-Home')
-    }
+    if (isHomeModule.toBoolean()) { implementation project(':module-Home') }
+    if (isLoginModule.toBoolean()) { implementation project(':module-login') }
     implementation project(":module-Demo")
 
     implementation project(':library-player')
-//    implementation project(':library-views')
-//    implementation project(':library-network')
 
-//    implementation project(':library')
-    implementation fileTree(include: ['*.jar','*.aar'], dir: 'libs')
 //    implementation 'com.getbase:floatingactionbutton:1.10.1'
 
     // Glide
