@@ -8,8 +8,11 @@ import android.os.Bundle
 import android.view.View
 import android.widget.RelativeLayout
 import android.widget.VideoView
-import androidx.lifecycle.ViewModelProvider
+import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import com.kingz.base.BaseVMActivity
+import com.kingz.base.factory.ViewModelFactory
+import com.zeke.kangaroo.utils.ZLog
 import com.zeke.module_login.repository.LoginRepository
 import com.zeke.module_login.viewmodel.LoginViewModel
 import kotlinx.android.synthetic.main.splash_activity.*
@@ -25,28 +28,36 @@ class SplashActivityKt : BaseVMActivity<LoginRepository, LoginViewModel>(), View
 
     override fun getContentView() = R.layout.splash_activity
 
-    override fun createViewModel(): LoginViewModel {
-        //TODO ViewModel的创建  统一处理
-        return ViewModelProvider(this)[LoginViewModel::class.java]
+//    override fun createViewModel(): LoginViewModel {
+//        return ViewModelProvider(this)[LoginViewModel::class.java]
+//    }
+
+    // 使用 'by viewModels()' 的Kotlin属性代理的方式
+    override val viewModel: LoginViewModel by viewModels {
+        ViewModelFactory.build { LoginViewModel() }
     }
 
-    override fun initData(savedInstanceState: Bundle?) {}
+    override fun initData(savedInstanceState: Bundle?) {
+        viewModel.loginInfoData.observe(this, Observer { result ->
+            ZLog.d("LoginLiveData update:", "$result")
+        })
+    }
 
     override fun initView(savedInstanceState: Bundle?) {
-        if (!BuildConfig.SPLSH_DEBUG) {
-            openMainPage()
-        } else {
-            buttonRight.setOnClickListener(this)
-            buttonLeft.setOnClickListener(this)
-            loginView.post {
-                loginView.apply {
-                    val delta = top + height
-                    translationY = (-1 * delta).toFloat()
-                }
+//        if (!BuildConfig.SPLSH_DEBUG) {
+//            openMainPage()
+//        } else {
+        buttonRight.setOnClickListener(this)
+        buttonLeft.setOnClickListener(this)
+        loginView.post {
+            loginView.apply {
+                val delta = top + height
+                translationY = (-1 * delta).toFloat()
             }
-            playVideo()
-            playAnim()
         }
+        playVideo()
+        playAnim()
+//        }
     }
 
     private fun playVideo() {
@@ -103,6 +114,7 @@ class SplashActivityKt : BaseVMActivity<LoginRepository, LoginViewModel>(), View
                 inputType = InputType.NONE
                 buttonLeft.setText(R.string.button_login)
                 buttonRight.setText(R.string.button_signup)
+                viewModel.doLogin()
             }
             InputType.SIGN_UP -> {
                 //TODO 进行注册操作
@@ -132,5 +144,4 @@ class SplashActivityKt : BaseVMActivity<LoginRepository, LoginViewModel>(), View
     enum class InputType {
         NONE, LOGIN, SIGN_UP
     }
-
 }

@@ -8,13 +8,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.kingz.base.response.Status
 import com.kingz.coroutines.data.api.ApiHelperImpl
 import com.kingz.coroutines.data.api.RetrofitBuilder
 import com.kingz.coroutines.data.local.DatabaseBuilder
 import com.kingz.coroutines.data.local.DatabaseHelperImpl
 import com.kingz.coroutines.data.local.entity.User
 import com.kingz.coroutines.learn.base.UserAdapter
-import com.kingz.coroutines.utils.Status
 import com.kingz.coroutines.utils.ViewModelFactory
 import com.zeke.example.coroutines.R
 import kotlinx.android.synthetic.main.activity_recycler_view.*

@@ -9,12 +9,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.kingz.base.response.Status
 import com.kingz.coroutines.data.api.WAndroidApiImpl
 import com.kingz.coroutines.demo.adapter.ChaptersAdapter
 import com.kingz.coroutines.demo.base.BaseVMActivity
 import com.kingz.coroutines.demo.entity.ChaptersEntity
 import com.kingz.coroutines.demo.vm.ChaptersViewModel
-import com.kingz.coroutines.utils.Status
 import com.kingz.coroutines.utils.ViewModelFactory
 import com.zeke.example.coroutines.R
 import com.zeke.kangaroo.utils.ZLog

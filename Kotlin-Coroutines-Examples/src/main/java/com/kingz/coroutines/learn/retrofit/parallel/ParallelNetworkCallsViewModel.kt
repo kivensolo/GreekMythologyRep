@@ -5,10 +5,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kingz.base.response.ResponseResult
 import com.kingz.coroutines.data.api.ApiHelper
 import com.kingz.coroutines.data.local.DatabaseHelper
 import com.kingz.coroutines.data.model.ApiUser
-import com.kingz.coroutines.utils.Resource
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
@@ -26,7 +26,7 @@ class ParallelNetworkCallsViewModel(
         private val apiHelper: ApiHelper,
         private val dbHelper: DatabaseHelper
 ) : ViewModel() {
-    private val users = MutableLiveData<Resource<List<ApiUser>>>()
+    private val users = MutableLiveData<ResponseResult<List<ApiUser>>>()
 
     init {
         fetchUsers()
@@ -34,7 +34,7 @@ class ParallelNetworkCallsViewModel(
 
     private fun fetchUsers() {
         viewModelScope.launch {
-            users.postValue(Resource.loading(null))
+            users.postValue(ResponseResult.loading(null))
             // coroutineScope is needed, else in case of any network error, it will crash
             try {
                 coroutineScope {
@@ -58,17 +58,17 @@ class ParallelNetworkCallsViewModel(
                     allUsersFromApi.addAll(usersFromApi)
                     allUsersFromApi.addAll(moreUsersFromApi)
 
-                    users.postValue(Resource.success(allUsersFromApi))
+                    users.postValue(ResponseResult.success(allUsersFromApi))
                 }
             } catch (e: Exception) {
                 Log.e("ParallelViewModel","Something Went Wrong.${e.message}")
-                users.postValue(Resource.error("Something Went Wrong.${e.message}", null))
+                users.postValue(ResponseResult.error("Something Went Wrong.${e.message}", null))
             }
         }
     }
 
 
-    fun getUsers(): LiveData<Resource<List<ApiUser>>> {
+    fun getUsers(): LiveData<ResponseResult<List<ApiUser>>> {
         return users
     }
 }

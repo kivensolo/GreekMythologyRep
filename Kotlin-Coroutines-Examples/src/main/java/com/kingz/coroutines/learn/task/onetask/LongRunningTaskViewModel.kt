@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kingz.base.response.ResponseResult
 import com.kingz.coroutines.data.api.ApiHelper
 import com.kingz.coroutines.data.local.DatabaseHelper
-import com.kingz.coroutines.utils.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -17,22 +17,22 @@ class LongRunningTaskViewModel(
         private val dbHelper: DatabaseHelper
 ) : ViewModel() {
 
-    private val status = MutableLiveData<Resource<String>>()
+    private val status = MutableLiveData<ResponseResult<String>>()
 
     fun startLongRunningTask() {
         viewModelScope.launch {
-            status.postValue(Resource.loading(null))
+            status.postValue(ResponseResult.loading(null))
             try {
                 // do a long running task
                 doLongRunningTask()
-                status.postValue(Resource.success("Task Completed"))
+                status.postValue(ResponseResult.success("Task Completed"))
             } catch (e: Exception) {
-                status.postValue(Resource.error("Something Went Wrong", null))
+                status.postValue(ResponseResult.error("Something Went Wrong", null))
             }
         }
     }
 
-    fun getStatus(): LiveData<Resource<String>> {
+    fun getStatus(): LiveData<ResponseResult<String>> {
         return status
     }
 

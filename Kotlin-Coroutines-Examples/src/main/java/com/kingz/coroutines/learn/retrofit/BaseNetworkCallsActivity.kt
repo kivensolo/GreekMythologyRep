@@ -9,10 +9,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.kingz.base.response.ResponseResult
+import com.kingz.base.response.Status
 import com.kingz.coroutines.data.model.ApiUser
 import com.kingz.coroutines.learn.base.ApiUserAdapter
-import com.kingz.coroutines.utils.Resource
-import com.kingz.coroutines.utils.Status
 import com.zeke.example.coroutines.R
 import kotlinx.android.synthetic.main.activity_recycler_view.*
 
@@ -71,5 +71,5 @@ abstract class BaseNetworkCallsActivity<T:ViewModel> : AppCompatActivity() {
 
     abstract fun setupViewModel()
 
-    abstract fun getUser(): LiveData<Resource<List<ApiUser>>>
+    abstract fun getUser(): LiveData<ResponseResult<List<ApiUser>>>
 }

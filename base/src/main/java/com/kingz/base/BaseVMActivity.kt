@@ -3,20 +3,21 @@ package com.kingz.base
 import android.util.Log
 import androidx.lifecycle.Observer
 
-/**
- * @author cx
- */
-abstract class BaseVMActivity<V : BaseRepository, T : BaseViewModel<V>> : BaseSimpleActivity() {
-    protected val viewModel: T by lazy {
-        createViewModel()
-    }
+abstract class BaseVMActivity<V : BaseRepository, VM : BaseViewModel<V>> : BaseSimpleActivity() {
+//    protected val viewModel: VM by lazy {
+//        createViewModel()
+//    }
+//    abstract fun createViewModel(): VM
+
+    protected abstract val viewModel: VM
+
 
     override fun initViewModel() {
         super.initViewModel()
-        initViewModelActions()
+        initViewModelStatusActions()
     }
 
-    private fun initViewModelActions() {
+    private fun initViewModelStatusActions() {
         viewModel.statusLiveData.observe(this, Observer { status ->
             status?.run {
                 when (this) {
@@ -39,9 +40,6 @@ abstract class BaseVMActivity<V : BaseRepository, T : BaseViewModel<V>> : BaseSi
             }
         })
     }
-
-    abstract fun createViewModel(): T
-
 
     fun launchMain(block: BlockCode) {
         viewModel.launchMain { block() }

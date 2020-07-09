@@ -10,7 +10,7 @@ import kotlinx.coroutines.*
  * @date 2020/5/26
  * @maintainer zeke.wang
  * @desc:
- *
+ * Hold UI Data.
  * viewModelScope: 与ViewModel绑定的CoroutineScope
  */
 abstract class BaseViewModel<T : BaseRepository> : ViewModel() {
@@ -22,12 +22,8 @@ abstract class BaseViewModel<T : BaseRepository> : ViewModel() {
     abstract fun createRepository(): T
 
     /**
-     * 协程状态管理
-     *
-     * 开始 CoroutineState.START
-     * 刷新 CoroutineState.REFRESH
-     * 结束 CoroutineState.FINISH
-     * 异常 CoroutineState.ERROR
+     * 状态管理的LiveData
+     * 可用于判断网络请求状态等
      */
     val statusLiveData: MutableLiveData<CoroutineState> by lazy {
         MutableLiveData<CoroutineState>()
@@ -99,7 +95,7 @@ abstract class BaseViewModel<T : BaseRepository> : ViewModel() {
     }
 
     suspend fun switchToMain(block: BlockCode) {
-        withContext(Dispatchers.Main) { block()  }
+        withContext(Dispatchers.Main) { block() }
     }
 
     /**
@@ -110,14 +106,4 @@ abstract class BaseViewModel<T : BaseRepository> : ViewModel() {
         super.onCleared()
         viewModelScope.cancel()
     }
-}
-
-/**
- * 协程状态
- */
-enum class CoroutineState {
-    START,
-    REFRESH,
-    FINISH,
-    ERROR
 }

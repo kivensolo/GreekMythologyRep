@@ -1,4 +1,6 @@
 package com.kingz.base
 
-abstract class BaseRepository {
-}
+/**
+ * API for saving and loading app data
+ */
+abstract class BaseRepository

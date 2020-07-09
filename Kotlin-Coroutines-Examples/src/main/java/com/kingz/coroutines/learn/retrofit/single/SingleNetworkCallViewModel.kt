@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kingz.base.response.ResponseResult
 import com.kingz.coroutines.data.api.ApiHelper
 import com.kingz.coroutines.data.local.DatabaseHelper
 import com.kingz.coroutines.data.model.ApiUser
-import com.kingz.coroutines.utils.Resource
 import kotlinx.coroutines.launch
 
 /**
@@ -18,7 +18,7 @@ class SingleNetworkCallViewModel(
         private val dbHelper: DatabaseHelper
 ) : ViewModel() {
 
-    private val users = MutableLiveData<Resource<List<ApiUser>>>()
+    private val users = MutableLiveData<ResponseResult<List<ApiUser>>>()
 
     init {
         fetchUsers()
@@ -26,17 +26,17 @@ class SingleNetworkCallViewModel(
 
     private fun fetchUsers() {
         viewModelScope.launch {
-            users.postValue(Resource.loading(null))
+            users.postValue(ResponseResult.loading(null))
             try {
                 val usersFromApi = apiHelper.getUsers()
-                users.postValue(Resource.success(usersFromApi))
+                users.postValue(ResponseResult.success(usersFromApi))
             } catch (e: Exception) {
-                users.postValue(Resource.error(e.toString(), null))
+                users.postValue(ResponseResult.error(e.toString(), null))
             }
         }
     }
 
-    fun getUsers(): LiveData<Resource<List<ApiUser>>> {
+    fun getUsers(): LiveData<ResponseResult<List<ApiUser>>> {
         return users
     }
 

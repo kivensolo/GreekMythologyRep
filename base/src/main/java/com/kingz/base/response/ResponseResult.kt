@@ -1,9 +1,8 @@
-package com.kingz.coroutines.utils
+package com.kingz.base.response
 
-import com.kingz.base.response.ResponseResult
-import com.kingz.base.response.Status
-
-data class Resource<out T>(val status: Status, val data: T?, val message: String?) {
+data class ResponseResult<out T>(val status: Status,
+                                 val data: T?,
+                                 val message: String?) {
 
     companion object {
 

@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kingz.base.response.ResponseResult
 import com.kingz.coroutines.data.api.ApiHelper
 import com.kingz.coroutines.data.local.DatabaseHelper
 import com.kingz.coroutines.data.model.ApiUser
-import com.kingz.coroutines.utils.Resource
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 
@@ -16,10 +16,10 @@ class ExceptionHandlerViewModel(
     private val dbHelper: DatabaseHelper
 ) : ViewModel() {
 
-    private val users = MutableLiveData<Resource<List<ApiUser>>>()
+    private val users = MutableLiveData<ResponseResult<List<ApiUser>>>()
 
     private val exceptionHandler = CoroutineExceptionHandler { _, exception ->
-        users.postValue(Resource.error("Something Went Wrong：${exception.message}", null))
+        users.postValue(ResponseResult.error("Something Went Wrong：${exception.message}", null))
     }
 
     init {
@@ -28,13 +28,13 @@ class ExceptionHandlerViewModel(
 
     private fun fetchUsers() {
         viewModelScope.launch(exceptionHandler) {
-            users.postValue(Resource.loading(null))
+            users.postValue(ResponseResult.loading(null))
             val usersFromApi = apiHelper.getUsersWithError()
-            users.postValue(Resource.success(usersFromApi))
+            users.postValue(ResponseResult.success(usersFromApi))
         }
     }
 
-    fun getUsers(): LiveData<Resource<List<ApiUser>>> {
+    fun getUsers(): LiveData<ResponseResult<List<ApiUser>>> {
         return users
     }
 

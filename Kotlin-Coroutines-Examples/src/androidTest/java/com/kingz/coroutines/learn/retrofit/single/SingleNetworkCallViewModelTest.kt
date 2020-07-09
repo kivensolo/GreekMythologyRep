@@ -2,10 +2,10 @@ package com.kingz.coroutines.learn.retrofit.single
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import com.kingz.base.response.ResponseResult
 import com.kingz.coroutines.data.api.ApiHelper
 import com.kingz.coroutines.data.local.DatabaseHelper
 import com.kingz.coroutines.data.model.ApiUser
-import com.kingz.coroutines.utils.Resource
 import com.kingz.coroutines.utils.TestCoroutineRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.After
@@ -41,7 +41,7 @@ class SingleNetworkCallViewModelTest {
     private lateinit var databaseHelper: DatabaseHelper
 
     @Mock
-    private lateinit var apiUsersObserver: Observer<Resource<List<ApiUser>>>
+    private lateinit var apiUsersObserver: Observer<ResponseResult<List<ApiUser>>>
 
     @Before
     fun setUp() {
@@ -57,7 +57,7 @@ class SingleNetworkCallViewModelTest {
             val viewModel = SingleNetworkCallViewModel(apiHelper, databaseHelper)
             viewModel.getUsers().observeForever(apiUsersObserver)
             verify(apiHelper).getUsers()
-            verify(apiUsersObserver).onChanged(Resource.success(emptyList()))
+            verify(apiUsersObserver).onChanged(ResponseResult.success(emptyList()))
             viewModel.getUsers().removeObserver(apiUsersObserver)
         }
     }
@@ -73,7 +73,7 @@ class SingleNetworkCallViewModelTest {
             viewModel.getUsers().observeForever(apiUsersObserver)
             verify(apiHelper).getUsers()
             verify(apiUsersObserver).onChanged(
-                    Resource.error(
+                    ResponseResult.error(
                             RuntimeException(errorMessage).toString(),
                             null
                     )

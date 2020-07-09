@@ -6,11 +6,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.kingz.base.response.Status
 import com.kingz.coroutines.data.api.ApiHelperImpl
 import com.kingz.coroutines.data.api.RetrofitBuilder
 import com.kingz.coroutines.data.local.DatabaseBuilder
 import com.kingz.coroutines.data.local.DatabaseHelperImpl
-import com.kingz.coroutines.utils.Status
 import com.kingz.coroutines.utils.ViewModelFactory
 import com.zeke.example.coroutines.R
 import kotlinx.android.synthetic.main.activity_long_running_task.*

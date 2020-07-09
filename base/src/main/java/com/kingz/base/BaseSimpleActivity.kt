@@ -24,9 +24,7 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
 //        }
     }
 
-    open fun initViewModel(){
-
-    }
+    open fun initViewModel(){}
 
     abstract fun getContentView(): Int
 
