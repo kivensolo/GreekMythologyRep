@@ -7,6 +7,7 @@ include ':database'
 include ':module-Common'
 include ':module-Home'
 include ':module-Demo'
+include ':module-Login'
 
 def rootDir = settingsDir
 // 自定义lib库Project
@@ -28,4 +29,3 @@ gradle.beforeProject {
 gradle.afterProject {
     println "Settings end.   <<<<<<]"
 }
-include ':module-login'
