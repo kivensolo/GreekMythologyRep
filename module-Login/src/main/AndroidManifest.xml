@@ -4,6 +4,6 @@
 
     <application android:allowBackup="true">
 
-        <activity android:name=".SplashActivityKt" />
+        <activity android:name=".SplashActivity" />
     </application>
 </manifest>

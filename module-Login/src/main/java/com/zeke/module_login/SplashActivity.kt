@@ -19,10 +19,10 @@ import kotlinx.android.synthetic.main.splash_activity.*
 
 /**
  * author: King.Z <br>
- * date:  2016/9/29 19:03 <br>
+ * date:  2020/7/8 19:03 <br>
  * description: 应用启动欢迎 & 登录页面 <br>
  */
-class SplashActivityKt : BaseVMActivity<LoginRepository, LoginViewModel>(), View.OnClickListener {
+class SplashActivity : BaseVMActivity<LoginRepository, LoginViewModel>(), View.OnClickListener {
 
     private var inputType = InputType.NONE
 
@@ -38,9 +38,12 @@ class SplashActivityKt : BaseVMActivity<LoginRepository, LoginViewModel>(), View
     }
 
     override fun initData(savedInstanceState: Bundle?) {
-        viewModel.loginInfoData.observe(this, Observer { result ->
-            ZLog.d("LoginLiveData update:", "$result")
-        })
+        // Observe livedatas in UI-Thread
+        viewModel.launchMain(false) {
+            viewModel.loginInfoData.observe(this@SplashActivity, Observer { result ->
+                ZLog.d("LoginLiveData update:", "$result")
+            })
+        }
     }
 
     override fun initView(savedInstanceState: Bundle?) {
