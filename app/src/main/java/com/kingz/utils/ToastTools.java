@@ -17,11 +17,14 @@ import java.lang.reflect.Field;
  * Discription:  Toast工具类
  */
 public class ToastTools {
-    private static ToastTools mToastTools = null; //单例
+    private static ToastTools mToastTools = null;
     private Toast mToast;
 
-    public ToastTools() {
+    enum ToastType{
+        ATMOSPHERE, MGTV
     }
+
+    private ToastTools() {}
 
     //懒汉式，双重检验
     public static ToastTools getInstance() {
@@ -33,10 +36,6 @@ public class ToastTools {
             }
         }
         return mToastTools;
-    }
-
-    enum ToastType{
-        ATMOSPHERE, MGTV
     }
 
     public void showToast(Context context, String text) {
