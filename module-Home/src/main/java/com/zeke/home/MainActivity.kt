@@ -1,9 +1,12 @@
 package com.zeke.home
 
 import android.Manifest
+import android.app.Instrumentation
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
+import android.view.KeyEvent
 import android.view.View
 import androidx.core.app.ActivityCompat
 import com.kingz.database.entity.BaseEntity
@@ -14,6 +17,9 @@ import com.zeke.home.fragments.HomeLiveFragment
 import com.zeke.home.fragments.HomeRecomFragment
 import com.zeke.home.fragments.ISwitcher
 import com.zeke.home.model.HomeSongModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 /**
  * KT版本首页
@@ -58,9 +64,9 @@ class MainActivity : BaseActivity(), ISwitcher {
         homeVodFragment = HomeRecomFragment()
         homeLiveFragment = HomeLiveFragment()
         fragmentTS.add(R.id.content, homeVodFragment!!)
-                .show(homeVodFragment!!)
+            .show(homeVodFragment!!)
         fragmentTS.add(R.id.content, homeLiveFragment!!)
-                .hide(homeLiveFragment!!)
+            .hide(homeLiveFragment!!)
         fragmentTS.commit()
     }
 
@@ -69,7 +75,7 @@ class MainActivity : BaseActivity(), ISwitcher {
      */
     private fun initBottom() {
         val bottomController =
-                MainBottomController(findViewById<View>(R.id.main_bottom_layout))
+            MainBottomController(findViewById<View>(R.id.main_bottom_layout))
         bottomController.setListener(this)
 
     }
@@ -77,12 +83,18 @@ class MainActivity : BaseActivity(), ISwitcher {
     private fun permissionCheck() {
         val pm = packageManager
         val permissionResult = pm.checkPermission(
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                packageName)
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            packageName
+        )
         if (PackageManager.PERMISSION_GRANTED != permissionResult) {
-            ActivityCompat.requestPermissions(this,
-                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                    0x1001)
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ),
+                0x1001
+            )
         }
     }
 
@@ -117,5 +129,19 @@ class MainActivity : BaseActivity(), ISwitcher {
         startActivity(intent)
     }
 
+    /**
+     * 模拟Home键发送
+     */
+    private fun MockHomKey() {
+        fun sendKeyEvent(keyCode: Int) {
+            try {
+                val inst = Instrumentation()
+                inst.sendKeyDownUpSync(keyCode)
+            } catch (e: Exception) {
+                Log.e("","Exception when sendKeyEvent:$e")
+            }
+        }
+        GlobalScope.launch(Dispatchers.IO) { sendKeyEvent(KeyEvent.KEYCODE_HOME) }
+    }
 }
 
