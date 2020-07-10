@@ -9,11 +9,11 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.kingz.customdemo.R;
-import com.kingz.graphics.GlideApp;
 import com.zeke.kangaroo.utils.BitMapUtils;
 import com.zeke.kangaroo.utils.ScreenShotUtils;
 import com.zeke.kangaroo.utils.UIUtils;
@@ -156,7 +156,7 @@ public class BitmapPhotosActivity extends PhotosActivity {
                 .diskCacheStrategy(DiskCacheStrategy.DATA)
                 .error(R.drawable.alert_dialog_icon); //设置“加载失败”状态时显示的图片
 
-        GlideApp.with(this)
+        Glide.with(this)
                 .load(url)
                 .apply(requestOptions)
                 .transition(DrawableTransitionOptions.withCrossFade(600))
