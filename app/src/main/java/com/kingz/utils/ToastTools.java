@@ -1,16 +1,15 @@
 package com.kingz.utils;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.view.View;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.kingz.customdemo.R;
+
+import java.lang.reflect.Field;
 
 /**
  * Created by KingZ.
@@ -36,6 +35,10 @@ public class ToastTools {
         return mToastTools;
     }
 
+    enum ToastType{
+        ATMOSPHERE, MGTV
+    }
+
     public void showToast(Context context, String text) {
         if (mToast == null) {
             mToast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
@@ -46,45 +49,52 @@ public class ToastTools {
         mToast.show();
     }
 
-    public void showMgtvWaringToast(Context context, String info) {
+     public void showCustomToastByType(Context context, ToastType type) {
+        int res = R.layout.dialog_tip_learn;
+        switch (type) {
+            case ATMOSPHERE:
+                res = R.layout.dialog_tip_learn;
+                break;
+            case MGTV:
+                res = R.layout.custom_toast_layout;
+                break;
+            default:
+                break;
+        }
+        showTipToast(context, res);
+    }
+
+    private void showTipToast(Context context, int res) {
         if (mToast == null) {
             mToast = new Toast(context);
         }
-//        View view = View.inflate(this,R.layout.custom_toast_layout,null);
-        //设置View
-        LinearLayout root = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.custom_toast_layout, null);
-        root.setBackgroundResource(R.drawable.custom_toast_bg);
-
-        ImageView mIcon = (ImageView) root.findViewById(R.id.toast_img);
-        LinearLayout.LayoutParams mIconParams = (LinearLayout.LayoutParams) mIcon.getLayoutParams();
-        mIconParams.width = 32;
-        mIconParams.height = 32;
-//		mIconParams.bottomMargin = 5;
-//		mIconParams.topMargin = 15;
-        mIconParams.leftMargin = 10;
-        mIcon.setLayoutParams(mIconParams);
-
-        //设置文字
-        TextView txtContent = (TextView) root.findViewById(R.id.toast_info);
-        txtContent.setTextSize(TypedValue.COMPLEX_UNIT_PX, 24);
-        txtContent.setMaxEms(15);
-        txtContent.setShadowLayer(3, 1, 1, Color.BLACK);
-        txtContent.setText(info);
-        txtContent.setSingleLine();
-        txtContent.setPadding(10, 5, 5, 10);
-        LinearLayout.LayoutParams mtxtParams = (LinearLayout.LayoutParams) txtContent.getLayoutParams();
-        mtxtParams.rightMargin = 15;
-
-        //设置需要显示的View
+        //设置自定义布局
+        View root = LayoutInflater.from(context).inflate(res, null);
         mToast.setView(root);
         mToast.setGravity(Gravity.CENTER_VERTICAL, 0, 50);
-        mToast.setDuration(Toast.LENGTH_SHORT);
+        //mToast.setDuration(Toast.LENGTH_SHORT);
+
+        // 自定义Toast动效
+        try {
+            Field mTNField = mToast.getClass().getDeclaredField("mTN");
+            mTNField.setAccessible(true);
+            Object mTNObject = mTNField.get(mToast);
+            Field paramsField = mTNObject.getClass().getDeclaredField("mParams");
+            /*WindowManager.LayoutParams mParams的权限是private*/
+            paramsField.setAccessible(true);
+            WindowManager.LayoutParams layoutParams = (WindowManager.LayoutParams) paramsField.get(mTNObject);
+            if(layoutParams != null){
+                layoutParams.windowAnimations = R.style.CustomToastAnimationStyle;
+            }
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
         mToast.show();
     }
     /**
      * 清空Toast
      */
-    public void cancelToast() {
+    public void cancel() {
         if (mToast != null) {
             mToast.cancel();
         }

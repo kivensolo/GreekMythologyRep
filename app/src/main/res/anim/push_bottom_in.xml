@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 上下滑入式 -->
+<set xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:ignore="MissingDefaultResource">
+
+    <translate
+        android:duration="600"
+        android:fromYDelta="100%p"
+        android:toYDelta="0"
+        android:interpolator="@android:interpolator/accelerate_decelerate"/>
+
+</set>
