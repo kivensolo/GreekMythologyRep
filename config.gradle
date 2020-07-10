@@ -54,8 +54,7 @@ ext {
             room_version          : '2.2.1',
             stetho                : '1.5.0',
 
-            leakcanary            : '2.0-alpha-2',
-            leaksentry            : '2.0-alpha-2',
+            leakcanary            : '2.4',
             permissions         : '2.0.3',
             autosize            : '1.1.2',
     ]
@@ -143,9 +142,8 @@ ext {
             "autosize"               : "me.jessyan:autosize:$lib_versions.autosize",
             "autoLayout"             : "com.zhy:autolayout:1.4.5",
 
-            //https://github.com/square/leakcanary/wiki/Migrating-to-LeakCanary-2.0
+            //https://github.com/square/leakcanary  https://square.github.io/leakcanary
             "leakcanary"             : "com.squareup.leakcanary:leakcanary-android:$lib_versions.leakcanary",
-            "leaksentry"             : "com.squareup.leakcanary:leaksentry:$lib_versions.leaksentry",
 
             //https://github.com/yanzhenjie/AndPermission
             "permissions"            : "com.yanzhenjie:permission:$lib_versions.permissions",

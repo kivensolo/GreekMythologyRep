@@ -84,8 +84,7 @@ dependencies {
     api root_dependencies["autosize"]
     api root_dependencies["autoLayout"]
 
-    api root_dependencies["leakcanary"]
-    api root_dependencies["leaksentry"]
+    debugImplementation root_dependencies["leakcanary"]
 
     api root_dependencies["permissions"]
 
