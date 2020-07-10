@@ -161,9 +161,17 @@ android {
     }
 }
 
+
+kapt {
+    arguments {
+        arg("AROUTER_MODULE_NAME", project.getName())
+    }
+}
+
 dependencies {
     implementation fileTree(include: ['*.jar','*.aar'], dir: 'libs')
     kapt root_dependencies["arouter_compiler"]
+
     implementation project(':module-Common')
     if (isHomeModule.toBoolean()) { implementation project(':module-Home') }
     if (isLoginModule.toBoolean()) { implementation project(':module-login') }
