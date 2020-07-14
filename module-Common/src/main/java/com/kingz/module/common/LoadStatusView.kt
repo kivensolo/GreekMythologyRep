@@ -27,6 +27,7 @@ class LoadStatusView : FrameLayout {
     private var errorIcon: Drawable? = null
     private var noDataIcon: Drawable? = null
 
+    //TODO 改为JVMStatic
     constructor(context: Context) : super(context) {
         initView(context)
     }
@@ -44,60 +45,62 @@ class LoadStatusView : FrameLayout {
 //        progress.setIndeterminateDrawable()
 
         // 错误图标初始化
-        errorIcon = resources.getDrawable(R.drawable.ic_load_error)
+        errorIcon = resources.getDrawable(R.drawable.ic_load_error, null)
         errorIcon?.setBounds(0, 0,
                 errorIcon!!.minimumWidth,
                 errorIcon!!.minimumHeight)
         error = TextView(context)
-        error!!.setTextAppearance(context, R.style.txt_normal_dark)
-        error!!.gravity = Gravity.CENTER
-        error!!.compoundDrawablePadding = AutoUtils.getPercentHeightSize(96)
-        error!!.setTextSize(TypedValue.COMPLEX_UNIT_PX, AutoUtils.getPercentHeightSize(44).toFloat())
-        error!!.setLineSpacing(-1f, 1.5f)
-        error!!.setCompoundDrawables(null, errorIcon, null, null)
+        error?.setTextAppearance(context, R.style.txt_normal_dark)
+        error?.gravity = Gravity.CENTER
+        error?.compoundDrawablePadding = AutoUtils.getPercentHeightSize(96)
+        error?.setTextSize(TypedValue.COMPLEX_UNIT_PX, AutoUtils.getPercentHeightSize(44).toFloat())
+        error?.setLineSpacing(-1f, 1.5f)
+        error?.setCompoundDrawables(null, errorIcon, null, null)
 
-        noDataIcon = resources.getDrawable(R.drawable.ic_no_data)
+        noDataIcon = resources.getDrawable(R.drawable.ic_no_data, null)
         noDataIcon?.setBounds(0, 0,
                 noDataIcon!!.minimumWidth,
                 noDataIcon!!.minimumHeight)
 
-        val progressParams = FrameLayout.LayoutParams(
+        val progressParams = LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT)
-        progressParams.gravity = Gravity.CENTER
+                ViewGroup.LayoutParams.WRAP_CONTENT).apply {
+            gravity = Gravity.CENTER
+        }
         addView(progress, progressParams)
 
-        val errorParams = FrameLayout.LayoutParams(
+        val errorParams = LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT)
-        errorParams.gravity = Gravity.CENTER
+                ViewGroup.LayoutParams.WRAP_CONTENT).apply{
+            gravity = Gravity.CENTER
+        }
         addView(error, errorParams)
     }
 
     fun showProgress() {
         this.visibility = View.VISIBLE
-        progress!!.visibility = View.VISIBLE
-        error!!.visibility = View.GONE
+        progress?.visibility = View.VISIBLE
+        error?.visibility = View.GONE
     }
 
     fun showError(){
         showError(null)
     }
 
-    fun showError(listener: View.OnClickListener?) {
+    fun showError(listener: OnClickListener?) {
         this.visibility = View.VISIBLE
         val errorString = resources.getString(R.string.networl_error)
         val spannableString = SpannableString(errorString)
         //实例化ForegroundColorSpan对象并设置前景色
-        val errorSpan = ForegroundColorSpan(Color.parseColor("#5f5f5f"))
+        val errorSpan = ForegroundColorSpan(resources.getColor(R.color.dialog_text))
         spannableString.setSpan(errorSpan, 0, 7, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)//设置字体颜色
         //实例化ForegroundColorSpan对象并设置前景色
         val error2Span = ForegroundColorSpan(Color.parseColor("#989898"))
         spannableString.setSpan(error2Span, 8, errorString.length, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)//设置字体颜色
-        error!!.text = spannableString
-        error!!.setOnClickListener(listener)
-        error!!.visibility = View.VISIBLE
-        progress!!.visibility = View.GONE
+        error?.text = spannableString
+        error?.setOnClickListener(listener)
+        error?.visibility = View.VISIBLE
+        progress?.visibility = View.GONE
     }
 
 
@@ -106,13 +109,13 @@ class LoadStatusView : FrameLayout {
     }
 
     fun showEmpty(@StringRes string: Int,
-                  onClickListener: View.OnClickListener?) {
+                  onClickListener: OnClickListener?) {
         this.visibility = View.VISIBLE
         val str = resources.getString(string)
         if (str.contains("\n")) {
             val spannableString = SpannableString(str)
             //实例化ForegroundColorSpan对象并设置前景色
-            val errorSpan = ForegroundColorSpan(Color.parseColor("#5f5f5f"))
+            val errorSpan = ForegroundColorSpan(resources.getColor(R.color.dialog_text))
             spannableString.setSpan(errorSpan, 0,
                     str.indexOf("\n"),
                     Spanned.SPAN_INCLUSIVE_EXCLUSIVE)//设置字体颜色
@@ -121,19 +124,19 @@ class LoadStatusView : FrameLayout {
             spannableString.setSpan(error2Span, str.indexOf("\n"),
                     str.length,
                     Spanned.SPAN_INCLUSIVE_EXCLUSIVE)//设置字体颜色
-            error!!.text = spannableString
+            error?.text = spannableString
         } else {
-            error!!.text = str
+            error?.text = str
         }
-        error!!.setOnClickListener(onClickListener)
-        error!!.visibility = View.VISIBLE
-        progress!!.visibility = View.GONE
+        error?.setOnClickListener(onClickListener)
+        error?.visibility = View.VISIBLE
+        progress?.visibility = View.GONE
     }
 
     fun dismiss() {
         this.visibility = View.GONE
-        progress!!.visibility = View.GONE
-        error!!.visibility = View.GONE
+        progress?.visibility = View.GONE
+        error?.visibility = View.GONE
     }
 
 }

@@ -5,7 +5,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 
-abstract class BaseVMFragment<V : BaseRepository, T : BaseViewModel<V>> : BaseSimpleFragment() {
+abstract class BaseVMFragment<V : BaseRepository, T : BaseViewModel<V>>
+    : BaseSimpleFragment() {
+
     protected val viewModel: T by lazy {
         createViewModel()
     }
