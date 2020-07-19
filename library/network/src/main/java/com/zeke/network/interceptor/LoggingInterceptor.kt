@@ -22,7 +22,8 @@ class LoggingInterceptor : Interceptor {
             ZLog.d("request.body() == null")
         }
         val t1 = System.nanoTime()
-        ZLog.d("LoggingInterceptor", String.format("Sending request %s on %s%n%s",
+        //TODO 打印请求参数
+        ZLog.d("LoggingInterceptor", String.format("Sending request (url)%s on [connect]%s%n[headers:]%s",
                 request.url(), chain.connection(), request.headers()))
         val response = chain.proceed(request)
 
@@ -30,8 +31,7 @@ class LoggingInterceptor : Interceptor {
         // 原因在于这个方法会消耗返回结果的数据(buffer),只能使用一次
         val t2 = System.nanoTime()
         ZLog.d("LoggingInterceptor",
-                String.format("Received response for %s in %.1fms%n%s",
-                response.request().url(),
+                String.format("Response in --- %.1fms%n%s",
                 (t2 - t1) / 1e6,  // 等同于除1后面6个0
                 response.headers()))
 
@@ -40,8 +40,13 @@ class LoggingInterceptor : Interceptor {
         val source = responseBody!!.source()
         source.request(Long.MAX_VALUE) // Buffer the entire body.
         val buffer = source.buffer
-        ZLog.json(buffer.clone().readString(Charset.forName("UTF-8")))
+        val bodyString = buffer.clone().readString(Charset.forName("UTF-8"))
 
+        if(response.headers()["Content-Type"]?.contains("json") == true){
+            ZLog.json(bodyString)
+        }else{
+            ZLog.d(bodyString)
+        }
         return response
     }
 }
