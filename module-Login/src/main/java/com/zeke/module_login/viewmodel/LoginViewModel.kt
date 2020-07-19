@@ -15,8 +15,8 @@ class LoginViewModel : BaseViewModel<LoginRepository>() {
 
     // 用户登录数据 FIXME 为什么不接受 ResponseResult<UserInfoBean> 对象
     //    val loginInfoData: MutableLiveData<ResponseResult<UserInfoBean>> by lazy {
-    val loginInfoData: MutableLiveData<Response<UserInfoBean>> by lazy {
-        MutableLiveData<Response<UserInfoBean>>()
+    val loginInfoData: MutableLiveData<UserInfoBean> by lazy {
+        MutableLiveData<UserInfoBean>()
     }
     // 用户注册数据
     val registerData: MutableLiveData<Response<UserInfoBean>> by lazy {

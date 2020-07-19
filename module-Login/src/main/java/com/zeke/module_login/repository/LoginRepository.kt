@@ -13,7 +13,7 @@ class LoginRepository : BaseRepository() {
     /**
      * 进行用户登录操作
      */
-    suspend fun userLogin(name: String = "", password: String = ""): Response<UserInfoBean> {
+    suspend fun userLogin(name: String = "", password: String = ""): UserInfoBean {
         val service = ApiServiceUtil.getApiService<LoginApiService>()
         return withContext(Dispatchers.IO) {
             service.userLogin(name, password)

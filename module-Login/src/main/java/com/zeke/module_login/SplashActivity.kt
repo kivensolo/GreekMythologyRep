@@ -46,7 +46,7 @@ class SplashActivity : BaseVMActivity<LoginRepository, LoginViewModel>(), View.O
         // Observe livedatas in UI-Thread
         viewModel.loginInfoData.observe(this@SplashActivity, Observer {
             ZLog.d("loginInfoData onChanged:", "$it")
-            val loginData = it?.body()
+            val loginData = it
             if(loginData != null){
                 if (loginData.errorCode < 0) {
                     ToastUtils.show(this, "登陆失败:${loginData.errorMsg}")

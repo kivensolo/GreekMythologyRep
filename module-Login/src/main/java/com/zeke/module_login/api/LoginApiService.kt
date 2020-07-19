@@ -9,11 +9,16 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface LoginApiService : BaseApiService {
+//    @FormUrlEncoded
+//    @POST("/user/login")
+//    suspend fun userLogin(@Field("username") username: String
+//                          ,@Field("password") password: String)
+//            : Response<UserInfoBean>
     @FormUrlEncoded
     @POST("/user/login")
     suspend fun userLogin(@Field("username") username: String
                           ,@Field("password") password: String)
-            : Response<UserInfoBean>
+            : UserInfoBean
 
     /**
      * java.lang.IllegalArgumentException:
