@@ -1,6 +1,11 @@
 package com.kingz.base
 
 import android.os.Bundle
+import android.view.Gravity
+import android.view.View
+import android.view.ViewGroup
+import android.widget.FrameLayout
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -8,6 +13,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 abstract class BaseSimpleActivity : AppCompatActivity() {
+
+    private var progress: View? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,8 +37,24 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
 
     abstract fun initData(savedInstanceState: Bundle?)
 
-    abstract fun initView(savedInstanceState: Bundle?)
+    open fun initView(savedInstanceState: Bundle?){
+        progress = ProgressBar(baseContext)
+        val progressParams = FrameLayout.LayoutParams(
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        progressParams.gravity = Gravity.CENTER
+        progress?.visibility = View.GONE
+        addContentView(progress, progressParams)
+    }
 
+    fun showLoading() {
+        progress?.visibility = View.VISIBLE
+    }
+
+    fun dismissLoading() {
+        progress?.visibility = View.GONE
+    }
 
     /**
      * 必须在组合挂起函数中使用
