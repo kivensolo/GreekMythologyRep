@@ -3,7 +3,7 @@ package com.kingz.base
 import android.util.Log
 import androidx.lifecycle.Observer
 
-abstract class BaseVMActivity<V : BaseRepository, VM : BaseViewModel<V>> : BaseSimpleActivity() {
+abstract class BaseVMActivity<BR : BaseRepository, VM : BaseViewModel<BR>> : BaseSimpleActivity() {
 //    protected val viewModel: VM by lazy {
 //        createViewModel()
 //    }
@@ -22,18 +22,20 @@ abstract class BaseVMActivity<V : BaseRepository, VM : BaseViewModel<V>> : BaseS
             status?.run {
                 when (this) {
                     CoroutineState.START -> {//协程开始
-                        Log.d("coroutine", "开始")
+                        Log.d("Coroutine-status:", "START")
                     }
                     CoroutineState.REFRESH -> {//协程开始&&进度菊花圈
-                        Log.d("coroutine", "刷新")
+                        Log.d("Coroutine-status:", "REFRESH")
                         //TODO showLoading
+                        showLoading()
                     }
                     CoroutineState.FINISH -> {//协程结束
-                        Log.d("coroutine", "结束")
+                        Log.d("Coroutine-status:", "FINISHED")
                         //TODO dismissLoading
+                        dismissLoading()
                     }
                     CoroutineState.ERROR -> {//协程异常
-                        Log.e("coroutine", "异常")
+                        Log.e("Coroutine-status:", "ERROR")
                         //TODO dismissLoading
                     }
                 }

@@ -3,6 +3,7 @@ package com.kingz.base
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.zeke.kangaroo.utils.ZLog
 import kotlinx.coroutines.*
 
 /**
@@ -76,15 +77,21 @@ abstract class BaseViewModel<T : BaseRepository> : ViewModel() {
     private suspend fun exeBlock(refresh: Boolean, block: BlockCode) {
         coroutineScope {
             try {
+                // FIXME java.lang.IllegalStateException: Cannot invoke setValue on a background thread
                 if (refresh) {
-                    statusLiveData.value = CoroutineState.REFRESH
+//                    statusLiveData.value = CoroutineState.REFRESH
+                    statusLiveData.postValue(CoroutineState.REFRESH)
+
                 } else {
-                    statusLiveData.value = CoroutineState.START
+//                    statusLiveData.value = CoroutineState.START
+                    statusLiveData.postValue(CoroutineState.START)
                 }
                 block()
-                statusLiveData.value = CoroutineState.FINISH
+//                statusLiveData.value = CoroutineState.FINISH
+                statusLiveData.postValue(CoroutineState.FINISH)
             } catch (e: Exception) {
-                statusLiveData.value = CoroutineState.ERROR
+                ZLog.e("viewmodel exeBlock exeption: ${e.printStackTrace().toString()}")
+                statusLiveData.postValue(CoroutineState.ERROR)
                 //处理协程异常
             }
         }
