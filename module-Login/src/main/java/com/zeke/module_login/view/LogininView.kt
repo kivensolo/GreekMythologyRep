@@ -3,18 +3,14 @@ package com.zeke.module_login.view
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.widget.EditText
 import android.widget.LinearLayout
-
 import com.zeke.module_login.R
+import kotlinx.android.synthetic.main.form_view.view.*
 
 /**
  * 启动登录页面的用户账号登录视图
  */
 class LogininView : LinearLayout {
-
-    private var edit1: EditText? = null
-    private var edit2: EditText? = null
 
     constructor(context: Context) : super(context) {
         loadView()
@@ -32,16 +28,13 @@ class LogininView : LinearLayout {
     }
 
     private fun loadView() {
-        orientation = LinearLayout.VERTICAL
-        LayoutInflater.from(context)
-                .inflate(R.layout.form_view, this)
-        edit1 = findViewById<EditText>(R.id.login_name)
-        edit2 = findViewById<EditText>(R.id.login_pwd)
+        orientation = VERTICAL
+        LayoutInflater.from(context).inflate(R.layout.form_view, this)
     }
 
     override fun setFocusable(focusable: Boolean) {
         super.setFocusable(focusable)
-        edit1!!.isFocusable = focusable
-        edit2!!.isFocusable = focusable
+        login_name?.isFocusable = focusable
+        login_pwd?.isFocusable = focusable
     }
 }

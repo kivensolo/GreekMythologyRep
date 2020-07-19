@@ -1,7 +1,8 @@
 package com.zeke.module_login.api
 
 import com.kingz.base.BaseApiService
-import com.kingz.base.response.ResponseResult
+import com.zeke.module_login.entity.UserInfoBean
+import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -12,10 +13,18 @@ interface LoginApiService : BaseApiService {
     @POST("/user/login")
     suspend fun userLogin(@Field("username") username: String
                           ,@Field("password") password: String)
-            : ResponseResult<String>
+            : Response<UserInfoBean>
 
+    /**
+     * java.lang.IllegalArgumentException:
+     * @Field parameters can only be used with form encoding. (parameter #1)
+     */
+    @FormUrlEncoded
     @POST("user/register")
-    suspend fun userRegister(): String
+    suspend fun userRegister(@Field("username") username:  String,
+                             @Field("password") password: String,
+                             @Field("repassword") repassword: String): Response<UserInfoBean>
+//                             @Field("repassword") repassword: String): ResponseResult<RegisterBean>
 
     /**
      * 访问了 logout 后，服务端会让客户端清除 Cookie（即cookie max-Age=0），
