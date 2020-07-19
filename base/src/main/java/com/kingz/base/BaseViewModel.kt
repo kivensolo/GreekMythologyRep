@@ -76,18 +76,15 @@ abstract class BaseViewModel<T : BaseRepository> : ViewModel() {
 
     private suspend fun exeBlock(refresh: Boolean, block: BlockCode) {
         coroutineScope {
-            try {
-                // FIXME java.lang.IllegalStateException: Cannot invoke setValue on a background thread
-                if (refresh) {
-//                    statusLiveData.value = CoroutineState.REFRESH
-                    statusLiveData.postValue(CoroutineState.REFRESH)
 
-                } else {
-//                    statusLiveData.value = CoroutineState.START
-                    statusLiveData.postValue(CoroutineState.START)
-                }
+            // FIXME java.lang.IllegalStateException: Cannot invoke setValue on a background thread
+            if (refresh) {
+                statusLiveData.postValue(CoroutineState.REFRESH)
+            } else {
+                statusLiveData.postValue(CoroutineState.START)
+            }
+            try {
                 block()
-//                statusLiveData.value = CoroutineState.FINISH
                 statusLiveData.postValue(CoroutineState.FINISH)
             } catch (e: Exception) {
                 ZLog.e("viewmodel exeBlock exeption: ${e.printStackTrace().toString()}")
