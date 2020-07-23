@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom|start"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:shadowColor="@android:color/black"
+        android:shadowRadius="1"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:text="标题文本"
+        android:textColor="@android:color/white"
+        android:textSize="64px"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20px"
+        android:shadowColor="@android:color/black"
+        android:shadowRadius="1"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:text="描述文本描述文本描述文本描述文本描述文本描述文本描述文本描述文本描述文本"
+        android:textColor="@android:color/white"
+        android:textSize="32px"
+        android:textStyle="normal" />
+</LinearLayout>
