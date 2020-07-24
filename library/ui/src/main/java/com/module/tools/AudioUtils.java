@@ -9,8 +9,7 @@ import android.media.MediaRecorder;
  * @author zeke.wang
  * @date 2020/6/19
  * @maintainer zeke.wang
- * @copyright 2020 www.xgimi.com Inc. All rights reserved.
- * @desc:
+ * @desc:  音频工具类
  */
 public class AudioUtils {
 

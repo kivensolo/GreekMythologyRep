@@ -23,7 +23,7 @@ import com.zhy.autolayout.utils.AutoUtils
 class LoadStatusView : FrameLayout {
 
     private var progress: View? = null
-    private var error: TextView? = null
+    private var statusText: TextView? = null
     private var errorIcon: Drawable? = null
     private var noDataIcon: Drawable? = null
 
@@ -49,13 +49,13 @@ class LoadStatusView : FrameLayout {
         errorIcon?.setBounds(0, 0,
                 errorIcon!!.minimumWidth,
                 errorIcon!!.minimumHeight)
-        error = TextView(context)
-        error?.setTextAppearance(context, R.style.txt_normal_dark)
-        error?.gravity = Gravity.CENTER
-        error?.compoundDrawablePadding = AutoUtils.getPercentHeightSize(96)
-        error?.setTextSize(TypedValue.COMPLEX_UNIT_PX, AutoUtils.getPercentHeightSize(44).toFloat())
-        error?.setLineSpacing(-1f, 1.5f)
-        error?.setCompoundDrawables(null, errorIcon, null, null)
+        statusText = TextView(context)
+        statusText?.setTextAppearance(context, R.style.txt_normal_dark)
+        statusText?.gravity = Gravity.CENTER
+        statusText?.compoundDrawablePadding = AutoUtils.getPercentHeightSize(96)
+        statusText?.setTextSize(TypedValue.COMPLEX_UNIT_PX, AutoUtils.getPercentHeightSize(44).toFloat())
+        statusText?.setLineSpacing(-1f, 1.5f)
+        statusText?.setCompoundDrawables(null, errorIcon, null, null)
 
         noDataIcon = resources.getDrawable(R.drawable.ic_no_data, null)
         noDataIcon?.setBounds(0, 0,
@@ -74,13 +74,13 @@ class LoadStatusView : FrameLayout {
                 ViewGroup.LayoutParams.WRAP_CONTENT).apply{
             gravity = Gravity.CENTER
         }
-        addView(error, errorParams)
+        addView(statusText, errorParams)
     }
 
     fun showProgress() {
         this.visibility = View.VISIBLE
         progress?.visibility = View.VISIBLE
-        error?.visibility = View.GONE
+        statusText?.visibility = View.GONE
     }
 
     fun showError(){
@@ -97,18 +97,18 @@ class LoadStatusView : FrameLayout {
         //实例化ForegroundColorSpan对象并设置前景色
         val error2Span = ForegroundColorSpan(Color.parseColor("#989898"))
         spannableString.setSpan(error2Span, 8, errorString.length, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)//设置字体颜色
-        error?.text = spannableString
-        error?.setOnClickListener(listener)
-        error?.visibility = View.VISIBLE
+        statusText?.text = spannableString
+        statusText?.setOnClickListener(listener)
+        statusText?.visibility = View.VISIBLE
         progress?.visibility = View.GONE
     }
 
 
     fun showEmpty() {
-        showEmpty(R.string.tips_data_empty,null)
+        show(R.string.tips_data_empty,null)
     }
 
-    fun showEmpty(@StringRes string: Int,
+    fun show(@StringRes string: Int,
                   onClickListener: OnClickListener?) {
         this.visibility = View.VISIBLE
         val str = resources.getString(string)
@@ -124,19 +124,19 @@ class LoadStatusView : FrameLayout {
             spannableString.setSpan(error2Span, str.indexOf("\n"),
                     str.length,
                     Spanned.SPAN_INCLUSIVE_EXCLUSIVE)//设置字体颜色
-            error?.text = spannableString
+            statusText?.text = spannableString
         } else {
-            error?.text = str
+            statusText?.text = str
         }
-        error?.setOnClickListener(onClickListener)
-        error?.visibility = View.VISIBLE
+        statusText?.setOnClickListener(onClickListener)
+        statusText?.visibility = View.VISIBLE
         progress?.visibility = View.GONE
     }
 
     fun dismiss() {
         this.visibility = View.GONE
         progress?.visibility = View.GONE
-        error?.visibility = View.GONE
+        statusText?.visibility = View.GONE
     }
 
 }

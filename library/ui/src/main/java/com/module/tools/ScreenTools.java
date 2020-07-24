@@ -81,9 +81,19 @@ public class ScreenTools {
     }
 
     /**
+     * 获取去除状态栏之后的高度
+     *
+     * @param context 上下文
+     * @return 内容范围高度
+     */
+    public static int getScreenHeightWithoutStatus(Context context){
+        return getScreenHeight(context) - getStatusHeight(context);
+    }
+
+    /**
      * 获得状态栏的高度
      *
-     * @param context
+     * @param context 上下文
      * @return
      */
     public static int getStatusHeight(Context context) {
