@@ -6,14 +6,22 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.widget.ImageView;
+
 import androidx.annotation.NonNull;
+
+import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.google.gson.Gson;
 import com.google.gson.internal.$Gson$Types;
 import com.zeke.kangaroo.utils.ZLog;
 import com.zeke.network.interceptor.LoggingInterceptor;
-import okhttp3.*;
 
-import java.io.*;
+import org.jetbrains.annotations.NotNull;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.net.FileNameMap;
@@ -21,6 +29,19 @@ import java.net.URLConnection;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+
+import okhttp3.Cache;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.Headers;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 /**
  * author: King.Z <br>
@@ -170,13 +191,21 @@ public class OkHttpClientManager {
     /* -------------------------------------对外公布的方法  End -------------------------------------*/
 
     private void _initWithTimeOut(long connectTimeOut, long readTimeOut, long writeTimeOut) {
-        OkHttpClient.Builder builder = new OkHttpClient.Builder()
-                .retryOnConnectionFailure(true)
-                .connectTimeout(connectTimeOut, TimeUnit.MILLISECONDS)
-                .readTimeout(readTimeOut, TimeUnit.MILLISECONDS)
-                .writeTimeout(writeTimeOut, TimeUnit.MILLISECONDS)
-                .addInterceptor(new LoggingInterceptor());
+        OkHttpClient.Builder builder = getOkHttpClientBuilder(connectTimeOut, readTimeOut, writeTimeOut);
         mOkHttpClient = builder.build();
+    }
+
+    @NotNull
+    private OkHttpClient.Builder getOkHttpClientBuilder(long connectTimeOut,
+                                                        long readTimeOut,
+                                                        long writeTimeOut) {
+        return new OkHttpClient.Builder()
+                    .retryOnConnectionFailure(true)
+                    .connectTimeout(connectTimeOut, TimeUnit.MILLISECONDS)
+                    .readTimeout(readTimeOut, TimeUnit.MILLISECONDS)
+                    .writeTimeout(writeTimeOut, TimeUnit.MILLISECONDS)
+                    .addInterceptor(new LoggingInterceptor())
+                    .addNetworkInterceptor(new StethoInterceptor());
     }
 
     /**

@@ -4,6 +4,7 @@ import com.facebook.stetho.Stetho
 import com.kingz.base.BaseApplication
 import com.kingz.database.dao.AlbumDao
 import com.kingz.database.dao.SongDao
+import com.kingz.database.dao.UserDao
 
 /**
  * @author zeke.wang
@@ -41,6 +42,10 @@ open class DatabaseApplication : BaseApplication() {
 
     fun getAlbumDao(): AlbumDao {
         return DatabaseBuilder.getInstance(this)!!.getAlbumDao()
+    }
+
+    fun getUserDao(): UserDao {
+        return DatabaseBuilder.getInstance(this)!!.getUserDao()
     }
 
     //------------ DAO 获取函数 -----------------//

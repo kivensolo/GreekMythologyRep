@@ -18,6 +18,7 @@ ext {
             "okHttp3"                : "com.squareup.okhttp3:okhttp:${lib_versions.okhttp}",
             "okio"                   : "com.squareup.okio:okio:${lib_versions.okio}",
             "ok_log"                 : "com.squareup.okhttp3:logging-interceptor:${lib_versions.okhttp}",
+            "stetho-okhttp3"         : "com.facebook.stetho:stetho-okhttp3:1.5.0",
 
             "rxjava"                 : "io.reactivex.rxjava2:rxjava:2.2.2",
             "rxandroid"              : "io.reactivex.rxjava2:rxandroid:2.1.0",
@@ -27,7 +28,6 @@ ext {
             "retrofit2-rxjava"       : "com.squareup.retrofit2:adapter-rxjava2:2.2.0",
 
             "kangaroo"               : "com.github.zeke:kangaroo:$kangaroo_v",
-
     ]
 
 }

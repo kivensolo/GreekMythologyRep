@@ -13,9 +13,12 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.kingz.base.BaseVMActivity
 import com.kingz.base.factory.ViewModelFactory
+import com.kingz.database.DatabaseApplication
+import com.kingz.database.entity.UserEntity
 import com.zeke.kangaroo.utils.ToastUtils
 import com.zeke.kangaroo.utils.ZLog
 import com.zeke.module_login.entity.Data
+import com.zeke.module_login.entity.UserInfoBean
 import com.zeke.module_login.repository.LoginRepository
 import com.zeke.module_login.viewmodel.LoginViewModel
 import kotlinx.android.synthetic.main.form_view.*
@@ -47,12 +50,13 @@ class SplashActivity : BaseVMActivity<LoginRepository, LoginViewModel>(), View.O
         viewModel.loginInfoData.observe(this@SplashActivity, Observer {
             ZLog.d("loginInfoData onChanged:", "$it")
             val loginData = it
-            if(loginData != null){
+            if (loginData != null) {
                 if (loginData.errorCode < 0) {
                     ToastUtils.show(this, "登陆失败:${loginData.errorMsg}")
                 } else {
                     ToastUtils.show(this, "欢迎登陆!${(loginData.data as Data).nickname}")
                     // TODO 进行数据库数据存储 和跳转
+                    saveUserInfo(loginData)
                     //openMainPage()
                 }
             }
@@ -72,7 +76,35 @@ class SplashActivity : BaseVMActivity<LoginRepository, LoginViewModel>(), View.O
         })
     }
 
-    override fun initData(savedInstanceState: Bundle?) {}
+    /**
+     * Save user info to local db.
+     */
+    private fun saveUserInfo(loginData: UserInfoBean) {
+        val userEntity = UserEntity().apply {
+            val userInfo = loginData.data
+            if (userInfo != null) {
+                admin = userInfo.admin
+                nickname = userInfo.nickname
+                username = userInfo.username
+                publicName = userInfo.publicName
+                token = userInfo.token
+                id = userInfo.id
+            }
+        }
+        DatabaseApplication.getInstance().getUserDao().insert(userEntity)
+    }
+
+    override fun initData(savedInstanceState: Bundle?) {
+        checkUserCacheInfo()
+    }
+
+    private fun checkUserCacheInfo() {
+        val userInfo = DatabaseApplication.getInstance().getUserDao().getUserInfo()
+        if (userInfo != null) {
+            ToastUtils.show(this, "存在本地缓存用户信息")
+            ZLog.d("initData check userinfo:", "$userInfo")
+        }
+    }
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)

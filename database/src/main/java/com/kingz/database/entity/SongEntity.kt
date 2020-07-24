@@ -7,10 +7,11 @@ import androidx.room.PrimaryKey
 //@Entity(tableName = "songs")
 @Entity
 class SongEntity(
-        @PrimaryKey
+    @PrimaryKey
 
-        @ColumnInfo(name = "singer")
-        var singer: String = "",
+    @ColumnInfo(name = "singer")
+    var singer: String = "",
 
-        @ColumnInfo(name = "release_year")
-        var releaseYear: Int = 0): BaseEntity()
+    @ColumnInfo(name = "release_year")
+    var releaseYear: Int = 0
+) : BaseEntity()

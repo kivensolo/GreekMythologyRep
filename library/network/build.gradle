@@ -47,6 +47,7 @@ dependencies {
     implementation lib_dependencies["okHttp3"]
     implementation lib_dependencies["okio"]
     implementation lib_dependencies["ok_log"]
+    implementation lib_dependencies["stetho-okhttp3"]
     implementation lib_dependencies["kangaroo"]
 //    implementation project(":kangaroo")
 }

@@ -22,8 +22,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
-            // Android Debug Database Custom PortNumber.
+            // 【Android Debug Database Custom PortNumber】.
             // resValue(): Adds a new generated resource. 相当于在res/values中明确指定一个resource。
+            // 此处覆盖默认的8080端口
             resValue("string", "PORT_NUMBER", "9001")
         }
         release {
@@ -50,8 +51,7 @@ dependencies {
     kapt rootProject.ext.dependencies["room-compiler"]
     // Stetho基本调试依赖
     implementation 'com.facebook.stetho:stetho:1.5.0'
-    // 网络操作--有网络操作添加
-//    implementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
+    implementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
 //    implementation 'com.squareup.okhttp3:okhttp:3.9.0'
 
     // Android-Debug-Database
