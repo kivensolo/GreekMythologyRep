@@ -9,18 +9,18 @@ import com.kingz.database.entity.UserEntity
  * description: Data access object of user info.  <br>
  */
 @Dao
-abstract class UserDao {
+interface UserDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insert(data: UserEntity)
+    fun insert(data: UserEntity)
 
 //    //TODO 如何删除全部数据?
 //    @Delete
 //    abstract fun delete()  // does not have any parameters to delete
 
     @Update
-    abstract fun update(data: UserEntity)
+    fun update(data: UserEntity)
 
     @Query("SELECT * FROM UserEntity")
-    abstract fun getUserInfo(): UserEntity?
+    fun getUserInfo(): UserEntity?
 }

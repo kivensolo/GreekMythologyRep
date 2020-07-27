@@ -5,20 +5,20 @@ import com.kingz.database.entity.BaseEntity
 import com.kingz.database.entity.SongEntity
 
 @Dao
-abstract class SongDao {
+interface SongDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insert(data: BaseEntity)
+    fun insert(data: BaseEntity)
 
     @Delete
-    abstract fun delete(data: BaseEntity)
+    fun delete(data: BaseEntity)
 
     @Query("SELECT * FROM SongEntity WHERE name==:songName ")
-    abstract fun querySongBy(songName: String): SongEntity?
+    fun querySongBy(songName: String): SongEntity?
 
     @Query("SELECT * FROM SongEntity WHERE name==:songName AND singer==:singer")
-    abstract fun querySongBy(songName: String, singer: String?): SongEntity?
+    fun querySongBy(songName: String, singer: String?): SongEntity?
 
     @Update
-    abstract fun update(data: SongEntity)
+    fun update(data: SongEntity)
 }

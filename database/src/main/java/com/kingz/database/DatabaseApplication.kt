@@ -37,19 +37,19 @@ open class DatabaseApplication : BaseApplication() {
 
     //------------ DAO 获取函数  可下沉至业务层-----------------//
     fun getSongDao(): SongDao {
-        return DatabaseBuilder.getInstance(this)!!.getSongDao()
+        return AppDatabase.database.getSongDao()
     }
 
     fun getAlbumDao(): AlbumDao {
-        return DatabaseBuilder.getInstance(this)!!.getAlbumDao()
+        return AppDatabase.database.getAlbumDao()
     }
 
     fun getUserDao(): UserDao {
-        return DatabaseBuilder.getInstance(this)!!.getUserDao()
+        return AppDatabase.database.getUserDao()
     }
 
     //------------ DAO 获取函数 -----------------//
     fun destroyDatabase() {
-        DatabaseBuilder.destroyDatabase()
+        AppDatabase.destroyDatabase()
     }
 }
