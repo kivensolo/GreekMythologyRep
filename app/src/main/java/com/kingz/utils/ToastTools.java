@@ -20,13 +20,23 @@ public class ToastTools {
     private static ToastTools mToastTools = null;
     private Toast mToast;
 
-    enum ToastType{
+    public enum ToastType{
         ATMOSPHERE, MGTV
     }
 
     private ToastTools() {}
 
     //懒汉式，双重检验
+    public void showToast(Context context, String text) {
+        if (mToast == null) {
+            mToast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
+        } else {
+            mToast.setText(text);
+            mToast.setDuration(Toast.LENGTH_SHORT);
+        }
+        mToast.show();
+    }
+
     public static ToastTools getInstance() {
         if(mToastTools == null){
             synchronized (ToastTools.class){
@@ -38,17 +48,7 @@ public class ToastTools {
         return mToastTools;
     }
 
-    public void showToast(Context context, String text) {
-        if (mToast == null) {
-            mToast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
-        } else {
-            mToast.setText(text);
-            mToast.setDuration(Toast.LENGTH_SHORT);
-        }
-        mToast.show();
-    }
-
-     public void showCustomToastByType(Context context, ToastType type) {
+     public void showCustomToastByType(Context context, String msg,ToastType type) {
         int res = R.layout.dialog_tip_learn;
         switch (type) {
             case ATMOSPHERE:
@@ -60,13 +60,14 @@ public class ToastTools {
             default:
                 break;
         }
-        showTipToast(context, res);
+        showTipToast(context,msg, res);
     }
 
-    private void showTipToast(Context context, int res) {
+    private void showTipToast(Context context, String msg, int res) {
         if (mToast == null) {
             mToast = new Toast(context);
         }
+        mToast.setText(msg);
         //设置自定义布局
         View root = LayoutInflater.from(context).inflate(res, null);
         mToast.setView(root);

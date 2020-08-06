@@ -62,7 +62,7 @@ public class BasicControlsActivity extends Activity implements View.OnClickListe
     };
 
     private void initViews() {
-        mToast = new ToastTools();
+        mToast = ToastTools.getInstance();
         disabledButton = (Button) findViewById(R.id.button_disabled);
         disabledButton.setEnabled(false);
         gridViewButton = (Button) findViewById(R.id.btn_gridView);
@@ -117,12 +117,12 @@ public class BasicControlsActivity extends Activity implements View.OnClickListe
         switch (buttonView.getId()) {
             case R.id.radio1:
                 if (isChecked) {
-                    mToast.showMgtvWaringToast(context, "选择了左边的RaidoButton");
+                    mToast.showToast(context, "选择了左边的RaidoButton");
                 }
                 break;
             case R.id.radio2:
                 if (isChecked) {
-                    mToast.showMgtvWaringToast(context, "选择了右边的RaidoButton");
+                    mToast.showToast(context, "选择了右边的RaidoButton");
                 }
                 break;
             default:
@@ -138,7 +138,7 @@ public class BasicControlsActivity extends Activity implements View.OnClickListe
     public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
         if (fromUser) {
             //android:isIndicator="true" 的属性 指示器的作用  只看
-            mToast.showMgtvWaringToast(this, "设置的星级为：" + rating + ";并且设置指示器属性");
+            mToast.showToast(this, "设置的星级为：" + rating + ";并且设置指示器属性");
             ratingBar.setIsIndicator(true);
         }
     }

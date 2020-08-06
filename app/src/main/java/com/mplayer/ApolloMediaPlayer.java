@@ -177,7 +177,7 @@ public class ApolloMediaPlayer extends BaseActivity {
                         mPlayer.reset();
                     }
                     if (channelLists.isEmpty() || TextUtils.isEmpty(channelLists.get(position).playUrl)) {
-                        ToastTools.getInstance().showMgtvWaringToast(ApolloMediaPlayer.this, "视频地址不能为空");
+                        ToastTools.getInstance().showToast(ApolloMediaPlayer.this, "视频地址不能为空");
                         return;
                     }
                     String url = channelLists.get(position).playUrl;
@@ -269,7 +269,7 @@ public class ApolloMediaPlayer extends BaseActivity {
             public void onPrepare() {
                 dismissLoadingDialog();
                 startSeekBarTimer();
-                ToastTools.getInstance().showMgtvWaringToast(ApolloMediaPlayer.this, "开始播放");
+                ToastTools.getInstance().showToast(ApolloMediaPlayer.this, "开始播放");
                 duration = mPlayer.getMediaPlayer().getDuration();
                 if (duration > 0) {
                     setRightSideTime(formatTimeToHHMMSS(duration));

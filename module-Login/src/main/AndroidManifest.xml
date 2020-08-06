@@ -4,6 +4,11 @@
 
     <application android:allowBackup="true">
 
-        <activity android:name=".SplashActivity" />
+        <activity android:name="com.zeke.module_login.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 </manifest>

@@ -45,7 +45,7 @@ import java.util.concurrent.TimeUnit;
  * //TODO 需要重构
  */
 public class DownloadAPPActivity extends BaseActivity implements
-        View.OnClickListener,LifecycleOwner {
+        View.OnClickListener, LifecycleOwner {
 
     public static final String TAG = "DownloadAPPActivity";
     public static final int PAGE_ID = R.layout.bitmap_demo_layout;
@@ -97,7 +97,7 @@ public class DownloadAPPActivity extends BaseActivity implements
         mProgressBarView.setProgressCompleteListener(new HorizontalProgressBarNoNumber.ProgressCompleteListener() {
             @Override
             public void onComplete() {
-                ToastTools.getInstance().showMgtvWaringToast(context, "Done!!");
+                ToastTools.getInstance().showToast(context, "Done!!");
                 mProgressBarView.setVisibility(View.INVISIBLE);
             }
         });
@@ -119,7 +119,8 @@ public class DownloadAPPActivity extends BaseActivity implements
         }
         if (!NetUtils.isConnect(context)) {
             Log.e(TAG, "网络未连接,无法进一步下载");
-            ToastTools.getInstance().showMgtvWaringToast(context, "url is empty!");
+            ToastTools.getInstance().showCustomToastByType(
+                    context,"url is empty!", ToastTools.ToastType.MGTV);
             return;
         }
 //        Java方式连接网络
@@ -132,12 +133,12 @@ public class DownloadAPPActivity extends BaseActivity implements
                 .build();
 
         Data urlData = new Data.Builder()
-                .putString(FileDownloadWorker.KEY_ADDR_URI,url)
+                .putString(FileDownloadWorker.KEY_ADDR_URI, url)
                 .build();
 
         OneTimeWorkRequest fileDownloadRequest = new OneTimeWorkRequest
                 .Builder(FileDownloadWorker.class)
-                .setInitialDelay(2,TimeUnit.SECONDS) // 设置执行延迟
+                .setInitialDelay(2, TimeUnit.SECONDS) // 设置执行延迟
                 .setConstraints(constraints) //设置约束
                 .setInputData(urlData) // 设置输入参数(最大10KB)
                 .addTag("download")  // 设置Worker的Tag
@@ -148,14 +149,14 @@ public class DownloadAPPActivity extends BaseActivity implements
                 .observe(this, new Observer<List<WorkInfo>>() {
                     @Override
                     public void onChanged(@Nullable List<WorkInfo> workInfos) {
-                        if (workInfos == null ||  workInfos.size() == 0) {
+                        if (workInfos == null || workInfos.size() == 0) {
                             return;
                         }
                         WorkInfo workInfo = workInfos.get(0);
                         Data outputData = workInfo.getOutputData();
 
-                        if(workInfo.getState() == WorkInfo.State.SUCCEEDED){
-                            ToastTools.getInstance().showMgtvWaringToast(context, outputData.getString("result"));
+                        if (workInfo.getState() == WorkInfo.State.SUCCEEDED) {
+                            ToastTools.getInstance().showToast(context, outputData.getString("result"));
                         }
                     }
                     // 目前1.0.1的版本不支持观察worker工作进程中的功能。 在2.3.0-alpha01版本才支持

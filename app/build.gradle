@@ -174,9 +174,8 @@ dependencies {
 
     implementation project(':module-Common')
     if (isHomeModule.toBoolean()) { implementation project(':module-Home') }
-    if (isLoginModule.toBoolean()) { implementation project(':module-login') }
+    if (isLoginModule.toBoolean()) { implementation project(':module-Login') }
     implementation project(":module-Demo")
-
     implementation project(':library-player')
 
 //    implementation 'com.getbase:floatingactionbutton:1.10.1'

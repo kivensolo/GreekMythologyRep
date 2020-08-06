@@ -59,10 +59,6 @@
         <!--android:authorities="${packageName}.BmobContentProvider">-->
 
 
-        <!-- 主Activity -->
-
-
-        <!---->
 
         <activity
             android:name="com.kingz.view.animation.PropertyAnimationsActivity"
@@ -329,7 +325,6 @@
             tools:targetApi="n"/>
         <!--  ************ Android >=5.0 新特性展示  End ************ -->
 
-        <activity android:name="com.zeke.home.ScrollableTabExampleActivity" />
 
         <activity android:name="com.zeke.ktx.modules.aac.CoroutineTestActivity"
             android:screenOrientation="fullSensor" />

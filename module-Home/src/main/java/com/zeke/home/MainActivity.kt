@@ -9,9 +9,11 @@ import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import androidx.core.app.ActivityCompat
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.kingz.database.entity.BaseEntity
 import com.kingz.module.common.BaseActivity
 import com.kingz.module.common.base.BaseFragment
+import com.kingz.module.common.router.RPath
 import com.kingz.module.home.R
 import com.zeke.home.fragments.HomeLiveFragment
 import com.zeke.home.fragments.HomeRecomFragment
@@ -23,8 +25,8 @@ import kotlinx.coroutines.launch
 
 /**
  * KT版本首页
- *
  */
+@Route(path = RPath.PAGE_MAIN,group = "modle-home")
 class MainActivity : BaseActivity(), ISwitcher {
 
     private var homeVodFragment: HomeRecomFragment? = null

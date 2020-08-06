@@ -309,12 +309,11 @@ public class ExternalStorage extends Activity {
                     public void onScanCompleted(String path, Uri uri) {
                         ZLog.i("ExternalStorage", "Scanned " + path + ":");
                         ZLog.i("ExternalStorage", "-> uri=" + uri);
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                ToastTools.getInstance().showMgtvWaringToast(ExternalStorage.this, "onScanCompleted!");
-                            }
-                        });
+                        runOnUiThread(() ->
+                                ToastTools.getInstance().showCustomToastByType(
+                                        ExternalStorage.this,
+                                                "onScanCompleted!",
+                                                ToastTools.ToastType.MGTV));
                     }
                 });
     }

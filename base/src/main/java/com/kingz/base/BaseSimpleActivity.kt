@@ -9,6 +9,7 @@ import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import com.zeke.kangaroo.utils.ToastUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -31,13 +32,13 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
 //        }
     }
 
-    open fun initViewModel(){}
+    open fun initViewModel() {}
 
     abstract fun getContentView(): Int
 
     abstract fun initData(savedInstanceState: Bundle?)
 
-    open fun initView(savedInstanceState: Bundle?){
+    open fun initView(savedInstanceState: Bundle?) {
         progress = ProgressBar(baseContext)
         val progressParams = FrameLayout.LayoutParams(
             ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -56,11 +57,17 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
         progress?.visibility = View.GONE
     }
 
+
+    fun showToast(msg: String) {
+        ToastUtils.show(this, msg)
+    }
+
     /**
      * 必须在组合挂起函数中使用
      * 在开始观察前已主动切换至主线程，避免线程错误
      */
-    suspend fun <T> LiveData<T>.observeSuspend(onChanged: (t: T) -> Unit) = withContext(Dispatchers.Main) {
-        observe(this@BaseSimpleActivity, Observer { onChanged(it) })
-    }
+    suspend fun <T> LiveData<T>.observeSuspend(onChanged: (t: T) -> Unit) =
+        withContext(Dispatchers.Main) {
+            observe(this@BaseSimpleActivity, Observer { onChanged(it) })
+        }
 }

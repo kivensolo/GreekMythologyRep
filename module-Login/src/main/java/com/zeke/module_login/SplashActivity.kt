@@ -11,11 +11,13 @@ import android.widget.RelativeLayout
 import android.widget.VideoView
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.kingz.base.BaseVMActivity
 import com.kingz.base.factory.ViewModelFactory
 import com.kingz.database.DatabaseApplication
 import com.kingz.database.entity.UserEntity
-import com.zeke.kangaroo.utils.ToastUtils
+import com.kingz.module.common.router.RPath
 import com.zeke.kangaroo.utils.ZLog
 import com.zeke.module_login.entity.Data
 import com.zeke.module_login.entity.UserInfoBean
@@ -23,12 +25,14 @@ import com.zeke.module_login.repository.LoginRepository
 import com.zeke.module_login.viewmodel.LoginViewModel
 import kotlinx.android.synthetic.main.form_view.*
 import kotlinx.android.synthetic.main.splash_activity.*
+import kotlinx.coroutines.*
 
 /**
  * author: King.Z <br>
  * date:  2020/7/8 19:03 <br>
  * description: 应用启动欢迎 & 登录页面 <br>
  */
+@Route(path = RPath.PAGE_LOGIN)
 class SplashActivity : BaseVMActivity<LoginRepository, LoginViewModel>(), View.OnClickListener {
 
     private var inputType = InputType.NONE
@@ -48,14 +52,14 @@ class SplashActivity : BaseVMActivity<LoginRepository, LoginViewModel>(), View.O
         super.initViewModel()
         // Observe livedatas in UI-Thread
         viewModel.loginInfoData.observe(this@SplashActivity, Observer {
-            ZLog.d("loginInfoData onChanged:", "$it")
+            ZLog.d("loginInfoData onChanged: $it")
             val loginData = it
             if (loginData != null) {
                 if (loginData.errorCode < 0) {
-                    ToastUtils.show(this, "登陆失败:${loginData.errorMsg}")
+                    showToast("登陆失败:${loginData.errorMsg}")
                 } else {
-                    ToastUtils.show(this, "欢迎登陆!${(loginData.data as Data).nickname}")
-                    // TODO 进行数据库数据存储 和跳转
+                    showToast("欢迎登陆!${(loginData.data as Data).nickname}")
+                    // TODO 进行首页跳转
                     saveUserInfo(loginData)
                     //openMainPage()
                 }
@@ -67,9 +71,9 @@ class SplashActivity : BaseVMActivity<LoginRepository, LoginViewModel>(), View.O
             val registerData = it?.body()
             if (registerData != null) {
                 if (registerData.errorCode < 0) {
-                    ToastUtils.show(this, "注册异常:${registerData.errorMsg}")
+                    showToast("注册异常:${registerData.errorMsg}")
                 } else {
-                    ToastUtils.show(this, "注册成功!")
+                    showToast("注册成功!")
                     //TODO 进行默认用户登录操作
                 }
             }
@@ -91,7 +95,11 @@ class SplashActivity : BaseVMActivity<LoginRepository, LoginViewModel>(), View.O
                 id = userInfo.id
             }
         }
-        DatabaseApplication.getInstance().getUserDao().insert(userEntity)
+
+
+        lifecycleScope.launch {
+            DatabaseApplication.getInstance().getUserDao().insert(userEntity)
+        }
     }
 
     override fun initData(savedInstanceState: Bundle?) {
@@ -99,11 +107,19 @@ class SplashActivity : BaseVMActivity<LoginRepository, LoginViewModel>(), View.O
     }
 
     private fun checkUserCacheInfo() {
-        val userInfo = DatabaseApplication.getInstance().getUserDao().getUserInfo()
-        if (userInfo != null) {
-            ToastUtils.show(this, "存在本地缓存用户信息")
-            ZLog.d("initData check userinfo:", "$userInfo")
+        lifecycleScope.launch(Dispatchers.IO) {
+            val userInfo = DatabaseApplication.getInstance().getUserDao().getUserInfo()
+            withContext(Dispatchers.Main){
+                if (userInfo != null) {
+                    buttonLeft?.visibility = View.GONE
+                    buttonRight?.visibility = View.GONE
+                    showToast("欢迎回来${userInfo.username}")
+                    ZLog.d("initData check userinfo:", "$userInfo")
+                    openMainPage()
+                }
+            }
         }
+
     }
 
     override fun initView(savedInstanceState: Bundle?) {
@@ -164,6 +180,7 @@ class SplashActivity : BaseVMActivity<LoginRepository, LoginViewModel>(), View.O
                 } else if (v == buttonRight) {
                     inputType = InputType.SIGN_UP
                     re_pwd.visibility = View.VISIBLE
+                    re_pwd_line.visibility = View.VISIBLE
                     // change text to singup-mode
                     updateButtonText(
                         resources.getText(R.string.button_confirm_signup),
@@ -218,6 +235,7 @@ class SplashActivity : BaseVMActivity<LoginRepository, LoginViewModel>(), View.O
             TextUtils.isEmpty(login_pwd?.text ?: "")
         ) {
             ZLog.e("请输入账号和密码")
+            showToast("存在本地缓存用户信息")
         } else {
             viewModel.login(login_name!!.text, login_pwd!!.text)
         }
@@ -252,16 +270,16 @@ class SplashActivity : BaseVMActivity<LoginRepository, LoginViewModel>(), View.O
     private fun doUserRegister() {
         ZLog.d("Click to register.")
         if (TextUtils.isEmpty(login_name?.text)) {
-            ToastUtils.show(this, "请输入账户名")
+            showToast("请输入账户名")
             return
         } else if (TextUtils.isEmpty(login_pwd?.text) || login_pwd.text.length <= 7) {
-            ToastUtils.show(this, "请输入有效密码(长度大于7)")
+            showToast("请输入有效密码(长度大于7)")
             return
         } else if (TextUtils.isEmpty(re_pwd?.text)) {
-            ToastUtils.show(this, "请确认注册密码")
+            showToast("请确认注册密码")
             return
         } else if (!TextUtils.equals(re_pwd?.text, login_pwd?.text)) {
-            ToastUtils.show(this, "请输入相同密码")
+            showToast("请输入相同密码")
             return
         }
         viewModel.singUp(
@@ -272,12 +290,20 @@ class SplashActivity : BaseVMActivity<LoginRepository, LoginViewModel>(), View.O
     }
 
     private fun openMainPage() {
-        val intent = with(intent) {
-            action = "com.kingz.home.mainpage"
-            addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
+        GlobalScope.launch {
+            delay(3000)
+            val intent = with(Intent()) {
+                action = "com.kingz.home.mainpage"
+//            addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
+                this
+            }
+            startActivity(intent)
+            // FixMe 打开pageMain会报错
+//            ARouter.getInstance()
+//                .build(RPath.PAGE_MAIN)
+//                .navigation(baseContext)
+            finish()
         }
-        startActivity(intent)
-        finish()
     }
 
     override fun onPause() {
