@@ -19,8 +19,12 @@ import java.util.*
  * Data: 2016 2016/3/13
  * Discription: 自定义View的onMeasure计算
  */
-class CustomOnMeasureView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null,
-                                                    defStyle: Int = 0) : View(context, attrs, defStyle) {
+class CustomOnMeasureView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyle: Int = 0
+) : View(context, attrs, defStyle) {
+
     /** 文本 */
     private var mTitleText: String? = null
 

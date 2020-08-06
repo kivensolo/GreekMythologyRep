@@ -181,11 +181,18 @@ public class AutoWrapTextView extends View {
         return width[0];
     }
     private int getTopTextMarginTop() {
+        // 第一行文字的高度/2 + paddingTop + 字体空间?
         return mSplitTextRectArray[0].height() / 2 + mPaddingTop + getFontSpace();
     }
 
     /**
-     * TODO 这个是获取什么距离？
+     * ascent  ---  负数
+     * baseline --- 0
+     * descent  --- 正数
+     *
+     * fontMetrics.descent- fontMetrics.ascent 相当于整个一行文字的高度
+     * 除以2，就是高度的一半，再减去descent
+     * 得到的是个啥字体空间????
      */
     private int getFontSpace() {
         Paint.FontMetricsInt fontMetrics = mTextPaint.getFontMetricsInt();

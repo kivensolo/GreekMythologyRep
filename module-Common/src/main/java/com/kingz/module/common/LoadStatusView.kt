@@ -20,23 +20,18 @@ import com.zhy.autolayout.utils.AutoUtils
 /**
  * description: 加载、重试、错误状态的视图
  */
-class LoadStatusView : FrameLayout {
+class LoadStatusView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0    // 注意这个attr的默认值,有的控件不一定是0
+) : FrameLayout(context, attrs, defStyleAttr) {
 
     private var progress: View? = null
     private var statusText: TextView? = null
     private var errorIcon: Drawable? = null
     private var noDataIcon: Drawable? = null
 
-    //TODO 改为JVMStatic
-    constructor(context: Context) : super(context) {
-        initView(context)
-    }
-
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
-        initView(context)
-    }
-
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+    init {
         initView(context)
     }
 

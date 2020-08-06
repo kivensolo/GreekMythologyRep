@@ -11,7 +11,6 @@ import kotlinx.coroutines.withContext
 
 /**
  * description: 基类
- * TODO 抽离出Base模块
  */
 // abstract class BaseActivity : AutoLayoutActivity() {
 abstract class BaseActivity : AppCompatActivity() {
