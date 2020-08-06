@@ -24,7 +24,7 @@ import com.kingz.database.entity.UserEntity
         BaseEntity::class,
         SongEntity::class,
         UserEntity::class],
-    version = 1, exportSchema = false
+    version = 2, exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
 
@@ -49,9 +49,9 @@ abstract class AppDatabase : RoomDatabase() {
                 context.applicationContext,
                 AppDatabase::class.java,
                 databaseName)
-                .allowMainThreadQueries()
+//                .allowMainThreadQueries()   // 不允许主线程进行IO操作
                 .fallbackToDestructiveMigration()
-//                .addMigrations(migration_1to2)    // 数据库迁移
+//                .addMigrations(migration_1to2)
                 .build()
 
         internal val database: AppDatabase by lazy {
@@ -67,6 +67,7 @@ abstract class AppDatabase : RoomDatabase() {
          */
         private val migration_1to2: Migration = object : Migration(1, 2) {
             override fun migrate(database: SupportSQLiteDatabase) {
+                // TODO 如何修改表名?  UserEntity 改为user
                 database.execSQL("ALTER TABLE UserEntity ADD COLUMN money TEXT NOT NULL DEFAULT ''")
             }
         }

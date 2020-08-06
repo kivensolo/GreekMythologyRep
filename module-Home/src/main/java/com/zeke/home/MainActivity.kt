@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.kingz.database.entity.BaseEntity
 import com.kingz.module.common.BaseActivity
@@ -57,7 +58,9 @@ class MainActivity : BaseActivity(), ISwitcher {
         // })
 
         //TestCode
-        HomeSongModel<BaseEntity>().testInsertData()
+        lifecycleScope.launch(Dispatchers.IO){
+            HomeSongModel<BaseEntity>().testInsertData()
+        }
     }
 
     private fun initFragment() {

@@ -117,7 +117,6 @@ class MainBottomController(private val rootView: View) : View.OnClickListener {
     }
 
     override fun onClick(v: View) {
-        // 同java的switch
         when (v.id) {
             R.id.bottom_vod_layout -> {
                 switchCheckState(ISwitcher.TYPE_VOD)

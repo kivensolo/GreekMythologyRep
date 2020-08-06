@@ -12,15 +12,15 @@ import com.kingz.database.entity.UserEntity
 interface UserDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(data: UserEntity)
+    suspend fun insert(data: UserEntity)
 
 //    //TODO 如何删除全部数据?
 //    @Delete
 //    abstract fun delete()  // does not have any parameters to delete
 
     @Update
-    fun update(data: UserEntity)
+    suspend fun update(data: UserEntity)
 
-    @Query("SELECT * FROM UserEntity")
+    @Query("SELECT * FROM user")
     fun getUserInfo(): UserEntity?
 }
