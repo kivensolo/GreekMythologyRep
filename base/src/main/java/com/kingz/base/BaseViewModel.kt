@@ -12,6 +12,8 @@ import kotlinx.coroutines.*
  * @maintainer zeke.wang
  * @desc:
  * Hold UI Data.
+ * ViewModel中持有 Repository，并通过它执行具体逻辑
+ *
  * viewModelScope: 与ViewModel绑定的CoroutineScope
  */
 abstract class BaseViewModel<T : BaseRepository> : ViewModel() {

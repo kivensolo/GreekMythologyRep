@@ -26,6 +26,7 @@ class Api private constructor() {
 
     companion object {
         fun getInstance() = Helper.instance
+        // TODO  搞成外部可以自定义设置的方式
         const val HOST = "https://www.wanandroid.com"
     }
 

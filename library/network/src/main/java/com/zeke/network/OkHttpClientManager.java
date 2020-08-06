@@ -9,7 +9,6 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 
-import com.ding.library.CaptureInfoInterceptor;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.google.gson.Gson;
 import com.google.gson.internal.$Gson$Types;
@@ -206,7 +205,7 @@ public class OkHttpClientManager {
                     .readTimeout(readTimeOut, TimeUnit.MILLISECONDS)
                     .writeTimeout(writeTimeOut, TimeUnit.MILLISECONDS)
                     .addInterceptor(new LoggingInterceptor())
-                    .addInterceptor(new CaptureInfoInterceptor())
+//                    .addInterceptor(new CaptureInfoInterceptor())
                     .addNetworkInterceptor(new StethoInterceptor());
     }
 
