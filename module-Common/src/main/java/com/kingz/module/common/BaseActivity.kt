@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import com.kingz.module.common.ext.observe
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -13,6 +14,7 @@ import kotlinx.coroutines.withContext
  * description: 基类
  */
 // abstract class BaseActivity : AutoLayoutActivity() {
+@Deprecated("被BaseVMActivity代替")
 abstract class BaseActivity : AppCompatActivity() {
     private val TAG = BaseActivity::class.java.simpleName
 

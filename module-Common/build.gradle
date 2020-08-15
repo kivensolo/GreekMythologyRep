@@ -29,6 +29,10 @@ android {
         }
     }
 
+    kotlinOptions {
+        // 设置jvm target为1.8 否则某些ktx的语法糖无法使用
+        jvmTarget = "1.8"
+    }
 }
 
 dependencies {

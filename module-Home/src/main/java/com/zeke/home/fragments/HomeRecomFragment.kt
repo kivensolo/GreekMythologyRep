@@ -11,13 +11,13 @@ import com.zeke.home.presenters.RecomPresenter
  * author：KingZ
  * date：2019/12/29
  * description：首页-推荐页展示的Fragemnt
+ * 此部分暂时MVP
  */
 class HomeRecomFragment : HomeBaseFragment<RecomPresenter>(), RecomPageContract.View {
 
     init {
         mPresenter = RecomPresenter(this)
     }
-
 
     override fun showRecomInfo(data: MutableList<HomeRecomData>?) {
         Log.d(TAG, "showDemoPageInfo onResult.")
@@ -31,7 +31,7 @@ class HomeRecomFragment : HomeBaseFragment<RecomPresenter>(), RecomPageContract.
         data.forEach lit@ {
             titleList.add(it.name)
             when(it.type) {
-                "recom" -> fragmentList.add(HomeHotPageFragment())
+                "recom" -> fragmentList.add(HomeWanAndroidFragment())
                 "demo" -> fragmentList.add(ExpandableDemoFragment())
                 "magicIndicator" -> fragmentList.add(MagicIndicatorDemoFragment())
             }

@@ -13,6 +13,10 @@ import com.zeke.kangaroo.utils.ToastUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
+/**
+ * Top level abstract activity.
+ * [MVVM]
+ */
 abstract class BaseSimpleActivity : AppCompatActivity() {
 
     private var progress: View? = null
@@ -26,16 +30,28 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
         initData(savedInstanceState)
     }
 
+    /**
+     * Get layout id.
+     */
+    abstract fun getContentView(): Int
+
+    /**
+     * Init immersion style bar.
+     */
     private fun initImmersionBar() {
 //        immersionBar {
 //            barColor(R.color.colorPrimary)
 //        }
     }
 
+    /**
+     * Init viewmodel
+     */
     open fun initViewModel() {}
 
-    abstract fun getContentView(): Int
-
+    /**
+     * Init data logic.
+     */
     abstract fun initData(savedInstanceState: Bundle?)
 
     open fun initView(savedInstanceState: Bundle?) {
@@ -67,6 +83,15 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
      * 在开始观察前已主动切换至主线程，避免线程错误
      */
     suspend fun <T> LiveData<T>.observeSuspend(onChanged: (t: T) -> Unit) =
+        withContext(Dispatchers.Main) {
+            observe(this@BaseSimpleActivity, Observer { onChanged(it) })
+        }
+
+     /**
+     * 不要求组合挂起函数
+     * 在开始观察前已主动切换至主线程，避免线程错误
+     */
+    suspend fun <T> LiveData<T>.observe(onChanged: (T) -> Unit) =
         withContext(Dispatchers.Main) {
             observe(this@BaseSimpleActivity, Observer { onChanged(it) })
         }

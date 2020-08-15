@@ -3,7 +3,8 @@ package com.kingz.base
 import android.util.Log
 import androidx.lifecycle.Observer
 
-abstract class BaseVMActivity<BR : BaseRepository, VM : BaseViewModel<BR>> : BaseSimpleActivity() {
+abstract class BaseVMActivity<BR : BaseRepository,
+        VM : BaseViewModel<BR>> : BaseSimpleActivity() {
 //    protected val viewModel: VM by lazy {
 //        createViewModel()
 //    }

@@ -30,7 +30,7 @@ class LoggingInterceptor : Interceptor {
         }
         printRequest(chain)
         val response = chain.proceed(request)
-        printResponse(response)
+//        printResponse(response)
         return response
     }
 
@@ -82,7 +82,7 @@ class LoggingInterceptor : Interceptor {
      * Don't get response data by responseBody.string().
      * Because this method will waste buffer data.
      */
-    fun printResponse(response: Response) {
+    private fun printResponse(response: Response) {
         val endTime = System.nanoTime()
         val headers = response.headers()
         ZLog.d(
@@ -99,11 +99,11 @@ class LoggingInterceptor : Interceptor {
         // Buffer the entire body.
         source.request(Long.MAX_VALUE)
         val buffer = source.buffer
-        val bodyString = buffer.clone().readString(Charset.forName("UTF-8"))
-        if (headers["Content-Type"]?.contains("json") == true) {
-            ZLog.json(bodyString)
-        } else {
-            ZLog.d(bodyString)
-        }
+//        val bodyString = buffer.clone().readString(Charset.forName("UTF-8"))
+//        if (headers["Content-Type"]?.contains("json") == true) {
+//            ZLog.json(bodyString)
+//        } else {
+//            ZLog.d(bodyString)
+//        }
     }
 }

@@ -61,7 +61,7 @@ class SplashActivity : BaseVMActivity<LoginRepository, LoginViewModel>(), View.O
                     showToast("欢迎登陆!${(loginData.data as Data).nickname}")
                     // TODO 进行首页跳转
                     saveUserInfo(loginData)
-                    //openMainPage()
+                    openMainPage()
                 }
             }
         })

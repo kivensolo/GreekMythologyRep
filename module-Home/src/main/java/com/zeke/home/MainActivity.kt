@@ -8,11 +8,13 @@ import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
+import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.kingz.base.BaseVMActivity
+import com.kingz.base.factory.ViewModelFactory
 import com.kingz.database.entity.BaseEntity
-import com.kingz.module.common.BaseActivity
 import com.kingz.module.common.base.BaseFragment
 import com.kingz.module.common.router.RPath
 import com.kingz.module.home.R
@@ -20,58 +22,50 @@ import com.zeke.home.fragments.HomeLiveFragment
 import com.zeke.home.fragments.HomeRecomFragment
 import com.zeke.home.fragments.ISwitcher
 import com.zeke.home.model.HomeSongModel
+import com.zeke.home.repository.HomePageRepository
+import com.zeke.home.viewmodel.MainPageViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-/**
- * KT版本首页
- */
-@Route(path = RPath.PAGE_MAIN,group = "modle-home")
-class MainActivity : BaseActivity(), ISwitcher {
+@Route(path = RPath.PAGE_MAIN, group = "modle-home")
+class MainActivity : BaseVMActivity<HomePageRepository, MainPageViewModel>(), ISwitcher {
 
-    private var homeVodFragment: HomeRecomFragment? = null
-    private var homeLiveFragment: HomeLiveFragment? = null
+    private lateinit var homeVodFragment: HomeRecomFragment
+    private lateinit var homeLiveFragment: HomeLiveFragment
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+    override val viewModel: MainPageViewModel by viewModels {
+        ViewModelFactory.build { MainPageViewModel() }
+    }
 
-        initFragment()
+    override fun getContentView() = R.layout.activity_main
+
+    override fun initView(savedInstanceState: Bundle?) {
+        super.initView(savedInstanceState)
+        initFragments()
         initBottom()
+    }
+
+    override fun initData(savedInstanceState: Bundle?) {
         permissionCheck()
 
-        //Test Code
-        // val apiManager = ApiManager.i()
-        // val gitHubService = apiManager.setApi(GitHubService::class.java)
-        // val userInfoObservable = gitHubService.getUserInfo("kivensolo")
-        // apiManager.setSubscribe(userInfoObservable, object :SingleObserver<GitHubUserInfo>{
-        //     override fun onSubscribe(d: Disposable) {
-        //     }
-        //
-        //     override fun onError(e: Throwable) {
-        //         ZLog.e("user onError")
-        //     }
-        //     override fun onSuccess(t: GitHubUserInfo) {
-        //         ZLog.d("onSuccess  user is ${t.name}")
-        //     }
-        // })
-
         //TestCode
-        lifecycleScope.launch(Dispatchers.IO){
+        lifecycleScope.launch(Dispatchers.IO) {
             HomeSongModel<BaseEntity>().testInsertData()
         }
     }
 
-    private fun initFragment() {
+    /**
+     * 初始化首页的Fragment
+     */
+    private fun initFragments() {
         val fragmentManager = supportFragmentManager
         val fragmentTS = fragmentManager.beginTransaction()
         homeVodFragment = HomeRecomFragment()
         homeLiveFragment = HomeLiveFragment()
-        fragmentTS.add(R.id.content, homeVodFragment!!)
-            .show(homeVodFragment!!)
-        fragmentTS.add(R.id.content, homeLiveFragment!!)
-            .hide(homeLiveFragment!!)
+        fragmentTS.add(R.id.content, homeVodFragment)
+            .show(homeVodFragment)
+        fragmentTS.add(R.id.content, homeLiveFragment)
+            .hide(homeLiveFragment)
         fragmentTS.commit()
     }
 
@@ -82,7 +76,6 @@ class MainActivity : BaseActivity(), ISwitcher {
         val bottomController =
             MainBottomController(findViewById<View>(R.id.main_bottom_layout))
         bottomController.setListener(this)
-
     }
 
     private fun permissionCheck() {
@@ -143,10 +136,11 @@ class MainActivity : BaseActivity(), ISwitcher {
                 val inst = Instrumentation()
                 inst.sendKeyDownUpSync(keyCode)
             } catch (e: Exception) {
-                Log.e("","Exception when sendKeyEvent:$e")
+                Log.e("", "Exception when sendKeyEvent:$e")
             }
         }
-        GlobalScope.launch(Dispatchers.IO) { sendKeyEvent(KeyEvent.KEYCODE_HOME) }
+        lifecycleScope.launch(Dispatchers.IO) { sendKeyEvent(KeyEvent.KEYCODE_HOME) }
     }
+
 }
 

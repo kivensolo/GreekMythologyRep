@@ -14,6 +14,7 @@ import com.kingz.module.common.LoadStatusView
 /**
  * description: 基类的Fragment
  */
+@Deprecated("使用BaseVMFragment代替")
 abstract class BaseFragment : Fragment() {
     companion object {
         val TAG: String = BaseFragment::class.java.simpleName

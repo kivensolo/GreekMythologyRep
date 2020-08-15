@@ -15,9 +15,9 @@ import com.zeke.kangaroo.adapter.CommonRecyclerAdapter
  * date:  2020/5/24 13:22 <br>
  * description: 单独一个海报的代理Adapter <br>
  */
-class OnePicDelegateAdapter: IDelegateAdapter<HomeRecomData> {
+class BannerDelegateAdapter: IDelegateAdapter<HomeRecomData> {
     override fun isForViewType(dataType: HomeRecomData): Boolean {
-        return dataType.type == "one_pic"
+        return dataType.type == "banner"
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

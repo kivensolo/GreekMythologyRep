@@ -1,4 +1,4 @@
-package com.zeke.module_login
+package com.kingz.module.common.service
 
 import com.zeke.network.retrofit.mannager.Api
 
@@ -12,7 +12,8 @@ object ApiServiceUtil {
 
     private val map = mutableMapOf<Class<*>, Any?>()
 
-    inline fun <reified T> getApiService() = getServiceByType(T::class.java)
+    inline fun <reified T> getApiService() =
+        getServiceByType(T::class.java)
 
     fun <T> getServiceByType(type: Class<T>): T {
         @Suppress("UNCHECKED_CAST")

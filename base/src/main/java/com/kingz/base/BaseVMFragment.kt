@@ -8,9 +8,7 @@ import kotlinx.coroutines.launch
 abstract class BaseVMFragment<V : BaseRepository, T : BaseViewModel<V>>
     : BaseSimpleFragment() {
 
-    protected val viewModel: T by lazy {
-        createViewModel()
-    }
+    protected abstract val viewModel: T
 
     override fun initViewModel() {
         super.initViewModel()
@@ -42,8 +40,6 @@ abstract class BaseVMFragment<V : BaseRepository, T : BaseViewModel<V>>
             }
         })
     }
-
-    abstract fun createViewModel(): T
 
     fun launch(blockCode: BlockCode) {
         lifecycleScope.launch {
