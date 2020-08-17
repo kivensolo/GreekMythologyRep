@@ -3,6 +3,7 @@ package com.module.tools;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Build;
 import android.provider.Settings;
 import android.util.DisplayMetrics;
@@ -125,17 +126,34 @@ public class ScreenTools {
      * 设置状态栏透明
      */
     public static void setStatusBarTransparent(Activity activity) {
-        if (Build.VERSION.SDK_INT >= 21) {
+        if(activity == null){
+            return;
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             View decorView = activity.getWindow().getDecorView();
             int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                     | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
             decorView.setSystemUiVisibility(option);
-//            activity.getWindow().setStatusBarColor(Color.TRANSPARENT);
+            activity.getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
         ActionBar actionBar = activity.getActionBar();
         if (actionBar != null) {
             actionBar.hide();
         }
+    }
+
+    /**
+     * 隐藏导航栏
+     */
+    public static void hideNavigation(Activity activity) {
+        View decorView = activity.getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY      //沾粘性的沉浸式
+                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_IMMERSIVE
+                | View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
     }
 
     /**
