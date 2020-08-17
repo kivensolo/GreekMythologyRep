@@ -43,12 +43,18 @@ open class CommonApp: DatabaseApplication(){
     }
 
     private fun initBugly() {
-    //第三个参数为SDK调试模式开关，调试模式的行为特性如下：
-    //  输出详细的Bugly SDK的Log；
-    //  每一条Crash都会被立即上报；
-    //  自定义日志将会在Logcat中输出。
-    //  建议在测试阶段建议设置成true，发布时设置为false。
-        CrashReport.initCrashReport(applicationContext, BUGLY_KEY, false)
+        //  建议在测试阶段建议设置成true，发布时设置为false。
+        if (BuildConfig.DEBUG) {
+            //第三个参数为SDK调试模式开关，调试模式的行为特性如下：
+            //  输出详细的Bugly SDK的Log；
+            //  每一条Crash都会被立即上报；
+            //  自定义日志将会在Logcat中输出。
+            CrashReport.initCrashReport(applicationContext, BUGLY_KEY, false)
+            // 自定义参数---设备串号
+            CrashReport.putUserData(this, "DeviceId", "宇宙无敌机皇")
+            // 自定义参数---设备机型
+            CrashReport.setAppChannel(this, "机型信号")
+        }
     }
 
 
