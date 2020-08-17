@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -18,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
@@ -183,5 +185,21 @@ public class ViewUtils {
                 cxt.startActivity(intent);
             }
         } catch (Exception ignored) {}
+    }
+
+    /**
+     * 获取View的截图
+     *
+     * @param view view
+     * @return Bitmap
+     */
+    public Bitmap convertViewToBitmap(View view) {
+        Bitmap bitmap = null;
+        if (view != null) {
+            view.setDrawingCacheEnabled(true);
+            view.buildDrawingCache();
+            bitmap = view.getDrawingCache();
+        }
+        return bitmap;
     }
 }
