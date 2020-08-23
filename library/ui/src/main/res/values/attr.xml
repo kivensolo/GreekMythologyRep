@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
     【resource】是根标签，可以在里面定义若干个【declare-styleable】
       <declare-styleable name="XXXXX">中name定义了变量的名称，下面可以再自定义多个属性attr
       对于<attr name="progress_unreached_color" format="dimension"/>来说，
@@ -28,10 +27,10 @@
     </declare-styleable>
 
     <declare-styleable name="circleView">
-        <attr name="innerColor" format="color"/>
-        <attr name="outerColor" format="color"/>
-        <attr name="circleWidth" format="dimension"/>
-        <attr name="speed" format="integer"/>
+        <attr name="innerColor" format="color" />
+        <attr name="outerColor" format="color" />
+        <attr name="circleWidth" format="dimension" />
+        <attr name="speed" format="integer" />
     </declare-styleable>
 
     <declare-styleable name="HorizontalProgressBarWithNumber">
@@ -50,6 +49,15 @@
 
     <declare-styleable name="RoundProgressBarWidthNumber">
         <attr name="radius" format="dimension" />
+    </declare-styleable>
+
+
+    <declare-styleable name="FlutteringLayout"
+        desc="桃心飘动的自定义layout属性">
+        <attr name="heart_enter_duration" format="integer" />
+        <attr name="heart_duration" format="integer" />
+        <attr name="heart_scale" format="float" />
+        <attr name="heart_same_size" format="boolean" />
     </declare-styleable>
 
 </resources>

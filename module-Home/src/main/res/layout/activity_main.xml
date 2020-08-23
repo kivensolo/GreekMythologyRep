@@ -1,25 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
     android:background="@color/tab_bg"
     tools:context="com.zeke.home.MainActivity">
-
-    <FrameLayout
-        android:contentDescription="@string/content_view_desc"
-        android:id="@+id/content"
+    <com.module.touch.SuperSlidingPaneLayout
+        android:id="@+id/slidPanelLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/main_bottom_layout"
-        android:background="@android:color/white"/>
+        android:fitsSystemWindows="true"
+        app:mode="scale_menu"
+        app:compat_sliding="true">
+        <!--左侧滑动菜单区域-->
+        <include layout="@layout/slide_menu_layout" />
 
-    <!-- 底部Layout -->
-    <include
-        android:id="@+id/main_bottom_layout"
-        layout="@layout/main_bottom_layout" />
+        <!--内容区域-->
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp">
+            <include layout="@layout/top_title_bar"/>
+        </androidx.appcompat.widget.Toolbar>
+
+
+        <com.module.touch.SuperSlidingPaneLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:direction="top">
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/mainpage_nsv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:focusableInTouchMode="true"
+                android:fillViewport="true">
+                 <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:descendantFocusability="blocksDescendants">
+                    <com.youth.banner.Banner
+                        android:id="@+id/banner"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/banner_height"
+                        android:visibility="gone"
+                        app:is_auto_play="true" />
+
+                     <FrameLayout
+                         android:id="@+id/content"
+                         android:layout_width="match_parent"
+                         android:layout_height="match_parent"
+                         android:layout_above="@id/main_bottom_layout"
+                         android:background="@android:color/white"
+                         android:contentDescription="@string/content_view_desc" />
+                 </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+
+             <!-- 底部Layout -->
+            <include
+                android:id="@+id/main_bottom_layout"
+                layout="@layout/main_bottom_layout" />
+        </com.module.touch.SuperSlidingPaneLayout>
+
+
+    </com.module.touch.SuperSlidingPaneLayout>
+
 
 </RelativeLayout>

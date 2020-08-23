@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Home-model</string>
 
      <!--点播界面  被格式化的参数索引%1$s和%2$s分别表示第一位和第二位占位符，$s表示是字符串 -->
@@ -33,4 +33,14 @@
     <string name="tab_with_custom_layout" translatable="false">Load custom layout</string>
 
     <string name="content_view_desc" translatable="false">页面内容显示页面根View</string>
+
+
+    <string name="menu_collect" translatable="false" tools:ignore="ExtraTranslation">我的收藏</string>
+    <string name="menu_system" translatable="false" tools:ignore="ExtraTranslation">知识体系</string>
+    <string name="menu_project" translatable="false" tools:ignore="ExtraTranslation">项目分类</string>
+    <string name="menu_navi" translatable="false" tools:ignore="ExtraTranslation">网址导航</string>
+    <string name="menu_about" translatable="false" tools:ignore="ExtraTranslation">关于我们</string>
+    <string name="menu_logout" translatable="false" tools:ignore="ExtraTranslation">退出登录</string>
+    <string name="click_login" translatable="false" tools:ignore="ExtraTranslation">点击登录</string>
+
 </resources>
