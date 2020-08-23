@@ -98,12 +98,12 @@
         android:gravity="center"
         style="@style/OnClickStyle"/>
     </LinearLayout>
-    <com.king.view.flutteringlayout.FlutteringLayout
+    <com.module.anim.FlutteringLayout
         android:id="@+id/flutteringLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="10dp"
-        app:duration="3000"
-        app:enter_duration="300"
-        app:scale="1.0"/>
+        app:heart_duration="3000"
+        app:heart_enter_duration="300"
+        app:heart_scale="1.0"/>
 </RelativeLayout>

@@ -31,7 +31,7 @@
         <com.module.touch.SuperSlidingPaneLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:direction="top">
+            app:loading_img_direction="top">
             <androidx.core.widget.NestedScrollView
                 android:id="@+id/mainpage_nsv"
                 android:layout_width="match_parent"
