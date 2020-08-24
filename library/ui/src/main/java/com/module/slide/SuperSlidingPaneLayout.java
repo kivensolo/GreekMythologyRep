@@ -948,12 +948,14 @@ public class SuperSlidingPaneLayout extends ViewGroup {
         return wantTouchEvents;
     }
 
-    private boolean closePane(View pane, int initialVelocity) {
-        if (mFirstLayout || smoothSlideTo(0.f, initialVelocity)) {
-            mPreservedOpenState = false;
-            return true;
-        }
-        return false;
+    /**
+     * Open the sliding pane if it is currently slideable. If first layout
+     * has already completed this will animate.
+     *
+     * @return true if the pane was slideable and is now open/in the process of opening
+     */
+    public boolean openPane() {
+        return openPane(mSlideableView, 0);
     }
 
     private boolean openPane(View pane, int initialVelocity) {
@@ -965,32 +967,6 @@ public class SuperSlidingPaneLayout extends ViewGroup {
     }
 
     /**
-     * @deprecated Renamed to {@link #openPane()} - this method is going away soon!
-     */
-    @Deprecated
-    public void smoothSlideOpen() {
-        openPane();
-    }
-
-    /**
-     * Open the sliding pane if it is currently slideable. If first layout
-     * has already completed this will animate.
-     *
-     * @return true if the pane was slideable and is now open/in the process of opening
-     */
-    public boolean openPane() {
-        return openPane(mSlideableView, 0);
-    }
-
-    /**
-     * @deprecated Renamed to {@link #closePane()} - this method is going away soon!
-     */
-    @Deprecated
-    public void smoothSlideClosed() {
-        closePane();
-    }
-
-    /**
      * Close the sliding pane if it is currently slideable. If first layout
      * has already completed this will animate.
      *
@@ -998,6 +974,14 @@ public class SuperSlidingPaneLayout extends ViewGroup {
      */
     public boolean closePane() {
         return closePane(mSlideableView, 0);
+    }
+
+    private boolean closePane(View pane, int initialVelocity) {
+        if (mFirstLayout || smoothSlideTo(0.f, initialVelocity)) {
+            mPreservedOpenState = false;
+            return true;
+        }
+        return false;
     }
 
     /**

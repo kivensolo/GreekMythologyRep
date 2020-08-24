@@ -27,12 +27,22 @@ import com.module.views.img.CircleImageView;
  * instantiates this view should add an OnRefreshListener to be notified
  * whenever the swipe to refresh gesture is completed. The SwipeRefreshLayout
  * will notify the listener each and every time the gesture is completed again;
+ * 只要用户可以通过垂直滑动手势刷新视图内容，就应该使用SwipeRefreshLayout。
+ * 实例化此视图的活动应该添加一个OnRefreshListener，以便在刷新手势完成时得到通知。
+ * SwipeRefreshLayout会在每次手势完成时通知侦听器;
+ *
  * the listener is responsible for correctly determining when to actually
  * initiate a refresh of its content. If the listener determines there should
  * not be a refresh, it must call setRefreshing(false) to cancel any visual
  * indication of a refresh. If an activity wishes to show just the progress
  * animation, it should call setRefreshing(true). To disable the gesture and
  * progress animation, call setEnabled(false) on the view.
+ *
+ * 侦听器负责正确地确定何时实际启动其内容的刷新。如果侦听器确定不应该有刷新，
+ * 它必须调用setRefreshing(false)来取消任何刷新的可视指示。
+ * 如果一个活动希望只显示进度动画，它应该调用setRefreshing(true)。
+ * 要禁用手势和进度动画，在视图上调用setEnabled(false)。
+ *
  * <p>
  * This layout should be made the parent of the view that will be refreshed as a
  * result of the gesture and can only support one direct child. This view will
@@ -40,6 +50,10 @@ import com.module.views.img.CircleImageView;
  * width and the height supplied in this layout. The SwipeRefreshLayout does not
  * provide accessibility events; instead, a menu item must be provided to allow
  * refresh of the content wherever this gesture is used.
+ * 这个布局应该成为视图的父视图，该视图将由于这个手势而刷新，并且只能支持一个直接子视图。
+ * 这个视图也将成为这个手势的目标，并且将被迫匹配这个布局中提供的宽度和高度。
+ * SwipeRefreshLayout不提供可访问性事件;
+ * 相反，必须提供一个菜单项，以允许在使用此手势的任何地方刷新内容。
  * </p>
  */
 public class SuperSwipeRefreshLayout extends ViewGroup {
