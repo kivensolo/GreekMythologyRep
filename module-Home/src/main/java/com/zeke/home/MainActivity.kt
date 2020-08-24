@@ -18,12 +18,15 @@ import com.kingz.database.entity.BaseEntity
 import com.kingz.module.common.base.BaseFragment
 import com.kingz.module.common.router.RPath
 import com.kingz.module.home.R
+import com.module.slide.SuperSlidingPaneLayout
 import com.zeke.home.fragments.HomeLiveFragment
 import com.zeke.home.fragments.HomeRecomFragment
 import com.zeke.home.fragments.ISwitcher
 import com.zeke.home.model.HomeSongModel
 import com.zeke.home.repository.HomePageRepository
 import com.zeke.home.viewmodel.MainPageViewModel
+import com.zeke.kangaroo.utils.ZLog
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -32,6 +35,9 @@ class MainActivity : BaseVMActivity<HomePageRepository, MainPageViewModel>(), IS
 
     private lateinit var homeVodFragment: HomeRecomFragment
     private lateinit var homeLiveFragment: HomeLiveFragment
+
+    private lateinit var panelSlidelLsr: HomePanelSlidelLsr
+    private var menuPanel: View? = null
 
     override val viewModel: MainPageViewModel by viewModels {
         ViewModelFactory.build { MainPageViewModel() }
@@ -43,6 +49,9 @@ class MainActivity : BaseVMActivity<HomePageRepository, MainPageViewModel>(), IS
         super.initView(savedInstanceState)
         initFragments()
         initBottom()
+
+        panelSlidelLsr = HomePanelSlidelLsr()
+        slidPanelLayout?.setPanelSlideListener(panelSlidelLsr)
     }
 
     override fun initData(savedInstanceState: Bundle?) {
@@ -127,6 +136,22 @@ class MainActivity : BaseVMActivity<HomePageRepository, MainPageViewModel>(), IS
         startActivity(intent)
     }
 
+    fun OnClick(view: View?) {
+        ZLog.d("OnClick view_id=" + view?.id)
+        when (view?.id) {
+            R.id.iv_title_menu -> {
+                if (slidPanelLayout?.isOpen == true) {
+                    slidPanelLayout?.closePane()
+                } else {
+                    slidPanelLayout?.openPane()
+                }
+            }
+            R.id.iv_title_search -> {
+                //TODO 进行搜索页跳转
+            }
+        }
+    }
+
     /**
      * 模拟Home键发送
      */
@@ -140,6 +165,16 @@ class MainActivity : BaseVMActivity<HomePageRepository, MainPageViewModel>(), IS
             }
         }
         lifecycleScope.launch(Dispatchers.IO) { sendKeyEvent(KeyEvent.KEYCODE_HOME) }
+    }
+
+    inner class HomePanelSlidelLsr : SuperSlidingPaneLayout.SimplePanelSlideListener() {
+        override fun onPanelOpened(panel: View?) {
+            super.onPanelOpened(panel)
+        }
+
+        override fun onPanelClosed(panel: View?) {
+            super.onPanelClosed(panel)
+        }
     }
 
 }

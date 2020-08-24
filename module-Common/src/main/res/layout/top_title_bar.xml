@@ -5,7 +5,7 @@
     android:gravity="center"
     android:background="#1B82D2">
     <ImageView
-        android:id="@+id/ivLeft"
+        android:id="@+id/iv_title_menu"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:src="@drawable/btn_menu_selector"
@@ -24,7 +24,7 @@
         android:layout_gravity="center_horizontal"
         android:text="@string/app_name"/>
     <ImageView
-        android:id="@+id/ivRight"
+        android:id="@+id/iv_title_search"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:paddingLeft="@dimen/size_14dp"

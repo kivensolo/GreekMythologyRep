@@ -2,17 +2,25 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+<!--    &lt;!&ndash;内容区域&ndash;&gt;-->
+<!--    <com.module.slide.SuperSwipeRefreshLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        app:loading_img_direction="top"-->
+<!--        tools:background="@color/accent_A100">-->
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" />
+
+<!--    </com.module.slide.SuperSwipeRefreshLayout>-->
 
     <ViewStub
         android:id="@+id/load_state"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
     <ViewStub
         android:id="@+id/fbtn_go_top"
