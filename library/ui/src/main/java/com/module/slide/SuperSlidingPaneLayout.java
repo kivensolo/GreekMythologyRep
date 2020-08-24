@@ -1,5 +1,5 @@
 
-package com.module.touch;
+package com.module.slide;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -42,19 +42,28 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 /**
+ * SuperSlidingPaneLayout 基于 SlidingPaneLayout提供了额外几种侧滑效果;
+ *
  * SlidingPaneLayout provides a horizontal, multi-pane layout for use at the top level
  * of a UI. A left (or first) pane is treated as a content list or browser, subordinate to a
  * primary detail view for displaying content.
+ * SlidingPaneLayout提供了一个水平的、多窗格的布局，用于UI的顶层(根布局)。
+ * 左边(或第一个)窗格被视为内容列表或浏览器，从属于用于显示内容的主详细信息视图。
  *
  * <p>Child views may overlap if their combined width exceeds the available width
  * in the SlidingPaneLayout. When this occurs the user may slide the topmost view out of the way
  * by dragging it, or by navigating in the direction of the overlapped view using a keyboard.
  * If the content of the dragged child view is itself horizontally scrollable, the user may
  * grab it by the very edge.</p>
+ * 如果子视图的组合宽度超过SlidingPaneLayout中的可用宽度，则它们可能会重叠。当这种情况发生时，
+ * 用户可以通过拖动将最上面的视图移开，或者使用键盘在重叠视图的方向上导航。
+ * 如果被拖动的子视图的内容本身是水平滚动的，用户可以抓住它的边缘。
  *
  * <p>Thanks to this sliding behavior, SlidingPaneLayout may be suitable for creating layouts
  * that can smoothly adapt across many different screen sizes, expanding out fully on larger
  * screens and collapsing on smaller screens.</p>
+ * 由于这种滑动行为，SlidingPaneLayout可能适合创建布局，可以平滑地适应许多不同的屏幕尺寸，
+ * 在大屏幕上完全展开和在小屏幕上崩溃
  *
  * <p>SlidingPaneLayout is distinct from a navigation drawer as described in the design
  * guide and should not be used in the same scenarios. SlidingPaneLayout should be thought
@@ -63,22 +72,34 @@ import java.util.ArrayList;
  * a physicality and direct information hierarchy between panes that does not necessarily exist
  * in a scenario where a navigation drawer should be used instead.</p>
  *
+ * SlidingPaneLayout 与设计指南中描述的导航抽屉不同，不应在同一方案中使用。
+ * SlidingPaneLayout 应仅视为一种允许通常用于较大屏幕的双窗格布局，以自然的方式适应较小的屏幕。
+ * SlidingPaneLayout 表示的交互模式意味着在应该使用导航抽屉的方案中不一定存在的窗格之间存在物理性和直接信息层次结构。
+ *
  * <p>Appropriate uses of SlidingPaneLayout include pairings of panes such as a contact list and
  * subordinate interactions with those contacts, or an email thread list with the content pane
  * displaying the contents of the selected thread. Inappropriate uses of SlidingPaneLayout include
  * switching between disparate functions of your app, such as jumping from a social stream view
  * to a view of your personal profile - cases such as this should use the navigation drawer
- * pattern instead. ({@link DrawerLayout DrawerLayout} implements this pattern.)</p>
+ * pattern instead. ({@link androidx.drawerlayout.widget.DrawerLayout DrawerLayout} implements this pattern.)</p>
+ * SlidingPaneLayout 的适当用途包括窗格的配对，如联系人列表和与这些联系人的从属交互，
+ * 或包含显示所选线程内容的内容窗格的电子邮件线程列表。
+ * SlidingPaneLayout 的不当使用包括在应用的不同功能之间切换，例如从社交流视图跳转到个人配置文件视图 -
+ * 此类情况下，应改用导航抽屉模式。（[@link出抽屉放）实现此模式。
  *
  * <p>Like {@link android.widget.LinearLayout LinearLayout}, SlidingPaneLayout supports
  * the use of the layout parameter <code>layout_weight</code> on child views to determine
  * how to divide leftover space after measurement is complete. It is only relevant for width.
  * When views do not overlap weight behaves as it does in a LinearLayout.</p>
+ * 与 LinearLayout 一样，SlidingPaneLayout 支持使用子视图上的layout_weight布局参数来确定在测量完成后如何划分剩余空间。
+ * 它只与宽度相关。当视图不重叠时，权重的行为与LinearLayout中的行为一样。
  *
  * <p>When views do overlap, weight on a slideable pane indicates that the pane should be
  * sized to fill all available space in the closed state. Weight on a pane that becomes covered
  * indicates that the pane should be sized to fill all available space except a small minimum strip
  * that the user may use to grab the slideable view and pull it back over into a closed state.</p>
+ * 当视图重叠时，可滑动窗格(slideable pane)上的weight表示应调整窗格的大小以填充处于关闭状态的所有可用空间。
+ * 覆盖窗格上的权重表示应调整窗格大小以填充所有可用空间，但用户可以用于抓取可滑动视图并将其拉回关闭状态的最小小条带除外。
  */
 public class SuperSlidingPaneLayout extends ViewGroup {
     private static final String TAG = "SlidingPaneLayout";
@@ -209,12 +230,12 @@ public class SuperSlidingPaneLayout extends ViewGroup {
 
     public enum Mode {
 
-        DEFAULT(0),
-        TRANSLATION(1),
-        SCALE_MENU(2),
-        SCALE_PANEL(3),
-        SCALE_BOTH(4),
-        TRANSLATION_SCALE(5);
+        DEFAULT(0),             // 默认不动，只是将可见PANEL滑开
+        TRANSLATION(1),         // Menu和可见窗格一起滑动
+        SCALE_MENU(2),          // Menu进入时有缩放效果
+        SCALE_PANEL(3),         // PANEL退出时有缩放效果
+        SCALE_BOTH(4),          // MENU和PANEL都有缩放效果
+        TRANSLATION_SCALE(5);   // MENU和PANEL一起滑动并伴随缩放效果
 
         private int mValue;
 
@@ -243,25 +264,33 @@ public class SuperSlidingPaneLayout extends ViewGroup {
 
     /**
      * Listener for monitoring events about sliding panes.
+     * 用于监视有关滑动窗格的事件的侦听器
      */
     public interface PanelSlideListener {
         /**
          * Called when a sliding pane's position changes.
+         * 当滑动窗格的位置改变时调用
          * @param panel The child view that was moved
+         *              被移动的子视图
          * @param slideOffset The new offset of this sliding pane within its range, from 0-1
+         *              此滑动窗格在其范围内(从0-1)的新偏移量
          */
         public void onPanelSlide(View panel, float slideOffset);
         /**
          * Called when a sliding pane becomes slid completely open. The pane may or may not
          * be interactive at this point depending on how much of the pane is visible.
+         * 当滑动窗格完全打开时调用,此时，窗格可能是交互式的，也可能不是，这取决于窗格的可见程度.
          * @param panel The child view that was slid to an open position, revealing other panes
+         *              子view被滑动到一个开放的位置，露出其他窗格
          */
         public void onPanelOpened(View panel);
 
         /**
          * Called when a sliding pane becomes slid completely closed. The pane is now guaranteed
          * to be interactive. It may now obscure other views in the layout.
+         * 当滑动窗格完全关闭时调用,窗格现在保证是交互式的。它现在可能会掩盖布局中的其他视图;
          * @param panel The child view that was slid to a closed position
+         *              子view滑到一个封闭的位置
          */
         public void onPanelClosed(View panel);
     }
@@ -269,6 +298,8 @@ public class SuperSlidingPaneLayout extends ViewGroup {
     /**
      * No-op stubs for {@link PanelSlideListener}. If you only want to implement a subset
      * of the listener methods you can extend this instead of implement the full interface.
+     * PanelSlideListener的无操作实现(No-op stubs for xxxx)，如果你只是想实现一个接口方法的子集，就可以继承这个类，
+     * 而不是实现整个完整的接口;
      */
     public static class SimplePanelSlideListener implements PanelSlideListener {
         @Override

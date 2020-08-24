@@ -1,4 +1,4 @@
-package com.module.swiperefresh;
+package com.module.slide;
 
 import android.content.Context;
 import android.content.res.Resources;
