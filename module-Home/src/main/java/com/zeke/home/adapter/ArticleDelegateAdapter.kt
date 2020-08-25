@@ -2,19 +2,17 @@ package com.zeke.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.kingz.module.common.adapter.IDelegateAdapter
 import com.kingz.module.home.R
 import com.zeke.home.entity.ArticleData
-import com.zeke.home.entity.HomeRecomData
 import com.zeke.kangaroo.adapter.CommonRecyclerAdapter
 
 /**
  * author: King.Z <br>
  * date:  2020/5/24 13:22 <br>
- * description: 3个海报的代理Adapter <br>
+ * description: 文章类型模板UI的代理Adapter <br>
  */
 class ArticleDelegateAdapter: IDelegateAdapter<ArticleData.DataBean.ArticleItem> {
     override fun isForViewType(dataType: ArticleData.DataBean.ArticleItem): Boolean {
