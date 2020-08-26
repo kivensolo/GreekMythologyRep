@@ -180,20 +180,20 @@ dependencies {
     implementation root_dependencies["arouter"]
     kapt root_dependencies["arouter_compiler"]
 
-    logger.log(LogLevel.ERROR,'  +--- add project module-Common to app.')
+    logger.log(LogLevel.ERROR,'  +--- add module-Common to app.')
     implementation project(':module-Common')
     if (isHomeModule.toBoolean()) {
-        logger.log(LogLevel.ERROR,'  +--- add project module-Home to app.')
+        logger.log(LogLevel.ERROR,'  +--- add module-Home to app.')
         implementation project(':module-Home')
     }
     if (isLoginModule.toBoolean()) {
-        logger.log(LogLevel.ERROR,'  +--- add project module-Login to app.')
+        logger.log(LogLevel.ERROR,'  +--- add module-Login to app.')
         implementation project(':module-Login')
     }
-    logger.log(LogLevel.ERROR,'  +--- add project module-Demo to app.')
+    logger.log(LogLevel.ERROR,'  +--- add module-Demo to app.')
     implementation project(":module-Demo")
 
-    logger.log(LogLevel.ERROR,'  +--- add project library-player to app.')
+    logger.log(LogLevel.ERROR,'  +--- add library-player to app.')
     implementation project(':library-player')
 
 //    implementation 'com.getbase:floatingactionbutton:1.10.1'
