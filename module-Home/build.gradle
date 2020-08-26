@@ -5,8 +5,11 @@ if (isHomeModule.toBoolean()) {
 }
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 def root_android = rootProject.ext.android
+def root_dependencies = rootProject.ext.dependencies
+
 android {
     compileSdkVersion root_android.compileSdkVersion
     buildToolsVersion root_android.buildToolsVersion
@@ -24,6 +27,14 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
+
+
+        // Arouter的Kotlin配置
+        kapt {
+            arguments {
+                arg("AROUTER_MODULE_NAME", project.getName())
+            }
+        }
     }
 
     buildTypes {
@@ -65,6 +76,9 @@ dependencies {
     testImplementation rootProject.ext.test["junit"]
     androidTestImplementation rootProject.ext.test["test-ext-junit"]
     androidTestImplementation rootProject.ext.test["support-test-espresso"]
+
+    implementation root_dependencies["arouter"]
+    kapt root_dependencies["arouter_compiler"]
 
     implementation project(':module-Common')
 

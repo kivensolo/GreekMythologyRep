@@ -3,7 +3,6 @@ package com.zeke.module_login
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
-import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
@@ -18,6 +17,7 @@ import com.kingz.base.factory.ViewModelFactory
 import com.kingz.database.DatabaseApplication
 import com.kingz.database.entity.UserEntity
 import com.kingz.module.common.router.RPath
+import com.kingz.module.common.router.Router
 import com.zeke.kangaroo.utils.ZLog
 import com.zeke.module_login.entity.Data
 import com.zeke.module_login.entity.UserInfoBean
@@ -292,16 +292,7 @@ class SplashActivity : BaseVMActivity<LoginRepository, LoginViewModel>(), View.O
     private fun openMainPage() {
         GlobalScope.launch {
             delay(3000)
-            val intent = with(Intent()) {
-                action = "com.kingz.home.mainpage"
-//            addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
-                this
-            }
-            startActivity(intent)
-            // FixMe 打开pageMain会报错
-//            ARouter.getInstance()
-//                .build(RPath.PAGE_MAIN)
-//                .navigation(baseContext)
+            Router.startActivity(RPath.PAGE_MAIN)
             finish()
         }
     }

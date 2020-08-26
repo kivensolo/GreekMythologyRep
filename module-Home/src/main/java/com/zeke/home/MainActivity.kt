@@ -30,7 +30,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-@Route(path = RPath.PAGE_MAIN, group = "modle-home")
+@Route(path = RPath.PAGE_MAIN)
 class MainActivity : BaseVMActivity<HomePageRepository, MainPageViewModel>(), ISwitcher {
 
     private lateinit var homeVodFragment: HomeRecomFragment

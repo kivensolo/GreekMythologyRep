@@ -5,8 +5,10 @@ if (isLoginModule.toBoolean()) {
 }
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 def root_android = rootProject.ext.android
+def root_dependencies = rootProject.ext.dependencies
 
 android {
     compileSdkVersion root_android.compileSdkVersion
@@ -25,6 +27,13 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
+
+         // Arouter的Kotlin配置
+        kapt {
+            arguments {
+                arg("AROUTER_MODULE_NAME", project.getName())
+            }
+        }
     }
 
     sourceSets {
@@ -67,6 +76,9 @@ dependencies {
 //    if(!isLoginModule){
 //        implementation project(':module-Common')
 //    }
+    implementation root_dependencies["arouter"]
+    kapt root_dependencies["arouter_compiler"]
+
     implementation project(path: ':module-Common')
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])

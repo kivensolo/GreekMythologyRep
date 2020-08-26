@@ -56,6 +56,13 @@ android {
 //                //  .externalNativeBuild/cmake/debug/{abi}/cmake_build_command.txt
 //            }
 //        }
+
+        // Arouter的Kotlin配置
+        kapt {
+            arguments {
+                arg("AROUTER_MODULE_NAME", project.getName())
+            }
+        }
     }
 
     buildTypes {
@@ -164,18 +171,29 @@ android {
 
 kapt {
     arguments {
-        arg("AROUTER_MODULE_NAME", project.getName())
+        arg("moduleName", project.getName())
     }
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar','*.aar'], dir: 'libs')
+    implementation root_dependencies["arouter"]
     kapt root_dependencies["arouter_compiler"]
 
+    logger.log(LogLevel.ERROR,'  +--- add project module-Common to app.')
     implementation project(':module-Common')
-    if (isHomeModule.toBoolean()) { implementation project(':module-Home') }
-    if (isLoginModule.toBoolean()) { implementation project(':module-Login') }
+    if (isHomeModule.toBoolean()) {
+        logger.log(LogLevel.ERROR,'  +--- add project module-Home to app.')
+        implementation project(':module-Home')
+    }
+    if (isLoginModule.toBoolean()) {
+        logger.log(LogLevel.ERROR,'  +--- add project module-Login to app.')
+        implementation project(':module-Login')
+    }
+    logger.log(LogLevel.ERROR,'  +--- add project module-Demo to app.')
     implementation project(":module-Demo")
+
+    logger.log(LogLevel.ERROR,'  +--- add project library-player to app.')
     implementation project(':library-player')
 
 //    implementation 'com.getbase:floatingactionbutton:1.10.1'
