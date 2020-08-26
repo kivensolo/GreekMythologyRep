@@ -10,7 +10,6 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
-                <action android:name="com.kingz.home.mainpage"/>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
