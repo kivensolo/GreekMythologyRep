@@ -23,7 +23,7 @@ project(':library-network').projectDir = new File(rootDir, 'library/network')
 
 
 gradle.beforeProject {
-    project -> println("------> A Project Ready to config ......${project.name}")
+    project -> println("------> Project [${project.name}]  Ready to config ...")
 }
 
 gradle.afterProject {

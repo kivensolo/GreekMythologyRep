@@ -18,6 +18,7 @@ import com.kingz.database.DatabaseApplication
 import com.kingz.database.entity.UserEntity
 import com.kingz.module.common.router.RPath
 import com.kingz.module.common.router.Router
+import com.kingz.module.common.user.UserInfo
 import com.zeke.kangaroo.utils.ZLog
 import com.zeke.module_login.entity.Data
 import com.zeke.module_login.entity.UserInfoBean
@@ -108,7 +109,7 @@ class SplashActivity : BaseVMActivity<LoginRepository, LoginViewModel>(), View.O
 
     private fun checkUserCacheInfo() {
         lifecycleScope.launch(Dispatchers.IO) {
-            val userInfo = DatabaseApplication.getInstance().getUserDao().getUserInfo()
+            val userInfo = UserInfo.getUserInfor()
             withContext(Dispatchers.Main){
                 if (userInfo != null) {
                     buttonLeft?.visibility = View.GONE

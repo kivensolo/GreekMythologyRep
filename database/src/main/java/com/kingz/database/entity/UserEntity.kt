@@ -10,13 +10,14 @@ import java.io.Serializable
  * description: 数据库保存的用户信息条目 <br>
  */
 @Entity(tableName = "user", primaryKeys = ["id"])
-class UserEntity : Serializable {
-    @ColumnInfo(name = "admin")     var admin: Boolean = false
-    @ColumnInfo(name = "nickname")  var nickname: String = ""
-    @ColumnInfo(name = "username")  var username: String = ""
-    @ColumnInfo(name = "publicName")var publicName: String = ""
-    @ColumnInfo(name = "token")     var token: String = ""
-    @ColumnInfo(name = "id")        var id: Int = -1
+class UserEntity(
+    @ColumnInfo(name = "admin")     var admin: Boolean = false,
+    @ColumnInfo(name = "nickname")  var nickname: String = "",
+    @ColumnInfo(name = "username")  var username: String = "",
+    @ColumnInfo(name = "publicName")var publicName: String = "",
+    @ColumnInfo(name = "token")     var token: String = "",
+    @ColumnInfo(name = "id")        var id: Int = -1)
+    : Serializable {
 
     override fun toString(): String {
         return "UserEntity(admin=$admin, nickname='$nickname', username='$username', publicName='$publicName', token='$token', id=$id)"

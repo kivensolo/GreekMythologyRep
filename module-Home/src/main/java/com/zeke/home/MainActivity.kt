@@ -10,6 +10,7 @@ import android.view.KeyEvent
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.kingz.base.BaseVMActivity
@@ -27,6 +28,7 @@ import com.zeke.home.repository.HomePageRepository
 import com.zeke.home.viewmodel.MainPageViewModel
 import com.zeke.kangaroo.utils.ZLog
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.slide_menu_layout.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -61,6 +63,7 @@ class MainActivity : BaseVMActivity<HomePageRepository, MainPageViewModel>(), IS
         lifecycleScope.launch(Dispatchers.IO) {
             HomeSongModel<BaseEntity>().testInsertData()
         }
+        viewModel.getUserInfo()
     }
 
     /**
@@ -76,6 +79,15 @@ class MainActivity : BaseVMActivity<HomePageRepository, MainPageViewModel>(), IS
         fragmentTS.add(R.id.content, homeLiveFragment)
             .hide(homeLiveFragment)
         fragmentTS.commit()
+    }
+
+    override fun initViewModel() {
+        super.initViewModel()
+        viewModel.userInfoLiveData.observe(this, Observer{
+            ZLog.d("userInfoLiveData onChanged: $it")
+            if(it == null) return@Observer
+            tvUser.text = it.username
+        })
     }
 
     /**

@@ -2,6 +2,7 @@ package com.zeke.home.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import com.kingz.base.BaseViewModel
+import com.kingz.database.entity.UserEntity
 import com.zeke.home.entity.ArticleData
 import com.zeke.home.repository.HomePageRepository
 import com.zeke.kangaroo.utils.ZLog
@@ -15,6 +16,10 @@ class MainPageViewModel : BaseViewModel<HomePageRepository>() {
         MutableLiveData<ArticleData>()
     }
 
+    val userInfoLiveData: MutableLiveData<UserEntity> by lazy {
+        MutableLiveData<UserEntity>()
+    }
+
     fun getArticalData(pageId: String) {
         launchDefault {
             try {
@@ -24,6 +29,13 @@ class MainPageViewModel : BaseViewModel<HomePageRepository>() {
                 ZLog.e("dologin on exception: ${e.printStackTrace()}")
                 articalLiveData.postValue(null)
             }
+        }
+    }
+
+    fun getUserInfo() {
+        launchIO {
+            val info = repository.getUserInfo()
+            userInfoLiveData.postValue(info)
         }
     }
 

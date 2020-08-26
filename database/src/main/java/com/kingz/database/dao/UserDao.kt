@@ -1,6 +1,9 @@
 package com.kingz.database.dao
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import com.kingz.database.entity.UserEntity
 
 /**
@@ -16,11 +19,15 @@ interface UserDao {
 
 //    //TODO 如何删除全部数据?
 //    @Delete
-//    abstract fun delete()  // does not have any parameters to delete
+    // Method annotated with @Delete but does not have any parameters to delete.
+//    suspend fun logout()  // does not have any parameters to delete
 
-    @Update
-    suspend fun update(data: UserEntity)
+//    @Update
+//    suspend fun update(data: UserEntity)
 
     @Query("SELECT * FROM user")
-    fun getUserInfo(): UserEntity?
+    suspend fun getUserInfo(): UserEntity?
+
+//    @Query("SELECT * FROM user where publicName NOT NULL")
+//    suspend fun isUserLogin():Int
 }
