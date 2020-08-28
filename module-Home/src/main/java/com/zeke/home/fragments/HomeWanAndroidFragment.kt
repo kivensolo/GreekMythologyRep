@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kingz.base.BaseVMFragment
+import com.kingz.base.CoroutineState
 import com.kingz.base.factory.ViewModelFactory
 import com.kingz.module.home.R
 import com.zeke.home.adapter.ArticleDelegateAdapter
@@ -13,6 +14,7 @@ import com.zeke.home.adapter.HomeArticleAdapter
 import com.zeke.home.repository.HomePageRepository
 import com.zeke.home.viewmodel.MainPageViewModel
 import com.zeke.kangaroo.utils.ZLog
+import kotlinx.android.synthetic.main.activity_main.*
 
 /**
  * 首页热门推荐(玩android)的Fragemnt
@@ -34,6 +36,11 @@ class HomeWanAndroidFragment : BaseVMFragment<HomePageRepository, MainPageViewMo
                 articleAdapter.addAll(it.data?.datas)
                 mRecyclerView.adapter = articleAdapter
                 (mRecyclerView.adapter as HomeArticleAdapter).notifyDataSetChanged()
+
+                if (viewModel.statusLiveData.value == CoroutineState.FINISH ||
+                    viewModel.statusLiveData.value == CoroutineState.ERROR) {
+                    swipeRefreshLayout?.isRefreshing = false
+                }
             }
         })
     }

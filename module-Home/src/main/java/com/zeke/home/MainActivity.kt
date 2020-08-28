@@ -2,14 +2,17 @@ package com.zeke.home
 
 import android.Manifest
 import android.app.Instrumentation
+import android.app.Service
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.os.Vibrator
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -18,8 +21,13 @@ import com.kingz.base.factory.ViewModelFactory
 import com.kingz.database.entity.BaseEntity
 import com.kingz.module.common.base.BaseFragment
 import com.kingz.module.common.router.RPath
+import com.kingz.module.common.utils.RandomUtils
+import com.kingz.module.home.BuildConfig
 import com.kingz.module.home.R
 import com.module.slide.SuperSlidingPaneLayout
+import com.module.slide.SuperSwipeRefreshLayout
+import com.youth.banner.BannerConfig
+import com.zeke.home.banner.BannerGlideImageLoader
 import com.zeke.home.fragments.HomeLiveFragment
 import com.zeke.home.fragments.HomeRecomFragment
 import com.zeke.home.fragments.ISwitcher
@@ -31,6 +39,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.slide_menu_layout.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.lang.String
 
 @Route(path = RPath.PAGE_MAIN)
 class MainActivity : BaseVMActivity<HomePageRepository, MainPageViewModel>(), ISwitcher {
@@ -40,6 +49,8 @@ class MainActivity : BaseVMActivity<HomePageRepository, MainPageViewModel>(), IS
 
     private lateinit var panelSlidelLsr: HomePanelSlidelLsr
     private var menuPanel: View? = null
+    // 当前页数
+    private var mCurPage = 1
 
     override val viewModel: MainPageViewModel by viewModels {
         ViewModelFactory.build { MainPageViewModel() }
@@ -51,9 +62,37 @@ class MainActivity : BaseVMActivity<HomePageRepository, MainPageViewModel>(), IS
         super.initView(savedInstanceState)
         initFragments()
         initBottom()
+        initSlidingPaneLayout()
+        initSwipeRefreshLayout()
+        initBannerView()
+    }
 
+    private fun initBannerView() {
+        banner?.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE)
+        banner?.setImageLoader(BannerGlideImageLoader())
+        banner?.setOnBannerListener { position ->
+            // TODO 进行web页面跳转
+        }
+    }
+
+    private fun initSlidingPaneLayout() {
         panelSlidelLsr = HomePanelSlidelLsr()
         slidPanelLayout?.setPanelSlideListener(panelSlidelLsr)
+        slidPanelLayout?.sliderFadeColor = ContextCompat.getColor(this, R.color.black_transparent)
+        slidPanelLayout?.coveredFadeColor = ContextCompat.getColor(this, R.color.transparent)
+        tvVersion?.text = String.format("v%s", BuildConfig.VERSION_NAME)
+    }
+
+    private fun initSwipeRefreshLayout() {
+        swipeRefreshLayout?.setOnRefreshListener { direction ->
+            if (direction == SuperSwipeRefreshLayout.Direction.TOP) {
+                mCurPage = 1
+                //TODO 进行banner数据获取
+            }
+            val vibrator = getSystemService(Service.VIBRATOR_SERVICE) as Vibrator
+            vibrator.vibrate(70)
+        }
+//        swipeRefreshLayout?.isRefreshing = true
     }
 
     override fun initData(savedInstanceState: Bundle?) {
@@ -83,10 +122,14 @@ class MainActivity : BaseVMActivity<HomePageRepository, MainPageViewModel>(), IS
 
     override fun initViewModel() {
         super.initViewModel()
-        viewModel.userInfoLiveData.observe(this, Observer{
+        viewModel.userInfoLiveData.observe(this, Observer {
             ZLog.d("userInfoLiveData onChanged: $it")
-            if(it == null) return@Observer
+            if (it == null) {
+                tvLogout.visibility = View.INVISIBLE
+                return@Observer
+            }
             tvUser.text = it.username
+            tvLogout.visibility = View.VISIBLE
         })
     }
 
@@ -161,6 +204,28 @@ class MainActivity : BaseVMActivity<HomePageRepository, MainPageViewModel>(), IS
             R.id.iv_title_search -> {
                 //TODO 进行搜索页跳转
             }
+            R.id.tvVersion -> {
+                clickVersion(true)
+            }
+        }
+    }
+
+    private fun clickVersion(isClick: Boolean) {
+        if (isClick) {
+            addHeart(1)
+        }
+    }
+
+    inner class HomePanelSlidelLsr : SuperSlidingPaneLayout.SimplePanelSlideListener() {
+        override fun onPanelOpened(panel: View?) {
+            super.onPanelOpened(panel)
+            addHeart(RandomUtils.INSTANCE.random(5, 15))
+        }
+    }
+
+    private fun addHeart(count: Int) {
+        for (i in 0 until count) {
+            flutteringLayout.addHeart()
         }
     }
 
@@ -178,16 +243,5 @@ class MainActivity : BaseVMActivity<HomePageRepository, MainPageViewModel>(), IS
         }
         lifecycleScope.launch(Dispatchers.IO) { sendKeyEvent(KeyEvent.KEYCODE_HOME) }
     }
-
-    inner class HomePanelSlidelLsr : SuperSlidingPaneLayout.SimplePanelSlideListener() {
-        override fun onPanelOpened(panel: View?) {
-            super.onPanelOpened(panel)
-        }
-
-        override fun onPanelClosed(panel: View?) {
-            super.onPanelClosed(panel)
-        }
-    }
-
 }
 

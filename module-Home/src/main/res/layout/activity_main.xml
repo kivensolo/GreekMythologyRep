@@ -32,6 +32,7 @@
 
         <!--内容区域-->
         <com.module.slide.SuperSwipeRefreshLayout
+            android:id="@+id/swipeRefreshLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:loading_img_direction="top"
