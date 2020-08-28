@@ -6,6 +6,7 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.kingz.database.DatabaseApplication
 import com.kingz.module.common.service.GitHubService
 import com.kingz.module.common.service.WeatherService
+import com.kingz.module.common.utils.crash.NeverCrash
 import com.tencent.bugly.crashreport.CrashReport
 import com.zeke.kangaroo.utils.ZLog
 import com.zeke.network.retrofit.mannager.Api
@@ -40,6 +41,19 @@ open class CommonApp: DatabaseApplication(){
         initApiManager()
         initLog()
         initBugly()
+        initCrashCatcher()
+    }
+
+    private fun initCrashCatcher() {
+        NeverCrash.init(object : NeverCrash.CrashHandler {
+            override fun uncaughtException(thread: Thread?, throwable: Throwable?) {
+                if (BuildConfig.DEBUG) {
+                    ZLog.e(TAG, "Crash", throwable)
+                    CrashReport.postCatchedException(throwable)
+                }
+            }
+        }
+        )
     }
 
     private fun initBugly() {
