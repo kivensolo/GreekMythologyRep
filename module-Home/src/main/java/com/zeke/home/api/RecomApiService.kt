@@ -1,7 +1,7 @@
 package com.zeke.home.api
 
 import com.kingz.base.BaseApiService
-import com.zeke.home.entity.ArticleData
+import com.zeke.home.bean.ArticleData
 import com.zeke.home.entity.BannerData
 import retrofit2.http.GET
 import retrofit2.http.Path

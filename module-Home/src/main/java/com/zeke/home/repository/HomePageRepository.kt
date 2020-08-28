@@ -5,7 +5,7 @@ import com.kingz.database.entity.UserEntity
 import com.kingz.module.common.service.ApiServiceUtil
 import com.kingz.module.common.user.UserInfo
 import com.zeke.home.api.RecomApiService
-import com.zeke.home.entity.ArticleData
+import com.zeke.home.bean.ArticleData
 
 class HomePageRepository : BaseRepository() {
 

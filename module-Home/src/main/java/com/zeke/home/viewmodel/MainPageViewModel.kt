@@ -3,7 +3,7 @@ package com.zeke.home.viewmodel
 import androidx.lifecycle.MutableLiveData
 import com.kingz.base.BaseViewModel
 import com.kingz.database.entity.UserEntity
-import com.zeke.home.entity.ArticleData
+import com.zeke.home.bean.ArticleData
 import com.zeke.home.repository.HomePageRepository
 import com.zeke.kangaroo.utils.ZLog
 

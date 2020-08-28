@@ -2,8 +2,7 @@ package com.zeke.home.adapter
 
 import android.view.ViewGroup
 import com.kingz.module.common.adapter.IDelegateAdapter
-import com.zeke.home.entity.ArticleData
-import com.zeke.home.entity.HomeRecomData
+import com.zeke.home.bean.ArticleData
 import com.zeke.kangaroo.adapter.CommonRecyclerAdapter
 
 

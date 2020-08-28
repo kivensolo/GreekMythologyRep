@@ -1,4 +1,4 @@
-package com.zeke.home.entity
+package com.zeke.home.bean
 
 class  ArticleData {
     var data: DataBean? = null
