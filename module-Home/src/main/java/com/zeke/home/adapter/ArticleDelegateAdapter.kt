@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.kingz.module.common.adapter.IDelegateAdapter
+import com.kingz.module.common.bean.ArticleData
 import com.kingz.module.home.R
-import com.zeke.home.bean.ArticleData
 import com.zeke.kangaroo.adapter.CommonRecyclerAdapter
 
 /**

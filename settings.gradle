@@ -8,6 +8,7 @@ include ':module-Common'
 include ':module-Home'
 include ':module-Demo'
 include ':module-Login'
+include ':module-Web'
 
 def rootDir = settingsDir
 // 自定义lib库Project
@@ -29,3 +30,4 @@ gradle.beforeProject {
 gradle.afterProject {
     println "<------ Settings end."
 }
+

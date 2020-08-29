@@ -20,8 +20,10 @@ import com.kingz.base.BaseVMActivity
 import com.kingz.base.factory.ViewModelFactory
 import com.kingz.database.entity.BaseEntity
 import com.kingz.module.common.base.BaseFragment
+import com.kingz.module.common.repository.WanAndroidRepository
 import com.kingz.module.common.router.RPath
 import com.kingz.module.common.utils.RandomUtils
+import com.kingz.module.common.viewmodel.WanAndroidViewModel
 import com.kingz.module.home.BuildConfig
 import com.kingz.module.home.R
 import com.module.slide.SuperSlidingPaneLayout
@@ -32,8 +34,6 @@ import com.zeke.home.fragments.HomeLiveFragment
 import com.zeke.home.fragments.HomeRecomFragment
 import com.zeke.home.fragments.ISwitcher
 import com.zeke.home.model.HomeSongModel
-import com.zeke.home.repository.HomePageRepository
-import com.zeke.home.viewmodel.MainPageViewModel
 import com.zeke.kangaroo.utils.ZLog
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.slide_menu_layout.*
@@ -42,7 +42,7 @@ import kotlinx.coroutines.launch
 import java.lang.String
 
 @Route(path = RPath.PAGE_MAIN)
-class MainActivity : BaseVMActivity<HomePageRepository, MainPageViewModel>(), ISwitcher {
+class MainActivity : BaseVMActivity<WanAndroidRepository, WanAndroidViewModel>(), ISwitcher {
 
     private lateinit var homeVodFragment: HomeRecomFragment
     private lateinit var homeLiveFragment: HomeLiveFragment
@@ -52,8 +52,8 @@ class MainActivity : BaseVMActivity<HomePageRepository, MainPageViewModel>(), IS
     // 当前页数
     private var mCurPage = 1
 
-    override val viewModel: MainPageViewModel by viewModels {
-        ViewModelFactory.build { MainPageViewModel() }
+    override val viewModel: WanAndroidViewModel by viewModels {
+        ViewModelFactory.build { WanAndroidViewModel() }
     }
 
     override fun getContentView() = R.layout.activity_main
@@ -201,7 +201,7 @@ class MainActivity : BaseVMActivity<HomePageRepository, MainPageViewModel>(), IS
                     slidPanelLayout?.openPane()
                 }
             }
-            R.id.iv_title_search -> {
+            R.id.iv_toolbar_right -> {
                 //TODO 进行搜索页跳转
             }
             R.id.tvVersion -> {

@@ -1,15 +1,15 @@
-package com.zeke.home.viewmodel
+package com.kingz.module.common.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import com.kingz.base.BaseViewModel
 import com.kingz.database.entity.UserEntity
-import com.zeke.home.bean.ArticleData
-import com.zeke.home.repository.HomePageRepository
+import com.kingz.module.common.bean.ArticleData
+import com.kingz.module.common.repository.WanAndroidRepository
 import com.zeke.kangaroo.utils.ZLog
 
-class MainPageViewModel : BaseViewModel<HomePageRepository>() {
-    override fun createRepository(): HomePageRepository {
-        return HomePageRepository()
+open class WanAndroidViewModel : BaseViewModel<WanAndroidRepository>() {
+    override fun createRepository(): WanAndroidRepository {
+        return WanAndroidRepository()
     }
 
     val articalLiveData: MutableLiveData<ArticleData> by lazy {
@@ -20,7 +20,7 @@ class MainPageViewModel : BaseViewModel<HomePageRepository>() {
         MutableLiveData<UserEntity>()
     }
 
-    fun getArticalData(pageId: String) {
+    fun getArticalData(pageId: Int) {
         launchDefault {
             try {
                 val result = repository.getArticals(pageId)

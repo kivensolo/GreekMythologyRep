@@ -1,0 +1,8 @@
+<resources>
+    <!-- toolbar menu -->
+    <string name="toolbar_menu_share">分享</string>
+    <string name="toolbar_menu_collect">收藏</string>
+    <string name="toolbar_menu_un_collect">取消收藏</string>
+    <string name="toolbar_menu_refresh">刷新</string>
+    <string name="toolbar_menu_explorer">用浏览器打开</string>
+</resources>

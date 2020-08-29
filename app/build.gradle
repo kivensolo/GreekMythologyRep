@@ -192,7 +192,8 @@ dependencies {
     }
     logger.log(LogLevel.ERROR,'  +--- add module-Demo to app.')
     implementation project(":module-Demo")
-
+    logger.log(LogLevel.ERROR,'  +--- add module-Web to app.')
+    implementation project(":module-Web")
     logger.log(LogLevel.ERROR,'  +--- add library-player to app.')
     implementation project(':library-player')
 

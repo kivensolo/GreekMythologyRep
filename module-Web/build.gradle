@@ -1,0 +1,66 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+def root_android = rootProject.ext.android
+def root_dependencies = rootProject.ext.dependencies
+
+android {
+    compileSdkVersion root_android.compileSdkVersion
+    buildToolsVersion root_android.buildToolsVersion
+
+
+    defaultConfig {
+        minSdkVersion root_android.minSdkVersion
+        targetSdkVersion root_android.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+
+        // Arouter的Kotlin配置
+        kapt {
+            arguments {
+                arg("AROUTER_MODULE_NAME", project.getName())
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        // 解决 Invoke-customs are only supported starting with Android O 报错.
+        // Reason: kotlin 字节码的问题
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        // 设置jvm target为1.8 否则某些ktx的语法糖无法使用
+        jvmTarget = "1.8"
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation rootProject.ext.dependencies["appcompat"]
+    implementation 'androidx.core:core-ktx:1.3.1'
+    testImplementation rootProject.ext.test["junit"]
+    androidTestImplementation rootProject.ext.test["test-ext-junit"]
+    androidTestImplementation rootProject.ext.test["support-test-espresso"]
+
+    implementation root_dependencies["arouter"]
+    kapt root_dependencies["arouter_compiler"]
+
+    implementation project(':module-Common')
+    implementation "com.just.agentweb:agentweb:4.1.4"
+}

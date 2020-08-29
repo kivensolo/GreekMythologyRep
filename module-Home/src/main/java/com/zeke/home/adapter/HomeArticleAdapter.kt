@@ -1,8 +1,9 @@
 package com.zeke.home.adapter
 
+import android.view.View
 import android.view.ViewGroup
 import com.kingz.module.common.adapter.IDelegateAdapter
-import com.zeke.home.bean.ArticleData
+import com.kingz.module.common.bean.ArticleData
 import com.zeke.kangaroo.adapter.CommonRecyclerAdapter
 
 
@@ -17,13 +18,16 @@ class HomeArticleAdapter : CommonRecyclerAdapter<ArticleData.DataBean.ArticleIte
     /**
      * ViewType类型判断的委托者
      */
-    var delegateAdapters: MutableList<IDelegateAdapter<ArticleData.DataBean.ArticleItem>> = ArrayList()
+    var delegateAdapters: MutableList<IDelegateAdapter<ArticleData.DataBean.ArticleItem>> =
+        ArrayList()
 
     fun addDelegate(delegateAdapter: IDelegateAdapter<ArticleData.DataBean.ArticleItem>) {
         delegateAdapters.add(delegateAdapter)
     }
 
-    override fun getItemLayout(type: Int): Int { return 0 }
+    override fun getItemLayout(type: Int): Int {
+        return 0
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         // 找到对应的委托Adapter 把onCreateViewHolder交给委托Adapter去处理
@@ -34,7 +38,7 @@ class HomeArticleAdapter : CommonRecyclerAdapter<ArticleData.DataBean.ArticleIte
         val recomData = getItem(position)
         // 遍历所有的代理，查询谁能处理
         delegateAdapters.forEach {
-            if(it.isForViewType(recomData)){
+            if (it.isForViewType(recomData)) {
                 // 谁能处理就返回他的index
                 return delegateAdapters.indexOf(it)
             }
@@ -50,5 +54,18 @@ class HomeArticleAdapter : CommonRecyclerAdapter<ArticleData.DataBean.ArticleIte
         val delegateAdapter = delegateAdapters[viewType]
         // 把onBindViewHolder交给委托Adapter去处理
         delegateAdapter.onBindViewHolder(holder, position, getItem(position))
+
+        // 监听器设置
+        if (mOnItemClickListener != null) {
+            holder.setOnClickListener { itemView ->
+                mOnItemClickListener?.onItemClick(itemView, position)
+            }
+        }
+    }
+
+    public var mOnItemClickListener: OnItemClickListener? = null
+
+    interface OnItemClickListener {
+        fun onItemClick(v: View?, position: Int)
     }
 }

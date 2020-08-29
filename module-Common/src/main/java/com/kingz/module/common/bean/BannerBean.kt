@@ -1,4 +1,4 @@
-package com.zeke.home.entity
+package com.kingz.module.common.bean
 
 data class BannerData(
     val data:MutableList<BannerItem>

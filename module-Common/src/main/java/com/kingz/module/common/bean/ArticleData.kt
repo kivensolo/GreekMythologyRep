@@ -1,4 +1,4 @@
-package com.zeke.home.bean
+package com.kingz.module.common.bean
 
 class  ArticleData {
     var data: DataBean? = null
