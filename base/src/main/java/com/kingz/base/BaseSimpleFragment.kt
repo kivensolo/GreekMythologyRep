@@ -51,6 +51,7 @@ abstract class BaseSimpleFragment : Fragment() {
         onViewCreated()
     }
 
+    /** VIewModel中持有的UI数据监听 */
     open fun initViewModel() {}
 
     abstract fun getLayoutResID(): Int

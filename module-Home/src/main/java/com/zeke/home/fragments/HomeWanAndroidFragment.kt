@@ -34,7 +34,6 @@ class HomeWanAndroidFragment : BaseVMFragment<WanAndroidRepository, WanAndroidVi
 
     override fun initViewModel() {
         super.initViewModel()
-        // 初始化VIewModel的数据监听
         viewModel.articalLiveData.observe(this, Observer {
             if (it?.data != null && it.data?.datas != null) {
                 ZLog.d("存在文章数据,进行文章数据更新")
@@ -48,6 +47,17 @@ class HomeWanAndroidFragment : BaseVMFragment<WanAndroidRepository, WanAndroidVi
                 }
             }
         })
+
+        viewModel.bannerLiveData.observe(this,  Observer {
+                ZLog.d("Banner data onChanged(): " + it.data?.data?.size)
+            if(it.data?.data?.size?:0 > 0){
+                it.data?.data?.forEach { item ->
+                    item.desc
+                    ZLog.d("+1  desc = " + item.desc)
+                }
+                //TODO 刷新UI
+            }
+        })
     }
 
     override fun onViewCreated() {
@@ -58,6 +68,8 @@ class HomeWanAndroidFragment : BaseVMFragment<WanAndroidRepository, WanAndroidVi
     override fun getLayoutResID() = R.layout.fragment_common_page
 
     override fun initData(savedInstanceState: Bundle?) {
+        viewModel.getBanner()
+
         articleAdapter = HomeArticleAdapter()
         articleAdapter.mOnItemClickListener = object : HomeArticleAdapter.OnItemClickListener {
             override fun onItemClick(v: View?, position: Int) {
@@ -72,6 +84,7 @@ class HomeWanAndroidFragment : BaseVMFragment<WanAndroidRepository, WanAndroidVi
         articleAdapter.addDelegate(ArticleDelegateAdapter())
         mRecyclerView.adapter = articleAdapter
 
+        // 执行VIewModel的数据请求
         // 获取网络数据
         viewModel.getArticalData(0)
     }
@@ -79,6 +92,8 @@ class HomeWanAndroidFragment : BaseVMFragment<WanAndroidRepository, WanAndroidVi
     override fun initView(savedInstanceState: Bundle?) {
         mRecyclerView = rootView.findViewById(R.id.recycler_view) as RecyclerView
         mRecyclerView.layoutManager = LinearLayoutManager(context)
+
+
     }
 
 

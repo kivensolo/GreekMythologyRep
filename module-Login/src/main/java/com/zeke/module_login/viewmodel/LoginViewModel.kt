@@ -15,6 +15,7 @@ class LoginViewModel : BaseViewModel<LoginRepository>() {
 
     // 用户登录数据 FIXME 为什么不接受 ResponseResult<UserInfoBean> 对象
     //    val loginInfoData: MutableLiveData<ResponseResult<UserInfoBean>> by lazy {
+    // 这种写法就是把LiveData暴露在ViewModel中，而不是放在repository中
     val loginInfoData: MutableLiveData<UserInfoBean> by lazy {
         MutableLiveData<UserInfoBean>()
     }
