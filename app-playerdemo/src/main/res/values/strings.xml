@@ -83,4 +83,7 @@
     <string name="demo_label_destory">Release</string>
     <string name="demo_label_rebuild">Rebuild</string>
 
+    <string name="demo_label_search">搜索</string>
+    <string name="demo_label_connect">连接</string>
+
 </resources>
