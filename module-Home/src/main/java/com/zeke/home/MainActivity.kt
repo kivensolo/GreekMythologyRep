@@ -3,8 +3,11 @@ package com.zeke.home
 import android.Manifest
 import android.app.Instrumentation
 import android.app.Service
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.nsd.NsdManager
+import android.net.nsd.NsdServiceInfo
 import android.os.Bundle
 import android.os.Vibrator
 import android.util.Log
@@ -103,6 +106,8 @@ class MainActivity : BaseVMActivity<WanAndroidRepository, WanAndroidViewModel>()
             HomeSongModel<BaseEntity>().testInsertData()
         }
         viewModel.getUserInfo()
+
+        registerNSDServer(55589)
     }
 
     /**
@@ -243,5 +248,76 @@ class MainActivity : BaseVMActivity<WanAndroidRepository, WanAndroidViewModel>()
         }
         lifecycleScope.launch(Dispatchers.IO) { sendKeyEvent(KeyEvent.KEYCODE_HOME) }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        stopNSDServer()
+    }
+
+
+    private var mServiceName: kotlin.String? = null
+    private var nsdManager : NsdManager? = null
+
+    /**
+     * 进行NSD服务注册
+     * NSD的Server服务器端的注册和监听最好是放在子线程中
+     * 或者使用Android服务类Service来注册监听。
+     * 服务器端直接在Activity监听，回调，拿到里面的数据显示在Activity上面是有点问题的
+     */
+    private fun registerNSDServer(port: Int) {
+        // Create the NsdServiceInfo object, and populate it.
+        val serviceInfo = NsdServiceInfo().apply {
+            serviceName = "KingZ-NsdChat"
+            serviceType = "_nsdchat._tcp"
+            setPort(port)
+        }
+
+        nsdManager = (getSystemService(Context.NSD_SERVICE) as NsdManager).apply {
+            // 异步的
+            registerService(serviceInfo,
+                NsdManager.PROTOCOL_DNS_SD,
+                registrationListener)
+        }
+    }
+
+    /**
+     * 注销NSD服务，让客户端无法搜索到我们的NSD服务器
+     */
+    private fun stopNSDServer(){
+        nsdManager?.unregisterService(registrationListener)
+    }
+
+
+    // 实例化注册监听器
+    private val registrationListener = object : NsdManager.RegistrationListener {
+
+        override fun onServiceRegistered(NsdServiceInfo: NsdServiceInfo) {
+            ZLog.d("Kingz","onServiceRegistered")
+            // Save the service name. Android may have changed it in order to
+            // resolve a conflict, so update the name you initially requested
+            // with the name Android actually used.
+            mServiceName = NsdServiceInfo.serviceName
+
+            // 任何需要在服务注册后运行的代码都必须包含在 onServiceRegistered() 方法中，
+            // 因为registerService是异步的
+        }
+
+        override fun onRegistrationFailed(serviceInfo: NsdServiceInfo, errorCode: Int) {
+            ZLog.d("Kingz","onRegistrationFailed")
+            // Registration failed! Put debugging code here to determine why.
+        }
+
+        override fun onServiceUnregistered(arg0: NsdServiceInfo) {
+            ZLog.d("Kingz","onServiceUnregistered")
+            // Service has been unregistered. This only happens when you call
+            // NsdManager.unregisterService() and pass in this listener.
+        }
+
+        override fun onUnregistrationFailed(serviceInfo: NsdServiceInfo, errorCode: Int) {
+            ZLog.d("Kingz","onUnregistrationFailed")
+            // Unregistration failed. Put debugging code here to determine why.
+        }
+    }
+
 }
 
