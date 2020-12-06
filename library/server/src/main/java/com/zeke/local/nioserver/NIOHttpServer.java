@@ -268,7 +268,7 @@ public class NIOHttpServer {
             //read bytes data from soketChannel.
             int readBytes = _socketChannel.read(mRequestBuffer);
 
-            if (readBytes < 0) {
+            if (readBytes < 0) { // end is '-1'
                 if (mRequestBuilder == null) {
                     _socketChannel.close(); // close the channel
                     return;
@@ -299,7 +299,7 @@ public class NIOHttpServer {
             }
         }
 
-        //TODO encode ---> send
+        // encode ---> send
         public void notifyWritable() throws IOException {
             if (mResponseBuffer == null) {
                 return;
@@ -313,7 +313,6 @@ public class NIOHttpServer {
                     // Client has send body data.
                     final Selector selector = _server._selector;
                     final HttpServerHandler attachment = this;
-                    // TODO 又注册？？
                     socketChannel.register(selector,0,attachment);
                     // TODO what?!
                     selector.wakeup();
@@ -583,13 +582,13 @@ public class NIOHttpServer {
                         }
                         return true;
                     }
-                    //try {
-                    //	String resp100Continue = mRequest.protocolVer.toUpperCase() + " 100 Continue\r\n\r\n";
-                    // TODO android-28 no write method. android-26 still exist.
-                    //_socketChannel.write(ByteBuffer.wrap(resp100Continue.getBytes("utf-8")));
-                    //} catch (IOException e) {
-                    //	e.printStackTrace();
-                    //}
+                    try {
+                    	String resp100Continue = mRequest.protocolVer.toUpperCase() + " 100 Continue\r\n\r\n";
+                        // FIXME android-28 no write method. android-26 still exist.
+                        _socketChannel.write(ByteBuffer.wrap(resp100Continue.getBytes("utf-8")));
+                    } catch (IOException e) {
+                    	e.printStackTrace();
+                    }
                 }
                 return false;
             }
