@@ -59,9 +59,21 @@ public class FilmsListActivity extends BaseActivity {
 
     private void initRecyclerLayoutManager(RecyclerView recyclerView) {
         //LayoutManager--------->GridLayoutManager(网格)/LinearLayoutManager(线性)/StaggeredGridLayoutManager(错列网格)
-        // 错列网格布局 spanCount：方向垂直:列数  方向水平:行数
+        // 错列网格布局 spanCount：Span简单的定义了一个某一维度上堆栈起来的item数
+        // 维度垂直即为列数  维度水平即为行数
         //recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setLayoutManager(new GridLayoutManager(this,5));
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(
+                this,
+                5,
+                GridLayoutManager.VERTICAL,
+                false);
+        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                return (position % 7 == 0 ? 2 : 5);
+            }
+        });
+        recyclerView.setLayoutManager(gridLayoutManager);
         // recyclerView.setLayoutManager(new StaggeredGridLayoutManager(5, StaggeredGridLayoutManager.VERTICAL));
     }
 
