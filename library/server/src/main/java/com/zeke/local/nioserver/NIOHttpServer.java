@@ -404,7 +404,7 @@ public class NIOHttpServer {
         }
 
         private void _internalHandleHttpRequest(final HttpServerRequest request) throws IOException {
-            //TODO register啥？？？
+            //将channel注册到选择器上
             _socketChannel.register(_server._selector, 0, this);
             _server.dispatchRequest(this, request);
         }
