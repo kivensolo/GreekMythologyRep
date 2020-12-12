@@ -297,7 +297,7 @@ class SplashActivity : BaseVMActivity<LoginRepository, LoginViewModel>(), View.O
 //            addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
                 this
             }
-            startActivity(intent)
+            startActivity(intent) //Home不是module时，无法打开
             // FixMe 打开pageMain会报错
 //            ARouter.getInstance()
 //                .build(RPath.PAGE_MAIN)
