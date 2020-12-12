@@ -209,7 +209,7 @@ class MainActivity : BaseVMActivity<WanAndroidRepository, WanAndroidViewModel>()
             R.id.iv_toolbar_right -> {
                 //TODO 进行搜索页跳转
             }
-            R.id.tvVersion -> {
+            R.id.tvTitle -> {
                 clickVersion(true)
             }
         }
