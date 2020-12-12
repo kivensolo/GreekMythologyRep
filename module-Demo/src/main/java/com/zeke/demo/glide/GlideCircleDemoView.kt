@@ -8,12 +8,12 @@ import android.util.AttributeSet
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
-import com.zeke.demo.BaseDemoView
 import com.zeke.demo.R
+import com.zeke.demo.base.BaseDemoView
 import com.zeke.kangaroo.utils.ZLog
 
 
-class GlideCircleView : BaseDemoView {
+class GlideCircleDemoView : BaseDemoView {
     constructor(context: Context) : super(context){
         postInvalidate()
     }
@@ -25,7 +25,6 @@ class GlideCircleView : BaseDemoView {
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         canvas.drawColor(Color.YELLOW)
-
 
         val simpleTarget: SimpleTarget<Bitmap?> = object : SimpleTarget<Bitmap?>() {
 
@@ -39,9 +38,5 @@ class GlideCircleView : BaseDemoView {
                 .load(R.drawable.marvel_qiyi)
                 .apply(circleCrop)
                 .into(simpleTarget)
-
     }
-
-
-
 }

@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import com.zeke.demo.BaseDemoActivity
 import com.zeke.demo.R
+import com.zeke.demo.base.AbsDemoActivity
 import com.zeke.demo.draw.base_api.*
 import com.zeke.demo.draw.canvas.CanvasDemoViewGroup
 import com.zeke.demo.draw.paint.*
@@ -18,9 +18,9 @@ import java.util.*
 /**
  * 关于绘制练习的页面
  */
-class PracticeDrawActivity : BaseDemoActivity() {
+class PracticeDrawActivity : AbsDemoActivity() {
 
-    override fun initPageModels() {
+    override fun inflatePageData() {
         // 1-1 基础api展示数据
         val cardData1: MutableList<CardItemModel> = ArrayList()
         cardData1.add(CardItemModel("canvas.drawColor(Color.YELLOW)", Practice1ColorView(this)))

@@ -5,7 +5,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
-import com.zeke.demo.BasePracticeView
+import com.zeke.demo.base.BasePracticeView
 import com.zeke.demo.model.CardItemConst
 
 class Practice4PointView @JvmOverloads constructor(

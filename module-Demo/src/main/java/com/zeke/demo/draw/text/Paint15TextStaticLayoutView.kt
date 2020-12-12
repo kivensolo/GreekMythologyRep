@@ -6,7 +6,7 @@ import android.text.Layout
 import android.text.StaticLayout
 import android.text.TextPaint
 import android.util.AttributeSet
-import com.zeke.demo.BasePracticeView
+import com.zeke.demo.base.BasePracticeView
 import com.zeke.demo.model.CardItemConst
 import com.zeke.kangaroo.utils.UIUtils
 

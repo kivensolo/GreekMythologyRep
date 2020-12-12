@@ -5,8 +5,8 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.util.AttributeSet
-import com.zeke.demo.BasePracticeView
 import com.zeke.demo.R
+import com.zeke.demo.base.BasePracticeView
 import com.zeke.kangaroo.utils.BitMapUtils
 import com.zeke.kangaroo.utils.UIUtils
 

@@ -17,9 +17,10 @@ import java.util.*
 
 /**
  * 模拟音乐跳动的随机柱状图效果
+ * TODO 增加自定义view的属性配置
  */
-class ChartTextView @JvmOverloads constructor(context: Context,
-                                              attrs: AttributeSet? = null, defStyleAttr: Int = 0)
+class ChartTextView @JvmOverloads constructor(
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
     : AppCompatTextView(context, attrs, defStyleAttr){
     var aniColumnC:ObjectAnimator ? = null
     var aniColumnB:ObjectAnimator ? = null

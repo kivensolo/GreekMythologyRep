@@ -3,8 +3,8 @@ package com.zeke.demo.draw.paint
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
-import com.zeke.demo.BasePracticeView
 import com.zeke.demo.R
+import com.zeke.demo.base.BasePracticeView
 import com.zeke.demo.model.CardItemConst
 
 /**
