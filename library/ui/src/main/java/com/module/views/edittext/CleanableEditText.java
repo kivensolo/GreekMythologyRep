@@ -10,7 +10,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
-import android.widget.EditText;
+
+import androidx.appcompat.widget.AppCompatEditText;
 
 /**
  * author：KingZ
@@ -24,7 +25,7 @@ import android.widget.EditText;
  *  取消EditText下划线：
  *      android:background="@null"
  */
-public class CleanableEditText extends EditText implements OnFocusChangeListener {
+public class CleanableEditText extends AppCompatEditText implements OnFocusChangeListener {
     private final String TAG = "ClearableEditText";
     private Drawable mClearDrawable;
     private boolean hasFocus;
