@@ -1,4 +1,4 @@
-package com.zeke.demo
+package com.zeke.demo.base
 
 import android.os.Bundle
 import android.view.Menu
@@ -6,13 +6,14 @@ import android.view.View
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.kingz.module.common.BaseActivity
+import com.zeke.demo.R
 import com.zeke.demo.model.DemoContentModel
 
 /**
  * Demo练习页面的抽象基类
  * 由TabLayout和ViewPager组成的页面
  */
-abstract class BaseDemoActivity : BaseActivity() {
+abstract class AbsDemoActivity : BaseActivity() {
     open var tabLayout: TabLayout? = null
     open var pager: ViewPager? = null
     open val pageModels: MutableList<DemoContentModel> by lazy { ArrayList<DemoContentModel>() }
@@ -21,7 +22,7 @@ abstract class BaseDemoActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_tab)
         initViews()
-        initPageModels()
+        inflatePageData()
         initPagerAdapter()
     }
 
@@ -36,9 +37,9 @@ abstract class BaseDemoActivity : BaseActivity() {
     }
 
     /**
-     * 初始化页面数据模型
+     * 填充页面数据Page数据
      */
-    open fun initPageModels(){}
+    open fun inflatePageData(){}
 
     /**
      * 初始化Pager的Adapter

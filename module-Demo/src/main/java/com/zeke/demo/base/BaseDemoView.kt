@@ -1,4 +1,4 @@
-package com.zeke.demo
+package com.zeke.demo.base
 
 import android.content.Context
 import android.util.AttributeSet
@@ -6,7 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.request.RequestOptions
 
-open class BaseDemoView : View {
+/**
+ * Demo templete base view.
+ */
+open abstract class BaseDemoView : View {
     companion object{
         // var IMG_WIDTH:Int
         // var IMG_HIGHT:Int
@@ -25,6 +28,9 @@ open class BaseDemoView : View {
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
     open fun getRequestOption(): RequestOptions{
-        return RequestOptions().override(IMG_WIDTH, IMG_HIGHT)
+        return RequestOptions().override(
+            IMG_WIDTH,
+            IMG_HIGHT
+        )
     }
 }

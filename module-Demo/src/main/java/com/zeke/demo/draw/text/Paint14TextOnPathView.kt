@@ -4,7 +4,7 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
-import com.zeke.demo.BasePracticeView
+import com.zeke.demo.base.BasePracticeView
 
 /**
  * author: King.Z <br>

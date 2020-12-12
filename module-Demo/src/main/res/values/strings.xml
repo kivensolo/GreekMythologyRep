@@ -14,4 +14,22 @@
     <string name="glide_blur" translatable="false">blur</string>
     <string name="glide_round_with_border" translatable="false">round_with_border</string>
     <string name="glide_load_fade" translatable="false">load_fade</string>
+
+    <!--PhotoView 效果测试页面-->
+    <string name="transition_test" translatable="false">test</string>
+    <string name="photo_view_sample" translatable="false">PhotoView Sample</string>
+    <string name="menu_zoom_enable" translatable="false">Enable Zoom</string>
+    <string name="menu_zoom_disable" translatable="false">Disable Zoom</string>
+    <string name="menu_scale_fit_center" translatable="false">Change to FIT_CENTER</string>
+    <string name="menu_scale_fit_start" translatable="false">Change to FIT_START</string>
+    <string name="menu_scale_fit_end" translatable="false">Change to FIT_END</string>
+    <string name="menu_scale_fit_xy" translatable="false">Change to FIT_XY</string>
+    <string name="menu_scale_center" translatable="false">Change to CENTER</string>
+    <string name="menu_scale_center_inside" translatable="false">Change to CENTER_INSIDE</string>
+    <string name="menu_scale_center_crop" translatable="false">Change to CENTER_CROP</string>
+    <string name="menu_zoom_random_animate" translatable="false">Animate scale to random value</string>
+    <string name="menu_zoom_random" translatable="false">Set scale to random value</string>
+    <string name="menu_matrix_restore" translatable="false">Restore Display Matrix</string>
+    <string name="menu_matrix_capture" translatable="false">Capture Display Matrix</string>
+    <string name="extract_visible_bitmap" translatable="false">Extract visible bitmap</string>
 </resources>

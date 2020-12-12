@@ -1,4 +1,4 @@
-package com.zeke.demo
+package com.zeke.demo.base
 
 import android.content.Context
 import android.graphics.*
@@ -27,7 +27,9 @@ open class BasePracticeView @JvmOverloads constructor(
     }
 
     init{
-        paint.textSize = UIUtils.dip2px(context, defaultFontSize).toFloat()
+        paint.textSize = UIUtils.dip2px(context,
+            defaultFontSize
+        ).toFloat()
         paint.isAntiAlias = true
         paint.isDither = true
     }

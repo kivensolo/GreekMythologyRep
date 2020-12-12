@@ -22,6 +22,7 @@ import com.kingz.scroll.view_pager.ViewPagerAnimationDemoActivity;
 import com.kingz.view.listview.CustomListViewActivity;
 import com.kingz.view.shape.ShapeDrawOval;
 import com.kingz.view.webview.WebViewActivity;
+import com.zeke.demo.photoview.sample.PhotoViewMainActivity;
 import com.zeke.kangaroo.view.popwindow.CommonPopupWindow;
 
 /**
@@ -58,6 +59,7 @@ public class CustomViewsPage extends  Activity implements OnItemClickListener{
 		mAdapter.add(new ListBillData(this,"WebAPP测试",new Intent(this,WebViewActivity.class)));
 		mAdapter.add(new ListBillData(this,"WZViewPager",new Intent(this,ViewPagerAnimationDemoActivity.class)));
 		mAdapter.add(new ListBillData(this,"贝塞尔水波曲线",new Intent(this,WaveLoadingActivity.class)));
+		mAdapter.add(new ListBillData(this,"可缩放的ImageView",new Intent(this, PhotoViewMainActivity.class)));
 	}
 
 	@Override
