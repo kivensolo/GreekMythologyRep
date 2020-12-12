@@ -12,9 +12,10 @@ android {
 }
 
 dependencies {
-    api project(modulePrefix + 'library-player')
-    api project(modulePrefix + 'library-views')
     api project(modulePrefix + 'library-network')
+    api project(modulePrefix + 'library-player')
+    api project(modulePrefix + 'library-server')
+    api project(modulePrefix + 'library-views')
 }
 
 ext {
