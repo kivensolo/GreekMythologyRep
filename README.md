@@ -4,43 +4,49 @@ GreekMythologyRep
 
 A record of learning the knowledge points of all parts of Android.  And will be continuously updated.
 <br>
-记录自己Android各方面学习的app，会持续不停的更新。
 
-内置Modules
+Built in Librarys
 ==============
-因个人使用的原因，所以库并没有单独抽离出来，而是包含在此项目中，方便修改。
 ## 1. player-library
-一款Android播放器封装库，支持以下播放器：
-- **内置MediaPlayer**
+An Android player package library, supporting the following players：
+- **Android MediaPlayer**
 - **ExoPlayer2**
-- **ijk**
+- **IJK**
 
-实例化方式：<br>
-**`MediaPlayerFactory.newInstance(Context context, int mode, Object args)`** 默认创建ijk播放器
+Use sample：<br>
+**`MediaPlayerFactory.newInstance(Context context, int mode, Object args)`** Default is ijk-player.
 
-## 2. views-library
-包括了日常开发中使用的自定义view/封装组件以及view相关工具类。
+## 2. library-views
+Includes custom views, encapsulation component and view related tool class used in daily development。
 
-### 自定义组件简介 (按效果):
+## 3. library-network
+Base on RxJava2(RxAndroid) + retrofit2 + OkHttp3.
 
-|加载效果|介绍|
+## 3. library-server
+Android local servers,Include the following:
+- NioServer
+- NanoServer(TODO)
+
+### Introduction to custom controls:
+
+|Loading|Desc|
 | ------ | --- |
 |[WaveLoadingView][1]|水波加载效果View|
 |[Win10LoaddingView][2]|仿win10效果的加载圈|
 
-|进度条效果|介绍|
+|Progress|Desc|
 | ------ | --- |
 |[CircleProgressView][3]|圆形进度条|
 |[HorizontalProgressBarWithNumber][4]|横向带数字进度条|
 |[RoundProgressBarWidthNumber][5]|圆角带数字进度条|
 |[SpiralProgressView][6]|螺旋条纹进度条(仿mac)|
 
-|文字|介绍|
+|Text|Desc|
 | ------ | --- |
-|[BorderTextView][7]|带border的TextView|
+|[BorderTextView][7]|TextView with border.|
 
 
-|列表控件|介绍|
+|List control|Desc|
 | ------ | --- |
 |[SliderDeleteListView][8]|可滑动删除的List|
 
