@@ -14,5 +14,22 @@
             tools:targetApi="lollipop" />
 
 
+        <activity android:name="com.zeke.demo.photoview.sample.PhotoViewMainActivity"/>
+
+        <!--**photoview sample**-->
+        <activity android:name="com.zeke.demo.photoview.sample.SimpleSampleActivity" />
+
+        <activity android:name="com.zeke.demo.photoview.sample.ViewPagerActivity" />
+
+        <activity android:name="com.zeke.demo.photoview.sample.RotationSampleActivity" />
+
+        <activity android:name="com.zeke.demo.photoview.sample.GlideSampleActivity" />
+
+        <activity android:name="com.zeke.demo.photoview.sample.ActivityTransitionActivity" />
+
+        <activity android:name="com.zeke.demo.photoview.sample.ActivityTransitionToActivity" />
+
+        <activity android:name="com.zeke.demo.photoview.sample.ImmersiveActivity" />
+        <!--**photoview sample**-->
     </application>
 </manifest>

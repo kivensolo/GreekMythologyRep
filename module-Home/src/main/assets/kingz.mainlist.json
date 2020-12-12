@@ -103,8 +103,8 @@
         "class": "com.kingz.pages.CustomViewsPage"
       },
       {
-        "name": "Custom controls newV2",
-        "class": "com.zeke.ktx.demo.customview.CustomViewsDemoActivity"
+        "name": "新版自定义View/控件展示页面",
+        "class": "com.zeke.demo.customview.CustomViewsDemoActivity"
       }
     ]
   },
