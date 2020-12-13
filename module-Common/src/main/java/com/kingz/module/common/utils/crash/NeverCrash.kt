@@ -57,7 +57,7 @@ class NeverCrash private constructor() {
     companion object {
         private var mInstance: NeverCrash? = null
         private val instance: NeverCrash?
-            private get() {
+            get() {
                 if (mInstance == null) {
                     synchronized(NeverCrash::class.java) {
                         if (mInstance == null) {
