@@ -6,7 +6,7 @@ import android.view.MotionEvent;
 import android.view.ViewConfiguration;
 
 import com.kingz.play.gesture.IGestureCallBack;
-import com.module.tools.ScreenTools;
+import com.zeke.kangaroo.utils.ScreenDisplayUtils;
 import com.zeke.kangaroo.utils.VolumeUtils;
 import com.zeke.kangaroo.utils.ZLog;
 
@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 public class PlayerGestureListener extends GestureDetector.SimpleOnGestureListener {
     public static final String TAG = "PlayerGestureListener";
     private IGestureCallBack listener;
-    private int screenWidth, centerW;
+    private int centerW;
     //播放器View的长宽DP
     private float dpVideoWidth, dpVideoHeight;
     private ScrollMode scrollMode = ScrollMode.NONE;
@@ -42,13 +42,13 @@ public class PlayerGestureListener extends GestureDetector.SimpleOnGestureListen
     public PlayerGestureListener(Context context, IGestureCallBack listener) {
         this.listener = listener;
         this.context = context;
-        this.screenWidth = ScreenTools.getScreenWidth(context);
-        centerW = this.screenWidth / 2;
-        ZLog.d(TAG,"screenWidth="+ this.screenWidth);
-        mTouchSlop = ScreenTools.getTouchSlop(ViewConfiguration.get(context));
+        int screenWidth = ScreenDisplayUtils.getScreenWidth(context);
+        centerW = screenWidth / 2;
+        ZLog.d(TAG,"screen Width="+ screenWidth);
+        mTouchSlop =ViewConfiguration.get(context).getScaledTouchSlop();
         density = context.getResources().getDisplayMetrics().density;
 
-        brightnessValue = ScreenTools.getScreenBrightnessValue(context) / 255f;
+        brightnessValue = ScreenDisplayUtils.getScreenBrightnessValue(context) / 255f;
         volumeValue = VolumeUtils.getCurrentVolumePrecent(context);
 
         //默认的视频宽高dp值
