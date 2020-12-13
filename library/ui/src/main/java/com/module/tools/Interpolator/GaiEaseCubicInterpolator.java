@@ -6,7 +6,7 @@ import android.view.animation.Interpolator;
  * @author zeke.wang
  * @date 2020/7/23
  * @maintainer zeke.wang
- * @desc:
+ * @desc: 改版贝塞尔差值器
  */
 public class GaiEaseCubicInterpolator implements Interpolator {
     private float[] result;
