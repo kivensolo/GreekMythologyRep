@@ -16,7 +16,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.AppCompatTextView;
 
 import com.kingz.customdemo.R;
-import com.module.tools.ScreenTools;
+import com.zeke.kangaroo.utils.ScreenDisplayUtils;
 import com.zeke.kangaroo.utils.ZLog;
 
 /**
@@ -24,6 +24,8 @@ import com.zeke.kangaroo.utils.ZLog;
  * date:  2016/8/19 17:37 <br>
  *     update at : 2019/3/24
  * description: Drag & Fling View <br>
+ *
+ *     TODO 做边界回弹效果
  */
 public class DragAndFlingView extends AppCompatTextView {
 
@@ -64,8 +66,8 @@ public class DragAndFlingView extends AppCompatTextView {
         //禁用后，用户可以按住然后按下移动他们的手指，会得到滚动事件
         mGestureDetector.setIsLongpressEnabled(false);
         initPaints();
-        screenWidth = ScreenTools.getScreenWidth(getContext());
-        screenHeight = ScreenTools.getScreenHeight(getContext());
+        screenWidth = ScreenDisplayUtils.getScreenWidth(getContext());
+        screenHeight = ScreenDisplayUtils.getScreenHeight(getContext());
         ZLog.d(TAG, "FlingView screenWidth=" + screenWidth + ";screenHeight=" + screenHeight);
     }
 
@@ -145,16 +147,17 @@ public class DragAndFlingView extends AppCompatTextView {
                 ZLog.i(TAG, "ACTION_DOWN : preX = " + preX + ";preY = " + preY + "; x = " + x);
                 break;
             case MotionEvent.ACTION_MOVE:
-                float x_offset = event.getRawX() - preMotionRawX;
-                float y_offset = event.getRawY() - preMotionRawY;
+                float deltaX = event.getRawX() - preMotionRawX;
+                float deltaY = event.getRawY() - preMotionRawY;
 
-                offsetLeftAndRight((int) x_offset); // 调整左右Layout
-                offsetTopAndBottom((int) y_offset); // 调整上下Layout
+                offsetLeftAndRight((int) deltaX); // 调整左右Layout
+                offsetTopAndBottom((int) deltaY); // 调整上下Layout
                 preMotionRawX = event.getRawX();
                 preMotionRawY = event.getRawY();
                 preX = getX();
                 preY = getY();
-                ZLog.i(TAG, "ACTION_MOVE : x_offset=" + x_offset+";y_offset="+y_offset+"   prePostion=" + preX + "-" + preY);
+                ZLog.i(TAG, "ACTION_MOVE : deltaX=" + deltaX+";deltaY="+deltaY+"   " +
+                        "prePostion=" + preX + "-" + preY);
                 break;
             case MotionEvent.ACTION_UP:
                 preX = getX();
