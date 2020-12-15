@@ -1,9 +1,9 @@
-package com.zeke.local.nioserver;
+package com.nioserver;
 
 import android.text.TextUtils;
 
-import com.zeke.local.nioserver.http.HttpResponse;
-import com.zeke.local.nioserver.utils.MemoryOutputStream;
+import com.nioserver.http.HttpResponse;
+import com.nioserver.utils.MemoryOutputStream;
 
 import java.io.IOException;
 import java.io.InputStream;

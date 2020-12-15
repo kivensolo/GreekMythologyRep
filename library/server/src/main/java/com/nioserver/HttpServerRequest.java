@@ -1,6 +1,6 @@
-package com.zeke.local.nioserver;
+package com.nioserver;
 
-import com.zeke.local.nioserver.http.HttpRequest;
+import com.nioserver.http.HttpRequest;
 
 import java.util.HashMap;
 
