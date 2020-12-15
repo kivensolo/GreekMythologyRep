@@ -1,4 +1,4 @@
-package com.zeke.local.nioserver
+package com.nioserver
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
