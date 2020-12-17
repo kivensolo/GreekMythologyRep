@@ -8,7 +8,7 @@ import com.nioserver.utils.MemoryOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -108,14 +108,9 @@ public class HttpServerResponse extends HttpResponse {
         responseHdr.append("\r\n");
 
         byte[] responseHdrBytes = null;
-        try {
-            responseHdrBytes = responseHdr.toString().getBytes("utf-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
         byte[] dataBuffer = _outputStream.getDataBuffer();
 
+        responseHdrBytes = responseHdr.toString().getBytes(StandardCharsets.UTF_8);
         int headerSize = responseHdrBytes.length;
         int newDataSize = contentLength + headerSize;
         _outputStream.expand(newDataSize);
@@ -145,7 +140,7 @@ public class HttpServerResponse extends HttpResponse {
 
     public HttpServerResponse writeBody(String data) {
         try {
-            _outputStream.write(data.getBytes("utf-8"));
+            _outputStream.write(data.getBytes(StandardCharsets.UTF_8));
         } catch (IOException e) {
             e.printStackTrace();
         }
