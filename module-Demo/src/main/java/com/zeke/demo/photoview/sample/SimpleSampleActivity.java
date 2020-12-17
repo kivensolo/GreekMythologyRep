@@ -168,5 +168,10 @@ public class SimpleSampleActivity extends AppCompatActivity {
             Log.d("PhotoView", String.format(FLING_LOG_STRING, velocityX, velocityY));
             return true;
         }
+
+        @Override
+        public void onFling(float startX, float startY, float velocityX, float velocityY) {
+
+        }
     }
 }
