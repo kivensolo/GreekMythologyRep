@@ -40,6 +40,24 @@
     ]
   },
   {
+    "name": "AAC",
+    "desc": "Android Architecture Components",
+    "samples": [
+      {
+        "name": "协程练习",
+        "class": "com.zeke.ktx.modules.aac.CoroutineTestActivity"
+      },
+      {
+        "name": "ViewModel Demo",
+        "class": "com.zeke.ktx.modules.aac.ViewModelDemoActivity"
+      },
+      {
+        "name": "Shared ViewModel Demo",
+        "class": "com.zeke.ktx.modules.aac.sharedvm.SharedFirstVMActivity"
+      }
+    ]
+  },
+  {
     "name": "Original",
     "desc": "原生基本控件",
     "samples": [
@@ -213,19 +231,6 @@
         "class": "com.kingz.newfeatures.NewFeaturesMainActivity"
       }
     ]
-  },
-  {
-    "name": "AAC",
-    "desc": "Android Architecture Components",
-    "samples": [
-      {
-        "name": "协程练习",
-        "class": "com.zeke.ktx.modules.aac.CoroutineTestActivity"
-      },
-      {
-        "name": "ViewModel Demo",
-        "class": "com.zeke.ktx.modules.aac.ViewModelDemoActivity"
-      }
-    ]
   }
+
 ]

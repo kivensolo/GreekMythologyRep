@@ -328,6 +328,8 @@
 
         <activity android:name="com.zeke.ktx.modules.aac.CoroutineTestActivity"
             android:screenOrientation="fullSensor" />
+        <activity android:name="com.zeke.ktx.modules.aac.sharedvm.SharedSecondVMActivity" />
+        <activity android:name="com.zeke.ktx.modules.aac.sharedvm.SharedFirstVMActivity" />
 
         <!--服务 exported:外部是否可访问  process:为服务设置不同进程-->
         <service
