@@ -44,6 +44,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.String
 
+/**
+ * 手机版本首页
+ */
 @Route(path = RPath.PAGE_MAIN)
 class MainActivity : BaseVMActivity<WanAndroidRepository, WanAndroidViewModel>(), ISwitcher {
 
@@ -52,8 +55,39 @@ class MainActivity : BaseVMActivity<WanAndroidRepository, WanAndroidViewModel>()
 
     private lateinit var panelSlidelLsr: HomePanelSlidelLsr
     private var menuPanel: View? = null
+
+    // NSD-DemoCode
+    private var mServiceName: kotlin.String? = null
+    private var nsdManager: NsdManager? = null
+
     // 当前页数
     private var mCurPage = 1
+
+    private val registrationListener = object : NsdManager.RegistrationListener {
+
+        override fun onServiceRegistered(NsdServiceInfo: NsdServiceInfo) {
+            // Save the service name. Android may have changed it in order to
+            // resolve a conflict, so update the name you initially requested
+            // with the name Android actually used.
+            mServiceName = NsdServiceInfo.serviceName
+        }
+
+        override fun onRegistrationFailed(serviceInfo: NsdServiceInfo, errorCode: Int) {
+            // Registration failed! Put debugging code here to determine why.
+            ZLog.e("onRegistrationFailed errorCode=$errorCode")
+        }
+
+        override fun onServiceUnregistered(info: NsdServiceInfo) {
+            // Service has been unregistered. This only happens when you call
+            // NsdManager.unregisterService() and pass in this listener.
+        }
+
+        override fun onUnregistrationFailed(serviceInfo: NsdServiceInfo, errorCode: Int) {
+            // Unregistration failed. Put debugging code here to determine why.
+            ZLog.e("onUnregistrationFailed errorCode=$errorCode")
+        }
+    }
+
 
     override val viewModel: WanAndroidViewModel by viewModels {
         ViewModelFactory.build { WanAndroidViewModel() }
@@ -107,7 +141,38 @@ class MainActivity : BaseVMActivity<WanAndroidRepository, WanAndroidViewModel>()
         }
         viewModel.getUserInfo()
 
-        registerNSDServer(55589)
+        registerService(55530)
+    }
+
+    /**
+     * 注册Nsd服务
+     * 参数1 ：
+     * 服务名称设置为“NsdChat”。
+     * 此服务名称是实例名称：
+     *  它是对网络上其他设备可见的名称。
+     *  网络上使用 NSD 查找本地服务的任何设备都可以看到该名称。
+     *  请记住，网络上任何服务的名称都必须是唯一的，并且 Android 会自动处理冲突解决。
+     *  如果网络中的两台设备都安装了 NsdChat 应用，则其中一台设备会自动更改服务名称，
+     *  如更改为“NsdChat (1)”之类的。
+     *
+     *  参数2：设置服务类型，指定应用使用的协议和传输层。
+     *  语法为“_<protocol>._<transportlayer>”
+     */
+    private fun registerService(port: Int) {
+        // Create the NsdServiceInfo object, and populate it.
+        val serviceInfo = NsdServiceInfo().apply {
+            // The name is subject to change based on conflicts
+            // with other services advertised on the same network.
+            serviceName = "NsdChat"
+            serviceType = "_nsdchat._tcp"
+            setPort(port)
+        }
+        nsdManager = (getSystemService(Context.NSD_SERVICE) as NsdManager)
+            .apply {
+            registerService(serviceInfo,
+                NsdManager.PROTOCOL_DNS_SD,
+                registrationListener)
+        }
     }
 
     /**
@@ -209,7 +274,7 @@ class MainActivity : BaseVMActivity<WanAndroidRepository, WanAndroidViewModel>()
             R.id.iv_toolbar_right -> {
                 //TODO 进行搜索页跳转
             }
-            R.id.tvTitle -> {
+            R.id.tvVersion -> {
                 clickVersion(true)
             }
         }
@@ -248,76 +313,5 @@ class MainActivity : BaseVMActivity<WanAndroidRepository, WanAndroidViewModel>()
         }
         lifecycleScope.launch(Dispatchers.IO) { sendKeyEvent(KeyEvent.KEYCODE_HOME) }
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        stopNSDServer()
-    }
-
-
-    private var mServiceName: kotlin.String? = null
-    private var nsdManager : NsdManager? = null
-
-    /**
-     * 进行NSD服务注册
-     * NSD的Server服务器端的注册和监听最好是放在子线程中
-     * 或者使用Android服务类Service来注册监听。
-     * 服务器端直接在Activity监听，回调，拿到里面的数据显示在Activity上面是有点问题的
-     */
-    private fun registerNSDServer(port: Int) {
-        // Create the NsdServiceInfo object, and populate it.
-        val serviceInfo = NsdServiceInfo().apply {
-            serviceName = "KingZ-NsdChat"
-            serviceType = "_nsdchat._tcp"
-            setPort(port)
-        }
-
-        nsdManager = (getSystemService(Context.NSD_SERVICE) as NsdManager).apply {
-            // 异步的
-            registerService(serviceInfo,
-                NsdManager.PROTOCOL_DNS_SD,
-                registrationListener)
-        }
-    }
-
-    /**
-     * 注销NSD服务，让客户端无法搜索到我们的NSD服务器
-     */
-    private fun stopNSDServer(){
-        nsdManager?.unregisterService(registrationListener)
-    }
-
-
-    // 实例化注册监听器
-    private val registrationListener = object : NsdManager.RegistrationListener {
-
-        override fun onServiceRegistered(NsdServiceInfo: NsdServiceInfo) {
-            ZLog.d("Kingz","onServiceRegistered")
-            // Save the service name. Android may have changed it in order to
-            // resolve a conflict, so update the name you initially requested
-            // with the name Android actually used.
-            mServiceName = NsdServiceInfo.serviceName
-
-            // 任何需要在服务注册后运行的代码都必须包含在 onServiceRegistered() 方法中，
-            // 因为registerService是异步的
-        }
-
-        override fun onRegistrationFailed(serviceInfo: NsdServiceInfo, errorCode: Int) {
-            ZLog.d("Kingz","onRegistrationFailed")
-            // Registration failed! Put debugging code here to determine why.
-        }
-
-        override fun onServiceUnregistered(arg0: NsdServiceInfo) {
-            ZLog.d("Kingz","onServiceUnregistered")
-            // Service has been unregistered. This only happens when you call
-            // NsdManager.unregisterService() and pass in this listener.
-        }
-
-        override fun onUnregistrationFailed(serviceInfo: NsdServiceInfo, errorCode: Int) {
-            ZLog.d("Kingz","onUnregistrationFailed")
-            // Unregistration failed. Put debugging code here to determine why.
-        }
-    }
-
 }
 
