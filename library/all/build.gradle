@@ -16,6 +16,7 @@ dependencies {
     api project(modulePrefix + 'library-player')
     api project(modulePrefix + 'library-server')
     api project(modulePrefix + 'library-views')
+    api project(modulePrefix + 'library-hlscache')
 }
 
 ext {

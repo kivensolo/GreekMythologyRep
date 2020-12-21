@@ -1,5 +1,6 @@
 include ':app'
 include ':app-playerdemo'
+include ':app-hlsCacheDemo'
 include ':Kotlin-Coroutines-Examples'
 
 include ':base'
@@ -17,12 +18,14 @@ include ':library-player'
 include ':library-views'
 include ':library-network'
 include ':library-server'
+include ':library-hlscache'
 
 project(':library').projectDir = new File(rootDir, 'library/all')
 project(':library-player').projectDir = new File(rootDir, 'library/player')
 project(':library-views').projectDir = new File(rootDir, 'library/ui')
 project(':library-network').projectDir = new File(rootDir, 'library/network')
 project(':library-server').projectDir = new File(rootDir, 'library/server')
+project(':library-hlscache').projectDir = new File(rootDir, 'library/hlscache')
 
 
 gradle.beforeProject {
