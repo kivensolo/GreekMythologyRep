@@ -128,10 +128,12 @@ android {
     adbOptions{
     }
 
-//    packagingOptions {
-//        doNotStrip '*/mips/*.so'
-//        doNotStrip '*/mips64/*.so'
-//    }
+    packagingOptions {
+        doNotStrip '*/mips/*.so'
+        doNotStrip '*/mips64/*.so'
+        doNotStrip '*/x86/*.so'
+        doNotStrip '*/x86_64/*.so'
+    }
 
     repositories{
         flatDir{
