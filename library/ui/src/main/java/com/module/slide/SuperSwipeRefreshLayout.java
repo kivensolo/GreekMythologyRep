@@ -105,6 +105,11 @@ public class SuperSwipeRefreshLayout extends ViewGroup {
     private boolean mOriginalOffsetCalculated = false;
 
     private float mInitialMotionY;
+    private float mInitialMotionX;
+    private float absMotionDeltaY;
+    private float absMotionDeltaX;
+    private boolean mIsDispatchTouchToChild;
+    // Current layout has been dragged.
     private boolean mIsBeingDragged;
     private int mActivePointerId = INVALID_POINTER;
     // Whether this item is scaled up rather than clipped
@@ -261,7 +266,7 @@ public class SuperSwipeRefreshLayout extends ViewGroup {
     /**
      * One of DEFAULT, or LARGE.
      */
-    public void setSize(int size) {
+    public void setSize(@MaterialProgressDrawable.ProgressDrawableSize int size) {
         if (size != MaterialProgressDrawable.LARGE && size != MaterialProgressDrawable.DEFAULT) {
             return;
         }
@@ -720,6 +725,14 @@ public class SuperSwipeRefreshLayout extends ViewGroup {
                 setTargetOffsetTopAndBottom(mOriginalOffsetTop - mCircleView.getTop(), true);
                 mActivePointerId = MotionEventCompat.getPointerId(ev, 0);
                 mIsBeingDragged = false;
+                mIsDispatchTouchToChild = false;
+
+                final float initialMotionX = getMotionEventX(ev, mActivePointerId);
+                if (initialMotionX == -1) {
+                    return false;
+                }
+                mInitialMotionX = initialMotionX;
+
                 final float initialMotionY = getMotionEventY(ev, mActivePointerId);
                 if (initialMotionY == -1) {
                     return false;
@@ -730,11 +743,21 @@ public class SuperSwipeRefreshLayout extends ViewGroup {
                 if (mActivePointerId == INVALID_POINTER) {
                     return false;
                 }
+                if(mIsDispatchTouchToChild){
+                    return false;
+                }
 
                 final float y = getMotionEventY(ev, mActivePointerId);
                 if (y == -1) {
                     return false;
                 }
+                absMotionDeltaY = Math.abs(y - mInitialMotionY);
+
+                if (isHorizontalMotion(ev)) {
+                    return false;
+                }
+
+                //处理child的上下滚动方向
                 if (mBothDirection) {
                     if (y > mInitialMotionY) {
                         setRawDirection(Direction.TOP);
@@ -746,17 +769,8 @@ public class SuperSwipeRefreshLayout extends ViewGroup {
                         return false;
                     }
                 }
-                float yDiff;
-                switch (mDirection) {
-                    case BOTTOM:
-                        yDiff = mInitialMotionY - y;
-                        break;
-                    case TOP:
-                    default:
-                        yDiff = y - mInitialMotionY;
-                        break;
-                }
-                if (yDiff > mTouchSlop && !mIsBeingDragged) {
+
+                if (absMotionDeltaY > mTouchSlop && !mIsBeingDragged) {
                     mIsBeingDragged = true;
                     mProgress.setAlpha(STARTING_PROGRESS_ALPHA);
                 }
@@ -776,12 +790,33 @@ public class SuperSwipeRefreshLayout extends ViewGroup {
         return mIsBeingDragged;
     }
 
+    private boolean isHorizontalMotion(MotionEvent ev) {
+        final float x = getMotionEventX(ev, mActivePointerId);
+        if (x == -1) {
+            return true;
+        }
+        absMotionDeltaX = Math.abs(x - mInitialMotionX);
+        if(absMotionDeltaX > absMotionDeltaY && absMotionDeltaX > mTouchSlop){
+            mIsDispatchTouchToChild = true;
+            return true;
+        }
+        return false;
+    }
+
     private float getMotionEventY(MotionEvent ev, int activePointerId) {
         final int index = MotionEventCompat.findPointerIndex(ev, activePointerId);
         if (index < 0) {
             return -1;
         }
         return MotionEventCompat.getY(ev, index);
+    }
+
+    private float getMotionEventX(MotionEvent ev, int activePointerId) {
+        final int index = ev.findPointerIndex(activePointerId);
+        if (index < 0) {
+            return -1;
+        }
+        return ev.getX(index);
     }
 
     @Override
