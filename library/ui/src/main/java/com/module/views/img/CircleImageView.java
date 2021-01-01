@@ -17,9 +17,13 @@ import androidx.core.view.ViewCompat;
 /**
  * author: King.Z <br>
  * date:  2020/8/23 11:48 <br>
- * description:  <br>
+ * description: 支持带阴影效果的圆形ImageView <br>
  */
 public class CircleImageView extends AppCompatImageView {
+
+    public CircleImageView(Context context) {
+        super(context);
+    }
 
     private static final int KEY_SHADOW_COLOR = 0x1E000000;
     private static final int FILL_SHADOW_COLOR = 0x3D000000;
@@ -109,7 +113,6 @@ public class CircleImageView extends AppCompatImageView {
     }
 
     private class OvalShadow extends OvalShape {
-        private RadialGradient mRadialGradient;
         private Paint mShadowPaint;
         private int mCircleDiameter;
 
@@ -118,10 +121,11 @@ public class CircleImageView extends AppCompatImageView {
             mShadowPaint = new Paint();
             mShadowRadius = shadowRadius;
             mCircleDiameter = circleDiameter;
-            mRadialGradient = new RadialGradient(mCircleDiameter / 2, mCircleDiameter / 2,
-                    mShadowRadius, new int[]{
-                    FILL_SHADOW_COLOR, Color.TRANSPARENT
-            }, null, Shader.TileMode.CLAMP);
+            RadialGradient mRadialGradient = new RadialGradient(
+                    (float) (mCircleDiameter / 2),
+                    (float) (mCircleDiameter / 2), mShadowRadius,
+                    new int[]{FILL_SHADOW_COLOR, Color.TRANSPARENT},
+                    null, Shader.TileMode.CLAMP);
             mShadowPaint.setShader(mRadialGradient);
         }
 
@@ -129,9 +133,12 @@ public class CircleImageView extends AppCompatImageView {
         public void draw(Canvas canvas, Paint paint) {
             final int viewWidth = CircleImageView.this.getWidth();
             final int viewHeight = CircleImageView.this.getHeight();
-            canvas.drawCircle(viewWidth / 2, viewHeight / 2, (mCircleDiameter / 2 + mShadowRadius),
-                    mShadowPaint);
-            canvas.drawCircle(viewWidth / 2, viewHeight / 2, (mCircleDiameter / 2), paint);
+
+            float cx = (float)(viewWidth / 2);
+            float cy = (float)(viewHeight / 2);
+            float cr = (float)(mCircleDiameter / 2);
+            canvas.drawCircle(cx, cy,( cr + mShadowRadius), mShadowPaint);
+            canvas.drawCircle(cx, cy, cr, paint);
         }
     }
 }
