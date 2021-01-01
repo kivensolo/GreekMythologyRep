@@ -1,25 +1,39 @@
 package com.zeke.home.fragments
 
 import android.util.Log
+import androidx.annotation.StringDef
 import com.kingz.module.common.BaseActivity
 import com.kingz.module.home.R
 import com.zeke.home.contract.RecomPageContract
-import com.zeke.home.entity.HomeRecomData
+import com.zeke.home.entity.TemplatePageData
 import com.zeke.home.presenters.RecomPresenter
 
 /**
  * author：KingZ
  * date：2019/12/29
- * description：首页-推荐页展示的Fragemnt
+ * description：首页-推荐分类页展示的Fragemnts
  * 此部分暂时MVP
  */
 class HomeRecomFragment : HomeBaseFragment<RecomPresenter>(), RecomPageContract.View {
 
+
+    companion object{
+        // 目前支持的TYPE
+        const val TYPE_WAN_ANDROID = "wanAndroid"
+        const val TYPE_DEMO = "demo"
+        const val TYPE_MAGICINDICATOR = "magicIndicator"
+    }
     init {
         mPresenter = RecomPresenter(this)
     }
 
-    override fun showRecomInfo(data: MutableList<HomeRecomData>?) {
+    @kotlin.annotation.Retention(AnnotationRetention.BINARY)
+    @StringDef(
+        TYPE_WAN_ANDROID,TYPE_DEMO, TYPE_MAGICINDICATOR
+    )
+    annotation class PageRecomType
+
+    override fun showRecomInfo(data: MutableList<TemplatePageData>?) {
         Log.d(TAG, "showDemoPageInfo onResult.")
         if(data == null || data.size == 0){
             showEmpty()
@@ -31,9 +45,9 @@ class HomeRecomFragment : HomeBaseFragment<RecomPresenter>(), RecomPageContract.
         data.forEach lit@ {
             titleList.add(it.name)
             when(it.type) {
-                "recom" -> fragmentList.add(HomeWanAndroidFragment())
-                "demo" -> fragmentList.add(ExpandableDemoFragment())
-                "magicIndicator" -> fragmentList.add(MagicIndicatorDemoFragment())
+                TYPE_WAN_ANDROID -> fragmentList.add(HomeWanAndroidFragment())
+                TYPE_DEMO -> fragmentList.add(ExpandableDemoFragment())
+                TYPE_MAGICINDICATOR -> fragmentList.add(MagicIndicatorDemoFragment())
             }
         }
         refreshViewPagerData()

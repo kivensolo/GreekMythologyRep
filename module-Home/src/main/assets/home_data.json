@@ -1,8 +1,8 @@
 [
   {
     "id":"home_index_0",
-    "name":"推荐",
-    "type":"recom",
+    "name":"玩安卓",
+    "type":"wanAndroid",
     "extends":"无扩展数据",
     "page_content":[
       {

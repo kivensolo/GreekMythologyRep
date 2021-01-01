@@ -1,21 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-<!--    &lt;!&ndash;内容区域&ndash;&gt;-->
-<!--    <com.module.slide.SuperSwipeRefreshLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        app:loading_img_direction="top"-->
-<!--        tools:background="@color/accent_A100">-->
+    <!--内容区域-->
+    <com.module.slide.SuperSwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:loading_img_direction="top"
+        tools:background="@color/accent_A100">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view"
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/mainpage_nsv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical" />
+            android:fillViewport="true"
+            android:focusableInTouchMode="true">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:descendantFocusability="blocksDescendants"
+                android:orientation="vertical">
+                <com.youth.banner.Banner
+                    android:id="@+id/banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/banner_height"
+                    android:visibility="gone"
+                    app:is_auto_play="true" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" />
+            </LinearLayout>
 
-<!--    </com.module.slide.SuperSwipeRefreshLayout>-->
+        </androidx.core.widget.NestedScrollView>
+
+
+    </com.module.slide.SuperSwipeRefreshLayout>
 
     <ViewStub
         android:id="@+id/load_state"

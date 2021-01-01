@@ -19,10 +19,10 @@ import com.kingz.module.home.R
 import com.zeke.home.adapter.ArticleDelegateAdapter
 import com.zeke.home.adapter.HomeArticleAdapter
 import com.zeke.kangaroo.utils.ZLog
-import kotlinx.android.synthetic.main.activity_main.*
 
 /**
  * 首页热门推荐(玩android)的Fragemnt
+ * 内部使用 SuperSwipeRefreshLayout
  */
 class HomeWanAndroidFragment : BaseVMFragment<WanAndroidRepository, WanAndroidViewModel>() {
     lateinit var mRecyclerView: RecyclerView
@@ -43,7 +43,7 @@ class HomeWanAndroidFragment : BaseVMFragment<WanAndroidRepository, WanAndroidVi
                 if (viewModel.statusLiveData.value == CoroutineState.FINISH ||
                     viewModel.statusLiveData.value == CoroutineState.ERROR
                 ) {
-                    swipeRefreshLayout?.isRefreshing = false
+//                    swipeRefreshLayout?.isRefreshing = false
                 }
             }
         })

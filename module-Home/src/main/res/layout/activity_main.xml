@@ -26,54 +26,22 @@
             android:layout_height="50dp"
             app:contentInsetLeft="0dp"
             app:contentInsetStart="0dp">
-
             <include layout="@layout/top_title_bar" />
         </androidx.appcompat.widget.Toolbar>
 
         <!--内容区域-->
-        <com.module.slide.SuperSwipeRefreshLayout
-            android:id="@+id/swipeRefreshLayout"
+        <FrameLayout
+            android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:loading_img_direction="top"
-            tools:background="@color/accent_A100">
+            android:background="@android:color/white"
+            android:layout_marginBottom="146px"
+            android:contentDescription="@string/content_view_desc" />
 
-            <androidx.core.widget.NestedScrollView
-                android:id="@+id/mainpage_nsv"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fillViewport="true"
-                android:focusableInTouchMode="true"
-                android:layout_above="@id/main_bottom_layout">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:descendantFocusability="blocksDescendants"
-                    android:orientation="vertical">
-
-                    <com.youth.banner.Banner
-                        android:id="@+id/banner"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/banner_height"
-                        android:visibility="gone"
-                        app:is_auto_play="true" />
-
-                    <FrameLayout
-                        android:id="@+id/content"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@android:color/white"
-                        android:contentDescription="@string/content_view_desc" />
-                </LinearLayout>
-            </androidx.core.widget.NestedScrollView>
-
-            <!-- 底部Layout -->
-            <include
-                android:id="@+id/main_bottom_layout"
-                layout="@layout/main_bottom_layout" />
-        </com.module.slide.SuperSwipeRefreshLayout>
-
+        <!-- 底部Layout-->
+        <include
+            android:id="@+id/main_bottom_layout"
+            layout="@layout/main_bottom_layout" />
     </LinearLayout>
 
 </com.module.slide.SuperSlidingPaneLayout>

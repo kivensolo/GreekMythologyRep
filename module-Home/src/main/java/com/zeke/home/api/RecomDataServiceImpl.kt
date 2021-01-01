@@ -4,8 +4,8 @@ import android.content.Context
 import android.os.AsyncTask
 import android.util.JsonReader
 import android.widget.Toast
-import com.zeke.home.entity.HomeRecomData
 import com.zeke.home.entity.PageContent
+import com.zeke.home.entity.TemplatePageData
 import com.zeke.kangaroo.utils.ZLog
 import com.zeke.network.response.IRequestResponse
 import java.io.IOException
@@ -17,15 +17,15 @@ import java.util.*
  * date：2020/2/21
  * description：首页推荐数据实现类
  */
-class RecomDataServiceImpl : DataApiService<MutableList<HomeRecomData>> {
+class RecomDataServiceImpl : DataApiService<MutableList<TemplatePageData>> {
     companion object {
         private val TAG = RecomDataServiceImpl::class.java.simpleName
-        private lateinit var mCallBack: IRequestResponse<MutableList<HomeRecomData>>
+        private lateinit var mCallBack: IRequestResponse<MutableList<TemplatePageData>>
 
     }
 
     override fun requestData(context: Context,
-                             callback: IRequestResponse<MutableList<HomeRecomData>>) {
+                             callback: IRequestResponse<MutableList<TemplatePageData>>) {
         mCallBack = callback
         val assetManager = context.assets
         val uris: Array<String>
@@ -50,11 +50,11 @@ class RecomDataServiceImpl : DataApiService<MutableList<HomeRecomData>> {
 
 
     class HomeDataLoader(var ctx: Context)
-        : AsyncTask<String, Void, MutableList<HomeRecomData>>() {
+        : AsyncTask<String, Void, MutableList<TemplatePageData>>() {
         private var sawError: Boolean = false
 
-        override fun doInBackground(vararg parms: String?): MutableList<HomeRecomData> {
-            val homeRecomData = ArrayList<HomeRecomData>()
+        override fun doInBackground(vararg parms: String?): MutableList<TemplatePageData> {
+            val homeRecomData = ArrayList<TemplatePageData>()
 
             for (uri in parms) {
                 try {
@@ -75,7 +75,7 @@ class RecomDataServiceImpl : DataApiService<MutableList<HomeRecomData>> {
         @Throws(IOException::class)
         private fun praseLocalJsonData(
                 reader: JsonReader,
-                pages: MutableList<HomeRecomData>) {
+                pages: MutableList<TemplatePageData>) {
             reader.beginArray()
             while (reader.hasNext()) {
                 parsePage(reader, pages)
@@ -86,12 +86,12 @@ class RecomDataServiceImpl : DataApiService<MutableList<HomeRecomData>> {
         @Throws(IOException::class)
         private fun parsePage(
                 reader: JsonReader,
-                pages: MutableList<HomeRecomData>) {
+                pages: MutableList<TemplatePageData>) {
             var pageId = ""
             var pageName = ""
             var pageType = ""
             var pageContent: MutableList<PageContent>? = null
-            val pageLIst = ArrayList<HomeRecomData>()
+            val pageLIst = ArrayList<TemplatePageData>()
             reader.beginObject()
             while (reader.hasNext()) {
                 val node = reader.nextName()
@@ -111,7 +111,7 @@ class RecomDataServiceImpl : DataApiService<MutableList<HomeRecomData>> {
                 }
             }
             reader.endObject()
-            pageLIst.add(HomeRecomData(pageId, pageName, pageType, pageContent))
+            pageLIst.add(TemplatePageData(pageId, pageName, pageType, pageContent))
             pages.addAll(pageLIst)
         }
 
@@ -136,7 +136,7 @@ class RecomDataServiceImpl : DataApiService<MutableList<HomeRecomData>> {
             return pageContentList
         }
 
-        override fun onPostExecute(result: MutableList<HomeRecomData>) {
+        override fun onPostExecute(result: MutableList<TemplatePageData>) {
             super.onPostExecute(result)
             //TODO 处理完毕返回数据
 

@@ -2,14 +2,12 @@ package com.zeke.home
 
 import android.Manifest
 import android.app.Instrumentation
-import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.nsd.NsdManager
 import android.net.nsd.NsdServiceInfo
 import android.os.Bundle
-import android.os.Vibrator
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
@@ -30,9 +28,6 @@ import com.kingz.module.common.viewmodel.WanAndroidViewModel
 import com.kingz.module.home.BuildConfig
 import com.kingz.module.home.R
 import com.module.slide.SuperSlidingPaneLayout
-import com.module.slide.SuperSwipeRefreshLayout
-import com.youth.banner.BannerConfig
-import com.zeke.home.banner.BannerGlideImageLoader
 import com.zeke.home.fragments.HomeLiveFragment
 import com.zeke.home.fragments.HomeRecomFragment
 import com.zeke.home.fragments.ISwitcher
@@ -100,17 +95,17 @@ class MainActivity : BaseVMActivity<WanAndroidRepository, WanAndroidViewModel>()
         initFragments()
         initBottom()
         initSlidingPaneLayout()
-        initSwipeRefreshLayout()
-        initBannerView()
+//        initSwipeRefreshLayout()
+//        initBannerView()
     }
 
-    private fun initBannerView() {
-        banner?.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE)
-        banner?.setImageLoader(BannerGlideImageLoader())
-        banner?.setOnBannerListener { position ->
-            // TODO 进行web页面跳转
-        }
-    }
+//    private fun initBannerView() {
+//        banner?.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE)
+//        banner?.setImageLoader(BannerGlideImageLoader())
+//        banner?.setOnBannerListener { position ->
+//            // TODO 进行web页面跳转
+//        }
+//    }
 
     private fun initSlidingPaneLayout() {
         panelSlidelLsr = HomePanelSlidelLsr()
@@ -119,18 +114,19 @@ class MainActivity : BaseVMActivity<WanAndroidRepository, WanAndroidViewModel>()
         slidPanelLayout?.coveredFadeColor = ContextCompat.getColor(this, R.color.transparent)
         tvVersion?.text = String.format("v%s", BuildConfig.VERSION_NAME)
     }
+//  TODO 推迟到Web Fragment初始化之后
 
-    private fun initSwipeRefreshLayout() {
-        swipeRefreshLayout?.setOnRefreshListener { direction ->
-            if (direction == SuperSwipeRefreshLayout.Direction.TOP) {
-                mCurPage = 1
-                //TODO 进行banner数据获取
-            }
-            val vibrator = getSystemService(Service.VIBRATOR_SERVICE) as Vibrator
-            vibrator.vibrate(70)
-        }
-//        swipeRefreshLayout?.isRefreshing = true
-    }
+//    private fun initSwipeRefreshLayout() {
+//        swipeRefreshLayout?.setOnRefreshListener { direction ->
+//            if (direction == SuperSwipeRefreshLayout.Direction.TOP) {
+//                mCurPage = 1
+//                //TODO 进行banner数据获取
+//            }
+//            val vibrator = getSystemService(Service.VIBRATOR_SERVICE) as Vibrator
+//            vibrator.vibrate(70)
+//        }
+////        swipeRefreshLayout?.isRefreshing = true
+//    }
 
     override fun initData(savedInstanceState: Bundle?) {
         permissionCheck()
@@ -207,8 +203,7 @@ class MainActivity : BaseVMActivity<WanAndroidRepository, WanAndroidViewModel>()
      * 初始化底部相关
      */
     private fun initBottom() {
-        val bottomController =
-            MainBottomController(findViewById<View>(R.id.main_bottom_layout))
+        val bottomController = MainBottomController(findViewById<View>(R.id.main_bottom_layout))
         bottomController.setListener(this)
     }
 

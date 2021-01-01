@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.kingz.module.common.adapter.IDelegateAdapter
 import com.kingz.module.home.R
-import com.zeke.home.entity.HomeRecomData
+import com.zeke.home.entity.TemplatePageData
 import com.zeke.kangaroo.adapter.CommonRecyclerAdapter
 
 /**
@@ -15,8 +15,8 @@ import com.zeke.kangaroo.adapter.CommonRecyclerAdapter
  * date:  2020/5/24 13:22 <br>
  * description: 3个海报的代理Adapter <br>
  */
-class ThreePicDelegateAdapter: IDelegateAdapter<HomeRecomData> {
-    override fun isForViewType(dataType: HomeRecomData): Boolean {
+class ThreePicDelegateAdapter: IDelegateAdapter<TemplatePageData> {
+    override fun isForViewType(dataType: TemplatePageData): Boolean {
         return dataType.type == "three_pic"
     }
 
@@ -25,7 +25,7 @@ class ThreePicDelegateAdapter: IDelegateAdapter<HomeRecomData> {
         return CommonRecyclerAdapter.ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int, dataType: HomeRecomData) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int, dataType: TemplatePageData) {
         if(holder is CommonRecyclerAdapter.ViewHolder){
             holder.getView<TextView>(R.id.tv_content).text = dataType.name
             holder.getView<TextView>(R.id.tv_source).text = "澎湃新闻"

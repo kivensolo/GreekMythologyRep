@@ -3,12 +3,12 @@ package com.zeke.home.entity
 /**
  * author：KingZ
  * date：2020/2/21
- * description：首页推荐数据格式
+ * description：首页Page模板数据格式
  */
-data class HomeRecomData(val id: String,
-                         val name:String,
-                         val type:String,
-                         var page_content: MutableList<PageContent>?) {
+data class TemplatePageData(val id: String,
+                            val name:String,
+                            val type:String,
+                            var page_content: MutableList<PageContent>?) {
     fun getPageContent(): MutableList<PageContent>? {
         return page_content
     }
