@@ -42,6 +42,17 @@ interface WanAndroidApiService : BaseApiService {
      */
     @POST("lg/collect/{id}/json")
     suspend fun collect(@Path("id") id:Int): CollectBean?
+    /**
+     * 取消收藏站内文章
+     */
+    @POST("lg/uncollect/{id}/json")
+    suspend fun unCcollect(@Path("id") id:Int): CollectBean?
+
+    /**
+     * 收藏文章列表
+     */
+    @POST("lg/collect/list/{page_idnex}/json")
+    suspend fun collectList(@Path("page_idnex") id:Int): CollectListBean?
 
     /**
      * 收藏站外文章

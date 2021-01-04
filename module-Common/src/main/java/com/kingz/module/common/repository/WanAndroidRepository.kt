@@ -8,6 +8,7 @@ import com.kingz.database.entity.UserEntity
 import com.kingz.module.common.api.WanAndroidApiService
 import com.kingz.module.common.bean.ArticleData
 import com.kingz.module.common.bean.BannerData
+import com.kingz.module.common.bean.CollectBean
 import com.kingz.module.common.service.ApiServiceUtil
 import com.kingz.module.common.user.UserInfo
 import com.zeke.kangaroo.utils.ZLog
@@ -35,6 +36,22 @@ open class WanAndroidRepository : BaseRepository() {
     suspend fun getBannerData(): BannerData? {
         ZLog.d("get Banner ---> ")
         return ApiServiceUtil.getApiService<WanAndroidApiService>().bannerData()
+    }
+
+    /**
+     * 添加收藏文章
+     */
+    suspend fun collectArticle(articleId:Int):CollectBean?{
+        ZLog.d("collect article: $articleId ---> ")
+        return ApiServiceUtil.getApiService<WanAndroidApiService>().collect(articleId)
+    }
+
+    /**
+     * 取消文章收藏
+     */
+    suspend fun unCollectArticle(articleId:Int):CollectBean?{
+        ZLog.d("uncollect article: $articleId ---> ")
+        return ApiServiceUtil.getApiService<WanAndroidApiService>().unCcollect(articleId)
     }
 
     /**
