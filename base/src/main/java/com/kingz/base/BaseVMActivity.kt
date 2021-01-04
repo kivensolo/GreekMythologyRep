@@ -27,17 +27,15 @@ abstract class BaseVMActivity<BR : BaseRepository,
                     }
                     CoroutineState.REFRESH -> {//协程开始&&进度菊花圈
                         Log.d("Coroutine-status:", "REFRESH")
-                        //TODO showLoading
                         showLoading()
                     }
                     CoroutineState.FINISH -> {//协程结束
                         Log.d("Coroutine-status:", "FINISHED")
-                        //TODO dismissLoading
                         dismissLoading()
                     }
                     CoroutineState.ERROR -> {//协程异常
                         Log.e("Coroutine-status:", "ERROR")
-                        //TODO dismissLoading
+                        dismissLoading()
                     }
                 }
             }
