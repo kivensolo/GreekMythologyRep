@@ -2,11 +2,8 @@ package com.zeke.home
 
 import android.Manifest
 import android.app.Instrumentation
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.nsd.NsdManager
-import android.net.nsd.NsdServiceInfo
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
@@ -32,6 +29,7 @@ import com.zeke.home.fragments.HomeLiveFragment
 import com.zeke.home.fragments.HomeRecomFragment
 import com.zeke.home.fragments.ISwitcher
 import com.zeke.home.model.HomeSongModel
+import com.zeke.home.service.NSDService
 import com.zeke.kangaroo.utils.ZLog
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.slide_menu_layout.*
@@ -51,37 +49,10 @@ class MainActivity : BaseVMActivity<WanAndroidRepository, WanAndroidViewModel>()
     private lateinit var panelSlidelLsr: HomePanelSlidelLsr
     private var menuPanel: View? = null
 
-    // NSD-DemoCode
-    private var mServiceName: kotlin.String? = null
-    private var nsdManager: NsdManager? = null
-
     // 当前页数
     private var mCurPage = 1
 
-    private val registrationListener = object : NsdManager.RegistrationListener {
 
-        override fun onServiceRegistered(NsdServiceInfo: NsdServiceInfo) {
-            // Save the service name. Android may have changed it in order to
-            // resolve a conflict, so update the name you initially requested
-            // with the name Android actually used.
-            mServiceName = NsdServiceInfo.serviceName
-        }
-
-        override fun onRegistrationFailed(serviceInfo: NsdServiceInfo, errorCode: Int) {
-            // Registration failed! Put debugging code here to determine why.
-            ZLog.e("onRegistrationFailed errorCode=$errorCode")
-        }
-
-        override fun onServiceUnregistered(info: NsdServiceInfo) {
-            // Service has been unregistered. This only happens when you call
-            // NsdManager.unregisterService() and pass in this listener.
-        }
-
-        override fun onUnregistrationFailed(serviceInfo: NsdServiceInfo, errorCode: Int) {
-            // Unregistration failed. Put debugging code here to determine why.
-            ZLog.e("onUnregistrationFailed errorCode=$errorCode")
-        }
-    }
 
 
     override val viewModel: WanAndroidViewModel by viewModels {
@@ -103,7 +74,7 @@ class MainActivity : BaseVMActivity<WanAndroidRepository, WanAndroidViewModel>()
 //        banner?.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE)
 //        banner?.setImageLoader(BannerGlideImageLoader())
 //        banner?.setOnBannerListener { position ->
-//            // TODO 进行web页面跳转
+//            //进行web页面跳转
 //        }
 //    }
 
@@ -114,13 +85,13 @@ class MainActivity : BaseVMActivity<WanAndroidRepository, WanAndroidViewModel>()
         slidPanelLayout?.coveredFadeColor = ContextCompat.getColor(this, R.color.transparent)
         tvVersion?.text = String.format("v%s", BuildConfig.VERSION_NAME)
     }
-//  TODO 推迟到Web Fragment初始化之后
+//   推迟到Web Fragment初始化之后
 
 //    private fun initSwipeRefreshLayout() {
 //        swipeRefreshLayout?.setOnRefreshListener { direction ->
 //            if (direction == SuperSwipeRefreshLayout.Direction.TOP) {
 //                mCurPage = 1
-//                //TODO 进行banner数据获取
+//                // 进行banner数据获取
 //            }
 //            val vibrator = getSystemService(Service.VIBRATOR_SERVICE) as Vibrator
 //            vibrator.vibrate(70)
@@ -137,38 +108,7 @@ class MainActivity : BaseVMActivity<WanAndroidRepository, WanAndroidViewModel>()
         }
         viewModel.getUserInfo()
 
-        registerService(55530)
-    }
-
-    /**
-     * 注册Nsd服务
-     * 参数1 ：
-     * 服务名称设置为“NsdChat”。
-     * 此服务名称是实例名称：
-     *  它是对网络上其他设备可见的名称。
-     *  网络上使用 NSD 查找本地服务的任何设备都可以看到该名称。
-     *  请记住，网络上任何服务的名称都必须是唯一的，并且 Android 会自动处理冲突解决。
-     *  如果网络中的两台设备都安装了 NsdChat 应用，则其中一台设备会自动更改服务名称，
-     *  如更改为“NsdChat (1)”之类的。
-     *
-     *  参数2：设置服务类型，指定应用使用的协议和传输层。
-     *  语法为“_<protocol>._<transportlayer>”
-     */
-    private fun registerService(port: Int) {
-        // Create the NsdServiceInfo object, and populate it.
-        val serviceInfo = NsdServiceInfo().apply {
-            // The name is subject to change based on conflicts
-            // with other services advertised on the same network.
-            serviceName = "NsdChat"
-            serviceType = "_nsdchat._tcp"
-            setPort(port)
-        }
-        nsdManager = (getSystemService(Context.NSD_SERVICE) as NsdManager)
-            .apply {
-            registerService(serviceInfo,
-                NsdManager.PROTOCOL_DNS_SD,
-                registrationListener)
-        }
+        NSDService().init(baseContext)
     }
 
     /**
