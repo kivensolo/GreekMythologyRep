@@ -1,9 +1,13 @@
 package com.zeke.home.fragments
 
+import android.app.Service
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.launcher.ARouter
@@ -14,11 +18,18 @@ import com.kingz.module.common.base.WADConstants
 import com.kingz.module.common.bean.ArticleData
 import com.kingz.module.common.repository.WanAndroidRepository
 import com.kingz.module.common.router.RPath
+import com.kingz.module.common.utils.ktx.SDKVersion
 import com.kingz.module.common.viewmodel.WanAndroidViewModel
 import com.kingz.module.home.R
+import com.module.slide.SuperSwipeRefreshLayout
 import com.zeke.home.adapter.ArticleDelegateAdapter
 import com.zeke.home.adapter.HomeArticleAdapter
 import com.zeke.kangaroo.utils.ZLog
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+
 
 /**
  * 首页热门推荐(玩android)的Fragemnt
@@ -27,6 +38,10 @@ import com.zeke.kangaroo.utils.ZLog
 class HomeWanAndroidFragment : BaseVMFragment<WanAndroidRepository, WanAndroidViewModel>() {
     lateinit var mRecyclerView: RecyclerView
     lateinit var articleAdapter: HomeArticleAdapter
+    private lateinit var swipeRefreshLayout:SuperSwipeRefreshLayout
+
+    // 当前页数
+    private var mCurPage = 1
 
     override val viewModel: WanAndroidViewModel by viewModels {
         ViewModelFactory.build { WanAndroidViewModel() }
@@ -43,7 +58,7 @@ class HomeWanAndroidFragment : BaseVMFragment<WanAndroidRepository, WanAndroidVi
                 if (viewModel.statusLiveData.value == CoroutineState.FINISH ||
                     viewModel.statusLiveData.value == CoroutineState.ERROR
                 ) {
-//                    swipeRefreshLayout?.isRefreshing = false
+                    swipeRefreshLayout?.isRefreshing = false
                 }
             }
         })
@@ -92,8 +107,37 @@ class HomeWanAndroidFragment : BaseVMFragment<WanAndroidRepository, WanAndroidVi
     override fun initView(savedInstanceState: Bundle?) {
         mRecyclerView = rootView.findViewById(R.id.recycler_view) as RecyclerView
         mRecyclerView.layoutManager = LinearLayoutManager(context)
+        initSwipeRefreshLayout()
+    }
 
+    private fun initSwipeRefreshLayout() {
+        swipeRefreshLayout = rootView.findViewById(R.id.swipeRefreshLayout)
+        swipeRefreshLayout.setOnRefreshListener { direction ->
+            if (direction == SuperSwipeRefreshLayout.Direction.TOP) {
+                mCurPage = 1
+                // 进行banner数据获取
 
+                // 模拟刷新完毕
+                lifecycleScope.launch {
+                    delay(1000)
+                    withContext(Dispatchers.Main) {
+                        swipeRefreshLayout.isRefreshing = false
+                    }
+                }
+            }
+            val vibrator = context?.getSystemService(Service.VIBRATOR_SERVICE) as Vibrator
+            if (SDKVersion.afterOreo()) {
+                vibrator.vibrate(
+                    VibrationEffect.createOneShot(
+                        70,
+                        VibrationEffect.DEFAULT_AMPLITUDE
+                    )
+                )
+            } else {
+                vibrator.vibrate(70)
+            }
+        }
+        swipeRefreshLayout.isRefreshing = true
     }
 
 

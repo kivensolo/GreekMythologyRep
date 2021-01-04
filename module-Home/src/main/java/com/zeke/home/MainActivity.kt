@@ -49,11 +49,6 @@ class MainActivity : BaseVMActivity<WanAndroidRepository, WanAndroidViewModel>()
     private lateinit var panelSlidelLsr: HomePanelSlidelLsr
     private var menuPanel: View? = null
 
-    // 当前页数
-    private var mCurPage = 1
-
-
-
 
     override val viewModel: WanAndroidViewModel by viewModels {
         ViewModelFactory.build { WanAndroidViewModel() }
@@ -66,7 +61,6 @@ class MainActivity : BaseVMActivity<WanAndroidRepository, WanAndroidViewModel>()
         initFragments()
         initBottom()
         initSlidingPaneLayout()
-//        initSwipeRefreshLayout()
 //        initBannerView()
     }
 
@@ -86,18 +80,6 @@ class MainActivity : BaseVMActivity<WanAndroidRepository, WanAndroidViewModel>()
         tvVersion?.text = String.format("v%s", BuildConfig.VERSION_NAME)
     }
 //   推迟到Web Fragment初始化之后
-
-//    private fun initSwipeRefreshLayout() {
-//        swipeRefreshLayout?.setOnRefreshListener { direction ->
-//            if (direction == SuperSwipeRefreshLayout.Direction.TOP) {
-//                mCurPage = 1
-//                // 进行banner数据获取
-//            }
-//            val vibrator = getSystemService(Service.VIBRATOR_SERVICE) as Vibrator
-//            vibrator.vibrate(70)
-//        }
-////        swipeRefreshLayout?.isRefreshing = true
-//    }
 
     override fun initData(savedInstanceState: Bundle?) {
         permissionCheck()
