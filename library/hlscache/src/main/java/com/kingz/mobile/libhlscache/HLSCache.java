@@ -2,7 +2,7 @@ package com.kingz.mobile.libhlscache;
 
 import com.kingz.mobile.libhlscache.bean.CacheConfig;
 import com.kingz.mobile.libhlscache.bean.CacheVideoConfig;
-import com.kingz.mobile.libhlscache.bean.OnResultListener;
+import com.kingz.mobile.libhlscache.bean.IDownloadCallBack;
 import com.kingz.mobile.libhlscache.bean.Progress;
 import com.kingz.mobile.libhlscache.bean.VideoInfo;
 import com.kingz.mobile.libhlscache.http.AbsHttpRequester;
@@ -24,7 +24,7 @@ import fi.iki.elonen.NanoHTTPD;
  * 对内：内部对象创建依赖管理。
  */
 public class HLSCache {
-    private List<OnResultListener> listeners = new ArrayList<>();
+    private List<IDownloadCallBack> listeners = new ArrayList<>();
 
     // 内部模块
     private NanoHTTPD nanoHTTPD;
@@ -54,17 +54,17 @@ public class HLSCache {
     }
 
     /**
-     * 添加下载过程中成功、失败监听。调用 {@link #removeResultListener(OnResultListener)} 删除监听。
-     * 注意：只添加监听不调用 {@link #removeResultListener(OnResultListener)} 将造成 Context 上下文泄漏
+     * 添加下载过程中成功、失败监听。调用 {@link #removeResultListener(IDownloadCallBack)} 删除监听。
+     * 注意：只添加监听不调用 {@link #removeResultListener(IDownloadCallBack)} 将造成 Context 上下文泄漏
      */
-    public void addResultListener(OnResultListener onResultListener) {
+    public void addResultListener(IDownloadCallBack onResultListener) {
         listeners.add(onResultListener);
     }
 
     /**
      * 删除监听
      */
-    public void removeResultListener(OnResultListener onResultListener) {
+    public void removeResultListener(IDownloadCallBack onResultListener) {
         listeners.remove(onResultListener);
     }
 
@@ -215,14 +215,14 @@ public class HLSCache {
 
     void callbackDownloadError(final String id, final Exception e) {
         LogUtils.i(e.toString());
-        for (OnResultListener listener : listeners) {
+        for (IDownloadCallBack listener : listeners) {
             listener.onDownloadError(id, e);
         }
     }
 
     void callbackDownloadFinish(final String id) {
         LogUtils.i(id + " download finish.");
-        for (OnResultListener listener : listeners) {
+        for (IDownloadCallBack listener : listeners) {
             listener.onDownloadFinish(id);
         }
     }

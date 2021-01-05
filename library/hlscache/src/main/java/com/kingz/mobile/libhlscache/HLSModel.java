@@ -16,10 +16,8 @@ import com.kingz.mobile.libhlscache.bean.VideoInfo;
 import com.kingz.mobile.libhlscache.http.AbsHttpRequester;
 import com.kingz.mobile.libhlscache.utils.ActionCallBack;
 import com.kingz.mobile.libhlscache.utils.IOUtils;
-import com.kingz.mobile.libhlscache.utils.IntIntPair;
 import com.kingz.mobile.libhlscache.utils.LogUtils;
 import com.kingz.mobile.libhlscache.utils.Pair;
-import com.kingz.mobile.libhlscache.utils.StringIntPair;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -262,7 +260,7 @@ public class HLSModel {
      *
      * @return something
      */
-    synchronized StringIntPair getNextNeedDownloadTs() {
+    synchronized Pair<String, Integer> getNextNeedDownloadTs() {
         return priorityManager.getNextNeedDownloadTs(videoMap);
     }
 
@@ -708,7 +706,7 @@ public class HLSModel {
         }
         IntRanges ranges = v.getDownloadedTsRanges();
         float downloadedDuration = 0;
-        for (IntIntPair pair : ranges.getRanges()) {
+        for (Pair<Integer,Integer> pair : ranges.getRanges()) {
             downloadedDuration += v.tsIndexToStartTime(pair.second) - v.tsIndexToStartTime(pair.first);
         }
 

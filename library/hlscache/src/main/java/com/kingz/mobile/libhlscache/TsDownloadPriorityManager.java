@@ -2,8 +2,7 @@ package com.kingz.mobile.libhlscache;
 
 import com.kingz.mobile.libhlscache.bean.IntRanges;
 import com.kingz.mobile.libhlscache.bean.VideoInfo;
-import com.kingz.mobile.libhlscache.utils.IntIntPair;
-import com.kingz.mobile.libhlscache.utils.StringIntPair;
+import com.kingz.mobile.libhlscache.utils.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,16 +14,16 @@ import java.util.Random;
  */
 class TsDownloadPriorityManager {
     private Random random = new Random(System.currentTimeMillis());
-    private List<StringIntPair> requestFIFO = new ArrayList<>(); // Pair<video id,ts index>，请求队列，优先控制下载请求队列里的分片。
+    private List<Pair<String,Integer>> requestFIFO = new ArrayList<>(); // Pair<video id,ts index>，请求队列，优先控制下载请求队列里的分片。
 
     void addRequestFIFO(String videoId, int tsIndex) {
-        StringIntPair sip = new StringIntPair(videoId, tsIndex);
+        Pair<String,Integer> sip = Pair.create(videoId, tsIndex);
         if (!requestFIFO.contains(sip)) {
             requestFIFO.add(0, sip);
         }
     }
 
-    StringIntPair getNextNeedDownloadTs(Map<String, VideoInfo> videoInfoMap) {
+    Pair<String,Integer> getNextNeedDownloadTs(Map<String, VideoInfo> videoInfoMap) {
 
         // 1. 请求队列有内容则优先下载请求队列。
         if (!requestFIFO.isEmpty()) {
@@ -45,16 +44,16 @@ class TsDownloadPriorityManager {
             if (videoInfo.getConfig().getForwardCacheTime() != Integer.MAX_VALUE) {
                 // 读取已缓存距离进行比较。
                 int lastRequestTsIndex = videoInfo.getLastRequestTsIndex();
-                IntIntPair containsPair = videoInfo.getDownloadedTsRanges().contains(lastRequestTsIndex);
+                Pair<Integer,Integer> containsPair = videoInfo.getDownloadedTsRanges().contains(lastRequestTsIndex);
 
                 if (containsPair != null) {
                     float finishBufferTime = videoInfo.tsIndexToStartTime(lastRequestTsIndex) +
                             videoInfo.getConfig().getForwardCacheTime();
                     if (videoInfo.tsIndexToStartTime(containsPair.second) < finishBufferTime) {
-                        return new StringIntPair(videoInfo.getId(), containsPair.second);
+                        return Pair.create(videoInfo.getId(), containsPair.second);
                     }
                 } else {
-                    return new StringIntPair(videoInfo.getId(), lastRequestTsIndex);
+                    return Pair.create(videoInfo.getId(), lastRequestTsIndex);
                 }
             }
         }
@@ -77,7 +76,7 @@ class TsDownloadPriorityManager {
             if (!downloadedTsRanges.getRanges().isEmpty()) {
                 tsIndex = downloadedTsRanges.getRanges().get(0).second;
             }
-            return new StringIntPair(videoInfo.getId(), tsIndex);
+            return Pair.create(videoInfo.getId(), tsIndex);
         }
 
         return null;

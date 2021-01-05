@@ -1,10 +1,14 @@
 package com.kingz.mobile.libhlscache.bean;
 
+import androidx.annotation.IntDef;
+
 import com.iheartradio.m3u8.data.Playlist;
 import com.iheartradio.m3u8.data.TrackData;
-import com.kingz.mobile.libhlscache.utils.IntIntPair;
+import com.kingz.mobile.libhlscache.utils.Pair;
 import com.kingz.mobile.libhlscache.utils.Tools;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,14 +18,27 @@ import java.util.List;
  */
 public class VideoInfo {
     private String id;
-    private float[] tsDivideTimes;   // 分片分界时间，最后一个为影片时长。单位 s
-    private IntRanges downloadedTsRanges = new IntRanges();  // 已下载的 ts 分片段，由多个 [start, end) 组成
+    // 分片分界时间，最后一个为影片时长。单位 s
+    private float[] tsDivideTimes;
+    // 已下载的 ts 分片段，由多个 [start, end) 组成
+    private IntRanges downloadedTsRanges = new IntRanges();
 
     // online 表示 url 有效。
+    // 下载中
     public static final int STATE_ONLINE_DOWNLOADING = 0;
+    // 下载失败
     public static final int STATE_ONLINE_ERROR = 1;
+    // 暂停下载
     public static final int STATE_ONLINE_PAUSE = 2;
+    // 未激活视频，有两种情况：
+    // 1. 下载完成(通过 {@link #isDownloadFinish()})判断.
+    // 2. 上次退出时存留的视频.
     public static final int STATE_OFFLINE = 3; // 完成或者没有设置 url
+
+    @IntDef({STATE_ONLINE_DOWNLOADING, STATE_ONLINE_ERROR, STATE_ONLINE_PAUSE, STATE_OFFLINE})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface DownLoadState {}
+
     private int state;
 
     private String url;
@@ -104,9 +121,9 @@ public class VideoInfo {
     }
 
     public boolean isDownloadFinish() {
-        List<IntIntPair> ranges = downloadedTsRanges.getRanges();
+        List<Pair<Integer,Integer>> ranges = downloadedTsRanges.getRanges();
         if (ranges.size() == 1) {
-            IntIntPair pair = ranges.get(0);
+            Pair<Integer,Integer> pair = ranges.get(0);
             if (pair.first == 0 && pair.second == tsDivideTimes.length - 1) {
                 return true;
             }
@@ -132,7 +149,7 @@ public class VideoInfo {
         }
     }
 
-    public IntIntPair hasDownloadedTs(int tsIndex) {
+    public Pair<Integer,Integer> hasDownloadedTs(int tsIndex) {
         return downloadedTsRanges.contains(tsIndex);
     }
 

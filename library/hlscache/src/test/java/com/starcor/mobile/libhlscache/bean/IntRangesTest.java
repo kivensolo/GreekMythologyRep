@@ -1,7 +1,7 @@
 package com.starcor.mobile.libhlscache.bean;
 
 import com.kingz.mobile.libhlscache.bean.IntRanges;
-import com.kingz.mobile.libhlscache.utils.IntIntPair;
+import com.kingz.mobile.libhlscache.utils.Pair;
 
 import org.junit.Test;
 
@@ -19,30 +19,30 @@ public class IntRangesTest {
 
         intRanges.addInt(1);
         intRanges.addInt(1);
-        assertEquals(Arrays.asList(new IntIntPair(1, 2)), intRanges.getRanges());
+        assertEquals(Arrays.asList(Pair.create(1, 2)), intRanges.getRanges());
 
         intRanges.addInt(1);
-        assertEquals(Arrays.asList(new IntIntPair(1, 2)), intRanges.getRanges());
+        assertEquals(Arrays.asList(Pair.create(1, 2)), intRanges.getRanges());
 
         intRanges.addInt(2);
-        assertEquals(Arrays.asList(new IntIntPair(1, 3)), intRanges.getRanges());
+        assertEquals(Arrays.asList(Pair.create(1, 3)), intRanges.getRanges());
 
         intRanges.addInt(3);
-        assertEquals(Arrays.asList(new IntIntPair(1, 4)), intRanges.getRanges());
+        assertEquals(Arrays.asList(Pair.create(1, 4)), intRanges.getRanges());
 
         intRanges.addInt(15);
         intRanges.addInt(16);
         intRanges.addInt(17);
-        assertEquals(Arrays.asList(new IntIntPair(1, 4), new IntIntPair(15, 18)), intRanges.getRanges());
+        assertEquals(Arrays.asList(Pair.create(1, 4), Pair.create(15, 18)), intRanges.getRanges());
 
         intRanges.addInt(5);
         intRanges.addInt(6);
         intRanges.addInt(6);
         intRanges.addInt(7);
-        assertEquals(Arrays.asList(new IntIntPair(1, 4), new IntIntPair(5, 8), new IntIntPair(15, 18)), intRanges.getRanges());
+        assertEquals(Arrays.asList(Pair.create(1, 4), Pair.create(5, 8), Pair.create(15, 18)), intRanges.getRanges());
 
         intRanges.addInt(4);
-        assertEquals(Arrays.asList(new IntIntPair(1, 8), new IntIntPair(15, 18)), intRanges.getRanges());
+        assertEquals(Arrays.asList(Pair.create(1, 8), Pair.create(15, 18)), intRanges.getRanges());
 
         intRanges.addInt(8);
         intRanges.addInt(9);
@@ -52,7 +52,7 @@ public class IntRangesTest {
         intRanges.addInt(12);
         intRanges.addInt(13);
         intRanges.addInt(14);
-        assertEquals(Arrays.asList(new IntIntPair(1, 18)), intRanges.getRanges());
+        assertEquals(Arrays.asList(Pair.create(1, 18)), intRanges.getRanges());
     }
 
 }

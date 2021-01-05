@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.kingz.mobile.libhlscache.HLSCache;
 import com.kingz.mobile.libhlscache.bean.CacheVideoConfig;
-import com.kingz.mobile.libhlscache.bean.OnResultListener;
+import com.kingz.mobile.libhlscache.bean.IDownloadCallBack;
 import com.kingz.mobile.libhlscache.bean.Progress;
 import com.kingz.mobile.libhlscache.bean.VideoInfo;
 
@@ -49,7 +49,7 @@ public class SingleActivity extends AppCompatActivity {
 
         mHLSCache = new HLSCache(path);
 
-        mHLSCache.addResultListener(new OnResultListener() {
+        mHLSCache.addResultListener(new IDownloadCallBack() {
             @Override
             public void onDownloadError(String id, Exception e) {
                 Log.d("libhlscache", "onDownloadError: ");
