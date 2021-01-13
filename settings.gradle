@@ -1,3 +1,5 @@
+println("> Initialization [${DEFAULT_SETTINGS_FILE}] Start.")
+
 include ':app'
 include ':app-playerdemo'
 include ':app-hlsCacheDemo'
@@ -33,6 +35,7 @@ gradle.beforeProject {
 }
 
 gradle.afterProject {
-    println "<------ Settings end."
+    println "<------ Config end."
 }
 
+println("> Initialization [${DEFAULT_SETTINGS_FILE}] End.")

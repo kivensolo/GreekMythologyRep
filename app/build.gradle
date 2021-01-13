@@ -1,3 +1,9 @@
+//def currentPrj = getProject()
+def prjPath = project.path
+println("   $prjPath config Begin")
+//Sets the custom build directory of this project
+//currentPrj.buildDir("custom-build")
+
 apply {
     plugin 'com.android.application'
     plugin 'kotlin-android'
@@ -177,26 +183,33 @@ kapt {
     }
 }
 
+
+def _logPrintDependencieModel(module_name){
+    logger.log(LogLevel.ERROR,"     +--- add ${module_name} to app.")
+}
+
 dependencies {
+    println("   The closure to use to configure the dependencies is begin run.")
     implementation fileTree(include: ['*.jar','*.aar'], dir: 'libs')
     implementation root_dependencies["arouter"]
     kapt root_dependencies["arouter_compiler"]
 
-    logger.log(LogLevel.ERROR,'  +--- add module-Common to app.')
+    _logPrintDependencieModel(':module-Common')
     implementation project(':module-Common')
     if (isHomeModule.toBoolean()) {
-        logger.log(LogLevel.ERROR,'  +--- add module-Home to app.')
+        _logPrintDependencieModel(':module-Home')
         implementation project(':module-Home')
     }
     if (isLoginModule.toBoolean()) {
-        logger.log(LogLevel.ERROR,'  +--- add module-Login to app.')
+        _logPrintDependencieModel(':module-Login')
         implementation project(':module-Login')
     }
-    logger.log(LogLevel.ERROR,'  +--- add module-Demo to app.')
+
+    _logPrintDependencieModel(':module-Demo')
     implementation project(":module-Demo")
-    logger.log(LogLevel.ERROR,'  +--- add module-Web to app.')
+    _logPrintDependencieModel(':module-Web')
     implementation project(":module-Web")
-    logger.log(LogLevel.ERROR,'  +--- add library-player to app.')
+    _logPrintDependencieModel(':library-player')
     implementation project(':library-player')
 
 //    implementation 'com.getbase:floatingactionbutton:1.10.1'
@@ -257,13 +270,13 @@ dependencies {
 //gradle.buildFinished {
 //    result -> println('>>>>>> all buildFinished!.')
 //}
-//
+
 ///**
 // * 表示所有的模块都已经配置完
 // * 可以准备执行task
 // */
 project.afterEvaluate {
-    logger.log(LogLevel.ERROR,'>>>>> Evaluate End')
+    logger.log(LogLevel.ERROR,"------[${project.path}] is end Evaluate.")
     logger.log(LogLevel.ERROR, assemble.getTaskDependencies().toString())
     logger.log(LogLevel.ERROR, assemble.getTaskDependencies().getDependencies().toString())
     /** 遍历构建遍历 可以根据构建类型进行任务处理 */
@@ -275,3 +288,4 @@ project.afterEvaluate {
 //logger.log(LogLevel.DEBUG, ">>>>>>>>>>> app config End")
 
 
+println("   $prjPath config End")
