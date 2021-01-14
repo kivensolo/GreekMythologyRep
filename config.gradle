@@ -75,8 +75,8 @@ ext {
             "test-runner"          : 'androidx.test:runner:1.1.0',
             "test-rules"           : 'androidx.test:rules:1.1.0',
 
-            // Assertions
-            "test-ext-junit"       : 'androidx.test.ext:junit:1.1.1',
+            // Test-ext library
+            "test-ext-junit"       : 'androidx.test.ext:junit:1.1.2',
             "test-ext-truth"       : 'androidx.test.ext:truth:1.1.1',
 
             // Espresso dependencies
