@@ -2,12 +2,11 @@ package com.kingz;
 
 import android.content.Intent;
 import android.os.IBinder;
-import android.os.RemoteException;
 
-import androidx.test.InstrumentationRegistry;
+import androidx.test.core.app.ApplicationProvider;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.MediumTest;
 import androidx.test.rule.ServiceTestRule;
-import androidx.test.runner.AndroidJUnit4;
 
 import com.kingz.four_components.service.LocalService;
 import com.kingz.four_components.service.MyComponentsOfService;
@@ -59,9 +58,9 @@ public class LocalServiceTest {
     public final ServiceTestRule mServiceRule = new ServiceTestRule();
 
     @Before
-    public void setup() throws Exception {
-        serviceIntent = new Intent(InstrumentationRegistry.getTargetContext(), LocalService.class);
-        serviceIntent_2 = new Intent(InstrumentationRegistry.getTargetContext(), MyComponentsOfService.class);
+    public void setup() {
+        serviceIntent = new Intent(ApplicationProvider.getApplicationContext(), LocalService.class);
+        serviceIntent_2 = new Intent(ApplicationProvider.getApplicationContext(), MyComponentsOfService.class);
     }
 
     @Test
@@ -80,7 +79,7 @@ public class LocalServiceTest {
 
 
     @Test
-    public void testWithYourService() throws TimeoutException, RemoteException {
+    public void testWithYourService() throws TimeoutException {
         IBinder binder = mServiceRule.bindService(serviceIntent_2);
         MyComponentsOfService service =  ((MyComponentsOfService.LocalServiceBinder)binder).getService();
         int currentNum = service.getCurrentNum();

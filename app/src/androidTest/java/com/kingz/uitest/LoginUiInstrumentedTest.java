@@ -1,16 +1,13 @@
-package com.kingz;
+package com.kingz.uitest;
 
 import android.content.Context;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
 
-import androidx.test.rule.ActivityTestRule;
+import androidx.test.core.app.ApplicationProvider;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import com.kingz.view.animation.ShakeAnimation;
 import com.zeke.kangaroo.utils.NetUtils;
 
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -24,13 +21,13 @@ import static junit.framework.TestCase.assertEquals;
  */
 @RunWith(AndroidJUnit4.class)
 public class LoginUiInstrumentedTest {
-    @Rule
-    public ActivityTestRule<ShakeAnimation> mShakePageRule = new ActivityTestRule<>(ShakeAnimation.class);
+//    @Rule
+//    public ActivityTestRule<ShakeAnimation> mShakePageRule = new ActivityTestRule<>(ShakeAnimation.class);
     private Context mContext;
 
     @Before
     public void setMainActivity() {
-        mContext = InstrumentationRegistry.getTargetContext();
+        mContext = ApplicationProvider.getApplicationContext();
     }
 
     /**
@@ -38,20 +35,20 @@ public class LoginUiInstrumentedTest {
      * @throws Exception
      */
     @Test
-    public void test_sque()throws Exception {
+    public void test_sque(){
         testPackageName();
         net_isConnect();
     }
 
 
     @Test
-    public void testPackageName() throws Exception {
+    public void testPackageName() {
         assertEquals("com.kingz.customdemo", mContext.getPackageName());
     }
 
 
     @Test
-    public void net_isConnect() throws Exception{
+    public void net_isConnect() {
         assertEquals(true, NetUtils.isConnect(mContext));
     }
 

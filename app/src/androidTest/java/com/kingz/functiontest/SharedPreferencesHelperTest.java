@@ -1,10 +1,11 @@
-package com.kingz;
+package com.kingz.functiontest;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
+
+import androidx.test.core.app.ApplicationProvider;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -28,12 +29,11 @@ public class SharedPreferencesHelperTest {
     private Context mContext;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp(){
         //获取application的context
-        mContext = InstrumentationRegistry.getTargetContext();
+        mContext = ApplicationProvider.getApplicationContext();
         //实例化SharedPreferences
         mSharePreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
-
         //mock相关操作
 
     }
@@ -42,12 +42,12 @@ public class SharedPreferencesHelperTest {
      * 测试保存数据是否成功
      */
     @Test
-    public void sharedPreferencesHelper_SavePersonalInformation() throws Exception {
+    public void sharedPreferencesHelper_SavePersonalInformation(){
     }
     /**
      * 测试保存数据，然后获取数据是否成功
      */
     @Test
-    public void sharedPreferencesHelper_SaveAndReadPersonalInformation() throws Exception {
+    public void sharedPreferencesHelper_SaveAndReadPersonalInformation(){
     }
 }
