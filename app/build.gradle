@@ -211,6 +211,7 @@ dependencies {
     implementation project(":module-Web")
     _logPrintDependencieModel(':library-player')
     implementation project(':library-player')
+    implementation project(':library-unittest')
 
 //    implementation 'com.getbase:floatingactionbutton:1.10.1'
 

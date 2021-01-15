@@ -1,31 +1,35 @@
 package com.kingz.functiontest;
 
-import android.content.Context;
-import android.content.Intent;
-
-import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.zeke.home.MainActivity;
+import com.zeke.test.BaseInstrumentedTest;
 
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static junit.framework.TestCase.assertEquals;
+
 @RunWith(AndroidJUnit4.class)
-public class StartPageInstrumentedTest {
-    @Rule
-    private Context mContext;
+public class StartPageInstrumentedTest extends BaseInstrumentedTest {
 
     @Before
-    public void setMainActivity() {
-        mContext = ApplicationProvider.getApplicationContext();
+    @Override
+    public void setUp() {
+        super.setUp();
     }
 
     @Test
     public void testOpenMain() {
-        Intent intent = new Intent(mContext,MainActivity.class);
-        mContext.startActivity(intent);
+        testStartActivity(MainActivity.class, intent -> {
+            intent.putExtra("params","123456");
+            return null;
+        });
+    }
+
+    @Test
+    public void testPackageName() {
+        assertEquals("com.kingz.customdemo", getPackageName());
     }
 }

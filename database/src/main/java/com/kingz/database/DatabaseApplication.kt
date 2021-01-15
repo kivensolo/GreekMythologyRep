@@ -10,7 +10,6 @@ import com.kingz.database.dao.UserDao
  * @author zeke.wang
  * @date 2020/6/11
  * @maintainer zeke.wang
- * @copyright 2020 www.xgimi.com Inc. All rights reserved.
  * @desc:
  */
 open class DatabaseApplication : BaseApplication() {

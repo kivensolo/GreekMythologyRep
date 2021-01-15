@@ -21,6 +21,7 @@ include ':library-views'
 include ':library-network'
 include ':library-server'
 include ':library-hlscache'
+include ':library-unittest'
 
 project(':library').projectDir = new File(rootDir, 'library/all')
 project(':library-player').projectDir = new File(rootDir, 'library/player')
@@ -28,6 +29,7 @@ project(':library-views').projectDir = new File(rootDir, 'library/ui')
 project(':library-network').projectDir = new File(rootDir, 'library/network')
 project(':library-server').projectDir = new File(rootDir, 'library/server')
 project(':library-hlscache').projectDir = new File(rootDir, 'library/hlscache')
+project(':library-unittest').projectDir = new File(rootDir, 'library/unitTest')
 
 
 gradle.beforeProject {
