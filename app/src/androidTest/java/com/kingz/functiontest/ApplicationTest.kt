@@ -2,9 +2,10 @@ package com.kingz.functiontest
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.kingz.database.DatabaseApplication
-import com.kingz.database.dao.SongDao
+import com.kingz.database.dao.SongDao_Impl
 import com.zeke.kangaroo.utils.ZLog
 import com.zeke.test.BaseInstrumentedTest
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -23,8 +24,9 @@ class ApplicationTest : BaseInstrumentedTest(){
             DatabaseApplication::class.java.getDeclaredMethod("getSongDao")
         declaredMethod.isAccessible = true
         val songDao = declaredMethod.invoke(app)
-        if(songDao is SongDao){
-            ZLog.d("get sondao")
+        if(songDao is SongDao_Impl){
+            ZLog.d("Get sondao")
         }
+        assertTrue(songDao is SongDao_Impl)
     }
 }
