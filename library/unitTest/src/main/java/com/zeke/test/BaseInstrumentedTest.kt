@@ -3,9 +3,8 @@ package com.zeke.test
 import android.app.Activity
 import android.content.Intent
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import junit.framework.Assert.assertNotNull
+import org.junit.Assert.assertNotNull
 import org.junit.Before
-import org.junit.Test
 import org.junit.runner.RunWith
 
 /**
@@ -24,10 +23,9 @@ abstract class BaseInstrumentedTest : BaseTest() {
     /**
      * Start activity by intent.
      */
-    @Test
     fun testStartActivity(clazz: Class<out Activity>,
                           exec: (intent: Intent) -> Unit) {
-        val intent =Intent(mContext, clazz::class.java)
+        val intent =Intent(mContext, clazz)
         exec(intent)
         mContext?.startActivity(intent)
         assertNotNull(mContext)

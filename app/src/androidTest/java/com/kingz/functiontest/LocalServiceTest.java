@@ -1,4 +1,4 @@
-package com.kingz;
+package com.kingz.functiontest;
 
 import android.content.Intent;
 import android.os.IBinder;

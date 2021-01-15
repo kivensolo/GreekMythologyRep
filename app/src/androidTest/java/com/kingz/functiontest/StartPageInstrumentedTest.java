@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static junit.framework.TestCase.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
@@ -23,6 +24,7 @@ public class StartPageInstrumentedTest extends BaseInstrumentedTest {
     @Test
     public void testOpenMain() {
         testStartActivity(MainActivity.class, intent -> {
+            intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("params","123456");
             return null;
         });

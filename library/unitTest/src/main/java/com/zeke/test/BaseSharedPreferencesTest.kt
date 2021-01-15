@@ -5,7 +5,6 @@ import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Before
-import org.junit.Test
 import org.junit.runner.RunWith
 
 /**
@@ -30,7 +29,6 @@ abstract class BaseSharedPreferencesTest : BaseTest() {
     /**
      * 测试保存数据是否成功
      */
-    @Test
     open fun testSaveData(exec: (editoe: SharedPreferences.Editor) -> Unit) {
         exec(mSharePreferencesEditor)
     }
@@ -38,7 +36,6 @@ abstract class BaseSharedPreferencesTest : BaseTest() {
     /**
      * 测试获取数据
      */
-    @Test
     open fun testReadData(exec: (editoe: SharedPreferences) -> Unit) {
         exec(mSharePreferences)
     }

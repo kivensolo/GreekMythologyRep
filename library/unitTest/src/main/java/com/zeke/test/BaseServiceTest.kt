@@ -4,7 +4,10 @@ import android.content.Intent
 import android.os.IBinder
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ServiceTestRule
-import org.junit.*
+import org.junit.After
+import org.junit.Before
+import org.junit.Ignore
+import org.junit.Rule
 import org.junit.runner.RunWith
 
 /**
@@ -22,7 +25,6 @@ abstract class BaseServiceTest : BaseTest() {
 
     }
 
-    @Test
     open fun testWithBindService(intent:Intent) : IBinder {
         return mServiceRule.bindService(intent)
     }

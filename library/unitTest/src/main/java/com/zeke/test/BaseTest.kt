@@ -23,4 +23,8 @@ abstract class BaseTest {
         //获取application的context
         mContext = ApplicationProvider.getApplicationContext()
     }
+
+    open fun getAppContext():Context?{
+        return mContext
+    }
 }
