@@ -29,7 +29,7 @@ object MediaPlayerFactory {
         }
     }
 
-    private fun createExo(context: Context, config: Any?): IPlayer {
+    private fun createExo(context: Context, @Suppress("UNUSED_PARAMETER") config: Any?): IPlayer {
         return ExoPlayer(context)
     }
 

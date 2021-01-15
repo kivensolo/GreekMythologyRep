@@ -465,7 +465,7 @@ class ExoPlayer(context: Context) : BasePlayer() {
             val rendererTracksInfo = getExoPlayerTracksInfo(RendererType.AUDIO,
                     0, mappedTrackInfo)
             for (trackIndex in rendererTracksInfo.rendererTrackIndexes) {
-                val trackGroupArray = mappedTrackInfo!!.getTrackGroups(trackIndex)
+                val trackGroupArray = mappedTrackInfo.getTrackGroups(trackIndex)
                 trackGroupArray?.apply {
                     val audioTrackArray = IntArray(trackGroupArray.length)
                     for (i in 0 until trackGroupArray.length) {
