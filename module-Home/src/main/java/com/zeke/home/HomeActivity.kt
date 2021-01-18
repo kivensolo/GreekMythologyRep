@@ -149,16 +149,16 @@ class HomeActivity : BaseVMActivity<WanAndroidRepository, WanAndroidViewModel>()
 
     override fun switchFragment(@ISwitcher.ButtomType position: Int) {
         when (position) {
-            ISwitcher.TYPE_VOD -> fragmentsChage(homeVodFragment, homeLiveFragment as BaseFragment)
-            ISwitcher.TYPE_LIVE -> fragmentsChage(homeLiveFragment, homeVodFragment as BaseFragment)
-            ISwitcher.TYPE_VIP -> fragmentsChage(null, homeVodFragment as BaseFragment)
-            ISwitcher.TYPE_MINE -> fragmentsChage(null, homeVodFragment as BaseFragment)
+            ISwitcher.TYPE_VOD -> fragmentsChange(homeVodFragment, homeLiveFragment as BaseFragment)
+            ISwitcher.TYPE_LIVE -> fragmentsChange(homeLiveFragment, homeVodFragment as BaseFragment)
+            ISwitcher.TYPE_VIP -> fragmentsChange(null, homeVodFragment as BaseFragment)
+            ISwitcher.TYPE_MINE -> fragmentsChange(null, homeVodFragment as BaseFragment)
         }//fragmentsChage(homeLiveFragment,homeVodFragment,homeVipFragment,homeMineFragment);
         //                fragmentsChage(homeVipFragment,homeVodFragment,homeLiveFragment,homeMineFragment);
         //                fragmentsChage(homeMineFragment,homeVodFragment,homeLiveFragment,homeVipFragment);
     }
 
-    private fun fragmentsChage(block: BaseFragment?, vararg none: BaseFragment) {
+    private fun fragmentsChange(block: BaseFragment?, vararg none: BaseFragment) {
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
         for (fragment in none) {

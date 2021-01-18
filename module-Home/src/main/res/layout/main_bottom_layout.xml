@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="146px"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_alignParentBottom="true"
     android:background="@color/tab_bg"
     android:orientation="vertical">
@@ -30,6 +31,7 @@
                 android:layout_width="72px"
                 android:layout_height="64px"
                 android:layout_marginTop="12px"
+                tools:background="@drawable/ic_vod_sel"
                 android:scaleType="fitCenter" />
 
             <TextView
@@ -57,6 +59,7 @@
                 android:layout_width="72px"
                 android:layout_height="64px"
                 android:layout_marginTop="12px"
+                    tools:background="@drawable/ic_live_sel"
                 android:scaleType="fitCenter" />
 
             <TextView
@@ -84,6 +87,7 @@
                 android:layout_width="72px"
                 android:layout_height="64px"
                 android:layout_marginTop="12px"
+                tools:background="@drawable/ic_vip_sel"
                 android:scaleType="fitCenter" />
 
             <TextView
@@ -111,6 +115,7 @@
                 android:layout_width="72px"
                 android:layout_height="64px"
                 android:layout_marginTop="12px"
+                tools:background="@drawable/ic_mine_sel"
                 android:scaleType="fitCenter"/>
 
             <TextView
