@@ -161,9 +161,12 @@ ext {
             //https://github.com/zhihu/Matisse   本地图像和视频选择器
             matisse              : "com.zhihu.android:matisse:0.5.2-beta3",
 
-            //https://github.com/gyf-dev/ImmersionBar   一个不错的浸式状态栏和沉浸式导航栏管理库
+            // https://github.com/gyf-dev/ImmersionBar   一个不错的浸式状态栏和沉浸式导航栏管理库
+            // 基础依赖包，必须要依赖
             "immersionbar"         : "com.gyf.immersionbar:immersionbar:3.0.0",
+            // fragment快速实现（可选）
             "immersionbar_fragment": "com.gyf.immersionbar:immersionbar-components:3.0.0",
+            // kotlin扩展（可选）
             "immersionbar_ktx"     : "com.gyf.immersionbar:immersionbar-ktx:3.0.0"
     ]
 
