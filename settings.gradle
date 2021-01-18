@@ -32,6 +32,15 @@ project(':library-hlscache').projectDir = new File(rootDir, 'library/hlscache')
 project(':library-unittest').projectDir = new File(rootDir, 'library/unitTest')
 
 
+include ':app-pickerview'
+include ':wheelview'
+project(':wheelview').projectDir = new File(rootDir, 'app-pickerview/wheelview')
+include ':pickerview'
+project(':pickerview').projectDir = new File(rootDir, 'app-pickerview/pickerview')
+include ':calendar_picker'
+project(':calendar_picker').projectDir = new File(rootDir, 'app-pickerview/calendar_picker')
+
+
 gradle.beforeProject {
     project -> println("------> Project [${project.name}]  Ready to config ...")
 }
