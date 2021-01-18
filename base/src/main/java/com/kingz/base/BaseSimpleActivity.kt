@@ -9,6 +9,7 @@ import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import com.gyf.immersionbar.ImmersionBar
 import com.zeke.kangaroo.utils.ToastUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -25,6 +26,9 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(getContentView())
         initViewModel()
+        val actionBar = supportActionBar
+        actionBar?.setDisplayShowTitleEnabled(false)
+        actionBar?.setDisplayHomeAsUpEnabled(true)
         initImmersionBar()
         initView(savedInstanceState)
         initData(savedInstanceState)
@@ -37,11 +41,13 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
 
     /**
      * Init immersion style bar.
+     * TODO 沉浸式处理
      */
-    private fun initImmersionBar() {
-//        immersionBar {
-//            barColor(R.color.colorPrimary)
-//        }
+    open fun initImmersionBar() {
+        ImmersionBar.with(this)
+//            .titleBar(toolbar)
+            .statusBarDarkFont(true)
+            .init()
     }
 
     /**

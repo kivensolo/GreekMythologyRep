@@ -27,8 +27,7 @@
                     android:id="@+id/banner"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/banner_height"
-                    android:visibility="gone"
-                    app:is_auto_play="true" />
+                    android:visibility="gone" />
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view"
                     android:layout_width="match_parent"

@@ -162,9 +162,9 @@ ext {
             matisse              : "com.zhihu.android:matisse:0.5.2-beta3",
 
             //https://github.com/gyf-dev/ImmersionBar   一个不错的浸式状态栏和沉浸式导航栏管理库
-            "immersionbar"         : "com.gyf.immersionbar:immersionbar:3.0.0-beta05",
-            "immersionbar_fragment": "com.gyf.immersionbar:immersionbar-components:3.0.0-beta05",
-            "immersionbar_ktx"     : "com.gyf.immersionbar:immersionbar-ktx:3.0.0-beta05"
+            "immersionbar"         : "com.gyf.immersionbar:immersionbar:3.0.0",
+            "immersionbar_fragment": "com.gyf.immersionbar:immersionbar-components:3.0.0",
+            "immersionbar_ktx"     : "com.gyf.immersionbar:immersionbar-ktx:3.0.0"
     ]
 
 }

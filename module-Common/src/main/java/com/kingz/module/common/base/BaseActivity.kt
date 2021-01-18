@@ -25,7 +25,7 @@ import com.zeke.kangaroo.utils.ZLog
  * author: King.Z
  * date: 2016 2016/3/27 18:26
  */
-@Deprecated("")
+@Deprecated("replace with BaseVMActivity")
 abstract class BaseActivity : AppCompatActivity() {
     var isLoadding = false
     var isActivityShow = false
