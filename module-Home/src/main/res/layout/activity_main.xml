@@ -11,21 +11,23 @@
     android:fitsSystemWindows="true"
     app:compat_sliding="true"
     app:mode="scale_menu"
-    tools:context="com.zeke.home.MainActivity">
+    tools:context="com.zeke.home.HomeActivity">
 
     <!--左侧滑动菜单区域-->
     <include layout="@layout/slide_menu_layout" />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
         <!--Title区域-->
         <androidx.appcompat.widget.Toolbar
+            android:id="@+id/main_toolbar_layout"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             app:contentInsetLeft="0dp"
-            app:contentInsetStart="0dp">
+            app:contentInsetStart="0dp"
+            tools:background="@color/accent_A100">
             <include layout="@layout/top_title_bar" />
         </androidx.appcompat.widget.Toolbar>
 
@@ -34,14 +36,15 @@
             android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_below="@id/main_toolbar_layout"
+            android:layout_above="@+id/main_bottom_layout"
             android:background="@android:color/white"
-            android:layout_marginBottom="146px"
             android:contentDescription="@string/content_view_desc" />
 
         <!-- 底部Layout-->
         <include
             android:id="@+id/main_bottom_layout"
             layout="@layout/main_bottom_layout" />
-    </LinearLayout>
+    </RelativeLayout>
 
 </com.module.slide.SuperSlidingPaneLayout>

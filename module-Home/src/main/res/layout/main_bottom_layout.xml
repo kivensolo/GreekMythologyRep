@@ -66,7 +66,7 @@
                 android:layout_marginBottom="8px"
                 android:layout_marginTop="6px"
                 android:enabled="false"
-                android:text="@string/fuli"
+                android:text="@string/bottom_live"
                 android:textColor="@color/main_bottom_color"
                 android:textSize="32px" />
         </com.zhy.autolayout.AutoLinearLayout>
