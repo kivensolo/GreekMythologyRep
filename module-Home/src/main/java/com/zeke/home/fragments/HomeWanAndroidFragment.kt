@@ -120,32 +120,31 @@ class HomeWanAndroidFragment : BaseVMFragment<WanAndroidRepository, WanAndroidVi
 
     private fun initSwipeRefreshLayout() {
         swipeRefreshLayout = rootView?.findViewById(R.id.swipeRefreshLayout)!!
-        swipeRefreshLayout?.setOnRefreshListener { direction ->
-            if (direction == SuperSwipeRefreshLayout.Direction.TOP) {
-                mCurPage = 1
-                // 进行banner数据获取
+        swipeRefreshLayout?.apply {
+            setOnRefreshListener { direction ->
+                if (direction == SuperSwipeRefreshLayout.Direction.TOP) {
+                    mCurPage = 1
+                    // 进行banner数据获取
 
-                // 模拟刷新完毕
-                lifecycleScope.launch {
-                    delay(1000)
-                    withContext(Dispatchers.Main) {
-                        swipeRefreshLayout?.isRefreshing = false
+                    // 模拟刷新完毕
+                    lifecycleScope.launch {
+                        delay(1000)
+                        withContext(Dispatchers.Main) {
+                            isRefreshing = false
+                        }
                     }
                 }
-            }
-            val vibrator = context?.getSystemService(Service.VIBRATOR_SERVICE) as Vibrator
-            if (SDKVersion.afterOreo()) {
-                vibrator.vibrate(
-                    VibrationEffect.createOneShot(
-                        70,
-                        VibrationEffect.DEFAULT_AMPLITUDE
+                val vibrator = context?.getSystemService(Service.VIBRATOR_SERVICE) as Vibrator
+                if (SDKVersion.afterOreo()) {
+                    vibrator.vibrate(
+                        VibrationEffect.createOneShot(40,VibrationEffect.DEFAULT_AMPLITUDE)
                     )
-                )
-            } else {
-                vibrator.vibrate(70)
+                } else {
+                    vibrator.vibrate(40)
+                }
             }
+            isRefreshing = true
         }
-        swipeRefreshLayout?.isRefreshing = true
     }
 
 
