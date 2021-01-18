@@ -25,10 +25,7 @@ import com.module.slide.SuperSwipeRefreshLayout
 import com.zeke.home.adapter.ArticleDelegateAdapter
 import com.zeke.home.adapter.HomeArticleAdapter
 import com.zeke.kangaroo.utils.ZLog
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 
 /**
@@ -37,7 +34,7 @@ import kotlinx.coroutines.withContext
  */
 class HomeWanAndroidFragment : BaseVMFragment<WanAndroidRepository, WanAndroidViewModel>() {
     lateinit var mRecyclerView: RecyclerView
-    lateinit var articleAdapter: HomeArticleAdapter
+    private var articleAdapter: HomeArticleAdapter? = null
     private var swipeRefreshLayout: SuperSwipeRefreshLayout? = null
 
     // 当前页数
@@ -50,58 +47,69 @@ class HomeWanAndroidFragment : BaseVMFragment<WanAndroidRepository, WanAndroidVi
     override fun initViewModel() {
         super.initViewModel()
         viewModel.articalLiveData.observe(this, Observer {
-            if (it?.data != null && it.data?.datas != null) {
-                ZLog.d("存在文章数据,进行文章数据更新")
-                articleAdapter.addAll(it.data?.datas)
-                (mRecyclerView.adapter as HomeArticleAdapter).notifyDataSetChanged()
+            lifecycleScope.launch(Dispatchers.IO) {
+                if (it?.data != null && it.data?.datas != null) {
+                    ZLog.d("存在文章数据,进行文章数据更新")
+                    articleAdapter?.addAll(it.data?.datas)
+                    withContext(Dispatchers.Main) {
+                        (mRecyclerView.adapter as HomeArticleAdapter).notifyDataSetChanged()
 
-                if (viewModel.statusLiveData.value == CoroutineState.FINISH ||
-                    viewModel.statusLiveData.value == CoroutineState.ERROR
-                ) {
-                    swipeRefreshLayout?.isRefreshing = false
+                        val value = viewModel.statusLiveData.value
+                        if (value == CoroutineState.FINISH || value == CoroutineState.ERROR) {
+                            swipeRefreshLayout?.isRefreshing = false
+                        }
+                    }
+
                 }
             }
         })
 
-        viewModel.bannerLiveData.observe(this,  Observer {
-                ZLog.d("Banner data onChanged(): " + it.data?.data?.size)
-            if(it.data?.data?.size?:0 > 0){
-                it.data?.data?.forEach { item ->
-                    item.desc
-                    ZLog.d("+1  desc = " + item.desc)
+        viewModel.bannerLiveData.observe(this, Observer {
+            ZLog.d("Banner data onChanged() data size = " + it.data?.data?.size)
+            lifecycleScope.launch(Dispatchers.IO) {
+                if (it.data?.data?.size ?: 0 > 0) {
+                    it.data?.data?.forEach { item ->
+                        item.desc
+                        ZLog.d("+1  desc = " + item.desc)
+                    }
+                    //刷新UI
                 }
-                //TODO 刷新UI
             }
+
         })
     }
 
     override fun onViewCreated() {
         //doNothing
-        ZLog.d("HomeHotPageFragment onViewCreated")
+        ZLog.d("HomeWanAndroidFragment onViewCreated")
     }
 
     override fun getLayoutResID() = R.layout.fragment_common_page
 
     override fun initData(savedInstanceState: Bundle?) {
-        viewModel.getBanner()
+        if (articleAdapter == null) {
+            ZLog.d("articleAdapter == null, getBanner.")
+            viewModel.getBanner()
 
-        articleAdapter = HomeArticleAdapter()
-        articleAdapter.mOnItemClickListener = object : HomeArticleAdapter.OnItemClickListener {
-            override fun onItemClick(v: View?, position: Int) {
-                if (articleAdapter.count > position) {
-                    openWeb(articleAdapter.getItem(position))
+            articleAdapter = HomeArticleAdapter()
+            articleAdapter?.apply {
+                mOnItemClickListener = object : HomeArticleAdapter.OnItemClickListener {
+                    override fun onItemClick(v: View?, position: Int) {
+                        if (articleAdapter!!.count > position) {
+                            openWeb(articleAdapter?.getItem(position))
+                        }
+                    }
                 }
+                // 添加委托Adapter
+                //addDelegate(BannerDelegateAdapter())
+                // addDelegate(ThreePicDelegateAdapter())
+                addDelegate(ArticleDelegateAdapter())
             }
+            // 执行VIewModel的数据请求
+            // 获取网络数据
+            viewModel.getArticalData(0)
         }
-        // 添加委托Adapter
-//        mAdapter.addDelegate(BannerDelegateAdapter())
-//        mAdapter.addDelegate(ThreePicDelegateAdapter())
-        articleAdapter.addDelegate(ArticleDelegateAdapter())
         mRecyclerView.adapter = articleAdapter
-
-        // 执行VIewModel的数据请求
-        // 获取网络数据
-        viewModel.getArticalData(0)
     }
 
     override fun initView(savedInstanceState: Bundle?) {
@@ -153,8 +161,20 @@ class HomeWanAndroidFragment : BaseVMFragment<WanAndroidRepository, WanAndroidVi
     }
 
     override fun onViewDestory() {
+        lifecycleScope.cancel()
+        super.onViewDestory()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        ZLog.d("release.")
         swipeRefreshLayout?.setOnRefreshListener(null)
         swipeRefreshLayout = null
-        super.onViewDestory()
+        articleAdapter = null
+    }
+
+    override fun onDetach() {
+       ZLog.d("Detach fragment.")
+        super.onDetach()
     }
 }
