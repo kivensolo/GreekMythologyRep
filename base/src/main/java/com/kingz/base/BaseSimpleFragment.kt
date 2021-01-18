@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 
 abstract class BaseSimpleFragment : Fragment() {
-    lateinit var rootView: View
+    var rootView: View ?= null
     var mActivity: Activity? = null
     var isActive = false
 
@@ -51,6 +51,12 @@ abstract class BaseSimpleFragment : Fragment() {
         onViewCreated()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        rootView = null
+        onViewDestory()
+    }
+
     /** VIewModel中持有的UI数据监听 */
     open fun initViewModel() {}
 
@@ -60,6 +66,8 @@ abstract class BaseSimpleFragment : Fragment() {
     open fun onCreateViewReady() {}
 
     open fun onViewCreated(){}
+
+    open fun onViewDestory(){}
 
     abstract fun initData(savedInstanceState: Bundle?)
 

@@ -105,13 +105,13 @@ class HomeWanAndroidFragment : BaseVMFragment<WanAndroidRepository, WanAndroidVi
     }
 
     override fun initView(savedInstanceState: Bundle?) {
-        mRecyclerView = rootView.findViewById(R.id.recycler_view) as RecyclerView
+        mRecyclerView = rootView?.findViewById(R.id.recycler_view) as RecyclerView
         mRecyclerView.layoutManager = LinearLayoutManager(context)
         initSwipeRefreshLayout()
     }
 
     private fun initSwipeRefreshLayout() {
-        swipeRefreshLayout = rootView.findViewById(R.id.swipeRefreshLayout)
+        swipeRefreshLayout = rootView?.findViewById(R.id.swipeRefreshLayout)!!
         swipeRefreshLayout.setOnRefreshListener { direction ->
             if (direction == SuperSwipeRefreshLayout.Direction.TOP) {
                 mCurPage = 1

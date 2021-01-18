@@ -311,8 +311,8 @@ class SplashActivity : BaseVMActivity<LoginRepository, LoginViewModel>(), View.O
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         (videoView as VideoView).stopPlayback()
+        super.onDestroy()
     }
 
     enum class InputType {
