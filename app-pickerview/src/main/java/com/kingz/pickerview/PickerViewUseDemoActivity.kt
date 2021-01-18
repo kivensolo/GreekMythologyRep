@@ -1,38 +1,86 @@
 package com.kingz.pickerview
 
 import android.app.Dialog
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
+import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.bigkoo.pickerview.builder.OptionsPickerBuilder
 import com.bigkoo.pickerview.builder.TimePickerBuilder
+import com.bigkoo.pickerview.listener.OnOptionsSelectListener
 import com.bigkoo.pickerview.listener.OnTimeSelectListener
+import com.bigkoo.pickerview.view.OptionsPickerView
 import com.bigkoo.pickerview.view.TimePickerView
 import kotlinx.android.synthetic.main.activity_main.*
 import java.text.SimpleDateFormat
 import java.util.*
 
+
+/**
+ * Android-PickerView系列之介绍与使用篇（一）
+ * https://blog.csdn.net/qq_22393017/article/details/58099486
+ * Android-PickerView系列之源码解析篇（二）
+ * https://blog.csdn.net/qq_22393017/article/details/59488906
+ *
+ * PickerView的使用Demo页面
+ * 1. 展示TimePicker和OptionsPicker的用法
+ */
 class PickerViewUseDemoActivity : AppCompatActivity() {
     private var tpViewAsDialog: TimePickerView? = null
     private var tpViewNormal: TimePickerView? = null
 
-    companion object{
-        const val TAG = "TimePickerDemo"
+    private var mOptionsPickerView: OptionsPickerView<String>? = null
+    private val options1Items: MutableList<String> = ArrayList()
+    private val options2Items: MutableList<MutableList<String>> = ArrayList()
+
+    companion object {
+        const val TAG = "PickerViewDemo"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initTimePicker()
-        show_from_buttom_as_dialog.setOnClickListener {
-            tpViewAsDialog?.show()
-        }
 
-        show_not_as_dialog.setOnClickListener {
-            tpViewNormal?.show()
+
+        initOptionsPicker()
+    }
+
+    private fun initOptionsPicker() {
+        getOptionData()
+        mOptionsPickerView = OptionsPickerBuilder(this,
+            OnOptionsSelectListener { options1: Int, options2: Int, options3: Int, view: View ->
+                //返回的分别是三个级别的选中位置
+                Log.i(TAG, "options1=${options1}, options2=${options2}, options3=${options3}")
+
+            }).setTitleText("城市选择")
+            .setContentTextSize(20)//设置滚轮文字大小
+            .setDividerColor(Color.LTGRAY)//设置分割线的颜色
+            .setSelectOptions(0, 1)//默认选中项
+            .setBgColor(Color.BLACK)
+            .setTitleBgColor(Color.DKGRAY)
+            .setTitleColor(Color.LTGRAY)
+            .setCancelColor(Color.YELLOW)
+            .setSubmitColor(Color.YELLOW)
+            .setTextColorCenter(Color.LTGRAY)
+            .isRestoreItem(true)//切换时是否还原，设置默认选中第一项。
+            .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
+            .setLabels("省", "市", "区")
+            .setOutSideColor(0x00000000) //设置外部遮罩颜色
+            .setOptionsSelectChangeListener { options1: Int, options2: Int, options3: Int ->
+                val str = "options1: $options1\noptions2: $options2\noptions3: $options3"
+                Toast.makeText(this@PickerViewUseDemoActivity, str, Toast.LENGTH_SHORT).show()
+            }
+            .build()
+        mOptionsPickerView?.setPicker(options1Items, options2Items)
+
+        show_area_options.setOnClickListener {
+            mOptionsPickerView?.show()
         }
     }
 
@@ -103,13 +151,13 @@ class PickerViewUseDemoActivity : AppCompatActivity() {
             .setItemVisibleCount(9)     //若设置偶数，实际值会加1（比如设置6，则最大可见条目为7）
             .setLineSpacingMultiplier(2.0f)
             .isAlphaGradient(true)
-            .addOnCancelClickListener {
-                Log.i(TAG, "onCancelClickListener")
-            }
-            .setTimeSelectChangeListener {
-                Log.i(TAG, "onTimeSelectChanged")
-            }
+            .addOnCancelClickListener {Log.i(TAG, "onCancelClickListener")}
+            .setTimeSelectChangeListener {Log.i(TAG, "onTimeSelectChanged")}
             .build()
+
+
+        show_from_buttom_as_dialog.setOnClickListener {tpViewAsDialog?.show()}
+        show_not_as_dialog.setOnClickListener {tpViewNormal?.show()}
     }
 
     private fun getTime(date: Date): String? {
@@ -117,5 +165,34 @@ class PickerViewUseDemoActivity : AppCompatActivity() {
         val format = SimpleDateFormat("yyyy-MM-dd HH:mm")
         return format.format(date)
     }
+
+
+    @Suppress("LocalVariableName")
+    private fun getOptionData() {
+        //选项1
+        options1Items.add("广东")
+        options1Items.add("湖南")
+        options1Items.add("广西")
+
+        //选项2
+        val options2Items_01: ArrayList<String> = ArrayList()
+        options2Items_01.add("广州")
+        options2Items_01.add("佛山")
+        options2Items_01.add("东莞")
+        options2Items_01.add("珠海")
+        val options2Items_02: ArrayList<String> = ArrayList()
+        options2Items_02.add("长沙")
+        options2Items_02.add("岳阳")
+        options2Items_02.add("株洲")
+        options2Items_02.add("衡阳")
+        val options2Items_03: ArrayList<String> = ArrayList()
+        options2Items_03.add("桂林")
+        options2Items_03.add("玉林")
+
+        options2Items.add(options2Items_01)
+        options2Items.add(options2Items_02)
+        options2Items.add(options2Items_03)
+    }
+
 
 }
