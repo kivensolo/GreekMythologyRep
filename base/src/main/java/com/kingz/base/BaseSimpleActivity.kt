@@ -41,11 +41,10 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
 
     /**
      * Init immersion style bar.
-     * TODO 沉浸式处理
      */
     open fun initImmersionBar() {
         ImmersionBar.with(this)
-//            .titleBar(toolbar)
+             //如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色
             .statusBarDarkFont(true)
             .init()
     }

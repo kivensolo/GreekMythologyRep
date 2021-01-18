@@ -2,7 +2,7 @@ package com.kingz.functiontest;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import com.zeke.home.MainActivity;
+import com.zeke.home.HomeActivity;
 import com.zeke.test.BaseInstrumentedTest;
 
 import org.junit.Before;
@@ -23,7 +23,7 @@ public class StartPageInstrumentedTest extends BaseInstrumentedTest {
 
     @Test
     public void testOpenMain() {
-        testStartActivity(MainActivity.class, intent -> {
+        testStartActivity(HomeActivity.class, intent -> {
             intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("params","123456");
             return null;

@@ -38,10 +38,10 @@ import kotlinx.coroutines.launch
 import java.lang.String
 
 /**
- * 手机版本首页
+ * 首页
  */
 @Route(path = RPath.PAGE_MAIN)
-class MainActivity : BaseVMActivity<WanAndroidRepository, WanAndroidViewModel>(), ISwitcher {
+class HomeActivity : BaseVMActivity<WanAndroidRepository, WanAndroidViewModel>(), ISwitcher {
 
     private lateinit var homeVodFragment: HomeRecomFragment
     private lateinit var homeLiveFragment: HomeLiveFragment

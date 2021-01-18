@@ -6,7 +6,7 @@
     <application android:allowBackup="true">
 
         <activity
-            android:name="com.zeke.home.MainActivity"
+            android:name="com.zeke.home.HomeActivity"
             android:launchMode="singleTop"
             android:screenOrientation="fullSensor"
             android:theme="@style/AppTheme"
