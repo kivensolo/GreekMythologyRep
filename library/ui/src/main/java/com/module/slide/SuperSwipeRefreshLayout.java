@@ -768,6 +768,13 @@ public class SuperSwipeRefreshLayout extends ViewGroup {
                             || (mDirection == Direction.TOP && canChildScrollUp())) {
                         return false;
                     }
+                }else{
+                    if(y < mInitialMotionY){
+                        // fix: 模式为top时, 从下往上滑动时,子view无法消费触摸事件
+                        if(mDirection == Direction.TOP && canChildScrollDown()){
+                            return false;
+                        }
+                    }
                 }
 
                 if (absMotionDeltaY > mTouchSlop && !mIsBeingDragged) {
