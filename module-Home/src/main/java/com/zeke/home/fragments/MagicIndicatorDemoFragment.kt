@@ -14,20 +14,23 @@ import com.zeke.home.ScrollableTabExampleActivity
  * description：MagicIndicator的使用demo
  */
 class MagicIndicatorDemoFragment: BaseFragment(){
+
+    var requestFocusView:View ?= null
+
     override fun getLayoutId(): Int {
         return R.layout.fragment_indicator_demo_main_layout
     }
 
-    override fun onViewCreated() {
-    }
+    override fun onViewCreated() {}
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        activity!!.findViewById<View>(R.id.scrollable_tab)
-                .setOnClickListener{
+        requestFocusView = activity?.findViewById<View>(R.id.scrollable_tab)
+            ?.apply {
+                setOnClickListener {
                     startActivity(Intent(activity, ScrollableTabExampleActivity::class.java))
                 }
-        //todo 对其他View进行监听
+        }
     }
 
 
@@ -42,6 +45,11 @@ class MagicIndicatorDemoFragment: BaseFragment(){
 //            R.id.load_custom_layout
 //            R.id.custom_navigator
         }
+    }
+
+    override fun onDestroyView() {
+        requestFocusView?.setOnClickListener(null)
+        super.onDestroyView()
     }
 
 }

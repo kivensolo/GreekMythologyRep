@@ -18,7 +18,7 @@ import com.zeke.kangaroo.adapter.CommonRecyclerAdapter
  */
 class SimplePageContentFragment : BaseFragment(), IView, View.OnClickListener {
 
-    private lateinit var mRecycleView: RecyclerView
+    private var mRecycleView: RecyclerView? =null
     var mRV: RVAdapter = RVAdapter()
 
     override val isShown: Boolean
@@ -30,9 +30,16 @@ class SimplePageContentFragment : BaseFragment(), IView, View.OnClickListener {
 
     override fun onViewCreated() {
         mRecycleView = rootView.findViewById(R.id.content_recycler)
-        mRecycleView.setHasFixedSize(true)
-        mRecycleView.layoutManager = GridLayoutManager(activity!!,2)
-        mRecycleView.adapter = mRV
+        mRecycleView?.apply {
+            setHasFixedSize(true)
+            layoutManager = GridLayoutManager(activity!!, 2)
+            adapter = mRV
+        }
+    }
+
+    override fun onDestroyView() {
+        mRecycleView = null
+        super.onDestroyView()
     }
 
     override fun showLoading() {

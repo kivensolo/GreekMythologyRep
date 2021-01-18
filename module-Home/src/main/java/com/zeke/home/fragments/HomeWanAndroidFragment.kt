@@ -38,7 +38,7 @@ import kotlinx.coroutines.withContext
 class HomeWanAndroidFragment : BaseVMFragment<WanAndroidRepository, WanAndroidViewModel>() {
     lateinit var mRecyclerView: RecyclerView
     lateinit var articleAdapter: HomeArticleAdapter
-    private lateinit var swipeRefreshLayout:SuperSwipeRefreshLayout
+    private var swipeRefreshLayout: SuperSwipeRefreshLayout? = null
 
     // 当前页数
     private var mCurPage = 1
@@ -112,7 +112,7 @@ class HomeWanAndroidFragment : BaseVMFragment<WanAndroidRepository, WanAndroidVi
 
     private fun initSwipeRefreshLayout() {
         swipeRefreshLayout = rootView?.findViewById(R.id.swipeRefreshLayout)!!
-        swipeRefreshLayout.setOnRefreshListener { direction ->
+        swipeRefreshLayout?.setOnRefreshListener { direction ->
             if (direction == SuperSwipeRefreshLayout.Direction.TOP) {
                 mCurPage = 1
                 // 进行banner数据获取
@@ -121,7 +121,7 @@ class HomeWanAndroidFragment : BaseVMFragment<WanAndroidRepository, WanAndroidVi
                 lifecycleScope.launch {
                     delay(1000)
                     withContext(Dispatchers.Main) {
-                        swipeRefreshLayout.isRefreshing = false
+                        swipeRefreshLayout?.isRefreshing = false
                     }
                 }
             }
@@ -137,7 +137,7 @@ class HomeWanAndroidFragment : BaseVMFragment<WanAndroidRepository, WanAndroidVi
                 vibrator.vibrate(70)
             }
         }
-        swipeRefreshLayout.isRefreshing = true
+        swipeRefreshLayout?.isRefreshing = true
     }
 
 
@@ -150,5 +150,11 @@ class HomeWanAndroidFragment : BaseVMFragment<WanAndroidRepository, WanAndroidVi
             .withBoolean(WADConstants.KEY_IS_COLLECT, data?.isCollect ?: false)
             .withInt(WADConstants.KEY_ID, data?.id ?: -1)
             .navigation(activity, 0x01)
+    }
+
+    override fun onViewDestory() {
+        swipeRefreshLayout?.setOnRefreshListener(null)
+        swipeRefreshLayout = null
+        super.onViewDestory()
     }
 }
