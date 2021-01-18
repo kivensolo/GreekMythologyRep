@@ -267,23 +267,23 @@
         <activity
             android:name="com.apiDemo.AlarmServiceActivity"
             android:screenOrientation="fullSensor"
-            android:theme="@android:style/Theme.Black" />
+            android:theme="@style/AppTheme" />
 
         <!-- ************ AIDL 测试页面 ************ -->
         <activity
             android:name="com.kingz.ipcdemo.AIDLActivity"
             android:screenOrientation="fullSensor"
-            android:theme="@android:style/Theme.Black" />
+            android:theme="@style/AppTheme" />
 
         <!-- ************ Acticity-alias 测试页面 ************ -->
         <activity
             android:name="com.kingz.four_components.activity.AttrOfAliasAct"
-            android:theme="@android:style/Theme.Holo.Light" />
+            android:theme="@style/AppTheme" />
 
         <!--  ************ 图形方面  Start ************ -->
         <activity
             android:name="com.kingz.graphics.Arcs"
-            android:theme="@android:style/Theme.Holo.Light" />
+            android:theme="@style/AppTheme" />
         <activity
             android:name="com.zeke.demo.glide.GlideCardDemoActivity"
             android:theme="@style/AppTheme" />
@@ -295,7 +295,7 @@
         <!--  ************ Android 基本API效果展示  Start ************ -->
         <activity
             android:name="com.kingz.basic_api.CanvasApiActivity"
-            android:theme="@android:style/Theme.Holo.Light" />
+            android:theme="@style/AppTheme" />
         <!--  ************ Android 基本API效果展示  End ************ -->
 
         <!--  ************ Android >=5.0 新特性展示  Start ************ -->
