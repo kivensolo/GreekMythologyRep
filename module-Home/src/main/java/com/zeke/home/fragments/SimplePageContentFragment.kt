@@ -29,7 +29,7 @@ class SimplePageContentFragment : BaseFragment(), IView, View.OnClickListener {
     }
 
     override fun onViewCreated() {
-        mRecycleView = rootView.findViewById(R.id.content_recycler)
+        mRecycleView = rootView?.findViewById(R.id.content_recycler)
         mRecycleView?.apply {
             setHasFixedSize(true)
             layoutManager = GridLayoutManager(activity!!, 2)

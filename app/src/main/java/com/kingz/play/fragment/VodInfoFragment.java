@@ -246,7 +246,7 @@ public class VodInfoFragment extends BaseFragment implements IPlayerView{
     @Override
     public void onCreateViewReady() {
         super.onCreateViewReady();
-        initViews(rootView);
+        initViews(getRootView());
         onPresenterCreateView();
     }
 

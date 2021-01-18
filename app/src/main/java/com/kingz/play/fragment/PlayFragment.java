@@ -85,7 +85,7 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onViewCreated() {
-        playView = rootView.findViewById(R.id.play_view);
+        playView = getRootView().findViewById(R.id.play_view);
         //        playView.setOnClickListener(this);
         playView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -115,7 +115,7 @@ public class PlayFragment extends BaseFragment implements IPlayerView{
         IPlayer mediaPlayer = MediaPlayTool.getInstance().getMediaPlayerCore();
 
         playPresenter = new PlayPresenter(mediaPlayer,this);
-        playerUiSwitcher = new PlayerUiSwitcher(playPresenter, rootView);
+        playerUiSwitcher = new PlayerUiSwitcher(playPresenter, getRootView());
         playerUiSwitcher.setOnClickListener(this);
         playerUiSwitcher.setVideoTitle("测试影片");
         playerUiSwitcher.setOnSeekBarChangeListener(playPresenter.seekBarChangeListener);

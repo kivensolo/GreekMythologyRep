@@ -54,12 +54,15 @@ public class VodDetailFragment extends BaseFragment implements View.OnClickListe
     @Override
     public void onCreateViewReady() {
         super.onCreateViewReady();
-        nameScoreTextview = rootView.findViewById(R.id.tv_name_video);
-        newEpisodeTv = rootView.findViewById(R.id.tv_episode_desc);
-        actorTv = rootView.findViewById(R.id.tv_actor);
-        directorTv = rootView.findViewById(R.id.tv_director);
-        detailTv = rootView.findViewById(R.id.video_detail);
-        rootView.findViewById(R.id.arrow_down).setOnClickListener(this);
+        View rootView = getRootView();
+        if(rootView != null){
+            nameScoreTextview = rootView.findViewById(R.id.tv_name_video);
+            newEpisodeTv = rootView.findViewById(R.id.tv_episode_desc);
+            actorTv = rootView.findViewById(R.id.tv_actor);
+            directorTv = rootView.findViewById(R.id.tv_director);
+            detailTv = rootView.findViewById(R.id.video_detail);
+            rootView.findViewById(R.id.arrow_down).setOnClickListener(this);
+        }
         showUI();
     }
 

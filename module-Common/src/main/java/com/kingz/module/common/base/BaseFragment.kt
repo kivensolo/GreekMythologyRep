@@ -20,7 +20,7 @@ abstract class BaseFragment : Fragment() {
         val TAG: String = BaseFragment::class.java.simpleName
     }
     protected var mActivity: Activity? = null
-    protected lateinit var rootView: View
+    var rootView: View? = null
     // 加载状态View
     protected var loadStatusView: LoadStatusView? = null
 
@@ -35,7 +35,9 @@ abstract class BaseFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        rootView = inflater.inflate(getLayoutId(), null)
+        if(rootView == null){
+            rootView = inflater.inflate(getLayoutId(), null)
+        }
         onCreateViewReady()
         return rootView
     }
@@ -50,8 +52,13 @@ abstract class BaseFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
     }
 
-    override fun onDetach() {
-        super.onDetach()
+    override fun onDestroyView() {
+        super.onDestroyView()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        rootView = null
         mActivity = null
     }
 

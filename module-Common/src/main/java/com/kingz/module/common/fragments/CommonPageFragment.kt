@@ -39,21 +39,21 @@ open class CommonPageFragment: BaseFragment(){
         initRecyclerView()
 
         // 填充load_state View
-        val loadStateStub = rootView.findViewById(R.id.load_state) as ViewStub
+        val loadStateStub = rootView!!.findViewById(R.id.load_state) as ViewStub
         loadStateStub.layoutResource = R.layout.load_status
         loadStateStub.inflatedId = R.id.load_state_view
         loadStatusView = loadStateStub.inflate() as LoadStatusView
         loadStatusView?.visibility = View.GONE
 
         // 填充FAB View
-        val fabStub = rootView.findViewById(R.id.fbtn_go_top) as ViewStub
+        val fabStub = rootView!!.findViewById(R.id.fbtn_go_top) as ViewStub
         fabStub.layoutResource = R.layout.app_floating_action_button
         loadStateStub.inflatedId = R.id.app_fab_btn
         // fabButton = fabStub.inflate() as FloatingActionButton
     }
 
     open fun initRecyclerView(){
-        mRecyclerView = rootView.findViewById(R.id.recycler_view) as RecyclerView
+        mRecyclerView = rootView!!.findViewById(R.id.recycler_view) as RecyclerView
     }
 
     override fun onViewCreated() {

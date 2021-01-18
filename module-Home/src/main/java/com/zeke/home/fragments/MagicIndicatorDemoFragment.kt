@@ -48,6 +48,7 @@ class MagicIndicatorDemoFragment: BaseFragment(){
     }
 
     override fun onDestroyView() {
+        rootView = null
         requestFocusView?.setOnClickListener(null)
         super.onDestroyView()
     }

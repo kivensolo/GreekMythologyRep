@@ -54,7 +54,7 @@ class ExpandableDemoFragment : BaseFragment()
     }
 
     override fun onViewCreated() {
-        listView = rootView.findViewById(android.R.id.list)
+        listView = rootView?.findViewById(android.R.id.list)
         expandAdapter = DemoFragmentExpandableListAdapter(context)
         listView!!.setAdapter(expandAdapter)
         listView!!.setOnGroupClickListener(ImpOnGroupClickListener())

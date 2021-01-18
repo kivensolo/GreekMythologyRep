@@ -42,7 +42,7 @@ class CardVerticalDemoFragment : BaseFragment() {
 
     override fun onCreateViewReady() {
         super.onCreateViewReady()
-        mRecycleView = rootView.findViewById(R.id.content_recycler)
+        mRecycleView = rootView!!.findViewById(R.id.content_recycler)
         mRecycleView.setHasFixedSize(true)
         mRecycleView.layoutManager = LinearLayoutManager(activity!!,
                 LinearLayoutManager.VERTICAL, false)
