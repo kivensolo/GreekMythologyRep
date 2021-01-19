@@ -5,8 +5,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.kingz.module.home.R
-import com.zeke.home.fragments.ISwitcher
-import com.zeke.home.fragments.ISwitcher.ButtomType
+import com.zeke.home.ISwitcher.ButtomType
 import java.util.*
 
 /**

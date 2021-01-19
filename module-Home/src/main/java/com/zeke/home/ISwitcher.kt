@@ -1,4 +1,4 @@
-package com.zeke.home.fragments
+package com.zeke.home
 
 import androidx.annotation.IntDef
 
@@ -9,10 +9,12 @@ interface ISwitcher {
 
     @kotlin.annotation.Retention(AnnotationRetention.SOURCE)
     @Target(AnnotationTarget.VALUE_PARAMETER)
-    @IntDef(TYPE_VOD,
-            TYPE_LIVE,
-            TYPE_VIP,
-            TYPE_MINE)
+    @IntDef(
+        TYPE_VOD,
+        TYPE_LIVE,
+        TYPE_VIP,
+        TYPE_MINE
+    )
     annotation class ButtomType
 
     fun switchFragment(@ButtomType type: Int)
