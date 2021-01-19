@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.kingz.module.common.AppLifeCycle
+import com.kingz.module.common.CommonApp
 import com.kingz.module.common.LoadStatusView
 
 
@@ -62,8 +63,7 @@ abstract class BaseFragment : Fragment() {
     }
 
     override fun getContext(): Context? {
-//        return if (mActivity == null) CommonApp.getInstance().baseContext else mActivity
-        return mActivity
+        return if (mActivity == null) CommonApp.getInstance().baseContext else mActivity
     }
 
     open fun onBackPressed(): Boolean {

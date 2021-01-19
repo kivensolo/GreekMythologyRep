@@ -1,11 +1,14 @@
 package com.zeke.home.fragments
 
+import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kingz.module.common.IView
 import com.kingz.module.common.base.BaseFragment
+import com.kingz.module.common.router.RPath
+import com.kingz.module.common.router.Router
 import com.kingz.module.home.R
 import com.zeke.home.entity.Live
 import com.zeke.kangaroo.adapter.CommonRecyclerAdapter
@@ -60,10 +63,12 @@ class SimplePageContentFragment : BaseFragment(), IView, View.OnClickListener {
     }
 
     override fun onClick(v: View) {
+
     }
 
     inner class RVAdapter : CommonRecyclerAdapter<Live>(){
-        init { // Initializer Block
+        init {
+            // Initializer Block
             //为Primary Constructor服务
         }
 
@@ -71,10 +76,15 @@ class SimplePageContentFragment : BaseFragment(), IView, View.OnClickListener {
             return R.layout.live_channel_item
         }
 
-        override fun onBindViewHolder(holder: CommonRecyclerAdapter.ViewHolder, position: Int) {
+        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             super.onBindViewHolder(holder, position)
             val data = getItem(position)
             holder.getView<TextView>(R.id.channel_id).text = (data as Live).name
+            holder.setOnClickListener {
+                Router.startActivity(RPath.PAGE_PLAYER, Bundle().apply {
+                    putString("play_url", data.live)
+                })
+            }
         }
     }
 }

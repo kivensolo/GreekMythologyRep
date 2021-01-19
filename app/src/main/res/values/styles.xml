@@ -53,39 +53,12 @@
     </style>-->
 
 
-    <!-- 自定义SeekBar样式  Start-->
-    <style name="MediaController_SeekBar" parent="android:Widget.SeekBar">
-        <item name="android:progressDrawable">@drawable/scrubber_progress_horizontal_holo_dark</item>
-        <item name="android:indeterminateDrawable">@drawable/scrubber_progress_horizontal_holo_dark</item>
-        <item name="android:minHeight">13dip</item>
-        <item name="android:maxHeight">13dip</item>
-        <item name="android:thumb">@drawable/scrubber_control_selector_holo</item>
-        <item name="android:thumbOffset">16dip</item>
-        <item name="android:paddingLeft">16dip</item>
-        <item name="android:paddingRight">16dip</item>
-    </style>
 
-    <style name="player_controller_seekbar" parent="android:Widget.SeekBar">
-        <item name="android:progressDrawable">@drawable/player_seekbar_progress</item>
-        <item name="android:indeterminateDrawable">@drawable/player_seekbar_progress</item>
-        <item name="android:minHeight">4dip</item>
-        <item name="android:maxHeight">4dip</item>
-        <item name="android:thumb">@drawable/player_seekbar_circle</item>
-        <item name="android:thumbOffset">2dip</item>
-        <item name="android:paddingLeft">2dip</item>
-        <item name="android:paddingRight">2dip</item>
-    </style>
-    <!-- 自定义SeekBar样式  End-->
 
 
     <style name="DetailPlayerButton.Pause">
         <item name="android:src">@drawable/exo_pause</item>
         <item name="android:contentDescription">@string/exo_controls_pause_description</item>
-    </style>
-
-    <style name="PlayTheme" parent="AppTheme">
-        <item name="android:windowFullscreen">true</item>
-        <item name="android:windowContentOverlay">@null</item>
     </style>
 
     <style name="txt_normal_dark">
@@ -101,6 +74,19 @@
     <style name="CustomToastAnimationStyle" parent="@android:style/Animation">
         <item name="android:windowEnterAnimation">@anim/push_bottom_in</item>
         <item name="android:windowExitAnimation">@anim/push_alpha_out</item>
+    </style>
+
+
+        <!-- 自定义SeekBar样式  Start-->
+    <style name="MediaController_SeekBar" parent="android:Widget.SeekBar">
+        <item name="android:progressDrawable">@drawable/scrubber_progress_horizontal_holo_dark</item>
+        <item name="android:indeterminateDrawable">@drawable/scrubber_progress_horizontal_holo_dark</item>
+        <item name="android:minHeight">13dip</item>
+        <item name="android:maxHeight">13dip</item>
+        <item name="android:thumb">@drawable/scrubber_control_selector_holo</item>
+        <item name="android:thumbOffset">16dip</item>
+        <item name="android:paddingLeft">16dip</item>
+        <item name="android:paddingRight">16dip</item>
     </style>
 
 </resources>

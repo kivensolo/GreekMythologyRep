@@ -11,7 +11,7 @@ data class LiveDataDto(
 data class Live(
         val icon: String,
         val isTitle: Boolean,
-        val live: String,
+        val live: String,  //playUrl
         val name: String
 ) : MultiItemEntity {
     override fun getItemType(): Int {

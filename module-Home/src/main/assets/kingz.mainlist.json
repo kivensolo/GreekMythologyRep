@@ -157,15 +157,15 @@
     ]
   },
   {
-    "name": "Mediaplayer",
+    "name": "Player",
     "samples": [
       {
-        "name": "Media",
+        "name": "MediaPlayer",
         "class": "com.mplayer.ApolloMediaPlayer"
       },
       {
-        "name": "Exo-Player",
-        "class": "com.mplayer.exo_player.DetailPageActivty"
+        "name": "Detail-With-ExoPlayer",
+        "class": "com.zeke.play.DetailPageActivty"
       }
     ]
   },

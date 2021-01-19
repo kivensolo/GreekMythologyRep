@@ -12,6 +12,8 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.gyf.immersionbar.BarHide
+import com.gyf.immersionbar.ImmersionBar
 import com.kingz.base.BaseVMActivity
 import com.kingz.base.factory.ViewModelFactory
 import com.kingz.database.DatabaseApplication
@@ -79,6 +81,12 @@ class SplashActivity : BaseVMActivity<LoginRepository, LoginViewModel>(), View.O
                 }
             }
         })
+    }
+
+    override fun initImmersionBar() {
+        ImmersionBar.with(this)
+            .hideBar(BarHide.FLAG_HIDE_STATUS_BAR)
+            .init()
     }
 
     /**

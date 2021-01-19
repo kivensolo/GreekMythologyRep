@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <!--文字颜色-->
+    <color name="text_blue">#2cbdd7</color>
+    <color name="text_gray">#9e9e9e</color>
+    <color name="text_dark">#222222</color>
+    <color name="text_red">#f04529</color>
+
+    <color name="mplayer_seekbar_played">#55E1FA</color>
+    <color name="mplayer_seekbar_unplayed">#66F8F9FA</color>
+    <color name="bg_main_vod_searchbar">#cc30343c</color>
+    <color name="bg_main_vod_search_text">#55050505</color>
+
+</resources>

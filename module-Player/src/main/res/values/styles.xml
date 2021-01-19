@@ -1,0 +1,19 @@
+<resources>
+    <style name="PlayTheme" parent="AppTheme">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="player_controller_seekbar" parent="android:Widget.SeekBar">
+        <item name="android:progressDrawable">@drawable/player_seekbar_progress</item>
+        <item name="android:indeterminateDrawable">@drawable/player_seekbar_progress</item>
+        <item name="android:minHeight">4dip</item>
+        <item name="android:maxHeight">4dip</item>
+        <item name="android:thumb">@drawable/player_seekbar_circle</item>
+        <item name="android:thumbOffset">2dip</item>
+        <item name="android:paddingLeft">2dip</item>
+        <item name="android:paddingRight">2dip</item>
+    </style>
+    <!-- 自定义SeekBar样式  End-->
+
+</resources>

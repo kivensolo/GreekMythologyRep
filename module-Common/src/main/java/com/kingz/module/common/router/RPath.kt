@@ -7,4 +7,6 @@ object RPath {
     const val PAGE_MAIN = "/modle_Home/main"
     const val PAGE_LOGIN = "/module_Login/login"
     const val PAGE_WEB = "/module_Web/web"
+    const val PAGE_DETAIL = "/module_MPlayer/detailPage"
+    const val PAGE_PLAYER = "/module_MPlayer/playerPage"
 }
