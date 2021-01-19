@@ -15,6 +15,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Transformation;
 import android.widget.AbsListView;
 
+import androidx.annotation.MainThread;
 import androidx.core.view.MotionEventCompat;
 import androidx.core.view.ViewCompat;
 
@@ -381,6 +382,7 @@ public class SuperSwipeRefreshLayout extends ViewGroup {
      *
      * @param refreshing Whether or not the view should show refresh progress.
      */
+    @MainThread
     public void setRefreshing(boolean refreshing) {
         if (refreshing && mRefreshing != refreshing) {
             // scale and show

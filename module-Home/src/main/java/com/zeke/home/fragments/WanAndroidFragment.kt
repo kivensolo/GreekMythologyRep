@@ -32,7 +32,7 @@ import kotlinx.coroutines.*
  * 首页热门推荐(玩android)的Fragemnt
  * 内部使用 SuperSwipeRefreshLayout
  */
-class HomeWanAndroidFragment : BaseVMFragment<WanAndroidRepository, WanAndroidViewModel>() {
+class WanAndroidFragment : BaseVMFragment<WanAndroidRepository, WanAndroidViewModel>() {
     lateinit var mRecyclerView: RecyclerView
     private var articleAdapter: HomeArticleAdapter? = null
     private var swipeRefreshLayout: SuperSwipeRefreshLayout? = null

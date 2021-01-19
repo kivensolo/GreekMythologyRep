@@ -25,9 +25,8 @@ import com.kingz.module.common.viewmodel.WanAndroidViewModel
 import com.kingz.module.home.BuildConfig
 import com.kingz.module.home.R
 import com.module.slide.SuperSlidingPaneLayout
-import com.zeke.home.fragments.HomeLiveFragment
-import com.zeke.home.fragments.HomeRecomFragment
-import com.zeke.home.fragments.ISwitcher
+import com.zeke.home.fragments.home.HomeLiveFragment
+import com.zeke.home.fragments.home.HomeRecomFragment
 import com.zeke.home.model.HomeSongModel
 import com.zeke.home.service.NSDService
 import com.zeke.kangaroo.utils.ZLog
@@ -41,7 +40,8 @@ import java.lang.String
  * 首页
  */
 @Route(path = RPath.PAGE_MAIN)
-class HomeActivity : BaseVMActivity<WanAndroidRepository, WanAndroidViewModel>(), ISwitcher {
+class HomeActivity : BaseVMActivity<WanAndroidRepository, WanAndroidViewModel>(),
+    ISwitcher {
 
     private lateinit var homeVodFragment: HomeRecomFragment
     private lateinit var homeLiveFragment: HomeLiveFragment
@@ -85,11 +85,11 @@ class HomeActivity : BaseVMActivity<WanAndroidRepository, WanAndroidViewModel>()
         permissionCheck()
 
         //TestCode
-        lifecycleScope.launch(Dispatchers.IO) {
+        launchIO {
             HomeSongModel<BaseEntity>().testInsertData()
         }
-        viewModel.getUserInfo()
 
+        viewModel.getUserInfo()
         NSDService().init(baseContext)
     }
 

@@ -7,12 +7,12 @@
         {
             "name": "CCTV1综合",
             "icon": "",
-            "live": "http://223.110.243.170/PLTV/3/224/3221226316/index.m3u8"
+            "live": "http://ivi.bupt.edu.cn/hls/cctv1hd.m3u8"
         },
         {
             "name": "CCTV3综艺",
             "icon": "",
-            "live": "http://183.207.249.5/PLTV/3/224/3221225588/index.m3u8"
+            "live": "http://ivi.bupt.edu.cn/hls/cctv3hd.m3u8"
         },
         {
             "name": "CCTV4中文国际",
@@ -20,14 +20,19 @@
             "live": "http://223.110.243.168/PLTV/3/224/3221225534/index.m3u8"
         },
         {
+            "name": "CCTV5",
+            "icon": "",
+            "live": "http://ivi.bupt.edu.cn/hls/cctv5hd.m3u8"
+        },
+        {
             "name": "CCTV5+",
             "icon": "",
-            "live": "http://183.207.249.14/PLTV/3/224/3221225604/index.m3u8"
+            "live": "http://ivi.bupt.edu.cn/hls/cctv5phd.m3u8"
         },
         {
             "name": "CCTV6电影",
             "icon": "",
-            "live": "http://183.207.249.15/PLTV/3/224/3221225548/index.m3u8"
+            "live": "http://ivi.bupt.edu.cn/hls/cctv6hd.m3u8"
         },
         {
             "name": "CCTV7军事农业",
@@ -37,7 +42,7 @@
         {
             "name": "CCTV8电视剧",
             "icon": "",
-            "live": "http://223.110.243.170/PLTV/3/224/3221227204/index.m3u8"
+            "live": "http://ivi.bupt.edu.cn/hls/cctv8hd.m3u8"
         },
         {
             "name": "CCTV9记录",
@@ -80,14 +85,29 @@
             "name":"卫视"
         },
         {
+            "name": "北京卫视",
+            "icon": "",
+            "live": "http://ivi.bupt.edu.cn/hls/btv1hd.m3u8"
+        },
+        {
+            "name": "北京文艺",
+            "icon": "",
+            "live": "http://ivi.bupt.edu.cn/hls/btv2hd.m3u8"
+        },
+        {
+            "name": "北京体育",
+            "icon": "",
+            "live": "http://ivi.bupt.edu.cn/hls/btv6hd.m3u8"
+        },
+        {
             "name": "东方卫视",
             "icon": "",
-            "live": "http://223.110.243.138/ott.js.chinamobile.com/PLTV/3/224/3221227208/index.m3u8"
+            "live": "http://ivi.bupt.edu.cn/hls/dfhd.m3u8"
         },
         {
             "name": "浙江卫视",
             "icon": "",
-            "live": "http://183.207.249.6/PLTV/3/224/3221225544/index.m3u8"
+            "live": "http://ivi.bupt.edu.cn/hls/zjhd.m3u8"
         },
         {
             "name": "湖北卫视",
@@ -95,24 +115,34 @@
             "live": "http://223.110.243.171/PLTV/3/224/3221227211/index.m3u8"
         },
         {
+            "name": "湖南卫视",
+            "icon": "",
+            "live": "http://ivi.bupt.edu.cn/hls/hunanhd.m3u8"
+        },
+        {
+            "name": "湖南卫视rtmp",
+            "icon": "",
+            "live": "rtmp://58.200.131.2:1935/livetv/hunantv"
+        },
+        {
             "name": "天津卫视",
             "icon": "",
-            "live": "http://223.110.243.170/PLTV/3/224/3221227212/index.m3u8"
+            "live": "http://ivi.bupt.edu.cn/hls/tjhd.m3u8"
         },
         {
             "name": "山东卫视",
             "icon": "",
-            "live": "http://223.110.243.171/PLTV/3/224/3221227258/index.m3u8"
+            "live": "http://ivi.bupt.edu.cn/hls/sdhd.m3u8"
         },
         {
             "name": "安徽卫视",
             "icon": "",
-            "live": "http://223.110.243.140/PLTV/3/224/3221225634/index.m3u8"
+            "live": "http://ivi.bupt.edu.cn/hls/ahhd.m3u8"
         },
         {
             "name": "黑龙江卫视",
             "icon": "",
-            "live": "http://223.110.243.169/PLTV/3/224/3221227252/index.m3u8"
+            "live": "http://ivi.bupt.edu.cn/hls/hljhd.m3u8"
         },
         {
             "name": "旅游卫视",
@@ -502,7 +532,7 @@
 
         {
              "name": "其他",
-             "isTitle": true   
+             "isTitle": true
         },{
            "name":"聚鲨环球精选",
             "icon":"",

@@ -56,8 +56,8 @@ abstract class BaseFragment : Fragment() {
         super.onDestroyView()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDetach() {
+        super.onDetach()
         rootView = null
         mActivity = null
     }

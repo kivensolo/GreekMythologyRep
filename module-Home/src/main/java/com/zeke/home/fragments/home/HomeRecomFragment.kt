@@ -1,11 +1,15 @@
-package com.zeke.home.fragments
+package com.zeke.home.fragments.home
 
 import android.util.Log
 import androidx.annotation.StringDef
+import androidx.fragment.app.Fragment
 import com.kingz.module.common.BaseActivity
 import com.kingz.module.home.R
 import com.zeke.home.contract.RecomPageContract
 import com.zeke.home.entity.TemplatePageData
+import com.zeke.home.fragments.ExpandableDemoFragment
+import com.zeke.home.fragments.MagicIndicatorDemoFragment
+import com.zeke.home.fragments.WanAndroidFragment
 import com.zeke.home.presenters.RecomPresenter
 
 /**
@@ -29,7 +33,9 @@ class HomeRecomFragment : HomeBaseFragment<RecomPresenter>(), RecomPageContract.
 
     @kotlin.annotation.Retention(AnnotationRetention.BINARY)
     @StringDef(
-        TYPE_WAN_ANDROID,TYPE_DEMO, TYPE_MAGICINDICATOR
+        TYPE_WAN_ANDROID,
+        TYPE_DEMO,
+        TYPE_MAGICINDICATOR
     )
     annotation class PageRecomType
 
@@ -39,23 +45,20 @@ class HomeRecomFragment : HomeBaseFragment<RecomPresenter>(), RecomPageContract.
             showEmpty()
             return
         }
-        fragmentList.clear()
-        titleList.clear()
-
-        data.forEach lit@ {
-            titleList.add(it.name)
-            when(it.type) {
-                TYPE_WAN_ANDROID -> fragmentList.add(HomeWanAndroidFragment())
-                TYPE_DEMO -> fragmentList.add(ExpandableDemoFragment())
-                TYPE_MAGICINDICATOR -> fragmentList.add(MagicIndicatorDemoFragment())
-            }
-        }
-        refreshViewPagerData()
+        viewPagerAdapter?.setData(data)
+        notifyPagerAdapterDataChanged()
     }
 
-    override fun onGetItemByPostion(position: Int) {
-        super.onGetItemByPostion(position)
-        val fragment = fragmentList[position]
+    /**
+     * 根据数据类型创建Fragment页面
+     */
+    override fun createPageFragment(data: TemplatePageData, position: Int): Fragment {
+        return when (data.type) {
+            TYPE_WAN_ANDROID -> WanAndroidFragment()
+            TYPE_DEMO -> ExpandableDemoFragment()
+            TYPE_MAGICINDICATOR -> MagicIndicatorDemoFragment()
+            else -> ExpandableDemoFragment()
+        }
     }
 
     override fun getLayoutId(): Int {
