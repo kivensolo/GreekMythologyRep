@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kingz.module.common.IView
 import com.kingz.module.common.base.BaseFragment
+import com.kingz.module.common.bean.MediaParams
 import com.kingz.module.common.router.RPath
 import com.kingz.module.common.router.Router
 import com.kingz.module.home.R
@@ -82,7 +83,11 @@ class SimplePageContentFragment : BaseFragment(), IView, View.OnClickListener {
             holder.getView<TextView>(R.id.channel_id).text = (data as Live).name
             holder.setOnClickListener {
                 Router.startActivity(RPath.PAGE_PLAYER, Bundle().apply {
-                    putString("play_url", data.live)
+                    putParcelable(MediaParams.PARAMS_KEY ,MediaParams().apply{
+                        videoName = data.name
+                        videoUrl = data.live
+                        videoType = "live"
+                    })
                 })
             }
         }

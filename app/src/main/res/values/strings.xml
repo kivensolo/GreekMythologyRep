@@ -83,11 +83,6 @@
     <string name="progress_with_number" translatable="false">带数字的水平和环形Progress</string>
     <string name="btn_collect" translatable="false">收藏按钮</string>
 
-    <!--播放器提示-->
-    <string name="full_play">全屏</string>
-    <string name="player_flow_tips" translatable="false">正在使用流量播放</string>
-
-
     <!--日期相关-->
     <string name="today" translatable="false">今天</string>
     <string name="yesterday" translatable="false">昨天</string>

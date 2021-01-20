@@ -17,11 +17,11 @@ import com.kingz.library.player.IPlayer;
 import com.kingz.module.common.base.BaseActivity;
 import com.kingz.module.common.base.BaseFragment;
 import com.kingz.module.common.base.IPresenter;
+import com.kingz.module.common.bean.MediaParams;
 import com.module.tools.ScreenTools;
 import com.zeke.kangaroo.utils.VolumeUtils;
 import com.zeke.module_player.R;
 import com.zeke.play.BasePlayPop;
-import com.zeke.play.MediaParams;
 import com.zeke.play.MediaPlayTool;
 import com.zeke.play.PlayerGestureListener;
 import com.zeke.play.gesture.IGestureCallBack;
@@ -52,7 +52,7 @@ public class PlayFragment extends BaseFragment implements IPlayerView {
     public static PlayFragment newInstance(MediaParams mediaParams) {
         PlayFragment playFragment = new PlayFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable("MediaParams", mediaParams);
+        bundle.putParcelable(MediaParams.PARAMS_KEY, mediaParams);
         playFragment.setArguments(bundle);
         return playFragment;
     }
@@ -73,7 +73,7 @@ public class PlayFragment extends BaseFragment implements IPlayerView {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mediaParams = (MediaParams) getArguments().getSerializable("MediaParams");
+            mediaParams = getArguments().getParcelable(MediaParams.PARAMS_KEY);
         }
     }
 
@@ -116,9 +116,10 @@ public class PlayFragment extends BaseFragment implements IPlayerView {
 
         playPresenter = new PlayPresenter(mediaPlayer,this);
         playPresenter.setPlayParams(mediaParams);
+        // TODO 根据类型初始化不同的UISwitcher
         playerUiSwitcher = new PlayerUiSwitcher(playPresenter, getRootView());
         playerUiSwitcher.setOnClickListener(this);
-        playerUiSwitcher.setVideoTitle("测试影片");
+        playerUiSwitcher.setVideoTitle(mediaParams.getVideoName());
         playerUiSwitcher.setOnSeekBarChangeListener(playPresenter.seekBarChangeListener);
         playPresenter.onCreateView();
     }

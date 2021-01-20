@@ -8,7 +8,7 @@
         <activity
             android:name="com.zeke.home.HomeActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="fullSensor"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>

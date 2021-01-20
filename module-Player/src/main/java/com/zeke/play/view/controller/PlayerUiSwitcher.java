@@ -210,6 +210,7 @@ public class PlayerUiSwitcher {
         bufferLoadView.setVisibility(View.GONE);
         showControllerBar(false, coverPanelController, gestureViewController);
         showControllerBar(!isLocked(), topBarController, bottomBarController);
+        bottomBarController.setPlayMode(_presenter.getPlayMode());
         bottomBarController.setPosition(_presenter.getCurrentPosition());
         bottomBarController.setDuration(_presenter.getDuration());
         lockPanelController.show();

@@ -9,6 +9,11 @@
     <string name="video_desc" translatable="false">简介</string>
     <string name="gusture_tip_icon" translatable="false">手势展示图标</string>
 
+    <!--播放器提示-->
+    <string name="living">直播中</string>
+    <string name="full_play">全屏</string>
+    <string name="player_flow_tips" translatable="false">正在使用流量播放</string>
+
     <!--点播界面  被格式化的参数索引%1$s和%2$s分别表示第一位和第二位占位符，$s表示是字符串 -->
     <string name="txt_desc" translatable="false">简介</string>
     <string name="txt_episode" translatable="false">剧集</string>

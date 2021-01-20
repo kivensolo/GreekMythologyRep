@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.kingz.module.common.CommonApp;
+import com.kingz.module.common.bean.MediaParams;
 import com.zeke.module_player.R;
 import com.zeke.play.fragment.PlayFragment;
 import com.zeke.play.fragment.VodDetailFragment;

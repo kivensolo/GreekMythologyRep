@@ -9,8 +9,8 @@ import com.google.android.exoplayer2.Player;
 import com.kingz.library.player.IPlayer;
 import com.kingz.library.player.IPlayerEventsCallBack;
 import com.kingz.library.player.exo.ExoPlayer;
+import com.kingz.module.common.bean.MediaParams;
 import com.zeke.kangaroo.utils.ZLog;
-import com.zeke.play.MediaParams;
 import com.zeke.play.view.IPlayerView;
 
 /**
@@ -207,6 +207,10 @@ public class PlayPresenter extends AbsBasePresenter implements IPlayerEventsCall
 
     public long getDuration() {
         return mPlayer.getDuration();
+    }
+
+    public String getPlayMode(){
+        return mPlayParams.getVideoType();
     }
 
     class PlaySeekBarChangeListener implements SeekBar.OnSeekBarChangeListener {
