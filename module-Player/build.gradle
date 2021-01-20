@@ -57,8 +57,8 @@ dependencies {
     kapt root_dependencies["arouter_compiler"]
 
     implementation project(path: ':module-Common')
-    implementation project(':library-player')
-    
+    api project(':library-player')
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation rootProject.ext.dependencies["appcompat"]
