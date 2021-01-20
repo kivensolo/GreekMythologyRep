@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.kingz.module.common.router.RPath
 import com.zeke.module_player.R
 import com.zeke.play.MediaParams
 import com.zeke.play.PlayerActivity
@@ -14,7 +15,7 @@ import com.zeke.play.fragment.PlayFragment
  * date：2021/1/19
  * description：直播播放器
  */
-@Route(path = "/module_MPlayer/playerPage")
+@Route(path = RPath.PAGE_PLAYER)
 class FullScreenPlayer : PlayerActivity() {
     private var playFragment: PlayFragment? = null
 
