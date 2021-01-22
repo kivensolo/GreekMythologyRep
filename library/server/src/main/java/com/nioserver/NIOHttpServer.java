@@ -46,7 +46,7 @@ public class NIOHttpServer {
      */
     private volatile ServerSocketChannel mServerSocketChannel;
     /**
-     * Nio channel selector
+     * NIO channel selector
      */
     private volatile Selector _selector;
     /**
@@ -109,7 +109,7 @@ public class NIOHttpServer {
                 try {
                     _selector = Selector.open();
                     SelectorProvider provider = _selector.provider();
-                    //Creatr IP Socket Address
+                    // Creatr IP Socket Address
                     InetSocketAddress localAddr = TextUtils.isEmpty(_localAddr) ?
                             new InetSocketAddress(_localPort) :
                             new InetSocketAddress(_localAddr, _localPort);
@@ -117,9 +117,9 @@ public class NIOHttpServer {
                     mServerSocketChannel = provider.openServerSocketChannel();
                     // 等同于 mServerSocketChannel = ServerSocketChannel.open()
                     mServerSocketChannel.configureBlocking(false);
-                    // A server socket associated with _socketChannel.
+                    // A server socket associated with socketChannel.
                     ServerSocket socket = mServerSocketChannel.socket();
-                    // bind and listen the address.
+                    // Bind and listen the address.
                     socket.bind(localAddr);
 
                     mServerSocketChannel.register(_selector,
@@ -134,75 +134,80 @@ public class NIOHttpServer {
         Selector selector;
         while ((selector = _selector) != null && selector.isOpen()) {
             try {
-                // check new connect
+                // blocking selection operation
                 selector.select();
-                SelectionKey selectionKey;
-                Set<SelectionKey> selectionKeys;
+
+                Set<SelectionKey> selectionKeySet;
                 synchronized (selector) {
-                    selectionKeys = selector.selectedKeys();
+                    selectionKeySet = selector.selectedKeys();
                 }
+                // Gets an iterator for the selected item in the selector,
+                // which is the registered event.
+                Iterator<SelectionKey> iterator = selectionKeySet.iterator();
 
-                Iterator<SelectionKey> iterator = selectionKeys.iterator();
-                while (true) {
-                    synchronized (selectionKeys) {
-                        if (iterator.hasNext()) {
-                            selectionKey = iterator.next();
-                            iterator.remove();
-                        } else {
-                            break;
-                        }
+                SelectionKey selectionKey;
+                while (iterator.hasNext()) {
+                    synchronized (selectionKeySet) {
+                        selectionKey = iterator.next();
+                        // Delete iterator that have already been selected to prevent duplicate processing
+                        iterator.remove();
                     }
-
-                    if (selectionKey == null) {
-                        continue;
-                    }
-
-                    if (!selectionKey.isValid()) {
-                        HttpServerHandler handler = (HttpServerHandler) selectionKey.attachment();
-                        handler.terminate();
-                        continue;
-                    }
-
-                    try {
-                        if (selectionKey.isAcceptable()) {
-                            // Get a new connect, register to selector.
-                            SocketChannel socketChannel = mServerSocketChannel.accept();
-                            if (socketChannel == null) {
-                                continue;
-                            }
-                            // adjusts this channel's blocking mode to not block.
-                            socketChannel.configureBlocking(false);
-                            HttpServerHandler handler = createHandler(this, socketChannel);
-                            socketChannel.register(selector, SelectionKey.OP_READ, handler);
-                            continue;
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        continue;
-                    }
-
-                    HttpServerHandler handler = (HttpServerHandler) selectionKey.attachment();
-                    try {
-                        if (selectionKey.isWritable()) {
-                            handler.notifyWritable();
-                            continue;
-                        }
-
-                        if (selectionKey.isReadable()) {
-                            handler.notifyReadable();
-                            continue;
-                        }
-                    } catch (CancelledKeyException e) {
-                        handler.terminate();
-                    } catch (Exception e) {
-                        handler.terminate();
-                        e.printStackTrace();
-                    }
+                    handleWithSelectionKey(selector, selectionKey);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
+        }
+    }
+
+    /**
+     * Handle events with SelectionKey.
+     */
+    private void handleWithSelectionKey(Selector selector, SelectionKey key){
+        if(key == null){
+            return;
+        }
+        // Get attached Handler.
+        HttpServerHandler attachedHandler = (HttpServerHandler) key.attachment();
+        if (!key.isValid()) {
+            attachedHandler.terminate();
+            return;
+        }
+
+        try {
+            if (key.isAcceptable()) {
+                // Check current socketChannel is avlid.
+                SocketChannel socketChannel = mServerSocketChannel.accept();
+                if (socketChannel == null) {
+                    return;
+                }
+                // Register channel to this socketSelector and set Read mode.
+                socketChannel.configureBlocking(false);
+                HttpServerHandler handler = createHandler(this, socketChannel);
+                socketChannel.register(selector, SelectionKey.OP_READ, handler);
+                return;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
+
+        try {
+            if (key.isWritable()){
+                attachedHandler.notifyWritable();
+                return;
+            }
+
+            if(key.isReadable()){
+                attachedHandler.notifyReadable();
+            }
+
+        } catch (CancelledKeyException e) {
+            attachedHandler.terminate();
+        } catch (Exception e) {
+            attachedHandler.terminate();
+            e.printStackTrace();
         }
     }
 
@@ -314,16 +319,16 @@ public class NIOHttpServer {
                     final Selector selector = _server._selector;
                     final HttpServerHandler attachment = this;
                     socketChannel.register(selector,0,attachment);
-                    // TODO what?!
+                    // Causes the first blocking selection operation return immediately.
                     selector.wakeup();
                     _server._reactorPool.execute(new Runnable() {
                         @Override
                         public void run() {
                             try {
 
-                                // 分块的话就32个字节为起点
+                                // 分块时以32个字节为起点
                                 int beginOffset = _sendChunkedData ? 32 : 0;
-                                // 分块的话以2字节为结束点
+                                // 分块时话以2字节为结束点
                                 int endOffset = _sendChunkedData ? 2 : 0;
                                 // 分块的话,一个块8KB?
                                 int sizeLimit = _sendChunkedData ? 8192 : -1;
@@ -408,6 +413,7 @@ public class NIOHttpServer {
             _server.dispatchRequest(this, request);
         }
 
+        @SuppressWarnings("WeakerAccess")
         protected void handleHttpRequest(HttpServerRequest request) throws IOException {
             getResponse(request)
                     .setStatus(404)
@@ -415,6 +421,7 @@ public class NIOHttpServer {
                     .send();
         }
 
+        @SuppressWarnings("WeakerAccess")
         public HttpServerResponse getResponse(HttpServerRequest httpRequest) {
             HttpServerResponse serverResponse = new HttpServerResponse(this);
             serverResponse.protocolVer = httpRequest.protocolVer;
