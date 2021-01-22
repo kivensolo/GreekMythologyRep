@@ -3,7 +3,7 @@ println("> Initialization [${DEFAULT_SETTINGS_FILE}] Start.")
 include ':app'
 include ':app-playerdemo'
 include ':app-hlsCacheDemo'
-include ':Kotlin-Coroutines-Examples'
+include ':app-Kotlin-Coroutines-Examples'
 
 include ':base'
 include ':database'
