@@ -6,7 +6,6 @@ import okhttp3.Protocol
 import okhttp3.Response
 import okio.Buffer
 import java.io.IOException
-import java.nio.charset.Charset
 
 /**
  * date：2019/9/17
@@ -26,11 +25,11 @@ class LoggingInterceptor : Interceptor {
         if (request.body() != null) {
             request.body()!!.writeTo(requestBuffer)
         } else {
-            ZLog.w("request.body() == null")
+            ZLog.w("request.body() is null.")
         }
         printRequest(chain)
         val response = chain.proceed(request)
-//        printResponse(response)
+        printResponse(response)
         return response
     }
 
@@ -86,24 +85,24 @@ class LoggingInterceptor : Interceptor {
         val endTime = System.nanoTime()
         val headers = response.headers()
         ZLog.d(
-            String.format(
-                "<--- %.1fms%n%s",
+            String.format( "<--- %.1fms%n%s",
                 (endTime - startTime) / 1e6,  // aka: 1x10^6
-                response.headers()
+                headers
             )
         )
-
+        return
+        // 暂时不打印Response
         //Get BufferedSource object and clone it.
-        val responseBody = response.body()
-        val source = responseBody!!.source()
-        // Buffer the entire body.
-        source.request(Long.MAX_VALUE)
-        val buffer = source.buffer
-//        val bodyString = buffer.clone().readString(Charset.forName("UTF-8"))
-//        if (headers["Content-Type"]?.contains("json") == true) {
-//            ZLog.json(bodyString)
-//        } else {
-//            ZLog.d(bodyString)
-//        }
+//        val responseBody = response.body()
+//        val source = responseBody!!.source()
+//        // Buffer the entire body.
+//        source.request(Long.MAX_VALUE)
+//        val buffer = source.buffer
+////        val bodyString = buffer.clone().readString(Charset.forName("UTF-8"))
+////        if (headers["Content-Type"]?.contains("json") == true) {
+////            ZLog.json(bodyString)
+////        } else {
+////            ZLog.d(bodyString)
+////        }
     }
 }
