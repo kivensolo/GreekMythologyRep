@@ -20,7 +20,7 @@ import java.util.*
  * description：Demo样例数据的数据提供实现类，
  * 负责Demo数据配置文件解析和数据返回
  */
-class AndroidDemoProvider constructor() : DataApiService<MutableList<DemoGroup>> {
+class AndroidDemoProvider : DataApiService<MutableList<DemoGroup>> {
     companion object {
         private val TAG = AndroidDemoProvider::class.java.simpleName
         private lateinit var mCallBack: IRequestResponse<MutableList<DemoGroup>>

@@ -1,4 +1,4 @@
-package com.zeke.home.banner;
+package com.zeke.home.wanandroid.banner;
 
 import android.content.Context;
 import android.widget.ImageView;

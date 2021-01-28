@@ -1,4 +1,4 @@
-package com.zeke.home.repository
+package com.zeke.home.wanandroid.repository
 
 import com.kingz.base.BaseRepository
 import com.kingz.base.response.ResponseResult

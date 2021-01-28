@@ -9,8 +9,8 @@ import com.zeke.home.contract.RecomPageContract
 import com.zeke.home.entity.TemplatePageData
 import com.zeke.home.fragments.ExpandableDemoFragment
 import com.zeke.home.fragments.MagicIndicatorDemoFragment
-import com.zeke.home.fragments.WanAndroidHomeFragment
 import com.zeke.home.presenters.RecomPresenter
+import com.zeke.home.wanandroid.WanAndroidHomeFragment
 
 /**
  * author：KingZ

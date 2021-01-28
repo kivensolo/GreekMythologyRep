@@ -1,4 +1,4 @@
-package com.zeke.home.fragments
+package com.zeke.home.wanandroid
 
 import android.app.Service
 import android.os.Bundle
@@ -7,6 +7,7 @@ import android.os.Vibrator
 import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
@@ -14,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.launcher.ARouter
 import com.kingz.base.BaseVMFragment
-import com.kingz.base.CoroutineState
 import com.kingz.base.factory.ViewModelFactory
 import com.kingz.module.common.router.RPath
 import com.kingz.module.common.utils.ktx.SDKVersion
@@ -28,13 +28,12 @@ import com.youth.banner.BannerConfig
 import com.youth.banner.Transformer
 import com.zeke.home.adapter.ArticleDelegateAdapter
 import com.zeke.home.adapter.HomeArticleAdapter
-import com.zeke.home.banner.BannerGlideImageLoader
-import com.zeke.home.repository.HomeRepository
-import com.zeke.home.viewmodel.HomeViewModel
+import com.zeke.home.wanandroid.banner.BannerGlideImageLoader
+import com.zeke.home.wanandroid.repository.HomeRepository
+import com.zeke.home.wanandroid.viewmodel.HomeViewModel
 import com.zeke.kangaroo.utils.ZLog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.*
 
@@ -64,20 +63,31 @@ class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>() {
     override fun initViewModel() {
         super.initViewModel()
 
-        viewModel.articalLiveData.observe(this, Observer { articleData ->
-            lifecycleScope.launch(Dispatchers.IO) {
-                if (articleData?.datas != null) {
-                    ZLog.d("存在文章数据,进行文章数据更新")
-                    articleAdapter?.addAll(articleData.datas)
-                    withContext(Dispatchers.Main) {
-                        (mRecyclerView.adapter as HomeArticleAdapter).notifyDataSetChanged()
-
-                        val value = viewModel.statusLiveData.value
-                        if (value == CoroutineState.FINISH || value == CoroutineState.ERROR) {
-//                            swipeRefreshLayout?.isRefreshing = false
+        viewModel.articalLiveData.observe(this, Observer {
+            ZLog.d("articalLiveData onobserve  Current thread= ${Thread.currentThread().name}")
+            launchIO {
+                val currentFirstData = articleAdapter?.getItem(0)
+                if (it?.datas != null) {
+                    swipeRefreshLayout?.finishRefresh()
+                    val articleList = it.datas
+                    if (currentFirstData?.id != articleList!![0].id) {
+                        //当前第一个数据不同于接口第一个，表示有新数据
+                        ZLog.d("Has new article data.")
+                        //TODO 优化数据更新逻辑，只插入新数据
+                        articleAdapter?.removeAll()
+                        articleAdapter?.addAll(articleList)
+                        withContext(Dispatchers.Main) {
+                            (mRecyclerView.adapter as HomeArticleAdapter).notifyDataSetChanged()
+                        }
+                    } else {
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(context, "当前数据已是最新", Toast.LENGTH_SHORT).show()
                         }
                     }
-
+                } else {
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(context, "数据请求异常", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         })
@@ -161,19 +171,22 @@ class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>() {
         swipeRefreshLayout = rootView?.findViewById(R.id.swipeRefreshLayout)!!
         swipeRefreshLayout?.apply {
             setOnRefreshListener {
-                finishRefresh(4000/*,false*/) //传入false表示刷新失败
                 val vibrator = context?.getSystemService(Service.VIBRATOR_SERVICE) as Vibrator
                 if (SDKVersion.afterOreo()) {
                     vibrator.vibrate(
                         VibrationEffect.createOneShot(40, VibrationEffect.DEFAULT_AMPLITUDE)
                     )
                 } else {
+                    @Suppress("DEPRECATION")
                     vibrator.vibrate(40)
                 }
+                // 获取最新数据
+                viewModel.getArticalData(0)
             }
 
             setOnLoadMoreListener {
-                finishLoadMore(2000/*,false*/);//传入false表示加载失败
+                finishLoadMore(2000/*,false*/)//传入false表示加载失败
+                //TODO 上拉加载后续的数据
             }
         }
     }
@@ -190,10 +203,10 @@ class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>() {
             .navigation(activity, 0x01)
     }
 
-    fun openWeb(url: String?) {
+    private fun openWeb(url: String?) {
         ARouter.getInstance()
             .build(RPath.PAGE_WEB)
-            .withString(WADConstants.KEY_URL,url)
+            .withString(WADConstants.KEY_URL, url)
             .navigation(activity, 0x01)
     }
 

@@ -1,11 +1,11 @@
-package com.zeke.home.viewmodel
+package com.zeke.home.wanandroid.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import com.kingz.base.BaseViewModel
 import com.kingz.base.response.ResponseResult
 import com.kingz.module.wanandroid.bean.ArticleData
 import com.kingz.module.wanandroid.bean.BannerData
-import com.zeke.home.repository.HomeRepository
+import com.zeke.home.wanandroid.repository.HomeRepository
 import com.zeke.kangaroo.utils.ZLog
 
 /**
@@ -27,12 +27,13 @@ class HomeViewModel : BaseViewModel<HomeRepository>() {
     }
 
     fun getArticalData(pageId: Int) {
+        ZLog.d("getArticalData pageId=$pageId")
         launchDefault {
             try {
                 val result = repository.getArticals(pageId)
                 articalLiveData.postValue(result.data)
             } catch (e: Exception) {
-                ZLog.e("dologin on exception: ${e.printStackTrace()}")
+                ZLog.e("getArticalData on exception: ${e.printStackTrace()}")
                 articalLiveData.postValue(null)
             }
         }
