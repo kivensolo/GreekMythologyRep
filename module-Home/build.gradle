@@ -23,6 +23,7 @@ android {
         if (!isHomeModule.toBoolean()) {
             //单独调试时添加applicationId集成调试时移除
             applicationId "com.kingz.demo.home"
+            multiDexEnabled true
         }
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
