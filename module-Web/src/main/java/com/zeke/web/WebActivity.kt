@@ -23,10 +23,10 @@ import com.just.agentweb.WebChromeClient
 import com.just.agentweb.WebViewClient
 import com.kingz.base.BaseVMActivity
 import com.kingz.base.factory.ViewModelFactory
-import com.kingz.module.common.base.WADConstants
-import com.kingz.module.common.repository.WanAndroidRepository
 import com.kingz.module.common.router.RPath
-import com.kingz.module.common.viewmodel.WanAndroidViewModel
+import com.kingz.module.wanandroid.WADConstants
+import com.kingz.module.wanandroid.repository.WanAndroidRepository
+import com.kingz.module.wanandroid.viewmodel.WanAndroidViewModel
 import kotlinx.android.synthetic.main.web_activity.*
 
 @Route(path = RPath.PAGE_WEB)

@@ -1,4 +1,4 @@
-package com.kingz.module.common.bean
+package com.kingz.module.wanandroid.bean
 
 /**
  * WanAndroid收藏列表Bean

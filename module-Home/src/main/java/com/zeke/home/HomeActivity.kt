@@ -18,15 +18,15 @@ import com.kingz.base.BaseVMActivity
 import com.kingz.base.factory.ViewModelFactory
 import com.kingz.database.entity.BaseEntity
 import com.kingz.module.common.base.BaseFragment
-import com.kingz.module.common.repository.WanAndroidRepository
 import com.kingz.module.common.router.RPath
 import com.kingz.module.common.utils.RandomUtils
-import com.kingz.module.common.viewmodel.WanAndroidViewModel
 import com.kingz.module.home.BuildConfig
 import com.kingz.module.home.R
+import com.kingz.module.wanandroid.repository.WanAndroidRepository
+import com.kingz.module.wanandroid.viewmodel.WanAndroidViewModel
 import com.module.slide.SuperSlidingPaneLayout
+import com.zeke.home.fragments.home.HomeContainerFragment
 import com.zeke.home.fragments.home.HomeLiveFragment
-import com.zeke.home.fragments.home.HomeRecomFragment
 import com.zeke.home.model.HomeSongModel
 import com.zeke.home.service.NSDService
 import com.zeke.kangaroo.utils.ZLog
@@ -43,7 +43,7 @@ import java.lang.String
 class HomeActivity : BaseVMActivity<WanAndroidRepository, WanAndroidViewModel>(),
     ISwitcher {
 
-    private lateinit var homeVodFragment: HomeRecomFragment
+    private lateinit var homeVodFragment: HomeContainerFragment
     private lateinit var homeLiveFragment: HomeLiveFragment
 
     private lateinit var panelSlidelLsr: HomePanelSlidelLsr
@@ -99,7 +99,7 @@ class HomeActivity : BaseVMActivity<WanAndroidRepository, WanAndroidViewModel>()
     private fun initFragments() {
         val fragmentManager = supportFragmentManager
         val fragmentTS = fragmentManager.beginTransaction()
-        homeVodFragment = HomeRecomFragment()
+        homeVodFragment = HomeContainerFragment()
         homeLiveFragment = HomeLiveFragment()
         fragmentTS.add(R.id.content, homeVodFragment)
             .show(homeVodFragment)

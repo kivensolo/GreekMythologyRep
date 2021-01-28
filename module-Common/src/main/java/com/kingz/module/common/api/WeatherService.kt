@@ -1,4 +1,4 @@
-package com.kingz.module.common.service
+package com.kingz.module.common.api
 
 import com.zeke.network.retrofit.model.WeatherEntity
 import io.reactivex.Observable

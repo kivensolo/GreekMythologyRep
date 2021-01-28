@@ -11,7 +11,7 @@ import kotlinx.coroutines.*
  * @date 2020/5/26
  * @maintainer zeke.wang
  * @desc:
- * Hold UI Data.
+ * Hold UI Data(内部持有LiveData).
  * ViewModel中持有 Repository，并通过它执行具体逻辑
  *
  * viewModelScope: 与ViewModel绑定的CoroutineScope

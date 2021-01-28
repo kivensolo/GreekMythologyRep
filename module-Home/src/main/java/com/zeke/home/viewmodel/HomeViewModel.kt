@@ -1,23 +1,68 @@
 package com.zeke.home.viewmodel
 
-import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.kingz.base.BaseViewModel
 import com.kingz.base.response.ResponseResult
-import com.kingz.module.common.bean.BannerData
-import com.zeke.home.repository.MainRepository
+import com.kingz.module.wanandroid.bean.ArticleData
+import com.kingz.module.wanandroid.bean.BannerData
+import com.zeke.home.repository.HomeRepository
+import com.zeke.kangaroo.utils.ZLog
 
 /**
- * author: King.Z <br>
- * date:  2020/9/21 22:26 <br>
- * description:  <br>
- *     首页的ViewModel
+ * author：ZekeWang
+ * date：2021/1/28
+ * description： 首页数据模型
  */
-@Deprecated(message = "使用了WanAndroidViewModel代替")
-class HomeViewModel: BaseViewModel<MainRepository>() {
-    override fun createRepository() = MainRepository()
-
-    suspend fun getBanner(): LiveData<ResponseResult<BannerData>>{
-         return repository.getBanner()
+class HomeViewModel : BaseViewModel<HomeRepository>() {
+    override fun createRepository(): HomeRepository {
+        return HomeRepository()
     }
 
+    val articalLiveData: MutableLiveData<ArticleData> by lazy {
+        MutableLiveData<ArticleData>()
+    }
+
+    val bannerLiveData: MutableLiveData<ResponseResult<BannerData>> by lazy {
+        MutableLiveData<ResponseResult<BannerData>>()
+    }
+
+    fun getArticalData(pageId: Int) {
+        launchDefault {
+            try {
+                val result = repository.getArticals(pageId)
+                articalLiveData.postValue(result.data)
+            } catch (e: Exception) {
+                ZLog.e("dologin on exception: ${e.printStackTrace()}")
+                articalLiveData.postValue(null)
+            }
+        }
+    }
+
+    /**
+     * 获取Banner数据
+     * LiveData在Repository中
+     */
+    fun getBanner() {
+        launchIO {
+            try {
+                val result = repository.getBannerData()
+                bannerLiveData.postValue(
+                    ResponseResult.success(
+                        result?.data
+                    )
+                )
+            } catch (e: Exception) {
+                bannerLiveData.postValue(
+                    ResponseResult.error(
+                        e.toString(),
+                        null
+                    )
+                )
+            }
+        }
+    }
+    //TODO
+    fun collect(){}
+    fun unCollect(){}
+    fun getTopArticles(){}
 }

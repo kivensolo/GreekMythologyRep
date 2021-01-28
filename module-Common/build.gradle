@@ -2,6 +2,9 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
+def root_dependencies = rootProject.ext.dependencies
+
+
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
     buildToolsVersion rootProject.ext.android.buildToolsVersion
@@ -62,5 +65,11 @@ dependencies {
     // Bugly
     api 'com.tencent.bugly:crashreport:3.0.0'
     api 'com.tencent.bugly:nativecrashreport:3.1.0'
+
+
+    api root_dependencies["banner"]
+    api root_dependencies["smartRefresh_Core"]
+    api root_dependencies["smartRefresh_Header_Classics"]
+    api root_dependencies["smartRefresh_Footer_Classics"]
 
 }

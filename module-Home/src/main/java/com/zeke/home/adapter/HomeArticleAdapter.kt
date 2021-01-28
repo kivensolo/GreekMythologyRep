@@ -3,7 +3,7 @@ package com.zeke.home.adapter
 import android.view.View
 import android.view.ViewGroup
 import com.kingz.module.common.adapter.IDelegateAdapter
-import com.kingz.module.common.bean.ArticleData
+import com.kingz.module.wanandroid.bean.Article
 import com.zeke.kangaroo.adapter.CommonRecyclerAdapter
 
 
@@ -13,15 +13,15 @@ import com.zeke.kangaroo.adapter.CommonRecyclerAdapter
  * description: 支持多种viewType的首页推荐Adapter <br>
  *
  */
-class HomeArticleAdapter : CommonRecyclerAdapter<ArticleData.DataBean.ArticleItem>() {
+class HomeArticleAdapter : CommonRecyclerAdapter<Article>() {
 
     /**
      * ViewType类型判断的委托者
      */
-    var delegateAdapters: MutableList<IDelegateAdapter<ArticleData.DataBean.ArticleItem>> =
+    var delegateAdapters: MutableList<IDelegateAdapter<Article>> =
         ArrayList()
 
-    fun addDelegate(delegateAdapter: IDelegateAdapter<ArticleData.DataBean.ArticleItem>) {
+    fun addDelegate(delegateAdapter: IDelegateAdapter<Article>) {
         delegateAdapters.add(delegateAdapter)
     }
 

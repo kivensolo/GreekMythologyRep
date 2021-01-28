@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.kingz.module.common.adapter.IDelegateAdapter
-import com.kingz.module.common.bean.ArticleData
 import com.kingz.module.home.R
+import com.kingz.module.wanandroid.bean.Article
 import com.zeke.kangaroo.adapter.CommonRecyclerAdapter
 
 /**
@@ -14,8 +14,8 @@ import com.zeke.kangaroo.adapter.CommonRecyclerAdapter
  * date:  2020/5/24 13:22 <br>
  * description: 文章类型模板UI的代理Adapter <br>
  */
-class ArticleDelegateAdapter: IDelegateAdapter<ArticleData.DataBean.ArticleItem> {
-    override fun isForViewType(dataType: ArticleData.DataBean.ArticleItem): Boolean {
+class ArticleDelegateAdapter: IDelegateAdapter<Article> {
+    override fun isForViewType(dataType: Article): Boolean {
         return dataType.contentType == "artical"
     }
 
@@ -24,7 +24,7 @@ class ArticleDelegateAdapter: IDelegateAdapter<ArticleData.DataBean.ArticleItem>
         return CommonRecyclerAdapter.ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int, dataType: ArticleData.DataBean.ArticleItem) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int, dataType: Article) {
         if(holder is CommonRecyclerAdapter.ViewHolder){
             holder.getView<TextView>(R.id.tv_content).text = dataType.title
             holder.getView<TextView>(R.id.tv_source).text = dataType.superChapterName

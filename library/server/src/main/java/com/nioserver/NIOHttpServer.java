@@ -38,6 +38,8 @@ import java.util.regex.Pattern;
  * @desc: 基于NIO实现的反应器模式服务端
  *
  * 知识点: NIO + TCP + 反应器模式 + HTTP协议
+ *
+ * //TODO 优化各种header和状态码
  */
 public class NIOHttpServer {
     /**
@@ -526,6 +528,7 @@ public class NIOHttpServer {
                 }
                 int newSize = dataSize + readBytes;
                 mReadBuffer.expand(newSize);
+                // Http请求的字节数据
                 byte[] dataBuffer = mReadBuffer.getDataBuffer();
                 netBuffer.get(dataBuffer, dataSize, readBytes);
                 mReadBuffer.setDataSize(dataSize + readBytes);

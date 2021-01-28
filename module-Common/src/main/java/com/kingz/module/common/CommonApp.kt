@@ -4,12 +4,16 @@ import android.content.Context
 import android.os.Handler
 import com.alibaba.android.arouter.launcher.ARouter
 import com.kingz.database.DatabaseApplication
-import com.kingz.module.common.service.GitHubService
-import com.kingz.module.common.service.WeatherService
+import com.kingz.module.common.api.GitHubService
+import com.kingz.module.common.api.WeatherService
 import com.kingz.module.common.utils.crash.NeverCrash
+import com.scwang.smart.refresh.footer.ClassicsFooter
+import com.scwang.smart.refresh.header.ClassicsHeader
+import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.tencent.bugly.crashreport.CrashReport
 import com.zeke.kangaroo.utils.ZLog
 import com.zeke.network.retrofit.mannager.Api
+
 
 /**
  * author: King.Z <br>
@@ -19,6 +23,18 @@ import com.zeke.network.retrofit.mannager.Api
 open class CommonApp: DatabaseApplication(){
 
     private var _appMainHandler: Handler? = null
+
+    init{
+        //设置全局的Header构建器
+        SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, layout ->
+            layout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white)
+            return@setDefaultRefreshHeaderCreator ClassicsHeader(context)
+        }
+        //设置全局的Footer构建器
+        SmartRefreshLayout.setDefaultRefreshFooterCreator{ context, _ ->
+            return@setDefaultRefreshFooterCreator ClassicsFooter(context).setDrawableSize(20f)
+        }
+    }
 
     companion object {
 

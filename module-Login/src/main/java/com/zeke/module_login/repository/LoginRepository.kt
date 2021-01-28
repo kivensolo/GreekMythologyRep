@@ -1,7 +1,7 @@
 package com.zeke.module_login.repository
 
 import com.kingz.base.BaseRepository
-import com.kingz.module.common.service.ApiServiceUtil
+import com.kingz.module.common.api.ApiServiceUtil
 import com.zeke.module_login.api.LoginApiService
 import com.zeke.module_login.entity.UserInfoBean
 import kotlinx.coroutines.Dispatchers

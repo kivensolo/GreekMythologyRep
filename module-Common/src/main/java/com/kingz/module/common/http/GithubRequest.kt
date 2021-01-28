@@ -1,7 +1,7 @@
 package com.kingz.module.common.http
 
+import com.kingz.module.common.api.GitHubService
 import com.kingz.module.common.model.GitHubUserInfo
-import com.kingz.module.common.service.GitHubService
 import com.zeke.network.retrofit.mannager.Api
 import io.reactivex.Single
 

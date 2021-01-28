@@ -9,7 +9,7 @@ import com.zeke.home.contract.RecomPageContract
 import com.zeke.home.entity.TemplatePageData
 import com.zeke.home.fragments.ExpandableDemoFragment
 import com.zeke.home.fragments.MagicIndicatorDemoFragment
-import com.zeke.home.fragments.WanAndroidFragment
+import com.zeke.home.fragments.WanAndroidHomeFragment
 import com.zeke.home.presenters.RecomPresenter
 
 /**
@@ -18,7 +18,7 @@ import com.zeke.home.presenters.RecomPresenter
  * description：首页-推荐分类页展示的Fragemnts
  * 此部分暂时MVP
  */
-class HomeRecomFragment : HomeBaseFragment<RecomPresenter>(), RecomPageContract.View {
+class HomeContainerFragment : HomeBaseFragment<RecomPresenter>(), RecomPageContract.View {
 
 
     companion object{
@@ -54,7 +54,7 @@ class HomeRecomFragment : HomeBaseFragment<RecomPresenter>(), RecomPageContract.
      */
     override fun createPageFragment(data: TemplatePageData, position: Int): Fragment {
         return when (data.type) {
-            TYPE_WAN_ANDROID -> WanAndroidFragment()
+            TYPE_WAN_ANDROID -> WanAndroidHomeFragment()
             TYPE_DEMO -> ExpandableDemoFragment()
             TYPE_MAGICINDICATOR -> MagicIndicatorDemoFragment()
             else -> ExpandableDemoFragment()

@@ -1,4 +1,4 @@
-package com.kingz.module.common.base;
+package com.kingz.module.wanandroid;
 
 /**
  * author: King.Z <br>

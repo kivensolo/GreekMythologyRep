@@ -1,4 +1,4 @@
-package com.kingz.module.common.service
+package com.kingz.module.common.api
 
 import com.kingz.module.common.model.GitHubRepo
 import com.kingz.module.common.model.GitHubUserInfo
