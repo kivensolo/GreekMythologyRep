@@ -2,6 +2,8 @@
 
 <resources>
     <color name="dkgray">#80808FF0</color>
+    <color name="deep_gray">#afaeae</color>
+    <color name="deep_gray_2">#636262</color>
     <color name="yello">#F8F8FF00</color>
     <color name="bright_green">#ff00ffaa</color>
     <color name="ltgray">#ffcccccc</color>
@@ -21,6 +23,7 @@
     <color name="ivory">#fffff0</color><!--象牙色 -->
     <color name="lightyellow">#ffffe0</color><!--亮黄色 -->
     <color name="yellow">#ffff00</color><!--黄色 -->
+    <color name="material_yellow">#f8bd0b</color><!--material黄色 -->
     <color name="snow">#fffafa</color><!--雪白色 -->
     <color name="floralwhite">#fffaf0</color><!--花白色 -->
     <color name="lemonchiffon">#fffacd</color><!--柠檬绸色 -->
@@ -36,8 +39,10 @@
     <color name="peachpuff">#ffdab9</color><!--桃色 -->
     <color name="gold">#ffd700</color><!--金色 -->
     <color name="pink">#ffc0cb</color><!--粉红色 -->
+    <color name="material_pink">#ff5675</color>
     <color name="lightpink">#ffb6c1</color><!--亮粉红色 -->
     <color name="orange">#ffa500</color><!--橙色 -->
+    <color name="material_orange">#EB7347</color>
     <color name="lightsalmon">#ffa07a</color><!--亮肉色 -->
     <color name="darkorange">#ff8c00</color><!--暗桔黄色 -->
     <color name="coral">#ff7f50</color><!--珊瑚色 -->
@@ -50,6 +55,8 @@
     <color name="magenta2">#9aff00ff</color><!--红紫色 -->
     <color name="oldlace">#fdf5e6</color><!--老花色 -->
     <color name="red">#ff0000</color><!--红色 -->
+    <color name="qian_red">#D24D57</color>
+
     <color name="lightgoldenrodyellow">#fafad2</color><!--亮金黄色 -->
     <color name="linen">#faf0e6</color><!--亚麻色 -->
     <color name="antiquewhite">#faebd7</color><!--古董白 -->
@@ -134,8 +141,11 @@
     <color name="steelblue">#4682b4</color><!--钢兰色 -->
     <color name="royalblue">#4169e1</color><!--皇家蓝 -->
     <color name="turquoise">#40e0d0</color><!--青绿色 -->
-    <color name="limegreen">#32cd32</color><!--橙绿色 -->
+    <color name="green_dark">#84AF9B</color>
     <color name="mediumseagreen">#3cb371</color><!--中海蓝 -->
+    <color name="green_grass">#AEDD81</color>
+    <color name="green_light">#8cc540</color>
+    <color name="limegreen">#32cd32</color><!--橙绿色 -->
     <color name="darkslategray">#2f4f4f</color><!--暗瓦灰色 -->
     <color name="darkslategrey">#2f4f4f</color><!--暗瓦灰色 -->
     <color name="seagreen">#2e8b57</color><!--海绿色 -->
@@ -156,10 +166,12 @@
     <color name="green">#008000</color><!--绿色 -->
     <color name="darkgreen">#006400</color><!--暗绿色 -->
     <color name="blue">#0000ff</color><!--蓝色 -->
+    <color name="blue_light">#00CCFF</color>
     <color name="pullblue">#400000ff</color><!--浅蓝色 -->
+    <color name="blue_dark">#019fa0</color>
     <color name="mediumblue">#0000cd</color><!--中兰色 -->
-    <color name="darkblue">#00008b</color><!--暗蓝色 -->
     <color name="navy">#000080</color><!--海军色 -->
+
 
     <!-- Android L 颜色 -->
     <color name="skygreen">#5FCDDA</color><!--天绿色 -->
@@ -170,6 +182,10 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="orange_red">#FC9D99</color>
+    <color name="blue_deep">#007cdc</color>
+    <color name="purple_light">#cd7bdd</color>
+    <color name="purple_deep">#887ddd</color>
 
     <!--wzviewpager所需颜色-->
     <color name="theme_500">#607D8B</color>

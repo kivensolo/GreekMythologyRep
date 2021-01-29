@@ -25,11 +25,10 @@ android {
             applicationId "com.kingz.demo.home"
             multiDexEnabled true
         }
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
 
-
+        vectorDrawables.useSupportLibrary = true
         // Arouter的Kotlin配置
         kapt {
             arguments {

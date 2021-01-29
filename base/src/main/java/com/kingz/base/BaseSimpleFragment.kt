@@ -60,6 +60,7 @@ abstract class BaseSimpleFragment : Fragment() {
     /** VIewModel中持有的UI数据监听 */
     open fun initViewModel() {}
 
+    /** 子类重写 获取layoutId **/
     abstract fun getLayoutResID(): Int
 
     /** 进行初始化操作，在onCreateView中调用*/

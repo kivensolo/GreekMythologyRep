@@ -6,7 +6,6 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.text.Html
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -14,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.launcher.ARouter
+import com.chad.library.adapter.base.animation.ScaleInAnimation
 import com.kingz.base.BaseVMFragment
 import com.kingz.base.factory.ViewModelFactory
 import com.kingz.module.common.router.RPath
@@ -26,7 +26,6 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.youth.banner.Banner
 import com.youth.banner.BannerConfig
 import com.youth.banner.Transformer
-import com.zeke.home.adapter.ArticleDelegateAdapter
 import com.zeke.home.adapter.HomeArticleAdapter
 import com.zeke.home.wanandroid.banner.BannerGlideImageLoader
 import com.zeke.home.wanandroid.repository.HomeRepository
@@ -40,16 +39,16 @@ import java.util.*
 
 /**
  * 首页热门推荐(玩android)的Fragemnt
- * 内部使用 SuperSwipeRefreshLayout
  */
 class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>() {
     private var banner: Banner? = null
-    lateinit var mRecyclerView: RecyclerView
+    private lateinit var mRecyclerView: RecyclerView
     private var articleAdapter: HomeArticleAdapter? = null
     private var swipeRefreshLayout: SmartRefreshLayout? = null
 
     // 当前页数
     private var mCurPage = 1
+    private var mPageCount = 0
 
     //Banner数据
     private var mBannerData: BannerData? = null
@@ -66,18 +65,22 @@ class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>() {
         viewModel.articalLiveData.observe(this, Observer {
             ZLog.d("articalLiveData onobserve  Current thread= ${Thread.currentThread().name}")
             launchIO {
+                val articleList = it.datas
+                //当前数据为空时
+                if(articleAdapter?.getDefItemCount() == 0 && it?.datas != null){
+                    withContext(Dispatchers.Main) {
+                        articleAdapter?.addData(articleList!!)
+                    }
+                    return@launchIO
+                }
+                // 数据非空时
                 val currentFirstData = articleAdapter?.getItem(0)
                 if (it?.datas != null) {
                     swipeRefreshLayout?.finishRefresh()
-                    val articleList = it.datas
-                    if (currentFirstData?.id != articleList!![0].id) {
-                        //当前第一个数据不同于接口第一个，表示有新数据
+                    if (currentFirstData?.id != articleList!![0].id) {  //当前第一个数据不同于接口第一个，表示有新数据
                         ZLog.d("Has new article data.")
-                        //TODO 优化数据更新逻辑，只插入新数据
-                        articleAdapter?.removeAll()
-                        articleAdapter?.addAll(articleList)
                         withContext(Dispatchers.Main) {
-                            (mRecyclerView.adapter as HomeArticleAdapter).notifyDataSetChanged()
+                            articleAdapter?.addData(articleList)
                         }
                     } else {
                         withContext(Dispatchers.Main) {
@@ -101,30 +104,6 @@ class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>() {
                 bannerUrls.add(item.imagePath)
                 bannerTitles.add(Html.fromHtml(item.title).toString())
             }
-//            banner?.apply {
-//                setImages(bannerUrls)                    // 设置图片数据集合
-//                setBannerTitles(bannerTitles)            // 设置标题集合（当banner样式有显示title时）
-//                start()
-//            }
-//            // 解决IllegalStateException，不能通过addHeaderView重复添加子View
-//            // 2.6.8版本新增setHeaderView方法
-//            // 解决IllegalStateException，不能通过addHeaderView重复添加子View
-//// 2.6.8版本新增setHeaderView方法
-//            if (adapter.getHeaderLayoutCount() > 0) {
-//                adapter.setHeaderView(banner)
-//            } else {
-//                adapter.addHeaderView(banner)
-//            }
-//            lifecycleScope.launch(Dispatchers.IO) {
-//                if (result.data?.itemList?.size ?: 0 > 0) {
-//                    result.data?.itemList?.forEach { item ->
-//                        item.desc
-//                        ZLog.d("+1  desc = " + item.desc)
-//                    }
-//                    //刷新UI
-//                }
-//            }
-
         })
     }
 
@@ -142,20 +121,15 @@ class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>() {
 
             articleAdapter = HomeArticleAdapter()
             articleAdapter?.apply {
-                mOnItemClickListener = object : HomeArticleAdapter.OnItemClickListener {
-                    override fun onItemClick(v: View?, position: Int) {
-                        if (articleAdapter!!.count > position) {
-                            openWeb(articleAdapter?.getItem(position))
-                        }
+                adapterAnimation = ScaleInAnimation()
+                setOnItemClickListener { _, _, position ->
+                    if (articleAdapter!!.getDefItemCount() > position) {
+                        openWeb(articleAdapter?.getItem(position))
                     }
                 }
-                // 添加委托Adapter
-                //addDelegate(BannerDelegateAdapter())
-                // addDelegate(ThreePicDelegateAdapter())
-                addDelegate(ArticleDelegateAdapter())
+                //TODO loadMore数据加载
+//                addLoadMoreModule()
             }
-            // 执行VIewModel的数据请求
-            // 获取网络数据
             viewModel.getArticalData(0)
         }
         mRecyclerView.adapter = articleAdapter
@@ -171,23 +145,28 @@ class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>() {
         swipeRefreshLayout = rootView?.findViewById(R.id.swipeRefreshLayout)!!
         swipeRefreshLayout?.apply {
             setOnRefreshListener {
-                val vibrator = context?.getSystemService(Service.VIBRATOR_SERVICE) as Vibrator
-                if (SDKVersion.afterOreo()) {
-                    vibrator.vibrate(
-                        VibrationEffect.createOneShot(40, VibrationEffect.DEFAULT_AMPLITUDE)
-                    )
-                } else {
-                    @Suppress("DEPRECATION")
-                    vibrator.vibrate(40)
-                }
-                // 获取最新数据
+                fireVibrate()
                 viewModel.getArticalData(0)
             }
-
             setOnLoadMoreListener {
                 finishLoadMore(2000/*,false*/)//传入false表示加载失败
                 //TODO 上拉加载后续的数据
             }
+        }
+    }
+
+    /**
+     * 触发震动效果
+     */
+    private fun fireVibrate() {
+        val vibrator = context?.getSystemService(Service.VIBRATOR_SERVICE) as Vibrator
+        if (SDKVersion.afterOreo()) {
+            vibrator.vibrate(
+                VibrationEffect.createOneShot(40, VibrationEffect.DEFAULT_AMPLITUDE)
+            )
+        } else {
+            @Suppress("DEPRECATION")
+            vibrator.vibrate(40)
         }
     }
 
@@ -256,7 +235,8 @@ class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>() {
             setOnBannerListener { position: Int ->
                 openWeb(bannerUrls[position])
             }
+            start()
         }
-
+        articleAdapter?.setHeaderView(view = banner!!)
     }
 }

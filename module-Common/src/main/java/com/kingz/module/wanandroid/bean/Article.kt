@@ -71,6 +71,8 @@ class Article() : Parcelable {
     var visible = 0
     var zan = 0
     var tags: List<*>? = null
+    var isTop = false
+    var originId = 0
 
     constructor(parcel: Parcel) : this() {
         apkLink = parcel.readString()
@@ -104,6 +106,8 @@ class Article() : Parcelable {
         userId = parcel.readInt()
         visible = parcel.readInt()
         zan = parcel.readInt()
+        isTop = parcel.readByte() != 0.toByte()
+        originId = parcel.readInt()
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -138,6 +142,8 @@ class Article() : Parcelable {
         parcel.writeInt(userId)
         parcel.writeInt(visible)
         parcel.writeInt(zan)
+        parcel.writeByte(if (isTop) 1 else 0)
+        parcel.writeInt(originId)
     }
 
     override fun describeContents(): Int {
@@ -153,5 +159,4 @@ class Article() : Parcelable {
             return arrayOfNulls(size)
         }
     }
-
 }

@@ -25,7 +25,7 @@ class BannerDelegateAdapter: IDelegateAdapter<TemplatePageData> {
         return CommonRecyclerAdapter.ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int, dataType: TemplatePageData) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, dataType: TemplatePageData) {
         if(holder is CommonRecyclerAdapter.ViewHolder){
             holder.getView<TextView>(R.id.tv_content)?.text = dataType.name
             // GlideApp().with(holder.itemView.getContext()).load(news.imgUrls.get(0)).into(viewHolder.ivPic);

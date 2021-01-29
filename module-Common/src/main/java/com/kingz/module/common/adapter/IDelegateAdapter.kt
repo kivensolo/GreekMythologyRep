@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
  * description: Adapter抽象代理 <br>
  */
 interface IDelegateAdapter<T> {
-
     // 查找委托时调用的方法，返回自己能处理的类型即可。
     fun isForViewType(dataType:T):Boolean
 
@@ -17,6 +16,6 @@ interface IDelegateAdapter<T> {
     fun onCreateViewHolder(parent: ViewGroup, viewType:Int): RecyclerView.ViewHolder
 
     // 用于委托Adapter的onBindViewHolder方法
-    fun onBindViewHolder(holder: RecyclerView.ViewHolder , position:Int ,dataType: T)
+    fun onBindViewHolder(holder: RecyclerView.ViewHolder, dataType: T)
 
 }

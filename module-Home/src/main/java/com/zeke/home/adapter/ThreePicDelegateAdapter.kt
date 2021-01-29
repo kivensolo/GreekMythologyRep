@@ -25,7 +25,7 @@ class ThreePicDelegateAdapter: IDelegateAdapter<TemplatePageData> {
         return CommonRecyclerAdapter.ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int, dataType: TemplatePageData) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, dataType: TemplatePageData) {
         if(holder is CommonRecyclerAdapter.ViewHolder){
             holder.getView<TextView>(R.id.tv_content).text = dataType.name
             holder.getView<TextView>(R.id.tv_source).text = "澎湃新闻"
