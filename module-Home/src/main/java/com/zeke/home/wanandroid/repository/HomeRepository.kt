@@ -5,7 +5,7 @@ import com.kingz.base.response.ResponseResult
 import com.kingz.module.common.api.ApiServiceUtil
 import com.kingz.module.wanandroid.api.WanAndroidApiService
 import com.kingz.module.wanandroid.bean.ArticleData
-import com.kingz.module.wanandroid.bean.BannerData
+import com.kingz.module.wanandroid.bean.BannerItem
 import com.kingz.module.wanandroid.response.WanAndroidResponse
 import com.zeke.kangaroo.utils.ZLog
 
@@ -22,7 +22,7 @@ class HomeRepository : BaseRepository() {
         return ApiServiceUtil.getApiService<WanAndroidApiService>().requestArticles(pageId)
     }
 
-    suspend fun getBannerData(): ResponseResult<BannerData>? {
+    suspend fun getBannerData(): ResponseResult<MutableList<BannerItem>>? {
         ZLog.d("get Banner ---> ")
         return ApiServiceUtil.getApiService<WanAndroidApiService>().bannerData()
     }

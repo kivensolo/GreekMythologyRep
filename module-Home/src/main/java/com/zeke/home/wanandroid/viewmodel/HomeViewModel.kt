@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.kingz.base.BaseViewModel
 import com.kingz.base.response.ResponseResult
 import com.kingz.module.wanandroid.bean.ArticleData
-import com.kingz.module.wanandroid.bean.BannerData
+import com.kingz.module.wanandroid.bean.BannerItem
 import com.zeke.home.wanandroid.repository.HomeRepository
 import com.zeke.kangaroo.utils.ZLog
 
@@ -22,8 +22,8 @@ class HomeViewModel : BaseViewModel<HomeRepository>() {
         MutableLiveData<ArticleData>()
     }
 
-    val bannerLiveData: MutableLiveData<ResponseResult<BannerData>> by lazy {
-        MutableLiveData<ResponseResult<BannerData>>()
+    val bannerLiveData: MutableLiveData<ResponseResult<List<BannerItem>>> by lazy {
+        MutableLiveData<ResponseResult<List<BannerItem>>>()
     }
 
     fun getArticalData(pageId: Int) {
@@ -47,17 +47,14 @@ class HomeViewModel : BaseViewModel<HomeRepository>() {
         launchIO {
             try {
                 val result = repository.getBannerData()
-                bannerLiveData.postValue(
-                    ResponseResult.success(
-                        result?.data
-                    )
-                )
+                if(result!!.code == -1){
+                    bannerLiveData.postValue(ResponseResult.error(result.message ?:"未知异常"))
+                }else{
+                    bannerLiveData.postValue(ResponseResult.success(result.data))
+                }
             } catch (e: Exception) {
                 bannerLiveData.postValue(
-                    ResponseResult.error(
-                        e.toString(),
-                        null
-                    )
+                    ResponseResult.error(e.toString(),null)
                 )
             }
         }

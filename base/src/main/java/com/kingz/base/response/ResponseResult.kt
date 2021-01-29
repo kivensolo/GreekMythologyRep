@@ -28,7 +28,7 @@ data class ResponseResult<out T>(
             return ResponseResult(-1,msg, data,  Status.FAILURE)
         }
 
-        fun <T> error(msg: String, data: T?): ResponseResult<T> {
+        fun <T> error(msg: String, data: T? = null): ResponseResult<T> {
             return ResponseResult(-1,msg, data,  Status.ERROR)
         }
 

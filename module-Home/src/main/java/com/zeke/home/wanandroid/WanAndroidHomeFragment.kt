@@ -13,7 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.launcher.ARouter
-import com.chad.library.adapter.base.animation.ScaleInAnimation
+import com.chad.library.adapter.base.animation.SlideInBottomAnimation
 import com.kingz.base.BaseVMFragment
 import com.kingz.base.factory.ViewModelFactory
 import com.kingz.module.common.router.RPath
@@ -21,13 +21,12 @@ import com.kingz.module.common.utils.ktx.SDKVersion
 import com.kingz.module.home.R
 import com.kingz.module.wanandroid.WADConstants
 import com.kingz.module.wanandroid.bean.Article
-import com.kingz.module.wanandroid.bean.BannerData
+import com.kingz.module.wanandroid.bean.BannerItem
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.youth.banner.Banner
-import com.youth.banner.BannerConfig
-import com.youth.banner.Transformer
-import com.zeke.home.adapter.HomeArticleAdapter
-import com.zeke.home.wanandroid.banner.BannerGlideImageLoader
+import com.youth.banner.adapter.BannerImageAdapter
+import com.zeke.home.wanandroid.adapter.ArticleAdapter
+import com.zeke.home.wanandroid.adapter.ImageBannerAdapter
 import com.zeke.home.wanandroid.repository.HomeRepository
 import com.zeke.home.wanandroid.viewmodel.HomeViewModel
 import com.zeke.kangaroo.utils.ZLog
@@ -41,17 +40,15 @@ import java.util.*
  * 首页热门推荐(玩android)的Fragemnt
  */
 class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>() {
-    private var banner: Banner? = null
+    private var banner: Banner<BannerItem, BannerImageAdapter<BannerItem>>? = null
     private lateinit var mRecyclerView: RecyclerView
-    private var articleAdapter: HomeArticleAdapter? = null
+    private var articleAdapter: ArticleAdapter? = null
     private var swipeRefreshLayout: SmartRefreshLayout? = null
 
     // 当前页数
     private var mCurPage = 1
     private var mPageCount = 0
 
-    //Banner数据
-    private var mBannerData: BannerData? = null
     private var bannerUrls: MutableList<String> = ArrayList()
     private var bannerTitles: MutableList<String> = ArrayList()
 
@@ -96,13 +93,15 @@ class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>() {
         })
 
         viewModel.bannerLiveData.observe(this, Observer { result ->
-            ZLog.d("Banner data onChanged() data size = " + result.data?.itemList?.size)
-            mBannerData = result.data
+            ZLog.d("Banner data onChanged() data size = " + result.data?.size)
             bannerUrls.clear()
             bannerTitles.clear()
-            mBannerData?.itemList?.forEach { item ->
+            result.data?.forEach { item ->
                 bannerUrls.add(item.imagePath)
                 bannerTitles.add(Html.fromHtml(item.title).toString())
+            }
+            banner?.apply {
+                setDatas(result.data)
             }
         })
     }
@@ -118,10 +117,9 @@ class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>() {
         if (articleAdapter == null) {
             ZLog.d("articleAdapter == null, getBanner.")
             viewModel.getBanner()
-
-            articleAdapter = HomeArticleAdapter()
+            articleAdapter = ArticleAdapter()
             articleAdapter?.apply {
-                adapterAnimation = ScaleInAnimation()
+                adapterAnimation = SlideInBottomAnimation()
                 setOnItemClickListener { _, _, position ->
                     if (articleAdapter!!.getDefItemCount() > position) {
                         openWeb(articleAdapter?.getItem(position))
@@ -220,22 +218,17 @@ class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>() {
 
 
     private fun initBanner() {
-        // 用代码创建的banner无法显示指示器，换为使用布局创建
-//        banner = new Banner(mContext);
         banner = LayoutInflater.from(context).inflate(
             R.layout.layout_banner, mRecyclerView, false
-        ) as Banner
-//        val params = ViewGroup.LayoutParams(
-//            ViewGroup.LayoutParams.MATCH_PARENT, UIUtils.dp2px(mContext, 200L)
-//        )
+        ) as Banner<BannerItem, BannerImageAdapter<BannerItem>>
         banner?.apply {
-            setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE) //显示圆形指示器和标题（水平显示)
-            setImageLoader(BannerGlideImageLoader()) // 设置图片加载器
-            setBannerAnimation(Transformer.Default)  // 设置banner动画效果
-            setOnBannerListener { position: Int ->
-                openWeb(bannerUrls[position])
+            addBannerLifecycleObserver(activity)
+            adapter = ImageBannerAdapter(null)
+            setLoopTime(3000L) //  设置轮播间隔时间 默认3000ms
+            scrollTime = 1000
+            setOnBannerListener { data, _ ->
+//                openWeb(data)
             }
-            start()
         }
         articleAdapter?.setHeaderView(view = banner!!)
     }

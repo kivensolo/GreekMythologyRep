@@ -1,4 +1,4 @@
-package com.zeke.home.adapter
+package com.zeke.home.wanandroid.adapter
 
 import android.content.Context
 import android.text.TextUtils
@@ -19,7 +19,7 @@ import com.kingz.module.wanandroid.bean.Article
  * description: 支持多种viewType的首页推荐Adapter <br>
  *
  */
-class HomeArticleAdapter @JvmOverloads constructor(
+class ArticleAdapter @JvmOverloads constructor(
     data: MutableList<Article>? = null) : BaseQuickAdapter<Article, BaseViewHolder>(R.layout.item_article, data) {
     private var mContext: Context? = null
 
@@ -47,7 +47,9 @@ class HomeArticleAdapter @JvmOverloads constructor(
 
     override fun convert(holder: BaseViewHolder, item: Article) {
         holder.apply {
-            setText(R.id.tvDesc, item.title)     //要转html Html.fromHtml(str).toString()
+            val userName = item.author ?: item.shareUser ?: "匿名"
+            setText(R.id.tvAuthor, userName)     //要转html Html.fromHtml(str).toString()
+            setText(R.id.tvDesc, item.title)
             setText(R.id.tvDate, item.niceDate)
             setText(R.id.tvTitle, item.title)
 
@@ -64,8 +66,10 @@ class HomeArticleAdapter @JvmOverloads constructor(
 
         val ivProject: ImageView = holder.itemView.findViewById(R.id.ivPoster)
         if (!TextUtils.isEmpty(item.envelopePic)) {
-            Glide.with(mContext!!).load(item.envelopePic)
-                .apply(options).into(ivProject)
+            Glide.with(ivProject)
+                .load(item.envelopePic)
+                .apply(options)
+                .into(ivProject)
         }
 
     }
