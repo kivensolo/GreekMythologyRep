@@ -39,9 +39,6 @@ import java.util.*
 
 /**
  * 首页热门推荐(玩android)的Fragemnt
- * TODO
- *  上拉数据加载
- *  banner播放器Item
  */
 class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>() {
 
