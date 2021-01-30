@@ -24,9 +24,8 @@ import com.kingz.module.wanandroid.bean.Article
 import com.kingz.module.wanandroid.bean.BannerItem
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.youth.banner.Banner
-import com.youth.banner.adapter.BannerImageAdapter
 import com.zeke.home.wanandroid.adapter.ArticleAdapter
-import com.zeke.home.wanandroid.adapter.ImageBannerAdapter
+import com.zeke.home.wanandroid.adapter.HomeBannerAdapter
 import com.zeke.home.wanandroid.repository.HomeRepository
 import com.zeke.home.wanandroid.viewmodel.HomeViewModel
 import com.zeke.kangaroo.utils.ZLog
@@ -40,7 +39,7 @@ import java.util.*
  * 首页热门推荐(玩android)的Fragemnt
  */
 class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>() {
-    private var banner: Banner<BannerItem, BannerImageAdapter<BannerItem>>? = null
+    private var banner: Banner<BannerItem, HomeBannerAdapter<BannerItem>>? = null
     private lateinit var mRecyclerView: RecyclerView
     private var articleAdapter: ArticleAdapter? = null
     private var swipeRefreshLayout: SmartRefreshLayout? = null
@@ -220,12 +219,12 @@ class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>() {
     private fun initBanner() {
         banner = LayoutInflater.from(context).inflate(
             R.layout.layout_banner, mRecyclerView, false
-        ) as Banner<BannerItem, BannerImageAdapter<BannerItem>>
+        ) as Banner<BannerItem, HomeBannerAdapter<BannerItem>>?
         banner?.apply {
             addBannerLifecycleObserver(activity)
-            adapter = ImageBannerAdapter(null)
-            setLoopTime(3000L) //  设置轮播间隔时间 默认3000ms
-            scrollTime = 1000
+            adapter = HomeBannerAdapter(null)
+//            setLoopTime(3000L) //  设置轮播间隔时间 默认3000ms
+//            scrollTime = 1000  //  设置轮播间隔时间 默认600ms
             setOnBannerListener { data, _ ->
 //                openWeb(data)
             }
