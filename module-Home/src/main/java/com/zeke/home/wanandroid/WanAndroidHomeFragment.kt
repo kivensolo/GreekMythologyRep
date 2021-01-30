@@ -24,6 +24,7 @@ import com.kingz.module.wanandroid.bean.Article
 import com.kingz.module.wanandroid.bean.BannerItem
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.youth.banner.Banner
+import com.youth.banner.transformer.ScaleInTransformer
 import com.zeke.home.wanandroid.adapter.ArticleAdapter
 import com.zeke.home.wanandroid.adapter.HomeBannerAdapter
 import com.zeke.home.wanandroid.repository.HomeRepository
@@ -215,8 +216,11 @@ class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>() {
         initBanner()
     }
 
-
+    /**
+     * 初始化Banner控件
+     */
     private fun initBanner() {
+        @Suppress("UNCHECKED_CAST")
         banner = LayoutInflater.from(context).inflate(
             R.layout.layout_banner, mRecyclerView, false
         ) as Banner<BannerItem, HomeBannerAdapter<BannerItem>>?
@@ -225,8 +229,9 @@ class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>() {
             adapter = HomeBannerAdapter(null)
 //            setLoopTime(3000L) //  设置轮播间隔时间 默认3000ms
 //            scrollTime = 1000  //  设置轮播间隔时间 默认600ms
+            setPageTransformer(ScaleInTransformer())
             setOnBannerListener { data, _ ->
-//                openWeb(data)
+                openWeb((data as BannerItem).url)
             }
         }
         articleAdapter?.setHeaderView(view = banner!!)
