@@ -24,6 +24,7 @@ import com.kingz.module.wanandroid.bean.Article
 import com.kingz.module.wanandroid.bean.BannerItem
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.youth.banner.Banner
+import com.youth.banner.indicator.CircleIndicator
 import com.youth.banner.transformer.ScaleInTransformer
 import com.zeke.home.wanandroid.adapter.ArticleAdapter
 import com.zeke.home.wanandroid.adapter.HomeBannerAdapter
@@ -38,8 +39,12 @@ import java.util.*
 
 /**
  * 首页热门推荐(玩android)的Fragemnt
+ * TODO
+ *  上拉数据加载
+ *  banner播放器Item
  */
 class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>() {
+
     private var banner: Banner<BannerItem, HomeBannerAdapter<BannerItem>>? = null
     private lateinit var mRecyclerView: RecyclerView
     private var articleAdapter: ArticleAdapter? = null
@@ -60,7 +65,7 @@ class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>() {
         super.initViewModel()
 
         viewModel.articalLiveData.observe(this, Observer {
-            ZLog.d("articalLiveData onobserve  Current thread= ${Thread.currentThread().name}")
+            ZLog.d("articalLiveData onobser  Current thread= ${Thread.currentThread().name}")
             launchIO {
                 val articleList = it.datas
                 //当前数据为空时
@@ -230,6 +235,7 @@ class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>() {
 //            setLoopTime(3000L) //  设置轮播间隔时间 默认3000ms
 //            scrollTime = 1000  //  设置轮播间隔时间 默认600ms
             setPageTransformer(ScaleInTransformer())
+            indicator = CircleIndicator(context)
             setOnBannerListener { data, _ ->
                 openWeb((data as BannerItem).url)
             }

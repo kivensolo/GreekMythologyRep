@@ -25,7 +25,8 @@ data class BannerItem(
     var order: Int,         // 序号
     var title: String,      // Title
     var type: Int,          // 类型  不知道是啥用
-    var url: String
+    var url: String,
+    @BannerType var viewType: Int = STYLE_PIC
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
@@ -35,7 +36,8 @@ data class BannerItem(
         parcel.readInt(),
         parcel.readString(),
         parcel.readInt(),
-        parcel.readString()
+        parcel.readString(),
+        parcel.readInt()
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -47,6 +49,7 @@ data class BannerItem(
         parcel.writeString(title)
         parcel.writeInt(type)
         parcel.writeString(url)
+        parcel.writeInt(viewType)
     }
 
     override fun describeContents(): Int {
