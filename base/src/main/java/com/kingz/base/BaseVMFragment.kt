@@ -41,7 +41,7 @@ abstract class BaseVMFragment<V : BaseRepository, T : BaseViewModel<V>>
         })
     }
 
-    fun launch(blockCode: BlockCode) {
+    fun launch(blockCode: Block) {
         lifecycleScope.launch {
             try {
                 blockCode()
@@ -51,15 +51,15 @@ abstract class BaseVMFragment<V : BaseRepository, T : BaseViewModel<V>>
         }
     }
 
-    fun launchMain(block: BlockCode) {
+    fun launchMain(block: Block) {
         viewModel.launchMain { block() }
     }
 
-    fun launchIO(block: BlockCode) {
+    fun launchIO(block: Block) {
         viewModel.launchIO { block() }
     }
 
-    fun launchDefault(block: BlockCode) {
+    fun launchDefault(block: Block) {
         viewModel.launchDefault { block() }
     }
 }

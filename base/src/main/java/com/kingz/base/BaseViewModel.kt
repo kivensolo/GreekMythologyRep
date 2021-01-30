@@ -58,25 +58,25 @@ abstract class BaseViewModel<T : BaseRepository> : ViewModel() {
     }
 
 
-    fun launchMain(refresh: Boolean = true, block: BlockCode) {
+    fun launchMain(refresh: Boolean = true, block: Block) {
         viewModelScope.launch(Dispatchers.Main) {
             exeBlock(refresh, block)
         }
     }
 
-    fun launchIO(refresh: Boolean = true, block: BlockCode) {
+    fun launchIO(refresh: Boolean = true, block: Block) {
         viewModelScope.launch(Dispatchers.IO) {
             exeBlock(refresh, block)
         }
     }
 
-    fun launchDefault(refresh: Boolean = true, block: BlockCode) {
+    fun launchDefault(refresh: Boolean = true, block: Block) {
         viewModelScope.launch(Dispatchers.Default) {
             exeBlock(refresh, block)
         }
     }
 
-    private suspend fun exeBlock(refresh: Boolean, block: BlockCode) {
+    private suspend fun exeBlock(refresh: Boolean, block: Block) {
         coroutineScope {
 
             // FIXME java.lang.IllegalStateException: Cannot invoke setValue on a background thread
@@ -96,11 +96,11 @@ abstract class BaseViewModel<T : BaseRepository> : ViewModel() {
         }
     }
 
-    suspend fun switchToIO(block: BlockCode) {
+    suspend fun switchToIO(block: Block) {
         withContext(Dispatchers.IO) { block() }
     }
 
-    suspend fun switchToMain(block: BlockCode) {
+    suspend fun switchToMain(block: Block) {
         withContext(Dispatchers.Main) { block() }
     }
 

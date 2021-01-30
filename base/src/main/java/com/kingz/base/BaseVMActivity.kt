@@ -42,15 +42,15 @@ abstract class BaseVMActivity<BR : BaseRepository,
         })
     }
 
-    fun launchMain(block: BlockCode) {
+    fun launchMain(block: Block) {
         viewModel.launchMain { block() }
     }
 
-    fun launchIO(block: BlockCode) {
+    fun launchIO(block: Block) {
         viewModel.launchIO { block() }
     }
 
-    fun launchDefault(block: BlockCode) {
+    fun launchDefault(block: Block) {
         viewModel.launchDefault { block() }
     }
 }
