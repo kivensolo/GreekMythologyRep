@@ -22,7 +22,7 @@ class AndroidPlayer(context: Context?) : BasePlayer(), AndroidMediaPlayerListene
     private var bufferPercent = 0
 
     override fun selectAudioTrack(audioTrackIndex: Int) {}
-    override fun setDisplayHolder(holder: SurfaceHolder?) {
+    override fun setDisplayHolder(holder: SurfaceHolder) {
         //TODO
     }
     override fun setSpeed(speed: Float) {} // Internal mediaPlayer is unsupport speed.

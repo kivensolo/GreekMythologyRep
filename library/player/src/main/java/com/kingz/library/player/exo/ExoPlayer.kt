@@ -53,7 +53,10 @@ class ExoPlayer(context: Context) : BasePlayer() {
             logD("PlayerEvent:: onTimelineChanged() $timeline")
         }
 
-        override fun onTracksChanged(trackGroups: TrackGroupArray, trackSelections: TrackSelectionArray) {
+        override fun onTracksChanged(
+            trackGroups: TrackGroupArray,
+            trackSelections: TrackSelectionArray
+        ) {
             logD("PlayerEvent:: onTracksChanged() $trackGroups $trackSelections")
         }
 
@@ -147,7 +150,7 @@ class ExoPlayer(context: Context) : BasePlayer() {
     private val mediaDataSourceFactory: DataSource.Factory
     private lateinit var trackSelector: DefaultTrackSelector
     private lateinit var trackSelectionHelper: TrackSelectionHelper
-    private var uris: Array<Uri?>? = null
+    private var uris: Array<Uri?> = arrayOf()
     private var extensions: Array<String?> = arrayOf()
 
     // Drm的后续抽出来
@@ -183,7 +186,7 @@ class ExoPlayer(context: Context) : BasePlayer() {
      */
     override fun setDataSource(uri: Uri?) {
         uris = arrayOf(uri)
-        extensions = arrayOfNulls(uris!!.size)
+        extensions = arrayOfNulls(uris.size)
         prepare()
     }
 
@@ -191,7 +194,7 @@ class ExoPlayer(context: Context) : BasePlayer() {
         setSelectedTrack(RendererType.AUDIO, audioTrackIndex, 0)
     }
 
-    override fun setDisplayHolder(holder: SurfaceHolder?) {
+    override fun setDisplayHolder(holder: SurfaceHolder) {
         player?.setVideoSurfaceHolder(holder)
     }
 
@@ -199,39 +202,49 @@ class ExoPlayer(context: Context) : BasePlayer() {
      * 初始化播放器
      */
     private fun init() {
-        if (player == null) { // 默认渲染工厂
-            val defaultRender = DefaultRenderersFactory(mContext)
+        if (player == null) {
+            // 渲染工厂
+            val renderersFactory = DefaultRenderersFactory(mContext)
             // 默认渲染器优先
-            defaultRender.setExtensionRendererMode(DefaultRenderersFactory.EXTENSION_RENDERER_MODE_PREFER)
-            // 创建DRM的渲染工厂
-//DefaultRenderersFactory renderersFactory = createRenderersFactoryWithDRM();
-//if (renderersFactory == null) {
-//    return;
-//}
+            renderersFactory.setExtensionRendererMode(DefaultRenderersFactory.EXTENSION_RENDERER_MODE_PREFER)
+            // TrackSelector
             createTrackSelector()
-            //player = ExoPlayerFactory.newSimpleInstance(mContext,renderersFactory, trackSelector);
-            player = ExoPlayerFactory.newSimpleInstance(mContext,
-                    defaultRender,
-                    trackSelector,
-                    DefaultLoadControl()) // 默认的加载控制器
-            addListenerWithPlayer()
+            val drmSessionManager = createDrmSessionManager()
+            player = ExoPlayerFactory.newSimpleInstance(
+                mContext,
+                renderersFactory,
+                trackSelector,
+                DefaultLoadControl(),   // 默认的加载控制器
+                drmSessionManager
+            ).apply {
+                addListener(eventListener)
+                eventLogger = EventLogger(trackSelector)
+                addMetadataOutput { metadata -> Log.d(TAG, "onMetadata()  metaData=$metadata") }
+                // addAudioDebugListener\addVideoDebugListener ... is deprecated.
+                  // Use AnalyticsListener to get more detailed debug information
+                addAnalyticsListener(eventLogger!!)
+                playWhenReady = false
+            }
             setSurface(null)
-            player?.playWhenReady = false
         }
     }
 
     private fun prepare() {
-        if (uris == null || uris!!.isEmpty()) {
+        if (uris.isEmpty()) {
             eventListener.onPlayerError(ExoPlaybackException.createForSource(IOException("no uris")))
             return
         }
-        val mediaSources = arrayOfNulls<MediaSource>(uris!!.size)
-        for (i in uris!!.indices) {
-            mediaSources[i] = createMediaSource(uris!![i], extensions[i])
+        val mediaSources = arrayOfNulls<MediaSource>(uris.size)
+        for (i in uris.indices) {
+            mediaSources[i] = createMediaSource(uris[i]!!, extensions[i])
             mediaSources[i]!!.addEventListener(mainHandler, CustomMediaSourceEventListener())
         }
-        val mediaSource = if (mediaSources.size == 1) mediaSources[0] else ConcatenatingMediaSource(*mediaSources)
-        player?.prepare(mediaSource)
+        val mediaSource = if (mediaSources.size == 1) {
+            mediaSources[0]
+        } else {
+            ConcatenatingMediaSource(*mediaSources)
+        }
+        player?.prepare(mediaSource!!)
     }
 
     private fun addListenerWithPlayer() {
@@ -240,35 +253,35 @@ class ExoPlayer(context: Context) : BasePlayer() {
         player?.addMetadataOutput { metadata -> Log.d(TAG, "onMetadata()  metaData=$metadata") }
         // addAudioDebugListener\addVideoDebugListener ... is deprecated.
 // Use AnalyticsListener to get more detailed debug information
-        player?.addAnalyticsListener(eventLogger)
+        player?.addAnalyticsListener(eventLogger!!)
     }
 
     private fun createTrackSelector() {
         // 自定义的bandwidth meter需要在ExoPlayerFactory.()的时候传递进去
         //TrackSelection.Factory adaptiveTrackSelectionFactory = new AdaptiveTrackSelection.Factory(BANDWIDTH_METER);
-        val adaptiveTrackSelectionFactory: TrackSelection.Factory = AdaptiveTrackSelection.Factory() //TrackSelection.Factory
+        val adaptiveTrackSelectionFactory: TrackSelection.Factory =
+            AdaptiveTrackSelection.Factory() //TrackSelection.Factory
         trackSelector = DefaultTrackSelector()
         trackSelectionHelper = TrackSelectionHelper(trackSelector, adaptiveTrackSelectionFactory)
     }
 
     /**
-     * 创建带DRM的渲染工厂
+     * 创建DRM会话管理者
      *
      * @return DefaultRenderersFactory
      */
-    private fun createRenderersFactoryWithDRM(): DefaultRenderersFactory? {
-        var drmSessionManager: DrmSessionManager<FrameworkMediaCrypto?>? = null
+    private fun createDrmSessionManager(): DrmSessionManager<FrameworkMediaCrypto>? {
         if (drmSchemeUuid != null) {
-            drmSessionManager = try {
-                buildDrmSessionManager(drmSchemeUuid, drmLicenseUrl)
+            return try {
+                buildDrmSessionManager(drmSchemeUuid, drmLicenseUrl!!)
             } catch (e: UnsupportedDrmException) {
                 e.printStackTrace()
                 eventListener.onPlayerError(ExoPlaybackException.createForSource(IOException("drmSessionManager == null")))
                 return null
             }
+        } else {
+            return null
         }
-        val extensionRendererMode = DefaultRenderersFactory.EXTENSION_RENDERER_MODE_OFF
-        return DefaultRenderersFactory(mContext, drmSessionManager, extensionRendererMode)
     }
 
     /**
@@ -282,7 +295,7 @@ class ExoPlayer(context: Context) : BasePlayer() {
      * @param overrideExtension param of Extension
      * @return A MediaSource
      */
-    private fun createMediaSource(uri: Uri?, overrideExtension: String?): MediaSource {
+    private fun createMediaSource(uri: Uri, overrideExtension: String?): MediaSource {
         @C.ContentType
         val type: Int = if (TextUtils.isEmpty(overrideExtension)) {
             Util.inferContentType(uri)
@@ -291,23 +304,25 @@ class ExoPlayer(context: Context) : BasePlayer() {
         }
         return when (type) {
             C.TYPE_DASH -> DashMediaSource.Factory(
-                    DefaultDashChunkSource.Factory(mediaDataSourceFactory),
-                    buildDataSourceFactory(null))
-                    .createMediaSource(uri)
+                DefaultDashChunkSource.Factory(mediaDataSourceFactory),
+                buildDataSourceFactory(null)
+            )
+                .createMediaSource(uri)
 //                    DashMediaSource.Factory(mediaDataSourceFactory)
 //                        .createMediaSource(uri)
             C.TYPE_SS -> SsMediaSource.Factory(
-                    DefaultSsChunkSource.Factory(mediaDataSourceFactory),
-                    buildDataSourceFactory(null))
-                    .createMediaSource(uri)
+                DefaultSsChunkSource.Factory(mediaDataSourceFactory),
+                buildDataSourceFactory(null)
+            )
+                .createMediaSource(uri)
             C.TYPE_HLS -> HlsMediaSource.Factory(mediaDataSourceFactory)
-                    .createMediaSource(uri)
+                .createMediaSource(uri)
             C.TYPE_OTHER ->  // Old
                 // ExtractorMediaSource extractorMediaSource = new ExtractorMediaSource.Factory(mediaDataSourceFactory)
                 //        .createMediaSource(uri);
                 // New
                 ProgressiveMediaSource.Factory(mediaDataSourceFactory)
-                        .createMediaSource(uri)
+                    .createMediaSource(uri)
             else -> {
                 throw IllegalArgumentException("Unsupported type: $type")
             }
@@ -315,21 +330,27 @@ class ExoPlayer(context: Context) : BasePlayer() {
     }
 
     @Throws(UnsupportedDrmException::class)
-    private fun buildDrmSessionManager(uuid: UUID, licenseUrl: String?): DrmSessionManager<FrameworkMediaCrypto?> { //if (Util.SDK_INT < 18) {
-        val drmCallback = HttpMediaDrmCallback(licenseUrl,
-                false,
-                buildHttpDataSourceFactory(if (false) mDefaultBandwidthMeter else null))
+    private fun buildDrmSessionManager(
+        uuid: UUID,
+        licenseUrl: String
+    ): DrmSessionManager<FrameworkMediaCrypto> { //if (Util.SDK_INT < 18) {
+        val drmCallback = HttpMediaDrmCallback(
+            licenseUrl,
+            false,
+            buildHttpDataSourceFactory(if (false) mDefaultBandwidthMeter else null)
+        )
         return DefaultDrmSessionManager(
-                uuid,
-                FrameworkMediaDrm.newInstance(uuid),
-                drmCallback,
-                null,
-                false,
-                3)
+            uuid,
+            FrameworkMediaDrm.newInstance(uuid),
+            drmCallback,
+            null,
+            false,
+            3
+        )
     }
 
     override fun setSpeed(speed: Float) {
-        player?.playbackParameters = PlaybackParameters(speed, 1.0f)
+        player?.setPlaybackParameters(PlaybackParameters(speed, 1.0f))
     }
 
     fun setRepeatMode(@RepeatMode repeatMode: Int) {
@@ -337,24 +358,30 @@ class ExoPlayer(context: Context) : BasePlayer() {
     }
 
     override fun setBufferSize(bufferSize: Int) {}
+
     override fun setSurface(surface: Surface?) {
-        player?.addTextOutput(null)
-        player?.setVideoSurface(surface)
-        if (playView is TextureView) {
-            player?.setVideoTextureView(playView as TextureView)
-        } else if (playView is SurfaceView) {
-            player?.setVideoSurfaceView(playView as SurfaceView)
+        player?.apply {
+//            addTextOutput(null)
+            setVideoSurface(surface)
+            if (playView is TextureView) {
+                setVideoTextureView(playView as TextureView)
+            } else if (playView is SurfaceView) {
+                setVideoSurfaceView(playView as SurfaceView)
+            }
         }
     }
 
     override fun attachListener() {}
+
     override fun detachListener() {
         player?.removeListener(eventListener)
     }
 
     private fun buildDataSourceFactory(bandwidthMeter: TransferListener?): DataSource.Factory {
-        return DefaultDataSourceFactory(mContext, bandwidthMeter,
-                buildHttpDataSourceFactory(bandwidthMeter))
+        return DefaultDataSourceFactory(
+            mContext, bandwidthMeter,
+            buildHttpDataSourceFactory(bandwidthMeter)
+        )
         //DefaultDataSourceFactory(context, Util.getUserAgent(context, context.packageName))
     }
 
@@ -369,7 +396,7 @@ class ExoPlayer(context: Context) : BasePlayer() {
     }
 
     override val currentURI: Uri
-        get() = if (uris == null || uris!!.isEmpty()) Uri.parse("") else uris!![0]!!
+        get() = if (uris.isEmpty()) Uri.parse("") else uris[0]!!
 
     override fun release() {
         super.release()
@@ -462,8 +489,10 @@ class ExoPlayer(context: Context) : BasePlayer() {
     override fun getAudioTrack(): IntArray {
         val mappedTrackInfo = trackSelector.currentMappedTrackInfo
         if (mappedTrackInfo != null) {
-            val rendererTracksInfo = getExoPlayerTracksInfo(RendererType.AUDIO,
-                    0, mappedTrackInfo)
+            val rendererTracksInfo = getExoPlayerTracksInfo(
+                RendererType.AUDIO,
+                0, mappedTrackInfo
+            )
             for (trackIndex in rendererTracksInfo.rendererTrackIndexes) {
                 val trackGroupArray = mappedTrackInfo.getTrackGroups(trackIndex)
                 trackGroupArray?.apply {
@@ -479,7 +508,11 @@ class ExoPlayer(context: Context) : BasePlayer() {
     }
 
 
-    private fun setSelectedTrack(type: RendererType, groupIndex: Int, trackIndex: Int) { // Retrieves the available tracks
+    private fun setSelectedTrack(
+        type: RendererType,
+        groupIndex: Int,
+        trackIndex: Int
+    ) { // Retrieves the available tracks
         val mappedTrackInfo = trackSelector.currentMappedTrackInfo ?: return
         val tracksInfo = getExoPlayerTracksInfo(type, groupIndex, mappedTrackInfo)
         val trackGroupArray = if (tracksInfo.rendererTrackIndex == C.INDEX_UNSET) {
@@ -488,7 +521,8 @@ class ExoPlayer(context: Context) : BasePlayer() {
             mappedTrackInfo.getTrackGroups(tracksInfo.rendererTrackIndex)
         }
         if (trackGroupArray == null || trackGroupArray.length == 0
-                || trackGroupArray.length <= tracksInfo.rendererTrackGroupIndex) {
+            || trackGroupArray.length <= tracksInfo.rendererTrackGroupIndex
+        ) {
             return
         }
 
@@ -504,11 +538,11 @@ class ExoPlayer(context: Context) : BasePlayer() {
             if (tracksInfo.rendererTrackIndex == rendererTrackIndex) {
                 // Specifies the correct track to use
                 parametersBuilder.setSelectionOverride(
-                        rendererTrackIndex, trackGroupArray,
-                        DefaultTrackSelector.SelectionOverride(
-                                tracksInfo.rendererTrackGroupIndex,
-                                trackIndex
-                        )
+                    rendererTrackIndex, trackGroupArray,
+                    DefaultTrackSelector.SelectionOverride(
+                        tracksInfo.rendererTrackGroupIndex,
+                        trackIndex
+                    )
                 )
                 // make sure renderer is enabled
                 parametersBuilder.setRendererDisabled(rendererTrackIndex, false)
@@ -521,8 +555,10 @@ class ExoPlayer(context: Context) : BasePlayer() {
     }
 
 
-    private fun getExoPlayerTracksInfo(type: RendererType, groupIndex: Int,
-                                       mappedTrackInfo: MappingTrackSelector.MappedTrackInfo?): ExoPlayerRendererTracksInfo {
+    private fun getExoPlayerTracksInfo(
+        type: RendererType, groupIndex: Int,
+        mappedTrackInfo: MappingTrackSelector.MappedTrackInfo?
+    ): ExoPlayerRendererTracksInfo {
         val rendererTrackList = ArrayList<Int>()
         var rendererTrackIndex = C.INDEX_UNSET
         var rendererTrackGroupIndex = C.INDEX_UNSET
@@ -538,7 +574,7 @@ class ExoPlayer(context: Context) : BasePlayer() {
                             // if the groupIndex belongs to the current exo player renderer
                             rendererTrackIndex = rendererIndex
                             rendererTrackGroupIndex =
-                                    groupIndex - skippedRenderersGroupsCount
+                                groupIndex - skippedRenderersGroupsCount
                         }
                     } else {
                         skippedRenderersGroupsCount += trackGroups.length
@@ -547,9 +583,9 @@ class ExoPlayer(context: Context) : BasePlayer() {
             }
         }
         return ExoPlayerRendererTracksInfo(
-                rendererTrackList,
-                rendererTrackIndex,
-                rendererTrackGroupIndex
+            rendererTrackList,
+            rendererTrackIndex,
+            rendererTrackGroupIndex
         )
     }
 
@@ -562,12 +598,22 @@ class ExoPlayer(context: Context) : BasePlayer() {
             super.onMediaPeriodReleased(windowIndex, mediaPeriodId)
         }
 
-        override fun onLoadStarted(windowIndex: Int, mediaPeriodId: MediaPeriodId?, loadEventInfo: LoadEventInfo, mediaLoadData: MediaLoadData) {
+        override fun onLoadStarted(
+            windowIndex: Int,
+            mediaPeriodId: MediaPeriodId?,
+            loadEventInfo: LoadEventInfo,
+            mediaLoadData: MediaLoadData
+        ) {
             super.onLoadStarted(windowIndex, mediaPeriodId, loadEventInfo, mediaLoadData)
             logD("onLoadStarted")
         }
 
-        override fun onLoadCompleted(windowIndex: Int, mediaPeriodId: MediaPeriodId?, loadEventInfo: LoadEventInfo, mediaLoadData: MediaLoadData) {
+        override fun onLoadCompleted(
+            windowIndex: Int,
+            mediaPeriodId: MediaPeriodId?,
+            loadEventInfo: LoadEventInfo,
+            mediaLoadData: MediaLoadData
+        ) {
             super.onLoadCompleted(windowIndex, mediaPeriodId, loadEventInfo, mediaLoadData)
             //移除监听器，避免重复回调
             //mediaSource.removeEventListener(this);
@@ -575,12 +621,31 @@ class ExoPlayer(context: Context) : BasePlayer() {
             logD("onLoadCompleted")
         }
 
-        override fun onLoadCanceled(windowIndex: Int, mediaPeriodId: MediaPeriodId?, loadEventInfo: LoadEventInfo, mediaLoadData: MediaLoadData) {
+        override fun onLoadCanceled(
+            windowIndex: Int,
+            mediaPeriodId: MediaPeriodId?,
+            loadEventInfo: LoadEventInfo,
+            mediaLoadData: MediaLoadData
+        ) {
             super.onLoadCanceled(windowIndex, mediaPeriodId, loadEventInfo, mediaLoadData)
         }
 
-        override fun onLoadError(windowIndex: Int, mediaPeriodId: MediaPeriodId?, loadEventInfo: LoadEventInfo, mediaLoadData: MediaLoadData, error: IOException, wasCanceled: Boolean) {
-            super.onLoadError(windowIndex, mediaPeriodId, loadEventInfo, mediaLoadData, error, wasCanceled)
+        override fun onLoadError(
+            windowIndex: Int,
+            mediaPeriodId: MediaPeriodId?,
+            loadEventInfo: LoadEventInfo,
+            mediaLoadData: MediaLoadData,
+            error: IOException,
+            wasCanceled: Boolean
+        ) {
+            super.onLoadError(
+                windowIndex,
+                mediaPeriodId,
+                loadEventInfo,
+                mediaLoadData,
+                error,
+                wasCanceled
+            )
         }
 
         override fun onReadingStarted(windowIndex: Int, mediaPeriodId: MediaPeriodId) {
@@ -588,12 +653,18 @@ class ExoPlayer(context: Context) : BasePlayer() {
             logD("onReadingStarted")
         }
 
-        override fun onUpstreamDiscarded(windowIndex: Int, mediaPeriodId: MediaPeriodId?, mediaLoadData: MediaLoadData) {
+        override fun onUpstreamDiscarded(
+            windowIndex: Int,
+            mediaPeriodId: MediaPeriodId?,
+            mediaLoadData: MediaLoadData){
             super.onUpstreamDiscarded(windowIndex, mediaPeriodId, mediaLoadData)
             logD("onUpstreamDiscarded")
         }
 
-        override fun onDownstreamFormatChanged(windowIndex: Int, mediaPeriodId: MediaPeriodId?, mediaLoadData: MediaLoadData) {
+        override fun onDownstreamFormatChanged(
+            windowIndex: Int,
+            mediaPeriodId: MediaPeriodId?,
+            mediaLoadData: MediaLoadData){
             super.onDownstreamFormatChanged(windowIndex, mediaPeriodId, mediaLoadData)
             logD("onDownstreamFormatChanged")
         }

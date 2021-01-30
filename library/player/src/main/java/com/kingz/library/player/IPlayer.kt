@@ -36,7 +36,7 @@ interface IPlayer {
     fun setDataSource(uri: Uri?)
     fun setPlayerEventCallBack(callBack: IPlayerEventsCallBack?)
     fun selectAudioTrack(audioTrackIndex: Int)
-    fun setDisplayHolder(holder: SurfaceHolder?)
+    fun setDisplayHolder(holder: SurfaceHolder)
     fun setSurface(surface: Surface?)
     fun getAudioTrack(): IntArray
 
