@@ -55,6 +55,6 @@ dependencies {
 //    implementation 'com.squareup.okhttp3:okhttp:3.9.0'
 
     // Android-Debug-Database
-    debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
-//    debugImplementation 'com.amitshekhar.android:debug-db-encrypt:1.0.6'
+    debugImplementation rootProject.ext.dependencies["debugDB"]
+    debugImplementation rootProject.ext.dependencies["debugDB_Encrypt"]
 }
