@@ -1,4 +1,4 @@
-package com.zeke.samples;
+package com.zeke.assets;
 
 import android.content.Context;
 import android.util.Log;

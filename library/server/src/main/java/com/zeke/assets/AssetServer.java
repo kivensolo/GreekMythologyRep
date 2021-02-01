@@ -1,4 +1,4 @@
-package com.zeke.samples;
+package com.zeke.assets;
 
 import android.content.Context;
 import android.content.res.AssetManager;
@@ -8,6 +8,7 @@ import com.nioserver.HttpServerHandler;
 import com.nioserver.HttpServerRequest;
 import com.nioserver.HttpServerResponse;
 import com.nioserver.NIOHttpServer;
+import com.nioserver.utils.Utils;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -39,7 +40,6 @@ public class AssetServer extends NIOHttpServer {
     public AssetServer(Context context, @Nullable String addr, int port) {
         super(addr, port);
         this.context = context;
-        _debugServer = new NIOHttpServer(addr, port);
     }
 
     @Override
@@ -60,35 +60,35 @@ public class AssetServer extends NIOHttpServer {
         @Override
         protected void handleHttpRequest(HttpServerRequest request) throws IOException {
             String path = request.path;
-            HttpServerResponse response = null;
-            if(TextUtils.isEmpty(path)){
-                path = "index.html";
-                response = getResponse(request);
+            HttpServerResponse response;
 
-                byte[] assetFile = loadAssetFile(mAssets, path);
-                OutputStream bodyStream = response.getBodyStream();
-                bodyStream.write(assetFile);
-                bodyStream.flush();
-            }else if (path.startsWith("/api/")) {
-				if ("/api/list-pages".equals(path)) {
-					response = listPages(request);
-				} else {
+            if(TextUtils.equals(path,"/")){
+                response = getWebResource(request, "/index.html");
+            } else if (path != null && path.startsWith("/api/")) {
+                //TODO Xul相关逻辑
+                if ("/api/list-pages".equals(path)) {
+                    response = listPages(request);
+                }else{
                     response = getResponse(request)
-                            .setStatus(501)
-                            .setMessage("Debug API Not implemented");
+                        .setStatus(501)
+                        .setMessage("Debug API Not implemented");
                 }
-
-				if (response == PENDING_RESPONSE) {
-					return;
-				}
-			}
+                if (response == PENDING_RESPONSE) {
+                    return;
+                }
+            } else {
+                response = getWebResource(request, path);
+            }
 
             if (response != null) {
                 response.send();
-                return;
+            }else{
+                HttpServerResponse errorResponse = getResponse(request);
+                errorResponse.setStatus(500)
+                        .setMessage("HTTP/1.0 500 Internal Server Error")
+                        .send();
             }
-
-			super.handleHttpRequest(request);
+//			super.handleHttpRequest(request);
         }
 
         @Override
@@ -104,6 +104,26 @@ public class AssetServer extends NIOHttpServer {
 			}
             return response;
         }
+
+        /**
+         * 获取Web资源
+         */
+        private HttpServerResponse getWebResource(HttpServerRequest request, String path) {
+			HttpServerResponse response = getResponse(request);
+            try {
+                byte[] assetFileBytes = loadAssetFile(mAssets, path.substring(1));
+                response.addHeader("Content-Type", Utils.getMIMEType(path.substring(1)));
+                OutputStream bodyStream = response.getBodyStream();
+                if(bodyStream != null){
+                    //FIXME  java.lang.NullPointerException: Attempt to get length of null array
+                    bodyStream.write(assetFileBytes);
+                    bodyStream.flush();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+			return response;
+		}
 
         private HttpServerResponse listPages(HttpServerRequest request) {
 			HttpServerResponse response = getResponse(request);

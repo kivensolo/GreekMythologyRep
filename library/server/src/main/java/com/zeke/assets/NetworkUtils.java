@@ -17,7 +17,7 @@
  *
  */
 
-package com.zeke.samples;
+package com.zeke.assets;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
