@@ -1,6 +1,7 @@
 package com.nioserver;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -68,6 +69,7 @@ public class NIOHttpServer {
      * @param port ip port.
      */
     private void initServer(@Nullable String addr, int port) {
+        Log.d("initServer",addr+":" +port);
         _localAddr = addr;
         _localPort = port;
         final ThreadGroup workerGroup = new ThreadGroup("NIO HTTP Server");
@@ -155,19 +157,20 @@ public class NIOHttpServer {
     /**
      * Handle events with SelectionKey.
      */
-    private void handleWithSelectionKey(Selector selector, SelectionKey key){
-        if(key == null){
+    private void handleWithSelectionKey(Selector selector, SelectionKey selectionKey) {
+        if (selectionKey == null) {
             return;
         }
-        // Get attached Handler.
-        HttpServerHandler attachedHandler = (HttpServerHandler) key.attachment();
-        if (!key.isValid()) {
-            attachedHandler.terminate();
+        if (!selectionKey.isValid()) {
+            //TODO 为何要判断key是否有效？
+            // Get attached Handler.
+            HttpServerHandler handler = (HttpServerHandler) selectionKey.attachment();
+            handler.terminate();
             return;
         }
 
         try {
-            if (key.isAcceptable()) {
+            if (selectionKey.isAcceptable()) {
                 // Check current socketChannel is avlid.
                 SocketChannel socketChannel = mServerSocketChannel.accept();
                 if (socketChannel == null) {
@@ -184,13 +187,15 @@ public class NIOHttpServer {
             return;
         }
 
+        // selectionKey有效时，才能正常获取attach的对象
+        HttpServerHandler attachedHandler = (HttpServerHandler) selectionKey.attachment();
         try {
-            if (key.isWritable()){
+            if (selectionKey.isWritable()) {
                 attachedHandler.notifyWritable();
                 return;
             }
 
-            if(key.isReadable()){
+            if (selectionKey.isReadable()) {
                 attachedHandler.notifyReadable();
             }
 

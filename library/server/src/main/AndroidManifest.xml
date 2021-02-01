@@ -1,1 +1,13 @@
-<manifest package="com.nioserver" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.nioserver">
+
+    <application>
+        <provider
+            android:name="com.zeke.assets.DebugInitProvider"
+            android:authorities="${applicationId}.DebugXulInitProvider"
+            android:enabled="true"
+            android:exported="false" />
+    </application>
+
+</manifest>
+

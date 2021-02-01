@@ -43,7 +43,10 @@ public class HttpServerHandler {
         return _socketChannel;
     }
 
-    // read ---> decode ---> compute
+    /**
+     * 内部通知有数据可读取，执行以下流程：
+     * read ---> decode ---> compute
+     */
     public void notifyReadable() throws IOException {
         resetRequestBuffer();
         //read bytes data from soketChannel.
@@ -80,7 +83,10 @@ public class HttpServerHandler {
         }
     }
 
-    // encode ---> send
+    /**
+     * 内部通知有数据可写出，执行以下流程：
+     * encode ---> send
+     */
     public void notifyWritable() throws IOException {
         if (mResponseBuffer == null) {
             return;
@@ -153,13 +159,12 @@ public class HttpServerHandler {
     }
 
     /**
-     * Send response to client by socketChannel.
-     *
+     * 通过socketChannel对象发送Response数据给客户端;
+     * 若无Content-Type的头信息,则添加默认值： text/html
      * @param serverResponse HttpResponse.
      */
     void send(HttpServerResponse serverResponse) {
         _response = serverResponse;
-
         serverResponse.addHeaderIfNotExists("Content-Type", "text/html")
                 .addHeaderIfNotExists("Connection", "close");
 
@@ -189,7 +194,10 @@ public class HttpServerHandler {
         _server.dispatchRequest(this, request);
     }
 
-    @SuppressWarnings("WeakerAccess")
+    /**
+     * 可重写此方法, 实现自定义解析Request的逻辑;
+     * @param request HttpRequest
+     */
     protected void handleHttpRequest(HttpServerRequest request) throws IOException {
         getResponse(request)
                 .setStatus(404)
@@ -197,7 +205,11 @@ public class HttpServerHandler {
                 .send();
     }
 
-    @SuppressWarnings("WeakerAccess")
+    /**
+     * 调用此方法,获取最基本的Response;
+     * @param httpRequest HttpRequest
+     * @return HttpResponse
+     */
     public HttpServerResponse getResponse(HttpServerRequest httpRequest) {
         HttpServerResponse serverResponse = new HttpServerResponse(this);
         serverResponse.protocolVer = httpRequest.protocolVer;
