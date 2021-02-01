@@ -32,12 +32,8 @@ public class AssetServer extends NIOHttpServer {
     private static NIOHttpServer _debugServer;
     private Context context;
 
-    public AssetServer(Context context) {
-        this(context, 55586);
-    }
-
     public AssetServer(Context context, int port) {
-        super(port);
+        this(context, null, port);
     }
 
     public AssetServer(Context context, @Nullable String addr, int port) {
