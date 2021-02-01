@@ -1,4 +1,4 @@
-package com.nioserver.http;
+package com.nioserver.model;
 
 import android.text.TextUtils;
 
@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class HttpRequest {
+public class Request {
 	public String method = "get";
 	public String schema = "http";
 	public String host;
@@ -31,7 +31,7 @@ public class HttpRequest {
 	public String toString() {
 		final StringBuilder urlBuilder = new StringBuilder();
 
-		HttpRequest request = this;
+		Request request = this;
 		urlBuilder.append(request.schema)
 			.append("://");
 
@@ -94,7 +94,7 @@ public class HttpRequest {
 		return buildQueryString(new StringBuilder(), form).toString();
 	}
 
-	public HttpRequest addQueryString(String key, String val) {
+	public Request addQueryString(String key, String val) {
 		if (queries == null) {
 			queries = new LinkedHashMap<String, String>();
 		}
@@ -123,7 +123,7 @@ public class HttpRequest {
 		return queries.containsKey(key);
 	}
 
-	public HttpRequest addHeaderParam(String key, String val) {
+	public Request addHeaderParam(String key, String val) {
 		if (header == null) {
 			header = new ArrayList<String>();
 		}
@@ -152,7 +152,7 @@ public class HttpRequest {
 		return  header;
 	}
 
-	public HttpRequest addFormParam(String key, String val) {
+	public Request addFormParam(String key, String val) {
 		if (form == null) {
 			form = new LinkedHashMap<String, String>();
 		}
@@ -181,16 +181,16 @@ public class HttpRequest {
 		return form.containsKey(key);
 	}
 
-	public HttpRequest makeClone() {
-		HttpRequest newRequest = makeCloneNoQueryString();
+	public Request makeClone() {
+		Request newRequest = makeCloneNoQueryString();
 		if (queries != null) {
 			newRequest.queries = (LinkedHashMap<String, String>) queries.clone();
 		}
 		return newRequest;
 	}
 
-	public HttpRequest makeCloneNoQueryString() {
-		HttpRequest newRequest = new HttpRequest();
+	public Request makeCloneNoQueryString() {
+		Request newRequest = new Request();
 		newRequest.method = method;
 		newRequest.schema = schema;
 		newRequest.host = host;

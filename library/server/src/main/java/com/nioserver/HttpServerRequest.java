@@ -1,6 +1,6 @@
 package com.nioserver;
 
-import com.nioserver.http.HttpRequest;
+import com.nioserver.model.Request;
 
 import java.util.HashMap;
 
@@ -9,7 +9,7 @@ import java.util.HashMap;
  * @since: 2020/11/26 21:22 <br>
  * @desc: Http Request.
  */
-public class HttpServerRequest extends HttpRequest {
+public class HttpServerRequest extends Request {
     // protocol version
     public String protocolVer;
     // request's body bytes

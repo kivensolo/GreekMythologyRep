@@ -1,16 +1,13 @@
-package com.nioserver.http;
+package com.nioserver.model;
 
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by hy on 2015/11/6.
- */
-public class HttpResponse {
+public class Response {
     public int code;
 	public String message;
 	public InputStream data;
 	public Map<String, List<String>> headers;
-	public HttpRequest request;
+	public Request request;
 }

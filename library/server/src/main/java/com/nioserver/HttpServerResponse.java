@@ -2,7 +2,7 @@ package com.nioserver;
 
 import android.text.TextUtils;
 
-import com.nioserver.http.HttpResponse;
+import com.nioserver.model.Response;
 import com.nioserver.utils.MemoryOutputStream;
 
 import java.io.IOException;
@@ -17,16 +17,16 @@ import java.util.Map;
  * @since: 2020/11/26 22:28 <br>
  * @desc:
  */
-public class HttpServerResponse extends HttpResponse {
+public class HttpServerResponse extends Response {
     public String protocolVer;
     public LinkedHashMap<String, String> headers = new LinkedHashMap<String, String>();
-    private NIOHttpServer.HttpServerHandler _handler;
+    private HttpServerHandler _handler;
     private MemoryOutputStream _outputStream;
     private InputStream _bodyStream;
     private Runnable _cleanup;
 
 
-    public HttpServerResponse(NIOHttpServer.HttpServerHandler handler) {
+    public HttpServerResponse(HttpServerHandler handler) {
         _handler = handler;
         _outputStream = new MemoryOutputStream(2048);
         _outputStream.reset(2048);
@@ -223,7 +223,7 @@ public class HttpServerResponse extends HttpResponse {
         return _bodyStream != null;
     }
 
-    public HttpResponse cleanBody() {
+    public Response cleanBody() {
         _outputStream.setDataSize(0);
         return this;
     }
