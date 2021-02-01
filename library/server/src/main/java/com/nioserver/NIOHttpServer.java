@@ -53,8 +53,6 @@ public class NIOHttpServer {
      */
     private int _localPort;
 
-    private Thread mAcceptor;
-
     public NIOHttpServer(String addr, int port) {
         initServer(addr, port);
     }
@@ -84,16 +82,13 @@ public class NIOHttpServer {
                 });
 
         //Thread of Acceptor.
-        mAcceptor = new Thread(workerGroup, "Acceptor") {
+        Thread mAcceptorWorker = new Thread(workerGroup, "Acceptor") {
             @Override
             public void run() {
                 doWork();
             }
         };
-    }
-
-    public void startUp(){
-        mAcceptor.start();
+        mAcceptorWorker.start();
     }
 
     /**
