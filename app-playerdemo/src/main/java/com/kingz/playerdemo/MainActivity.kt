@@ -6,7 +6,6 @@ import android.net.nsd.NsdServiceInfo
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_nsd.*
 import java.net.InetAddress
 
 /**
@@ -93,14 +92,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_nsd)
         nsdManager = getSystemService(Context.NSD_SERVICE) as NsdManager
 
-        // 扫描
-        btn_search.setOnClickListener {
-            discoverServices()
-        }
-        // 解析
-        btn_connect.setOnClickListener {
-            nsdManager.resolveService(mServiceInfo, resolveListener)
-        }
+//        // 扫描
+//        btn_search.setOnClickListener {
+//            discoverServices()
+//        }
+//        // 解析
+//        btn_connect.setOnClickListener {
+//            nsdManager.resolveService(mServiceInfo, resolveListener)
+//        }
     }
 
     /**
