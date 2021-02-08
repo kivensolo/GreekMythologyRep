@@ -8,18 +8,20 @@ import java.util.concurrent.Executors
 /**
  * @author cx
  */
-private val handler = Handler(Looper.getMainLooper())
+val handler = Handler(Looper.getMainLooper())
 private val coreSize = Runtime.getRuntime().availableProcessors() + 1
 
-private val fix: ExecutorService = Executors.newFixedThreadPool(coreSize)
-private val cache: ExecutorService = Executors.newCachedThreadPool()
+private val fixed: ExecutorService = Executors.newFixedThreadPool(coreSize)
+private val cached: ExecutorService = Executors.newCachedThreadPool()
 private val single: ExecutorService = Executors.newSingleThreadExecutor()
 private val scheduled: ExecutorService = Executors.newScheduledThreadPool(coreSize)
 
 /**
  * 切换到主线程
+ * inline: 函数内联
+ * crossinline 禁用非局部返回(non-local return)
  */
-fun <T> T.ktxRunOnUi(block: T.() -> Unit) {
+inline fun <T> T.RunOnUi(crossinline block: T.() -> Unit) {
     handler.post {
         block()
     }
@@ -28,7 +30,7 @@ fun <T> T.ktxRunOnUi(block: T.() -> Unit) {
 /**
  * 延迟delayMillis后切换到主线程
  */
-fun <T> T.ktxRunOnUiDelay(delayMillis: Long, block: T.() -> Unit) {
+fun <T> T.RunOnUiDelay(delayMillis: Long, block: T.() -> Unit) {
     handler.postDelayed({
         block()
     }, delayMillis)
@@ -37,7 +39,7 @@ fun <T> T.ktxRunOnUiDelay(delayMillis: Long, block: T.() -> Unit) {
 /**
  * 子线程执行 SingleThreadPool
  */
-fun <T> T.ktxRunOnBgSingle(block: T.() -> Unit) {
+fun <T> T.RunOnSingle(block: T.() -> Unit) {
     single.execute {
         block()
     }
@@ -46,8 +48,8 @@ fun <T> T.ktxRunOnBgSingle(block: T.() -> Unit) {
 /**
  * 子线程执行 FixedThreadPool
  */
-fun <T> T.ktxRunOnBgFix(block: T.() -> Unit) {
-    fix.execute {
+fun <T> T.RunOnFixed(block: T.() -> Unit) {
+    fixed.execute {
         block()
     }
 }
@@ -55,8 +57,8 @@ fun <T> T.ktxRunOnBgFix(block: T.() -> Unit) {
 /**
  * 子线程执行 CachedThreadPool
  */
-fun <T> T.ktxRunOnBgCache(block: T.() -> Unit) {
-    cache.execute {
+fun <T> T.RunOnCached(block: T.() -> Unit) {
+    cached.execute {
         block()
     }
 }
