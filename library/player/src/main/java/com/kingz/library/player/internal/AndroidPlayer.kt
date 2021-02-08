@@ -10,7 +10,7 @@ import android.view.Surface
 import android.view.SurfaceHolder
 import com.kingz.library.player.BasePlayer
 import com.kingz.library.player.IPlayer
-import com.kingz.utils.safeExecute
+import com.kingz.utils.runSafely
 
 /**
  * author：KingZ
@@ -45,7 +45,7 @@ class AndroidPlayer(context: Context?) : BasePlayer(), AndroidMediaPlayerListene
 
     override fun play() {
         super.play()
-        safeExecute({
+        runSafely({
             mInternalMediaPlayer?.start()
         }, {
             Log.e(TAG, "play error:" + it.message)
@@ -67,7 +67,7 @@ class AndroidPlayer(context: Context?) : BasePlayer(), AndroidMediaPlayerListene
 
     override fun pause() {
         super.pause()
-        safeExecute({
+        runSafely({
             mInternalMediaPlayer?.pause()
         }, {
             Log.e(TAG, "pause error:" + it.message)
@@ -175,7 +175,7 @@ class AndroidPlayer(context: Context?) : BasePlayer(), AndroidMediaPlayerListene
     }
 
     override fun seekTo(msec: Long) {
-        safeExecute({
+        runSafely({
             var seekTo = msec
             if (msec >= duration) {
                 seekTo = duration - SEEK_PROTECT_TIME_MS

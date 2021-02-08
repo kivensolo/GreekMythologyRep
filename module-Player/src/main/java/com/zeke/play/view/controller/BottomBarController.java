@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.kingz.utils.SafatyMethodKt;
+import com.kingz.utils.ktx.TimeUtilsKt;
 import com.module.tools.ViewUtils;
 import com.zeke.kangaroo.utils.TimeUtils;
 import com.zeke.module_player.R;
@@ -55,7 +55,7 @@ public class BottomBarController extends BaseController {
 
     public void setDuration(long duration) {
         if(isLiveMode()){
-            durationTimeView.setText(SafatyMethodKt.getSystemTime());
+            durationTimeView.setText(TimeUtilsKt.getSystemTime());
             seekBar.setMax(1);
         }else{
             durationTimeView.setText(TimeUtils.generateTime(duration));
