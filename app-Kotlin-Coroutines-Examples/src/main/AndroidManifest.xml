@@ -13,25 +13,12 @@
             android:supportsRtl="true"
             android:theme="@style/DemoTheme">
 
-        <activity
-                android:name="com.kingz.coroutines.demo.LoginActivity"
-                android:theme="@style/Theme.AppCompat.NoActionBar">
+        <activity android:name="com.kingz.coroutines.learn.CoroutinesDemosActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name="com.kingz.coroutines.learn.CoroutinesDemosActivity">
-            <intent-filter>
-<!--                <action android:name="android.intent.action.MAIN" />-->
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
-        <activity android:name="com.kingz.coroutines.demo.ChaptersActivity"
-                android:label="@string/chapters_activity"/>
 
         <activity
                 android:name="com.kingz.coroutines.learn.retrofit.single.SingleNetworkCallActivity"
