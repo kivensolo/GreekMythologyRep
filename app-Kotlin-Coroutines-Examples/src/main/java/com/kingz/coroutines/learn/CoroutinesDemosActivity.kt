@@ -23,39 +23,48 @@ class CoroutinesDemosActivity : AppCompatActivity() {
     }
 
     fun startSingleNetworkCallActivity(view: View) {
-        startActivity(Intent(this@CoroutinesDemosActivity, SingleNetworkCallActivity::class.java))
+        startActivity(Intent(this@CoroutinesDemosActivity,
+            SingleNetworkCallActivity::class.java))
     }
 
     fun startSeriesNetworkCallsActivity(view: View) {
-        startActivity(Intent(this@CoroutinesDemosActivity, SeriesNetworkCallsActivity::class.java))
+        startActivity(Intent(this@CoroutinesDemosActivity,
+            SeriesNetworkCallsActivity::class.java))
     }
 
     fun startParallelNetworkCallsActivity(view: View) {
-        startActivity(Intent(this@CoroutinesDemosActivity, ParallelNetworkCallsActivity::class.java))
+        startActivity(Intent(this@CoroutinesDemosActivity,
+            ParallelNetworkCallsActivity::class.java))
     }
 
     fun startRoomDatabaseActivity(view: View) {
-        startActivity(Intent(this@CoroutinesDemosActivity, RoomDBActivity::class.java))
+        startActivity(Intent(this@CoroutinesDemosActivity,
+            RoomDBActivity::class.java))
     }
 
     fun startTimeoutActivity(view: View) {
-        startActivity(Intent(this@CoroutinesDemosActivity, TimeoutActivity::class.java))
+        startActivity(Intent(this@CoroutinesDemosActivity,
+            TimeoutActivity::class.java))
     }
 
     fun startExceptionHandlerActivity(view: View) {
-        startActivity(Intent(this@CoroutinesDemosActivity, ExceptionHandlerActivity::class.java))
+        startActivity(Intent(this@CoroutinesDemosActivity,
+            ExceptionHandlerActivity::class.java))
     }
 
     fun startIgnoreErrorAndContinueActivity(view: View) {
-        startActivity(Intent(this@CoroutinesDemosActivity, IgnoreErrorAndContinueActivity::class.java))
+        startActivity(Intent(this@CoroutinesDemosActivity,
+            IgnoreErrorAndContinueActivity::class.java))
     }
 
     fun startLongRunningTaskActivity(view: View) {
-        startActivity(Intent(this@CoroutinesDemosActivity, LongRunningTaskActivity::class.java))
+        startActivity(Intent(this@CoroutinesDemosActivity,
+            LongRunningTaskActivity::class.java))
     }
 
     fun startTwoLongRunningTasksActivity(view: View) {
-        startActivity(Intent(this@CoroutinesDemosActivity, TwoLongRunningTasksActivity::class.java))
+        startActivity(Intent(this@CoroutinesDemosActivity,
+            TwoLongRunningTasksActivity::class.java))
     }
 
 }
