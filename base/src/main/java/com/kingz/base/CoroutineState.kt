@@ -1,8 +1,6 @@
 package com.kingz.base
 
 /**
- * @author zeke.wang
- * @date 2020/7/9
  * 协程状态
  */
 enum class CoroutineState {

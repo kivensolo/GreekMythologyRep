@@ -2,6 +2,7 @@ package com.kingz.base
 
 import android.util.Log
 import androidx.lifecycle.Observer
+import kotlinx.coroutines.CoroutineScope
 
 abstract class BaseVMActivity<BR : BaseRepository,
         VM : BaseViewModel<BR>> : BaseSimpleActivity() {
@@ -42,15 +43,15 @@ abstract class BaseVMActivity<BR : BaseRepository,
         })
     }
 
-    fun launchMain(block: Block) {
+    fun launchMain(block: suspend CoroutineScope.() -> Unit) {
         viewModel.launchMain { block() }
     }
 
-    fun launchIO(block: Block) {
+    fun launchIO(block: suspend CoroutineScope.() -> Unit) {
         viewModel.launchIO { block() }
     }
 
-    fun launchDefault(block: Block) {
+    fun launchDefault(block: suspend CoroutineScope.() -> Unit) {
         viewModel.launchDefault { block() }
     }
 }

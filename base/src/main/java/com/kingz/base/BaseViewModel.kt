@@ -3,6 +3,7 @@ package com.kingz.base
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kingz.base.response.BaseResponse
 import com.zeke.kangaroo.utils.ZLog
 import kotlinx.coroutines.*
 
@@ -27,6 +28,10 @@ abstract class BaseViewModel<T : BaseRepository> : ViewModel() {
     /**
      * 状态管理的LiveData
      * 可用于判断网络请求状态等
+     * [CoroutineState.START]
+     * [CoroutineState.REFRESH]
+     * [CoroutineState.FINISH]
+     * [CoroutineState.ERROR]
      */
     val statusLiveData: MutableLiveData<CoroutineState> by lazy {
         MutableLiveData<CoroutineState>()
@@ -41,7 +46,7 @@ abstract class BaseViewModel<T : BaseRepository> : ViewModel() {
         refresh: Boolean = true,
         netBlock: NetBlock<T>,
         error: Error? = null,
-        success: Success<T>) {
+        success: (BaseResponse<T>) -> Unit ){
         viewModelScope.launch {
             try {
                 if (refresh) {
@@ -58,25 +63,25 @@ abstract class BaseViewModel<T : BaseRepository> : ViewModel() {
     }
 
 
-    fun launchMain(refresh: Boolean = true, block: Block) {
+    fun launchMain(refresh: Boolean = true, block: suspend CoroutineScope.() -> Unit) {
         viewModelScope.launch(Dispatchers.Main) {
             exeBlock(refresh, block)
         }
     }
 
-    fun launchIO(refresh: Boolean = true, block: Block) {
+    fun launchIO(refresh: Boolean = true, block: suspend CoroutineScope.() -> Unit) {
         viewModelScope.launch(Dispatchers.IO) {
             exeBlock(refresh, block)
         }
     }
 
-    fun launchDefault(refresh: Boolean = true, block: Block) {
+    fun launchDefault(refresh: Boolean = true, block: suspend CoroutineScope.() -> Unit) {
         viewModelScope.launch(Dispatchers.Default) {
             exeBlock(refresh, block)
         }
     }
 
-    private suspend fun exeBlock(refresh: Boolean, block: Block) {
+    private suspend fun exeBlock(refresh: Boolean, block: suspend CoroutineScope.() -> Unit) {
         coroutineScope {
 
             // FIXME java.lang.IllegalStateException: Cannot invoke setValue on a background thread
@@ -96,11 +101,11 @@ abstract class BaseViewModel<T : BaseRepository> : ViewModel() {
         }
     }
 
-    suspend fun switchToIO(block: Block) {
+    suspend fun switchToIO(block: suspend CoroutineScope.() -> Unit) {
         withContext(Dispatchers.IO) { block() }
     }
 
-    suspend fun switchToMain(block: Block) {
+    suspend fun switchToMain(block: suspend CoroutineScope.() -> Unit) {
         withContext(Dispatchers.Main) { block() }
     }
 
