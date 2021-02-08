@@ -32,9 +32,13 @@ class IgnoreErrorAndContinueViewModel(
         viewModelScope.launch {
             users.postValue(ResponseResult.loading(null))
             try {
-                // supervisorScope is needed, so that we can ignore error and continue
-                // here, more than two child jobs are running in parallel under a supervisor,
-                // one child job gets failed, we can continue with other.
+                /**
+                 * supervisorScope is needed, so that we can ignore error and continue
+                 * here, more than two child jobs are running in parallel under a supervisor,
+                 * one child job gets failed, we can continue with other.
+                 * 如果有两个及以上的子Job在一个supervisor下并行运行，
+                 * 如果一个子job败，我们可以继续其他的子job。
+                 */
                 supervisorScope {
                     // supervisorScope 可以保证某个job失败，其他job可以继续执行。
                     val usersFromApiDeferred = async { apiHelper.getUsersWithError() }

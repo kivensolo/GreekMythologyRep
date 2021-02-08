@@ -22,7 +22,7 @@ class TwoLongRunningTasksViewModel(
         viewModelScope.launch {
             status.postValue(ResponseResult.loading(null))
             try {
-                // do long running tasks   async{} + await()
+                // 异步执行多个task, 并等待他们执行完毕   async{} + await()
                 val resultOneDeferred = async { doLongRunningTaskOne() }
                 val resultTwoDeferred = async { doLongRunningTaskTwo() }
                 val combinedResult = resultOneDeferred.await() + resultTwoDeferred.await()
