@@ -21,9 +21,9 @@ uploadArchives {
 
 dependencies {
     //gradle sdk
-    compile gradleApi()
+    implementation gradleApi()
     //groovy sdk
-    compile localGroovy()
+    implementation localGroovy()
 }
 
 
