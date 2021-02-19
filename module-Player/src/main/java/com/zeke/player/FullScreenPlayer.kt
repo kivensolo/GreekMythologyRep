@@ -1,10 +1,13 @@
 package com.zeke.player
 
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.kingz.module.common.bean.MediaParams
 import com.kingz.module.common.router.RPath
 import com.zeke.module_player.R
+import com.zeke.module_player.databinding.FullPlayerPageBinding
 import com.zeke.play.PlayerActivity
 import com.zeke.play.fragment.PlayFragment
 
@@ -16,7 +19,7 @@ import com.zeke.play.fragment.PlayFragment
 @Route(path = RPath.PAGE_PLAYER)
 class FullScreenPlayer : PlayerActivity() {
     private var playFragment: PlayFragment? = null
-
+    private lateinit var fullPlayerPageBinding: FullPlayerPageBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (savedInstanceState == null) {
@@ -25,7 +28,12 @@ class FullScreenPlayer : PlayerActivity() {
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.full_player_page
+        return INVALID_LAYOUT_ID
+    }
+
+    override fun getLayoutView(): View {
+        fullPlayerPageBinding = FullPlayerPageBinding.inflate(LayoutInflater.from(this))
+        return fullPlayerPageBinding.root
     }
 
     override fun initRotation() {}

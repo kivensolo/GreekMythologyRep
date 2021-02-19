@@ -1,11 +1,13 @@
 package com.zeke.play;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
@@ -25,6 +27,7 @@ public abstract class PlayerActivity extends BaseActivity {
     protected static final String TAG_VOD_PLAY = "vod_play";
     protected static final String TAG_VOD_INFO = "vod_info";
     protected static final String TAG_VOD_DETAIL = "vod_detail";
+    protected static final int INVALID_LAYOUT_ID = -1;
 
     //播放部分的layout params
     protected LinearLayout.LayoutParams portraitParams;
@@ -34,11 +37,19 @@ public abstract class PlayerActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         keepScreenOn();
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
-        setContentView(getLayoutId());
+        if(getLayoutId() != INVALID_LAYOUT_ID){
+            setContentView(getLayoutId());
+        }else{
+            setContentView(getLayoutView());
+        }
         initRotation();
     }
 
     public abstract int getLayoutId();
+
+    protected View getLayoutView(){
+        return null;
+    }
 
     /**
      * 保存屏幕常亮
@@ -78,6 +89,7 @@ public abstract class PlayerActivity extends BaseActivity {
         }
     }
 
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onDestroy() {
         super.onDestroy();
