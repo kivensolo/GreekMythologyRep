@@ -15,9 +15,7 @@ import com.zeke.kangaroo.utils.ZLog
  * description：首页数据的Repository
  */
 class HomeRepository : BaseRepository() {
-    /**
-     * 进行文章列表获取
-     */
+    /** 进行文章列表获取 */
     suspend fun getArticals(pageId: Int = 0): WanAndroidResponse<ArticleData> {
         return ApiServiceUtil.getApiService<WanAndroidApiService>().requestArticles(pageId)
     }

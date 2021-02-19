@@ -68,6 +68,7 @@ class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>() {
 
         viewModel.articalLiveData.observe(this, Observer {
             launchIO {
+                //TODO 异常情况 it为null的处理
                 val articleList = it.datas
                 ZLog.d("articalLiveData observed. ${articleList?.size}")
                 //当前数据为空时
@@ -92,8 +93,8 @@ class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>() {
                                     addData(articleList)
                                 } else {
                                     val defItemCount = getDefItemCount()
-                                    addData(defItemCount - 1, articleList)
-                                    //FIXME 完成数据插入后，UI不整体刷新的效果
+                                    addData(defItemCount, articleList)
+                                    //FIXME 第一次完成数据插入后，UI不整体刷新的效果
                                 }
                             }
                         }

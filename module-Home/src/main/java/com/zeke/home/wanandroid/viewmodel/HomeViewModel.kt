@@ -34,6 +34,7 @@ class HomeViewModel : BaseViewModel<HomeRepository>() {
                 val result = repository.getArticals(pageId)
                 articalLiveData.postValue(result.data)
             } catch (e: Exception) {
+                //java.net.SocketTimeoutException: timeout
                 ZLog.e("getArticalData on exception: ${e.printStackTrace()}")
                 articalLiveData.postValue(null)
             }
