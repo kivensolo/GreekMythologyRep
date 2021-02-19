@@ -194,8 +194,10 @@ class ExoPlayer(context: Context) : BasePlayer() {
         setSelectedTrack(RendererType.AUDIO, audioTrackIndex, 0)
     }
 
-    override fun setDisplayHolder(holder: SurfaceHolder) {
-        player?.setVideoSurfaceHolder(holder)
+    override fun setDisplayHolder(holder: SurfaceHolder?) {
+        if(holder != null){
+            player?.setVideoSurfaceHolder(holder)
+        }
     }
 
     /**
