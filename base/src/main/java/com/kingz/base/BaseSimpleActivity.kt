@@ -21,10 +21,11 @@ import kotlinx.coroutines.withContext
 abstract class BaseSimpleActivity : AppCompatActivity() {
 
     private var progress: View? = null
+    var INVALID_LAYOUT_ID:Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(getContentView())
+        initContentView()
         initViewModel()
         val actionBar = supportActionBar
         actionBar?.setDisplayShowTitleEnabled(false)
@@ -34,10 +35,21 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
         initData(savedInstanceState)
     }
 
+    private fun initContentView() {
+        val contentLayout = getContentLayout()
+        if (contentLayout != INVALID_LAYOUT_ID) {
+            setContentView(contentLayout)
+        } else {
+            setContentView(getContentView())
+        }
+    }
+
     /**
      * Get layout id.
      */
-    abstract fun getContentView(): Int
+    abstract fun getContentLayout(): Int
+
+    open fun getContentView():View? {return null}
 
     /**
      * Init immersion style bar.

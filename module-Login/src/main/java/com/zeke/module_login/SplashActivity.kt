@@ -40,7 +40,7 @@ class SplashActivity : BaseVMActivity<LoginRepository, LoginViewModel>(), View.O
 
     private var inputType = InputType.NONE
 
-    override fun getContentView() = R.layout.splash_activity
+    override fun getContentLayout() = R.layout.splash_activity
 
 //    override fun createViewModel(): LoginViewModel {
 //        return ViewModelProvider(this)[LoginViewModel::class.java]

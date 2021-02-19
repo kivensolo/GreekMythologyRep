@@ -62,7 +62,7 @@ class WebActivity : BaseVMActivity<WanAndroidRepository, WanAndroidViewModel>(),
     private var toolbarrightImg: ImageView?= null
     private var titleTextView: TextView?= null
 
-    override fun getContentView(): Int {
+    override fun getContentLayout(): Int {
         return R.layout.web_activity
     }
 

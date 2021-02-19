@@ -54,7 +54,7 @@ class HomeActivity : BaseVMActivity<WanAndroidRepository, WanAndroidViewModel>()
         ViewModelFactory.build { WanAndroidViewModel() }
     }
 
-    override fun getContentView() = R.layout.activity_main
+    override fun getContentLayout(): Int = R.layout.activity_main
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
