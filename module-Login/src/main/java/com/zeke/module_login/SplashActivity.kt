@@ -62,7 +62,6 @@ class SplashActivity : BaseVMActivity<LoginRepository, LoginViewModel>(), View.O
                     showToast("登陆失败:${loginData.errorMsg}")
                 } else {
                     showToast("欢迎登陆!${(loginData.data as Data).nickname}")
-                    // TODO 进行首页跳转
                     saveUserInfo(loginData)
                     openMainPage()
                 }
@@ -77,7 +76,6 @@ class SplashActivity : BaseVMActivity<LoginRepository, LoginViewModel>(), View.O
                     showToast("注册异常:${registerData.errorMsg}")
                 } else {
                     showToast("注册成功!")
-                    //TODO 进行默认用户登录操作
                 }
             }
         })

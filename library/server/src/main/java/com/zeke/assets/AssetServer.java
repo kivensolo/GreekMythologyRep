@@ -65,7 +65,6 @@ public class AssetServer extends NIOHttpServer {
             if(TextUtils.equals(path,"/")){
                 response = getWebResource(request, "/index.html");
             } else if (path != null && path.startsWith("/api/")) {
-                //TODO Xul相关逻辑
                 if ("/api/list-pages".equals(path)) {
                     response = listPages(request);
                 }else{

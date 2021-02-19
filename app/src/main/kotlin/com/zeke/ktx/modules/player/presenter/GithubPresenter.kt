@@ -11,7 +11,6 @@ import com.zeke.ktx.modules.player.contract.GithubContract
  */
 class GithubPresenter:GithubContract.Presenter{
     override fun getUserInfo(account: String) {
- // TODO
     }
 
     override fun getUserRepos(account: String) {

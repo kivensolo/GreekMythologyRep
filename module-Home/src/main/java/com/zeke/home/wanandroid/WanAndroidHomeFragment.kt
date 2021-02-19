@@ -23,6 +23,8 @@ import com.kingz.module.wanandroid.WADConstants
 import com.kingz.module.wanandroid.bean.Article
 import com.kingz.module.wanandroid.bean.BannerItem
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
+import com.scwang.smart.refresh.layout.api.RefreshLayout
+import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import com.youth.banner.Banner
 import com.youth.banner.indicator.CircleIndicator
 import com.youth.banner.transformer.ScaleInTransformer
@@ -48,8 +50,9 @@ class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>() {
     private var swipeRefreshLayout: SmartRefreshLayout? = null
 
     // 当前页数
-    private var mCurPage = 1
+    private var mCurPage = 0
     private var mPageCount = 0
+    private var isLoadingMore = false
 
     private var bannerUrls: MutableList<String> = ArrayList()
     private var bannerTitles: MutableList<String> = ArrayList()
@@ -62,7 +65,6 @@ class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>() {
         super.initViewModel()
 
         viewModel.articalLiveData.observe(this, Observer {
-            ZLog.d("articalLiveData onobser  Current thread= ${Thread.currentThread().name}")
             launchIO {
                 val articleList = it.datas
                 //当前数据为空时
@@ -76,10 +78,19 @@ class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>() {
                 val currentFirstData = articleAdapter?.getItem(0)
                 if (it?.datas != null) {
                     swipeRefreshLayout?.finishRefresh()
-                    if (currentFirstData?.id != articleList!![0].id) {  //当前第一个数据不同于接口第一个，表示有新数据
+                    if (currentFirstData?.id != articleList!![0].id) {
+                        //当前第一个数据不同于接口第一个，表示有新数据
                         ZLog.d("Has new article data.")
                         withContext(Dispatchers.Main) {
-                            articleAdapter?.addData(articleList)
+                            articleAdapter?.apply {
+                                if (!isLoadingMore) {
+                                    addData(articleList)
+                                } else {
+                                    isLoadingMore = false
+                                    val defItemCount = getDefItemCount()
+                                    addData(defItemCount - 1, articleList)
+                                }
+                            }
                         }
                     } else {
                         withContext(Dispatchers.Main) {
@@ -127,10 +138,8 @@ class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>() {
                         openWeb(articleAdapter?.getItem(position))
                     }
                 }
-                //TODO loadMore数据加载
-//                addLoadMoreModule()
             }
-            viewModel.getArticalData(0)
+            requestArticalData(0)
         }
         mRecyclerView.adapter = articleAdapter
     }
@@ -144,14 +153,19 @@ class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>() {
     private fun initSwipeRefreshLayout() {
         swipeRefreshLayout = rootView?.findViewById(R.id.swipeRefreshLayout)!!
         swipeRefreshLayout?.apply {
-            setOnRefreshListener {
-                fireVibrate()
-                viewModel.getArticalData(0)
-            }
-            setOnLoadMoreListener {
-                finishLoadMore(2000/*,false*/)//传入false表示加载失败
-                //TODO 上拉加载后续的数据
-            }
+            setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
+                override fun onRefresh(refreshLayout: RefreshLayout) {
+                    fireVibrate()
+                    requestArticalData(0)
+                }
+
+                override fun onLoadMore(refreshLayout: RefreshLayout) {
+                    if(!isLoadingMore){
+                        requestArticalData(mPageCount)
+                    }
+//                finishLoadMore(2000/*,false*/)//传入false表示加载失败
+                }
+            })
         }
     }
 
@@ -170,8 +184,14 @@ class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>() {
         }
     }
 
+    private fun requestArticalData(pageId: Int){
+        ZLog.d("requestArticalData pageID: $pageId")
+        mCurPage = pageId
+        mPageCount = if(mCurPage > mPageCount) mCurPage else mPageCount++
+        viewModel.getArticalData(pageId)
+    }
 
-    fun openWeb(data: Article?) {
+    private fun openWeb(data: Article?) {
         ARouter.getInstance()
             .build(RPath.PAGE_WEB)
             .withString(WADConstants.KEY_URL, data?.link)

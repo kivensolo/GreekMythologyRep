@@ -24,17 +24,13 @@ abstract class BaseVMFragment<V : BaseRepository, T : BaseViewModel<V>>
                     }
                     CoroutineState.REFRESH -> {//协程开始&&进度菊花圈
                         Log.d("coroutine-status:", "---> REFRESH")
-                        activity?.run {
-                            //TODO showloading
-                        }
+                        activity?.run {}
                     }
                     CoroutineState.FINISH -> {//协程结束
                         Log.d("coroutine-status:", "<--- FINISH")
-                        //TODO Dismiss loading
                     }
                     CoroutineState.ERROR -> {//协程异常
                         Log.d("coroutine-status:", "<--- ERROR")
-                        //TODO Dismiss loading
                     }
                 }
             }

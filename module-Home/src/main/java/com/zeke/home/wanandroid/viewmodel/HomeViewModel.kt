@@ -28,6 +28,7 @@ class HomeViewModel : BaseViewModel<HomeRepository>() {
 
     fun getArticalData(pageId: Int) {
         ZLog.d("getArticalData pageId=$pageId")
+        //后续 增加异常情况下延迟重试逻辑
         launchDefault {
             try {
                 val result = repository.getArticals(pageId)
