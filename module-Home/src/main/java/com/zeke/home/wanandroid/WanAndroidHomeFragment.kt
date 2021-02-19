@@ -41,6 +41,8 @@ import java.util.*
 
 /**
  * 首页热门推荐(玩android)的Fragemnt
+ * TODO swipeRefreshLayout 增加侧边栏滑动条
+ * TODO 状态通过swipeRefreshLayout内部状态判断
  */
 class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>() {
 
@@ -67,6 +69,7 @@ class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>() {
         viewModel.articalLiveData.observe(this, Observer {
             launchIO {
                 val articleList = it.datas
+                ZLog.d("articalLiveData observed. ${articleList?.size}")
                 //当前数据为空时
                 if(articleAdapter?.getDefItemCount() == 0 && it?.datas != null){
                     withContext(Dispatchers.Main) {
@@ -74,21 +77,23 @@ class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>() {
                     }
                     return@launchIO
                 }
+                swipeRefreshLayout?.apply{
+                    if(isLoadingMore) finishLoadMore() else finishRefresh()
+                }
                 // 数据非空时
                 val currentFirstData = articleAdapter?.getItem(0)
                 if (it?.datas != null) {
-                    swipeRefreshLayout?.finishRefresh()
                     if (currentFirstData?.id != articleList!![0].id) {
                         //当前第一个数据不同于接口第一个，表示有新数据
-                        ZLog.d("Has new article data.")
+                        ZLog.d("Has new article data. <------")
                         withContext(Dispatchers.Main) {
                             articleAdapter?.apply {
                                 if (!isLoadingMore) {
                                     addData(articleList)
                                 } else {
-                                    isLoadingMore = false
                                     val defItemCount = getDefItemCount()
                                     addData(defItemCount - 1, articleList)
+                                    //FIXME 完成数据插入后，UI不整体刷新的效果
                                 }
                             }
                         }
@@ -102,6 +107,7 @@ class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>() {
                         Toast.makeText(context, "数据请求异常", Toast.LENGTH_SHORT).show()
                     }
                 }
+                isLoadingMore = false
             }
         })
 
@@ -155,12 +161,15 @@ class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>() {
         swipeRefreshLayout?.apply {
             setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
                 override fun onRefresh(refreshLayout: RefreshLayout) {
+                    ZLog.d("onRefresh")
                     fireVibrate()
                     requestArticalData(0)
                 }
 
                 override fun onLoadMore(refreshLayout: RefreshLayout) {
+                    ZLog.d("onLoadMore mPageCount = $mPageCount")
                     if(!isLoadingMore){
+                        isLoadingMore = true
                         requestArticalData(mPageCount)
                     }
 //                finishLoadMore(2000/*,false*/)//传入false表示加载失败
@@ -184,10 +193,13 @@ class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>() {
         }
     }
 
+    /**
+     * 通过index请求对应页数文章
+     */
     private fun requestArticalData(pageId: Int){
-        ZLog.d("requestArticalData pageID: $pageId")
+        ZLog.d("requestArticalData page index = $pageId")
         mCurPage = pageId
-        mPageCount = if(mCurPage > mPageCount) mCurPage else mPageCount++
+        mPageCount = if(mCurPage > mPageCount) mCurPage else ++mPageCount
         viewModel.getArticalData(pageId)
     }
 
