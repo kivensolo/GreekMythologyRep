@@ -3,6 +3,7 @@ package com.kingz.base
 import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 abstract class BaseVMFragment<V : BaseRepository, T : BaseViewModel<V>>
@@ -37,7 +38,7 @@ abstract class BaseVMFragment<V : BaseRepository, T : BaseViewModel<V>>
         })
     }
 
-    fun launch(blockCode: Block) {
+    fun launch(blockCode: suspend CoroutineScope.() -> Unit) {
         lifecycleScope.launch {
             try {
                 blockCode()
@@ -47,15 +48,15 @@ abstract class BaseVMFragment<V : BaseRepository, T : BaseViewModel<V>>
         }
     }
 
-    fun launchMain(block: Block) {
+    fun launchMain(block: suspend CoroutineScope.() -> Unit) {
         viewModel.launchMain { block() }
     }
 
-    fun launchIO(block: Block) {
+    fun launchIO(block: suspend CoroutineScope.() -> Unit) {
         viewModel.launchIO { block() }
     }
 
-    fun launchDefault(block: Block) {
+    fun launchDefault(block: suspend CoroutineScope.() -> Unit) {
         viewModel.launchDefault { block() }
     }
 }

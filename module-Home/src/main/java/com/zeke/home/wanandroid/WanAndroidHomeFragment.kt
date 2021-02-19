@@ -98,6 +98,7 @@ class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>() {
                                 }
                             }
                         }
+
                     } else {
                         withContext(Dispatchers.Main) {
                             Toast.makeText(context, "当前数据已是最新", Toast.LENGTH_SHORT).show()
