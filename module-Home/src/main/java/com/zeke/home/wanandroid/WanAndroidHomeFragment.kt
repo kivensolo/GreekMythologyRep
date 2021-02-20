@@ -6,6 +6,7 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.text.Html
 import android.view.LayoutInflater
+import android.view.ViewStub
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.fragment.app.viewModels
@@ -42,8 +43,10 @@ import java.util.*
 
 /**
  * 首页热门推荐(玩android)的Fragemnt
- * TODO swipeRefreshLayout 增加侧边栏滑动条
- * TODO 状态通过swipeRefreshLayout内部状态判断
+ * TODO 功能：swipeRefreshLayout 增加侧边栏滑动条
+ * TODO 优化: 状态通过swipeRefreshLayout内部状态判断
+ *
+ * TODO 功能：增加FloatingActionButton的现实和隐藏
  */
 class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>() {
 
@@ -166,9 +169,37 @@ class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>() {
 
     override fun initView(savedInstanceState: Bundle?) {
         mRecyclerView = rootView?.findViewById(R.id.recycler_view) as RecyclerView
-        mRecyclerView.isVerticalScrollBarEnabled = true
-        mRecyclerView.layoutManager = LinearLayoutManager(context)
+        mRecyclerView.apply {
+            isVerticalScrollBarEnabled = true
+            layoutManager = LinearLayoutManager(context)
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    super.onScrollStateChanged(recyclerView, newState)
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+//                        if (lastItemPosition + 1 == lm.getItemCount()) {
+//                            //Log.d(TAG, "我在加载更多");
+//                            mCurrentStart++;
+//                            loadMore();
+//                        }
+                    }
+                }
+
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                }
+            })
+        }
         initSwipeRefreshLayout()
+        activity?.findViewById<ViewStub>(R.id.fbtn_go_top)
+            ?.inflate()
+            ?.setOnClickListener{
+             Toast.makeText(
+                context,
+                resources.getString(R.string.article_tag_top),
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+//        activity?.findViewById<View>(R.id.app_fab_btn)?
     }
 
     private fun initSwipeRefreshLayout() {

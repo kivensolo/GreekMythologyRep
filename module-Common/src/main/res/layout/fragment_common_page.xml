@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:layout_behavior="com.zeke.home.wanandroid.ScrollAwareFABBehavior">
 
     <!-- srlEnableLoadMoreWhenContentNotFull=“false” 取消内容不满一页时开启上拉加载功能-->
 
@@ -51,14 +52,11 @@
     </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
     <ViewStub
-        android:id="@+id/load_state"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <ViewStub
         android:id="@+id/fbtn_go_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inflatedId="@+id/app_fab_btn" />
+        android:inflatedId="@+id/app_fab_btn"
+        android:layout="@layout/app_floating_action_button"/>
 
-</FrameLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

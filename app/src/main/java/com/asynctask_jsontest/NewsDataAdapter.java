@@ -43,7 +43,7 @@ public class NewsDataAdapter extends BaseAdapter implements AbsListView.OnScroll
         for (int i = 0; i < mList.size(); i++) {
             URLS[i] = mList.get(i).newspictureUrl;
         }
-        //******** 注册滚动监听事件 不然onScrollStateChanged这些方法buuhi被调用*********
+        //******** 注册滚动监听事件 不然onScrollStateChanged这些方法不会被调用*********
         listView.setOnScrollListener(this);
     }
 
