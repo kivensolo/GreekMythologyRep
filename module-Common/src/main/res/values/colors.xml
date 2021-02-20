@@ -210,8 +210,8 @@
     <color name="tab_bg">#30343c</color>
     <!--Hub 主题颜色-->
     <color name="hub_white">#ffe8e8e8</color>
-    <color name="hub_yellow">#F79817</color>
-    <color name="hub_yellow_light">#F9BA62</color>
+    <color name="hub_yellow">#CC9817</color>
+    <color name="hub_yellow_light">#CCBA62</color>
 
 
     <color name="dialog_text">#5f5f5f</color>

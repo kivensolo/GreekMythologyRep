@@ -6,7 +6,9 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.text.Html
 import android.view.LayoutInflater
+import android.view.ViewStub
 import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
@@ -41,8 +43,10 @@ import java.util.*
 
 /**
  * 首页热门推荐(玩android)的Fragemnt
- * TODO swipeRefreshLayout 增加侧边栏滑动条
- * TODO 状态通过swipeRefreshLayout内部状态判断
+ * TODO 功能：swipeRefreshLayout 增加侧边栏滑动条
+ * TODO 优化: 状态通过swipeRefreshLayout内部状态判断
+ *
+ * TODO 功能：增加FloatingActionButton的现实和隐藏
  */
 class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>() {
 
@@ -66,20 +70,39 @@ class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>() {
     override fun initViewModel() {
         super.initViewModel()
 
+        obServArticalLiveData()
+        viewModel.bannerLiveData.observe(this, Observer { result ->
+            ZLog.d("Banner data onChanged() data size = " + result.data?.size)
+            bannerUrls.clear()
+            bannerTitles.clear()
+            result.data?.forEach { item ->
+                bannerUrls.add(item.imagePath)
+                bannerTitles.add(Html.fromHtml(item.title).toString())
+            }
+            banner?.apply {
+                setDatas(result.data)
+            }
+        })
+    }
+
+    /**
+     * 文章数据观察回调
+     */
+    private fun obServArticalLiveData() {
         viewModel.articalLiveData.observe(this, Observer {
             launchIO {
                 //TODO 异常情况 it为null的处理
                 val articleList = it.datas
-                ZLog.d("articalLiveData observed. ${articleList?.size}")
+                ZLog.d("articalLiveData onObserved.  dataSize = ${articleList?.size};")
                 //当前数据为空时
-                if(articleAdapter?.getDefItemCount() == 0 && it?.datas != null){
+                if (articleAdapter?.getDefItemCount() == 0 && it?.datas != null) {
                     withContext(Dispatchers.Main) {
                         articleAdapter?.addData(articleList!!)
                     }
                     return@launchIO
                 }
-                swipeRefreshLayout?.apply{
-                    if(isLoadingMore) finishLoadMore() else finishRefresh()
+                swipeRefreshLayout?.apply {
+                    if (isLoadingMore) finishLoadMore() else finishRefresh()
                 }
                 // 数据非空时
                 val currentFirstData = articleAdapter?.getItem(0)
@@ -94,37 +117,29 @@ class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>() {
                                 } else {
                                     val defItemCount = getDefItemCount()
                                     addData(defItemCount, articleList)
-                                    //FIXME 第一次完成数据插入后，UI不整体刷新的效果
                                 }
                             }
                         }
 
                     } else {
-                        withContext(Dispatchers.Main) {
-                            Toast.makeText(context, "当前数据已是最新", Toast.LENGTH_SHORT).show()
-                        }
+                        showToast(R.string.artical_latest)
                     }
                 } else {
-                    withContext(Dispatchers.Main) {
-                        Toast.makeText(context, "数据请求异常", Toast.LENGTH_SHORT).show()
-                    }
+                    showToast(R.string.exception_request_data)
                 }
                 isLoadingMore = false
             }
         })
+    }
 
-        viewModel.bannerLiveData.observe(this, Observer { result ->
-            ZLog.d("Banner data onChanged() data size = " + result.data?.size)
-            bannerUrls.clear()
-            bannerTitles.clear()
-            result.data?.forEach { item ->
-                bannerUrls.add(item.imagePath)
-                bannerTitles.add(Html.fromHtml(item.title).toString())
-            }
-            banner?.apply {
-                setDatas(result.data)
-            }
-        })
+    private suspend fun showToast(@StringRes id:Int) {
+        withContext(Dispatchers.Main) {
+            Toast.makeText(
+                context,
+                resources.getString(id),
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 
     override fun onViewCreated() {
@@ -154,8 +169,37 @@ class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>() {
 
     override fun initView(savedInstanceState: Bundle?) {
         mRecyclerView = rootView?.findViewById(R.id.recycler_view) as RecyclerView
-        mRecyclerView.layoutManager = LinearLayoutManager(context)
+        mRecyclerView.apply {
+            isVerticalScrollBarEnabled = true
+            layoutManager = LinearLayoutManager(context)
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    super.onScrollStateChanged(recyclerView, newState)
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+//                        if (lastItemPosition + 1 == lm.getItemCount()) {
+//                            //Log.d(TAG, "我在加载更多");
+//                            mCurrentStart++;
+//                            loadMore();
+//                        }
+                    }
+                }
+
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                }
+            })
+        }
         initSwipeRefreshLayout()
+        activity?.findViewById<ViewStub>(R.id.fbtn_go_top)
+            ?.inflate()
+            ?.setOnClickListener{
+             Toast.makeText(
+                context,
+                resources.getString(R.string.article_tag_top),
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+//        activity?.findViewById<View>(R.id.app_fab_btn)?
     }
 
     private fun initSwipeRefreshLayout() {

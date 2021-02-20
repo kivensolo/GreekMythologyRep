@@ -40,6 +40,19 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+    <style name="recycler_vertical_style">
+        <item name="android:orientation">vertical</item>
+        <item name="android:scrollbars">vertical</item>
+        <item name="android:scrollbarStyle">insideOverlay</item>
+        <item name="android:scrollbarSize">3dp</item>
+        <item name="android:fadeScrollbars">true</item>
+        <item name="android:scrollbarFadeDuration">500</item>
+<!--        <item name="android:overScrollMode">never</item>-->
+        <item name="android:scrollbarThumbVertical">@drawable/scrollbar_vertical_thumb</item>
+        <!-- 滚动条不显示的解决办法,添加背景色 -->
+        <item name="android:background">@color/transparent</item>
+    </style>
+
     <style name="custom_tab_layout_style" parent="AppBaseTheme">
         <item name="textAllCaps">false</item>
         <item name="android:textSize">15sp</item>
