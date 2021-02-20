@@ -769,7 +769,7 @@ public class ShadowLayout extends FrameLayout {
         }
 
         try {
-            //默认是显示
+            //默认显示
             isShowShadow = !attr.getBoolean(R.styleable.ShadowLayout_shadowHidden, false);
             leftShow = !attr.getBoolean(R.styleable.ShadowLayout_shadowHiddenLeft, false);
             rightShow = !attr.getBoolean(R.styleable.ShadowLayout_shadowHiddenRight, false);
@@ -780,23 +780,9 @@ public class ShadowLayout extends FrameLayout {
             mCornerRadius_leftBottom = attr.getDimension(R.styleable.ShadowLayout_cornerRadius_leftBottom, -1);
             mCornerRadius_rightTop = attr.getDimension(R.styleable.ShadowLayout_cornerRadius_rightTop, -1);
             mCornerRadius_rightBottom = attr.getDimension(R.styleable.ShadowLayout_cornerRadius_rightBottom, -1);
+            initShadowLimit(attr);
+            initShadowOffset(attr);
 
-            //默认扩散区域宽度
-            mShadowLimit = attr.getDimension(R.styleable.ShadowLayout_shadowLimit, 0);
-            if (mShadowLimit == 0) {
-                //如果阴影没有设置阴影扩散区域，那么默认隐藏阴影
-                isShowShadow = false;
-            } else {
-                int dip5 = (int) getContext().getResources().getDimension(R.dimen.dp_5);
-                if (mShadowLimit < dip5) {
-                    mShadowLimit = dip5;
-                }
-            }
-
-            //x轴偏移量
-            mShadowOffsetX = attr.getDimension(R.styleable.ShadowLayout_shadowOffsetX, 0);
-            //y轴偏移量
-            mShadowOffsetY = attr.getDimension(R.styleable.ShadowLayout_shadowOffsetY, 0);
             mShadowColor = attr.getColor(R.styleable.ShadowLayout_shadowColor, getResources().getColor(R.color.default_shadow_color));
 
             selectorType = SelectorType.fromType(attr.getInt(R.styleable.ShadowLayout_shapeMode, 1));
@@ -903,6 +889,31 @@ public class ShadowLayout extends FrameLayout {
 
         } finally {
             attr.recycle();
+        }
+    }
+
+    /**
+     * 初始化阴影偏移量
+     */
+    private void initShadowOffset(TypedArray attr) {
+        mShadowOffsetX = attr.getDimension(R.styleable.ShadowLayout_shadowOffsetX, 0);
+        mShadowOffsetY = attr.getDimension(R.styleable.ShadowLayout_shadowOffsetY, 0);
+    }
+
+    /**
+     * 初始化扩散区域
+     * 如果没有设置阴影扩散区域，则默认隐藏阴影,
+     * 最低有效值为5dp。
+     */
+    private void initShadowLimit(TypedArray attr) {
+        mShadowLimit = attr.getDimension(R.styleable.ShadowLayout_shadowLimit, 0);
+        if (mShadowLimit == 0) {
+            isShowShadow = false;
+        } else {
+            int dip5 = (int) getContext().getResources().getDimension(R.dimen.dp_5);
+            if (mShadowLimit < dip5) {
+                mShadowLimit = dip5;
+            }
         }
     }
 
