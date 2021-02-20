@@ -38,8 +38,7 @@
                     android:id="@+id/recycler_view"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:overScrollMode="never"/>
+                    style="@style/recycler_vertical_style"/>
             </LinearLayout>
 
 
@@ -51,41 +50,6 @@
 
     </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
-    <!--    <com.module.slide.SuperSwipeRefreshLayout-->
-    <!--        android:id="@+id/swipeRefreshLayout"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent"-->
-    <!--        app:loading_img_direction="top"-->
-    <!--        tools:background="@color/accent_A100">-->
-
-    <!--        <androidx.core.widget.NestedScrollView-->
-    <!--            android:id="@+id/mainpage_nsv"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="match_parent"-->
-    <!--            android:fillViewport="true"-->
-    <!--            android:focusableInTouchMode="true">-->
-    <!--            <LinearLayout-->
-    <!--                android:layout_width="match_parent"-->
-    <!--                android:layout_height="match_parent"-->
-    <!--                android:descendantFocusability="blocksDescendants"-->
-    <!--                android:orientation="vertical">-->
-    <!--                <com.youth.banner.Banner-->
-    <!--                    android:id="@+id/banner"-->
-    <!--                    android:layout_width="match_parent"-->
-    <!--                    android:layout_height="@dimen/banner_height"-->
-    <!--                    android:visibility="gone" />-->
-    <!--                <androidx.recyclerview.widget.RecyclerView-->
-    <!--                    android:id="@+id/recycler_view"-->
-    <!--                    android:layout_width="match_parent"-->
-    <!--                    android:layout_height="match_parent"-->
-    <!--                    android:orientation="vertical" />-->
-    <!--            </LinearLayout>-->
-
-    <!--        </androidx.core.widget.NestedScrollView>-->
-
-
-    <!--    </com.module.slide.SuperSwipeRefreshLayout>-->
-
     <ViewStub
         android:id="@+id/load_state"
         android:layout_width="match_parent"
@@ -93,8 +57,8 @@
 
     <ViewStub
         android:id="@+id/fbtn_go_top"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:inflatedId="@+id/app_fab_btn" />
 
 </FrameLayout>

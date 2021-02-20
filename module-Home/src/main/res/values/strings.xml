@@ -1,6 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Home-model</string>
 
+    <string name="artical_latest">当前数据已是最新</string>
+    <string name="exception_request_data">数据请求异常</string>
+
    <!-- article tags -->
     <string name="article_tag_top">置顶</string>
     <string name="article_tag_new">新</string>

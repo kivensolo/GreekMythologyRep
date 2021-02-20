@@ -6,11 +6,11 @@
     android:id="@+id/app_fab_btn"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_gravity="bottom|right"
+    android:layout_gravity="bottom|end"
     android:layout_margin="16dp"
     android:scaleType="center"
     android:src="@drawable/ic_back_top"
     android:visibility="gone"
-    app:backgroundTint="#88222222"
+    app:backgroundTint="@color/colorPrimary"
     app:elevation="0dp"
     tools:visibility="visible" />
