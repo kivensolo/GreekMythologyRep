@@ -31,5 +31,7 @@
 
         <activity android:name="com.zeke.demo.photoview.sample.ImmersiveActivity" />
         <!--**photoview sample**-->
+
+        <activity android:name="com.zeke.demo.shadowlayout.ShadowLayoutDemoActivity" />
     </application>
 </manifest>

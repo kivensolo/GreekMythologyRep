@@ -123,6 +123,10 @@
       {
         "name": "新版自定义View/控件展示页面",
         "class": "com.zeke.demo.customview.CustomViewsDemoActivity"
+      },
+      {
+        "name": "ShadowLayout",
+        "class": "com.zeke.demo.shadowlayout.ShadowLayoutDemoActivity"
       }
     ]
   },
