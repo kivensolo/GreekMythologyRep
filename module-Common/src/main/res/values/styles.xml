@@ -44,12 +44,11 @@
         <item name="android:orientation">vertical</item>
         <item name="android:scrollbars">vertical</item>
         <item name="android:scrollbarStyle">insideOverlay</item>
-        <item name="android:scrollbarSize">3dp</item>
+        <item name="android:scrollbarSize">@dimen/size_4dp</item>
         <item name="android:fadeScrollbars">true</item>
-        <item name="android:scrollbarFadeDuration">500</item>
-<!--        <item name="android:overScrollMode">never</item>-->
+        <item name="android:scrollbarFadeDuration">600</item>
+        <item name="android:overScrollMode">never</item>
         <item name="android:scrollbarThumbVertical">@drawable/scrollbar_vertical_thumb</item>
-        <!-- 滚动条不显示的解决办法,添加背景色 -->
         <item name="android:background">@color/transparent</item>
     </style>
 
@@ -57,7 +56,6 @@
         <item name="textAllCaps">false</item>
         <item name="android:textSize">15sp</item>
     </style>
-
 
     <style name="all_wrap">
         <item name="android:layout_width">wrap_content</item>

@@ -5,10 +5,12 @@ import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.text.Html
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewStub
 import android.widget.Toast
 import androidx.annotation.StringRes
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
@@ -16,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.launcher.ARouter
 import com.chad.library.adapter.base.animation.SlideInBottomAnimation
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.kingz.base.BaseVMFragment
 import com.kingz.base.factory.ViewModelFactory
 import com.kingz.module.common.router.RPath
@@ -43,7 +46,6 @@ import java.util.*
 
 /**
  * 首页热门推荐(玩android)的Fragemnt
- * TODO 功能：swipeRefreshLayout 增加侧边栏滑动条
  * TODO 优化: 状态通过swipeRefreshLayout内部状态判断
  *
  * TODO 功能：增加FloatingActionButton的现实和隐藏
@@ -190,16 +192,18 @@ class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>() {
             })
         }
         initSwipeRefreshLayout()
-        activity?.findViewById<ViewStub>(R.id.fbtn_go_top)
-            ?.inflate()
-            ?.setOnClickListener{
-             Toast.makeText(
-                context,
-                resources.getString(R.string.article_tag_top),
-                Toast.LENGTH_SHORT
-            ).show()
+        val fabView = activity?.findViewById<ViewStub>(R.id.fbtn_go_top)?.inflate()
+        (fabView as FloatingActionButton).apply {
+            val lp = layoutParams as CoordinatorLayout.LayoutParams
+            lp.gravity = Gravity.END and Gravity.BOTTOM
+            setOnClickListener {
+                Toast.makeText(
+                    context,
+                    resources.getString(R.string.article_tag_top),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
-//        activity?.findViewById<View>(R.id.app_fab_btn)?
     }
 
     private fun initSwipeRefreshLayout() {

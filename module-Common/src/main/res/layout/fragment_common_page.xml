@@ -6,7 +6,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:layout_behavior="com.zeke.home.wanandroid.ScrollAwareFABBehavior">
 
-    <!-- srlEnableLoadMoreWhenContentNotFull=“false” 取消内容不满一页时开启上拉加载功能-->
+    <!--
+        srlEnableLoadMoreWhenContentNotFull=“false” 取消内容不满一页时开启上拉加载功能
+        com.scwang.smart.refresh.header.ClassicsHeader
+        和com.scwang.smart.refresh.footer.ClassicsFooter可以不用在xml中指定,
+        但是背景色会是app主题色
+    -->
 
     <com.scwang.smart.refresh.layout.SmartRefreshLayout
         android:id="@+id/swipeRefreshLayout"
@@ -23,27 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/mainpage_nsv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true"
-            android:focusableInTouchMode="true">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    style="@style/recycler_vertical_style"/>
-            </LinearLayout>
-
-
-        </androidx.core.widget.NestedScrollView>
+        <include layout="@layout/common_recycler_view" />
 
         <com.scwang.smart.refresh.footer.ClassicsFooter
             android:layout_width="match_parent"
@@ -57,6 +42,5 @@
         android:layout_height="wrap_content"
         android:inflatedId="@+id/app_fab_btn"
         android:layout="@layout/app_floating_action_button"/>
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
