@@ -4,15 +4,6 @@
     <string name="artical_latest">当前数据已是最新</string>
     <string name="exception_request_data">数据请求异常</string>
 
-   <!-- article tags -->
-    <string name="article_tag_top">置顶</string>
-    <string name="article_tag_new">新</string>
-    <string name="article_tag_qa">问答</string>
-    <string name="art_author">作者</string>
-    <string name="art_date">2019–08–02</string>
-    <string name="art_title">这里是WanAndroid的文章标题</string>
-    <string name="art_desc">这里是WanAndroid的文章描述：从前有座山，山里有座庙，庙里有个老和尚和小和尚，老和尚对小和尚说：有座山，山里有座庙，庙里有个老和尚和小和尚，老和尚对小和尚说</string>
-    <string name="art_type">干货资源/课程推荐</string>
 
      <!--点播界面  被格式化的参数索引%1$s和%2$s分别表示第一位和第二位占位符，$s表示是字符串 -->
     <string name="txt_desc" translatable="false">简介</string>

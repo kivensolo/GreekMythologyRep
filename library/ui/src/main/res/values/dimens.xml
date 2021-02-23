@@ -26,6 +26,11 @@
     <dimen name="size_26dp">26dp</dimen>
     <dimen name="size_28dp">28dp</dimen>
     <dimen name="size_30dp">30dp</dimen>
+    <dimen name="size_31dp">31dp</dimen>
+    <dimen name="size_32dp">32dp</dimen>
+    <dimen name="size_33dp">33dp</dimen>
+    <dimen name="size_34dp">34dp</dimen>
+    <dimen name="size_35dp">35dp</dimen>
     <dimen name="size_40dp">40dp</dimen>
 
 

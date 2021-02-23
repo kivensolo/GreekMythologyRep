@@ -24,6 +24,7 @@ import com.kingz.module.common.utils.RvUtils
 import com.kingz.module.common.utils.ktx.SDKVersion
 import com.kingz.module.home.R
 import com.kingz.module.wanandroid.WADConstants
+import com.kingz.module.wanandroid.adapter.ArticleAdapter
 import com.kingz.module.wanandroid.bean.Article
 import com.kingz.module.wanandroid.bean.BannerItem
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
@@ -32,7 +33,6 @@ import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import com.youth.banner.Banner
 import com.youth.banner.indicator.CircleIndicator
 import com.youth.banner.transformer.ScaleInTransformer
-import com.zeke.home.wanandroid.adapter.ArticleAdapter
 import com.zeke.home.wanandroid.adapter.HomeBannerAdapter
 import com.zeke.home.wanandroid.repository.HomeRepository
 import com.zeke.home.wanandroid.viewmodel.HomeViewModel
@@ -45,7 +45,6 @@ import java.util.*
 
 /**
  * 首页热门推荐(玩android)的Fragemnt
- * TODO 优化: 状态通过swipeRefreshLayout内部状态判断
  */
 class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>(),IRvScroller {
 
@@ -57,10 +56,13 @@ class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>(),I
     // 当前页数
     private var mCurPage = 0
     private var mPageCount = 0
+    // 优化: 状态通过swipeRefreshLayout内部状态RefreshState判断
     private var isLoadingMore = false
 
     private var bannerUrls: MutableList<String> = ArrayList()
     private var bannerTitles: MutableList<String> = ArrayList()
+
+    override fun getLayoutResID() = R.layout.fragment_common_page
 
     override val viewModel: HomeViewModel by viewModels {
         ViewModelFactory.build { HomeViewModel() }
@@ -146,7 +148,6 @@ class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>(),I
         ZLog.d("HomeWanAndroidFragment onViewCreated")
     }
 
-    override fun getLayoutResID() = R.layout.fragment_common_page
 
     override fun initData(savedInstanceState: Bundle?) {
         if (articleAdapter == null) {
