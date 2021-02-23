@@ -8,11 +8,10 @@
     android:layout_margin="16dp"
     android:scaleType="center"
     android:src="@drawable/ic_back_top"
-    android:visibility="visible"
     app:elevation="5dp"
     app:layout_anchor="@id/swipeRefreshLayout"
     app:layout_anchorGravity="bottom|right|end"
-    app:pressedTranslationZ="3dp"/>
+    app:pressedTranslationZ="@dimen/dp_8"/>
 
 <!--
 android:src：FAB中显示的图标.

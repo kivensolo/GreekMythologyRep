@@ -5,12 +5,10 @@ import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.text.Html
-import android.view.Gravity
 import android.view.LayoutInflater
-import android.view.ViewStub
+import android.view.View
 import android.widget.Toast
 import androidx.annotation.StringRes
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
@@ -18,10 +16,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.launcher.ARouter
 import com.chad.library.adapter.base.animation.SlideInBottomAnimation
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.kingz.base.BaseVMFragment
 import com.kingz.base.factory.ViewModelFactory
+import com.kingz.module.common.base.IRvScroller
 import com.kingz.module.common.router.RPath
+import com.kingz.module.common.utils.RvUtils
 import com.kingz.module.common.utils.ktx.SDKVersion
 import com.kingz.module.home.R
 import com.kingz.module.wanandroid.WADConstants
@@ -47,10 +46,8 @@ import java.util.*
 /**
  * 首页热门推荐(玩android)的Fragemnt
  * TODO 优化: 状态通过swipeRefreshLayout内部状态判断
- *
- * TODO 功能：增加FloatingActionButton的现实和隐藏
  */
-class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>() {
+class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>(),IRvScroller {
 
     private var banner: Banner<BannerItem, HomeBannerAdapter<BannerItem>>? = null
     private lateinit var mRecyclerView: RecyclerView
@@ -170,40 +167,22 @@ class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>() {
     }
 
     override fun initView(savedInstanceState: Bundle?) {
+        initRecyclerView()
+        initSwipeRefreshLayout()
+        initFABInflate()
+    }
+
+    private fun initRecyclerView() {
         mRecyclerView = rootView?.findViewById(R.id.recycler_view) as RecyclerView
         mRecyclerView.apply {
             isVerticalScrollBarEnabled = true
             layoutManager = LinearLayoutManager(context)
-            addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                    super.onScrollStateChanged(recyclerView, newState)
-                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-//                        if (lastItemPosition + 1 == lm.getItemCount()) {
-//                            //Log.d(TAG, "我在加载更多");
-//                            mCurrentStart++;
-//                            loadMore();
-//                        }
-                    }
-                }
+        }
+    }
 
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    super.onScrolled(recyclerView, dx, dy)
-                }
-            })
-        }
-        initSwipeRefreshLayout()
-        val fabView = activity?.findViewById<ViewStub>(R.id.fbtn_go_top)?.inflate()
-        (fabView as FloatingActionButton).apply {
-            val lp = layoutParams as CoordinatorLayout.LayoutParams
-            lp.gravity = Gravity.END and Gravity.BOTTOM
-            setOnClickListener {
-                Toast.makeText(
-                    context,
-                    resources.getString(R.string.article_tag_top),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
+    private fun initFABInflate() {
+        val fabView = rootView?.findViewById<View>(R.id.app_fab_btn)
+        fabView?.setOnClickListener { scrollToTop() }
     }
 
     private fun initSwipeRefreshLayout() {
@@ -320,5 +299,12 @@ class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>() {
             }
         }
         articleAdapter?.setHeaderView(view = banner!!)
+    }
+
+    override fun scrollToTop() {
+        RvUtils.smoothScrollTop(mRecyclerView)
+    }
+
+    override fun scrollToTopRefresh() {
     }
 }
