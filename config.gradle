@@ -4,7 +4,7 @@ ext {
 
     android = [compileSdkVersion: 28,
                buildToolsVersion: '28.0.3', //AGP 3.2.1以后默认最低28.0.3
-               minSdkVersion    : 18,
+               minSdkVersion    : 21,
                targetSdkVersion : 22,
                versionCode      : 1,
                versionName      : "1.0.0"]
@@ -90,6 +90,7 @@ ext {
             "AndroidJUnitRunner"   : 'androidx.test.runner.AndroidJUnitRunner'
     ]
 
+
     dependencies = [
             "appcompat"              : "androidx.appcompat:appcompat:${rootProject.ext.androidx}",
             "core-ktx"               : "androidx.core:core-ktx:${rootProject.ext.androidx}",
@@ -140,6 +141,9 @@ ext {
             "material"               : "com.google.android.material:material:$lib_versions.material",
             // 广告图片轮播控件 https://github.com/youth5201314/banner
             "banner"                 : "com.youth.banner:banner:2.1.0",
+            // 收藏、点赞效果控件
+            "LikeButton"             : "com.github.jd-alexander:LikeButton:0.2.3",
+
             // 下拉上拉加载库: https://gitee.com/scwang90/SmartRefreshLayout
             "smartRefresh_Core"      : "com.scwang.smart:refresh-layout-kernel:$lib_versions.smartRefresh",
             "smartRefresh_Header_Classics"  : "com.scwang.smart:refresh-header-classics:$lib_versions.smartRefresh",  //经典刷新头
@@ -158,7 +162,7 @@ ext {
             "glide_compiler"         : "com.github.bumptech.glide:compiler:$lib_versions.glide_c",
             "glide_okhttp3"          : "com.github.bumptech.glide:okhttp3-integration:${lib_versions.glide_okhttp}",
 
-           //https://github.com/JessYanCoding/AndroidAutoSize
+            //https://github.com/JessYanCoding/AndroidAutoSize
             "autosize"               : "me.jessyan:autosize:$lib_versions.autosize",
             "autoLayout"             : "com.zhy:autolayout:1.4.5",
 
@@ -168,7 +172,7 @@ ext {
             //https://github.com/yanzhenjie/AndPermission
             "permissions"            : "com.yanzhenjie:permission:$lib_versions.permissions",
 
-             // My lib
+            // My lib
             "kangaroo"               : "com.github.zeke:kangaroo:1.0.6",
             "xul_cache"              : "com.github.xul:cache:1.0.0",
 
@@ -184,5 +188,4 @@ ext {
             "immersionbar_ktx"     : "com.gyf.immersionbar:immersionbar-ktx:3.0.0",
 
     ]
-
 }

@@ -2,4 +2,14 @@
     <string name="networl_error" translatable="false">网络错误</string>
     <string name="tips_data_empty" translatable="false">数据为空</string>
 
+    <!-- article tags -->
+    <string name="article_tag_top">置顶</string>
+    <string name="article_tag_new">新</string>
+    <string name="article_tag_qa">问答</string>
+    <string name="art_author">作者</string>
+    <string name="art_date">2019–08–02</string>
+    <string name="art_title">这里是WanAndroid的文章标题</string>
+    <string name="art_desc">这里是WanAndroid的文章描述：从前有座山，山里有座庙，庙里有个老和尚和小和尚，老和尚对小和尚说：有座山，山里有座庙，庙里有个老和尚和小和尚，老和尚对小和尚说</string>
+    <string name="art_type">干货资源/课程推荐</string>
+
 </resources>
