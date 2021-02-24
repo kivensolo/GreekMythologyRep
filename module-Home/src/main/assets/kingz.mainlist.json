@@ -84,6 +84,10 @@
       {
         "name": "SurfaceDraw",
         "class": "com.kingz.widgets.android_src.DrawRectWithSurface"
+      },
+      {
+        "name": "Fragment Lifecycle",
+        "class": "com.zeke.demo.fragments.FragementLifeCycleTestPage"
       }
     ]
   },

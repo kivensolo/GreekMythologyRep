@@ -33,5 +33,7 @@
         <!--**photoview sample**-->
 
         <activity android:name="com.zeke.demo.shadowlayout.ShadowLayoutDemoActivity" />
+
+        <activity android:name="com.zeke.demo.fragments.FragementLifeCycleTestPage" />
     </application>
 </manifest>

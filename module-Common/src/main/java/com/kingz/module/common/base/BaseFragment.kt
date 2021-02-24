@@ -15,7 +15,6 @@ import com.kingz.module.common.LoadStatusView
 /**
  * description: MVP模式基类的Fragment
  */
-//TODO  学习Fragment的懒加载
 abstract class BaseFragment : Fragment() {
     companion object {
         val TAG: String = BaseFragment::class.java.simpleName
