@@ -8,10 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 
-abstract class BaseSimpleFragment : Fragment() {
-    var rootView: View ?= null
+/**
+ * author：ZekeWang
+ * date：2021/2/24
+ * description：公共层的Fragment
+ */
+abstract class BaseCommonFragment : Fragment() {
+
+    var rootView: View?= null
     var mActivity: Activity? = null
-    var isActive = false
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -23,14 +28,9 @@ abstract class BaseSimpleFragment : Fragment() {
         mActivity = null
     }
 
-    override fun onPause() {
-        super.onPause()
-        isActive = false
-    }
-
-    override fun onResume() {
-        super.onResume()
-        isActive = true
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        onViewCreated()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -42,13 +42,7 @@ abstract class BaseSimpleFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         initViewModel()
-        initView(savedInstanceState)
-        initData(savedInstanceState)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        onViewCreated()
+        initView()
     }
 
     override fun onDestroyView() {
@@ -57,20 +51,17 @@ abstract class BaseSimpleFragment : Fragment() {
         onViewDestory()
     }
 
-    /** VIewModel中持有的UI数据监听 */
-    open fun initViewModel() {}
-
-    /** 子类重写 获取layoutId **/
-    abstract fun getLayoutResID(): Int
-
-    /** 进行初始化操作，在onCreateView中调用*/
     open fun onCreateViewReady() {}
 
     open fun onViewCreated(){}
 
     open fun onViewDestory(){}
 
-    abstract fun initData(savedInstanceState: Bundle?)
+    /** VIewModel中持有的UI数据监听 */
+    open fun initViewModel() {}
 
-    abstract fun initView(savedInstanceState: Bundle?)
+    /** 子类重写 获取layoutId **/
+    abstract fun getLayoutResID(): Int
+
+    abstract fun initView()
 }

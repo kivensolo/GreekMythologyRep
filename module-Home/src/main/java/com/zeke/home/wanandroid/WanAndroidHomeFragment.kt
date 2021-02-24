@@ -1,7 +1,6 @@
 package com.zeke.home.wanandroid
 
 import android.app.Service
-import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.text.Html
@@ -68,8 +67,15 @@ class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>(),I
 
     override fun initViewModel() {
         super.initViewModel()
-
+        ZLog.d("initViewModel()")
         obServArticalLiveData()
+        obServBannerLiveData()
+    }
+
+    /**
+     * Banner数据观察回调
+     */
+    private fun obServBannerLiveData() {
         viewModel.bannerLiveData.observe(this, Observer { result ->
             ZLog.d("Banner data onChanged() data size = " + result.data?.size)
             bannerUrls.clear()
@@ -143,15 +149,36 @@ class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>(),I
 
     override fun onViewCreated() {
         //doNothing
-        ZLog.d("HomeWanAndroidFragment onViewCreated")
+        ZLog.d("onViewCreated")
     }
 
     override fun getLayoutResID() = R.layout.fragment_common_page
 
-    override fun initData(savedInstanceState: Bundle?) {
-        if (articleAdapter == null) {
-            ZLog.d("articleAdapter == null, getBanner.")
+    /**
+     * 以懒加载方式进行数据加载
+     */
+    override fun lazyInit() {
+        if(articleAdapter?.itemCount == 1){
+            // 无数据时(只有1个HeadView), 才请求数据
             viewModel.getBanner()
+            requestArticalData(0)
+        }
+    }
+
+    override fun initView() {
+        ZLog.d("initView()")
+        initRecyclerView()
+        initSwipeRefreshLayout()
+        initFABInflate()
+        // Banne须在RecyclerView之后初始化
+        initBanner()
+    }
+
+    private fun initRecyclerView() {
+        mRecyclerView = rootView?.findViewById(R.id.recycler_view) as RecyclerView
+        mRecyclerView.apply {
+            isVerticalScrollBarEnabled = true
+            layoutManager = LinearLayoutManager(context)
             articleAdapter = ArticleAdapter()
             articleAdapter?.apply {
                 adapterAnimation = SlideInBottomAnimation()
@@ -161,22 +188,7 @@ class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>(),I
                     }
                 }
             }
-            requestArticalData(0)
-        }
-        mRecyclerView.adapter = articleAdapter
-    }
-
-    override fun initView(savedInstanceState: Bundle?) {
-        initRecyclerView()
-        initSwipeRefreshLayout()
-        initFABInflate()
-    }
-
-    private fun initRecyclerView() {
-        mRecyclerView = rootView?.findViewById(R.id.recycler_view) as RecyclerView
-        mRecyclerView.apply {
-            isVerticalScrollBarEnabled = true
-            layoutManager = LinearLayoutManager(context)
+            adapter = articleAdapter
         }
     }
 
@@ -251,32 +263,27 @@ class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>(),I
     }
 
     override fun onViewDestory() {
+        ZLog.d("onViewDestory.")
         lifecycleScope.cancel()
+        // 移除LiveData观察者
+        viewModel.articalLiveData.removeObservers(this)
+        viewModel.bannerLiveData.removeObservers(this)
         super.onViewDestory()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         ZLog.d("release.")
-        swipeRefreshLayout?.setOnRefreshListener(null)
+        swipeRefreshLayout?.setOnRefreshLoadMoreListener(null)
         swipeRefreshLayout = null
         articleAdapter = null
+        banner?.onDestroy(this)
+        banner = null
     }
 
     override fun onDetach() {
         ZLog.d("Detach fragment.")
         super.onDetach()
-    }
-
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        if (savedInstanceState != null) {
-            if (savedInstanceState.getBoolean("SAVE_INSTANCE_STATE")) {
-                //                lazyLoadData();
-            }
-        }
-        initBanner()
     }
 
     /**

@@ -7,7 +7,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 abstract class BaseVMFragment<V : BaseRepository, T : BaseViewModel<V>>
-    : BaseSimpleFragment() {
+    : BaseLazyFragment() {
 
     protected abstract val viewModel: T
 
