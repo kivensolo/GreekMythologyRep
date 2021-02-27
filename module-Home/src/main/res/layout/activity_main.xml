@@ -6,7 +6,6 @@
     android:id="@+id/slidPanelLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/tab_bg"
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
     app:compat_sliding="true"
@@ -27,8 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             app:contentInsetLeft="0dp"
-            app:contentInsetStart="0dp"
-            tools:background="@color/accent_A100">
+            app:contentInsetStart="0dp">
             <include layout="@layout/top_title_bar" />
         </androidx.appcompat.widget.Toolbar>
 

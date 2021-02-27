@@ -83,7 +83,7 @@ class SplashActivity : BaseVMActivity<LoginRepository, LoginViewModel>(), View.O
 
     override fun initImmersionBar() {
         ImmersionBar.with(this)
-            .hideBar(BarHide.FLAG_HIDE_STATUS_BAR)
+            .hideBar(BarHide.FLAG_HIDE_BAR)
             .init()
     }
 

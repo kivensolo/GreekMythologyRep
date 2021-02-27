@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.gyf.immersionbar.ImmersionBar
 import com.kingz.base.BaseVMActivity
 import com.kingz.base.factory.ViewModelFactory
 import com.kingz.database.entity.BaseEntity
@@ -229,6 +230,14 @@ class HomeActivity : BaseVMActivity<WanAndroidRepository, WanAndroidViewModel>()
             }
         }
         lifecycleScope.launch(Dispatchers.IO) { sendKeyEvent(KeyEvent.KEYCODE_HOME) }
+    }
+
+    override fun initImmersionBar() {
+        // Home页面设置Navigation消失无效
+        ImmersionBar.with(this)
+            .navigationBarColor(R.color.colorPrimary)
+//            .hideBar(BarHide.FLAG_HIDE_BAR)
+            .init()
     }
 }
 
