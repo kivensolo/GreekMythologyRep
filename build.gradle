@@ -10,9 +10,8 @@ buildscript {
 
     repositories {
         //使用阿里云镜像  防止Gradle同步超时
-        maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
+        maven { url 'https://maven.aliyun.com/repository/public'}   //central仓和jcenter仓的聚合仓
         maven { url 'https://maven.aliyun.com/repository/google' }
-        maven { url 'https://maven.aliyun.com/repository/jcenter' }
         maven { url "https://jitpack.io" }
 
         //maven { url uri('D:/repos')}  //local repositories
@@ -29,9 +28,8 @@ buildscript {
 //Configures this project and each of its sub-projects
 allprojects {
     repositories {
-        maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        maven{ url 'https://maven.aliyun.com/repository/public'}
         maven { url 'https://maven.aliyun.com/repository/google' }
-        maven { url 'https://maven.aliyun.com/repository/jcenter' }
         maven { url "https://jitpack.io" }
         maven{
             url 'https://dl.bintray.com/kivensolo/maven'
