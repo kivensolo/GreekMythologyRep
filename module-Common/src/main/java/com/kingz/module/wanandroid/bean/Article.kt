@@ -42,10 +42,10 @@ class Article() : Parcelable {
     var apkLink: String? = null
     var audit = 0
     var author: String? = null
-    var isCanEdit = false
+    var canEdit = false
     var chapterId = 0
     var chapterName: String? = null
-    var isCollect = false
+    var collect = false
     var courseId = 0
     var desc: String? = null
     var descMd: String? = null
@@ -78,10 +78,10 @@ class Article() : Parcelable {
         apkLink = parcel.readString()
         audit = parcel.readInt()
         author = parcel.readString()
-        isCanEdit = parcel.readByte() != 0.toByte()
+        canEdit = parcel.readByte() != 0.toByte()
         chapterId = parcel.readInt()
         chapterName = parcel.readString()
-        isCollect = parcel.readByte() != 0.toByte()
+        collect = parcel.readByte() != 0.toByte()
         courseId = parcel.readInt()
         desc = parcel.readString()
         descMd = parcel.readString()
@@ -114,10 +114,10 @@ class Article() : Parcelable {
         parcel.writeString(apkLink)
         parcel.writeInt(audit)
         parcel.writeString(author)
-        parcel.writeByte(if (isCanEdit) 1 else 0)
+        parcel.writeByte(if (canEdit) 1 else 0)
         parcel.writeInt(chapterId)
         parcel.writeString(chapterName)
-        parcel.writeByte(if (isCollect) 1 else 0)
+        parcel.writeByte(if (collect) 1 else 0)
         parcel.writeInt(courseId)
         parcel.writeString(desc)
         parcel.writeString(descMd)

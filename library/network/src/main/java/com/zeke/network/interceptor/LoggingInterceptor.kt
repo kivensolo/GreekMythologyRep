@@ -6,6 +6,7 @@ import okhttp3.Protocol
 import okhttp3.Response
 import okio.Buffer
 import java.io.IOException
+import java.nio.charset.Charset
 
 /**
  * date：2019/9/17
@@ -85,24 +86,27 @@ class LoggingInterceptor : Interceptor {
         val endTime = System.nanoTime()
         val headers = response.headers()
         ZLog.d(
-            String.format( "<--- %.1fms%n%s",
+            String.format( "<--- TIME = %.1fms%n%s",
                 (endTime - startTime) / 1e6,  // aka: 1x10^6
                 headers
             )
         )
-        return
-        // 暂时不打印Response
+        // Debug模式下才打印Response
         //Get BufferedSource object and clone it.
-//        val responseBody = response.body()
-//        val source = responseBody!!.source()
-//        // Buffer the entire body.
-//        source.request(Long.MAX_VALUE)
-//        val buffer = source.buffer
-////        val bodyString = buffer.clone().readString(Charset.forName("UTF-8"))
-////        if (headers["Content-Type"]?.contains("json") == true) {
-////            ZLog.json(bodyString)
-////        } else {
-////            ZLog.d(bodyString)
-////        }
+//        if (BuildConfig.DEBUG) {
+        if (false) {
+            val responseBody = response.body()
+            val source = responseBody!!.source()
+            // Buffer the entire body.
+            source.request(Long.MAX_VALUE)
+            val buffer = source.buffer
+            val bodyString = buffer.clone().readString(Charset.forName("UTF-8"))
+            if (headers["Content-Type"]?.contains("json") == true) {
+                ZLog.json(bodyString)
+            } else {
+                ZLog.d(bodyString)
+            }
+        }
+
     }
 }

@@ -4,6 +4,7 @@ import android.app.Service
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.text.Html
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
@@ -14,7 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.launcher.ARouter
-import com.chad.library.adapter.base.animation.SlideInBottomAnimation
+import com.chad.library.adapter.base.animation.ScaleInAnimation
 import com.kingz.base.BaseVMFragment
 import com.kingz.base.factory.ViewModelFactory
 import com.kingz.module.common.base.IRvScroller
@@ -26,6 +27,9 @@ import com.kingz.module.wanandroid.WADConstants
 import com.kingz.module.wanandroid.adapter.ArticleAdapter
 import com.kingz.module.wanandroid.bean.Article
 import com.kingz.module.wanandroid.bean.BannerItem
+import com.kingz.module.wanandroid.bean.CollectActionBean
+import com.kingz.module.wanandroid.repository.WanAndroidRepository
+import com.kingz.module.wanandroid.viewmodel.WanAndroidViewModel
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
@@ -33,7 +37,6 @@ import com.youth.banner.Banner
 import com.youth.banner.indicator.CircleIndicator
 import com.youth.banner.transformer.ScaleInTransformer
 import com.zeke.home.wanandroid.adapter.HomeBannerAdapter
-import com.zeke.home.wanandroid.repository.HomeRepository
 import com.zeke.home.wanandroid.viewmodel.HomeViewModel
 import com.zeke.kangaroo.utils.ZLog
 import kotlinx.coroutines.Dispatchers
@@ -45,7 +48,8 @@ import java.util.*
 /**
  * 首页热门推荐(玩android)的Fragemnt
  */
-class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>(),IRvScroller {
+class WanAndroidHomeFragment : BaseVMFragment<WanAndroidRepository, WanAndroidViewModel>(),
+    IRvScroller {
 
     private var banner: Banner<BannerItem, HomeBannerAdapter<BannerItem>>? = null
     private lateinit var mRecyclerView: RecyclerView
@@ -72,6 +76,28 @@ class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>(),I
         ZLog.d("initViewModel()")
         obServArticalLiveData()
         obServBannerLiveData()
+
+        viewModel.articalCollectData.observe(this, Observer { result ->
+            val message :String = if (result.isSuccess) {
+                if (result.actionType == CollectActionBean.TYPE.COLLECT) {
+                    resources.getString(R.string.collect_success)
+                } else {
+                    resources.getString(R.string.uncollect_success)
+                }
+            }else{
+                //TODO 恢复失败情况下的UI
+                if (!TextUtils.isEmpty(result.errorMsg)) {
+                    result.errorMsg
+                } else {
+                    if (result.actionType == CollectActionBean.TYPE.COLLECT) {
+                        resources.getString(R.string.collect_failed)
+                    } else {
+                        resources.getString(R.string.uncollect_failed)
+                    }
+                }
+            }
+            Toast.makeText(context,message,Toast.LENGTH_SHORT).show()
+        })
     }
 
     /**
@@ -182,11 +208,24 @@ class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>(),I
             layoutManager = LinearLayoutManager(context)
             articleAdapter = ArticleAdapter()
             articleAdapter?.apply {
-                adapterAnimation = SlideInBottomAnimation()
-                setOnItemClickListener { _, _, position ->
+                adapterAnimation = ScaleInAnimation()
+                setOnItemClickListener { adapter, view, position ->
                     if (articleAdapter!!.getDefItemCount() > position) {
                         openWeb(articleAdapter?.getItem(position))
                     }
+                }
+
+                //设置文章收藏监听器
+                likeListener = object : ArticleAdapter.LikeListener{
+                    override fun liked(item: Article, adapterPosition: Int) {
+                        //TODO 收藏后,进行绑定的数据刷新
+                        viewModel.changeArticleLike(item)
+                    }
+
+                    override fun unLiked(item: Article, adapterPosition: Int) {
+                        viewModel.changeArticleLike(item)
+                    }
+
                 }
             }
             adapter = articleAdapter
@@ -251,7 +290,7 @@ class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>(),I
             .withString(WADConstants.KEY_URL, data?.link)
             .withString(WADConstants.KEY_TITLE, data?.title)
             .withString(WADConstants.KEY_AUTHOR, data?.author)
-            .withBoolean(WADConstants.KEY_IS_COLLECT, data?.isCollect ?: false)
+            .withBoolean(WADConstants.KEY_IS_COLLECT, data?.collect ?: false)
             .withInt(WADConstants.KEY_ID, data?.id ?: -1)
             .navigation(activity, 0x01)
     }
@@ -266,9 +305,7 @@ class WanAndroidHomeFragment : BaseVMFragment<HomeRepository, HomeViewModel>(),I
     override fun onViewDestory() {
         ZLog.d("onViewDestory.")
         lifecycleScope.cancel()
-        // 移除LiveData观察者
-        viewModel.articalLiveData.removeObservers(this)
-        viewModel.bannerLiveData.removeObservers(this)
+        viewModel.cancle(this)
         super.onViewDestory()
     }
 

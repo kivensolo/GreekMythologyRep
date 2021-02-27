@@ -1,6 +1,6 @@
 package com.zeke.module_login.api
 
-import com.kingz.base.BaseApiService
+import com.kingz.module.wanandroid.api.WanAndroidApiService
 import com.zeke.module_login.entity.UserInfoBean
 import retrofit2.Response
 import retrofit2.http.Field
@@ -8,7 +8,7 @@ import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
 
-interface LoginApiService : BaseApiService {
+interface LoginApiService : WanAndroidApiService {
 //    @FormUrlEncoded
 //    @POST("/user/login")
 //    suspend fun userLogin(@Field("username") username: String

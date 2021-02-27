@@ -154,8 +154,8 @@
             app:icon_type="heart"
             app:anim_scale_factor="2.5"
             app:is_enabled="true"
-            app:like_drawable="@drawable/ic_heart_off"
-            app:unlike_drawable="@drawable/ic_heart_on"
+            app:like_drawable="@drawable/ic_heart_on"
+            app:unlike_drawable="@drawable/ic_heart_off"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
             tools:background="@drawable/ic_heart_on"/>

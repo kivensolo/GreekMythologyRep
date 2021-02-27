@@ -9,10 +9,12 @@ import android.view.MenuItem;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
+
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.kingz.adapter.MgPosterAdapter;
 import com.kingz.customdemo.R;
 import com.kingz.mode.RecycleDataInfo;
@@ -22,9 +24,14 @@ import com.kingz.recyclerview.data.MgPosterBean;
 import com.kingz.recyclerview.data.MgResponseBean;
 import com.zeke.kangaroo.utils.ZLog;
 import com.zeke.network.OkHttpClientManager;
-import okhttp3.Request;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+
+import okhttp3.Request;
 
 /**
  * author: King.Z

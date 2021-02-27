@@ -26,6 +26,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.net.FileNameMap;
 import java.net.URLConnection;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -35,6 +36,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.Headers;
+import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -68,15 +70,16 @@ public class OkHttpClientManager {
     private OkHttpClient mOkHttpClient;
     private Handler mDelivery;
     private Gson mGson;
+    private ClientBuilderFactory builderFactory;
 
     private OkHttpClientManager() {
-//        _initDefaultOkHttpClient();
-        _initWithTimeOut(DEFAULT_CONNECT, DEFAULT_READ, DEFAULT_WRITE);
         mDelivery = new Handler(Looper.getMainLooper());
         mGson = new Gson();
     }
 
     public OkHttpClient getOkHttpClient(){
+         // _initDefaultOkHttpClient();
+        mInstance._initWithTimeOut(DEFAULT_CONNECT, DEFAULT_READ, DEFAULT_WRITE);
         return mOkHttpClient;
     }
 
@@ -94,6 +97,10 @@ public class OkHttpClientManager {
             }
         }
         return mInstance;
+    }
+
+    public void setBuilderFactory(ClientBuilderFactory factory){
+        builderFactory = factory;
     }
 
     /* -------------------------------------对外公布的方法  Start -------------------------------------*/
@@ -195,18 +202,27 @@ public class OkHttpClientManager {
         mOkHttpClient = builder.build();
     }
 
+    //需要把这个提到外层  增加一个外部OKHttpC
     @NotNull
     private OkHttpClient.Builder getOkHttpClientBuilder(long connectTimeOut,
                                                         long readTimeOut,
                                                         long writeTimeOut) {
-        return new OkHttpClient.Builder()
-                    .retryOnConnectionFailure(true)
-                    .connectTimeout(connectTimeOut, TimeUnit.MILLISECONDS)
-                    .readTimeout(readTimeOut, TimeUnit.MILLISECONDS)
-                    .writeTimeout(writeTimeOut, TimeUnit.MILLISECONDS)
-                    .addInterceptor(new LoggingInterceptor())
-//                    .addInterceptor(new CaptureInfoInterceptor())
-                    .addNetworkInterceptor(new StethoInterceptor());
+        OkHttpClient.Builder builder = new OkHttpClient.Builder()
+                .retryOnConnectionFailure(true)
+                .connectTimeout(connectTimeOut, TimeUnit.MILLISECONDS)
+                .readTimeout(readTimeOut, TimeUnit.MILLISECONDS)
+                .writeTimeout(writeTimeOut, TimeUnit.MILLISECONDS);
+
+        // 外部拦截器添加
+        if (builderFactory != null) {
+            for (Interceptor interceptor : builderFactory.getPreInterceptors()) {
+                builder.addInterceptor(interceptor);
+            }
+        }
+        builder.addInterceptor(new LoggingInterceptor())
+//             .addInterceptor(new CaptureInfoInterceptor())
+               .addNetworkInterceptor(new StethoInterceptor());
+        return builder;
     }
 
     /**
@@ -637,4 +653,12 @@ public class OkHttpClientManager {
         String value;
     }
 
+    /**
+     * OkHttpClientBuilder扩展类
+     */
+    public static class ClientBuilderFactory {
+        public List<Interceptor> getPreInterceptors(){
+            return null;
+        }
+    }
 }

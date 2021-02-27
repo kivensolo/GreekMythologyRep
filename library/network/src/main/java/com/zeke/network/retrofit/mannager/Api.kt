@@ -2,10 +2,13 @@ package com.zeke.network.retrofit.mannager
 
 import android.content.Context
 import com.zeke.network.OkHttpClientManager
+import com.zeke.network.interceptor.AddCookiesInterceptor
+import com.zeke.network.interceptor.SaveCookiesInterceptor
 import io.reactivex.Single
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.CallAdapter
 import retrofit2.Converter
@@ -25,7 +28,8 @@ class Api private constructor() {
     }
 
     companion object {
-        fun getInstance() = Helper.instance
+        fun getInstance() =
+            Helper.instance
         // TODO  搞成外部可以自定义设置的方式
         const val HOST = "https://www.wanandroid.com"
     }
@@ -33,11 +37,22 @@ class Api private constructor() {
     private lateinit var retrofitBuilder: Retrofit.Builder
 
     fun init(context: Context) {
-        initRetrofit()
+        initRetrofit(context)
     }
 
-    private fun initRetrofit() {
-        val okHttpClient = OkHttpClientManager.getInstance().okHttpClient
+    private fun initRetrofit(context: Context) {
+        val okHttpClientManager = OkHttpClientManager.getInstance()
+        okHttpClientManager.setBuilderFactory(object :
+            OkHttpClientManager.ClientBuilderFactory() {
+            override fun getPreInterceptors(): MutableList<Interceptor> {
+                val list = ArrayList<Interceptor>()
+                list.add(AddCookiesInterceptor(context))
+                list.add(SaveCookiesInterceptor(context))
+                return list
+            }
+        })
+
+        val okHttpClient = okHttpClientManager.okHttpClient
         retrofitBuilder = Retrofit.Builder()
         retrofitBuilder.client(okHttpClient)
                 .baseUrl(HOST)

@@ -1,10 +1,12 @@
 package com.zeke.home.wanandroid.viewmodel
 
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
-import com.kingz.base.BaseViewModel
 import com.kingz.base.response.ResponseResult
+import com.kingz.module.common.api.ApiServiceUtil
 import com.kingz.module.wanandroid.bean.ArticleData
 import com.kingz.module.wanandroid.bean.BannerItem
+import com.kingz.module.wanandroid.viewmodel.WanAndroidViewModel
 import com.zeke.home.wanandroid.repository.HomeRepository
 import com.zeke.kangaroo.utils.ZLog
 
@@ -12,10 +14,11 @@ import com.zeke.kangaroo.utils.ZLog
  * author：ZekeWang
  * date：2021/1/28
  * description： 首页数据模型
+ * 继承自玩Android的ViewModel
  */
-class HomeViewModel : BaseViewModel<HomeRepository>() {
+class HomeViewModel : WanAndroidViewModel() {
     override fun createRepository(): HomeRepository {
-        return HomeRepository()
+        return HomeRepository(ApiServiceUtil.getApiService())
     }
 
     val articalLiveData: MutableLiveData<ArticleData> by lazy {
@@ -26,12 +29,21 @@ class HomeViewModel : BaseViewModel<HomeRepository>() {
         MutableLiveData<ResponseResult<List<BannerItem>>>()
     }
 
+    /**
+     *  移除当前LiveData中LiveData持有的观察者
+     */
+    fun cancle(owner: LifecycleOwner) {
+        articalLiveData.removeObservers(owner)
+        bannerLiveData.removeObservers(owner)
+        articalCollectData.removeObservers(owner)
+    }
+
     fun getArticalData(pageId: Int) {
         ZLog.d("getArticalData pageId=$pageId")
         //后续 增加异常情况下延迟重试逻辑
         launchDefault {
             try {
-                val result = repository.getArticals(pageId)
+                val result = (repository as HomeRepository).getArticals(pageId)
                 articalLiveData.postValue(result.data)
             } catch (e: Exception) {
                 //java.net.SocketTimeoutException: timeout
@@ -48,7 +60,7 @@ class HomeViewModel : BaseViewModel<HomeRepository>() {
     fun getBanner() {
         launchIO {
             try {
-                val result = repository.getBannerData()
+                val result = (repository as HomeRepository).getBannerData()
                 if(result!!.code == -1){
                     bannerLiveData.postValue(ResponseResult.error(result.message ?:"未知异常"))
                 }else{
@@ -61,8 +73,6 @@ class HomeViewModel : BaseViewModel<HomeRepository>() {
             }
         }
     }
-    //TODO
-    fun collect(){}
-    fun unCollect(){}
+
     fun getTopArticles(){}
 }

@@ -28,6 +28,7 @@ interface UserDao {
     @Query("SELECT * FROM user")
     suspend fun getUserInfo(): UserEntity?
 
+    //TODO 更新用户Cookies信息
 //    @Query("SELECT * FROM user where publicName NOT NULL")
 //    suspend fun isUserLogin():Int
 }

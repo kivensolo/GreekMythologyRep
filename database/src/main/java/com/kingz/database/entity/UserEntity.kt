@@ -16,10 +16,11 @@ class UserEntity(
     @ColumnInfo(name = "username")  var username: String = "",
     @ColumnInfo(name = "publicName")var publicName: String = "",
     @ColumnInfo(name = "token")     var token: String = "",
+    @ColumnInfo(name = "cookies")   var cookies: String = "",
     @ColumnInfo(name = "id")        var id: Int = -1)
     : Serializable {
 
     override fun toString(): String {
-        return "UserEntity(admin=$admin, nickname='$nickname', username='$username', publicName='$publicName', token='$token', id=$id)"
+        return "UserEntity(admin=$admin, nickname='$nickname', username='$username', publicName='$publicName', token='$token', cookies='$cookies', id=$id)"
     }
 }

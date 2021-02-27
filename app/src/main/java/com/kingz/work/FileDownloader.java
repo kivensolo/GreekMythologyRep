@@ -3,13 +3,10 @@ package com.kingz.work;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+
 import com.kingz.utils.ExecutorServiceHelper;
 import com.zeke.kangaroo.utils.UriUtils;
 import com.zeke.network.OkHttpClientManager;
-import okhttp3.Headers;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,6 +17,11 @@ import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import okhttp3.Headers;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 /**
  * 文件下载器，具备断点下载功能。

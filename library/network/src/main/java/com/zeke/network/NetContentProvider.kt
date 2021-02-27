@@ -34,7 +34,7 @@ class NetContentProvider : ContentProvider() {
 
     override fun onCreate(): Boolean {
         context?.run {
-            Api.getInstance().init(applicationContext)
+           Api.getInstance().init(applicationContext)
         }
         return true
     }

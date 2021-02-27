@@ -21,16 +21,16 @@ import com.like.OnLikeListener
  * description: 支持多种viewType的文章Adapter <br>
  *
  */
-class ArticleAdapter @JvmOverloads constructor(
+open class ArticleAdapter @JvmOverloads constructor(
     data: MutableList<Article>? = null,
     var mType:Int? = TYPE_COMMON
 ) : BaseQuickAdapter<Article, BaseViewHolder>(R.layout.item_article, data) {
     private var mContext: Context? = null
     var likeListener: LikeListener? = null
 
-    interface LikeListener {
-        fun liked(item: Article?, adapterPosition: Int)
-        fun unLiked(item: Article?, adapterPosition: Int)
+    open interface LikeListener {
+        fun liked(item: Article, adapterPosition: Int)
+        fun unLiked(item: Article, adapterPosition: Int)
     }
 
     companion object {
@@ -84,7 +84,7 @@ class ArticleAdapter @JvmOverloads constructor(
                     ivLike.isLiked = true
                 }
                 TYPE_COMMON ->{
-                    ivLike.isLiked = item.isCollect
+                    ivLike.isLiked = item.collect
                 }
             }
         }
@@ -101,5 +101,14 @@ class ArticleAdapter @JvmOverloads constructor(
                 .into(ivProject)
         }
 
+    }
+
+    /**
+     * 重置指定位置数据的收藏按钮状态
+     */
+    fun resetCollectState(position: Int){
+        val likeButton = getViewByPosition(position, R.id.ivLike) ?: return
+        (likeButton as LikeButton).isLiked = likeButton.isLiked
+        notifyItemChanged(position)
     }
 }

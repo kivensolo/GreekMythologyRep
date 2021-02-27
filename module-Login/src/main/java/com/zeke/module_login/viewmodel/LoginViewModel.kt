@@ -5,13 +5,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
 import com.kingz.base.BaseViewModel
+import com.kingz.module.common.api.ApiServiceUtil
 import com.zeke.kangaroo.utils.ZLog
 import com.zeke.module_login.entity.UserInfoBean
 import com.zeke.module_login.repository.LoginRepository
 import retrofit2.Response
 
 class LoginViewModel : BaseViewModel<LoginRepository>() {
-    override fun createRepository() = LoginRepository()
+    override fun createRepository() : LoginRepository{
+        return LoginRepository(ApiServiceUtil.getApiService())
+    }
 
     // 用户登录数据 FIXME 为什么不接受 ResponseResult<UserInfoBean> 对象
     //    val loginInfoData: MutableLiveData<ResponseResult<UserInfoBean>> by lazy {

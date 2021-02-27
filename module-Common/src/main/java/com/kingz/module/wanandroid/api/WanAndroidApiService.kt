@@ -47,12 +47,21 @@ interface WanAndroidApiService : BaseApiService {
      * 收藏站内文章
      */
     @POST("lg/collect/{id}/json")
-    suspend fun collect(@Path("id") id:Int): CollectBean?
+    suspend fun collect(@Path("id") id:Int): WanAndroidResponse<CollectBean>
+
     /**
-     * 取消收藏站内文章
+     * 取消收藏文章(普通文章)
+     * id传入的是列表中文章的id。
+     */
+    @POST("lg/uncollect_originId/{id}/json")
+    suspend fun unCollect(@Path("id") id:Int): WanAndroidResponse<CollectBean>
+
+
+    /**
+     * 取消收藏文章(我的收藏页面（该页面包含自己录入的内容）)
      */
     @POST("lg/uncollect/{id}/json")
-    suspend fun unCcollect(@Path("id") id:Int): CollectBean?
+    suspend fun unCollectMine(@Path("id") id:Int): WanAndroidResponse<CollectBean>
 
     /**
      * 收藏文章列表
