@@ -257,15 +257,19 @@ class WebActivity : BaseVMActivity<WanAndroidRepository, WanAndroidViewModel>(),
     }
 
     override fun onMenuItemClick(item: MenuItem): Boolean {
-        val itemId = item.itemId
-        if (itemId == R.id.menuShare) {
-            clickShare()
-        } else if (itemId == R.id.menuCollect) {
-            clickCollect()
-        } else if (itemId == R.id.menuRefresh) {
-            loadUrl(mCurUrl)
-        } else if (itemId == R.id.menuExplorer) {
-            clickExplorer()
+        when (item.itemId) {
+            R.id.menuShare -> {
+                clickShare()
+            }
+            R.id.menuCollect -> {
+                clickCollect()
+            }
+            R.id.menuRefresh -> {
+                loadUrl(mCurUrl)
+            }
+            R.id.menuExplorer -> {
+                clickExplorer()
+            }
         }
         return true
     }
