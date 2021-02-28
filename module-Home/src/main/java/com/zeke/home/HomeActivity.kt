@@ -23,6 +23,8 @@ import com.kingz.module.common.router.RPath
 import com.kingz.module.common.utils.RandomUtils
 import com.kingz.module.home.BuildConfig
 import com.kingz.module.home.R
+import com.kingz.module.wanandroid.WADConstants
+import com.kingz.module.wanandroid.activity.AppBarActivity
 import com.kingz.module.wanandroid.repository.WanAndroidRepository
 import com.kingz.module.wanandroid.viewmodel.WanAndroidViewModel
 import com.module.slide.SuperSlidingPaneLayout
@@ -63,6 +65,17 @@ class HomeActivity : BaseVMActivity<WanAndroidRepository, WanAndroidViewModel>()
         initBottom()
         initSlidingPaneLayout()
 //        initBannerView()
+        initSlideMenuView()
+    }
+
+    private fun initSlideMenuView() {
+        tvCollect?.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putInt(WADConstants.Key.KEY_FRAGEMTN_TYPE, WADConstants.Type.TYPE_TAB_COLLECT)
+            val putExtras = Intent().putExtras(bundle)
+            putExtras.setClass(this, AppBarActivity::class.java)
+            startActivity(putExtras)
+        }
     }
 
 //    private fun initBannerView() {

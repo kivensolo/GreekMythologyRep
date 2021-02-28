@@ -1,1 +1,8 @@
-<manifest package="com.kingz.module.common" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.kingz.module.common">
+
+    <application>
+        <activity
+            android:name="com.kingz.module.wanandroid.activity.AppBarActivity"/>
+    </application>
+</manifest>

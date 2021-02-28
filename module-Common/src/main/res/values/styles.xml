@@ -43,7 +43,7 @@
     <style name="recycler_vertical_style">
         <item name="android:orientation">vertical</item>
         <item name="android:scrollbars">vertical</item>
-        <item name="android:scrollbarStyle">insideOverlay</item>
+        <item name="android:scrollbarStyle">outsideOverlay</item>
         <item name="android:scrollbarSize">@dimen/size_4dp</item>
         <item name="android:fadeScrollbars">true</item>
         <item name="android:scrollbarFadeDuration">600</item>
@@ -55,6 +55,22 @@
     <style name="custom_tab_layout_style" parent="AppBaseTheme">
         <item name="textAllCaps">false</item>
         <item name="android:textSize">15sp</item>
+    </style>
+
+     <!--  按钮圆形波纹效果，通过theme属性引入,
+            且其中重要属性android:background
+            要设置为无边界的波纹  -->
+    <style name="RippleButton">
+        <!--点击后波纹的颜色-->
+        <item name="android:colorControlHighlight">#FAFAFA</item>
+        <!--效果半径-->
+        <item name="android:radius">20dp</item>
+        <item name="android:background">?android:attr/selectableItemBackgroundBorderless</item>
+    </style>
+
+    <!-- 圆形progressBar样式   -->
+    <style name="CircleProgressBar">
+        <item name="android:color">@color/colorPrimary</item>
     </style>
 
     <style name="all_wrap">
