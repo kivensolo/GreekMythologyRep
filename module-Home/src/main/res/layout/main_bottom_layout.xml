@@ -4,6 +4,7 @@
     android:layout_height="146px"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_alignParentBottom="true"
+    android:layout_gravity="bottom"
     android:background="@color/tab_bg"
     android:orientation="vertical">
 

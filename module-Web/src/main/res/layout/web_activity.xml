@@ -5,5 +5,5 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/top_title_bar" />
+    <include layout="@layout/top_tool_bar" />
 </LinearLayout>

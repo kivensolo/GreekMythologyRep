@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="@color/colorPrimary"
+    app:contentInsetStart="0dp"
+    app:layout_scrollFlags="scroll|enterAlways"
+    android:padding="10dp"
+    tools:layout_height="@dimen/size_40dp">
+    <!--
+    AppBarLayout的子View应该提供滑动时他们期望的响应的动作Behavior,
+    通过setScrollFlags(int)
+        scroll:
+            View将会随着可滚动View(如ScrollView)一起滚动，就好像子View 是属于ScrollView的一部分一样
+        enterAlways：
+            当ScrollView 向下滑动时，子View 将直接向下滑动，
+            而不管ScrollView 是否在滑动。注意：要与scroll 搭配使用，否者是不能滑动的
+        enterAlwaysCollapsed:
+            是对enterAlways 的补充，当ScrollView 向下滑动的时候，
+            滑动View（也就是设置了enterAlwaysCollapsed 的View）下滑至折叠的高度，
+            当ScrollView 到达滑动范围的结束值的时候，滑动View剩下的部分开始滑动。
+            这个折叠的高度是通过View的minimum height （最小高度）指定的。
+        exitUntilCollapsed:
+            当ScrollView 滑出屏幕时（也就时向上滑动时），
+            滑动View先响应滑动事件，滑动至折叠高度，也就是通过minimum height 设置的最小高度后，
+            就固定不动了，再把滑动事件交给 scrollview 继续滑动。
+        snap:
+            在滚动结束后，如果view只是部分可见，它将滑动到最近的边界。
+            比如，如果view的底部只有25%可见，它将滚动离开屏幕，而如果底部有75%可见，它将滚动到完全显示。
+        【总结】：
+        CoordinatorLayout 是协调子View的，通过Behavior指定子View动作。
+        AppbarLayout就是一个竖直方向的LinearLayout,只不过它添加了一些材料的概念和特性，可以定制子View的滑动
+
+        CollapsingToolbarLayout 对Toolbar的包装并且实现了折叠app bar效果，
+            使用时，要作为 AppbarLayout 的直接子View。
+    -->
+
+    <ImageView
+        android:id="@+id/iv_title_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/btn_menu_selector"
+        style="@style/OnClickStyle"/>
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textSize="@dimen/size_18sp"
+        android:textColor="@color/white"
+        android:text="@string/app_name"
+        tools:text="@string/app_name"/>
+    <ImageView
+        android:id="@+id/iv_toolbar_right"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/size_14dp"
+        android:paddingRight="@dimen/size_14dp"
+        android:layout_gravity="end|center_vertical"
+        android:src="@drawable/btn_search_selector"
+        style="@style/OnClickStyle"/>
+</androidx.appcompat.widget.Toolbar>
