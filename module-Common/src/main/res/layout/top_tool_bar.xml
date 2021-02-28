@@ -9,7 +9,6 @@
     android:background="@color/colorPrimary"
     app:contentInsetStart="0dp"
     app:layout_scrollFlags="scroll|enterAlways"
-    android:padding="10dp"
     tools:layout_height="@dimen/size_40dp">
     <!--
     AppBarLayout的子View应该提供滑动时他们期望的响应的动作Behavior,
@@ -44,6 +43,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/btn_menu_selector"
+        android:layout_marginStart="@dimen/size_14dp"
         style="@style/OnClickStyle"/>
     <TextView
         android:id="@+id/tvTitle"
