@@ -3,9 +3,11 @@ package com.kingz.module.wanandroid.activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.activity.viewModels
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.kingz.base.BaseVMActivity
 import com.kingz.base.factory.ViewModelFactory
 import com.kingz.module.common.R
+import com.kingz.module.common.router.RPath
 import com.kingz.module.wanandroid.WADConstants
 import com.kingz.module.wanandroid.repository.WanAndroidRepository
 import com.kingz.module.wanandroid.viewmodel.WanAndroidViewModel
@@ -16,6 +18,7 @@ import com.zeke.kangaroo.utils.ToastUtils
  * date：2021/2/28
  * description：带有AppBar的Layout页面
  */
+@Route(path = RPath.PAGE_Common)
 class AppBarActivity : BaseVMActivity<WanAndroidRepository, WanAndroidViewModel>() {
     override val viewModel: WanAndroidViewModel by viewModels {
         ViewModelFactory.build { WanAndroidViewModel() }
