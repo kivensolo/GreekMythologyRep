@@ -102,10 +102,6 @@
 
         <!-- 原生布局汇总页面 -->
         <activity
-            android:name="com.kingz.pages.LayoutPage"
-            android:theme="@style/AppTheme" />
-
-        <activity
             android:name="com.kingz.four_components.activity.news.NewsActivity"
             android:screenOrientation="fullSensor"
             android:theme="@style/AppTheme" />

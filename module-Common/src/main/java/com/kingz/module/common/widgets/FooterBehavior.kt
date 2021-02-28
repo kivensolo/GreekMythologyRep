@@ -6,8 +6,9 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.ViewCompat
+import kotlin.math.abs
 
-class BottomNavigationBehavior(
+class FooterBehavior(
     context: Context?,
     attrs: AttributeSet?
 ) : CoordinatorLayout.Behavior<View>(context, attrs) {
@@ -37,7 +38,7 @@ class BottomNavigationBehavior(
         target: View, dx: Int, dy: Int, consumed: IntArray,
         type: Int
     ) {
-        if (Math.abs(dy) < 10) {
+        if (abs(dy) < 10) {
             return
         }
         if (dy > 0) { // 上滑隐藏

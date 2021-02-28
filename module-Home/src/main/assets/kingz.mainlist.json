@@ -207,6 +207,10 @@
       {
         "name": "DragRecyclerView",
         "class": "com.kingz.recyclerview.MusicPosterPages"
+      },
+      {
+        "name": "AppBarLayout效果",
+        "class": "com.zeke.demo.meterial.AppBarLayoutDemoActivity"
       }
     ]
   },

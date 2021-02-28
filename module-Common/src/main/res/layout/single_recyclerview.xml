@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.recyclerview.widget.RecyclerView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/content_recycler"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:divider="@color/lightskyblue"
-    android:background="@color/black"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     android:paddingEnd="-16px" />
+
+<!-- 不加上这个layout_behavior, 就会出现RecyclerView覆盖AppBarLayout的情况 -->

@@ -55,6 +55,6 @@
         android:visibility="invisible"
         app:elevation="5dp"
         app:pressedTranslationZ="@dimen/dp_8"
-        app:layout_behavior="com.kingz.module.common.widgets.FloatingActionButtonBehavior"/>
+        app:layout_behavior="@string/behavior_fab_move"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

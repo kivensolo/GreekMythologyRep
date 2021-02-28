@@ -35,5 +35,17 @@
         <activity android:name="com.zeke.demo.shadowlayout.ShadowLayoutDemoActivity" />
 
         <activity android:name="com.zeke.demo.fragments.FragementLifeCycleTestPage" />
+
+        <!--   AppBarLayout 相关页面     -->
+        <activity android:name="com.zeke.demo.meterial.AppBarLayoutDemoActivity" />
+
+        <activity
+            android:name="com.zeke.demo.meterial.CollapseToolbarNoramalActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="com.zeke.demo.meterial.AppBarNormalActivity"
+            android:theme="@style/AppTheme" />
+        <!--   AppBarLayout 相关页面     -->
+
     </application>
 </manifest>

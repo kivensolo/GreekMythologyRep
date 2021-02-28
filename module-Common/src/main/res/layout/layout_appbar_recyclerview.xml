@@ -67,7 +67,7 @@
             android:src="@drawable/ic_arrow_upward"
             app:borderWidth="0dp"
             app:elevation="@dimen/dp_4"
-            app:layout_behavior="com.kingz.module.common.widgets.FloatingActionButtonBehavior"
+            app:layout_behavior="@string/behavior_fab_move"
             app:pressedTranslationZ="@dimen/dp_10"
             app:rippleColor="@color/colorPrimaryDark" />
 

@@ -20,6 +20,6 @@
         android:id="@+id/iv_photo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/zhuyin"/>
+        android:src="@drawable/marvel_qiyi"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -42,4 +42,6 @@
     <string name="shadow_offsety_title">阴影Y偏移量:</string>
     <string name="shadow_round_title">圆角大小:</string>
     <string name="shadow_alpha_title">透明度:</string>
+    <string name="appbarlayout_one_child">AppBarLayout只有1个Child</string>
+    <string name="collapseToolBarDemo">滑动时上部分折叠效果</string>
 </resources>

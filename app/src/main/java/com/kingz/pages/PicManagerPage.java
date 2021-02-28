@@ -12,6 +12,7 @@ import android.widget.ListView;
 
 import com.kingz.customdemo.R;
 import com.kingz.mode.ListBillData;
+import com.zeke.demo.meterial.CollapseToolbarNoramalActivity;
 
 /**
  * Created by KingZ on 2015/11/1.
@@ -38,7 +39,7 @@ public class PicManagerPage extends Activity implements AdapterView.OnItemClickL
     }
 
     private void addData() {
-		mAdapter.add(new ListBillData(this,"图片管理",new Intent(this,LayoutPage.class)));
+		mAdapter.add(new ListBillData(this,"图片管理",new Intent(this, CollapseToolbarNoramalActivity.class)));
 	}
 
     @Override

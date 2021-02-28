@@ -9,7 +9,7 @@
     android:background="@color/tab_bg"
     android:orientation="vertical"
     app:layout_insetEdge="bottom"
-    app:layout_behavior="com.kingz.module.common.widgets.BottomNavigationBehavior">
+    app:layout_behavior="">
 
     <View
         android:layout_width="match_parent"

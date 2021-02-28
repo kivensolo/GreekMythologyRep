@@ -18,4 +18,7 @@
     <string name="uncollect_failed">取消收藏失败!</string>
     <string name="action_failed">操作失败!</string>
 
+    <string name="behavior_fab_move">com.kingz.module.common.widgets.FloatingActionButtonBehavior</string>
+    <string name="behavior_footer">com.kingz.module.common.widgets.FooterBehavior</string>
+
 </resources>
