@@ -19,7 +19,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 /**
  * author：KingZ
  * date：2019/9/25
- * TODO 抽离优化
+ *
+ * 使用 {@see BaseRemoteDataSource()} 代替
  */
 class Api private constructor() {
 

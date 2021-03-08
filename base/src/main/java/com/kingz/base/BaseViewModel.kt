@@ -17,6 +17,7 @@ import kotlinx.coroutines.*
  *
  * viewModelScope: 与ViewModel绑定的CoroutineScope
  */
+@Deprecated(message = "使用BaseReactiveViewModel代替")
 abstract class BaseViewModel<T : BaseRepository> : ViewModel() {
 
     protected val repository by lazy {

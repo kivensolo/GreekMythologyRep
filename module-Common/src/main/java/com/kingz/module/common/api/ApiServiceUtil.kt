@@ -8,6 +8,8 @@ import com.zeke.network.retrofit.mannager.Api
  * @maintainer zeke.wang
  * @desc: ApiService创建的工具类
  */
+@Deprecated(message = "获取API类型的方式由BaseRemoteDataSource类提供," +
+        "包括API缓存逻辑")
 object ApiServiceUtil {
 
     private val map = mutableMapOf<Class<*>, Any?>()

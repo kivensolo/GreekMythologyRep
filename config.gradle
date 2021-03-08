@@ -108,11 +108,13 @@ ext {
             // 协程库支持
             "coroutines-core"        : "org.jetbrains.kotlinx:kotlinx-coroutines-core:$rootProject.ext.coroutines_version",
             "coroutines-android"     : "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.ext.coroutines_version",
+
             // mvvm协程支持
             // 1. 在viewmodel中使用协程作用域的库 如：viewmodelScope
             "lifecycle-viewmodel-ktx": "androidx.lifecycle:lifecycle-viewmodel-ktx:${rootProject.ext.jetpack_version}",
             // 2. 在livedata中使用协程作用域的库
             "lifecycle-livedata-ktx" : "androidx.lifecycle:lifecycle-livedata-ktx:${rootProject.ext.jetpack_version}",
+            "lifecycle-livedata-core-ktx" : "androidx.lifecycle:lifecycle-livedata-core-ktx:${rootProject.ext.jetpack_version}",
             // 3. 在activity中使用协程作用域的库  如：lifecycleScope
             "lifecycle-runtime-ktx"  : "androidx.lifecycle:lifecycle-runtime-ktx:${rootProject.ext.jetpack_version}",
             "lifecycle-extensions"   : "androidx.lifecycle:lifecycle-extensions:${rootProject.ext.jetpack_version}",

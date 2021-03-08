@@ -3,11 +3,10 @@ package com.zeke.home.wanandroid.viewmodel
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import com.kingz.base.response.ResponseResult
-import com.kingz.module.common.api.ApiServiceUtil
 import com.kingz.module.wanandroid.bean.ArticleData
 import com.kingz.module.wanandroid.bean.BannerItem
-import com.kingz.module.wanandroid.viewmodel.WanAndroidViewModel
-import com.zeke.home.wanandroid.repository.HomeRepository
+import com.kingz.module.wanandroid.repository.HomeDataSource
+import com.kingz.module.wanandroid.viewmodel.WanAndroidViewModelV2
 import com.zeke.kangaroo.utils.ZLog
 
 /**
@@ -16,10 +15,9 @@ import com.zeke.kangaroo.utils.ZLog
  * description： 首页数据模型
  * 继承自玩Android的ViewModel
  */
-class HomeViewModel : WanAndroidViewModel() {
-    override fun createRepository(): HomeRepository {
-        return HomeRepository(ApiServiceUtil.getApiService())
-    }
+class HomeViewModel : WanAndroidViewModelV2() {
+
+    override val dataSource: HomeDataSource = HomeDataSource()
 
     val articalLiveData: MutableLiveData<ArticleData> by lazy {
         MutableLiveData<ArticleData>()
@@ -41,9 +39,9 @@ class HomeViewModel : WanAndroidViewModel() {
     fun getArticalData(pageId: Int) {
         ZLog.d("getArticalData pageId=$pageId")
         //后续 增加异常情况下延迟重试逻辑
-        launchDefault {
+        launchCPU {
             try {
-                val result = (repository as HomeRepository).getArticals(pageId)
+                val result = dataSource.getArticals(pageId)
                 articalLiveData.postValue(result.data)
             } catch (e: Exception) {
                 //java.net.SocketTimeoutException: timeout
@@ -60,7 +58,7 @@ class HomeViewModel : WanAndroidViewModel() {
     fun getBanner() {
         launchIO {
             try {
-                val result = (repository as HomeRepository).getBannerData()
+                val result = dataSource.getBannerData()
                 if(result!!.code == -1){
                     bannerLiveData.postValue(ResponseResult.error(result.message ?:"未知异常"))
                 }else{
