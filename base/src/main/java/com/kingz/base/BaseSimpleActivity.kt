@@ -6,11 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import com.gyf.immersionbar.ImmersionBar
-import com.zeke.kangaroo.utils.ToastUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -20,6 +20,7 @@ import kotlinx.coroutines.withContext
  */
 abstract class BaseSimpleActivity : AppCompatActivity() {
 
+    //优化思路: 全局单例weakRefebceDialog,显示的地方直接show,隐藏的地方直接dismiss
     private var progress: View? = null
     var INVALID_LAYOUT_ID:Int = -1
 
@@ -83,16 +84,31 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
     }
 
     fun showLoading() {
-        progress?.visibility = View.VISIBLE
+        progress?.let {
+            if (!it.isShown) {
+                it.visibility = View.VISIBLE
+            }
+        }
     }
 
     fun dismissLoading() {
-        progress?.visibility = View.GONE
+        progress?.let {
+            if (it.isShown) {
+                it.visibility = View.GONE
+            }
+        }
     }
 
 
     fun showToast(msg: String) {
-        ToastUtils.show(this, msg)
+        if (msg.isNotBlank()) {
+            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        dismissLoading()
     }
 
     /**

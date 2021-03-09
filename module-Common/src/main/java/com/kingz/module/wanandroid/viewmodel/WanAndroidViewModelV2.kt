@@ -23,11 +23,13 @@ open class WanAndroidViewModelV2 : BaseReactiveViewModel() {
         MutableLiveData<CollectActionBean>()
     }
 
-    open val dataSource: WanAndroidRemoteDataSource = WanAndroidRemoteDataSource()
+    open val remoteDataSource by lazy {
+        WanAndroidRemoteDataSource(this)
+    }
 
     fun getUserInfo() {
         launchIO {
-            val info = dataSource.getUserInfo()
+            val info = remoteDataSource.getUserInfo()
             userInfoLiveData.postValue(info)
         }
     }
@@ -38,7 +40,7 @@ open class WanAndroidViewModelV2 : BaseReactiveViewModel() {
     fun changeArticleLike(item: Article) {
         launchIO {
             try {
-                val data = dataSource.changeArticleLike(item)
+                val data = remoteDataSource.changeArticleLike(item)
                 val result = CollectActionBean().apply {
                     actionType = if (item.collect) {
                         CollectActionBean.TYPE.UNCOLLECT

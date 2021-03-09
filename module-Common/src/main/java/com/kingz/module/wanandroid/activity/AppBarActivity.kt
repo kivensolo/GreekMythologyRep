@@ -9,9 +9,9 @@ import com.kingz.base.factory.ViewModelFactory
 import com.kingz.module.common.R
 import com.kingz.module.common.router.RPath
 import com.kingz.module.wanandroid.WADConstants
-import com.kingz.module.wanandroid.repository.WanAndroidRepository
-import com.kingz.module.wanandroid.viewmodel.WanAndroidViewModel
+import com.kingz.module.wanandroid.viewmodel.WanAndroidViewModelV2
 import com.zeke.kangaroo.utils.ToastUtils
+import com.zeke.reactivehttp.base.BaseReactiveViewModel
 
 /**
  * author：ZekeWang
@@ -19,9 +19,9 @@ import com.zeke.kangaroo.utils.ToastUtils
  * description：带有AppBar的Layout页面
  */
 @Route(path = RPath.PAGE_Common)
-class AppBarActivity : BaseVMActivity<WanAndroidRepository, WanAndroidViewModel>() {
-    override val viewModel: WanAndroidViewModel by viewModels {
-        ViewModelFactory.build { WanAndroidViewModel() }
+class AppBarActivity : BaseVMActivity() {
+    override val viewModel: BaseReactiveViewModel by viewModels {
+        ViewModelFactory.build { WanAndroidViewModelV2() }
     }
 
     override fun getContentLayout(): Int = R.layout.layout_appbar_recycler_list_page

@@ -51,8 +51,7 @@ dependencies {
 
 
     api project(':database')
-    // 网络库和工具库由Common引出
-    api project(':library-network' )
+    // 工具库由Common引出
     api project(":library-views")
     api rootProject.ext.dependencies["kangaroo"]
 

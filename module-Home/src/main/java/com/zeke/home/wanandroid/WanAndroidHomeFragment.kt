@@ -18,6 +18,7 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.chad.library.adapter.base.animation.ScaleInAnimation
 import com.kingz.base.BaseVMFragment
 import com.kingz.base.factory.ViewModelFactory
+import com.kingz.module.common.LoadStatusView
 import com.kingz.module.common.base.IRvScroller
 import com.kingz.module.common.router.RPath
 import com.kingz.module.common.utils.RvUtils
@@ -28,8 +29,7 @@ import com.kingz.module.wanandroid.adapter.ArticleAdapter
 import com.kingz.module.wanandroid.bean.Article
 import com.kingz.module.wanandroid.bean.BannerItem
 import com.kingz.module.wanandroid.bean.CollectActionBean
-import com.kingz.module.wanandroid.repository.WanAndroidRepository
-import com.kingz.module.wanandroid.viewmodel.WanAndroidViewModel
+import com.kingz.module.wanandroid.viewmodel.WanAndroidViewModelV2
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
@@ -47,14 +47,17 @@ import java.util.*
 
 /**
  * 首页热门推荐(玩android)的Fragemnt
+ *  //TODO 显示网络异常情况下，数据加载失败的UI
+ *  //TODO banner如果没数据  需要刷新
  */
-class WanAndroidHomeFragment : BaseVMFragment<WanAndroidRepository, WanAndroidViewModel>(),
+class WanAndroidHomeFragment : BaseVMFragment<WanAndroidViewModelV2>(),
     IRvScroller {
 
     private var banner: Banner<BannerItem, HomeBannerAdapter<BannerItem>>? = null
     private lateinit var mRecyclerView: RecyclerView
     private var articleAdapter: ArticleAdapter? = null
     private var swipeRefreshLayout: SmartRefreshLayout? = null
+    private var loadStatusView: LoadStatusView? = null
 
     // 当前页数
     private var mCurPage = 0
@@ -123,12 +126,21 @@ class WanAndroidHomeFragment : BaseVMFragment<WanAndroidRepository, WanAndroidVi
      */
     private fun obServArticalLiveData() {
         viewModel.articalLiveData.observe(this, Observer {
+            //FIXME 断网后再联网  手动刷新时，会回调两次
             launchIO {
-                //TODO 异常情况 it为null的处理
+                ZLog.d("articalLiveData onObserved.")
+                if(it == null){
+                    ZLog.d("articalLiveData request error. result is null.")
+//                    showToast(R.string.exception_request_data)
+                    swipeRefreshLayout?.finishRefresh()
+                    showError()
+                    return@launchIO
+                }
+
                 val articleList = it.datas
-                ZLog.d("articalLiveData onObserved.  dataSize = ${articleList?.size};")
+                ZLog.d("articalLiveData dataSize = ${articleList?.size};")
                 //当前数据为空时
-                if (articleAdapter?.getDefItemCount() == 0 && it?.datas != null) {
+                if (articleAdapter?.getDefItemCount() == 0) {
                     withContext(Dispatchers.Main) {
                         articleAdapter?.addData(articleList!!)
                     }
@@ -139,26 +151,19 @@ class WanAndroidHomeFragment : BaseVMFragment<WanAndroidRepository, WanAndroidVi
                 }
                 // 数据非空时
                 val currentFirstData = articleAdapter?.getItem(0)
-                if (it?.datas != null) {
-                    if (currentFirstData?.id != articleList!![0].id) {
-                        //当前第一个数据不同于接口第一个，表示有新数据
-                        ZLog.d("Has new article data. <------")
-                        withContext(Dispatchers.Main) {
-                            articleAdapter?.apply {
-                                if (!isLoadingMore) {
-                                    addData(articleList)
-                                } else {
-                                    val defItemCount = getDefItemCount()
-                                    addData(defItemCount, articleList)
-                                }
+                if (currentFirstData?.id != articleList!![0].id) {
+                    //当前第一个数据不同于接口第一个，表示有新数据
+                    ZLog.d("Has new article data. <------")
+                    withContext(Dispatchers.Main) {
+                        articleAdapter?.apply {
+                            if (!isLoadingMore) {
+                                addData(articleList)
+                            } else {
+                                val defItemCount = getDefItemCount()
+                                addData(defItemCount, articleList)
                             }
                         }
-
-                    } else {
-                        showToast(R.string.artical_latest)
                     }
-                } else {
-                    showToast(R.string.exception_request_data)
                 }
                 isLoadingMore = false
             }
@@ -194,6 +199,9 @@ class WanAndroidHomeFragment : BaseVMFragment<WanAndroidRepository, WanAndroidVi
 
     override fun initView() {
         ZLog.d("initView()")
+        loadStatusView = rootView?.findViewById(R.id.load_status)
+        loadStatusView?.showProgress()
+
         initRecyclerView()
         initSwipeRefreshLayout()
         initFABInflate()
@@ -245,6 +253,10 @@ class WanAndroidHomeFragment : BaseVMFragment<WanAndroidRepository, WanAndroidVi
                     ZLog.d("onRefresh")
                     fireVibrate()
                     requestArticalData(0)
+                    //TODO banner如果没数据  需要刷新
+                    if(banner?.childCount == 0){
+                        viewModel.getBanner()
+                    }
                 }
 
                 override fun onLoadMore(refreshLayout: RefreshLayout) {
@@ -278,7 +290,7 @@ class WanAndroidHomeFragment : BaseVMFragment<WanAndroidRepository, WanAndroidVi
      * 通过index请求对应页数文章
      */
     private fun requestArticalData(pageId: Int){
-        ZLog.d("requestArticalData page index = $pageId")
+        ZLog.d("request ArticalData page index = $pageId")
         mCurPage = pageId
         mPageCount = if(mCurPage > mPageCount) mCurPage else ++mPageCount
         viewModel.getArticalData(pageId)
@@ -352,4 +364,20 @@ class WanAndroidHomeFragment : BaseVMFragment<WanAndroidRepository, WanAndroidVi
 
     override fun scrollToTopRefresh() {
     }
+
+    fun hideLoading() {
+        loadStatusView?.dismiss()
+        swipeRefreshLayout?.visibility = View.VISIBLE
+    }
+    private fun showError() {
+        swipeRefreshLayout?.visibility = View.GONE
+        loadStatusView?.showError()
+    }
+
+    fun showEmpty() {
+        swipeRefreshLayout?.visibility = View.GONE
+        loadStatusView?.showEmpty()
+    }
+
+
 }

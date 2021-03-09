@@ -1,6 +1,6 @@
 package com.zeke.reactivehttp.callback
 
-import github.leavesc.reactivehttp.exception.BaseHttpException
+import com.zeke.reactivehttp.exception.BaseHttpException
 
 /**
  * @Author: leavesC

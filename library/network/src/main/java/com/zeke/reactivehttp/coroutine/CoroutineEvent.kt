@@ -13,8 +13,8 @@ import kotlinx.coroutines.*
  * 为具体实现提供作用域控制。
  * 直接子类：
  *  IUIActionEvent、BaseRemoteDataSource
- *
  */
+
 interface ICoroutineEvent {
 
     /**
@@ -43,6 +43,8 @@ interface ICoroutineEvent {
 
     suspend fun <T> withNonCancellable(block: suspend CoroutineScope.() -> T): T {
         return withContext(NonCancellable, block)
+        // 等同于
+        //return withContext(NonCancellable) { block() }
     }
 
     suspend fun <T> withMain(block: suspend CoroutineScope.() -> T): T {
@@ -95,6 +97,13 @@ interface ICoroutineEvent {
 
     fun launchCPU(block: suspend CoroutineScope.() -> Unit): Job {
         return lifecycleSupportedScope.launch(context = cpuDispatcher, block = block)
+    }
+
+    fun launchCPUWithCatch(block: suspend CoroutineScope.() -> Unit,
+                           exec:(e:Exception) -> Unit) {
+        try {
+            lifecycleSupportedScope.launch(context = cpuDispatcher, block = block)
+        }catch (e: Exception){ exec(e) }
     }
 
     fun <T> asyncMain(block: suspend CoroutineScope.() -> T): Deferred<T> {

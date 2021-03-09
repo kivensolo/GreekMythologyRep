@@ -22,6 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory
  *
  * 使用 {@see BaseRemoteDataSource()} 代替
  */
+@Deprecated(message = "")
 class Api private constructor() {
 
     private object Helper {

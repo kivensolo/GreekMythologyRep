@@ -1,4 +1,4 @@
-package github.leavesc.reactivehttp.exception
+package com.zeke.reactivehttp.exception
 
 import com.zeke.reactivehttp.bean.IHttpWrapBean
 
@@ -7,6 +7,9 @@ import com.zeke.reactivehttp.bean.IHttpWrapBean
  * @Date: 2020/10/22 10:37
  * @Desc: Exception
  * @GitHub：https://github.com/leavesC
+ * 对网络请求过程中发生的各类异常情况的包装类，
+ * 任何透传到外部的异常信息均会被封装为 BaseHttpException 类型。
+ * BaseHttpException 有两个默认子类，分别用于表示服务器异常和本地异常.
  *
  * @param errorCode        服务器返回的错误码 或者是 HttpConfig 中定义的本地错误码
  * @param errorMessage     服务器返回的异常信息 或者是 请求过程中抛出的信息，是最原始的异常信息
@@ -59,5 +62,6 @@ class ServerCodeBadException(
  * 请求过程抛出异常
  * @param throwable
  */
-class LocalBadException(throwable: Throwable) : BaseHttpException(CODE_ERROR_LOCAL_UNKNOWN, throwable.message
+class LocalBadException(throwable: Throwable) : BaseHttpException(
+    CODE_ERROR_LOCAL_UNKNOWN, throwable.message
         ?: "", throwable)

@@ -34,8 +34,7 @@ interface WanAndroidApiService : BaseApiService {
      * @param pageIndex 页码从0开始
      */
     @GET("/article/list/{pageIndex}/json")
-    suspend fun requestArticles(@Path("pageIndex") pageIndex: Int)
-            : WanAndroidResponse<ArticleData>
+    suspend fun requestArticles(@Path("pageIndex") pageIndex: Int): WanAndroidResponse<ArticleData>
 
     /**
      * 置顶文章
@@ -124,6 +123,37 @@ interface WanAndroidApiService : BaseApiService {
         @Field("password") password: String?,
         @Query("repassword") repassword: String?
     ): WanAndroidResponse<User?>?
+    // --------------------> 上面这部分是之前老的
+
+//    @FormUrlEncoded
+//    @POST("/user/login")
+//    suspend fun userLogin(@Field("username") username: String
+//                          ,@Field("password") password: String)
+//            : Response<UserInfoBean>
+    @FormUrlEncoded
+    @POST("/user/login")
+    suspend fun userLogin(@Field("username") username: String
+                          ,@Field("password") password: String)
+            : UserInfoBean
+
+    /**
+     * java.lang.IllegalArgumentException:
+     * @Field parameters can only be used with form encoding. (parameter #1)
+     */
+    @FormUrlEncoded
+    @POST("user/register")
+    suspend fun userRegister(@Field("username") username:  String,
+                             @Field("password") password: String,
+                             @Field("repassword") repassword: String): WanAndroidResponse<UserInfoBean>
+//                             @Field("repassword") repassword: String): ResponseResult<RegisterBean>
+
+    /**
+     * 访问了 logout 后，服务端会让客户端清除 Cookie（即cookie max-Age=0），
+     * 如果客户端 Cookie 实现合理，可以实现自动清理，
+     * 如果本地做了用户账号密码和保存，及时清理。
+     */
+    @GET("user/logout/json")
+    suspend fun userLogout(): String
     //------------------------ 用户信息API End----------------------------
 
 }

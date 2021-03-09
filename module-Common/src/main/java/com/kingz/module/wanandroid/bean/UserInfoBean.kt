@@ -1,4 +1,4 @@
-package com.zeke.module_login.entity
+package com.kingz.module.wanandroid.bean
 
 /**
  * author: King.Z <br>
@@ -6,7 +6,7 @@ package com.zeke.module_login.entity
  * description:  <br>
  */
 data class UserInfoBean(
-    val data:Data?,
+    val data: Data?,
     val errorCode:Int,
     val errorMsg:String?
 )

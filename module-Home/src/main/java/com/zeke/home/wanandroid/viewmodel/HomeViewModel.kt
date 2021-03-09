@@ -17,7 +17,9 @@ import com.zeke.kangaroo.utils.ZLog
  */
 class HomeViewModel : WanAndroidViewModelV2() {
 
-    override val dataSource: HomeDataSource = HomeDataSource()
+    override val remoteDataSource by lazy {
+        HomeDataSource(this)
+    }
 
     val articalLiveData: MutableLiveData<ArticleData> by lazy {
         MutableLiveData<ArticleData>()
@@ -38,16 +40,15 @@ class HomeViewModel : WanAndroidViewModelV2() {
 
     fun getArticalData(pageId: Int) {
         ZLog.d("getArticalData pageId=$pageId")
-        //后续 增加异常情况下延迟重试逻辑
-        launchCPU {
-            try {
-                val result = dataSource.getArticals(pageId)
-                articalLiveData.postValue(result.data)
-            } catch (e: Exception) {
-                //java.net.SocketTimeoutException: timeout
-                ZLog.e("getArticalData on exception: ${e.printStackTrace()}")
-                articalLiveData.postValue(null)
-            }
+        //TODO 后续 增加异常情况下延迟重试逻辑
+        launchCPUWithCatch({
+            articalLiveData.postValue(null)
+            val result = remoteDataSource.getArticals(pageId)
+            articalLiveData.postValue(result.data)
+        }){
+            //java.net.SocketTimeoutException: timeout
+            ZLog.e("getArticalData on exception: ${it.printStackTrace()}")
+            articalLiveData.postValue(null)
         }
     }
 
@@ -58,7 +59,7 @@ class HomeViewModel : WanAndroidViewModelV2() {
     fun getBanner() {
         launchIO {
             try {
-                val result = dataSource.getBannerData()
+                val result = remoteDataSource.getBannerData()
                 if(result!!.code == -1){
                     bannerLiveData.postValue(ResponseResult.error(result.message ?:"未知异常"))
                 }else{
@@ -71,6 +72,4 @@ class HomeViewModel : WanAndroidViewModelV2() {
             }
         }
     }
-
-    fun getTopArticles(){}
 }

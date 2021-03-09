@@ -4,15 +4,12 @@ import android.content.Context
 import android.os.Handler
 import com.alibaba.android.arouter.launcher.ARouter
 import com.kingz.database.DatabaseApplication
-import com.kingz.module.common.api.GitHubService
-import com.kingz.module.common.api.WeatherService
 import com.kingz.module.common.utils.crash.NeverCrash
 import com.scwang.smart.refresh.footer.ClassicsFooter
 import com.scwang.smart.refresh.header.ClassicsHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.tencent.bugly.crashreport.CrashReport
 import com.zeke.kangaroo.utils.ZLog
-import com.zeke.network.retrofit.mannager.Api
 
 
 /**
@@ -54,7 +51,6 @@ open class CommonApp: DatabaseApplication(){
         INSTANCE = this
 //        _appMainHandler = Handler(mainLooper)
         initARouter()
-        initApiManager()
         initLog()
         initBugly()
         initCrashCatcher()
@@ -85,15 +81,6 @@ open class CommonApp: DatabaseApplication(){
             // 自定义参数---设备机型
             CrashReport.setAppChannel(this, "机型信号")
         }
-    }
-
-
-    /**
-     * 初始化app网络管理器
-     */
-    private fun initApiManager() {
-        Api.getInstance().registeServer(GitHubService::class.java)
-        Api.getInstance().registeServer(WeatherService::class.java)
     }
 
     private fun initLog() {

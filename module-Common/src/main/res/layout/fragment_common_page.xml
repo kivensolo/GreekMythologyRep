@@ -57,4 +57,10 @@
         app:pressedTranslationZ="@dimen/dp_8"
         app:layout_behavior="@string/behavior_fab_move"/>
 
+    <com.kingz.module.common.LoadStatusView
+        android:id="@+id/load_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

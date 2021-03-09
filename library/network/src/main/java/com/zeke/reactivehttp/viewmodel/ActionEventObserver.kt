@@ -10,7 +10,36 @@ import kotlinx.coroutines.Job
  * @Date: 2020/4/30 15:23
  * @Desc: 用于定义 View 和  ViewModel 均需要实现的一些 UI 层行为
  * @GitHub：https://github.com/leavesC
+ *
+ *                   |----------------------|
+ *                   | BaseReactiveActivity |
+ *                   |----------------------|
+ *                               |
+ *                               |
+ *                               ↓
+ *      |-----------------------------------------------------|
+ *      |                       /————>  ShowLoadingLiveData   |
+ *      | BaseReactiveViewMOdel |————> DismissLoadingLiveData |
+ *      |                       \————>  ShowToastLiveData     |
+ *      |-----------------------------------------------------|
+ *                               |
+ *                               |
+ *                               ↓
+ *                   |----------------------|
+ *                   | BaseRemoteDataSource |
+ *                   |----------------------|
+ *
+ * [#BaseRemoteDataSource]: 作为数据提供者处于最下层，只用于向上层提供数据，提供了多个同步请求和异步请求方法，
+ * 和 BaseReactiveViewModel 之间依靠 IUIActionEvent 接口来联系
+ *
+ * [#BaseReactiveViewModel]：作为用户数据的承载体和处理者，包含了多个和网络请求事件相关的
+ *  LiveData 用于驱动界面层的 UI 变化，和 BaseReactiveActivity 之间依靠 IViewModelActionEvent 接口来联系
+ *
+ * [#BaseReactiveActivity]: 包含与系统和用户交互的逻辑，其负责响应 BaseReactiveViewModel
+ * 中的数据变化，提供了和 BaseReactiveViewModel 进行绑定的方法
  */
+
+// 连接DaaSource和ViewModel层
 interface IUIActionEvent : ICoroutineEvent {
 
     fun showLoading(job: Job?)
@@ -23,6 +52,9 @@ interface IUIActionEvent : ICoroutineEvent {
 
 }
 
+/**
+ * 连接ViewModel和View层
+ */
 interface IViewModelActionEvent : IUIActionEvent {
 
     val showLoadingEventLD: MutableLiveData<ShowLoadingEvent>
@@ -57,10 +89,14 @@ interface IUIActionEventObserver : IUIActionEvent {
 
     val lLifecycleOwner: LifecycleOwner
 
+    /**
+     * 创建ViewModel的代理方法,可用于View层获取ViewModel对象
+     */
     fun <VM> getViewModel(
         clazz: Class<VM>,
         factory: ViewModelProvider.Factory? = null,
-        initializer: (VM.(lifecycleOwner: LifecycleOwner) -> Unit)? = null): Lazy<VM> where VM : ViewModel, VM : IViewModelActionEvent {
+        initializer: (VM.(lifecycleOwner: LifecycleOwner) -> Unit)? = null
+    ): Lazy<VM> where VM : ViewModel, VM : IViewModelActionEvent {
         return lazy {
             getViewModelFast(clazz, factory, initializer)
         }
@@ -68,7 +104,8 @@ interface IUIActionEventObserver : IUIActionEvent {
 
     fun <VM> getViewModelFast(clazz: Class<VM>,
                               factory: ViewModelProvider.Factory? = null,
-                              initializer: (VM.(lifecycleOwner: LifecycleOwner) -> Unit)? = null): VM where VM : ViewModel, VM : IViewModelActionEvent {
+                              initializer: (VM.(lifecycleOwner: LifecycleOwner) -> Unit)? = null
+    ): VM where VM : ViewModel, VM : IViewModelActionEvent {
         return when (val localValue = lLifecycleOwner) {
             is ViewModelStoreOwner -> {
                 if (factory == null) {

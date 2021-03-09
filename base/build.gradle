@@ -43,6 +43,9 @@ dependencies {
     androidTestImplementation root_test["test-ext-junit"]
     androidTestImplementation root_test["support-test-espresso"]
 
+    //网络库由Base层引出
+    api project(':library-network' )
+
     api root_dependencies["multidex"]
 
     api root_dependencies["appcompat"]

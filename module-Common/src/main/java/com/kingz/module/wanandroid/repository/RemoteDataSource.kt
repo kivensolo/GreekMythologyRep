@@ -4,14 +4,11 @@ import com.kingz.base.response.ResponseResult
 import com.kingz.database.entity.UserEntity
 import com.kingz.module.common.user.UserInfo
 import com.kingz.module.wanandroid.api.WanAndroidApiService
-import com.kingz.module.wanandroid.bean.Article
-import com.kingz.module.wanandroid.bean.ArticleData
-import com.kingz.module.wanandroid.bean.BannerItem
-import com.kingz.module.wanandroid.bean.CollectBean
+import com.kingz.module.wanandroid.bean.*
 import com.kingz.module.wanandroid.response.WanAndroidResponse
-import com.kingz.module.wanandroid.viewmodel.WanAndroidViewModelV2
 import com.zeke.kangaroo.utils.ZLog
 import com.zeke.reactivehttp.datasource.RemoteExtendDataSource
+import com.zeke.reactivehttp.viewmodel.IUIActionEvent
 import retrofit2.Retrofit
 
 /**
@@ -20,11 +17,28 @@ import retrofit2.Retrofit
  * description： 玩Android的DataSource
  *  Repository的概念分为remote-DataSource和local-DataSource
  */
-open class WanAndroidRemoteDataSource : RemoteExtendDataSource<WanAndroidApiService>(
-    iActionEvent = WanAndroidViewModelV2(),
+open class WanAndroidRemoteDataSource(iActionEvent: IUIActionEvent?)
+    : RemoteExtendDataSource<WanAndroidApiService>(
+    iActionEvent = iActionEvent,
     apiServiceClass = WanAndroidApiService::class.java
 ) {
-    override val baseUrl: String
+
+//    companion object {
+//        private val httpClient: OkHttpClient by lazy {
+//            createHttpClient()
+//        }
+//
+//        private fun createHttpClient(): OkHttpClient {
+//            val builder = OkHttpClient.Builder()
+//                    .readTimeout(1000L, TimeUnit.MILLISECONDS)
+//                    .writeTimeout(1000L, TimeUnit.MILLISECONDS)
+//                    .connectTimeout(1000L, TimeUnit.MILLISECONDS)
+//                    .retryOnConnectionFailure(true)
+//            return builder.build()
+//        }
+//    }
+
+    final override val baseUrl: String
         get() = "https://www.wanandroid.com"
 
     override fun showToast(msg: String) {
@@ -44,13 +58,8 @@ open class WanAndroidRemoteDataSource : RemoteExtendDataSource<WanAndroidApiServ
      * 重写Retrofit创建，用于自定义的Retrofit
      */
     override fun createRetrofit(baseUrl: String): Retrofit {
-//        val client = OkHttpClient.Builder()
-//                    .readTimeout(10000L, TimeUnit.MILLISECONDS)
-//                    .writeTimeout(10000L, TimeUnit.MILLISECONDS)
-//                    .connectTimeout(10000L, TimeUnit.MILLISECONDS)
-//                    .retryOnConnectionFailure(true).build()
 //        return Retrofit.Builder()
-//                    .client(client)
+//                    .client(httpClient)
 //                    .baseUrl(baseUrl)
 //                    .addConverterFactory(GsonConverterFactory.create())
 //                    .build()
@@ -77,7 +86,7 @@ open class WanAndroidRemoteDataSource : RemoteExtendDataSource<WanAndroidApiServ
 /**
  * 首页相关数据远
  */
-class HomeDataSource:WanAndroidRemoteDataSource(){
+class HomeDataSource(iActionEvent: IUIActionEvent?) : WanAndroidRemoteDataSource(iActionEvent) {
 
     /** 进行文章列表获取 */
     suspend fun getArticals(pageId: Int = 0): WanAndroidResponse<ArticleData> {
@@ -87,5 +96,27 @@ class HomeDataSource:WanAndroidRemoteDataSource(){
     suspend fun getBannerData(): ResponseResult<MutableList<BannerItem>>? {
         ZLog.d("get Banner ---> ")
         return apiService.bannerData()
+    }
+}
+
+/**
+ * 用户相关信息数据源
+ * 登录 & 注册等
+ */
+class LoginDataSource(iActionEvent: IUIActionEvent?) : WanAndroidRemoteDataSource(iActionEvent) {
+    /**
+     * 进行用户登录操作
+     */
+    suspend fun userLogin(name: String = "", password: String = ""): UserInfoBean {
+        return apiService.userLogin(name, password)
+    }
+
+    /**
+     * 进行用户注册操作
+     */
+    suspend fun userRegister(name: String = "",
+                             password: String = "",
+                             rePassword: String = ""): WanAndroidResponse<UserInfoBean> {
+        return apiService.userRegister(name, password, rePassword)
     }
 }

@@ -8,23 +8,20 @@ import android.text.TextUtils
 import android.view.View
 import android.widget.RelativeLayout
 import android.widget.VideoView
-import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.gyf.immersionbar.BarHide
 import com.gyf.immersionbar.ImmersionBar
 import com.kingz.base.BaseVMActivity
-import com.kingz.base.factory.ViewModelFactory
 import com.kingz.database.DatabaseApplication
 import com.kingz.database.entity.UserEntity
 import com.kingz.module.common.router.RPath
 import com.kingz.module.common.router.Router
 import com.kingz.module.common.user.UserInfo
+import com.kingz.module.wanandroid.bean.Data
+import com.kingz.module.wanandroid.bean.UserInfoBean
 import com.zeke.kangaroo.utils.ZLog
-import com.zeke.module_login.entity.Data
-import com.zeke.module_login.entity.UserInfoBean
-import com.zeke.module_login.repository.LoginRepository
 import com.zeke.module_login.viewmodel.LoginViewModel
 import kotlinx.android.synthetic.main.form_view.*
 import kotlinx.android.synthetic.main.splash_activity.*
@@ -36,7 +33,7 @@ import kotlinx.coroutines.*
  * description: 应用启动欢迎 & 登录页面 <br>
  */
 @Route(path = RPath.PAGE_LOGIN)
-class SplashActivity : BaseVMActivity<LoginRepository, LoginViewModel>(), View.OnClickListener {
+class SplashActivity : BaseVMActivity(), View.OnClickListener {
 
     private var inputType = InputType.NONE
 
@@ -47,35 +44,37 @@ class SplashActivity : BaseVMActivity<LoginRepository, LoginViewModel>(), View.O
 //    }
 
     // 使用 'by viewModels()' 的Kotlin属性代理的方式
-    override val viewModel: LoginViewModel by viewModels {
-        ViewModelFactory.build { LoginViewModel() }
+    // 可以学习一下 IUIActionEventObserver 中的getViewModel
+//    override val viewModel: LoginViewModel by viewModels {
+//        ViewModelFactory.build { LoginViewModel() }
+//    }
+    override val viewModel: LoginViewModel by getViewModel(LoginViewModel::class.java) {
+        // 初始化时就进行监听注册
+        loginInfoData.observe(it, Observer { response ->  //UserInfoBean
+            ZLog.d("loginInfoData onChanged: $response")
+            if (response != null) {
+                if (response.errorCode < 0) {
+                    showToast("登陆失败:${response.errorMsg}")
+                } else {
+                    showToast("欢迎登陆!${(response.data as Data).nickname}")
+                    saveUserInfo(response)
+                    openMainPage()
+                }
+            }
+        })
     }
 
     override fun initViewModel() {
         super.initViewModel()
         // Observe livedatas in UI-Thread
-        viewModel.loginInfoData.observe(this@SplashActivity, Observer {
-            ZLog.d("loginInfoData onChanged: $it")
-            val loginData = it
-            if (loginData != null) {
-                if (loginData.errorCode < 0) {
-                    showToast("登陆失败:${loginData.errorMsg}")
-                } else {
-                    showToast("欢迎登陆!${(loginData.data as Data).nickname}")
-                    saveUserInfo(loginData)
-                    openMainPage()
-                }
-            }
-        })
-
-        viewModel.registerData.observe(this, Observer {
+        viewModel.registerLiveData.observe(this, Observer {
             ZLog.d("registerData onChanged:", "$it")
-            val registerData = it?.body()
+            val registerData = it?.data
             if (registerData != null) {
-                if (registerData.errorCode < 0) {
-                    showToast("注册异常:${registerData.errorMsg}")
-                } else {
+                if (registerData.errorCode == 0) {
                     showToast("注册成功!")
+                } else {
+                    showToast("注册异常:${registerData.errorMsg}")
                 }
             }
         })

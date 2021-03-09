@@ -3,7 +3,7 @@ package com.zeke.module_login.database
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.kingz.database.dao.UserDao
-import com.zeke.module_login.entity.UserInfoBean
+import com.kingz.module.wanandroid.bean.UserInfoBean
 
 /**
  * author: King.Z <br>

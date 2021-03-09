@@ -25,16 +25,15 @@ import com.kingz.base.BaseVMActivity
 import com.kingz.base.factory.ViewModelFactory
 import com.kingz.module.common.router.RPath
 import com.kingz.module.wanandroid.WADConstants
-import com.kingz.module.wanandroid.repository.WanAndroidRepository
-import com.kingz.module.wanandroid.viewmodel.WanAndroidViewModel
+import com.kingz.module.wanandroid.viewmodel.WanAndroidViewModelV2
 import kotlinx.android.synthetic.main.web_activity.*
 
 @Route(path = RPath.PAGE_WEB)
-class WebActivity : BaseVMActivity<WanAndroidRepository, WanAndroidViewModel>(),
+class WebActivity : BaseVMActivity(),
     PopupMenu.OnMenuItemClickListener {
 
-    override val viewModel: WanAndroidViewModel by viewModels {
-        ViewModelFactory.build { WanAndroidViewModel() }
+    override val viewModel: WanAndroidViewModelV2 by viewModels {
+        ViewModelFactory.build { WanAndroidViewModelV2() }
     }
 
     var agentWeb: AgentWeb? = null

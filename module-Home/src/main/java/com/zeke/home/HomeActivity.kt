@@ -25,13 +25,12 @@ import com.kingz.module.home.BuildConfig
 import com.kingz.module.home.R
 import com.kingz.module.wanandroid.WADConstants
 import com.kingz.module.wanandroid.activity.AppBarActivity
-import com.kingz.module.wanandroid.repository.WanAndroidRepository
-import com.kingz.module.wanandroid.viewmodel.WanAndroidViewModel
 import com.module.slide.SuperSlidingPaneLayout
 import com.zeke.home.fragments.home.HomeContainerFragment
 import com.zeke.home.fragments.home.HomeLiveFragment
 import com.zeke.home.model.HomeSongModel
 import com.zeke.home.service.NSDService
+import com.zeke.home.wanandroid.viewmodel.HomeViewModel
 import com.zeke.kangaroo.utils.ZLog
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.slide_menu_layout.*
@@ -43,7 +42,7 @@ import java.lang.String
  * 首页
  */
 @Route(path = RPath.PAGE_MAIN)
-class HomeActivity : BaseVMActivity<WanAndroidRepository, WanAndroidViewModel>(),
+class HomeActivity : BaseVMActivity(),
     ISwitcher {
 
     private lateinit var homeVodFragment: HomeContainerFragment
@@ -53,8 +52,8 @@ class HomeActivity : BaseVMActivity<WanAndroidRepository, WanAndroidViewModel>()
     private var menuPanel: View? = null
 
 
-    override val viewModel: WanAndroidViewModel by viewModels {
-        ViewModelFactory.build { WanAndroidViewModel() }
+    override val viewModel: HomeViewModel by viewModels {
+        ViewModelFactory.build { HomeViewModel() }
     }
 
     override fun getContentLayout(): Int = R.layout.activity_main
