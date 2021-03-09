@@ -83,18 +83,19 @@ class LoadStatusView @JvmOverloads constructor(
     }
 
     fun showError(listener: OnClickListener?) {
-        this.visibility = View.VISIBLE
-        val errorString = resources.getString(R.string.networl_error)
-        val spannableString = SpannableString(errorString)
-        //实例化ForegroundColorSpan对象并设置前景色
-        val errorSpan = ForegroundColorSpan(resources.getColor(R.color.dialog_text))
-        spannableString.setSpan(errorSpan, 0, 7, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)//设置字体颜色
-        //实例化ForegroundColorSpan对象并设置前景色
-        val error2Span = ForegroundColorSpan(Color.parseColor("#989898"))
-        spannableString.setSpan(error2Span, 8, errorString.length, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)//设置字体颜色
-        statusText?.text = spannableString
-        statusText?.setOnClickListener(listener)
-        statusText?.visibility = View.VISIBLE
+        visibility = View.VISIBLE
+        val errorString = resources.getString(R.string.network_error)
+        val spannableString = SpannableString(errorString).apply {
+            val errorSpan = ForegroundColorSpan(resources.getColor(R.color.dialog_text_gray))
+            val error2Span = ForegroundColorSpan(resources.getColor(R.color.dialog_text))
+            setSpan(errorSpan, 0, 7, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
+            setSpan(error2Span, 8, errorString.length, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
+        }
+        statusText?.apply {
+            text = spannableString
+            setOnClickListener(listener)
+            visibility = View.VISIBLE
+        }
         progress?.visibility = View.GONE
     }
 
@@ -129,7 +130,7 @@ class LoadStatusView @JvmOverloads constructor(
     }
 
     fun dismiss() {
-        this.visibility = View.GONE
+        visibility = View.GONE
         progress?.visibility = View.GONE
         statusText?.visibility = View.GONE
     }

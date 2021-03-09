@@ -47,8 +47,11 @@ import java.util.*
 
 /**
  * 首页热门推荐(玩android)的Fragemnt
- *  //TODO 显示网络异常情况下，数据加载失败的UI
- *  //TODO banner如果没数据  需要刷新
+ *
+ *
+ *  需求 ---> :
+ *      banner如果没数据  需要刷新
+ *      恢复收藏失败情况下的红心UI
  */
 class WanAndroidHomeFragment : BaseVMFragment<WanAndroidViewModelV2>(),
     IRvScroller {
@@ -88,7 +91,6 @@ class WanAndroidHomeFragment : BaseVMFragment<WanAndroidViewModelV2>(),
                     resources.getString(R.string.uncollect_success)
                 }
             }else{
-                //TODO 恢复失败情况下的UI
                 if (!TextUtils.isEmpty(result.errorMsg)) {
                     result.errorMsg
                 } else {
@@ -126,19 +128,22 @@ class WanAndroidHomeFragment : BaseVMFragment<WanAndroidViewModelV2>(),
      */
     private fun obServArticalLiveData() {
         viewModel.articalLiveData.observe(this, Observer {
-            //FIXME 断网后再联网  手动刷新时，会回调两次
+            //FIXME 断网后，切回此页面  手动刷新时，会回调两次
+            if (it == null) {
+                ZLog.d("artical LiveData request error. result is null.")
+                Toast.makeText(context, resources.getString(R.string.exception_request_data),
+                    Toast.LENGTH_SHORT).show()
+                swipeRefreshLayout?.finishRefresh()
+                showErrorView(true)
+                return@Observer
+            }
+            dismissLoading()
+            showErrorView(false)
             launchIO {
-                ZLog.d("articalLiveData onObserved.")
-                if(it == null){
-                    ZLog.d("articalLiveData request error. result is null.")
-//                    showToast(R.string.exception_request_data)
-                    swipeRefreshLayout?.finishRefresh()
-                    showError()
-                    return@launchIO
-                }
+                ZLog.d("artical LiveData onObserved.")
 
                 val articleList = it.datas
-                ZLog.d("articalLiveData dataSize = ${articleList?.size};")
+                ZLog.d("artical LiveData dataSize = ${articleList?.size};")
                 //当前数据为空时
                 if (articleAdapter?.getDefItemCount() == 0) {
                     withContext(Dispatchers.Main) {
@@ -253,7 +258,6 @@ class WanAndroidHomeFragment : BaseVMFragment<WanAndroidViewModelV2>(),
                     ZLog.d("onRefresh")
                     fireVibrate()
                     requestArticalData(0)
-                    //TODO banner如果没数据  需要刷新
                     if(banner?.childCount == 0){
                         viewModel.getBanner()
                     }
@@ -365,19 +369,23 @@ class WanAndroidHomeFragment : BaseVMFragment<WanAndroidViewModelV2>(),
     override fun scrollToTopRefresh() {
     }
 
-    fun hideLoading() {
+    private fun dismissLoading() {
         loadStatusView?.dismiss()
         swipeRefreshLayout?.visibility = View.VISIBLE
     }
-    private fun showError() {
-        swipeRefreshLayout?.visibility = View.GONE
-        loadStatusView?.showError()
+
+    private fun showErrorView(show:Boolean) {
+        if(show){
+            swipeRefreshLayout?.visibility = View.GONE
+            loadStatusView?.showError()
+        }else{
+            swipeRefreshLayout?.visibility = View.VISIBLE
+            loadStatusView?.visibility = View.GONE
+        }
     }
 
     fun showEmpty() {
         swipeRefreshLayout?.visibility = View.GONE
         loadStatusView?.showEmpty()
     }
-
-
 }
