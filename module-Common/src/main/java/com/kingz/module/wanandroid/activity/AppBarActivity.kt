@@ -1,7 +1,6 @@
 package com.kingz.module.wanandroid.activity
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import androidx.activity.viewModels
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.kingz.base.BaseVMActivity
@@ -42,9 +41,9 @@ class AppBarActivity : BaseVMActivity() {
         when (type) {
             WADConstants.Type.TYPE_TAB_COLLECT -> {
                 //TODO 进行页面填充
-                val inflateView =
-                    LayoutInflater.from(this).inflate(R.layout.layout_appbar_recyclerview, null)
-                addContentView(inflateView, inflateView.layoutParams)
+//                val inflateView =
+//                    LayoutInflater.from(this).inflate(R.layout.layout_appbar_recyclerview, null)
+//                addContentView(inflateView, inflateView.layoutParams)
             }
         }
     }

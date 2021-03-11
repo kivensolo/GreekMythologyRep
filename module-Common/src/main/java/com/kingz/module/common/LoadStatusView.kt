@@ -12,9 +12,9 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.annotation.StringRes
+import com.module.views.loading.Win10LoaddingView
 import com.zhy.autolayout.utils.AutoUtils
 
 /**
@@ -26,7 +26,8 @@ class LoadStatusView @JvmOverloads constructor(
     defStyleAttr: Int = 0    // 注意这个attr的默认值,有的控件不一定是0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
-    private var progress: View? = null
+    private var progress : Win10LoaddingView?= null
+//    private var progress: View? = null
     private var statusText: TextView? = null
     private var errorIcon: Drawable? = null
     private var noDataIcon: Drawable? = null
@@ -36,7 +37,13 @@ class LoadStatusView @JvmOverloads constructor(
     }
 
     private fun initView(context: Context) {
-        progress = ProgressBar(context)
+//      progress = ProgressBar(context)
+        progress = Win10LoaddingView(context).apply {
+            setStrokeWidth(18)
+            setColor(resources.getColor(R.color.skygreen_b))
+            setDuration(3000)
+            setType(Win10LoaddingView.LoadingType.DOTS)
+        }
 //        progress.setIndeterminateDrawable()
 
         // 错误图标初始化
@@ -73,8 +80,11 @@ class LoadStatusView @JvmOverloads constructor(
     }
 
     fun showProgress() {
-        this.visibility = View.VISIBLE
-        progress?.visibility = View.VISIBLE
+        visibility = View.VISIBLE
+        progress?.apply {
+            visibility = View.VISIBLE
+            start()
+        }
         statusText?.visibility = View.GONE
     }
 
@@ -96,7 +106,10 @@ class LoadStatusView @JvmOverloads constructor(
             setOnClickListener(listener)
             visibility = View.VISIBLE
         }
-        progress?.visibility = View.GONE
+        progress?.apply {
+            visibility = View.GONE
+            stop()
+        }
     }
 
 
@@ -126,12 +139,18 @@ class LoadStatusView @JvmOverloads constructor(
         }
         statusText?.setOnClickListener(onClickListener)
         statusText?.visibility = View.VISIBLE
-        progress?.visibility = View.GONE
+        progress?.apply {
+            stop()
+            visibility = View.GONE
+        }
     }
 
     fun dismiss() {
         visibility = View.GONE
-        progress?.visibility = View.GONE
+        progress?.apply {
+            stop()
+            visibility = View.GONE
+        }
         statusText?.visibility = View.GONE
     }
 
