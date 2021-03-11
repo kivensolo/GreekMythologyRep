@@ -42,7 +42,6 @@ class HomeViewModel : WanAndroidViewModelV2() {
         ZLog.d("getArticalData pageId=$pageId")
         //TODO 后续 增加异常情况下延迟重试逻辑
         launchCPUWithCatch({
-            articalLiveData.postValue(null)
             val result = remoteDataSource.getArticals(pageId)
             articalLiveData.postValue(result.data)
         }){

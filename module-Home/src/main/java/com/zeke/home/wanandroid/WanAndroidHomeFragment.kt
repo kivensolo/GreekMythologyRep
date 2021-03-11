@@ -128,11 +128,10 @@ class WanAndroidHomeFragment : BaseVMFragment<WanAndroidViewModelV2>(),
      */
     private fun obServArticalLiveData() {
         viewModel.articalLiveData.observe(this, Observer {
-            //FIXME 断网后，切回此页面  手动刷新时，会回调两次
             if (it == null) {
                 ZLog.d("artical LiveData request error. result is null.")
-                Toast.makeText(context, resources.getString(R.string.exception_request_data),
-                    Toast.LENGTH_SHORT).show()
+//                Toast.makeText(context, resources.getString(R.string.exception_request_data),
+//                    Toast.LENGTH_SHORT).show()
                 swipeRefreshLayout?.finishRefresh()
                 showErrorView(true)
                 return@Observer
@@ -192,9 +191,12 @@ class WanAndroidHomeFragment : BaseVMFragment<WanAndroidViewModelV2>(),
 
 
     /**
-     * 以懒加载方式进行数据加载
+     * 以懒加载方式加载
      */
     override fun lazyInit() {
+        initViewModel()
+        initView()
+
         if(articleAdapter?.itemCount == 1){
             // 无数据时(只有1个HeadView), 才请求数据
             viewModel.getBanner()
@@ -322,6 +324,7 @@ class WanAndroidHomeFragment : BaseVMFragment<WanAndroidViewModelV2>(),
         ZLog.d("onViewDestory.")
         lifecycleScope.cancel()
         viewModel.cancle(this)
+        loadStatusView = null
         super.onViewDestory()
     }
 
