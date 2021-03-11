@@ -13,7 +13,7 @@ import com.zeke.kangaroo.utils.ZLog
  * onCreatedView -> onActivityCreated -> onStart -> onResume
  * -> onPause -> onStop -> onDestroyView -> onDestroy -> onDetach
  * */
-abstract class BaseLazyFragment : BaseCommonFragment() {
+abstract class BaseLazyFragment : Fragment() {
 
     /**
      * 当使用ViewPager+Fragment形式时，setUserVisibleHint会优先Fragment生命周期函数调用，
