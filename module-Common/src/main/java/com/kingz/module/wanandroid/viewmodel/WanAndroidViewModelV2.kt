@@ -36,47 +36,41 @@ open class WanAndroidViewModelV2 : BaseReactiveViewModel() {
 
     /**
      * 进行指定文章的收藏和取消收藏
+     * @param srcArticle: 原文章数据
+     * @param isCollect: 是否收藏
      */
-    fun changeArticleLike(item: Article, position: Int, add:Boolean) {
+    fun changeArticleLike(srcArticle: Article, position: Int, isCollect:Boolean) {
         launchIO {
+            var result:CollectActionBean ?= null
             try {
-                val data = remoteDataSource.changeArticleLike(item)
-                val result = CollectActionBean().apply {
-                    actionType = if (item.collect) {
+                val data = remoteDataSource.changeArticleLike(srcArticle)
+                result = CollectActionBean().apply {
+                    actionType = if (srcArticle.collect) {
                         CollectActionBean.TYPE.UNCOLLECT
                     } else {
                         CollectActionBean.TYPE.COLLECT
                     }
                     isSuccess = (data.errorCode == 0)
-                    // 收藏状态更新成功时，改变传递数据，用于UI回绑
-                    if(isSuccess){
-                        item.collect = add
+                    // 收藏状态更新成功时，改变Item数据
+                    if (isSuccess) {
+                        srcArticle.collect = isCollect
+                    } else {
+                        errorMsg = data.errorMsg ?: "unKnow"
                     }
                 }
-                if (data.errorCode == 0) {
-                    val collect = item.collect
-                    item.collect = !collect
-                } else {
-                    result.errorMsg = data.errorMsg ?: "unKnow"
-                }
-
-                result.bindArticleData = item
-                result.articlePostion = position
-                articalCollectData.postValue(result)
             } catch (e: Exception) {
                 //java.net.SocketTimeoutException: timeout
                 ZLog.e("changeArticleLike on exception: ${e.printStackTrace()}")
-                val result = CollectActionBean().apply {
-                    actionType = if (item.collect) {
+                result = CollectActionBean().apply {
+                    actionType = if (srcArticle.collect) {
                         CollectActionBean.TYPE.UNCOLLECT
                     } else {
                         CollectActionBean.TYPE.COLLECT
                     }
                     isSuccess = false
                 }
-
-                result.bindArticleData = item
-                result.articlePostion = position
+            }finally {
+                result?.articlePostion = position
                 articalCollectData.postValue(result)
             }
         }
