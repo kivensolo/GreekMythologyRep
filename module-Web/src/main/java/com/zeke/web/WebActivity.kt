@@ -138,6 +138,10 @@ class WebActivity : BaseVMActivity(),
                     }
                 })
                 .setWebViewClient(object : WebViewClient() {
+                    //Crash
+                    //    java.lang.IllegalArgumentException:
+                    //    Parameter specified as non-null is null: method kotlin.jvm.internal.Intrinsics.checkParameterIsNotNull,
+                    //    parameter favicon
                     override fun onPageStarted(
                         view: WebView,
                         url: String,
