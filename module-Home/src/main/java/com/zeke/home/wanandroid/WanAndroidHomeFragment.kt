@@ -84,6 +84,8 @@ class WanAndroidHomeFragment : BaseVMFragment<WanAndroidViewModelV2>(),
         obServBannerLiveData()
 
         viewModel.articalCollectData.observe(this, Observer { result ->
+            onArticalItemRefreshAfterCollect(result)
+
             val message :String = if (result.isSuccess) {
                 if (result.actionType == CollectActionBean.TYPE.COLLECT) {
                     resources.getString(R.string.collect_success)
@@ -103,6 +105,19 @@ class WanAndroidHomeFragment : BaseVMFragment<WanAndroidViewModelV2>(),
             }
             Toast.makeText(context,message,Toast.LENGTH_SHORT).show()
         })
+    }
+
+    private fun onArticalItemRefreshAfterCollect(result: CollectActionBean) {
+        result.bindArticleData?.let { artical ->
+            articleAdapter?.apply {
+                val oldItem = getItem(result.articlePostion)
+                // 收藏数据改变，重置UI绑定数据
+                if (oldItem.collect != artical.collect) {
+                    ZLog.d("current artical is collected ? ${artical.collect}")
+                    articleAdapter?.setData(result.articlePostion, artical)
+                }
+            }
+        }
     }
 
     /**
@@ -233,12 +248,11 @@ class WanAndroidHomeFragment : BaseVMFragment<WanAndroidViewModelV2>(),
                 //设置文章收藏监听器
                 likeListener = object : ArticleAdapter.LikeListener{
                     override fun liked(item: Article, adapterPosition: Int) {
-                        //TODO 收藏后,进行绑定的数据刷新
-                        viewModel.changeArticleLike(item)
+                        viewModel.changeArticleLike(item, adapterPosition,true)
                     }
 
                     override fun unLiked(item: Article, adapterPosition: Int) {
-                        viewModel.changeArticleLike(item)
+                        viewModel.changeArticleLike(item, adapterPosition, false)
                     }
 
                 }

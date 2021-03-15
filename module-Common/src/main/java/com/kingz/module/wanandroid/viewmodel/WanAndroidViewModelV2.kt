@@ -37,7 +37,7 @@ open class WanAndroidViewModelV2 : BaseReactiveViewModel() {
     /**
      * 进行指定文章的收藏和取消收藏
      */
-    fun changeArticleLike(item: Article) {
+    fun changeArticleLike(item: Article, position: Int, add:Boolean) {
         launchIO {
             try {
                 val data = remoteDataSource.changeArticleLike(item)
@@ -48,6 +48,10 @@ open class WanAndroidViewModelV2 : BaseReactiveViewModel() {
                         CollectActionBean.TYPE.COLLECT
                     }
                     isSuccess = (data.errorCode == 0)
+                    // 收藏状态更新成功时，改变传递数据，用于UI回绑
+                    if(isSuccess){
+                        item.collect = add
+                    }
                 }
                 if (data.errorCode == 0) {
                     val collect = item.collect
@@ -55,6 +59,9 @@ open class WanAndroidViewModelV2 : BaseReactiveViewModel() {
                 } else {
                     result.errorMsg = data.errorMsg ?: "unKnow"
                 }
+
+                result.bindArticleData = item
+                result.articlePostion = position
                 articalCollectData.postValue(result)
             } catch (e: Exception) {
                 //java.net.SocketTimeoutException: timeout
@@ -67,6 +74,9 @@ open class WanAndroidViewModelV2 : BaseReactiveViewModel() {
                     }
                     isSuccess = false
                 }
+
+                result.bindArticleData = item
+                result.articlePostion = position
                 articalCollectData.postValue(result)
             }
         }
