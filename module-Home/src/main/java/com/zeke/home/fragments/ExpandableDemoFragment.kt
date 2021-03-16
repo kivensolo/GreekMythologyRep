@@ -29,9 +29,8 @@ class ExpandableDemoFragment : BaseFragment()
     private var expandAdapter: DemoFragmentExpandableListAdapter? = null
     private var listView: AnimatedExpandableListView? = null
 
-    companion object {
-        //FIXME 如何去加载so库？
-        // System.loadLibrary("testNative-lib")
+    init {
+         System.loadLibrary("testNative-lib")
     }
 
     override val isShown: Boolean
@@ -100,6 +99,10 @@ class ExpandableDemoFragment : BaseFragment()
             } else {
                 listView!!.expandGroupWithAnimation(groupPosition)
             }
+            Toast.makeText(activity,
+                    stringFromJNI(),
+                    Toast.LENGTH_SHORT)
+                    .show()
             return true
         }
     }

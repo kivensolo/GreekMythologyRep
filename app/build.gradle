@@ -49,25 +49,37 @@ android {
 
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 
-//        ndk{
-//            abiFilters 'x86','x86_64','armeabi-v7a','armeabi','armea64-v8a'
-//        }
+        ndk{
+            //输出指定ABI的so文件 Supported ABIs are [arm64-v8a, armeabi-v7a, x86, x86_64]
+            abiFilters 'x86','armeabi-v7a'
+        }
 
-//        externalNativeBuild {
-//            cmake {
-//                cppFlags "-std=c++11 -frtti -fexceptions"
-//                abiFilters 'armeabi-v7a','x86'
-//
-//                version "3.6"
-//                //  .externalNativeBuild/cmake/debug/{abi}/cmake_build_command.txt
-//            }
-//        }
+        // NDK Step1
+        externalNativeBuild {
+            cmake {
+                //See more: https://developer.android.com/ndk/guides/cmake.html
+                // -fexceptions: 支持C++异常处理  -frtti 支持运行时类型识别
+                cppFlags "-std=c++11 -frtti -fexceptions"
+                abiFilters 'armeabi-v7a','x86'
+
+                version "3.6"
+                //  .externalNativeBuild/cmake/debug/{abi}/cmake_build_command.txt
+            }
+        }
 
         // Arouter的Kotlin配置
         kapt {
             arguments {
                 arg("AROUTER_MODULE_NAME", project.getName())
             }
+        }
+    }
+
+    // NDK Step2: Use this block to link Gradle to your CMake or ndk-build script.
+    externalNativeBuild {
+        cmake {
+            // Provides a relative path to your CMake build script.
+            path "CMakeLists.txt"
         }
     }
 
@@ -96,15 +108,6 @@ android {
             signingConfig signingConfigs.ZekeSigned
         }
     }
-
-    // Use this block to link Gradle to your CMake or ndk-build script.
-//    externalNativeBuild {
-//        cmake {
-//            // Provides a relative path to your CMake build script.
-//            path "CMakeLists.txt"
-//        }
-//    }
-
     // Specifies flavor dimensions.
     flavorDimensions "area"
 
