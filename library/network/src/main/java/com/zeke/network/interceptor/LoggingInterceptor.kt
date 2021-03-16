@@ -86,7 +86,7 @@ class LoggingInterceptor : Interceptor {
         val endTime = System.nanoTime()
         val headers = response.headers()
         ZLog.d(
-            String.format( "<--- TIME = %.1fms%n%s",
+            String.format( "<=== TIME(%.1fms)%n%s",
                 (endTime - startTime) / 1e6,  // aka: 1x10^6
                 headers
             )

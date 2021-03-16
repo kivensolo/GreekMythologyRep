@@ -30,6 +30,7 @@ import com.kingz.module.wanandroid.bean.Article
 import com.kingz.module.wanandroid.bean.BannerItem
 import com.kingz.module.wanandroid.bean.CollectActionBean
 import com.kingz.module.wanandroid.viewmodel.WanAndroidViewModelV2
+import com.like.LikeButton
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
@@ -47,11 +48,6 @@ import java.util.*
 
 /**
  * 首页热门推荐(玩android)的Fragemnt
- *
- *
- *  需求 ---> :
- *      banner如果没数据  需要刷新
- *      恢复收藏失败情况下的红心UI
  */
 class WanAndroidHomeFragment : BaseVMFragment<WanAndroidViewModelV2>(),
     IRvScroller {
@@ -84,40 +80,31 @@ class WanAndroidHomeFragment : BaseVMFragment<WanAndroidViewModelV2>(),
         obServBannerLiveData()
 
         viewModel.articalCollectData.observe(this, Observer { result ->
-            onArticalItemRefreshAfterCollect(result)
-
             val message :String = if (result.isSuccess) {
+                // 处理操作成功的情况
                 if (result.actionType == CollectActionBean.TYPE.COLLECT) {
                     resources.getString(R.string.collect_success)
                 } else {
                     resources.getString(R.string.uncollect_success)
                 }
             }else{
+                // 处理操作失败的情况，需要重置UI
                 if (!TextUtils.isEmpty(result.errorMsg)) {
                     result.errorMsg
                 } else {
+                    val childView = mRecyclerView.getChildAt(result.articlePostion)
+                    val likeBUtton = childView.findViewById<LikeButton>(R.id.ivLike)
                     if (result.actionType == CollectActionBean.TYPE.COLLECT) {
+                        likeBUtton.isLiked = false
                         resources.getString(R.string.collect_failed)
                     } else {
+                        likeBUtton.isLiked = true
                         resources.getString(R.string.uncollect_failed)
                     }
                 }
             }
             Toast.makeText(context,message,Toast.LENGTH_SHORT).show()
         })
-    }
-
-    private fun onArticalItemRefreshAfterCollect(result: CollectActionBean) {
-        result.bindArticleData?.let { artical ->
-            articleAdapter?.apply {
-                val oldItem = getItem(result.articlePostion)
-                // 收藏数据改变，重置UI绑定数据
-                if (oldItem.collect != artical.collect) {
-                    ZLog.d("current artical is collected ? ${artical.collect}")
-                    articleAdapter?.setData(result.articlePostion, artical)
-                }
-            }
-        }
     }
 
     /**
@@ -248,11 +235,11 @@ class WanAndroidHomeFragment : BaseVMFragment<WanAndroidViewModelV2>(),
                 //设置文章收藏监听器
                 likeListener = object : ArticleAdapter.LikeListener{
                     override fun liked(item: Article, adapterPosition: Int) {
-                        viewModel.changeArticleLike(item, adapterPosition,true)
+                        viewModel.changeArticleLike(item, adapterPosition, true)
                     }
 
                     override fun unLiked(item: Article, adapterPosition: Int) {
-                        viewModel.changeArticleLike(item, adapterPosition, false)
+                        viewModel.changeArticleLike(item, adapterPosition,false)
                     }
 
                 }

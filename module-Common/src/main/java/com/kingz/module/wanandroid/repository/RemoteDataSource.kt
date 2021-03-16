@@ -2,14 +2,21 @@ package com.kingz.module.wanandroid.repository
 
 import com.kingz.base.response.ResponseResult
 import com.kingz.database.entity.UserEntity
+import com.kingz.module.common.CommonApp
 import com.kingz.module.common.user.UserInfo
 import com.kingz.module.wanandroid.api.WanAndroidApiService
 import com.kingz.module.wanandroid.bean.*
 import com.kingz.module.wanandroid.response.WanAndroidResponse
 import com.zeke.kangaroo.utils.ZLog
+import com.zeke.network.OkHttpClientManager
+import com.zeke.network.interceptor.AddCookiesInterceptor
+import com.zeke.network.interceptor.SaveCookiesInterceptor
 import com.zeke.reactivehttp.datasource.RemoteExtendDataSource
 import com.zeke.reactivehttp.viewmodel.IUIActionEvent
+import okhttp3.Interceptor
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 /**
  * author：ZekeWang
@@ -23,20 +30,25 @@ open class WanAndroidRemoteDataSource(iActionEvent: IUIActionEvent?)
     apiServiceClass = WanAndroidApiService::class.java
 ) {
 
-//    companion object {
-//        private val httpClient: OkHttpClient by lazy {
-//            createHttpClient()
-//        }
-//
-//        private fun createHttpClient(): OkHttpClient {
-//            val builder = OkHttpClient.Builder()
-//                    .readTimeout(1000L, TimeUnit.MILLISECONDS)
-//                    .writeTimeout(1000L, TimeUnit.MILLISECONDS)
-//                    .connectTimeout(1000L, TimeUnit.MILLISECONDS)
-//                    .retryOnConnectionFailure(true)
-//            return builder.build()
-//        }
-//    }
+    companion object {
+        private val wanAndroidHttpClient: OkHttpClient by lazy {
+            createHttpClient()
+        }
+
+        private fun createHttpClient(): OkHttpClient {
+            val okHttpClientManager = OkHttpClientManager.getInstance()
+            okHttpClientManager.setBuilderFactory(object :
+                OkHttpClientManager.ClientBuilderFactory() {
+                override fun getPreInterceptors(): MutableList<Interceptor> {
+                    val list = ArrayList<Interceptor>()
+                    list.add(AddCookiesInterceptor(CommonApp.getInstance().applicationContext))
+                    list.add(SaveCookiesInterceptor(CommonApp.getInstance().applicationContext))
+                    return list
+                }
+            })
+            return okHttpClientManager.okHttpClient
+        }
+    }
 
     final override val baseUrl: String
         get() = "https://www.wanandroid.com"
@@ -58,12 +70,11 @@ open class WanAndroidRemoteDataSource(iActionEvent: IUIActionEvent?)
      * 重写Retrofit创建，用于自定义的Retrofit
      */
     override fun createRetrofit(baseUrl: String): Retrofit {
-//        return Retrofit.Builder()
-//                    .client(httpClient)
-//                    .baseUrl(baseUrl)
-//                    .addConverterFactory(GsonConverterFactory.create())
-//                    .build()
-        return super.createRetrofit(baseUrl)
+        return Retrofit.Builder()
+                    .client(wanAndroidHttpClient)
+                    .baseUrl(baseUrl)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build()
     }
 
     /**

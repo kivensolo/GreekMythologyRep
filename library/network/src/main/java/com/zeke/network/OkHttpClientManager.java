@@ -211,8 +211,7 @@ public class OkHttpClientManager {
                 .retryOnConnectionFailure(true)
                 .connectTimeout(connectTimeOut, TimeUnit.MILLISECONDS)
                 .readTimeout(readTimeOut, TimeUnit.MILLISECONDS)
-                .writeTimeout(writeTimeOut, TimeUnit.MILLISECONDS)
-                .retryOnConnectionFailure(true);
+                .writeTimeout(writeTimeOut, TimeUnit.MILLISECONDS);
 
         // 外部拦截器添加
         if (builderFactory != null) {
