@@ -1,0 +1,70 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+def root_android = rootProject.ext.android
+
+android {
+    compileSdkVersion root_android.compileSdkVersion
+    buildToolsVersion root_android.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion root_android.minSdkVersion
+        targetSdkVersion root_android.targetSdkVersion
+        versionCode root_android.versionCode
+        versionName root_android.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+
+        ndk {
+            //输出指定ABI的so文件 Supported ABIs are [arm64-v8a, armeabi-v7a, x86, x86_64]
+            abiFilters 'x86', 'armeabi-v7a'
+        }
+
+        // NDK Step1
+        externalNativeBuild {
+            cmake {
+                //See more: https://developer.android.com/ndk/guides/cmake.html
+                // -fexceptions: Exceptions Support 支持C++异常处理
+                // -frtti : Runtime Type Information Support 支持运行时类型识别
+                cppFlags "-std=c++11 -frtti -fexceptions"
+                abiFilters 'armeabi-v7a', 'x86'
+
+                version "3.6"
+                //  .externalNativeBuild/cmake/debug/{abi}/cmake_build_command.txt
+            }
+        }
+    }
+
+    buildTypes {
+        debug {
+            zipAlignEnabled true
+            minifyEnabled false
+        }
+        release {
+            zipAlignEnabled true
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    // NDK Step2: Use this block to link Gradle to your CMake or ndk-build script.
+    externalNativeBuild {
+        cmake {
+            // Provides a relative path to your CMake build script.
+            path "CMakeLists.txt"
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation rootProject.ext.dependencies["appcompat"]
+    implementation 'androidx.core:core-ktx:1.3.0'
+    testImplementation rootProject.ext.test["junit"]
+    androidTestImplementation rootProject.ext.test["test-ext-junit"]
+    androidTestImplementation rootProject.ext.test["support-test-espresso"]
+}

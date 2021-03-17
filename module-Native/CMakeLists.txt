@@ -12,12 +12,12 @@ cmake_minimum_required(VERSION 3.4.1)
 
 # 编译出一个动态库 native-lib，源文件只有 src/main/cpp/native-lib.cpp
 add_library( # 设置library名称
-             testNative-lib
+             ZekeBitMap
 
              # 设置library模式
              # SHARED模式会编译so文件，点击AS的编译按钮，
              #  在app/build/intermediates/cmake/xxx/obj路径下会生成不同CPU架构对应的so文件
-             # STATIC模式不会编译
+             # STATIC模式不会编译  但是ndk_build的方式，两种都会生成so文件
              SHARED
 
              # 提供到源代码文件的相对路径.
@@ -33,7 +33,7 @@ find_library( # Sets the name of the path variable.
 
 # 关联library
 target_link_libraries( # 关联的library
-                       testNative-lib
+                       ZekeBitMap
                        # Links the target library to the log library
                        # included in the NDK.
                        # 关联native-lib和log-lib

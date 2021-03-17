@@ -5,6 +5,7 @@ include ':app-playerdemo'
 include ':app-hlsCacheDemo'
 include ':app-bannerDemo'
 include ':app-Kotlin-Coroutines-Examples'
+include ':module-Native'
 
 include ':base'
 include ':database'

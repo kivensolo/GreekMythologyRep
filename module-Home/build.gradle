@@ -81,6 +81,7 @@ dependencies {
     kapt root_dependencies["arouter_compiler"]
 
     implementation project(':module-Common')
+    implementation project(':module-Native')
 
     implementation root_dependencies["gson"]
 //    implementation "androidx.constraintlayout:constraintlayout:1.1.3"

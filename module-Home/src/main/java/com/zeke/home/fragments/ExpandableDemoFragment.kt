@@ -29,9 +29,6 @@ class ExpandableDemoFragment : BaseFragment()
     private var expandAdapter: DemoFragmentExpandableListAdapter? = null
     private var listView: AnimatedExpandableListView? = null
 
-    init {
-         System.loadLibrary("testNative-lib")
-    }
 
     override val isShown: Boolean
         get() = activity != null && (activity as BaseActivity).isActivityShow && isVisible
@@ -99,13 +96,8 @@ class ExpandableDemoFragment : BaseFragment()
             } else {
                 listView!!.expandGroupWithAnimation(groupPosition)
             }
-            Toast.makeText(activity,
-                    stringFromJNI(),
-                    Toast.LENGTH_SHORT)
-                    .show()
             return true
         }
     }
 
-    external fun stringFromJNI(): String
 }

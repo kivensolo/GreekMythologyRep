@@ -32,11 +32,13 @@ import com.zeke.home.model.HomeSongModel
 import com.zeke.home.service.NSDService
 import com.zeke.home.wanandroid.viewmodel.HomeViewModel
 import com.zeke.kangaroo.utils.ZLog
+import com.zeke.utils.BitmapUtils
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.slide_menu_layout.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.String
+
 
 /**
  * 首页
@@ -65,6 +67,7 @@ class HomeActivity : BaseVMActivity(),
         initSlidingPaneLayout()
 //        initBannerView()
         initSlideMenuView()
+        ZLog.d("init:" + BitmapUtils.native_get_string())
     }
 
     private fun initSlideMenuView() {
