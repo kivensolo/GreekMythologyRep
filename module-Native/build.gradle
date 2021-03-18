@@ -8,7 +8,10 @@ android {
     compileSdkVersion root_android.compileSdkVersion
     buildToolsVersion root_android.buildToolsVersion
 
+    android.ndkVersion "22.0.7026061"
+
     defaultConfig {
+
         minSdkVersion root_android.minSdkVersion
         targetSdkVersion root_android.targetSdkVersion
         versionCode root_android.versionCode
