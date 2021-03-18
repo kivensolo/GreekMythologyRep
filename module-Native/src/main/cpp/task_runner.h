@@ -2,59 +2,60 @@
 #define __TASK_RUNNER__
 
 class runner_base {
-public:
-	virtual void * run() = 0;
+	public:
+		virtual void * run() = 0;
 };
 
 template <typename _Runner, typename _ParamType>
+
 class task_runner : public runner_base {
 	_Runner &_runner;
 	_ParamType _param;
 
-public:
-	task_runner(_Runner &runner, _ParamType param)
-		: _runner(runner)
-		, _param(param) {}
+	public:
+		task_runner(_Runner &runner, _ParamType param)
+			: _runner(runner)
+			, _param(param) {}
 
-	virtual void * run() {
-		this->_runner(&(this->_param));
-		return 0;
-	}
+		virtual void * run() {
+			this->_runner(&(this->_param));
+			return 0;
+		}
 };
 
 class thread_worker {
 	volatile bool _terminate;
 	runner_base * _runners[16];
 	int _runner_count;
-protected:
-	void * _run() {
-		while (!_terminate) {
-			if (_runner_count == 0) {
-				this->wait_task();
-				continue;
+	protected:
+		void * _run() {
+			while (!_terminate) {
+				if (_runner_count == 0) {
+					this->wait_task();
+					continue;
+				}
+				while (_runner_count > 0) {
+					_runner_count--;
+					_runners[_runner_count]->run();
+				}
+				this->signal_task_finished();
 			}
-			while (_runner_count > 0) {
-				_runner_count--;
-				_runners[_runner_count]->run();
-			}
-			this->signal_task_finished();
+			return 0;
 		}
-		return 0;
-	}
-	virtual void wait_task() = 0;
-	virtual void signal_task_finished() = 0;
-	void terminate() {
-		_terminate = true;
-		this->signal();
-	}
-public:
-	thread_worker() : _terminate(false), _runner_count(0) {}
-	void add_runner(runner_base *runner) {
-		_runners[_runner_count++] = runner;
-	}
-	virtual void wait() = 0;
-	virtual void signal() = 0;
-	virtual void join() = 0;
+		virtual void wait_task() = 0;
+		virtual void signal_task_finished() = 0;
+		void terminate() {
+			_terminate = true;
+			this->signal();
+		}
+	public:
+		thread_worker() : _terminate(false), _runner_count(0) {}
+		void add_runner(runner_base *runner) {
+			_runners[_runner_count++] = runner;
+		}
+		virtual void wait() = 0;
+		virtual void signal() = 0;
+		virtual void join() = 0;
 };
 
 #if _WIN32
@@ -112,30 +113,31 @@ int GET_CPU_NUM() {
 }
 #else
 class pthread_sem {
-	sem_t _sem;
+//	信号量的数据类型为结构sem_t
+	sem_t _sem; //sem为指向信号量结构的一个指针
 public:
 	pthread_sem(int value = 0, int shared = 0) {
-		sem_init(&_sem, shared, value);
+		sem_init(&_sem, shared, value); //整型信号量
 	}
 	~pthread_sem() {
 		sem_destroy(&_sem);
 	}
 	int wait() {
-		return sem_wait(&_sem);
+		return sem_wait(&_sem); //阻塞的等待灯亮操作(灯亮:信号量大于0)
 	}
 	int signal(int n = 1) {
-#if _WIN32
-		if (n == 1) {
-			return sem_post(&_sem);
-		}
-		return sem_post_multiple(&_sem, n);
-#else
-		return sem_post(&_sem);
-#endif
+		#if _WIN32
+				if (n == 1) {
+					return sem_post(&_sem);
+				}
+				return sem_post_multiple(&_sem, n);
+		#else
+				return sem_post(&_sem);
+		#endif
 	}
 	int value() {
 		int val = 0;
-		sem_getvalue(&_sem, &val);
+		sem_getvalue(&_sem, &val); // 获取灯值
 		return val;
 	}
 };

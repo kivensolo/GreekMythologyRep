@@ -10,7 +10,7 @@ cmake_minimum_required(VERSION 3.4.1)
 # 可以通过添加多个add_library()命令来定义多个库,CMake会自动建造它们。
 # 当构建应用时，Gradle会自动将共享库打包到APK中。.
 
-# 编译出一个动态库 native-lib，源文件只有 src/main/cpp/native-lib.cpp
+# 编译出一个动态库 native-lib
 add_library( # 设置library名称
              ZekeBitMap
 
@@ -21,7 +21,8 @@ add_library( # 设置library名称
              SHARED
 
              # 提供到源代码文件的相对路径.
-             src/main/cpp/native-lib.cpp)
+             src/main/cpp/BitmapTool.cpp
+             src/main/cpp/JniTestDemo.cpp)
 
 # 定位library log_lib 并link到动态库 native-lib 中
 find_library( # Sets the name of the path variable.

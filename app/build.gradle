@@ -49,10 +49,11 @@ android {
 
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 
-//        ndk{
-//            //输出指定ABI的so文件 Supported ABIs are [arm64-v8a, armeabi-v7a, x86, x86_64]
-//            abiFilters 'x86','armeabi-v7a'
-//        }
+        ndk{
+            // apk打包时包含的ABI的so文件
+            // Supported ABIs are [arm64-v8a, armeabi-v7a, x86, x86_64]
+            abiFilters 'arm64-v8a','x86','armeabi-v7a'
+        }
 
         // Arouter的Kotlin配置
         kapt {

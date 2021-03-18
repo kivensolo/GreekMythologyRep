@@ -17,10 +17,12 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
 
-        ndk {
-            //输出指定ABI的so文件 Supported ABIs are [arm64-v8a, armeabi-v7a, x86, x86_64]
-            abiFilters 'x86', 'armeabi-v7a'
-        }
+//        ndk {
+//            //apk打包包含的ABI的so文件 Supported ABIs are [arm64-v8a, armeabi-v7a, x86, x86_64]
+//            // 如果当前编译项目中用abiFilters，则会进行二次过滤，
+//            // 在cmake的abiFilters输出文件中再过滤一次
+//            abiFilters 'armeabi-v7a', 'arm64-v8a'
+//        }
 
         // NDK Step1
         externalNativeBuild {
@@ -29,7 +31,9 @@ android {
                 // -fexceptions: Exceptions Support 支持C++异常处理
                 // -frtti : Runtime Type Information Support 支持运行时类型识别
                 cppFlags "-std=c++11 -frtti -fexceptions"
-                abiFilters 'armeabi-v7a', 'x86'
+
+                // 编译后输出指定ABI的so文件
+                abiFilters 'armeabi-v7a', 'x86', 'arm64-v8a'
 
                 version "3.6"
                 //  .externalNativeBuild/cmake/debug/{abi}/cmake_build_command.txt
@@ -57,6 +61,7 @@ android {
         }
     }
 
+    // NDK Step3: build改项目，输出so文件
 }
 
 dependencies {

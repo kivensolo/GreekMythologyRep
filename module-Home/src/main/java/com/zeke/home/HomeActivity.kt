@@ -67,7 +67,6 @@ class HomeActivity : BaseVMActivity(),
         initSlidingPaneLayout()
 //        initBannerView()
         initSlideMenuView()
-        ZLog.d("init:" + BitmapUtils.native_get_string())
     }
 
     private fun initSlideMenuView() {
@@ -165,7 +164,10 @@ class HomeActivity : BaseVMActivity(),
 
     override fun switchFragment(@ISwitcher.ButtomType position: Int) {
         when (position) {
-            ISwitcher.TYPE_VOD -> fragmentsChange(homeVodFragment, homeLiveFragment as BaseFragment)
+            ISwitcher.TYPE_VOD -> {
+                ZLog.d("switchFragment:" + BitmapUtils.native_get_Hello())
+                fragmentsChange(homeVodFragment, homeLiveFragment as BaseFragment)
+            }
             ISwitcher.TYPE_LIVE -> fragmentsChange(homeLiveFragment, homeVodFragment as BaseFragment)
             ISwitcher.TYPE_VIP -> fragmentsChange(null, homeVodFragment as BaseFragment)
             ISwitcher.TYPE_MINE -> fragmentsChange(null, homeVodFragment as BaseFragment)

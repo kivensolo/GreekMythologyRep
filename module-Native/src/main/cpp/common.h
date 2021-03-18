@@ -25,6 +25,6 @@
 typedef unsigned char ubyte;
 typedef unsigned int uint32_t;
 
-extern "C" void doBlur(ubyte* buf, int width, int height);
-extern "C" void doFastBlur(ubyte* buf, int width, int height, int radius);
-extern "C" void doFastBlurParallel(ubyte* buf, int width, int height, int radius);
+//extern "C" void doBlur(ubyte* buf, int width, int height);
+//extern "C" void doFastBlur(ubyte* buf, int width, int height, int radius);
+//extern "C" void doFastBlurParallel(ubyte* buf, int width, int height, int radius);

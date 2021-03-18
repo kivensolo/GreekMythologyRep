@@ -37,6 +37,11 @@ android {
         }
     }
 
+    packagingOptions {
+        pickFirst 'lib/armeabi/libZekeBitMap.so'
+        pickFirst 'lib/x86/libZekeBitMap.so'
+    }
+
     buildTypes {
         release {
             minifyEnabled false
