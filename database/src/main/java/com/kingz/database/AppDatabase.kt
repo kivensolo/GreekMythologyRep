@@ -24,7 +24,8 @@ import com.kingz.database.entity.UserEntity
         BaseEntity::class,
         SongEntity::class,
         UserEntity::class],
-    version = 2, exportSchema = false
+    version = 2,
+    exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
 
@@ -44,14 +45,17 @@ abstract class AppDatabase : RoomDatabase() {
             return INSTANCE!!
         }
 
+        /**
+         * Room启动时将检测version是否发生增加，如果有，那么将找到Migration去执行特定的操作。
+         * 如果没有,则会因为fallbackToDestructiveMigration()。将
+         * 会删除数据库并重建…此时不会crash，但所有数据丢失。
+         */
         private fun buildRoomDB(context: Context) =
-            Room.databaseBuilder(
-                context.applicationContext,
-                AppDatabase::class.java,
-                databaseName)
+            Room.databaseBuilder(context.applicationContext,
+                AppDatabase::class.java,databaseName)
 //                .allowMainThreadQueries()   // 不允许主线程进行IO操作
                 .fallbackToDestructiveMigration()
-//                .addMigrations(migration_1to2)
+                .addMigrations(migration_1to2,migration_2to3) //执行数据库迁移
                 .build()
 
         internal val database: AppDatabase by lazy {
@@ -69,6 +73,15 @@ abstract class AppDatabase : RoomDatabase() {
             override fun migrate(database: SupportSQLiteDatabase) {
                 // TODO 如何修改表名?  UserEntity 改为user
                 database.execSQL("ALTER TABLE UserEntity ADD COLUMN money TEXT NOT NULL DEFAULT ''")
+            }
+        }
+        /**
+         * 数据库迁移对象
+         * vesion增加，提供Migration(即使表结构没有变化) - 数据正常
+         */
+        private val migration_2to3: Migration = object : Migration(2, 3) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                //没有变化，所以是一个空实现
             }
         }
     }

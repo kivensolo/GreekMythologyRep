@@ -72,6 +72,10 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
      */
     abstract fun initData(savedInstanceState: Bundle?)
 
+    /**
+     * Init View.
+     * 默认会添加一个Progress
+     */
     open fun initView(savedInstanceState: Bundle?) {
         progress = ProgressBar(baseContext)
         val progressParams = FrameLayout.LayoutParams(

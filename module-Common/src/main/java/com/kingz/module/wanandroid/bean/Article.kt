@@ -150,6 +150,10 @@ class Article() : Parcelable {
         return 0
     }
 
+    override fun toString(): String {
+        return "\nArticle(id=$id, title=$title)"
+    }
+
     companion object CREATOR : Parcelable.Creator<Article> {
         override fun createFromParcel(parcel: Parcel): Article {
             return Article(parcel)

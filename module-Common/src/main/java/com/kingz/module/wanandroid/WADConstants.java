@@ -24,7 +24,7 @@ public interface WADConstants {
     String KEY_CHECK_TIME = "key_check_time";
 
     interface Key{
-        String KEY_FRAGEMTN_TYPE = "key_fragemnt_type";
+        String KEY_FRAGEMTN_TYPE = "key_fragmennt_type";
 
     }
 

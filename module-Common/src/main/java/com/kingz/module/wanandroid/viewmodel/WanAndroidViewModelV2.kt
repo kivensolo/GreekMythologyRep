@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.kingz.database.entity.UserEntity
 import com.kingz.module.wanandroid.bean.Article
 import com.kingz.module.wanandroid.bean.CollectActionBean
+import com.kingz.module.wanandroid.bean.CollectListBean
 import com.kingz.module.wanandroid.repository.WanAndroidRemoteDataSource
 import com.zeke.kangaroo.utils.ZLog
 import com.zeke.reactivehttp.base.BaseReactiveViewModel
@@ -21,6 +22,10 @@ open class WanAndroidViewModelV2 : BaseReactiveViewModel() {
 
     val articalCollectData: MutableLiveData<CollectActionBean> by lazy {
         MutableLiveData<CollectActionBean>()
+    }
+
+    val userCollectArticalListLiveData: MutableLiveData<CollectListBean> by lazy {
+        MutableLiveData<CollectListBean>()
     }
 
     open val remoteDataSource by lazy {
@@ -75,6 +80,25 @@ open class WanAndroidViewModelV2 : BaseReactiveViewModel() {
             }
         }
     }
+
+    /**
+     * 获取登录用户自身的文章集合
+     * @param pageIndex: 页面index id
+     */
+    fun getMineCollectArticalList(pageIndex: Int) {
+        launchIO {
+            var result: CollectListBean? = null
+            try {
+                val articleList = remoteDataSource.getArticleList(pageIndex)
+                result = articleList.data
+            } catch (e: Exception) {
+                ZLog.e("getMineCollectArticalList on exception: ${e.printStackTrace()}")
+            } finally {
+                userCollectArticalListLiveData.postValue(result)
+            }
+        }
+    }
+
 
     // 顶层接口方法
     override fun showLoading(job: Job?) {

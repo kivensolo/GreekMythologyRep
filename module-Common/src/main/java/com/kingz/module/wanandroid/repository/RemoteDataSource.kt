@@ -92,6 +92,13 @@ open class WanAndroidRemoteDataSource(iActionEvent: IUIActionEvent?)
         }
     }
 
+    /**
+     * 获取登录用户的收藏文章列表数据
+     */
+    suspend fun getArticleList(pageIndex: Int): WanAndroidResponse<CollectListBean>{
+        return apiService.collectList(pageIndex)
+    }
+
 }
 
 /**

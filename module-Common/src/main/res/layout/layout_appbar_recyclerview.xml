@@ -73,6 +73,6 @@
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    <include layout="@layout/include_progressbar"/>
+<!--    <include layout="@layout/include_progressbar"/>-->
 
 </FrameLayout>

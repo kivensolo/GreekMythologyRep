@@ -1,5 +1,8 @@
 package com.kingz.module.wanandroid.bean
 
+/**
+ * 推荐文章列表数据
+ */
 class ArticleData {
     /**
      * curPage : 1

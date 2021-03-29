@@ -63,10 +63,10 @@ interface WanAndroidApiService : BaseApiService {
     suspend fun unCollectMine(@Path("id") id:Int): WanAndroidResponse<CollectBean>
 
     /**
-     * 收藏文章列表
+     * 获取登录用户的收藏文章列表
      */
-    @POST("lg/collect/list/{page_idnex}/json")
-    suspend fun collectList(@Path("page_idnex") id:Int): WanAndroidResponse<CollectListBean>?
+    @GET("lg/collect/list/{page_index}/json")
+    suspend fun collectList(@Path("page_index") pageIndex:Int): WanAndroidResponse<CollectListBean>
 
     /**
      * 收藏站外文章

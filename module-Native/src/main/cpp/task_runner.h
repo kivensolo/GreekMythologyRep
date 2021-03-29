@@ -23,6 +23,9 @@ class task_runner : public runner_base {
 		}
 };
 
+/**
+ * 工作线程
+ */
 class thread_worker {
 	volatile bool _terminate;
 	runner_base * _runners[16];
@@ -113,17 +116,25 @@ int GET_CPU_NUM() {
 }
 #else
 class pthread_sem {
-//	信号量的数据类型为结构sem_t
+    //信号量的数据类型为结构sem_t 本质上是一个长整型的
 	sem_t _sem; //sem为指向信号量结构的一个指针
 public:
 	pthread_sem(int value = 0, int shared = 0) {
-		sem_init(&_sem, shared, value); //整型信号量
+	    /**
+	     * 初始化信号量
+	     * &_sem: 指向信号量结构的一个指针
+	     * shared: 不为０时此信号量在进程间共享，否则只能为当前进程的所有线程共享
+	     * value: 信号量的初始值
+	     */
+		sem_init(&_sem, shared, value);
 	}
+	//解构时自动释放信号量sem
 	~pthread_sem() {
 		sem_destroy(&_sem);
 	}
 	int wait() {
-		return sem_wait(&_sem); //阻塞的等待灯亮操作(灯亮:信号量大于0)
+	    //阻塞当前线程直到信号量sem的值大于0(灯亮操作)
+		return sem_wait(&_sem);
 	}
 	int signal(int n = 1) {
 		#if _WIN32
@@ -131,13 +142,15 @@ public:
 					return sem_post(&_sem);
 				}
 				return sem_post_multiple(&_sem, n);
-		#else
+        #else
+				//增加信号量的值
 				return sem_post(&_sem);
 		#endif
 	}
 	int value() {
 		int val = 0;
-		sem_getvalue(&_sem, &val); // 获取灯值
+		// 获取信号量sem的值
+		sem_getvalue(&_sem, &val);
 		return val;
 	}
 };

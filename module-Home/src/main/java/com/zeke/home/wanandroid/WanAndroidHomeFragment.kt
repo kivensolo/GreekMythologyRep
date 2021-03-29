@@ -1,8 +1,5 @@
 package com.zeke.home.wanandroid
 
-import android.app.Service
-import android.os.VibrationEffect
-import android.os.Vibrator
 import android.text.Html
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -16,19 +13,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.launcher.ARouter
 import com.chad.library.adapter.base.animation.ScaleInAnimation
-import com.kingz.base.BaseVMFragment
 import com.kingz.base.factory.ViewModelFactory
 import com.kingz.module.common.LoadStatusView
 import com.kingz.module.common.base.IRvScroller
 import com.kingz.module.common.router.RPath
 import com.kingz.module.common.utils.RvUtils
-import com.kingz.module.common.utils.ktx.SDKVersion
 import com.kingz.module.home.R
 import com.kingz.module.wanandroid.WADConstants
 import com.kingz.module.wanandroid.adapter.ArticleAdapter
 import com.kingz.module.wanandroid.bean.Article
 import com.kingz.module.wanandroid.bean.BannerItem
 import com.kingz.module.wanandroid.bean.CollectActionBean
+import com.kingz.module.wanandroid.fragemnts.CommonFragment
 import com.kingz.module.wanandroid.viewmodel.WanAndroidViewModelV2
 import com.like.LikeButton
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
@@ -49,7 +45,7 @@ import java.util.*
 /**
  * 首页热门推荐(玩android)的Fragemnt
  */
-class WanAndroidHomeFragment : BaseVMFragment<WanAndroidViewModelV2>(),
+class WanAndroidHomeFragment : CommonFragment<WanAndroidViewModelV2>(),
     IRvScroller {
 
     private var banner: Banner<BannerItem, HomeBannerAdapter<BannerItem>>? = null
@@ -279,21 +275,6 @@ class WanAndroidHomeFragment : BaseVMFragment<WanAndroidViewModelV2>(),
     }
 
     /**
-     * 触发震动效果
-     */
-    private fun fireVibrate() {
-        val vibrator = context?.getSystemService(Service.VIBRATOR_SERVICE) as Vibrator
-        if (SDKVersion.afterOreo()) {
-            vibrator.vibrate(
-                VibrationEffect.createOneShot(40, VibrationEffect.DEFAULT_AMPLITUDE)
-            )
-        } else {
-            @Suppress("DEPRECATION")
-            vibrator.vibrate(40)
-        }
-    }
-
-    /**
      * 通过index请求对应页数文章
      */
     private fun requestArticalData(pageId: Int){
@@ -301,17 +282,6 @@ class WanAndroidHomeFragment : BaseVMFragment<WanAndroidViewModelV2>(),
         mCurPage = pageId
         mPageCount = if(mCurPage > mPageCount) mCurPage else ++mPageCount
         viewModel.getArticalData(pageId)
-    }
-
-    private fun openWeb(data: Article?) {
-        ARouter.getInstance()
-            .build(RPath.PAGE_WEB)
-            .withString(WADConstants.KEY_URL, data?.link)
-            .withString(WADConstants.KEY_TITLE, data?.title)
-            .withString(WADConstants.KEY_AUTHOR, data?.author)
-            .withBoolean(WADConstants.KEY_IS_COLLECT, data?.collect ?: false)
-            .withInt(WADConstants.KEY_ID, data?.id ?: -1)
-            .navigation(activity, 0x01)
     }
 
     private fun openWeb(url: String?) {
