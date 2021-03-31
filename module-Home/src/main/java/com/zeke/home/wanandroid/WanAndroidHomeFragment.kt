@@ -11,15 +11,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.alibaba.android.arouter.launcher.ARouter
 import com.chad.library.adapter.base.animation.ScaleInAnimation
 import com.kingz.base.factory.ViewModelFactory
-import com.kingz.module.common.LoadStatusView
 import com.kingz.module.common.base.IRvScroller
-import com.kingz.module.common.router.RPath
 import com.kingz.module.common.utils.RvUtils
 import com.kingz.module.home.R
-import com.kingz.module.wanandroid.WADConstants
 import com.kingz.module.wanandroid.adapter.ArticleAdapter
 import com.kingz.module.wanandroid.bean.Article
 import com.kingz.module.wanandroid.bean.BannerItem
@@ -52,7 +48,6 @@ class WanAndroidHomeFragment : CommonFragment<WanAndroidViewModelV2>(),
     private lateinit var mRecyclerView: RecyclerView
     private var articleAdapter: ArticleAdapter? = null
     private var swipeRefreshLayout: SmartRefreshLayout? = null
-    private var loadStatusView: LoadStatusView? = null
 
     // 当前页数
     private var mCurPage = 0
@@ -203,10 +198,7 @@ class WanAndroidHomeFragment : CommonFragment<WanAndroidViewModelV2>(),
     }
 
     override fun initView() {
-        ZLog.d("initView()")
-        loadStatusView = rootView?.findViewById(R.id.load_status)
-        loadStatusView?.showProgress()
-
+        super.initView()
         initRecyclerView()
         initSwipeRefreshLayout()
         initFABInflate()
@@ -284,34 +276,19 @@ class WanAndroidHomeFragment : CommonFragment<WanAndroidViewModelV2>(),
         viewModel.getArticalData(pageId)
     }
 
-    private fun openWeb(url: String?) {
-        ARouter.getInstance()
-            .build(RPath.PAGE_WEB)
-            .withString(WADConstants.KEY_URL, url)
-            .navigation(activity, 0x01)
-    }
-
     override fun onViewDestory() {
-        ZLog.d("onViewDestory.")
         lifecycleScope.cancel()
         viewModel.cancle(this)
-        loadStatusView = null
         super.onViewDestory()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        ZLog.d("release.")
         swipeRefreshLayout?.setOnRefreshLoadMoreListener(null)
         swipeRefreshLayout = null
         articleAdapter = null
         banner?.onDestroy(this)
         banner = null
-    }
-
-    override fun onDetach() {
-        ZLog.d("Detach fragment.")
-        super.onDetach()
     }
 
     /**
@@ -343,15 +320,15 @@ class WanAndroidHomeFragment : CommonFragment<WanAndroidViewModelV2>(),
     override fun scrollToTopRefresh() {
     }
 
-    private fun dismissLoading() {
-        loadStatusView?.dismiss()
+    override fun dismissLoading() {
+        super.dismissLoading()
         swipeRefreshLayout?.visibility = View.VISIBLE
     }
 
     private fun showErrorView(show:Boolean) {
         if(show){
             swipeRefreshLayout?.visibility = View.GONE
-            loadStatusView?.showError()
+            showErrorStatus()
         }else{
             swipeRefreshLayout?.visibility = View.VISIBLE
             loadStatusView?.visibility = View.GONE
@@ -360,6 +337,6 @@ class WanAndroidHomeFragment : CommonFragment<WanAndroidViewModelV2>(),
 
     fun showEmpty() {
         swipeRefreshLayout?.visibility = View.GONE
-        loadStatusView?.showEmpty()
+        showEmptyStatus()
     }
 }

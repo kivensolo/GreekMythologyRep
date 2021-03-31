@@ -15,6 +15,7 @@ import com.kingz.module.wanandroid.fragemnts.UserCollectionFragment
 import com.kingz.module.wanandroid.viewmodel.WanAndroidViewModelV2
 import com.zeke.kangaroo.utils.ToastUtils
 import com.zeke.kangaroo.utils.ZLog
+import kotlinx.android.synthetic.main.include_toolbar_back.*
 
 /**
  * author：ZekeWang
@@ -36,6 +37,12 @@ class AppBarActivity : BaseVMActivity() {
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
         mFragmentManager = supportFragmentManager
+        ivLeft?.setOnClickListener {
+            val trans: FragmentTransaction = mFragmentManager!!.beginTransaction()
+            trans.remove(curFragment!!)
+            trans.commitAllowingStateLoss()
+            finish()
+        }
     }
 
     override fun initData(savedInstanceState: Bundle?) {
@@ -50,15 +57,17 @@ class AppBarActivity : BaseVMActivity() {
             ToastUtils.show(baseContext, "非法类型参数")
             return
         }
-
+        ZLog.d("type = $type")
         when (type) {
-            WADConstants.Type.TYPE_TAB_COLLECT -> {
+            WADConstants.Type.TYPE_TAB_COLLECT -> { //1
+                tvTitle?.setText(R.string.mine_collect)
                 switchFragment(UserCollectionFragment())
             }
         }
+
     }
 
-    fun switchFragment(targetFragment: Fragment?) {
+    private fun switchFragment(targetFragment: Fragment?) {
         switchFragment(targetFragment, null)
     }
 
@@ -68,7 +77,7 @@ class AppBarActivity : BaseVMActivity() {
      *
      * @param targetFragment 跳转目标fragment
      */
-    fun switchFragment(targetFragment: Fragment?, args: Bundle?) {
+    private fun switchFragment(targetFragment: Fragment?, args: Bundle?) {
         if (targetFragment == null) {
             ZLog.d("参数为空")
             return
@@ -86,7 +95,8 @@ class AppBarActivity : BaseVMActivity() {
                     trans.hide(curFragment!!)
                 }
                 trans.add(R.id.flContainer, targetFragment,targetFragment::class.java.simpleName)
-                trans.addToBackStack(targetFragment::class.java.simpleName)
+                // 按返回键会移除掉次fragment
+//                trans.addToBackStack(targetFragment::class.java.simpleName)
                 //trans.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);    //设置动画效果
             } else {
                 //targetFragment = mFragmentManager.findFragmentByTag(targetFragment.getClass().getSimpleName());

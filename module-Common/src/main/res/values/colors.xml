@@ -14,6 +14,8 @@
     <color name="color_pressed">@color/deep_gray</color>
     <color name="colorPrimaryLight">@color/green_dark</color>
 
+    <color name="text_gary_bkg">#14FFFFFF</color>
+
 
     <color name="dkgray">#80808FF0</color>
     <color name="deep_gray">#afaeae</color>

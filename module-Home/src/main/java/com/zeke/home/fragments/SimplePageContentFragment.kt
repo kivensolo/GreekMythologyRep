@@ -80,7 +80,13 @@ class SimplePageContentFragment : BaseFragment(), IView, View.OnClickListener {
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             super.onBindViewHolder(holder, position)
             val data = getItem(position)
-            holder.getView<TextView>(R.id.channel_id).text = (data as Live).name
+            val textView = holder.getView<TextView>(R.id.channel_id)
+            textView.text = (data as Live).name
+
+            if((position / 2) % 2 != 0){ // 偶数行
+                textView.setBackgroundResource(R.color.text_gary_bkg)
+            }
+
             holder.setOnClickListener {
                 Router.startActivity(RPath.PAGE_PLAYER, Bundle().apply {
                     putParcelable(MediaParams.PARAMS_KEY ,MediaParams().apply{
