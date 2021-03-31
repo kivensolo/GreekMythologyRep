@@ -5,10 +5,13 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import com.alibaba.android.arouter.launcher.ARouter
 import com.kingz.base.BaseVMFragment
+import com.kingz.module.common.LoadStatusView
+import com.kingz.module.common.R
 import com.kingz.module.common.router.RPath
 import com.kingz.module.common.utils.ktx.SDKVersion
 import com.kingz.module.wanandroid.WADConstants
 import com.kingz.module.wanandroid.bean.Article
+import com.zeke.kangaroo.utils.ZLog
 import com.zeke.reactivehttp.base.BaseReactiveViewModel
 
 /**
@@ -17,6 +20,44 @@ import com.zeke.reactivehttp.base.BaseReactiveViewModel
  * description： 业务Common层的Fragment
  */
 abstract class CommonFragment<T : BaseReactiveViewModel> : BaseVMFragment<T>() {
+
+    //公共Loading控件
+    protected var loadStatusView: LoadStatusView? = null
+
+    override fun initView() {
+        ZLog.d("initView()")
+        loadStatusView = rootView?.findViewById(R.id.load_status)
+        loadStatusView?.showProgress()
+    }
+
+    override fun onViewDestory() {
+        ZLog.d("onViewDestory.")
+        super.onViewDestory()
+        loadStatusView = null
+    }
+
+    override fun onDestroy() {
+        ZLog.d("release.")
+        super.onDestroy()
+    }
+
+    override fun onDetach() {
+        ZLog.d("Detach fragment.")
+        super.onDetach()
+    }
+
+    protected open fun dismissLoading(){
+        ZLog.d("dismiss Loading View.")
+        loadStatusView?.dismiss()
+    }
+
+    protected open fun showErrorStatus(){
+        loadStatusView?.showError()
+    }
+
+    protected open fun showEmptyStatus(){
+        loadStatusView?.showEmpty()
+    }
 
     /**
      * 打开文章web页面
@@ -32,6 +73,12 @@ abstract class CommonFragment<T : BaseReactiveViewModel> : BaseVMFragment<T>() {
             .navigation(activity, 0x01)
     }
 
+    protected fun openWeb(url: String?) {
+        ARouter.getInstance()
+            .build(RPath.PAGE_WEB)
+            .withString(WADConstants.KEY_URL, url)
+            .navigation(activity, 0x01)
+    }
 
       /**
      * 触发震动效果
