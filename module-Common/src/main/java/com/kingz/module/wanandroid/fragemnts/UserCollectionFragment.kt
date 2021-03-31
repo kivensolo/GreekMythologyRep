@@ -3,14 +3,17 @@ package com.kingz.module.wanandroid.fragemnts
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.animation.ScaleInAnimation
 import com.kingz.base.factory.ViewModelFactory
+import com.kingz.database.entity.CollectionArtical
 import com.kingz.module.common.R
 import com.kingz.module.common.utils.RvUtils
 import com.kingz.module.wanandroid.adapter.ArticleAdapter
 import com.kingz.module.wanandroid.bean.Article
+import com.kingz.module.wanandroid.viewmodel.CollectArticalViewModel
 import com.kingz.module.wanandroid.viewmodel.WanAndroidViewModelV2
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.api.RefreshLayout
@@ -31,6 +34,8 @@ class UserCollectionFragment : CommonFragment<WanAndroidViewModelV2>() {
     private lateinit var mRecyclerView: RecyclerView
     private var articleAdapter: ArticleAdapter? = null
     private var swipeRefreshLayout: SmartRefreshLayout? = null
+    private var collectArticles: CollectArticalViewModel? = null
+
 
     override val viewModel: WanAndroidViewModelV2 by viewModels {
         ViewModelFactory.build { WanAndroidViewModelV2() }
@@ -39,7 +44,6 @@ class UserCollectionFragment : CommonFragment<WanAndroidViewModelV2>() {
     override fun getLayoutResID() = R.layout.fragment_common_page
 
     override fun initView() {
-        ZLog.d("init Views")
         super.initView()
         initRecyclerView()
         initFABInflate()
@@ -109,6 +113,13 @@ class UserCollectionFragment : CommonFragment<WanAndroidViewModelV2>() {
 
     override fun initViewModel() {
         super.initViewModel()
+        collectArticles = ViewModelProvider(this).get(CollectArticalViewModel::class.java)
+        collectArticles?.getCollectList(this,
+            Observer { collectionList:List<CollectionArtical?>? ->
+                if(collectionList == null) return@Observer
+                //articleAdapter?.addData(collectionList)
+            })
+
         viewModel.userCollectArticalListLiveData.observe(this, Observer {
             ZLog.d("userCollectArticalListLiveData onChanged: $it")
             if (it == null) {
@@ -125,26 +136,26 @@ class UserCollectionFragment : CommonFragment<WanAndroidViewModelV2>() {
             loadStatusView?.visibility = View.GONE
 
             launchIO {
-                val collectionList = it.datas
-                ZLog.d("collectionList Size = ${collectionList?.size};")
+                val datas = it.datas
+                ZLog.d("collectionList Size = ${datas?.size};")
                 //当前数据为空时
                 if (articleAdapter?.getDefItemCount() == 0) {
                     withContext(Dispatchers.Main) {
-                        articleAdapter?.addData(collectionList!!)
+                        articleAdapter?.addData(datas!!)
                     }
                     return@launchIO
                 }
 
                 // 数据非空时
                 val currentFirstData = articleAdapter?.getItem(0)
-                if (currentFirstData?.id != collectionList!![0].id) {
+                if (currentFirstData?.id != datas!![0].id) {
                     withContext(Dispatchers.Main) {
-                        articleAdapter?.apply {
-                            //暂时没有做分页加载
-                            addData(collectionList)
-                        }
+                        articleAdapter?.addData(datas)
                     }
                 }
+
+                //TODO ROOM数据库插入
+                collectArticles?.inserArticalList(datas)
             }
         })
     }

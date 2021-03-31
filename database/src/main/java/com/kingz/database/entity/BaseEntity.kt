@@ -6,6 +6,9 @@ import java.io.Serializable
 
 @Entity(primaryKeys = ["id"])
 open class BaseEntity : Serializable {
+//    @PrimaryKey(autoGenerate = true)
+//    var id = 0
+
     @ColumnInfo(name = "type")
     var type: String = ""
     @ColumnInfo(name = "name")
