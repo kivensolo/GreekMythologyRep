@@ -8,22 +8,24 @@ import java.io.Serializable
 /**
  * author：ZekeWang
  * date：2021/3/31
- * description：收藏文章的Entity
- *
- * @Entity 标识数据库中的表
- * @PrimaryKey 表示主键，autoGenerate表示自增
- * @ColumnInfo表示字段，name表示字段名称
+ * description：用户收藏文章的Entity
  */
 @Entity(tableName = "collect_artical")
-class CollectionArtical : Serializable {
+class CollectionArticle : Serializable {
     @PrimaryKey(autoGenerate = true)
     var id = 0
 
+    @ColumnInfo(name="title_id",defaultValue = "1")
+    var title_id:Int = 0
+
     @ColumnInfo(name="title_name",defaultValue = "WanAndroid artical")
-    lateinit var title:String
+    lateinit var title_name:String
 
     @ColumnInfo(name="date",defaultValue = "1970-1-1 00:00")
     lateinit var date:String
+
+    @ColumnInfo(name="link")
+    lateinit var link:String
 
     @ColumnInfo(name="review_score",defaultValue = "1.0")
     var score=0.0

@@ -6,7 +6,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.Observer
 import com.kingz.database.AppDatabase
-import com.kingz.database.entity.CollectionArtical
+import com.kingz.database.entity.CollectionArticle
 import com.kingz.module.wanandroid.bean.Article
 import com.zeke.reactivehttp.base.BaseReactiveViewModel
 
@@ -19,26 +19,26 @@ import com.zeke.reactivehttp.base.BaseReactiveViewModel
  */
 open class CollectArticalViewModel(application: Application) : BaseReactiveViewModel() {
     //列表查询的中介
-    private val mediatorLiveData = MediatorLiveData<List<CollectionArtical?>?>()
+    private val mediatorLiveData = MediatorLiveData<List<CollectionArticle?>?>()
     private val db: AppDatabase?
     private val mContext: Context
 
     init {
         mContext = application
         db = AppDatabase.getInstance(mContext)
-        mediatorLiveData.addSource(
-            db.getCollectArticalDao().allCollectArticals)
-        { collectArticalList ->
-            if (db.databaseCreated.value != null) {
-                mediatorLiveData.postValue(collectArticalList)
-            }
-        }
+//        mediatorLiveData.addSource(
+//            db.getCollectArticalDao().allCollectArticals)
+//        { collectArticalList ->
+//            if (db.databaseCreated.value != null) {
+//                mediatorLiveData.postValue(collectArticalList)
+//            }
+//        }
     }
 
     /**
      * 从Room数据库中获取收藏文章列表数据
      */
-    fun getCollectList(owner: LifecycleOwner?, observer: Observer<List<CollectionArtical?>?>?) {
+    fun getCollectList(owner: LifecycleOwner?, observer: Observer<List<CollectionArticle?>?>?) {
         if (owner != null && observer != null){
             mediatorLiveData.observe(owner, observer)
         }
@@ -49,11 +49,13 @@ open class CollectArticalViewModel(application: Application) : BaseReactiveViewM
      */
     fun inserArticalList(data:List<Article>){
         for (datum in data) {
-            val artical = CollectionArtical().apply {
-                title = datum.title ?: ""
+            val artical = CollectionArticle().apply {
+                title_id = datum.id
+                title_name = datum.title ?: ""
                 date = datum.niceDate ?: ""
+                link = datum.link ?: "" // 本地404地址
             }
-            db?.getCollectArticalDao()?.insert(artical)
+//            db?.getCollectArticalDao()?.insert(artical)
         }
     }
 }

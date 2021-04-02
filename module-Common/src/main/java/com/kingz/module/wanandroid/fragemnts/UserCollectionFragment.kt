@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.animation.ScaleInAnimation
 import com.kingz.base.factory.ViewModelFactory
-import com.kingz.database.entity.CollectionArtical
+import com.kingz.database.entity.CollectionArticle
 import com.kingz.module.common.R
 import com.kingz.module.common.utils.RvUtils
 import com.kingz.module.wanandroid.adapter.ArticleAdapter
@@ -113,11 +113,12 @@ class UserCollectionFragment : CommonFragment<WanAndroidViewModelV2>() {
 
     override fun initViewModel() {
         super.initViewModel()
+        //Cannot create an instance of class com.kingz.module.wanandroid.viewmodel.CollectArticalViewModel
         collectArticles = ViewModelProvider(this).get(CollectArticalViewModel::class.java)
         collectArticles?.getCollectList(this,
-            Observer { collectionList:List<CollectionArtical?>? ->
+            Observer { collectionList:List<CollectionArticle?>? ->
                 if(collectionList == null) return@Observer
-                //articleAdapter?.addData(collectionList)
+//                articleAdapter?.addData(collectionList)
             })
 
         viewModel.userCollectArticalListLiveData.observe(this, Observer {

@@ -12,7 +12,7 @@ import com.kingz.database.dao.CollectionArticalDao
 import com.kingz.database.dao.SongDao
 import com.kingz.database.dao.UserDao
 import com.kingz.database.entity.BaseEntity
-import com.kingz.database.entity.CollectionArtical
+import com.kingz.database.entity.CollectionArticle
 import com.kingz.database.entity.SongEntity
 import com.kingz.database.entity.UserEntity
 
@@ -29,9 +29,12 @@ import com.kingz.database.entity.UserEntity
  * 编译时将生成AppDatabase_Impl.java实现类
  */
 @Database(
-    entities = [BaseEntity::class,SongEntity::class,
-        UserEntity::class, CollectionArtical::class],
-    version = 3, exportSchema = false
+    entities = [
+        BaseEntity::class,
+        SongEntity::class,
+        UserEntity::class,
+        CollectionArticle::class],
+    version = 2, exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
 
@@ -57,8 +60,11 @@ abstract class AppDatabase : RoomDatabase() {
         }
 
         /**
-         * Room启动时将检测version是否发生增加，如果有，那么将找到Migration去执行特定的操作。
-         * 如果没有,则会因为fallbackToDestructiveMigration()。将
+         * Room启动时通过SQLiteOpenHelper检测version是否发生变化，如果有，则触发onDowngrade或者onUpgrade。
+         * 在RoomOpenHelper中进行升级或降级操作: 遍历已有的Migration列表去执行特定迁移的操作。
+         * 执行完毕后，会进行结果有效性判断。
+         *
+         * fallbackToDestructiveMigration()： 在迁移失败时，将
          * 会删除数据库并重建…此时不会crash，但所有数据丢失。
          */
         private fun buildRoomDB(context: Context) =
@@ -66,7 +72,7 @@ abstract class AppDatabase : RoomDatabase() {
                 AppDatabase::class.java, DATA_BASE_NAME)
 //                .allowMainThreadQueries()   // 不允许主线程进行IO操作
                 .fallbackToDestructiveMigration()
-                .addMigrations(migration_1to2,migration_2to3) //执行数据库迁移
+                .addMigrations(migration_1to2)
                 .addCallback(object :Callback(){
                     override fun onDestructiveMigration(db: SupportSQLiteDatabase) {
                         // 若使用了fallbackToDestructiveMigration()
@@ -78,7 +84,7 @@ abstract class AppDatabase : RoomDatabase() {
 //                        Executors.newFixedThreadPool(5).execute {
 //                                //RoomDatabase创建后异步插入初始化数据，并通知MediatorLiveData
                                 val dataBase = getInstance(context)
-////                                val ids = dataBase.getCollectArticalDao().insert(*Utils.initData)
+//                                val ids = dataBase.getCollectArticalDao().insert(*Utils.initData)
                                 dataBase.databaseCreated.postValue(true)
 //                            }
                     }
@@ -94,29 +100,53 @@ abstract class AppDatabase : RoomDatabase() {
         }
 
         /**
-         * 数据库迁移对象
+         * 数据库迁移 V1~V2
+         * 增加收藏数据表
          */
         private val migration_1to2: Migration = object : Migration(1, 2) {
             override fun migrate(database: SupportSQLiteDatabase) {
-                //当添加int 类型数据时，需要添加默认值
-//                database.execSQL("ALTER TABLE UserEntity ADD COLUMN age INTEGER NOT NULL DEFAULT 10")
-                database.execSQL("ALTER TABLE USER ADD COLUMN money TEXT NOT NULL DEFAULT ''")
-            }
-        }
 
-        private val migration_2to3: Migration = object : Migration(2, 3) {
-            override fun migrate(database: SupportSQLiteDatabase) {
-                // 新增了文章收藏数据的表, 但是COLUMN要手动加
-                database.execSQL("CREATE TABLE IF NOT EXISTS `COLLECT_ARTICAL` (" +
-                        "`date` TEXT NOT NULL DEFAULT '1970-1-1 00:00'," +
-                        "`id` INTEGER NOT NULL DEFAULT null," +
-                        "`title_name` TEXT NOT NULL DEFAULT 'WanAndroid artical'," +
-                        "`review_score` REAL NOT NULL DEFAULT '1.0'" +
-                        ")")
-//                database.execSQL("ALTER TABLE COLLECT_ARTICAL ADD COLUMN date TEXT NOT NULL DEFAULT '1970-1-1 00:00'")
-//                database.execSQL("ALTER TABLE COLLECT_ARTICAL ADD COLUMN id INTEGER NOT NULL DEFAULT 0")
-//                database.execSQL("ALTER TABLE COLLECT_ARTICAL ADD COLUMN title_name TEXT NOT NULL DEFAULT 'WanAndroid artical'")
-//                database.execSQL("ALTER TABLE COLLECT_ARTICAL ADD COLUMN review_score REAL NOT NULL DEFAULT '1.0'")
+                database.run {
+                    /**
+                     * 增加新表操作
+                     * 表名: 大小写有影响
+                     * DEFAULT 无用
+                     */
+                    execSQL("CREATE TABLE IF NOT EXISTS collect_artical (" +
+                            "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+                            "title_id INTEGER NOT NULL DEFAULT 1," +
+                            "date TEXT NOT NULL DEFAULT '1970-1-1 00:00'," +
+                            "title_name TEXT NOT NULL DEFAULT 'WanAndroid artical'," +
+                            "link TEXT NOT NULL," +
+                            "review_score REAL NOT NULL DEFAULT 1.0)")
+
+
+                    /**
+                     * 对表进行列的添加、修改或删除操作(ALTER TABLE)
+                     * int类型默认值切记不要加''
+                     *
+                     * 此处模拟增加一列rank数据
+                     */
+//                   execSQL("ALTER TABLE collect_artical ADD COLUMN rank INTEGER NOT NULL DEFAULT 0")
+//                   execSQL("ALTER TABLE USER ADD COLUMN money TEXT NOT NULL DEFAULT ''")
+
+                    /**
+                     * 向表中插入新的列: INSERT INTO
+                     * [语法:]
+                     * INSERT INTO table_name VALUES (Value1, Value2,....)
+                     * INSERT INTO table_name (COLUMN_1_NAME, COLUMN_2_NAME,...) VALUES (Value1, Value2,....)
+                     *
+                     */
+                    execSQL("INSERT INTO collect_artical VALUES(10,10086,'2021-04-02','学Android从入门到放弃','http://www.baidu.com','98.8')")
+
+
+                    /**
+                     * 删除表操作
+                     */
+                    //database.execSQL("DROP TABLE BaseEntity")
+                }
+
+
             }
         }
 
