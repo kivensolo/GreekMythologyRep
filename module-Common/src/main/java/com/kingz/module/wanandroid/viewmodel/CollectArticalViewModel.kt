@@ -15,7 +15,7 @@ import com.zeke.reactivehttp.base.BaseReactiveViewModel
  * date：2021/3/31
  * description：收藏文章数据得ViewModel
  *
- * //TODO 做与服务器收藏数据的定时同步
+ * //TODO 做与服务器收藏数据的定时同步 每10s
  */
 open class CollectArticalViewModel(application: Application) : BaseReactiveViewModel() {
     //列表查询的中介
@@ -53,9 +53,10 @@ open class CollectArticalViewModel(application: Application) : BaseReactiveViewM
                 title_id = datum.id
                 title_name = datum.title ?: ""
                 date = datum.niceDate ?: ""
-                link = datum.link ?: "" // 本地404地址
+                link = datum.link ?: ""
+                score = 100.0
             }
-//            db?.getCollectArticalDao()?.insert(artical)
+            db?.getCollectArticalDao()?.insert(artical)
         }
     }
 }

@@ -3,12 +3,11 @@ package com.kingz.module.wanandroid.fragemnts
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.animation.ScaleInAnimation
 import com.kingz.base.factory.ViewModelFactory
-import com.kingz.database.entity.CollectionArticle
+import com.kingz.module.common.CommonApp
 import com.kingz.module.common.R
 import com.kingz.module.common.utils.RvUtils
 import com.kingz.module.wanandroid.adapter.ArticleAdapter
@@ -34,7 +33,10 @@ class UserCollectionFragment : CommonFragment<WanAndroidViewModelV2>() {
     private lateinit var mRecyclerView: RecyclerView
     private var articleAdapter: ArticleAdapter? = null
     private var swipeRefreshLayout: SmartRefreshLayout? = null
-    private var collectArticles: CollectArticalViewModel? = null
+
+    private val collectArticles: CollectArticalViewModel by viewModels {
+        ViewModelFactory.build { CollectArticalViewModel(CommonApp.getInstance()) }
+    }
 
 
     override val viewModel: WanAndroidViewModelV2 by viewModels {
@@ -114,12 +116,14 @@ class UserCollectionFragment : CommonFragment<WanAndroidViewModelV2>() {
     override fun initViewModel() {
         super.initViewModel()
         //Cannot create an instance of class com.kingz.module.wanandroid.viewmodel.CollectArticalViewModel
-        collectArticles = ViewModelProvider(this).get(CollectArticalViewModel::class.java)
-        collectArticles?.getCollectList(this,
-            Observer { collectionList:List<CollectionArticle?>? ->
-                if(collectionList == null) return@Observer
-//                articleAdapter?.addData(collectionList)
-            })
+//        collectArticles.getCollectList(this,
+//            Observer { collectionList:List<CollectionArticle?>? ->
+//                if(collectionList == null) {
+//                    // 数据为空，查网络
+//                    return@Observer
+//                }
+////                articleAdapter?.addData(collectionList)
+//            })
 
         viewModel.userCollectArticalListLiveData.observe(this, Observer {
             ZLog.d("userCollectArticalListLiveData onChanged: $it")
@@ -144,6 +148,8 @@ class UserCollectionFragment : CommonFragment<WanAndroidViewModelV2>() {
                     withContext(Dispatchers.Main) {
                         articleAdapter?.addData(datas!!)
                     }
+                    //TODO 数据插入
+//                    collectArticles.inserArticalList(datas!!)
                     return@launchIO
                 }
 
@@ -154,11 +160,9 @@ class UserCollectionFragment : CommonFragment<WanAndroidViewModelV2>() {
                         articleAdapter?.addData(datas)
                     }
                 }
-
-                //TODO ROOM数据库插入
-                collectArticles?.inserArticalList(datas)
             }
         })
+
     }
 
 
