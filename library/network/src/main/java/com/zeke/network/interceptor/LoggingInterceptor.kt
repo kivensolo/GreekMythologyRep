@@ -26,7 +26,7 @@ class LoggingInterceptor : Interceptor {
         if (request.body() != null) {
             request.body()!!.writeTo(requestBuffer)
         } else {
-            ZLog.w("request.body() is null.")
+            ZLog.w("Request body is empty.")
         }
         printRequest(chain)
         val response = chain.proceed(request)
