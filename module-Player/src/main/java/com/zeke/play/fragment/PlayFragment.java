@@ -29,12 +29,15 @@ import com.zeke.play.presenter.PlayPresenter;
 import com.zeke.play.view.IPlayerView;
 import com.zeke.play.view.controller.PlayerUiSwitcher;
 
+import me.jessyan.autosize.AutoSizeConfig;
+import me.jessyan.autosize.internal.CustomAdapt;
+
 /**
  * author：KingZ
  * date：2019/7/30
  * description：播放器Fragment
  */
-public class PlayFragment extends BaseFragment implements IPlayerView {
+public class PlayFragment extends BaseFragment implements IPlayerView, CustomAdapt {
     public static final String TAG = "PlayFragment";
     private PlayerUiSwitcher playerUiSwitcher;
     private PlayPresenter playPresenter;
@@ -50,6 +53,7 @@ public class PlayFragment extends BaseFragment implements IPlayerView {
     }
 
     public static PlayFragment newInstance(MediaParams mediaParams) {
+        AutoSizeConfig.getInstance().setCustomFragment(true);
         PlayFragment playFragment = new PlayFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelable(MediaParams.PARAMS_KEY, mediaParams);
@@ -328,6 +332,16 @@ public class PlayFragment extends BaseFragment implements IPlayerView {
 
     public PlayerUiSwitcher getControllerViewManager(){
         return playerUiSwitcher;
+    }
+
+    @Override
+    public boolean isBaseOnWidth() {
+        return false;
+    }
+
+    @Override
+    public float getSizeInDp() {
+        return 0;
     }
 
     class SurfaceGustureCallback implements IGestureCallBack {

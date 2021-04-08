@@ -91,7 +91,7 @@
             android:shadowRadius="5"
             android:text="-- kb/s"
             android:textColor="@android:color/white"
-            android:textSize="14sp" />
+            android:textSize="@dimen/sp_16" />
     </LinearLayout>
 
     <!-- 顶部 状态栏 -->
@@ -126,7 +126,7 @@
                 android:paddingRight="8dp"
                 android:singleLine="true"
                 android:textColor="@android:color/white"
-                android:textSize="15sp"
+                android:textSize="@dimen/size_20sp"
                 android:textStyle="bold"
                 android:visibility="invisible"
                 tools:text="测试影片asdasdasdas"
@@ -146,7 +146,7 @@
     <!-- 底部部分 -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="@dimen/size_48dp"
         android:layout_alignParentBottom="true"
         android:orientation="vertical">
 
@@ -155,7 +155,6 @@
             android:id="@+id/player_bar_bottom"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:layout_marginTop="-8dp"
             android:background="@drawable/player_bottom_bg"
             android:gravity="center_vertical"
             android:orientation="horizontal">
@@ -170,20 +169,20 @@
                 android:drawableStart="@drawable/player_live_circle"
                 android:drawablePadding="8dp"
                 android:gravity="center"
-                android:paddingStart="11dp"
                 android:text="@string/living"
+                android:layout_marginStart="@dimen/size_16dp"
                 android:textColor="@color/skygreen_b"
-                android:textSize="13sp" />
+                android:textSize="@dimen/size_18sp" />
 
             <CheckBox
                 android:id="@+id/play_pause"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
                 android:background="@null"
                 android:button="@drawable/player_chk_state"
                 android:checked="true"
-                android:paddingEnd="10dp" />
+                android:layout_marginEnd="@dimen/size_10dp" />
 
             <!-- 下一集-->
             <ImageView
@@ -225,7 +224,7 @@
                 android:background="@null"
                 android:gravity="center"
                 android:textColor="@android:color/white"
-                android:textSize="13sp"
+                android:textSize="@dimen/size_18sp"
                 tools:text="33:22" />
 
             <!-- 右下角的一部分按钮-->
@@ -243,7 +242,7 @@
                     android:paddingEnd="16dp"
                     android:text="清晰度"
                     android:textColor="@android:color/white"
-                    android:textSize="13sp"
+                    android:textSize="@dimen/size_18sp"
                     tools:ignore="HardcodedText,RtlSymmetry"/>
 
                 <ImageView
@@ -269,10 +268,10 @@
 
         <ImageView
             android:id="@+id/player_lock"
-            android:layout_width="165px"
-            android:layout_height="165px"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="@dimen/size_20dp"
             android:src="@drawable/ic_player_unlock"
             tools:visibility="visible" />
     </RelativeLayout>

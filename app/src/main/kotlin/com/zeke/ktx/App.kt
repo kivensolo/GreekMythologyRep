@@ -1,7 +1,6 @@
 package com.zeke.ktx
 
 import android.app.Activity
-import android.app.Application
 import android.graphics.Color
 import android.os.Bundle
 import android.os.StrictMode
@@ -44,7 +43,7 @@ open class App : CommonApp() {
         super.onCreate()
         instance = this
         initCacheCenter()
-        initAPPScreenParms()
+        initScreenParms()
         init()
 //        initFpsDebugView()
         initStrictListenner()
@@ -70,11 +69,17 @@ open class App : CommonApp() {
                 .play()
     }
 
-    private fun initAPPScreenParms() {
-        Log.i(TAG, "SCREEN_WIDTH = " + resources.displayMetrics.widthPixels
-                + "   SCREEN_HEIGHT = " + resources.displayMetrics.heightPixels)
-        SCREEN_WIDTH = resources.displayMetrics.widthPixels
-        SCREEN_HEIGHT = resources.displayMetrics.heightPixels
+    private fun initScreenParms() {
+        val screenDensity:Float
+        val screenDensityDpi:Int
+        resources.displayMetrics.let {
+            SCREEN_WIDTH = it.widthPixels
+            SCREEN_HEIGHT = it.heightPixels
+            screenDensity = it.density
+            screenDensityDpi = it.densityDpi
+        }
+         Log.i(TAG, "SCREEN_SIZE = ($SCREEN_WIDTH,$SCREEN_HEIGHT)  " +
+                 "Density=$screenDensity ,DensityDpi(Density*160)= $screenDensityDpi")
     }
 
 
@@ -153,7 +158,7 @@ open class App : CommonApp() {
      * 自己监测生命周期，辅助判断应用是否在前台
      */
     @Deprecated("")
-    internal inner class LifecycleHandler : Application.ActivityLifecycleCallbacks {
+    internal inner class LifecycleHandler : ActivityLifecycleCallbacks {
         var visibleActivityNum = 0
             private set
         var aliveActivityNum = 0

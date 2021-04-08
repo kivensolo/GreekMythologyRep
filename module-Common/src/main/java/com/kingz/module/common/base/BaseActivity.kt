@@ -167,9 +167,13 @@ abstract class BaseActivity : AppCompatActivity() {
          * 今日头条屏幕适配方案，以设计图宽360dp的去适配页面
          * 在onCreate的时候调用
          * px = dp * density = dp * (dpi/160)
-         * dpi = (sqre(w^2 + h^2) px / 屏幕尺寸 inch ) = 机型不同尺寸
+         * dpi = (sqre(w^2 + h^2) px / 屏幕尺寸 inch ) = 机型不同尺寸不同
          *
-         * 1920 * 1080 机子: density == 440
+         * 以1080P 5.0寸设备为例：
+         *  对角线像素为2203
+         *  dpi = 2203 /5 ≈ 440
+         *  density = 440 / 160 = 2.75
+         *
          * @param act
          * @param application
          */
@@ -181,7 +185,7 @@ abstract class BaseActivity : AppCompatActivity() {
                 //监听字体切换
                 application.registerComponentCallbacks(object : ComponentCallbacks {
                     override fun onConfigurationChanged(newConfig: Configuration) {
-                        if (newConfig != null && newConfig.fontScale > 1) {
+                        if (newConfig.fontScale > 1) {
                             mNonCompatScaleDensity = application.resources.displayMetrics.scaledDensity
                         }
                     }
