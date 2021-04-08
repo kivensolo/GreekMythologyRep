@@ -10,7 +10,7 @@ import java.io.Serializable
  * date：2021/3/31
  * description：用户收藏文章的Entity
  */
-@Entity(tableName = "collect_artical")
+@Entity(tableName = "collect_article")
 class CollectionArticle : Serializable {
     @PrimaryKey(autoGenerate = true)
     var id = 0

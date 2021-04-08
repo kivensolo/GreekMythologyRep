@@ -7,12 +7,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.animation.ScaleInAnimation
 import com.kingz.base.factory.ViewModelFactory
-import com.kingz.module.common.CommonApp
 import com.kingz.module.common.R
 import com.kingz.module.common.utils.RvUtils
 import com.kingz.module.wanandroid.adapter.ArticleAdapter
 import com.kingz.module.wanandroid.bean.Article
-import com.kingz.module.wanandroid.viewmodel.CollectArticalViewModel
+import com.kingz.module.wanandroid.viewmodel.CollectArticleViewModel
 import com.kingz.module.wanandroid.viewmodel.WanAndroidViewModelV2
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.api.RefreshLayout
@@ -26,7 +25,7 @@ import kotlinx.coroutines.withContext
  * date：2021/3/29
  * description：用户文章收藏页面的Fragment
  *
- * TODO 改为优先从ROOM数据库层中获取数据
+ * FIXME 排查有网络请求时，从首页跳转时卡顿的问题
  */
 class UserCollectionFragment : CommonFragment<WanAndroidViewModelV2>() {
 
@@ -34,13 +33,8 @@ class UserCollectionFragment : CommonFragment<WanAndroidViewModelV2>() {
     private var articleAdapter: ArticleAdapter? = null
     private var swipeRefreshLayout: SmartRefreshLayout? = null
 
-    private val collectArticles: CollectArticalViewModel by viewModels {
-        ViewModelFactory.build { CollectArticalViewModel(CommonApp.getInstance()) }
-    }
-
-
-    override val viewModel: WanAndroidViewModelV2 by viewModels {
-        ViewModelFactory.build { WanAndroidViewModelV2() }
+    override val viewModel: CollectArticleViewModel by viewModels {
+        ViewModelFactory.build { CollectArticleViewModel() }
     }
 
     override fun getLayoutResID() = R.layout.fragment_common_page
@@ -110,22 +104,12 @@ class UserCollectionFragment : CommonFragment<WanAndroidViewModelV2>() {
         initViewModel()
         initView()
         ZLog.d("articleAdapter?.itemCount = ${articleAdapter?.itemCount}")
-        getMyCollectArticalData(0)
+        getMyCollectArticalData()
     }
 
     override fun initViewModel() {
         super.initViewModel()
-        //Cannot create an instance of class com.kingz.module.wanandroid.viewmodel.CollectArticalViewModel
-//        collectArticles.getCollectList(this,
-//            Observer { collectionList:List<CollectionArticle?>? ->
-//                if(collectionList == null) {
-//                    // 数据为空，查网络
-//                    return@Observer
-//                }
-////                articleAdapter?.addData(collectionList)
-//            })
-
-        viewModel.userCollectArticalListLiveData.observe(this, Observer {
+        viewModel.userCollectArticleListLiveData.observe(this, Observer {
             ZLog.d("userCollectArticalListLiveData onChanged: $it")
             if (it == null) {
                 ZLog.d("User collection data is null.")
@@ -148,8 +132,6 @@ class UserCollectionFragment : CommonFragment<WanAndroidViewModelV2>() {
                     withContext(Dispatchers.Main) {
                         articleAdapter?.addData(datas!!)
                     }
-                    //TODO 数据插入
-//                    collectArticles.inserArticalList(datas!!)
                     return@launchIO
                 }
 
@@ -165,8 +147,7 @@ class UserCollectionFragment : CommonFragment<WanAndroidViewModelV2>() {
 
     }
 
-
-    private fun getMyCollectArticalData(index: Int) {
-        viewModel.getMineCollectArticalList(index)
+    private fun getMyCollectArticalData() {
+        viewModel.getCollectArticleData()
     }
 }

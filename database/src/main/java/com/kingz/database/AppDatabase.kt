@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.kingz.database.dao.AlbumDao
-import com.kingz.database.dao.CollectionArticalDao
+import com.kingz.database.dao.CollectionArticleDao
 import com.kingz.database.dao.SongDao
 import com.kingz.database.dao.UserDao
 import com.kingz.database.entity.BaseEntity
@@ -41,7 +41,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun getSongDao(): SongDao
     abstract fun getAlbumDao(): AlbumDao
     abstract fun getUserDao(): UserDao
-    abstract fun getCollectArticalDao(): CollectionArticalDao
+    abstract fun getCollectArticleDao(): CollectionArticleDao
     val databaseCreated = MutableLiveData<Boolean?>()
 
     companion object {
@@ -112,7 +112,7 @@ abstract class AppDatabase : RoomDatabase() {
                      * 表名: 大小写有影响
                      * DEFAULT 无用
                      */
-                    execSQL("CREATE TABLE IF NOT EXISTS collect_artical (" +
+                    execSQL("CREATE TABLE IF NOT EXISTS collect_article (" +
                             "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
                             "title_id INTEGER NOT NULL DEFAULT 1," +
                             "date TEXT NOT NULL DEFAULT '1970-1-1 00:00'," +
@@ -127,7 +127,7 @@ abstract class AppDatabase : RoomDatabase() {
                      *
                      * 此处模拟增加一列rank数据
                      */
-//                   execSQL("ALTER TABLE collect_artical ADD COLUMN rank INTEGER NOT NULL DEFAULT 0")
+//                   execSQL("ALTER TABLE collect_article ADD COLUMN rank INTEGER NOT NULL DEFAULT 0")
 //                   execSQL("ALTER TABLE USER ADD COLUMN money TEXT NOT NULL DEFAULT ''")
 
                     /**
@@ -137,7 +137,7 @@ abstract class AppDatabase : RoomDatabase() {
                      * INSERT INTO table_name (COLUMN_1_NAME, COLUMN_2_NAME,...) VALUES (Value1, Value2,....)
                      *
                      */
-                    execSQL("INSERT INTO collect_artical VALUES(10,10086,'2021-04-02','学Android从入门到放弃','http://www.baidu.com','98.8')")
+                    execSQL("INSERT INTO collect_article VALUES(10,10086,'2021-04-02','学Android从入门到放弃','http://www.baidu.com','98.8')")
 
 
                     /**

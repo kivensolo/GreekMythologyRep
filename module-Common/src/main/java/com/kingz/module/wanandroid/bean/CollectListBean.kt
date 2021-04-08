@@ -64,12 +64,12 @@ class CollectListBean {
      * size : 20
      * total : 6840
      */
-    private var curPage = 0
-    private val offset = 0
-    private val over = false
-    private val pageCount = 0
-    private val size = 0
-    private val total = 0
+    var curPage = 0
+    var offset = 0
+    var over = false
+    var pageCount = 0
+    var size = 0
+    var total = 0
     var datas: List<Article>? = null
     override fun toString(): String {
         return "CollectListBean(curPage=$curPage, collectList=$datas)"
