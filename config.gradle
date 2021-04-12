@@ -127,6 +127,7 @@ ext {
             "paging-runtime-ktx"     : "androidx.paging:paging-runtime-ktx:${lib_versions.paging_version}",
 
             // Room数据库
+            "room-common"           : "androidx.room:room-common:${lib_versions.room_version}",
             "room-runtime"           : "androidx.room:room-runtime:${lib_versions.room_version}",
             "room-compiler"          : "androidx.room:room-compiler:${lib_versions.room_version}",
             "room-ktx"               : "androidx.room:room-ktx:${lib_versions.room_version}",

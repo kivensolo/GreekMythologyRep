@@ -67,6 +67,7 @@ dependencies {
     api root_dependencies["lifecycle-extensions"]
 
     // Room数据库支持
+    api root_dependencies["room-common"]
     api root_dependencies["room-runtime"]
     api root_dependencies["room-ktx"]
     api root_dependencies["stetho"]             // Stetho基本调试依赖
