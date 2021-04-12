@@ -33,19 +33,19 @@ abstract class HomeBaseFragment<T : IPresenter> : BaseFragment(), IView {
     override fun onViewCreated() {
         viewPagerAdapter = HomePagerAdapter(childFragmentManager, PageCreator())
         tableLayout = rootView?.findViewById(R.id.tab_layout)
-        tableLayout!!.setPadding(0, 0, 0, 0)
-        tableLayout!!.visibility = View.GONE
+        tableLayout?.setPadding(0, 0, 0, 0)
+        tableLayout?.visibility = View.GONE
 
-        coverView = rootView?.findViewById(R.id.tab_cover)
+//        coverView = rootView?.findViewById(R.id.tab_cover)
 
         viewPager = rootView?.findViewById(R.id.viewpager)
-        viewPager!!.adapter = viewPagerAdapter
+        viewPager?.adapter = viewPagerAdapter
 
         // tableLayout 与 ViewPager 绑定
-        tableLayout!!.setupWithViewPager(viewPager)
+        tableLayout?.setupWithViewPager(viewPager)
 
         loadStatusView = rootView?.findViewById(R.id.load_status)
-        loadStatusView!!.showProgress()
+        loadStatusView?.showProgress()
     }
 
     override val isShown: Boolean
@@ -58,7 +58,7 @@ abstract class HomeBaseFragment<T : IPresenter> : BaseFragment(), IView {
     override fun hideLoading() {
         loadStatusView?.dismiss()
         tableLayout?.visibility = View.VISIBLE
-        coverView?.visibility = View.VISIBLE
+//        coverView?.visibility = View.VISIBLE
     }
 
     override fun showError() {

@@ -11,19 +11,19 @@
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
-            android:layout_height="100px"
+            android:layout_height="@dimen/size_33dp"
             android:background="@color/tab_bg"
-            android:paddingLeft="54px"
-            android:paddingRight="54px"
+            android:paddingLeft="18dp"
+            android:paddingRight="18dp"
             app:tabTextAppearance="@style/custom_tab_layout_style" />
 
-        <ImageView
+        <!--<ImageView
             android:id="@+id/tab_cover"
             android:layout_width="match_parent"
             android:layout_height="100px"
             android:scaleType="fitXY"
             android:src="@drawable/cover_guidbar"
-            android:visibility="gone" />
+            android:visibility="gone" />-->
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewpager"
