@@ -84,7 +84,7 @@ class FullScreenPlayer : PlayerActivity(),CustomAdapt {
 
     /**
      * 返回高度适配的DP尺寸
-     * 横屏模式下,高度以360P为准(1080px)
+     * 横屏模式下,高度以360DP为准(1080px)
      */
     override fun getSizeInDp(): Float {
         return 360F
