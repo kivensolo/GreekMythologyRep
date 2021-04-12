@@ -18,7 +18,6 @@ import com.zeke.kangaroo.adapter.CommonRecyclerAdapter
  * author：KingZ
  * date：2019/12/29
  * description：首页/点播/每个tab页
- * //可以 将Recycle替换为DragRecyclerView
  */
 class SimplePageContentFragment : BaseFragment(), IView, View.OnClickListener {
 
@@ -33,6 +32,7 @@ class SimplePageContentFragment : BaseFragment(), IView, View.OnClickListener {
     }
 
     override fun onViewCreated() {
+        //TODO 为啥这个recycleView有(174,48,60,99)的padding????
         mRecycleView = rootView?.findViewById(R.id.content_recycler)
         mRecycleView?.apply {
             setHasFixedSize(true)

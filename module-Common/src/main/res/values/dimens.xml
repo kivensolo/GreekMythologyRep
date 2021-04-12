@@ -7,8 +7,12 @@
         dp/dip  : 与密度无关的象素，一种基于屏幕密度的抽象单位。在每英寸160点的显示器上，
                   1dp = 1px。但dp和px的比例会随着屏幕密度的变化而改变，不同设备有不同的显示效果。
                   设置宽度或者高度等属性时，推荐使用dp(dip)作为单位
-        sp      : 与刻度无关的象素，主要用于字体显示best for textsize，作为和文字相关大小单位。-->
+        sp      : 与刻度无关的象素，主要用于字体显示best for textsize，作为和文字相关大小单位。
 
+        计算公式：
+            px = dp * density = dp * (dpi/160)
+            以1080P 5寸设备为标准：dpi=480  density=3  px是dp的3倍。
+    -->
     <!--
         ML: android:textSize="@dimen/some_name"
         Java: float dimen = Resources.getDimen(R.dimen.some_name)
