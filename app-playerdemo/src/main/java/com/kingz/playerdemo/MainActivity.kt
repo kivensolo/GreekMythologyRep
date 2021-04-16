@@ -1,116 +1,222 @@
 package com.kingz.playerdemo
 
-import android.content.Context
-import android.net.nsd.NsdManager
-import android.net.nsd.NsdServiceInfo
 import android.os.Bundle
 import android.util.Log
+import android.view.SurfaceHolder
 import androidx.appcompat.app.AppCompatActivity
-import java.net.InetAddress
+import com.kingz.playerdemo.decode.AudioSyncDecoder
+import com.kingz.playerdemo.decode.VideoSyncDecoder
+import kotlinx.android.synthetic.main.activity_main.*
+import java.io.File
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
+
 
 /**
- * NSD客户端分为两个步骤：扫描，解析
+ * 使用MediaCodec播放本地视频
+ * https://blog.csdn.net/u011418943/article/details/107561111
  */
 class MainActivity : AppCompatActivity() {
 
-    private val TAG: String = "MainActivity"
-    private val SERVICE_NAME: String = "KingZ-NsdChat"
-    private lateinit var mServiceInfo: NsdServiceInfo
-    private lateinit var nsdManager: NsdManager
+    private val TAG: String = "PlayerDemoActivity"
+    private var isStreamEnd = false
+    private var mExecutorService: ExecutorService? = null
+    private var mVideoSync: VideoSyncDecoder? = null
+    private var mAudioDecodeSync: AudioSyncDecoder? = null
 
-    // 扫描监听器
-    private val discoveryListener = object : NsdManager.DiscoveryListener {
 
-        // 在服务发现开始时调用
-        override fun onDiscoveryStarted(regType: String) {
-            Log.d(TAG, "Service discovery started -----> ")
+    private var callback: SurfaceHolder.Callback = object : SurfaceHolder.Callback {
+        override fun surfaceChanged(holder: SurfaceHolder?, format: Int, width: Int, height: Int) {
+            Log.i(TAG, "surfaceChanged")
         }
 
-        /**
-         *  在服务找到时回调返回NsdServiceInfo的对象
-         *  里面只有NSD服务器的主机名，要解析后才能得到该主机名的其他数据信息
-         */
-        override fun onServiceFound(service: NsdServiceInfo) {
-            Log.d(TAG, "Service discovery success :: $service")
-            when {
-                // 服务类型是包含此服务的协议和传输层的字符串
-                service.serviceType != "_nsdchat._tcp" ->
-                    Log.e(TAG, "Unknown Service Type: ${service.serviceType}")
-                service.serviceName == SERVICE_NAME ->
-                    Log.d(TAG, "Same machine: ${service.serviceName}")
-                service.serviceName.contains("NsdChat") ->
-                    // 当应用在网络上找到要连接的服务时
-                    // 它必须首先使用 resolveService() 方法确定该服务的连接信息
-                    nsdManager.resolveService(service, resolveListener)
-            }
+        override fun surfaceDestroyed(holder: SurfaceHolder) {
+            Log.i(TAG, "surfaceDestroyed")
+//            workerThread?.interrupt()
+//            workerThread = null
+//            if (audioMediaCodecWorker != null) {
+//                audioMediaCodecWorker!!.interrupt()
+//                audioMediaCodecWorker = null
+//            }
         }
 
-        override fun onServiceLost(service: NsdServiceInfo) {
-            // When the network service is no longer available.
-            // Internal bookkeeping code goes here.
-            Log.e(TAG, "service lost: $service")
+        override fun surfaceCreated(holder: SurfaceHolder) {
+            Log.i(TAG, "surfaceCreated")
+            // 音频解码
         }
 
-        override fun onDiscoveryStopped(serviceType: String) {
-            Log.i(TAG, "Discovery stopped: $serviceType")
-        }
-
-        override fun onStartDiscoveryFailed(serviceType: String, errorCode: Int) {
-            Log.e(TAG, "Discovery failed: Error code:$errorCode")
-            nsdManager.stopServiceDiscovery(this)
-        }
-
-        override fun onStopDiscoveryFailed(serviceType: String, errorCode: Int) {
-            Log.e(TAG, "Discovery failed: Error code:$errorCode")
-            nsdManager.stopServiceDiscovery(this)
-        }
-    }
-
-    // 解析监听器
-    private val resolveListener = object : NsdManager.ResolveListener {
-
-        override fun onResolveFailed(serviceInfo: NsdServiceInfo, errorCode: Int) {
-            // Called when the resolve fails. Use the error code to debug.
-            Log.e(TAG, "Resolve failed: $errorCode")
-        }
-
-        override fun onServiceResolved(serviceInfo: NsdServiceInfo) {
-            Log.e(TAG, "Resolve Succeeded. $serviceInfo")
-
-            if (serviceInfo.serviceName == SERVICE_NAME) {
-                Log.d(TAG, "Same IP.")
-                return
-            }
-            mServiceInfo = serviceInfo
-            val port: Int = serviceInfo.port
-            val host: InetAddress = serviceInfo.host
-        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_nsd)
-        nsdManager = getSystemService(Context.NSD_SERVICE) as NsdManager
+        setContentView(R.layout.activity_main)
+//        filePathUri = "android.resource://$packageName/${R.raw.welcome_video}"
 
-//        // 扫描
-//        btn_search.setOnClickListener {
-//            discoverServices()
-//        }
-//        // 解析
-//        btn_connect.setOnClickListener {
-//            nsdManager.resolveService(mServiceInfo, resolveListener)
-//        }
+        val mFile = File(externalCacheDir, "ChiLing.mp4")
+
+        mExecutorService = Executors.newFixedThreadPool(2)
+        // 设置Surface不维护自己的缓冲区，等待屏幕的渲染引擎将内容推送到用户面前
+        // 该api已经废弃，这个编辑会自动设置
+        // surfaceView.holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS)
+        val holder = surface_view.holder
+        holder.addCallback(callback)
+        play_player.setOnClickListener {
+            // 音视频同步
+            mVideoSync = VideoSyncDecoder (holder.surface, mFile.absolutePath)
+            mAudioDecodeSync = AudioSyncDecoder(mFile.absolutePath)
+            mExecutorService?.execute(mVideoSync)
+            mExecutorService?.execute(mAudioDecodeSync)
+        }
+        pause_player.setOnClickListener {
+            mVideoSync?.pauseMedia()
+        }
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        isStreamEnd = true
     }
 
     /**
-     * 发现NSD服务
-     */
-    private fun discoverServices() {
-        nsdManager.discoverServices(
-            "_nsdchat._tcp", //要和NSD服务器端定的ServerType一样
-            NsdManager.PROTOCOL_DNS_SD, //固定参数
-            discoveryListener           //扫描监听器
-        )
-    }
+     * 音频解码工作线程
+     *//*
+    inner class AudioMediaCodecWorker(playUrl: String) : Thread() {
 
+        var videoUrl: String? = playUrl
+
+        //数据显示的时间戳
+        var presentationTimeUs = 0L
+        var inputErrorCount = 0
+        var outputErrorCount = 0
+
+        override fun run() {
+            super.run()
+            tryFindVideoTrack()
+        }
+
+        private fun tryFindVideoTrack(): Boolean {
+            mediaExtractor = MediaExtractor()
+            Log.i(TAG, "Try FindVideoTrack fileURl:$videoUrl")
+            try{
+                mediaExtractor.setDataSource(videoUrl)
+            }catch (e:Exception){
+                e.printStackTrace()
+                return false
+            }
+
+            // 遍历数据视频轨道，创建指定格式的MediaCodec
+            for (idx in 0 until mediaExtractor.trackCount) {
+                val mediaFormat = mediaExtractor.getTrackFormat(idx)
+
+                val mime = mediaFormat.getString(MediaFormat.KEY_MIME)
+                // 找到视频轨道，并创建MediaCodec解码器
+                if (mime.startsWith("video/")) {
+//                    val width = mediaFormat.getInteger(MediaFormat.KEY_WIDTH)
+//                    val height = mediaFormat.getInteger(MediaFormat.KEY_HEIGHT)
+                    Log.w(TAG,"Find video track, MIME=$mime ; MediaFormat=$mediaFormat; ")
+
+                    //选择此视频轨道
+                    mediaExtractor.selectTrack(idx)
+                    try {
+                        //创建解码器  STATE --- Uninitialized
+                        mMediaCodec = MediaCodec.createDecoderByType(mime).apply {
+                            // STATE --- Configured
+                            this.configure(mediaFormat, mSurface, null, 0)
+                            // STATE --- Executing (Can deal with data) ---> Flushed
+                            this.start()
+                        }
+                        val bufferInfo = MediaCodec.BufferInfo()
+                        val inputbuffer = mMediaCodec?.inputBuffers
+                        while (!isStreamEnd) {
+                            inputData(mediaExtractor, inputbuffer)
+                            outputData(bufferInfo)
+                        }
+                        return true
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    }
+                }
+            }
+            return false
+        }
+
+        *//**
+         * MediaCodec 输出数据至OutBuffer
+         * @param outBuffer: 用于储存视频输出数据的buffer
+         *//*
+        private fun outputData(outBuffer: MediaCodec.BufferInfo) {
+            val outBufferIndex = mMediaCodec?.dequeueOutputBuffer(outBuffer, 20 * 1000L)!!
+            if (outBufferIndex >= 0) {
+                Log.i(TAG, "=======>>>>> OutData, time(Us):$presentationTimeUs")
+                //释放指定索引位置的buffer数据,并渲染到Surface上
+                mMediaCodec?.releaseOutputBuffer(outBufferIndex, true)
+                outputErrorCount = 0
+                return
+            }
+            // outBufferIndex < 0 则认为查找失败
+            if (outputErrorCount > 10) {
+                outputErrorCount = 0
+                Log.e(TAG, "输出超过错误上限")
+                return
+            }
+            outputErrorCount++
+            outputData(outBuffer)
+        }
+
+        *//**
+         * 通过MediaExtractor从inputBuffer中读取数据
+         * 并输入至MediaCodoc
+         *//*
+        private fun inputData(extractor: MediaExtractor, inputBuffer: Array<ByteBuffer>?) {
+            //返回可以使用的输入buffer索引
+            val bufferIndex: Int = mMediaCodec?.dequeueInputBuffer(10 * 1000L)!!
+
+            // buffer有效
+            if (bufferIndex >= 0) {
+                presentationTimeUs++
+//                var input: ByteBuffer? = null
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                    input = mMediaCodec?.getInputBuffer(bufferIndex)
+//                } else {
+//                  input = inputBuffer?.get(bufferIndex)
+//                }
+
+                // 获取的有效ByteBuffer
+                val tmpByteBuffer = inputBuffer?.get(bufferIndex)
+
+                *//**
+                 * 读取采样数据的buffer大小
+                 * 通过MediaExtractor检索当前已编码的样例，
+                 * 并将其存储在从给定偏移量开始的字节缓冲区中。
+                 * 返回样本大小(如果*没有更多的样本，则返回-1)
+                 *//*
+                val size = extractor.readSampleData(tmpByteBuffer, 0)
+                Log.i(TAG, "<<<<<<======= InputData time(us):$presentationTimeUs    size(byte):$size")
+                var flag = 0
+                if (size < 0) {
+                    flag = MediaCodec.BUFFER_FLAG_END_OF_STREAM
+                    Log.e(TAG, "视频流结束")
+                    isStreamEnd = true
+                    mMediaCodec?.release()
+                    return
+                }
+                inputErrorCount = 0
+                // 设置指定索引位置的buffer数据
+                mMediaCodec?.queueInputBuffer(bufferIndex, 0, size, presentationTimeUs, flag)
+                // 提前到下一个样品。如果没有更多的示例数据，则返回false(流结束)
+                extractor.advance()
+                return
+            }
+
+            if (inputErrorCount > 10) {
+                inputErrorCount = 0
+                Log.e(TAG, "数据注入超过错误上限")
+                return
+            }
+            outputErrorCount++
+            inputData(extractor, inputBuffer)
+        }
+    }
+*/
 }
