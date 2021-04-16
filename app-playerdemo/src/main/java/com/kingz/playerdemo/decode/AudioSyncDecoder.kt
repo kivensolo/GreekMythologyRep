@@ -17,7 +17,7 @@ import androidx.annotation.RequiresApi
 class AudioSyncDecoder constructor(playUrl: String) : BaseDecoder(playUrl) {
     // 音频采样率
     private var mPcmEncodeBit: Int = 0
-    private var audioTrack: AudioTrack? = null
+    private var mAudioTrack: AudioTrack? = null
 
     init {
         initAMExtractor()
@@ -64,7 +64,7 @@ class AudioSyncDecoder constructor(playUrl: String) : BaseDecoder(playUrl) {
          * 所以只需要设置一帧的最小buffer即可，
          * 然后调用 play() 方法去等待数据
          */
-        audioTrack = AudioTrack(
+        mAudioTrack = AudioTrack(
             audioAttributes,
             audioFormat,
             minBufferSize, //
@@ -72,7 +72,7 @@ class AudioSyncDecoder constructor(playUrl: String) : BaseDecoder(playUrl) {
             AudioManager.AUDIO_SESSION_ID_GENERATE
         )
         //监听播放,等待音频数据
-        audioTrack?.play()
+        mAudioTrack?.play()
     }
 
     override fun decodeType(): TrackType = TrackType.AUDIO
@@ -89,9 +89,9 @@ class AudioSyncDecoder constructor(playUrl: String) : BaseDecoder(playUrl) {
             Log.i(TAG, "------>>>Audio OutData, time(Us):$timeStamp")
             val outputBuffer = mMediaCodec.getOutputBuffer(outBufferIndex)
             // 流式模式写数据到 AudioTrack中，排队阻塞等待播放,实现音频播放
-            audioTrack?.write(outputBuffer, outBuffer.size, AudioTrack.WRITE_BLOCKING)
+            mAudioTrack?.write(outputBuffer, outBuffer.size, AudioTrack.WRITE_BLOCKING)
             //释放指定索引位置的buffer数据,并渲染到Surface上
-            mMediaCodec.releaseOutputBuffer(outBufferIndex, true)
+            mMediaCodec.releaseOutputBuffer(outBufferIndex, false)
             outputErrorCount = 0
             return false
         }
