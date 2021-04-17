@@ -9,7 +9,7 @@ import androidx.annotation.RequiresApi
  * author：ZekeWang
  * date：2021/4/16
  * description：
- *  音频同步解码器
+ *  音频解码器 ------ 同步方式
  *  使用AudioTrack
  *  https://blog.csdn.net/u011418943/article/details/107561111
  */
@@ -29,11 +29,14 @@ class AudioSyncDecoder constructor(playUrl: String) : BaseDecoder(playUrl) {
         initPcmEncode()
         //音频采样率
         val sampleRate = mediaFormat.getInteger(MediaFormat.KEY_SAMPLE_RATE)
-        //获取视频通道数
+        // 获取视频通道数
         val channelCount = mediaFormat.getInteger(MediaFormat.KEY_CHANNEL_COUNT)
-        //拿到声道
-        val channelConfig =
-            if (channelCount == 1) AudioFormat.CHANNEL_IN_MONO else AudioFormat.CHANNEL_IN_STEREO
+        // 拿到声道
+        val channelConfig = if (channelCount == 1) {
+            AudioFormat.CHANNEL_IN_MONO
+        } else {
+            AudioFormat.CHANNEL_IN_STEREO //立体声
+        }
         // 一帧的最小buffer大小
         val minBufferSize = AudioTrack.getMinBufferSize(sampleRate, channelConfig, mPcmEncodeBit)
 
@@ -86,7 +89,7 @@ class AudioSyncDecoder constructor(playUrl: String) : BaseDecoder(playUrl) {
         //FIXME java.lang.IllegalStateException Stop时
         val outBufferIndex = mMediaCodec.dequeueOutputBuffer(outBuffer, DEQUEUE_TIMEOUT_US)
         if (outBufferIndex >= 0) {
-            Log.i(TAG, "------>>>Audio OutData, time(Us):$timeStamp")
+//            Log.i(TAG, "------>>>Audio OutData, time(Us):$mPresentationTimeUs")
             val outputBuffer = mMediaCodec.getOutputBuffer(outBufferIndex)
             // 流式模式写数据到 AudioTrack中，排队阻塞等待播放,实现音频播放
             mAudioTrack?.write(outputBuffer, outBuffer.size, AudioTrack.WRITE_BLOCKING)

@@ -9,7 +9,7 @@ import com.kingz.playerdemo.extractor.AMExtractor
 /**
  * author：ZekeWang
  * date：2021/4/16
- * description：解码基类，用于解码音视频
+ * description：解码基类，用于解码音视频流
  */
 abstract class BaseDecoder(private val playUrl: String) : Runnable {
     val TAG: String = BaseDecoder::class.java.simpleName
@@ -17,8 +17,10 @@ abstract class BaseDecoder(private val playUrl: String) : Runnable {
     lateinit var mMediaCodec: MediaCodec
     lateinit var mediaFormat: MediaFormat
     var isStreamEnd = false
-    //数据显示的时间戳
-    var timeStamp = 0L
+    // 当前帧的pts时间戳(从0开始)
+    var mPresentationTimeUs = 0L
+    // 系统时间戳，用于同步校准画面帧
+    var timeStamp = -1L
 
     var inputErrorCount = 0
     var outputErrorCount = 0
@@ -109,13 +111,13 @@ abstract class BaseDecoder(private val playUrl: String) : Runnable {
              */
             val size = extractor.readSampleData(tmpByteBuffer, 0)
 
-            timeStamp = extractor.sampleTime
+            mPresentationTimeUs = extractor.sampleTime
             val flag = extractor.sampleFlags
 
 //            Log.i(TAG, "InputData time(us):$timeStamp    size(byte):$size   ------>")
             if (size < 0) {
                 // 结束,传递 end-of-stream 标志
-                Log.e(TAG, "视频流结束")
+                Log.e(TAG, "流处理结束.")
                 mMediaCodec.queueInputBuffer(bufferIndex,0,0,0,
                                         MediaCodec.BUFFER_FLAG_END_OF_STREAM)
                 isStreamEnd = true
@@ -123,7 +125,7 @@ abstract class BaseDecoder(private val playUrl: String) : Runnable {
             }
             inputErrorCount = 0
             // 设置指定索引位置的buffer数据
-            mMediaCodec.queueInputBuffer(bufferIndex, 0, size, timeStamp, flag)
+            mMediaCodec.queueInputBuffer(bufferIndex, 0, size, mPresentationTimeUs, flag)
             // 拿到下一帧。若没有,则返回false(流结束)
             extractor.advance()
             return
