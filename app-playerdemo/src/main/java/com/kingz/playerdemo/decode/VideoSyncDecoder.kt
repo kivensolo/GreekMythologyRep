@@ -34,40 +34,39 @@ class VideoSyncDecoder(
     }
 
     /**
-     * MediaCodec 输出数据至OutBuffer
+     * 消费从Codec中输出的outBuffer数据
      * @param outBufferInfo: 用于储存视频输出数据的buffer
      */
     override fun handleOutputData(outBufferInfo: MediaCodec.BufferInfo): Boolean {
-        val outBufferIndex = mMediaCodec.dequeueOutputBuffer(outBufferInfo, 20 * 1000L)!!
+        // 获取可使用的缓冲区索引
+        val outBufferIndex = mMediaCodec.dequeueOutputBuffer(outBufferInfo, DEQUEUE_TIMEOUT_US)
         if (outBufferIndex >= 0) {
-            // 屏蔽频繁的打印
-            // Log.i(TAG, "------> Video OutData, time(Us):$mPresentationTimeUs")
-            if(timeStamp == -1L){
-                timeStamp = System.currentTimeMillis();
+            if (timeStamp == -1L) {
+                timeStamp = System.currentTimeMillis()
             }
-            synRenderWithPTS(outBufferInfo,timeStamp)
+            synRenderWithPTS(outBufferInfo, timeStamp)
             //释放指定索引位置的buffer，并渲染到 Surface 中
             mMediaCodec.releaseOutputBuffer(outBufferIndex, true)
             outputErrorCount = 0
+        } else if (outBufferIndex == MediaCodec.INFO_OUTPUT_BUFFERS_CHANGED) {
+            Log.w(TAG, "The output buffers have changed")
+        } else if (outBufferIndex == MediaCodec.INFO_OUTPUT_FORMAT_CHANGED) {
+            // 输出的format已经改变，后续数据会按照新的format输出,
+            // 通过getOutputFormat()返回一个新的format
+        } else {
+            outputErrorCount++
+            if (outputErrorCount > 10) {
+                outputErrorCount = 0
+                Log.e(TAG, "Out buffer is busy during [DEQUEUE_TIMEOUT_US x 10]")
+            }
         }
-        return isEndOfStream(outBufferInfo)
-
-//        if (isEndOfStream(outBufferInfo)) return true
-        // 未解析完毕时, outBufferIndex < 0 则认为查找失败 进行重试机制
-//        if (outputErrorCount > 10) {
-//            outputErrorCount = 0
-//            Log.e(TAG, "输出超过错误上限")
-//            return true
-//        }
-//        outputErrorCount++
-//        handleOutputData(outBuffer)
-//        return false
+        return checkStreamEnd(outBufferInfo)
     }
 
     /**
      * 流是否解析完毕
      */
-    private fun isEndOfStream(outBufferInfo: MediaCodec.BufferInfo): Boolean {
+    private fun checkStreamEnd(outBufferInfo: MediaCodec.BufferInfo): Boolean {
         if ((outBufferInfo.flags and MediaCodec.BUFFER_FLAG_END_OF_STREAM) != 0) {
             Log.e(TAG, "Video OutputBuffer BUFFER_FLAG_END_OF_STREAM")
             //TODO 增加画面销毁的可控选择

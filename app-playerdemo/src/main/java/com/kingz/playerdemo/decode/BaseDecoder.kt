@@ -3,16 +3,24 @@ package com.kingz.playerdemo.decode
 import android.media.MediaCodec
 import android.media.MediaExtractor
 import android.media.MediaFormat
+import android.os.Build
 import android.util.Log
 import com.kingz.playerdemo.extractor.AMExtractor
+import java.nio.ByteBuffer
+
+enum class TrackType {
+    VIDEO, AUDIO
+}
 
 /**
  * author：ZekeWang
  * date：2021/4/16
  * description：解码基类，用于解码音视频流
+ * 默认异步解码
  */
-abstract class BaseDecoder(private val playUrl: String) : Runnable {
-    val TAG: String = BaseDecoder::class.java.simpleName
+abstract class BaseDecoder(private val playUrl: String,
+                           private val isAsync:Boolean = true) : Runnable {
+    val TAG: String = javaClass.simpleName
     lateinit var baseExtractor: AMExtractor
     lateinit var mMediaCodec: MediaCodec
     lateinit var mediaFormat: MediaFormat
@@ -24,7 +32,8 @@ abstract class BaseDecoder(private val playUrl: String) : Runnable {
 
     var inputErrorCount = 0
     var outputErrorCount = 0
-    val DEQUEUE_TIMEOUT_US = 20 * 1000L  // 10ms
+    @Suppress("PropertyName")
+    val DEQUEUE_TIMEOUT_US = 10 * 1000L  // 10ms
 
     /**
      * 初始化AMExtractor
@@ -63,20 +72,21 @@ abstract class BaseDecoder(private val playUrl: String) : Runnable {
     }
 
     override fun run() {
+        @Suppress("SENSELESS_COMPARISON")
+        if(mMediaCodec == null){
+            throw IllegalStateException("Please init AMExtractor first !")
+        }
         // STATE --- Executing (Can deal with data) ---> Flushed
-        mMediaCodec?.start()
-
+        mMediaCodec.start()
         try {
             val bufferInfo = MediaCodec.BufferInfo()
             while (!isStreamEnd) {
-                dealInputBuffer(getMediaExtractor())
-                //解码输出交给子类
-                val isFinish: Boolean = handleOutputData(bufferInfo)
-                if(isFinish){
+                dealInputData(getMediaExtractor())
+                if(handleOutputData(bufferInfo)){
                     break
                 }
             }
-            done()
+            release()
         }catch (e: Exception) {
             e.printStackTrace()
         }
@@ -86,22 +96,17 @@ abstract class BaseDecoder(private val playUrl: String) : Runnable {
     /**
      * 通过MediaExtractor从inputBuffer中读取数据
      * 并输入至MediaCodoc
+     * @param extractor: MediaExtractor
      */
-    private fun dealInputBuffer(extractor: MediaExtractor) {
-        //返回可以使用的输入buffer索引
-        val bufferIndex: Int = mMediaCodec.dequeueInputBuffer(DEQUEUE_TIMEOUT_US)
-
-        // buffer有效
-        if (bufferIndex >= 0) {
-            val inputBuffer = mMediaCodec.inputBuffers
-//          var input: ByteBuffer? = null
-//          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//              input = mMediaCodec?.getInputBuffer(bufferIndex)
-//          } else {
-//            input = inputBuffer?.get(bufferIndex)
-//          }
-            // 获取的有效ByteBuffer
-            val tmpByteBuffer = inputBuffer[bufferIndex]
+    private fun dealInputData(extractor: MediaExtractor) {
+        // 获取有效输入缓冲区的索引，如果当前没有可用的缓冲区，则返回-1。
+        val availableBufferIndex: Int = mMediaCodec.dequeueInputBuffer(DEQUEUE_TIMEOUT_US)
+        if (availableBufferIndex >= 0) {
+            val inputBuffer: ByteBuffer = (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                mMediaCodec.getInputBuffer(availableBufferIndex)
+            } else {
+                mMediaCodec.inputBuffers[availableBufferIndex]
+            }) ?: return
 
             /**
              * 拿到视频的当前帧的buffer，读取采样数据的buffer大小
@@ -109,42 +114,40 @@ abstract class BaseDecoder(private val playUrl: String) : Runnable {
              * 并将其存储在从给定偏移量开始的字节缓冲区中。
              * 返回样本大小(如果*没有更多的样本，则返回-1)
              */
-            val size = extractor.readSampleData(tmpByteBuffer, 0)
+            val size = extractor.readSampleData(inputBuffer, 0)
 
             mPresentationTimeUs = extractor.sampleTime
             val flag = extractor.sampleFlags
 
-//            Log.i(TAG, "InputData time(us):$timeStamp    size(byte):$size   ------>")
             if (size < 0) {
-                // 结束,传递 end-of-stream 标志
-                Log.e(TAG, "流处理结束.")
-                mMediaCodec.queueInputBuffer(bufferIndex,0,0,0,
-                                        MediaCodec.BUFFER_FLAG_END_OF_STREAM)
+                Log.e(TAG, "Stream is end! onComplete !!! ")
+                mMediaCodec.queueInputBuffer(availableBufferIndex,
+                    0,0,0, MediaCodec.BUFFER_FLAG_END_OF_STREAM)
                 isStreamEnd = true
                 return
             }
             inputErrorCount = 0
             // 设置指定索引位置的buffer数据
-            mMediaCodec.queueInputBuffer(bufferIndex, 0, size, mPresentationTimeUs, flag)
+            mMediaCodec.queueInputBuffer(availableBufferIndex, 0, size, mPresentationTimeUs, flag)
             // 拿到下一帧。若没有,则返回false(流结束)
             extractor.advance()
             return
-        }
-
-        if (inputErrorCount > 10) {
-            inputErrorCount = 0
-            Log.e(TAG, "数据注入超过错误上限")
+        }else{
+            inputErrorCount++
+            if (inputErrorCount > 10) {
+                inputErrorCount = 0
+                Log.e(TAG, "Input buffer is busy during [DEQUEUE_TIMEOUT_US x 10]")
+            }
             return
         }
-        outputErrorCount++
-        dealInputBuffer(extractor)
     }
 
     /**
      * 处理OutBuffer
+     * 解码输出交给子类
      * @return 流的解析是否finish
      */
-    protected abstract fun handleOutputData(outBuffer: MediaCodec.BufferInfo):Boolean
+    protected abstract fun handleOutputData(outBufferInfo: MediaCodec.BufferInfo):Boolean
 
     /**
      * 判断需要解码的类型
@@ -152,6 +155,9 @@ abstract class BaseDecoder(private val playUrl: String) : Runnable {
      */
     protected abstract fun decodeType():TrackType
 
+    /**
+     * 获取Android提供的MediaExtractor
+     */
     private fun getMediaExtractor(): MediaExtractor {
         return baseExtractor.mMediaExtractor
     }
@@ -162,7 +168,7 @@ abstract class BaseDecoder(private val playUrl: String) : Runnable {
     protected abstract fun configure()
 
 
-    protected fun done() {
+    protected fun release() {
         try {
             isStreamEnd = true
             //释放 mediacodec
@@ -174,8 +180,4 @@ abstract class BaseDecoder(private val playUrl: String) : Runnable {
             e.printStackTrace()
         }
     }
-}
-
-enum class TrackType {
-    VIDEO, AUDIO
 }
