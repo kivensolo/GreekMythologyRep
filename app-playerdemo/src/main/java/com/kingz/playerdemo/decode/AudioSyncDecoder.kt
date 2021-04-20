@@ -5,6 +5,7 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import java.nio.ByteBuffer
+import kotlin.math.max
 
 /**
  * author：ZekeWang
@@ -46,11 +47,8 @@ class AudioSyncDecoder constructor(playUrl: String) : BaseDecoder(playUrl) {
             Log.d(TAG, "Init Audio Track <= KITKAT")
             // < 5.0
             val audioFormat = AudioFormat.ENCODING_PCM_16BIT
-            mAudioTrack = AudioTrack(
-                AudioManager.STREAM_MUSIC,
-                sampleRate, channelConfig,
-                audioFormat, minBufferSize,
-                AudioTrack.MODE_STREAM
+            mAudioTrack = AudioTrack(AudioManager.STREAM_MUSIC, sampleRate, channelConfig,
+                audioFormat, max(minBufferSize, 2048), AudioTrack.MODE_STREAM
             )
         } else {
             Log.d(TAG, "Init Audio Track > KITKAT")
@@ -71,8 +69,8 @@ class AudioSyncDecoder constructor(playUrl: String) : BaseDecoder(playUrl) {
             mAudioTrack = AudioTrack(
                 audioAttributes,
                 audioFormat,
-                minBufferSize, // 只需要设置一帧的最小buffer即可
-                AudioTrack.MODE_STREAM, //
+                max(minBufferSize, 2048),
+                AudioTrack.MODE_STREAM,
                 AudioManager.AUDIO_SESSION_ID_GENERATE
             )
         }
