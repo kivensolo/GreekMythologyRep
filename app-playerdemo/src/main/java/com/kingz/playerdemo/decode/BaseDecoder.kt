@@ -16,10 +16,13 @@ enum class TrackType {
  * author：ZekeWang
  * date：2021/4/16
  * description：解码基类，用于解码音视频流
- * 默认异步解码
+ * 默认同步解码
+ * 若需使用异步解码,构造函数中设置isAsync为true即可。
+ *
+ * 在 5.0 之后，google 建议使用异步解码的方式去使用 MediaCodec
  */
 abstract class BaseDecoder(private val playUrl: String,
-                           private val isAsync:Boolean = true) : Runnable {
+                           protected val isAsync:Boolean = false) : Runnable {
     val TAG: String = javaClass.simpleName
     lateinit var baseExtractor: AMExtractor
     lateinit var mMediaCodec: MediaCodec
@@ -27,8 +30,8 @@ abstract class BaseDecoder(private val playUrl: String,
     var isStreamEnd = false
     // 当前帧的pts时间戳(从0开始)
     var mPresentationTimeUs = 0L
-    // 系统时间戳，用于同步校准画面帧
-    var timeStamp = -1L
+    // 输出数据系统时间戳
+    var ouputTimeStamp = -1L
 
     var inputErrorCount = 0
     var outputErrorCount = 0
@@ -64,6 +67,9 @@ abstract class BaseDecoder(private val playUrl: String,
 
             //创建解码器  STATE --- Uninitialized
             mMediaCodec = MediaCodec.createDecoderByType(mime)
+            if (isAsync) {
+                setAsyncCallback()
+            }
             // STATE --- Configured
             configure()
         } catch (e: Exception) {
@@ -78,19 +84,20 @@ abstract class BaseDecoder(private val playUrl: String,
         }
         // STATE --- Executing (Can deal with data) ---> Flushed
         mMediaCodec.start()
-        try {
-            val bufferInfo = MediaCodec.BufferInfo()
-            while (!isStreamEnd) {
-                dealInputData(getMediaExtractor())
-                if(handleOutputData(bufferInfo)){
-                    break
+        if (!isAsync) { // 同步解码
+            try {
+                val bufferInfo = MediaCodec.BufferInfo()
+                while (!isStreamEnd) {
+                    dealInputData(getMediaExtractor())
+                    if (handleOutputData(bufferInfo)) {
+                        break
+                    }
                 }
+                release()
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
-            release()
-        }catch (e: Exception) {
-            e.printStackTrace()
         }
-
     }
 
     /**
@@ -120,10 +127,14 @@ abstract class BaseDecoder(private val playUrl: String,
             val flag = extractor.sampleFlags
 
             if (size < 0) {
-                Log.e(TAG, "Stream is end! onComplete !!! ")
+                Log.e(TAG, "Stream is end!")
                 mMediaCodec.queueInputBuffer(availableBufferIndex,
                     0,0,0, MediaCodec.BUFFER_FLAG_END_OF_STREAM)
                 isStreamEnd = true
+                // seekTo到视频开头，并且重置解码器
+                getMediaExtractor().seekTo(0,MediaExtractor.SEEK_TO_CLOSEST_SYNC)
+                // reset decoder state
+                mMediaCodec.flush()
                 return
             }
             inputErrorCount = 0
@@ -158,7 +169,7 @@ abstract class BaseDecoder(private val playUrl: String,
     /**
      * 获取Android提供的MediaExtractor
      */
-    private fun getMediaExtractor(): MediaExtractor {
+    protected fun getMediaExtractor(): MediaExtractor {
         return baseExtractor.mMediaExtractor
     }
 
@@ -167,6 +178,12 @@ abstract class BaseDecoder(private val playUrl: String,
      */
     protected abstract fun configure()
 
+    /**
+     * 设置Codec的异步回调
+     * 5.0之后推荐使用,需要在
+     * @see configure()之前调用
+     */
+    protected abstract fun setAsyncCallback()
 
     protected fun release() {
         try {

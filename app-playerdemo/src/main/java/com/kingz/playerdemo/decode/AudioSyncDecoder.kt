@@ -84,6 +84,8 @@ class AudioSyncDecoder constructor(playUrl: String) : BaseDecoder(playUrl) {
         mMediaCodec.configure(mediaFormat, null, null, 0)
     }
 
+    override fun setAsyncCallback() {}
+
     override fun handleOutputData(outBufferInfo: MediaCodec.BufferInfo): Boolean {
         // 获取可使用的缓冲区索引
         val outBufferIndex = mMediaCodec.dequeueOutputBuffer(outBufferInfo, DEQUEUE_TIMEOUT_US)

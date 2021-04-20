@@ -1,9 +1,11 @@
 package com.kingz.playerdemo.decode
 
 import android.media.MediaCodec
+import android.media.MediaExtractor
+import android.media.MediaFormat
+import android.os.Build
 import android.util.Log
 import android.view.Surface
-
 
 
 /**
@@ -21,16 +23,72 @@ class VideoSyncDecoder(
     // 当前帧解码后的真实时间戳
     private var decodeFrameTimeMs:Long = -1
     // pts时间戳与真实解码时间的差值
-    private var timeDiff:Long = -1
+    private var renderDelta:Long = -1
 
     init {
+        Log.d(TAG, "init() with async? --- $isAsync")
         initAMExtractor()
     }
+
+  /*  private val synRenderMsg: Int = 0x0001
+    var mPTSSyncHandler = Handler {
+        when(it.what){
+            synRenderMsg -> {
+                getMediaExtractor().advance()
+                true
+            }
+            else -> { false }
+        }
+    }*/
 
     override fun decodeType(): TrackType = TrackType.VIDEO
 
     override fun configure() {
         mMediaCodec.configure(mediaFormat, surface, null, 0)
+    }
+
+    override fun setAsyncCallback() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mMediaCodec.setCallback(object : MediaCodec.Callback() {
+
+                override fun onOutputBufferAvailable(codec: MediaCodec,
+                                                     index: Int,
+                                                     info: MediaCodec.BufferInfo) {
+                    if (info.flags and MediaCodec.BUFFER_FLAG_CODEC_CONFIG != 0) {
+                        codec.releaseOutputBuffer(index, false)
+                        return
+                    }
+                    synRenderWithPTS(info)
+                    codec.releaseOutputBuffer(index, true)
+                    checkStreamEnd(info)
+                }
+
+                override fun onInputBufferAvailable(codec: MediaCodec, index: Int) {
+                    //从解码器中拿到输入buffer，让Client填充数据
+                    val inputBuffer = codec.getInputBuffer(index)
+                    val size = baseExtractor.mMediaExtractor.readSampleData(inputBuffer, 0)
+
+                    mPresentationTimeUs = getMediaExtractor().sampleTime
+                    val flag = getMediaExtractor().sampleFlags
+                    if(size < 0){
+                        codec.queueInputBuffer(index,
+                    0,0,0, MediaCodec.BUFFER_FLAG_END_OF_STREAM)
+                        isStreamEnd = true
+                        return
+                    }
+                      // 设置指定索引位置的buffer数据
+                    mMediaCodec.queueInputBuffer(index, 0, size, mPresentationTimeUs, flag)
+                    //Post 下一帧处理
+                }
+
+                override fun onOutputFormatChanged(codec: MediaCodec, format: MediaFormat) {}
+
+                override fun onError(codec: MediaCodec, e: MediaCodec.CodecException) {
+                    codec.reset()
+                }
+
+            })
+        }
     }
 
     /**
@@ -41,10 +99,7 @@ class VideoSyncDecoder(
         // 获取可使用的缓冲区索引
         val outBufferIndex = mMediaCodec.dequeueOutputBuffer(outBufferInfo, DEQUEUE_TIMEOUT_US)
         if (outBufferIndex >= 0) {
-            if (timeStamp == -1L) {
-                timeStamp = System.currentTimeMillis()
-            }
-            synRenderWithPTS(outBufferInfo, timeStamp)
+            synRenderWithPTS(outBufferInfo)
             //释放指定索引位置的buffer，并渲染到 Surface 中
             mMediaCodec.releaseOutputBuffer(outBufferIndex, true)
             outputErrorCount = 0
@@ -64,31 +119,42 @@ class VideoSyncDecoder(
     }
 
     /**
-     * 流是否解析完毕
-     */
-    private fun checkStreamEnd(outBufferInfo: MediaCodec.BufferInfo): Boolean {
-        if ((outBufferInfo.flags and MediaCodec.BUFFER_FLAG_END_OF_STREAM) != 0) {
-            Log.e(TAG, "Video OutputBuffer BUFFER_FLAG_END_OF_STREAM")
-            //TODO 增加画面销毁的可控选择
-            return true
-        }
-        return false
-    }
-
-    /**
      * 用时间戳来矫正pts,使得画面渲染的速度是符合pts的要求
      */
-    private fun synRenderWithPTS(outBufferInfo: MediaCodec.BufferInfo, startTimeMs: Long) {
+    private fun synRenderWithPTS(outBufferInfo: MediaCodec.BufferInfo) {
+        if (ouputTimeStamp == -1L) {
+            ouputTimeStamp = System.currentTimeMillis()
+        }
         ptsTimeStampMs = outBufferInfo.presentationTimeUs / 1000
-        decodeFrameTimeMs = System.currentTimeMillis() - startTimeMs
-        timeDiff = ptsTimeStampMs - decodeFrameTimeMs
-        if (timeDiff > 0) { // 画面解码时间间隔小于显示时间间隔要求
+        decodeFrameTimeMs = System.currentTimeMillis() - ouputTimeStamp
+        renderDelta = ptsTimeStampMs - decodeFrameTimeMs
+        if (renderDelta > 0) { // 画面解码时间间隔小于显示时间间隔要求
             try {
-                Thread.sleep(timeDiff)
+                Thread.sleep(renderDelta)
             } catch (e: InterruptedException) {
                 e.printStackTrace()
             }
         }
+    }
+
+    /**
+     * 流是否解析完毕
+     */
+    private fun checkStreamEnd(info: MediaCodec.BufferInfo):Boolean{
+        isStreamEnd = info.flags and MediaCodec.BUFFER_FLAG_END_OF_STREAM != 0
+        if(isStreamEnd){
+            Log.e(TAG, "Video OutputBuffer BUFFER_FLAG_END_OF_STREAM")
+            getMediaExtractor().seekTo(0, MediaExtractor.SEEK_TO_CLOSEST_SYNC)
+            mMediaCodec.flush() // reset decoder state
+        }
+        return isStreamEnd
+    }
+
+    /**
+     * 获取当前播放时间(ms)
+     */
+    fun getCurrentPos():Long{
+        return  ptsTimeStampMs
     }
 
     fun pauseMedia() {
