@@ -130,22 +130,17 @@ public class NIOHttpServer {
                 // blocking selection operation
                 selector.select();
 
-                Set<SelectionKey> selectionKeySet;
-                synchronized (selector) {
-                    selectionKeySet = selector.selectedKeys();
-                }
+                Set<SelectionKey> selectionKeySet = selector.selectedKeys();
                 // Gets an iterator for the selected item in the selector,
                 // which is the registered event.
                 Iterator<SelectionKey> iterator = selectionKeySet.iterator();
 
                 SelectionKey selectionKey;
                 while (iterator.hasNext()) {
-                    synchronized (selectionKeySet) {
-                        selectionKey = iterator.next();
-                        // Delete iterator that have already been selected to prevent duplicate processing
-                        iterator.remove();
-                    }
-                    handleWithSelectionKey(selector, selectionKey);
+                    selectionKey = iterator.next();
+                    // Delete iterator that have already been selected to prevent duplicate processing
+                    iterator.remove();
+                    handleSelectionKey(selector, selectionKey);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -157,14 +152,13 @@ public class NIOHttpServer {
     /**
      * Handle events with SelectionKey.
      */
-    private void handleWithSelectionKey(Selector selector, SelectionKey selectionKey) {
+    private void handleSelectionKey(Selector selector, SelectionKey selectionKey) {
         if (selectionKey == null) {
             return;
         }
         if (!selectionKey.isValid()) {
-            //TODO 为何要判断key是否有效？
-            // Get attached Handler.
-            HttpServerHandler handler = (HttpServerHandler) selectionKey.attachment();
+            //Maybe key's channel is closed, or its selector is closed
+            ISelectableChannelHandler handler = (ISelectableChannelHandler) selectionKey.attachment();
             handler.terminate();
             return;
         }
@@ -191,12 +185,12 @@ public class NIOHttpServer {
         HttpServerHandler attachedHandler = (HttpServerHandler) selectionKey.attachment();
         try {
             if (selectionKey.isWritable()) {
-                attachedHandler.notifyWritable();
+                attachedHandler.notifyWritable(System.nanoTime());
                 return;
             }
 
             if (selectionKey.isReadable()) {
-                attachedHandler.notifyReadable();
+                attachedHandler.notifyReadable(System.nanoTime());
             }
 
         } catch (CancelledKeyException e) {
