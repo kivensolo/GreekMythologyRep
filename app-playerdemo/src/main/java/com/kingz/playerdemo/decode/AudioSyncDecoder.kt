@@ -147,6 +147,19 @@ class AudioSyncDecoder constructor(playUrl: String) : BaseDecoder(playUrl) {
         }
     }
 
+    /**
+     * 同步播放速率
+     */
+    override fun syncPlaybackRate() {
+        if(mAudioTrack != null){
+            val sampleRate = mAudioTrack!!.sampleRate * mPlaybackRate
+            mAudioTrack?.playbackRate = sampleRate.toInt()
+        }
+    }
+
+    override fun preDecode() {
+    }
+
     fun pauseMedia() {
         mMediaCodec.stop()
     }

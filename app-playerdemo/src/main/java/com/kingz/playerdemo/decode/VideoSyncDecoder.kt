@@ -92,6 +92,16 @@ class VideoSyncDecoder(
     }
 
     /**
+     * 画面的倍速是基于音频的PTS，所以无需单独做倍速同步
+     */
+    override fun syncPlaybackRate() {
+        //do nothing
+    }
+
+    override fun preDecode() {
+    }
+
+    /**
      * 消费从Codec中输出的outBuffer数据
      * @param outBufferInfo: 用于储存视频输出数据的buffer
      */

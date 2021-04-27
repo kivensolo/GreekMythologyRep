@@ -38,6 +38,9 @@ abstract class BaseDecoder(private val playUrl: String,
     @Suppress("PropertyName")
     val DEQUEUE_TIMEOUT_US = 10 * 1000L  // 10ms
 
+    // Rate of play. Default is x1.0
+    var mPlaybackRate = 1.0f
+
     /**
      * 初始化AMExtractor
      * 在子类run之前调用
@@ -184,6 +187,19 @@ abstract class BaseDecoder(private val playUrl: String,
      * @see configure()之前调用
      */
     protected abstract fun setAsyncCallback()
+
+    /**
+     * Set the play speed for playback.
+     * @param rate 0.5~2.0f
+     */
+    fun setPlaybackRate(rate:Float){
+        mPlaybackRate = rate
+        syncPlaybackRate()
+    }
+
+    protected abstract fun syncPlaybackRate()
+
+    protected abstract fun preDecode()
 
     protected fun release() {
         try {
