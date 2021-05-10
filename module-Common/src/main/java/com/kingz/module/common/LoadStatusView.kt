@@ -15,7 +15,6 @@ import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.annotation.StringRes
 import com.module.views.loading.Win10LoaddingView
-import com.zhy.autolayout.utils.AutoUtils
 
 /**
  * description: 加载、重试、错误状态的视图
@@ -54,8 +53,8 @@ class LoadStatusView @JvmOverloads constructor(
         statusText = TextView(context)
         statusText?.setTextAppearance(context, R.style.txt_normal_dark)
         statusText?.gravity = Gravity.CENTER
-        statusText?.compoundDrawablePadding = AutoUtils.getPercentHeightSize(96)
-        statusText?.setTextSize(TypedValue.COMPLEX_UNIT_PX, AutoUtils.getPercentHeightSize(44).toFloat())
+        statusText?.compoundDrawablePadding = 96
+        statusText?.setTextSize(TypedValue.COMPLEX_UNIT_PX,44f)
         statusText?.setLineSpacing(-1f, 1.5f)
         statusText?.setCompoundDrawables(null, errorIcon, null, null)
 

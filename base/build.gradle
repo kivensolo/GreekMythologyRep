@@ -86,7 +86,7 @@ dependencies {
     api root_dependencies["glide_okhttp3"]
 
     api root_dependencies["autosize"]
-    api root_dependencies["autoLayout"]
+//    api root_dependencies["autoLayout"]  @deprecated
 
     debugImplementation root_dependencies["leakcanary"]
 

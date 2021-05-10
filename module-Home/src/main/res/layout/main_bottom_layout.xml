@@ -22,7 +22,7 @@
         android:layout_height="144px"
         android:orientation="horizontal">
 
-        <com.zhy.autolayout.AutoLinearLayout
+        <LinearLayout
             android:id="@+id/bottom_vod_layout"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -48,9 +48,9 @@
                 android:text="@string/bottom_demo"
                 android:textColor="@color/main_bottom_color"
                 android:textSize="32px" />
-        </com.zhy.autolayout.AutoLinearLayout>
+        </LinearLayout>
 
-        <com.zhy.autolayout.AutoLinearLayout
+        <LinearLayout
             android:id="@+id/bottom_live_layout"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -76,9 +76,9 @@
                 android:text="@string/bottom_live"
                 android:textColor="@color/main_bottom_color"
                 android:textSize="32px" />
-        </com.zhy.autolayout.AutoLinearLayout>
+        </LinearLayout>
 
-        <com.zhy.autolayout.AutoLinearLayout
+        <LinearLayout
             android:id="@+id/bottom_vip_layout"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -104,9 +104,9 @@
                 android:text="@string/no_use"
                 android:textColor="@color/main_bottom_color"
                 android:textSize="32px" />
-        </com.zhy.autolayout.AutoLinearLayout>
+        </LinearLayout>
 
-        <com.zhy.autolayout.AutoLinearLayout
+        <LinearLayout
             android:id="@+id/bottom_mine_layout"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -132,6 +132,6 @@
                 android:text="@string/no_use"
                 android:textColor="@color/main_bottom_color"
                 android:textSize="32px" />
-        </com.zhy.autolayout.AutoLinearLayout>
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>
