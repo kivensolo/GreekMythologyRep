@@ -70,11 +70,29 @@ public class OkHttpClientManager {
     private OkHttpClient mOkHttpClient;
     private Handler mDelivery;
     private Gson mGson;
-    private ClientBuilderFactory builderFactory;
+    private IClientBuilderFactory builderFactory;
 
     private OkHttpClientManager() {
         mDelivery = new Handler(Looper.getMainLooper());
         mGson = new Gson();
+    }
+
+    /**
+     * OkHttpClientBuilder扩展接口
+     */
+    public interface IClientBuilderFactory {
+        /**
+         * 前置网络拦截器钩子函数
+         * @return 前置拦截器接口列表, 可为null
+         */
+        List<Interceptor> getPreInterceptors();
+
+         /**
+         * 后置网络拦截器钩子函数
+         * @return 后置拦截器接口列表，可为null
+         */
+         List<Interceptor> getPostInterceptors();
+
     }
 
     public OkHttpClient getOkHttpClient(){
@@ -99,7 +117,7 @@ public class OkHttpClientManager {
         return mInstance;
     }
 
-    public void setBuilderFactory(ClientBuilderFactory factory){
+    public void setBuilderFactory(IClientBuilderFactory factory){
         builderFactory = factory;
     }
 
@@ -212,17 +230,38 @@ public class OkHttpClientManager {
                 .connectTimeout(connectTimeOut, TimeUnit.MILLISECONDS)
                 .readTimeout(readTimeOut, TimeUnit.MILLISECONDS)
                 .writeTimeout(writeTimeOut, TimeUnit.MILLISECONDS);
+        configInterceptors(builder);
 
-        // 外部拦截器添加
+        return builder;
+    }
+
+    /**
+     * 网络拦截器初始化设置
+     * @param builder  OkHttpClient.Builder 对象
+     */
+    private void configInterceptors(OkHttpClient.Builder builder) {
+        //前置拦截器添加
         if (builderFactory != null) {
-            for (Interceptor interceptor : builderFactory.getPreInterceptors()) {
-                builder.addInterceptor(interceptor);
+            List<Interceptor> preInterceptors = builderFactory.getPreInterceptors();
+            if (preInterceptors != null) {
+                for (Interceptor interceptor : preInterceptors) {
+                    builder.addInterceptor(interceptor);
+                }
             }
         }
         builder.addInterceptor(new LoggingInterceptor())
 //             .addInterceptor(new CaptureInfoInterceptor())
                .addNetworkInterceptor(new StethoInterceptor());
-        return builder;
+
+        //后置拦截器添加
+        if (builderFactory != null) {
+            List<Interceptor> postInterceptors = builderFactory.getPostInterceptors();
+            if(postInterceptors != null){
+                for (Interceptor interceptor : postInterceptors) {
+                    builder.addInterceptor(interceptor);
+                }
+            }
+        }
     }
 
     /**
@@ -651,14 +690,5 @@ public class OkHttpClientManager {
 
         String key;
         String value;
-    }
-
-    /**
-     * OkHttpClientBuilder扩展类
-     */
-    public static class ClientBuilderFactory {
-        public List<Interceptor> getPreInterceptors(){
-            return null;
-        }
     }
 }

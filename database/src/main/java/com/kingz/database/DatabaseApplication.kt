@@ -3,6 +3,7 @@ package com.kingz.database
 import com.facebook.stetho.Stetho
 import com.kingz.base.BaseApplication
 import com.kingz.database.dao.AlbumDao
+import com.kingz.database.dao.CookiesDao
 import com.kingz.database.dao.SongDao
 import com.kingz.database.dao.UserDao
 
@@ -10,7 +11,7 @@ import com.kingz.database.dao.UserDao
  * @author zeke.wang
  * @date 2020/6/11
  * @maintainer zeke.wang
- * @desc:
+ * @desc: 数据库Application顶层模块
  */
 open class DatabaseApplication : BaseApplication() {
 
@@ -35,17 +36,11 @@ open class DatabaseApplication : BaseApplication() {
     }
 
     //------------ DAO 获取函数  可下沉至业务层-----------------//
-    fun getSongDao(): SongDao {
-        return AppDatabase.database.getSongDao()
-    }
+    fun getSongDao(): SongDao = AppDatabase.database.getSongDao()
+    fun getAlbumDao(): AlbumDao = AppDatabase.database.getAlbumDao()
 
-    fun getAlbumDao(): AlbumDao {
-        return AppDatabase.database.getAlbumDao()
-    }
-
-    fun getUserDao(): UserDao {
-        return AppDatabase.database.getUserDao()
-    }
+    fun getUserDao(): UserDao = AppDatabase.database.getUserDao()
+    fun getCookiesDao(): CookiesDao = AppDatabase.database.getCookoesDao()
 
     //------------ DAO 获取函数 -----------------//
     fun destroyDatabase() {

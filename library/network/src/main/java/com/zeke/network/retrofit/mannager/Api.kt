@@ -45,12 +45,16 @@ class Api private constructor() {
     private fun initRetrofit(context: Context) {
         val okHttpClientManager = OkHttpClientManager.getInstance()
         okHttpClientManager.setBuilderFactory(object :
-            OkHttpClientManager.ClientBuilderFactory() {
+            OkHttpClientManager.IClientBuilderFactory {
             override fun getPreInterceptors(): MutableList<Interceptor> {
                 val list = ArrayList<Interceptor>()
-                list.add(AddCookiesInterceptor(context))
-                list.add(SaveCookiesInterceptor(context))
+                list.add(AddCookiesInterceptor(null))
+                list.add(SaveCookiesInterceptor(null))
                 return list
+            }
+
+            override fun getPostInterceptors(): MutableList<Interceptor>? {
+                return null
             }
         })
 

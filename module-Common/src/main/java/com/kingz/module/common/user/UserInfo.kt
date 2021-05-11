@@ -21,6 +21,9 @@ object UserInfo {
         //清room用户表缓存
         val userDao = DatabaseApplication.getInstance().getUserDao()
         userDao.userLogout()
-        //TODO 清cookie
+
+        val cookieDao = DatabaseApplication.getInstance().getCookiesDao()
+        cookieDao.clear()
+
     }
 }

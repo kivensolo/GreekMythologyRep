@@ -1,18 +1,22 @@
 package com.kingz.module.wanandroid.repository
 
+import android.text.TextUtils
 import com.kingz.base.response.ResponseResult
+import com.kingz.database.DatabaseApplication
+import com.kingz.database.entity.CookiesEntity
 import com.kingz.database.entity.UserEntity
-import com.kingz.module.common.CommonApp
 import com.kingz.module.common.user.UserInfo
 import com.kingz.module.wanandroid.api.WanAndroidApiService
 import com.kingz.module.wanandroid.bean.*
 import com.kingz.module.wanandroid.response.WanAndroidResponse
 import com.zeke.kangaroo.utils.ZLog
 import com.zeke.network.OkHttpClientManager
+import com.zeke.network.cookie.ICookiesHandler
 import com.zeke.network.interceptor.AddCookiesInterceptor
 import com.zeke.network.interceptor.SaveCookiesInterceptor
 import com.zeke.reactivehttp.datasource.RemoteExtendDataSource
 import com.zeke.reactivehttp.viewmodel.IUIActionEvent
+import okhttp3.HttpUrl
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -30,20 +34,81 @@ open class WanAndroidRemoteDataSource(iActionEvent: IUIActionEvent?)
     apiServiceClass = WanAndroidApiService::class.java
 ) {
 
+    /**
+     * 业务层的cookie处理类
+     */
+    class CookiesHander : ICookiesHandler {
+        private val PATH_LOGIN = "user/login"
+        private val PATH_REGISTER = "user/register"
+        override fun setCookies(httpUrl: HttpUrl, cookies: String) {
+            ZLog.d("setCookies of: ${httpUrl.host()}")
+            if (isUserLoginAPI(httpUrl.toString())) {
+//                launchIO {
+                    val url = httpUrl.url().toString()
+                    val host = httpUrl.host().toString()
+                    val urlEntity = CookiesEntity(url = url, cookies = cookies)
+                    val hostEntity = CookiesEntity(url = host, cookies = cookies)
+                    val cookiesList: MutableList<CookiesEntity> = ArrayList()
+                    cookiesList.add(urlEntity)
+                    cookiesList.add(hostEntity)
+                    //分别为该url和host设置相同的cookie，其中host可选,这样能使得该cookie的应用范围更广
+                    val cookiesDao = DatabaseApplication.getInstance().getCookiesDao()
+                    cookiesDao.insert(cookiesList)
+                    //FIXME 只添加了一个cookie
+//                }
+            }
+        }
+
+        override fun getCookies(httpUrl: HttpUrl): String? {
+            val url = httpUrl.url().toString()
+            val hostAddr = httpUrl.host()
+            if (!TextUtils.isEmpty(hostAddr) &&
+                (url.contains("lg/uncollect") //取消收藏站内文章
+                        || url.contains("article") // 获取文章列表
+                        || url.contains("lg/collect") // 收藏站内文章
+                        || url.contains("lg/todo"))
+                || url.contains("coin") //积分 API
+            ) {
+                val cookies: String
+//                launchIO {
+                    val cookiesDao = DatabaseApplication.getInstance().getCookiesDao()
+                    val queryCookies = cookiesDao.getCookies(hostAddr)
+                    cookies = queryCookies?.cookies ?: ""
+//                }
+                return cookies
+            }
+            return ""
+        }
+
+        /**
+         * 是否是用户登录或者注册接口
+         */
+        private fun isUserLoginAPI(url: String): Boolean {
+            return if (TextUtils.isEmpty(url)) {
+                false
+            } else url.contains(PATH_LOGIN) || url.contains(PATH_REGISTER)
+        }
+    }
+
     companion object {
         private val wanAndroidHttpClient: OkHttpClient by lazy {
             createHttpClient()
         }
 
         private fun createHttpClient(): OkHttpClient {
+            val cookiesHander = CookiesHander()
             val okHttpClientManager = OkHttpClientManager.getInstance()
             okHttpClientManager.setBuilderFactory(object :
-                OkHttpClientManager.ClientBuilderFactory() {
-                override fun getPreInterceptors(): MutableList<Interceptor> {
+                OkHttpClientManager.IClientBuilderFactory {
+                override fun getPreInterceptors(): MutableList<Interceptor>? {
                     val list = ArrayList<Interceptor>()
-                    list.add(AddCookiesInterceptor(CommonApp.getInstance().applicationContext))
-                    list.add(SaveCookiesInterceptor(CommonApp.getInstance().applicationContext))
+                    list.add(AddCookiesInterceptor(cookiesHander))
+                    list.add(SaveCookiesInterceptor(cookiesHander))
                     return list
+                }
+
+                override fun getPostInterceptors(): MutableList<Interceptor>? {
+                    return null
                 }
             })
             return okHttpClientManager.okHttpClient

@@ -1,15 +1,12 @@
 package com.zeke.network.interceptor;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.text.TextUtils;
+import com.zeke.network.cookie.ICookiesHandler;
 
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -19,10 +16,15 @@ import okhttp3.Response;
  */
 public class SaveCookiesInterceptor implements Interceptor {
 
-    private Context mContext;
+    private ICookiesHandler mCookiesHandler;
 
-    public SaveCookiesInterceptor(Context context) {
-        mContext = context;
+    /**
+     * 外部传递的CookieHandler
+     *
+     * @param cookiesHandler Cookie处理器
+     */
+    public SaveCookiesInterceptor(ICookiesHandler cookiesHandler) {
+       mCookiesHandler = cookiesHandler;
     }
 
     @Override
@@ -37,7 +39,9 @@ public class SaveCookiesInterceptor implements Interceptor {
         if (!response.headers(Const.Http.SET_COOKIE).isEmpty()) {
             List<String> cookies = response.headers(Const.Http.SET_COOKIE);
             String cookie = encodeCookie(cookies);
-            saveCookie(request.url(), cookie);
+            if(mCookiesHandler != null){
+                mCookiesHandler.setCookies(request.url(),cookie);
+            }
         }
         return response;
     }
@@ -64,32 +68,5 @@ public class SaveCookiesInterceptor implements Interceptor {
         }
 
         return sb.toString();
-    }
-
-    /**
-     * 如果 response 的header 中包含 cookie 信息，则保存cookie到本地
-     * 分别为该url和host设置相同的cookie，其中host可选
-     * 这样能使得该cookie的应用范围更广
-     */
-    private void saveCookie(HttpUrl url, String cookies) {
-        SharedPreferences sp = mContext.getSharedPreferences(Const.Local.COOKIE_PREF,
-                Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        if (isUserLoginAPI(url.toString())) {
-            editor.putString(url.toString(), cookies);
-            editor.putString(url.host(), cookies);
-        }
-        editor.apply();
-    }
-
-    /**
-     * 是否是用户登录或者注册接口
-     */
-    private boolean isUserLoginAPI(String url){
-        if(TextUtils.isEmpty(url)){
-            return false;
-        }
-        return url.contains(Const.Http.WAN_ANDROID_LOGIN_KEY)
-                || url.contains(Const.Http.WAN_ANDROID_REGISTER_KEY);
     }
 }

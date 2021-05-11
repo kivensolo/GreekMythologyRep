@@ -7,14 +7,8 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.kingz.database.dao.AlbumDao
-import com.kingz.database.dao.CollectionArticleDao
-import com.kingz.database.dao.SongDao
-import com.kingz.database.dao.UserDao
-import com.kingz.database.entity.BaseEntity
-import com.kingz.database.entity.CollectionArticle
-import com.kingz.database.entity.SongEntity
-import com.kingz.database.entity.UserEntity
+import com.kingz.database.dao.*
+import com.kingz.database.entity.*
 
 /**
  * @author zeke.wang
@@ -27,21 +21,31 @@ import com.kingz.database.entity.UserEntity
  *
  * 必须提供获取DAO接口的抽象方法，Room将通过这个方法实例化DAO接口。
  * 编译时将生成AppDatabase_Impl.java实现类
+ *
+ * Release Note:
+ * v2 :
+ *   完善数据库迁移版本的改造
+ * V3:
+ *   增加HttpCookie表
  */
 @Database(
     entities = [
         BaseEntity::class,
         SongEntity::class,
         UserEntity::class,
+        CookiesEntity::class,
         CollectionArticle::class],
-    version = 2, exportSchema = false
+    version = 3, exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun getSongDao(): SongDao
     abstract fun getAlbumDao(): AlbumDao
     abstract fun getUserDao(): UserDao
+    abstract fun getCookoesDao(): CookiesDao
     abstract fun getCollectArticleDao(): CollectionArticleDao
+
+
     val databaseCreated = MutableLiveData<Boolean?>()
 
     companion object {
@@ -70,9 +74,9 @@ abstract class AppDatabase : RoomDatabase() {
         private fun buildRoomDB(context: Context) =
             Room.databaseBuilder(context.applicationContext,
                 AppDatabase::class.java, DATA_BASE_NAME)
-//                .allowMainThreadQueries()   // 不允许主线程进行IO操作
+                .allowMainThreadQueries()   // 不允许主线程进行IO操作
                 .fallbackToDestructiveMigration()
-                .addMigrations(migration_1to2)
+                .addMigrations(migration_1to2, migration_2to3)
                 .addCallback(object :Callback(){
                     override fun onDestructiveMigration(db: SupportSQLiteDatabase) {
                         // 若使用了fallbackToDestructiveMigration()
@@ -147,6 +151,19 @@ abstract class AppDatabase : RoomDatabase() {
                 }
 
 
+            }
+        }
+
+        /**
+         * 数据库迁移 V2~V3
+         * 增加Cookies数据表
+         */
+        private val migration_2to3: Migration = object : Migration(2, 3) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("CREATE TABLE IF NOT EXISTS http_cookie (" +
+                            "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+                            "url TEXT NOT NULL DEFAULT ''," +
+                            "cookies TEXT NOT NULL DEFAULT '')")
             }
         }
 
