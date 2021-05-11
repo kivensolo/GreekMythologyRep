@@ -233,6 +233,10 @@
     <color name="text_dark">#222222</color>
     <color name="text_red">#f04529</color>
 
+    <!-- svg icon 颜色-->
+    <color name="ic_color_light">#3DCBE5</color>
+    <color name="ic_color_gray">@color/white_transparent</color>
+
     <color name="mplayer_seekbar_played">#55E1FA</color>
     <color name="mplayer_seekbar_unplayed">#66F8F9FA</color>
     <color name="bg_main_vod_searchbar">#cc30343c</color>

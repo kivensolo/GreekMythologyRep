@@ -21,7 +21,7 @@
     <string name="pls_input_name" translatable="false">请输入用户名</string>
     <string name="login" translatable="false">登录</string>
     <string name="user_error_tips" translatable="false">User Name Error!</string>
-    <string name="bottom_demo" translatable="false">Demo学习</string>
+    <string name="bottom_knowlege" translatable="false">知识</string>
     <string name="bottom_live" translatable="false">直播</string>
     <string name="no_use" translatable="false">暂未开发</string>
 

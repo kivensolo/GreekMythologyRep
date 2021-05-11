@@ -37,6 +37,7 @@
     <dimen name="dp_28">28dp</dimen>
     <dimen name="dp_30">30dp</dimen>
     <dimen name="dp_32">32dp</dimen>
+    <dimen name="dp_33">33dp</dimen>
     <dimen name="dp_34">34dp</dimen>
     <dimen name="dp_36">36dp</dimen>
     <dimen name="dp_48">48dp</dimen>

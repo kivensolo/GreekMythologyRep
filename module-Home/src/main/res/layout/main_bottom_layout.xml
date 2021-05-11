@@ -26,10 +26,10 @@
 
             <ImageView
                 android:id="@+id/vod_img"
-                android:layout_width="@dimen/dp_24"
-                android:layout_height="@dimen/dp_22"
+                android:layout_width="@dimen/dp_28"
+                android:layout_height="@dimen/dp_28"
                 android:layout_marginTop="@dimen/dp_4"
-                tools:background="@drawable/ic_vod_sel"
+                tools:background="@drawable/ic_knowlege_sel"
                 android:scaleType="fitCenter" />
 
             <TextView
@@ -37,10 +37,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/dp_3"
-                android:layout_marginTop="@dimen/dp_2"
                 android:enabled="true"
-                android:text="@string/bottom_demo"
-                android:textColor="@color/main_bottom_color"
+                android:text="@string/bottom_knowlege"
+                android:textColor="@color/white"
                 android:textSize="@dimen/sp_10" />
         </LinearLayout>
 
@@ -54,21 +53,21 @@
 
             <ImageView
                 android:id="@+id/live_img"
-                android:layout_width="@dimen/dp_24"
-                android:layout_height="@dimen/dp_22"
+                android:layout_width="@dimen/dp_28"
+                android:layout_height="@dimen/dp_26"
                 android:layout_marginTop="@dimen/dp_4"
-                    tools:background="@drawable/ic_live_sel"
-                android:scaleType="fitCenter" />
+                tools:background="@drawable/ic_live_sel"
+                android:scaleType="fitCenter"/>
 
             <TextView
                 android:id="@+id/live_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_3"
                 android:layout_marginBottom="@dimen/dp_3"
-                android:layout_marginTop="@dimen/dp_2"
                 android:enabled="false"
                 android:text="@string/bottom_live"
-                android:textColor="@color/main_bottom_color"
+                android:textColor="@color/white"
                 android:textSize="@dimen/sp_10" />
         </LinearLayout>
 
@@ -82,8 +81,8 @@
 
             <ImageView
                 android:id="@+id/vip_img"
-                android:layout_width="@dimen/dp_24"
-                android:layout_height="@dimen/dp_22"
+                android:layout_width="@dimen/dp_28"
+                android:layout_height="@dimen/dp_28"
                 android:layout_marginTop="@dimen/dp_4"
                 tools:background="@drawable/ic_vip_sel"
                 android:scaleType="fitCenter" />
@@ -93,10 +92,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/dp_3"
-                android:layout_marginTop="@dimen/dp_2"
+                android:layout_marginTop="@dimen/dp_1"
                 android:enabled="false"
                 android:text="@string/no_use"
-                android:textColor="@color/main_bottom_color"
+                android:textColor="@color/white"
                 android:textSize="@dimen/sp_10" />
         </LinearLayout>
 
@@ -110,8 +109,8 @@
 
             <ImageView
                 android:id="@+id/mine_img"
-                android:layout_width="@dimen/dp_24"
-                android:layout_height="@dimen/dp_22"
+                android:layout_width="@dimen/dp_28"
+                android:layout_height="@dimen/dp_28"
                 android:layout_marginTop="@dimen/dp_4"
                 tools:background="@drawable/ic_mine_sel"
                 android:scaleType="fitCenter"/>
@@ -121,10 +120,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/dp_3"
-                android:layout_marginTop="@dimen/dp_2"
+                android:layout_marginTop="@dimen/dp_1"
                 android:enabled="false"
                 android:text="@string/no_use"
-                android:textColor="@color/main_bottom_color"
+                android:textColor="@color/white"
                 android:textSize="@dimen/sp_10" />
         </LinearLayout>
     </LinearLayout>
