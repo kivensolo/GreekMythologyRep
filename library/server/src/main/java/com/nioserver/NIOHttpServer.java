@@ -181,8 +181,8 @@ public class NIOHttpServer {
             return;
         }
 
-        // selectionKey有效时，才能正常获取attach的对象
-        HttpServerHandler attachedHandler = (HttpServerHandler) selectionKey.attachment();
+        // Key有效时，才能正常获取attach的对象
+        ISelectableChannelHandler attachedHandler = (ISelectableChannelHandler) selectionKey.attachment();
         try {
             if (selectionKey.isWritable()) {
                 attachedHandler.notifyWritable(System.nanoTime());

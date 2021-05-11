@@ -1,25 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="146px"
+    android:layout_height="@dimen/dp_50"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_alignParentBottom="true"
     android:layout_gravity="bottom"
-    android:background="@color/tab_bg"
+    android:background="@color/colorPrimary"
     android:orientation="vertical"
     app:layout_insetEdge="bottom"
     app:layout_behavior="">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_marginTop="1px"
-        android:background="#efefef" />
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="144px"
+        android:layout_height="@dimen/dp_48"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -32,9 +26,9 @@
 
             <ImageView
                 android:id="@+id/vod_img"
-                android:layout_width="72px"
-                android:layout_height="64px"
-                android:layout_marginTop="12px"
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_22"
+                android:layout_marginTop="@dimen/dp_4"
                 tools:background="@drawable/ic_vod_sel"
                 android:scaleType="fitCenter" />
 
@@ -42,12 +36,12 @@
                 android:id="@+id/vod_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8px"
-                android:layout_marginTop="6px"
+                android:layout_marginBottom="@dimen/dp_3"
+                android:layout_marginTop="@dimen/dp_2"
                 android:enabled="true"
                 android:text="@string/bottom_demo"
                 android:textColor="@color/main_bottom_color"
-                android:textSize="32px" />
+                android:textSize="@dimen/sp_10" />
         </LinearLayout>
 
         <LinearLayout
@@ -60,9 +54,9 @@
 
             <ImageView
                 android:id="@+id/live_img"
-                android:layout_width="72px"
-                android:layout_height="64px"
-                android:layout_marginTop="12px"
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_22"
+                android:layout_marginTop="@dimen/dp_4"
                     tools:background="@drawable/ic_live_sel"
                 android:scaleType="fitCenter" />
 
@@ -70,12 +64,12 @@
                 android:id="@+id/live_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8px"
-                android:layout_marginTop="6px"
+                android:layout_marginBottom="@dimen/dp_3"
+                android:layout_marginTop="@dimen/dp_2"
                 android:enabled="false"
                 android:text="@string/bottom_live"
                 android:textColor="@color/main_bottom_color"
-                android:textSize="32px" />
+                android:textSize="@dimen/sp_10" />
         </LinearLayout>
 
         <LinearLayout
@@ -88,9 +82,9 @@
 
             <ImageView
                 android:id="@+id/vip_img"
-                android:layout_width="72px"
-                android:layout_height="64px"
-                android:layout_marginTop="12px"
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_22"
+                android:layout_marginTop="@dimen/dp_4"
                 tools:background="@drawable/ic_vip_sel"
                 android:scaleType="fitCenter" />
 
@@ -98,12 +92,12 @@
                 android:id="@+id/vip_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8px"
-                android:layout_marginTop="6px"
+                android:layout_marginBottom="@dimen/dp_3"
+                android:layout_marginTop="@dimen/dp_2"
                 android:enabled="false"
                 android:text="@string/no_use"
                 android:textColor="@color/main_bottom_color"
-                android:textSize="32px" />
+                android:textSize="@dimen/sp_10" />
         </LinearLayout>
 
         <LinearLayout
@@ -116,9 +110,9 @@
 
             <ImageView
                 android:id="@+id/mine_img"
-                android:layout_width="72px"
-                android:layout_height="64px"
-                android:layout_marginTop="12px"
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_22"
+                android:layout_marginTop="@dimen/dp_4"
                 tools:background="@drawable/ic_mine_sel"
                 android:scaleType="fitCenter"/>
 
@@ -126,12 +120,12 @@
                 android:id="@+id/mine_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8px"
-                android:layout_marginTop="6px"
+                android:layout_marginBottom="@dimen/dp_3"
+                android:layout_marginTop="@dimen/dp_2"
                 android:enabled="false"
                 android:text="@string/no_use"
                 android:textColor="@color/main_bottom_color"
-                android:textSize="32px" />
+                android:textSize="@dimen/sp_10" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
