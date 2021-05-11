@@ -62,7 +62,7 @@ open class WanAndroidRemoteDataSource(iActionEvent: IUIActionEvent?)
     /**
      * 获取用户信息
      */
-    suspend fun getUserInfo(): UserEntity? {
+    suspend fun getUserInfoFromLocal(): UserEntity? {
         return UserInfo.getUserInfor()
     }
 
@@ -99,6 +99,44 @@ open class WanAndroidRemoteDataSource(iActionEvent: IUIActionEvent?)
         return apiService.collectList(pageIndex)
     }
 
+    /************************ 用户相关信息数据  START ************************/
+    /**
+     * 用户登录
+     * @param name: 用户名
+     * @param password: 用户密码
+     */
+    suspend fun userLogin(name: String = "", password: String = ""): UserInfoBean {
+        ZLog.d("user Login: name=$name password=******")
+        return apiService.userLogin(name, password)
+    }
+
+    /**
+     * 用户登出
+     */
+    suspend fun userLogout():UserInfoBean{
+        ZLog.e("userLogout()")
+        val result = apiService.userLogout()
+        if(result.errorCode == 0){
+            launchIO {
+                UserInfo.clearLocalUserInfo()
+            }
+        }
+        return result
+    }
+
+    /**
+     * 进行用户注册操作
+     * @param name: 用户名
+     * @param password: 用户密码
+     * @param rePassword: 二次输入的用户密码
+     */
+    suspend fun userRegister(name: String = "",
+                             password: String = "",
+                             rePassword: String = ""): WanAndroidResponse<UserInfoBean> {
+        return apiService.userRegister(name, password, rePassword)
+    }
+    /************************ 用户相关信息数据  END************************/
+
 }
 
 /**
@@ -114,27 +152,5 @@ class HomeDataSource(iActionEvent: IUIActionEvent?) : WanAndroidRemoteDataSource
     suspend fun getBannerData(): ResponseResult<MutableList<BannerItem>>? {
         ZLog.d("get Banner ---> ")
         return apiService.bannerData()
-    }
-}
-
-/**
- * 用户相关信息数据源
- * 登录 & 注册等
- */
-class LoginDataSource(iActionEvent: IUIActionEvent?) : WanAndroidRemoteDataSource(iActionEvent) {
-    /**
-     * 进行用户登录操作
-     */
-    suspend fun userLogin(name: String = "", password: String = ""): UserInfoBean {
-        return apiService.userLogin(name, password)
-    }
-
-    /**
-     * 进行用户注册操作
-     */
-    suspend fun userRegister(name: String = "",
-                             password: String = "",
-                             rePassword: String = ""): WanAndroidResponse<UserInfoBean> {
-        return apiService.userRegister(name, password, rePassword)
     }
 }

@@ -5,6 +5,8 @@ import android.app.Instrumentation
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.os.Handler
+import android.os.Message
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
@@ -19,7 +21,9 @@ import com.kingz.base.BaseVMActivity
 import com.kingz.base.factory.ViewModelFactory
 import com.kingz.database.entity.BaseEntity
 import com.kingz.module.common.base.BaseFragment
+import com.kingz.module.common.ext.startActivity
 import com.kingz.module.common.router.RPath
+import com.kingz.module.common.router.Router
 import com.kingz.module.common.utils.RandomUtils
 import com.kingz.module.home.BuildConfig
 import com.kingz.module.home.R
@@ -53,6 +57,20 @@ class HomeActivity : BaseVMActivity(),
     private lateinit var panelSlidelLsr: HomePanelSlidelLsr
     private var menuPanel: View? = null
 
+    private var mIsDoubleClieckLogout= false
+    private val MSG_CLICK_LOGOUT_PASS = 0x0001
+    private var mHandler:Handler = Handler(object : Handler.Callback {
+        override fun handleMessage(msg: Message?): Boolean {
+            when(msg!!.what){
+                MSG_CLICK_LOGOUT_PASS -> {
+                    mIsDoubleClieckLogout = false
+                    return true
+                }
+            }
+            return false
+        }
+
+    })
 
     override val viewModel: HomeViewModel by viewModels {
         ViewModelFactory.build { HomeViewModel() }
@@ -71,11 +89,26 @@ class HomeActivity : BaseVMActivity(),
 
     private fun initSlideMenuView() {
         tvCollect?.setOnClickListener {
-            val bundle = Bundle()
-            bundle.putInt(WADConstants.Key.KEY_FRAGEMTN_TYPE, WADConstants.Type.TYPE_TAB_COLLECT)
-            val putExtras = Intent().putExtras(bundle)
-            putExtras.setClass(this, AppBarActivity::class.java)
-            startActivity(putExtras)
+            startActivity<AppBarActivity> {
+                val bundle = Bundle()
+                bundle.putInt(
+                    WADConstants.Key.KEY_FRAGEMTN_TYPE, WADConstants.Type.TYPE_TAB_COLLECT
+                )
+                it.putExtras(bundle)
+            }
+        }
+
+        tvLogout?.setOnClickListener {
+            if (mIsDoubleClieckLogout) {
+                mIsDoubleClieckLogout = false
+                launchIO { viewModel.userLogout() }
+                return@setOnClickListener
+            }
+            showToast(getStringFromRes(R.string.logout_confirm_tips))
+            mIsDoubleClieckLogout = true
+            val msg = Message.obtain()
+            msg.what = MSG_CLICK_LOGOUT_PASS
+            mHandler.sendMessageDelayed(msg, 2 * 1000)
         }
     }
 
@@ -128,12 +161,18 @@ class HomeActivity : BaseVMActivity(),
         viewModel.userInfoLiveData.observe(this, Observer {
             ZLog.d("userInfoLiveData onChanged: $it")
             if (it == null) {
-                tvLogout.visibility = View.INVISIBLE
+                Router.startActivity(RPath.PAGE_LOGIN)
+                finish()
                 return@Observer
             }
             tvUser.text = it.username
             tvLogout.visibility = View.VISIBLE
         })
+    }
+
+    override fun onDestroy() {
+        mHandler.removeCallbacksAndMessages(null)
+        super.onDestroy()
     }
 
     /**

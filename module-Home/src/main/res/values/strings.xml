@@ -47,4 +47,11 @@
     <string name="menu_logout" translatable="false" tools:ignore="ExtraTranslation">退出登录</string>
     <string name="click_login" translatable="false" tools:ignore="ExtraTranslation">点击登录</string>
 
+
+    <string name="logout_confirm_tips" translatable="false" tools:ignore="ExtraTranslation">再次点击退出登录</string>
+    <string name="logout_tips" translatable="false" tools:ignore="ExtraTranslation">用户已退出</string>
+
+
+
+
 </resources>

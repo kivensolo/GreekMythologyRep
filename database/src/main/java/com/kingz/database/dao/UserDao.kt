@@ -1,9 +1,6 @@
 package com.kingz.database.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.kingz.database.entity.UserEntity
 
 /**
@@ -17,10 +14,14 @@ interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(data: UserEntity)
 
-//    //TODO 如何删除全部数据?
-//    @Delete
-    // Method annotated with @Delete but does not have any parameters to delete.
-//    suspend fun logout()  // does not have any parameters to delete
+    // 删除指定用户 Method annotated with @Delete but does not have any parameters to delete.
+    @Delete
+    suspend fun deleteUser(user:UserEntity)
+    // does not have any parameters to delete
+
+    //删除全部
+    @Query(("DELETE FROM user"))
+    suspend fun userLogout()
 
 //    @Update
 //    suspend fun update(data: UserEntity)
@@ -31,4 +32,8 @@ interface UserDao {
     //TODO 更新用户Cookies信息
 //    @Query("SELECT * FROM user where publicName NOT NULL")
 //    suspend fun isUserLogin():Int
+
+    //根据用户名查找指定用户信息
+    @Query("SELECT * FROM user where username=:name")
+    suspend fun getUserByName(name:String):UserEntity?
 }

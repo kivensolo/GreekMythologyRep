@@ -110,6 +110,8 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
         }
     }
 
+    fun getStringFromRes(id: Int): String = resources.getString(id)
+
     override fun onDestroy() {
         super.onDestroy()
         dismissLoading()

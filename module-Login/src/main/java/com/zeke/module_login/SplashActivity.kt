@@ -115,8 +115,8 @@ class SplashActivity : BaseVMActivity(), View.OnClickListener {
     private fun checkUserCacheInfo() {
         lifecycleScope.launch(Dispatchers.IO) {
             val userInfo = UserInfo.getUserInfor()
-            withContext(Dispatchers.Main){
-                if (userInfo != null) {
+            if (userInfo != null) {
+                withContext(Dispatchers.Main) {
                     buttonLeft?.visibility = View.GONE
                     buttonRight?.visibility = View.GONE
                     showToast("欢迎回来${userInfo.username}")
@@ -238,10 +238,9 @@ class SplashActivity : BaseVMActivity(), View.OnClickListener {
     private fun confirmLogin() {
         ZLog.d("click to login.")
         if (TextUtils.isEmpty(login_name?.text ?: "") ||
-            TextUtils.isEmpty(login_pwd?.text ?: "")
-        ) {
+            TextUtils.isEmpty(login_pwd?.text ?: "")) {
             ZLog.e("请输入账号和密码")
-            showToast("存在本地缓存用户信息")
+            showToast(getStringFromRes(R.string.user_info_invalid_tips))
         } else {
             viewModel.login(login_name!!.text, login_pwd!!.text)
         }

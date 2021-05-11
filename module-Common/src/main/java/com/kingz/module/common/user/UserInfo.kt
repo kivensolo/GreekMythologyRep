@@ -11,7 +11,16 @@ import com.kingz.database.entity.UserEntity
  * @desc: 用户信息相关
  */
 object UserInfo {
+    //获取本地缓存的用户数据
     suspend fun getUserInfor(): UserEntity? {
         return DatabaseApplication.getInstance().getUserDao().getUserInfo()
+    }
+
+    //清除用户数据
+    suspend fun clearLocalUserInfo(){
+        //清room用户表缓存
+        val userDao = DatabaseApplication.getInstance().getUserDao()
+        userDao.userLogout()
+        //TODO 清cookie
     }
 }
