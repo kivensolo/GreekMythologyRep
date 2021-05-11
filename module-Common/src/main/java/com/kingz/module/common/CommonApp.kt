@@ -60,7 +60,7 @@ open class CommonApp: DatabaseApplication(){
         NeverCrash.init(object : NeverCrash.CrashHandler {
             override fun uncaughtException(thread: Thread?, throwable: Throwable?) {
                 if (BuildConfig.DEBUG) {
-                    ZLog.e(TAG, "Crash", throwable)
+                    ZLog.e(TAG, "unCaught Crash: thread=$thread", throwable)
                     CrashReport.postCatchedException(throwable)
                 }
             }

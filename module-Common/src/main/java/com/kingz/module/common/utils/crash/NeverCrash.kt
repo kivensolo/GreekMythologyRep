@@ -38,19 +38,15 @@ class NeverCrash private constructor() {
                 try {
                     Looper.loop()
                 } catch (e: Throwable) {
-                    if (mCrashHandler != null) { //捕获异常处理
-                        mCrashHandler?.uncaughtException(
-                            Looper.getMainLooper().thread
-                            ,e
-                        )
-                    }
+                    //捕获异常处理
+                    mCrashHandler?.uncaughtException(Looper.getMainLooper().thread, e)
                 }
             }
         }
+
         Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
-            if (mCrashHandler != null) { //捕获异常处理
-                mCrashHandler?.uncaughtException(thread, throwable)
-            }
+            //捕获异常处理
+            mCrashHandler?.uncaughtException(thread, throwable)
         }
     }
 
