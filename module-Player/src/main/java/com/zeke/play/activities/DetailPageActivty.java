@@ -1,4 +1,4 @@
-package com.zeke.play;
+package com.zeke.play.activities;
 
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
@@ -13,6 +13,8 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.kingz.module.common.CommonApp;
 import com.kingz.module.common.bean.MediaParams;
 import com.zeke.module_player.R;
+import com.zeke.play.PlayerActivity;
+import com.zeke.play.VideoInfo;
 import com.zeke.play.fragment.PlayFragment;
 import com.zeke.play.fragment.VodDetailFragment;
 import com.zeke.play.fragment.VodInfoFragment;

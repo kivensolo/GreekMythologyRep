@@ -2,7 +2,11 @@ package com.module.tools;
 
 
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Build;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.FloatRange;
 
 /**
  * author：KingZ
@@ -25,11 +29,13 @@ public class ColorUtils {
 
     /**
      * 将指定颜色进行alpha转换
-     * @param alpha     颜色的新透明度程度  [0..1]
      * @param srcColor  原始颜色值
+     * @param alpha     颜色的新透明度程度  [0..1]
      * @return 带新透明度的颜色值
      */
-    public static int replaceColorAlpha(float alpha, int srcColor) {
+    @ColorInt
+    public static int replaceColorAlpha(@ColorInt int srcColor,
+                                        @FloatRange(from = 0.0, to = 1.0) float alpha) {
         // ARGB 255,255,255,255   真色彩32位
         // 透明度占高8位  所以左移24 >>>位,确定透明度
         int a = Math.min(255, Math.max(0, (int) (alpha * 255.0f))) << 24;
@@ -44,6 +50,7 @@ public class ColorUtils {
      * 生成随机颜色(透明度100%)
      * @return 随机颜色 ffxxxxxx
      */
+    @ColorInt
     public static int randomColor() {
         return 0xff000000 |
                 ((int) ((float) (255 * Math.random()) * 255.0f + 0.5f) << 16) |
@@ -55,10 +62,30 @@ public class ColorUtils {
      * 生成随机颜色(透明度也随机)
      * @return 随机的ARGB颜色值
      */
+    @ColorInt
     public static int randomAlphaColor() {
         return ((int) ((float) (255 * Math.random()) * 255.0f + 0.5f) << 24) |
                ((int) ((float) (255 * Math.random()) * 255.0f + 0.5f) << 16) |
                ((int) ((float) (255 * Math.random()) * 255.0f + 0.5f) << 8) |
                 (int) ((float) (255 * Math.random()) * 255.0f + 0.5f);
+    }
+
+    /**
+     * 通过给定比例, 混合ARGB的色值;
+     *
+     * @param color1 第1个ARGB的颜色值
+     * @param color2 第2个ARGB的颜色值
+     * @param ratio  2个ARBG颜色值的混合比例;
+     *               0.0则会得到color1，0.5会得到两个颜色均匀的混合值，1.0会得到color2;
+     */
+    @ColorInt
+    public static int blendARGB(@ColorInt int color1, @ColorInt int color2,
+            @FloatRange(from = 0.0, to = 1.0) float ratio) {
+        final float inverseRatio = 1 - ratio;
+        float a = Color.alpha(color1) * inverseRatio + Color.alpha(color2) * ratio;
+        float r = Color.red(color1) * inverseRatio + Color.red(color2) * ratio;
+        float g = Color.green(color1) * inverseRatio + Color.green(color2) * ratio;
+        float b = Color.blue(color1) * inverseRatio + Color.blue(color2) * ratio;
+        return Color.argb((int) a, (int) r, (int) g, (int) b);
     }
 }

@@ -11,6 +11,7 @@ import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import androidx.activity.viewModels
+import androidx.annotation.ColorInt
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -30,6 +31,7 @@ import com.kingz.module.home.R
 import com.kingz.module.wanandroid.WADConstants
 import com.kingz.module.wanandroid.activity.AppBarActivity
 import com.module.slide.SuperSlidingPaneLayout
+import com.module.tools.ColorUtils
 import com.zeke.home.fragments.home.HomeContainerFragment
 import com.zeke.home.fragments.home.HomeLiveFragment
 import com.zeke.home.model.HomeSongModel
@@ -48,8 +50,7 @@ import java.lang.String
  * 首页
  */
 @Route(path = RPath.PAGE_MAIN)
-class HomeActivity : BaseVMActivity(),
-    ISwitcher {
+class HomeActivity : BaseVMActivity(),ISwitcher {
 
     private lateinit var homeVodFragment: HomeContainerFragment
     private lateinit var homeLiveFragment: HomeLiveFragment
@@ -91,9 +92,8 @@ class HomeActivity : BaseVMActivity(),
         tvCollect?.setOnClickListener {
             startActivity<AppBarActivity> {
                 val bundle = Bundle()
-                bundle.putInt(
-                    WADConstants.Key.KEY_FRAGEMTN_TYPE, WADConstants.Type.TYPE_TAB_COLLECT
-                )
+                bundle.putInt(WADConstants.Key.KEY_FRAGEMTN_TYPE,
+                    WADConstants.Type.TYPE_TAB_COLLECT)
                 it.putExtras(bundle)
             }
         }
@@ -201,14 +201,17 @@ class HomeActivity : BaseVMActivity(),
         }
     }
 
-    override fun switchFragment(@ISwitcher.ButtomType position: Int) {
-        when (position) {
+    override fun switchFragment(@ISwitcher.ButtomType type: Int) {
+        when (type) {
             ISwitcher.TYPE_VOD -> {
                 ZLog.d("switchFragment:" + BitmapUtils.native_get_Hello())
                 fragmentsChange(homeVodFragment, homeLiveFragment as BaseFragment)
             }
             ISwitcher.TYPE_LIVE -> fragmentsChange(homeLiveFragment, homeVodFragment as BaseFragment)
-            ISwitcher.TYPE_VIP -> fragmentsChange(null, homeVodFragment as BaseFragment)
+            ISwitcher.TYPE_VIP -> {
+//                setNavigationBarColor(resources.getColor(R.color.google_red))
+                fragmentsChange(null, homeVodFragment as BaseFragment)
+            }
             ISwitcher.TYPE_MINE -> fragmentsChange(null, homeVodFragment as BaseFragment)
         }//fragmentsChage(homeLiveFragment,homeVodFragment,homeVipFragment,homeMineFragment);
         //                fragmentsChage(homeVipFragment,homeVodFragment,homeLiveFragment,homeMineFragment);
@@ -255,9 +258,7 @@ class HomeActivity : BaseVMActivity(),
     }
 
     private fun clickVersion(isClick: Boolean) {
-        if (isClick) {
-            addHeart(1)
-        }
+        if (isClick) { addHeart(1) }
     }
 
     inner class HomePanelSlidelLsr : SuperSlidingPaneLayout.SimplePanelSlideListener() {
@@ -268,7 +269,7 @@ class HomeActivity : BaseVMActivity(),
     }
 
     private fun addHeart(count: Int) {
-        for (i in 0 until count) {
+        repeat(count) {
             flutteringLayout.addHeart()
         }
     }
@@ -294,6 +295,20 @@ class HomeActivity : BaseVMActivity(),
             .navigationBarColor(R.color.colorPrimary)
 //            .hideBar(BarHide.FLAG_HIDE_BAR)
             .init()
+    }
+
+    /**
+     * 测试修改导航栏效果
+     */
+    private fun setNavigationBarColor(@ColorInt color:Int){
+        val barParams = ImmersionBar.with(this).barParams
+        if(!barParams.hideNavigationBar){
+            window.navigationBarColor = ColorUtils.blendARGB(
+                color,
+                barParams.navigationBarColorTransform,
+                barParams.navigationBarAlpha
+            )
+        }
     }
 }
 

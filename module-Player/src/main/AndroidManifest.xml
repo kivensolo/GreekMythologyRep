@@ -3,7 +3,7 @@
 
     <application android:allowBackup="true">
         <activity
-            android:name="com.zeke.play.DetailPageActivty"
+            android:name="com.zeke.play.activities.DetailPageActivty"
             android:configChanges="locale|screenSize|keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="fullSensor"
@@ -15,6 +15,13 @@
             android:configChanges="locale|screenSize|keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="landscape"
+            android:theme="@style/PlayTheme"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+
+        <activity
+            android:name="com.zeke.play.activities.IJKSampleMediaActivity"
+            android:configChanges="locale|screenSize|keyboardHidden|orientation"
+            android:launchMode="singleTop"
             android:theme="@style/PlayTheme"
             android:windowSoftInputMode="stateAlwaysHidden" />
     </application>

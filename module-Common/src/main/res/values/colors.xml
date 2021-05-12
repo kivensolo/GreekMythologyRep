@@ -192,7 +192,7 @@
 
     <color name="app_main_color">@color/blue</color>
     <color name="app_main_color_dark">@color/blue_dark</color>
-    <color name="app_accent">@color/google_green</color>
+    <color name="app_accent">@color/blue_light</color>
 
     <!-- Android L 颜色 -->
     <color name="skygreen">#5FCDDA</color><!--天绿色 -->
