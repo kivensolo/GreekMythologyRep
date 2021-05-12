@@ -78,12 +78,12 @@ public abstract class PlayerActivity extends BaseActivity {
         switch (newConfig.orientation) {
             case Configuration.ORIENTATION_LANDSCAPE:
                 //横屏
-                findViewById(R.id.root_layout).setLayoutParams(new LinearLayout.LayoutParams(-1, -1));
+                findViewById(R.id.player_content).setLayoutParams(new LinearLayout.LayoutParams(-1, -1));
                 break;
             case Configuration.ORIENTATION_PORTRAIT:
                 //竖屏
                 if (portraitParams != null) {
-                    findViewById(R.id.root_layout).setLayoutParams(portraitParams);
+                    findViewById(R.id.player_content).setLayoutParams(portraitParams);
                 }
                 break;
         }

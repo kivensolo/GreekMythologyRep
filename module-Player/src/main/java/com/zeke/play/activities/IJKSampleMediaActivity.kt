@@ -8,6 +8,7 @@ import android.view.MenuItem
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentTransaction
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.kingz.module.common.base.BaseActivity
 import com.zeke.module_player.R
 import com.zeke.play.fragment.ijk.SampleMediaListFragment
@@ -17,6 +18,7 @@ import com.zeke.play.fragment.ijk.SampleMediaListFragment
  * date：2021/5/12
  * description：IJK播放器样例列表页面
  */
+@Route(path = "/module_MPlayer/jikDemoPage")
 class IJKSampleMediaActivity : BaseActivity() {
     private val MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1
 

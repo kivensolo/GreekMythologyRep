@@ -63,7 +63,7 @@ class FullScreenPlayer : PlayerActivity(),CustomAdapt {
         playFragment = fm.findFragmentByTag(TAG_VOD_PLAY) as PlayFragment?
         if (playFragment == null) {
             playFragment = PlayFragment.newInstance(mediaParams)
-            fragmentTransaction.add(R.id.root_layout, playFragment!!, TAG_LIVE_PLAY)
+            fragmentTransaction.add(R.id.player_content, playFragment!!, TAG_LIVE_PLAY)
         }
         fragmentTransaction.show(playFragment!!)
         fragmentTransaction.commit()
