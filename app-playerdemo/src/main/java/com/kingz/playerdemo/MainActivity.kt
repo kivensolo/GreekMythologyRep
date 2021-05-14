@@ -4,9 +4,13 @@ import android.os.Bundle
 import android.util.Log
 import android.view.SurfaceHolder
 import androidx.appcompat.app.AppCompatActivity
+import com.kingz.playerdemo.decode.AudioSyncDecoder
+import com.kingz.playerdemo.decode.VideoSyncDecoder
 import com.kingz.playerdemo.sync.MediaSync
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 
 /**
@@ -17,6 +21,10 @@ class MainActivity : AppCompatActivity() {
 
     private val TAG: String = "PlayerDemoActivity"
     private var isStreamEnd = false
+
+    private var mExecutorService: ExecutorService? = null
+    private var mVideoSync: VideoSyncDecoder? = null
+    private var mAudioDecodeSync: AudioSyncDecoder? = null
 
     private var callback: SurfaceHolder.Callback = object : SurfaceHolder.Callback {
         override fun surfaceChanged(holder: SurfaceHolder?, format: Int, width: Int, height: Int) {
@@ -38,7 +46,7 @@ class MainActivity : AppCompatActivity() {
             // 音频解码
         }
     }
-
+    var mediaSync:MediaSync? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -46,21 +54,38 @@ class MainActivity : AppCompatActivity() {
 
         val mFile = File(externalCacheDir, "ChiLing.mp4")
 
-        // 设置Surface不维护自己的缓冲区，等待屏幕的渲染引擎将内容推送到用户面前
+       /* // 设置Surface不维护自己的缓冲区，等待屏幕的渲染引擎将内容推送到用户面前
         // 该api已经废弃，这个编辑会自动设置
         // surfaceView.holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS)
         val holder = surface_view.holder
         holder.addCallback(callback)
 
-        val mediaSync = MediaSync(
+        mediaSync = MediaSync(
             holder.surface,
             mFile.absolutePath
         )
         play_player.setOnClickListener {
-            mediaSync.start()
+            mediaSync?.start()
         }
         pause_player.setOnClickListener {
-            mediaSync.pause()
+            mediaSync?.pause()
+        }*/
+
+         mExecutorService = Executors.newFixedThreadPool(2)
+        // 设置Surface不维护自己的缓冲区，等待屏幕的渲染引擎将内容推送到用户面前
+        // 该api已经废弃，这个编辑会自动设置
+        // surfaceView.holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS)
+        val holder = surface_view.holder
+        holder.addCallback(callback)
+        play_player.setOnClickListener {
+            // 音视频同步
+            mVideoSync = VideoSyncDecoder (holder.surface, mFile.absolutePath)
+            mAudioDecodeSync = AudioSyncDecoder(mFile.absolutePath)
+            mExecutorService?.execute(mVideoSync)
+            mExecutorService?.execute(mAudioDecodeSync)
+        }
+        pause_player.setOnClickListener {
+            mVideoSync?.pauseMedia()
         }
 
     }

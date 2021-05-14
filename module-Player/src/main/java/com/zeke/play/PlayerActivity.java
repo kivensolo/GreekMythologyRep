@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 
-import com.kingz.module.common.base.BaseActivity;
+import com.kingz.base.BaseVMActivity;
 import com.zeke.module_player.R;
 
 /**
@@ -22,7 +22,7 @@ import com.zeke.module_player.R;
  * description：手机端播放页面的抽象层
  *  - 横竖屏旋转的逻辑
  */
-public abstract class PlayerActivity extends BaseActivity {
+public abstract class PlayerActivity extends BaseVMActivity {
     protected static final String TAG_LIVE_PLAY = "live_play";
     protected static final String TAG_VOD_PLAY = "vod_play";
     protected static final String TAG_VOD_INFO = "vod_info";
@@ -37,16 +37,10 @@ public abstract class PlayerActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         keepScreenOn();
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
-        if(getLayoutId() != INVALID_LAYOUT_ID){
-            setContentView(getLayoutId());
-        }else{
-            setContentView(getLayoutView());
-        }
         initRotation();
     }
 
-    public abstract int getLayoutId();
-
+    @Deprecated
     protected View getLayoutView(){
         return null;
     }

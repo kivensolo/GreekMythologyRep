@@ -24,6 +24,11 @@ abstract class CommonFragment<T : BaseReactiveViewModel> : BaseVMFragment<T>() {
     //公共Loading控件
     protected var loadStatusView: LoadStatusView? = null
 
+    override fun lazyInit() {
+        initViewModel()
+        initView()
+    }
+
     override fun initView() {
         ZLog.d("initView()")
         loadStatusView = rootView?.findViewById(R.id.load_status)

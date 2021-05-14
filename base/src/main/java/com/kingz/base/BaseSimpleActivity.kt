@@ -65,7 +65,7 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
     /**
      * Init viewmodel
      */
-    open fun initViewModel() {}
+    abstract fun initViewModel()
 
     /**
      * Init data logic.

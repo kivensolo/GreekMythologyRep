@@ -1,9 +1,10 @@
-package com.zeke.play.presenter;
+package com.zeke.music.presenter;
 
 import android.media.TimedText;
 
 import com.kingz.library.player.IPlayerEventsCallBack;
-import com.zeke.play.fragment.VodInfoFragment;
+import com.zeke.music.fragments.VodInfoFragment;
+import com.zeke.play.presenter.AbsBasePresenter;
 
 /**
  * author：KingZ

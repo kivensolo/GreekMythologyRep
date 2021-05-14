@@ -72,9 +72,9 @@ interface WanAndroidApiService : BaseApiService {
      * 收藏站外文章
      */
     @GET("lg/collect/add/json")
-    suspend fun collect(@Field("title") title:String,
-                        @Field("author") author:String,
-                        @Field("link") link:String): WanAndroidResponse<CollectBean>?
+    suspend fun collect(@Query("title") title:String,
+                        @Query("author") author:String,
+                        @Query("link") link:String): WanAndroidResponse<CollectBean>?
     //------------------------ 文章信息API End----------------------------
 
 

@@ -23,7 +23,7 @@
     <string name="txt_tv_new_episode" translatable="false">更新至%1$s集</string>
     <string name="txt_variety_new" translatable="false">更新至%1$s期 / %2$s期全</string>
     <string name="txt_tv_new" translatable="false">更新至%1$s集 / %2$s集全</string>
-    <string name="txt_actor" translatable="false">主演:%1$s</string>
+    <string name="txt_actor" translatable="false">歌手:%1$s</string>
     <string name="txt_director" translatable="false">导演:%1$s</string>
     <string name="txt_detail" translatable="false">简介:%1$s </string>
     <string name="txt_test_int" translatable="false">评分:%1$d </string>

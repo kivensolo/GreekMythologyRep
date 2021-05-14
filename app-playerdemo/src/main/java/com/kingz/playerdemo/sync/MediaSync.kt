@@ -45,8 +45,7 @@ class MediaSync(
 
         // 需判断视频有没有音轨和声轨
         if(surface != null){
-            videoRender =
-                VideoSyncDecoder(surface, playUrl)
+            videoRender = VideoSyncDecoder(surface, playUrl)
         }
         audioRender = AudioSyncDecoder(playUrl)
     }

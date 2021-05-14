@@ -166,11 +166,6 @@ kapt {
     }
 }
 
-
-def _logPrintDependencieModel(module_name){
-    logger.log(LogLevel.ERROR,"     +--- add ${module_name} to app.")
-}
-
 dependencies {
     println("   The closure to use to configure the dependencies is begin run.")
     implementation fileTree(include: ['*.jar','*.aar'], dir: 'libs')
@@ -196,6 +191,8 @@ dependencies {
 
     _logPrintDependencieModel(':module-Player')
     implementation project(":module-Player")
+
+    implementation createModuleProject(":module-Music")
 
     implementation project(':library-unittest')
 
@@ -245,6 +242,21 @@ dependencies {
 
 //    implementation rootProject.ext.dependencies["kangaroo"]
     implementation rootProject.ext.dependencies["xul_cache"]
+}
+
+/**
+ * 创建指定名称的module所在的Project对象
+ * 并输入日志打印
+ * @param moduleName
+ * @return
+ */
+Project createModuleProject(String moduleName){
+    _logPrintDependencieModel(moduleName)
+    return project(moduleName)
+}
+
+def _logPrintDependencieModel(module_name){
+    logger.log(LogLevel.ERROR,"     +--- add ${module_name} to app.")
 }
 
 //

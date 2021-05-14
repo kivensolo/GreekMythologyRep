@@ -14,6 +14,8 @@ import kotlinx.coroutines.Job
  */
 abstract class BaseVMActivity : BaseSimpleActivity(), IUIActionEventObserver {
 
+    val TAG: String = javaClass.simpleName
+
     protected abstract val viewModel: BaseReactiveViewModel
 
     override val lifecycleSupportedScope: CoroutineScope
@@ -26,7 +28,6 @@ abstract class BaseVMActivity : BaseSimpleActivity(), IUIActionEventObserver {
         get() = this
 
     override fun initViewModel() {
-        super.initViewModel()
 //        initViewModelStatusActions()
     }
 

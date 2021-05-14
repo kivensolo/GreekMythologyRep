@@ -1,4 +1,4 @@
-package com.zeke.play.activities
+package com.zeke.music.activities
 
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
@@ -6,17 +6,22 @@ import android.os.Bundle
 import android.provider.Settings
 import android.view.View
 import android.widget.LinearLayout
+import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.kingz.base.factory.ViewModelFactory
 import com.kingz.module.common.CommonApp.Companion.getInstance
 import com.kingz.module.common.bean.MediaParams
+import com.zeke.kangaroo.utils.ZLog
 import com.zeke.module_player.R
+import com.zeke.music.bean.VideoInfo
+import com.zeke.music.fragments.VodDetailFragment
+import com.zeke.music.fragments.VodDetailFragment.Companion.newInstance
+import com.zeke.music.fragments.VodInfoFragment
+import com.zeke.music.presenter.VodInfoPresenter
+import com.zeke.music.viewmodel.MusicViewModel
 import com.zeke.play.PlayerActivity
-import com.zeke.play.VideoInfo
 import com.zeke.play.fragment.PlayFragment
-import com.zeke.play.fragment.VodDetailFragment
-import com.zeke.play.fragment.VodDetailFragment.Companion.newInstance
-import com.zeke.play.fragment.VodInfoFragment
-import com.zeke.play.presenter.VodInfoPresenter
 import java.util.concurrent.TimeUnit
 
 /**
@@ -25,8 +30,8 @@ import java.util.concurrent.TimeUnit
  * description：手机版本的详情页
  * 基于exo播放器组件
  */
-@Route(path = "/module_MPlayer/detailPage")
-class DetailPageActivty : PlayerActivity() {
+@Route(path = "/module_Music/detailPage")
+class MusicDetailPageActivty : PlayerActivity() {
     //播放区域的Fragment
     private var playFragment: PlayFragment? = null
     private var vodInfoFragment: VodInfoFragment? = null
@@ -34,14 +39,46 @@ class DetailPageActivty : PlayerActivity() {
     //影片详情介绍的Fragment
     private var vodDetailFragment: VodDetailFragment? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    private var mVideoId: Int = -1
+    private var mVideoInfo: VideoInfo? = null
+
+    override val viewModel: MusicViewModel by viewModels{
+        ViewModelFactory.build { MusicViewModel() }
+    }
+
+    override fun initView(savedInstanceState: Bundle?) {
+//        super.initView(savedInstanceState)
         if (savedInstanceState == null) {
             initFragment()
         }
     }
 
-    override fun getLayoutId(): Int = R.layout.detail_page
+    override fun getContentLayout(): Int = R.layout.detail_page
+
+    override fun initData(savedInstanceState: Bundle?) {
+        viewModel.videoInfoLiveData.observe(this, Observer {
+            ZLog.d("videoInfoLiveData onChanged: $it")
+            if (it == null) {
+                ZLog.e("videoInfo data is null.")
+                return@Observer
+            }
+            mVideoInfo = it
+            dismissLoading()
+            //填充影片信息Fragment数据
+            vodInfoFragment?.loadUI(it)
+            val mediaParams = MediaParams().apply {
+                videoId = it.id.toString()
+                videoName = it.videoName
+                videoType = it.videoType.toString()
+                videoUrl = it.videoUrl
+            }
+            playFragment?.setVideoInfo(mediaParams)
+            playFragment?.startPlay()
+        })
+        mVideoId = intent.getIntExtra(VodDetailFragment.DETAIL_ARG_KEY,63)
+        ZLog.d("VideoId=${mVideoId}")
+        viewModel.getVideoInfo(mVideoId)
+    }
 
     /**
      * 初始化横竖屏
@@ -68,9 +105,9 @@ class DetailPageActivty : PlayerActivity() {
         playFragment = fm.findFragmentByTag(TAG_VOD_PLAY) as PlayFragment?
         if (playFragment == null) { // 嫦娥探月
             // http://video.chinanews.com/flv/2019/04/23/400/111773_web.mp4
-            val mediaParams = MediaParams()
-            mediaParams.videoUrl = "https://vfx.mtime.cn/Video/2020/05/14/mp4/200514070325395613_1080.mp4"
-            playFragment = PlayFragment.newInstance(mediaParams)
+//            val mediaParams = MediaParams()
+//            mediaParams.videoUrl = "https://vfx.mtime.cn/Video/2020/05/14/mp4/200514070325395613_1080.mp4"
+            playFragment = PlayFragment.newInstance()
             fragmentTransaction.add(R.id.player_content, playFragment!!, TAG_VOD_PLAY)
         }
         // 影片信息区域
@@ -124,9 +161,5 @@ class DetailPageActivty : PlayerActivity() {
             fragmentTransaction.remove(vodDetailFragment!!)
         }
         fragmentTransaction.commit()
-    }
-
-    companion object {
-        const val TAG = "DetailPageActivty"
     }
 }

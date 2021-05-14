@@ -1,10 +1,14 @@
-package com.zeke.play.fragment
+package com.zeke.music.fragments
 
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.widget.CheckBox
 import android.widget.ScrollView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kingz.module.common.base.BaseActivity
@@ -12,9 +16,9 @@ import com.kingz.module.common.base.BaseFragment
 import com.kingz.module.common.base.IPresenter
 import com.zeke.kangaroo.utils.ZLog
 import com.zeke.module_player.R
-import com.zeke.play.VideoInfo
-import com.zeke.play.activities.DetailPageActivty
-import com.zeke.play.presenter.VodInfoPresenter
+import com.zeke.music.activities.MusicDetailPageActivty
+import com.zeke.music.bean.VideoInfo
+import com.zeke.music.presenter.VodInfoPresenter
 import com.zeke.play.view.IPlayerView
 
 /**
@@ -32,10 +36,12 @@ class VodInfoFragment : BaseFragment(), IPlayerView {
     private var descTv: TextView? = null
     ////收藏按钮
     private var collectChk: CheckBox? = null
-    private var videoInfo: VideoInfo? = null
     // 剧集
 //    private EpisodeAdapter episodeAdapter;
     private var episodeRecyclerView: RecyclerView? = null
+
+    //影片信息
+    private var mVideoInfo: VideoInfo? = null
 
     override val isShown: Boolean
         get() = activity != null && (activity as BaseActivity).isActivityShow && isVisible
@@ -89,12 +95,13 @@ class VodInfoFragment : BaseFragment(), IPlayerView {
      * 显示影片信息 (假数据)
      */
     private fun showVideoInfo() {
-        videoInfo = VideoInfo()
-        mScrollView?.visibility = View.VISIBLE
-        nameTv?.text = videoInfo?.videoName
-        scoreTv?.text = videoInfo?.userScore
-        descTv?.text = videoInfo?.summary
-        syncCollectState()
+        //TODO 获取影片信息
+//        videoInfo = VideoInfo()
+//        mScrollView?.visibility = View.VISIBLE
+//        nameTv?.text = videoInfo?.videoName
+//        scoreTv?.text = videoInfo?.userScore
+//        descTv?.text = videoInfo?.summary
+//        syncCollectState()
     }
 
     private fun syncCollectState() {
@@ -111,8 +118,9 @@ class VodInfoFragment : BaseFragment(), IPlayerView {
     override fun onClick(v: View) {
         val id = v.id
         if (id == R.id.iv_detail_arrow_more) {
-            if (activity != null) { //通过Activity来与Fragment交互
-                (activity as DetailPageActivty?)?.showOrDismissVideoDetail(true, videoInfo)
+            if (activity != null) {
+                //通过Activity来与Fragment交互
+                (activity as MusicDetailPageActivty?)?.showOrDismissVideoDetail(true, mVideoInfo)
             }
         } else if (id == R.id.episode_more) {
             ZLog.d(TAG, "onClick --- 更多剧集UI暂时未实现")
@@ -124,6 +132,22 @@ class VodInfoFragment : BaseFragment(), IPlayerView {
             collect()
         }
     }
+
+    fun loadUI(videoInfo: VideoInfo) {
+        ZLog.d("loadUI: $videoInfo")
+        mVideoInfo = videoInfo
+        val spannableString = SpannableString(videoInfo.videoName + "   " + 7.8)
+        val foregroundColorSpan = ForegroundColorSpan(ContextCompat.getColor(context!!, R.color.accent_A200))
+        spannableString.setSpan(
+            foregroundColorSpan,
+            (videoInfo.videoName + "   ").length,
+            spannableString.length,
+            Spanned.SPAN_INCLUSIVE_EXCLUSIVE
+        )
+        nameTv?.text = spannableString
+        descTv?.text = videoInfo.videoDesc
+    }
+
 
     private fun collect() {
         if (collectChk?.isChecked == true) {

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <!--文字颜色-->
+    <color name="text_blue">#2cbdd7</color>
+    <color name="text_gray">#9e9e9e</color>
+    <color name="text_dark">#222222</color>
+    <color name="text_red">#f04529</color>
+
+</resources>

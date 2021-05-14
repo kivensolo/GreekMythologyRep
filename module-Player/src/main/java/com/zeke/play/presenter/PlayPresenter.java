@@ -44,12 +44,11 @@ public class PlayPresenter extends AbsBasePresenter implements IPlayerEventsCall
     public void onCreateView() {
         mPlayer.setPlayerView(playerView.getPlayView());
         mPlayer.setPlayerEventCallBack(this);
-        //TODO 进行播放数据模型建立
-        startPlay();
     }
 
-    private void startPlay() {
+    public void startPlay() {
         if(mPlayParams == null){
+            ZLog.e("No play source.Please confirm playparams!!!");
             onError(ERROR_PLAY_PARAMS, -1);
             return;
         }

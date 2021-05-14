@@ -47,13 +47,9 @@ class PlayFragment : BaseFragment(), IPlayerView, CustomAdapt {
     companion object {
         private const val ORIENTATION_CHANGE_DELAY_MS = 2000L
 
-        fun newInstance(mediaParams: MediaParams?): PlayFragment {
+        fun newInstance(): PlayFragment {
             AutoSizeConfig.getInstance().isCustomFragment = true
-            return PlayFragment().apply {
-                val bundle = Bundle()
-                bundle.putParcelable(MediaParams.PARAMS_KEY, mediaParams)
-                arguments = bundle
-            }
+            return PlayFragment()
         }
     }
 
@@ -109,9 +105,7 @@ class PlayFragment : BaseFragment(), IPlayerView, CustomAdapt {
             true
         }
         val mediaPlayer = MediaPlayTool.getInstance().mediaPlayerCore
-        playPresenter = PlayPresenter(mediaPlayer, this).apply {
-            setPlayParams(mediaParams)
-        }
+        playPresenter = PlayPresenter(mediaPlayer, this)
         // TODO 根据类型初始化不同的UISwitcher
         mUiSwitcher = PlayerUiSwitcher(playPresenter, rootView).apply {
             setOnClickListener(this@PlayFragment)
@@ -146,6 +140,23 @@ class PlayFragment : BaseFragment(), IPlayerView, CustomAdapt {
             }
         }
         basePlayPop?.setOnDismissListener { switchVisibleState() }
+    }
+
+    /**
+     * 设置影片数据
+     */
+    fun setVideoInfo(mediaParams :MediaParams){
+        this.mediaParams = mediaParams
+        val bundle = Bundle()
+        bundle.putParcelable(MediaParams.PARAMS_KEY, mediaParams)
+        arguments = bundle
+
+        //数据传递至presenter
+        playPresenter?.setPlayParams(mediaParams)
+    }
+
+    fun startPlay(){
+        playPresenter?.startPlay()
     }
 
     override fun onPause() {

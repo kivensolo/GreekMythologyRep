@@ -173,7 +173,7 @@
       },
       {
         "name": "Detail-With-ExoPlayer",
-        "class": "com.zeke.play.activities.DetailPageActivty"
+        "class": "com.zeke.music.activities.MusicDetailPageActivty"
       },{
         "name": "IJK SampleList(Not ready)",
         "class": "com.zeke.play.activities.IJKSampleMediaActivity"
