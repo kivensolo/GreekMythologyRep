@@ -34,8 +34,12 @@ static def getGradleUserHome(){
     }
 }
 
-def releaseTime() {
-    return new Date().format("yyyy-MM-dd").toString()
+/**
+ * 获取编译时间
+ * @return 时间值
+ */
+static def releaseTime() {
+    return new Date().format("yyyy-MM-dd_HH-mm").toString()
 }
 
 

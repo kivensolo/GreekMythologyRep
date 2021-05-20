@@ -1,10 +1,10 @@
-//apply from: "config.gradle"
+//apply from: "buildsystem/config.gradle"
 
 // 配置Project的构建脚本类路径
 buildscript {
     println "   The closure to use to configure the build script classpath begin run."
 //    ext.kotlin_version = '1.3.72'
-    apply from: 'config.gradle'
+    apply from: 'buildsystem/config.gradle'
     def bs = buildscript
     println "   dumpBuildScript:${bs}"
 

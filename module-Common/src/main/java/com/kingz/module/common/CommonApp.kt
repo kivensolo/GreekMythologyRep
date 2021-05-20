@@ -1,6 +1,7 @@
 package com.kingz.module.common
 
 import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Handler
 import com.alibaba.android.arouter.launcher.ARouter
 import com.kingz.database.DatabaseApplication
@@ -34,10 +35,7 @@ open class CommonApp: DatabaseApplication(){
     }
 
     companion object {
-
         private const val TAG = "CommonApp"
-        private const val BUGLY_KEY = "34a3209dd6"
-
         private var INSTANCE: CommonApp? = null
 
         fun getInstance(): CommonApp {
@@ -71,16 +69,26 @@ open class CommonApp: DatabaseApplication(){
     private fun initBugly() {
         //  建议在测试阶段建议设置成true，发布时设置为false。
         if (BuildConfig.DEBUG) {
+            val buglyId = getMetaDataValue("bugly_appid")
             //第三个参数为SDK调试模式开关，调试模式的行为特性如下：
             //  输出详细的Bugly SDK的Log；
             //  每一条Crash都会被立即上报；
             //  自定义日志将会在Logcat中输出。
-            CrashReport.initCrashReport(applicationContext, BUGLY_KEY, false)
+            CrashReport.initCrashReport(applicationContext, buglyId, false)
             // 自定义参数---设备串号
             CrashReport.putUserData(this, "DeviceId", "宇宙无敌机皇")
             // 自定义参数---设备机型
             CrashReport.setAppChannel(this, "机型信号")
         }
+    }
+
+    /**
+     * 根据元数据name获取对应value
+     */
+    private fun getMetaDataValue(name: String):String?{
+        val applicationInfo = packageManager.getApplicationInfo(packageName,
+            PackageManager.GET_META_DATA)
+        return applicationInfo.metaData.getString(name)
     }
 
     private fun initLog() {
