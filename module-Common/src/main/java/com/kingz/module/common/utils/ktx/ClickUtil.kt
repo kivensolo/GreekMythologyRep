@@ -1,3 +1,5 @@
+package com.kingz.module.common.utils.ktx
+
 import android.view.View
 
 var lastTime = 0L

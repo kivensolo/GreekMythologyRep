@@ -1,4 +1,4 @@
-
+package com.kingz.module.common.utils.ktx
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -91,3 +91,25 @@ val Int.yearLater: String
         this.add(Calendar.YEAR, +this@yearLater)
         sdf.format(this.timeInMillis)
     }
+
+/**
+ * 通过出生日期计算年龄
+ * @param year  出生年份
+ * @param month 出生月份
+ * @param day   出生日期
+ * @return Age
+ */
+fun caculateAge(year: Int, month: Int, day: Int): Int {
+    val date = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(Date())
+    val splitDate = date.split("-").toTypedArray()
+    val currentYear = splitDate[0].toInt()
+    val currentMonth = splitDate[1].toInt()
+    val currentDay = splitDate[2].toInt()
+    return if (month < currentMonth) {
+        currentYear - year
+    } else if (month > currentMonth) {
+        currentYear - year - 1
+    } else {
+        if (day < currentDay) currentYear - year else currentYear - year - 1
+    }
+}
