@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import androidx.annotation.Nullable;
 
 import com.kingz.base.BaseVMActivity;
+import com.zeke.kangaroo.utils.ZLog;
 import com.zeke.module_player.R;
 
 /**
@@ -63,6 +64,7 @@ public abstract class PlayerActivity extends BaseVMActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        ZLog.d("onNewIntent()");
         setIntent(intent);
     }
 

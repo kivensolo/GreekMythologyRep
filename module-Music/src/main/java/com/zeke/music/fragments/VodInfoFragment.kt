@@ -12,10 +12,13 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.chad.library.adapter.base.animation.ScaleInAnimation
 import com.kingz.module.common.base.BaseActivity
 import com.kingz.module.common.base.BaseFragment
 import com.kingz.module.common.base.IPresenter
+import com.kingz.module.common.router.RPath
+import com.kingz.module.common.router.Router
 import com.zeke.kangaroo.utils.ZLog
 import com.zeke.module_player.R
 import com.zeke.music.activities.MusicDetailPageActivty
@@ -30,6 +33,7 @@ import com.zeke.play.view.IPlayerView
  * date：2019/7/30
  * description：影片简单样式详情的Fragment
  */
+@Route(path = RPath.PAGE_MUSIC_DETAIL)
 class VodInfoFragment : BaseFragment(), IPlayerView {
     private var vodInfoPresenter: VodInfoPresenter? = null
     private var mScrollView: ScrollView? = null
@@ -43,8 +47,11 @@ class VodInfoFragment : BaseFragment(), IPlayerView {
     // 剧集
 //    private EpisodeAdapter episodeAdapter;
     private var episodeRecyclerView: RecyclerView? = null
+
+    //相关推荐影片  FIXME 滚动不流畅
     private var videoRecomRV: RecyclerView? = null
     private var videoRecomAdapter: VideoRecomAdapter? = null
+    private val SPAN_COUNT_OF_RV = 2
 
     //影片信息
     private var mVideoInfo: VideoInfo? = null
@@ -71,7 +78,7 @@ class VodInfoFragment : BaseFragment(), IPlayerView {
         if(rootView == null){
             return
         }
-        mScrollView = rootView.findViewById(R.id.vod_detail_scrollview)
+        mScrollView = (rootView as ScrollView?)
         nameTv = rootView.findViewById(R.id.tv_name_video)
         scoreTv = rootView.findViewById(R.id.tv_score_video)
         descTv = rootView.findViewById(R.id.tv_detail_video)
@@ -91,13 +98,20 @@ class VodInfoFragment : BaseFragment(), IPlayerView {
         videoRecomRV = rootView.findViewById(R.id.video_recom_recycler)
         videoRecomRV?.apply {
             layoutManager = GridLayoutManager(
-                context, 3,
+                context, SPAN_COUNT_OF_RV,
                 GridLayoutManager.VERTICAL, false
             )
-            isVerticalScrollBarEnabled = true
+            isVerticalScrollBarEnabled = false
             videoRecomAdapter = VideoRecomAdapter().apply {
                 adapterAnimation = ScaleInAnimation()
-                setOnItemClickListener { adapter, view, position ->
+                setOnItemClickListener { adapter, _, position ->
+                    Router.startActivity(RPath.PAGE_MUSIC_DETAIL, Bundle().apply {
+                        val relatedInfo: RelatedVideoInfo =
+                            adapter.getItem(position) as RelatedVideoInfo
+                        ZLog.d("open detail page with video:${relatedInfo.videoName}," +
+                                " ${relatedInfo.id}")
+                        putInt(VodDetailFragment.DETAIL_ARG_KEY, relatedInfo.id)
+                    })
                 }
             }
             adapter = videoRecomAdapter
@@ -105,7 +119,8 @@ class VodInfoFragment : BaseFragment(), IPlayerView {
     }
 
     fun updateRecomData(data:List<RelatedVideoInfo>){
-        videoRecomAdapter?.addData(data)
+        ZLog.d("updateRecomData()")
+        videoRecomAdapter?.setList(data)
     }
 
     private fun onPresenterCreateView() {
@@ -179,6 +194,11 @@ class VodInfoFragment : BaseFragment(), IPlayerView {
         } else {
             ZLog.d(TAG, "onClick ---添加收藏")
         }
+    }
+
+    fun scrollToHead(){
+        ZLog.d(TAG, "scrollToHead()")
+        mScrollView?.scrollY = 0
     }
 
     override fun setPresenter(presenter: IPresenter) {}

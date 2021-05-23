@@ -1,5 +1,6 @@
 package com.zeke.music.activities
 
+import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.os.Bundle
@@ -53,6 +54,20 @@ class MusicDetailPageActivty : PlayerActivity() {
         }
     }
 
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        vodInfoFragment?.scrollToHead()
+        reloadVideoInfo(intent)
+    }
+
+    private fun reloadVideoInfo(intent: Intent?){
+        ZLog.d("reloadVideoInfo=${intent}")
+        intent?.apply{
+            mVideoId = getIntExtra(VodDetailFragment.DETAIL_ARG_KEY,63)
+            viewModel.getVideoInfo(mVideoId)
+        }
+    }
+
     override fun getContentLayout(): Int = R.layout.detail_page
 
     override fun initData(savedInstanceState: Bundle?) {
@@ -75,9 +90,8 @@ class MusicDetailPageActivty : PlayerActivity() {
             playFragment?.setVideoInfo(mediaParams)
             playFragment?.startPlay()
 
-            ZLog.d("Video info is normal, get releated info.")
+            ZLog.d("Video info is ok, get releated info of： ${it.id}")
             viewModel.getReleatedVideoList(it.id)
-
         })
         mVideoId = intent.getIntExtra(VodDetailFragment.DETAIL_ARG_KEY,63)
         ZLog.d("VideoId=${mVideoId}")

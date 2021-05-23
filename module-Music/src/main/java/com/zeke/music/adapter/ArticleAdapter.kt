@@ -5,7 +5,6 @@ import android.text.TextUtils
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
@@ -50,14 +49,16 @@ open class VideoRecomAdapter @JvmOverloads constructor(
             setText(R.id.recom_video_name, videoName)
         }
 
+        //FIXME 修正默认图宽高大小
         val options = RequestOptions().placeholder(R.drawable.pic_video_default)
-            .error(mContext!!.resources.getDrawable(R.color.red))
-            .transform(RoundedCorners(20))
+            .error(mContext!!.resources.getDrawable(R.drawable.pic_video_default))
+//            .transform(RoundedCorners(20)) //FIXME 如果遇到扩大铺满的图片，则圆角无效。
 
         val ivProject: ImageView = holder.itemView.findViewById(R.id.recom_video_poster)
         if (!TextUtils.isEmpty(item.videoImg)) {
             Glide.with(ivProject)
                 .load(item.videoImg)
+//                .load("")
                 .apply(options)
                 .into(ivProject)
         }

@@ -90,6 +90,11 @@ public class PlayPresenter extends AbsBasePresenter implements IPlayerEventsCall
         mPlayer.release();
     }
 
+    public void reset(){
+        mPlayer.pause();
+        mPlayer.release();
+    }
+
     public void seekTo(long progress) {
         if (progress < 0 || progress > mPlayer.getDuration()) {
             return;
