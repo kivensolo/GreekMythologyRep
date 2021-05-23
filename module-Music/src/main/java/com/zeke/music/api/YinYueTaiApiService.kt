@@ -1,7 +1,7 @@
 package com.zeke.music.api
 
 import com.kingz.base.BaseApiService
-import com.zeke.music.bean.RelatedVideoListInfo
+import com.zeke.music.bean.RelatedVideoInfo
 import com.zeke.music.bean.VideoInfo
 import com.zeke.music.bean.VideoListInfo
 import retrofit2.http.GET
@@ -31,7 +31,7 @@ interface YinYueTaiApiService: BaseApiService {
     suspend fun getVideoInfo(@Query("id") id:Int): VideoInfo
 
     @GET("/video/getRelatedVideoList")
-    suspend fun getRelatedVideoList(@Query("id") id:Int): List<RelatedVideoListInfo>
+    suspend fun getRelatedVideoList(@Query("id") id:Int): List<RelatedVideoInfo>
 
 
 }

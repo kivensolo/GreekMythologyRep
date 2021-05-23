@@ -9,14 +9,18 @@ import android.widget.CheckBox
 import android.widget.ScrollView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.chad.library.adapter.base.animation.ScaleInAnimation
 import com.kingz.module.common.base.BaseActivity
 import com.kingz.module.common.base.BaseFragment
 import com.kingz.module.common.base.IPresenter
 import com.zeke.kangaroo.utils.ZLog
 import com.zeke.module_player.R
 import com.zeke.music.activities.MusicDetailPageActivty
+import com.zeke.music.adapter.VideoRecomAdapter
+import com.zeke.music.bean.RelatedVideoInfo
 import com.zeke.music.bean.VideoInfo
 import com.zeke.music.presenter.VodInfoPresenter
 import com.zeke.play.view.IPlayerView
@@ -39,6 +43,8 @@ class VodInfoFragment : BaseFragment(), IPlayerView {
     // 剧集
 //    private EpisodeAdapter episodeAdapter;
     private var episodeRecyclerView: RecyclerView? = null
+    private var videoRecomRV: RecyclerView? = null
+    private var videoRecomAdapter: VideoRecomAdapter? = null
 
     //影片信息
     private var mVideoInfo: VideoInfo? = null
@@ -79,9 +85,27 @@ class VodInfoFragment : BaseFragment(), IPlayerView {
             LinearLayoutManager.HORIZONTAL,
             false
         )
-        //TODo 进行剧集数据适配器数据绑定
 //        episodeAdapter = new EpisodeAdapter(mediaParams);
 //        episodeRecyclerView.setAdapter(episodeAdapter);
+
+        videoRecomRV = rootView.findViewById(R.id.video_recom_recycler)
+        videoRecomRV?.apply {
+            layoutManager = GridLayoutManager(
+                context, 3,
+                GridLayoutManager.VERTICAL, false
+            )
+            isVerticalScrollBarEnabled = true
+            videoRecomAdapter = VideoRecomAdapter().apply {
+                adapterAnimation = ScaleInAnimation()
+                setOnItemClickListener { adapter, view, position ->
+                }
+            }
+            adapter = videoRecomAdapter
+        }
+    }
+
+    fun updateRecomData(data:List<RelatedVideoInfo>){
+        videoRecomAdapter?.addData(data)
     }
 
     private fun onPresenterCreateView() {

@@ -74,10 +74,24 @@ class MusicDetailPageActivty : PlayerActivity() {
             }
             playFragment?.setVideoInfo(mediaParams)
             playFragment?.startPlay()
+
+            ZLog.d("Video info is normal, get releated info.")
+            viewModel.getReleatedVideoList(it.id)
+
         })
         mVideoId = intent.getIntExtra(VodDetailFragment.DETAIL_ARG_KEY,63)
         ZLog.d("VideoId=${mVideoId}")
         viewModel.getVideoInfo(mVideoId)
+
+        viewModel.relatedVideoListLiveData.observe(this, Observer {
+             ZLog.d("RelatedVideoList liveData onChanged isSuccess? --- ${it == null}")
+            if (it == null) {
+                ZLog.e("videoReom data is null.")
+                return@Observer
+            }
+            vodInfoFragment?.updateRecomData(it)
+        })
+
     }
 
     /**

@@ -5,7 +5,7 @@ package com.zeke.music.bean
  * date：2021/5/14
  * description：音悦台相关影片的item信息
  */
-class RelatedVideoListInfo {
+class RelatedVideoInfo {
     /**
      * id : 198
      * videoName : 邓紫棋 无敌机智 @音悦大来宾_标清(9304663)

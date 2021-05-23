@@ -1,7 +1,7 @@
 package com.zeke.music.repository
 
 import com.zeke.music.api.YinYueTaiApiService
-import com.zeke.music.bean.RelatedVideoListInfo
+import com.zeke.music.bean.RelatedVideoInfo
 import com.zeke.music.bean.VideoInfo
 import com.zeke.music.bean.VideoListInfo
 import com.zeke.network.OkHttpClientManager
@@ -76,7 +76,7 @@ class YinYueTaiRemoteDataSource(iActionEvent: IUIActionEvent?) :
      * Get related video info by videoId
      * @param id video id.
      */
-    suspend fun getRelatedVideoList(id: Int): List<RelatedVideoListInfo> {
+    suspend fun getRelatedVideoList(id: Int): List<RelatedVideoInfo> {
         return apiService.getRelatedVideoList(id)
     }
 
