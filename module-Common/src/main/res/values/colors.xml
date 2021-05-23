@@ -187,8 +187,12 @@
 
 
     <color name="colorPrimary">@color/app_main_color</color>
-    <color name="colorPrimaryDark">@color/app_main_color</color>
+    <color name="colorPrimaryDark">@color/app_main_color_dark</color>
     <color name="colorAccent">@color/app_accent</color>
+
+    <color name="app_main_color">@color/blue</color>
+    <color name="app_main_color_dark">@color/blue_dark</color>
+    <color name="app_accent">@color/blue_light</color>
 
     <!-- Android L 颜色 -->
     <color name="skygreen">#5FCDDA</color><!--天绿色 -->
@@ -197,19 +201,22 @@
     <color name="qianpurple">#A08BE8</color><!--浅_葡萄色 -->
     <color name="suncolor">#FED094</color><!--夕阳色 -->
 
+    <!-- 谷歌配色 -->
+    <color name="google_blue">#2d85f0</color>
+    <color name="google_red">#f4433c</color>
+    <color name="google_yellow">#ffbc32</color>
+    <color name="google_green">#0aa858</color>
+
     <color name="orange_red">#FC9D99</color>
-    <color name="blue">#00CCFF</color>
-    <color name="blue_deep">#007cdc</color>
-    <color name="blue_dark">#019fa0</color>
-    <color name="blue_light">#00B1E0</color>
+    <color name="blue_light">#91a7ff</color>
+    <color name="blue">#5677fc</color>
+    <color name="blue_deep">#3f51b5</color>
+    <color name="blue_dark">#455ede</color>
     <color name="purple_light">#cd7bdd</color>
     <color name="purple_deep">#887ddd</color>
     <color name="md_pink">#ff5675</color>
     <color name="md_yellow">#f8bd0b</color>
 
-    <color name="app_main_color">#008577</color>
-    <color name="app_main_color_dark">#00574B</color>
-    <color name="app_accent">#FF4081</color>
 
     <!--wzviewpager所需颜色-->
     <color name="theme_500">#607D8B</color>
@@ -226,12 +233,18 @@
     <color name="text_dark">#222222</color>
     <color name="text_red">#f04529</color>
 
+    <!-- svg icon 颜色-->
+    <color name="ic_color_light">#3DCBE5</color>
+    <color name="ic_color_gray">@color/white_transparent</color>
+
     <color name="mplayer_seekbar_played">#55E1FA</color>
     <color name="mplayer_seekbar_unplayed">#66F8F9FA</color>
     <color name="bg_main_vod_searchbar">#cc30343c</color>
     <color name="bg_main_vod_search_text">#55050505</color>
 
+    <!-- 黑色 -->
     <color name="tab_bg">#30343c</color>
+
     <!--Hub 主题颜色-->
     <color name="hub_white">#ffe8e8e8</color>
     <color name="hub_yellow">#CC9817</color>

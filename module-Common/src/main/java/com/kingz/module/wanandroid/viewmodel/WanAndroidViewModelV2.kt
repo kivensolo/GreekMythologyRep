@@ -30,15 +30,27 @@ open class WanAndroidViewModelV2 : BaseReactiveViewModel() {
         MutableLiveData<CollectActionBean>()
     }
 
-
-    open val remoteDataSource by lazy {
+    // 需限定访问权限为protected 防止view层直接访问Model层的DataSource对象
+    protected open val remoteDataSource by lazy {
         WanAndroidRemoteDataSource(this)
     }
 
     fun getUserInfo() {
         launchIO {
-            val info = remoteDataSource.getUserInfo()
+            ZLog.d(TAG,"Get user info from data base.")
+            val info = remoteDataSource.getUserInfoFromLocal()
             userInfoLiveData.postValue(info)
+        }
+    }
+
+    fun userLogout(){
+        launchIO{
+            ZLog.e(TAG,"User logout")
+            val result = remoteDataSource.userLogout()
+            ZLog.d(TAG,"User logout result = $result")
+            if(result.errorCode == 0){
+                userInfoLiveData.postValue(null)
+            }
         }
     }
 

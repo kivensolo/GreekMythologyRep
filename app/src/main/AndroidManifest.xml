@@ -49,6 +49,10 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
+        <!-- bugly appid -->
+        <meta-data
+            android:name="bugly_appid"
+            android:value="${BUGLY_APP_ID}" />
 
         <!--<uses-library android:name="android.test.AndroidTestRunner"/>-->
 

@@ -10,7 +10,7 @@
     <FrameLayout
         android:id="@+id/player_content"
         android:layout_width="match_parent"
-        android:layout_height="302dp"
+        android:layout_height="210dp"
         android:contentDescription="@string/player_area"/>
 
     <!-- 视频播放器下边的内容区域 -->

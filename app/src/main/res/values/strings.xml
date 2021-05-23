@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingTranslation">
 
     <!--Application Str-->
     <string name="app_name">GreekMyth</string>
@@ -94,5 +95,10 @@
     <string name="bottom_demo" translatable="false">Demo学习</string>
     <string name="fuli" translatable="false">福利</string>
     <string name="no_use" translatable="false">暂未开发</string>
+
+
+    <!--  第三方库id配置  -->
+    <string name="app_bugly_appid">34a3209dd6</string>
+
 
 </resources>

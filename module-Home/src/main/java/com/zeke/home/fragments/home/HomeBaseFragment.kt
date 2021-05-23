@@ -18,7 +18,6 @@ import com.zeke.home.entity.TemplatePageData
  * 使用 TabLayout + viewPager + fragment 实现切页展示
  */
 abstract class HomeBaseFragment<T : IPresenter> : BaseFragment(), IView {
-    val TAG:String = HomeBaseFragment::class.java.simpleName
     lateinit var mPresenter: T
     protected var tableLayout: TabLayout? = null
     protected var coverView: View? = null

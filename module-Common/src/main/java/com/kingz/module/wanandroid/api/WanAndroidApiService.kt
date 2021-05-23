@@ -72,9 +72,9 @@ interface WanAndroidApiService : BaseApiService {
      * 收藏站外文章
      */
     @GET("lg/collect/add/json")
-    suspend fun collect(@Field("title") title:String,
-                        @Field("author") author:String,
-                        @Field("link") link:String): WanAndroidResponse<CollectBean>?
+    suspend fun collect(@Query("title") title:String,
+                        @Query("author") author:String,
+                        @Query("link") link:String): WanAndroidResponse<CollectBean>?
     //------------------------ 文章信息API End----------------------------
 
 
@@ -92,24 +92,6 @@ interface WanAndroidApiService : BaseApiService {
 
 
     //------------------------ 用户信息API Start----------------------------
-     /**
-     * 登录
-     * @param username 账号
-     * @param password 密码
-     * @return
-     */
-    @POST("user/login")
-    @FormUrlEncoded
-    suspend fun login(@Field("username") username:String,
-                      @Field("password") password:String)
-             :WanAndroidResponse<User>
-    /**
-     * 退出登录
-     * http://www.wanandroid.com/user/logout/json
-     */
-    @GET("user/logout/json")
-    suspend fun logout(): WanAndroidResponse<*>?
-
     /**
      * 注册
      * @param username 用户名
@@ -123,7 +105,7 @@ interface WanAndroidApiService : BaseApiService {
         @Field("password") password: String?,
         @Query("repassword") repassword: String?
     ): WanAndroidResponse<User?>?
-    // --------------------> 上面这部分是之前老的
+    // --------------------> 上面这个是之前老的
 
 //    @FormUrlEncoded
 //    @POST("/user/login")
@@ -153,7 +135,7 @@ interface WanAndroidApiService : BaseApiService {
      * 如果本地做了用户账号密码和保存，及时清理。
      */
     @GET("user/logout/json")
-    suspend fun userLogout(): String
+    suspend fun userLogout(): UserInfoBean
     //------------------------ 用户信息API End----------------------------
 
 }

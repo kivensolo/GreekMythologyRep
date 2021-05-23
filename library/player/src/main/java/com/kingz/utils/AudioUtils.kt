@@ -46,6 +46,7 @@ final class AudioUtils(context: Context): IAudioControl {
     // Stream Music Max value.
     private var mMusicMaxAudio: Int
 
+    private var audioFocusManager: AudioFocusManager? = null
 
     companion object{
         @Volatile
@@ -71,6 +72,7 @@ final class AudioUtils(context: Context): IAudioControl {
     init {
         mAudioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager?
         mMusicMaxAudio = mAudioManager!!.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
+        audioFocusManager = AudioFocusManager()
     }
 
     /**
@@ -201,4 +203,42 @@ final class AudioUtils(context: Context): IAudioControl {
         return mAudioManager!!.getStreamMaxVolume(audioType)
     }
 
+    /**
+     * 音频焦点控制器, 避免音视频声音并发问题
+     */
+    inner class AudioFocusManager(
+        private var mFocuseChangeLsr: AudioManager.OnAudioFocusChangeListener ?= null
+    ){
+        /**
+         * 请求音频焦点 设置监听
+         * @param onStart 音频焦点GAIN事件
+         * @param onPause 音频焦点LOSS事件
+         */
+        fun getAudioFocusValue(context:Context, onStart:()->Unit, onPause:()->Unit):Int{
+            //Android 2.2开始(API8)才有音频焦点机制
+            if(mFocuseChangeLsr == null){
+                mFocuseChangeLsr = AudioManager.OnAudioFocusChangeListener {
+                    when(it){
+                        AudioManager.AUDIOFOCUS_GAIN,
+                        AudioManager.AUDIOFOCUS_GAIN_TRANSIENT,
+                        AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK -> {//播放操作
+                            onStart()
+                        }
+                        AudioManager.AUDIOFOCUS_LOSS,
+                        AudioManager.AUDIOFOCUS_LOSS_TRANSIENT,
+                        AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK -> {//播放操作
+                            onPause()
+                        }
+                    }
+                }
+            }
+            //下面两个常量参数试过很多 都无效，最终反编译了其他app才搞定，汗~
+            return mAudioManager?.requestAudioFocus(
+                mFocuseChangeLsr,
+                AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK,
+                AudioManager.AUDIOFOCUS_GAIN_TRANSIENT
+            )?: AudioManager.AUDIOFOCUS_REQUEST_FAILED
+        }
+
+    }
 }

@@ -1,116 +1,97 @@
 package com.kingz.playerdemo
 
-import android.content.Context
-import android.net.nsd.NsdManager
-import android.net.nsd.NsdServiceInfo
 import android.os.Bundle
 import android.util.Log
+import android.view.SurfaceHolder
 import androidx.appcompat.app.AppCompatActivity
-import java.net.InetAddress
+import com.kingz.playerdemo.decode.AudioSyncDecoder
+import com.kingz.playerdemo.decode.VideoSyncDecoder
+import com.kingz.playerdemo.sync.MediaSync
+import kotlinx.android.synthetic.main.activity_main.*
+import java.io.File
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
+
 
 /**
- * NSD客户端分为两个步骤：扫描，解析
+ * 使用MediaCodec播放本地视频
+ * https://blog.csdn.net/u011418943/article/details/107561111
  */
 class MainActivity : AppCompatActivity() {
 
-    private val TAG: String = "MainActivity"
-    private val SERVICE_NAME: String = "KingZ-NsdChat"
-    private lateinit var mServiceInfo: NsdServiceInfo
-    private lateinit var nsdManager: NsdManager
+    private val TAG: String = "PlayerDemoActivity"
+    private var isStreamEnd = false
 
-    // 扫描监听器
-    private val discoveryListener = object : NsdManager.DiscoveryListener {
+    private var mExecutorService: ExecutorService? = null
+    private var mVideoSync: VideoSyncDecoder? = null
+    private var mAudioDecodeSync: AudioSyncDecoder? = null
 
-        // 在服务发现开始时调用
-        override fun onDiscoveryStarted(regType: String) {
-            Log.d(TAG, "Service discovery started -----> ")
+    private var callback: SurfaceHolder.Callback = object : SurfaceHolder.Callback {
+        override fun surfaceChanged(holder: SurfaceHolder?, format: Int, width: Int, height: Int) {
+            Log.i(TAG, "surfaceChanged")
         }
 
-        /**
-         *  在服务找到时回调返回NsdServiceInfo的对象
-         *  里面只有NSD服务器的主机名，要解析后才能得到该主机名的其他数据信息
-         */
-        override fun onServiceFound(service: NsdServiceInfo) {
-            Log.d(TAG, "Service discovery success :: $service")
-            when {
-                // 服务类型是包含此服务的协议和传输层的字符串
-                service.serviceType != "_nsdchat._tcp" ->
-                    Log.e(TAG, "Unknown Service Type: ${service.serviceType}")
-                service.serviceName == SERVICE_NAME ->
-                    Log.d(TAG, "Same machine: ${service.serviceName}")
-                service.serviceName.contains("NsdChat") ->
-                    // 当应用在网络上找到要连接的服务时
-                    // 它必须首先使用 resolveService() 方法确定该服务的连接信息
-                    nsdManager.resolveService(service, resolveListener)
-            }
+        override fun surfaceDestroyed(holder: SurfaceHolder) {
+            Log.i(TAG, "surfaceDestroyed")
+//            workerThread?.interrupt()
+//            workerThread = null
+//            if (audioMediaCodecWorker != null) {
+//                audioMediaCodecWorker!!.interrupt()
+//                audioMediaCodecWorker = null
+//            }
         }
 
-        override fun onServiceLost(service: NsdServiceInfo) {
-            // When the network service is no longer available.
-            // Internal bookkeeping code goes here.
-            Log.e(TAG, "service lost: $service")
-        }
-
-        override fun onDiscoveryStopped(serviceType: String) {
-            Log.i(TAG, "Discovery stopped: $serviceType")
-        }
-
-        override fun onStartDiscoveryFailed(serviceType: String, errorCode: Int) {
-            Log.e(TAG, "Discovery failed: Error code:$errorCode")
-            nsdManager.stopServiceDiscovery(this)
-        }
-
-        override fun onStopDiscoveryFailed(serviceType: String, errorCode: Int) {
-            Log.e(TAG, "Discovery failed: Error code:$errorCode")
-            nsdManager.stopServiceDiscovery(this)
+        override fun surfaceCreated(holder: SurfaceHolder) {
+            Log.i(TAG, "surfaceCreated")
+            // 音频解码
         }
     }
-
-    // 解析监听器
-    private val resolveListener = object : NsdManager.ResolveListener {
-
-        override fun onResolveFailed(serviceInfo: NsdServiceInfo, errorCode: Int) {
-            // Called when the resolve fails. Use the error code to debug.
-            Log.e(TAG, "Resolve failed: $errorCode")
-        }
-
-        override fun onServiceResolved(serviceInfo: NsdServiceInfo) {
-            Log.e(TAG, "Resolve Succeeded. $serviceInfo")
-
-            if (serviceInfo.serviceName == SERVICE_NAME) {
-                Log.d(TAG, "Same IP.")
-                return
-            }
-            mServiceInfo = serviceInfo
-            val port: Int = serviceInfo.port
-            val host: InetAddress = serviceInfo.host
-        }
-    }
-
+    var mediaSync:MediaSync? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_nsd)
-        nsdManager = getSystemService(Context.NSD_SERVICE) as NsdManager
+        setContentView(R.layout.activity_main)
+//        filePathUri = "android.resource://$packageName/${R.raw.welcome_video}"
 
-//        // 扫描
-//        btn_search.setOnClickListener {
-//            discoverServices()
-//        }
-//        // 解析
-//        btn_connect.setOnClickListener {
-//            nsdManager.resolveService(mServiceInfo, resolveListener)
-//        }
-    }
+        val mFile = File(externalCacheDir, "ChiLing.mp4")
 
-    /**
-     * 发现NSD服务
-     */
-    private fun discoverServices() {
-        nsdManager.discoverServices(
-            "_nsdchat._tcp", //要和NSD服务器端定的ServerType一样
-            NsdManager.PROTOCOL_DNS_SD, //固定参数
-            discoveryListener           //扫描监听器
+       /* // 设置Surface不维护自己的缓冲区，等待屏幕的渲染引擎将内容推送到用户面前
+        // 该api已经废弃，这个编辑会自动设置
+        // surfaceView.holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS)
+        val holder = surface_view.holder
+        holder.addCallback(callback)
+
+        mediaSync = MediaSync(
+            holder.surface,
+            mFile.absolutePath
         )
+        play_player.setOnClickListener {
+            mediaSync?.start()
+        }
+        pause_player.setOnClickListener {
+            mediaSync?.pause()
+        }*/
+
+         mExecutorService = Executors.newFixedThreadPool(2)
+        // 设置Surface不维护自己的缓冲区，等待屏幕的渲染引擎将内容推送到用户面前
+        // 该api已经废弃，这个编辑会自动设置
+        // surfaceView.holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS)
+        val holder = surface_view.holder
+        holder.addCallback(callback)
+        play_player.setOnClickListener {
+            // 音视频同步
+            mVideoSync = VideoSyncDecoder (holder.surface, mFile.absolutePath)
+            mAudioDecodeSync = AudioSyncDecoder(mFile.absolutePath)
+            mExecutorService?.execute(mVideoSync)
+            mExecutorService?.execute(mAudioDecodeSync)
+        }
+        pause_player.setOnClickListener {
+            mVideoSync?.pauseMedia()
+        }
+
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        isStreamEnd = true
+    }
 }

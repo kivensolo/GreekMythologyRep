@@ -11,6 +11,7 @@ import com.zeke.module_player.R
 import com.zeke.module_player.databinding.FullPlayerPageBinding
 import com.zeke.play.PlayerActivity
 import com.zeke.play.fragment.PlayFragment
+import com.zeke.reactivehttp.base.BaseReactiveViewModel
 import me.jessyan.autosize.AutoSizeConfig
 import me.jessyan.autosize.internal.CustomAdapt
 
@@ -31,9 +32,8 @@ class FullScreenPlayer : PlayerActivity(),CustomAdapt {
         }
     }
 
-    override fun getLayoutId(): Int {
-        return INVALID_LAYOUT_ID
-    }
+    override val viewModel: BaseReactiveViewModel
+        get() = TODO("Use MVVM mode.")
 
     override fun getLayoutView(): View {
         fullPlayerPageBinding = FullPlayerPageBinding.inflate(LayoutInflater.from(this))
@@ -62,17 +62,26 @@ class FullScreenPlayer : PlayerActivity(),CustomAdapt {
         // 播放区域
         playFragment = fm.findFragmentByTag(TAG_VOD_PLAY) as PlayFragment?
         if (playFragment == null) {
-            playFragment = PlayFragment.newInstance(mediaParams)
-            fragmentTransaction.add(R.id.root_layout, playFragment!!, TAG_LIVE_PLAY)
+            playFragment = PlayFragment.newInstance()
+            playFragment?.setVideoInfo(mediaParams)
+            fragmentTransaction.add(R.id.player_content, playFragment!!, TAG_LIVE_PLAY)
         }
         fragmentTransaction.show(playFragment!!)
         fragmentTransaction.commit()
+
+        playFragment?.startPlay()
     }
 
     override fun onDestroy() {
         AutoSizeConfig.getInstance().isUseDeviceSize = false
         playFragment?.onDestroy()
         super.onDestroy()
+    }
+
+    override fun getContentLayout(): Int = INVALID_LAYOUT_ID
+
+    override fun initData(savedInstanceState: Bundle?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     /**

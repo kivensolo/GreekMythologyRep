@@ -20,6 +20,8 @@ import kotlinx.coroutines.CoroutineScope
  */
 open class BaseReactiveViewModel : ViewModel(), IViewModelActionEvent {
 
+    val TAG: String = javaClass.simpleName
+
     override val lifecycleSupportedScope: CoroutineScope
         get() = viewModelScope
 

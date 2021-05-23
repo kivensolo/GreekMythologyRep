@@ -10,27 +10,26 @@ apply {
     plugin 'kotlin-android-extensions'
     plugin 'kotlin-kapt'
 
-    from '../config.gradle'
-    from '../utils.gradle'
-
+    from '../buildsystem/config.gradle'
+    from '../buildsystem/utils.gradle'
 }
 
 def keystorePropertiesFile = rootProject.file("keystore.properties")
 // Initialize a new Properties() object
-def keystoreProperties = new Properties()
+def _keystoreProperties = new Properties()
 // Load keystore.properties file into the keystoreProperties object.
-keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+_keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
-def root_android = rootProject.ext.android
-def root_dependencies = rootProject.ext.dependencies
+def _rootAndroid = rootProject.ext.android
+def _rootDependencies = rootProject.ext.dependencies
 
 android {
     signingConfigs {
         ZekeSigned {
-            keyAlias keystoreProperties['keyAlias']
-            keyPassword keystoreProperties['keyPassword']
-            storeFile file(keystoreProperties['storeFile'])
-            storePassword keystoreProperties['storePassword']
+            keyAlias _keystoreProperties['keyAlias']
+            keyPassword _keystoreProperties['keyPassword']
+            storeFile file(_keystoreProperties['storeFile'])
+            storePassword _keystoreProperties['storePassword']
         }
     }
 
@@ -40,11 +39,11 @@ android {
     defaultConfig {
         applicationId 'com.kingz.customdemo'
         multiDexEnabled true
-        versionCode root_android.versionCode
-        versionName root_android.versionName
+        versionCode _rootAndroid.versionCode
+        versionName _rootAndroid.versionName
         signingConfig signingConfigs.ZekeSigned
-        minSdkVersion root_android.minSdkVersion
-        targetSdkVersion root_android.targetSdkVersion
+        minSdkVersion _rootAndroid.minSdkVersion
+        targetSdkVersion _rootAndroid.targetSdkVersion
         buildConfigField("String", "APP_NAME", "\"Greek\"")
 
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
@@ -62,7 +61,7 @@ android {
             }
         }
     }
-
+    // ---------------- 构建类型配置[debug/release/beta] Start-------------- Specifies flavor dimensions.
     buildTypes {
         debug {
             zipAlignEnabled true
@@ -88,7 +87,9 @@ android {
             signingConfig signingConfigs.ZekeSigned
         }
     }
-    // Specifies flavor dimensions.
+    // ---------------- 构建类型配置[debug/release/beta] Start-------------- Specifies flavor dimensions.
+
+    // ---------------- 构建产物配置 Start-------------- Specifies flavor dimensions.
     flavorDimensions "area"
 
     productFlavors{
@@ -96,17 +97,27 @@ android {
         ChengDu{
             //运行在Android 5.0以上版本的设备中， 使用ART-supported格式生成multidex的速度要快很多
             minSdkVersion 21
+            versionCode 42
+            versionName "1.5.15"
             dimension "area"
             applicationId 'com.demo.chengdu'
+
+            manifestPlaceholders = [
+                    BUGLY_APP_ID: "@string/app_bugly_appid"
+            ]
         }
 
         Beijing{
             minSdkVersion android.minSdkVersion
+
+            manifestPlaceholders = [
+                    BUGLY_APP_ID: "@string/app_bugly_appid"
+            ]
         }
     }
+    // ---------------- 构建产物配置 End -------------- Specifies flavor dimensions.
 
-    configurations {
-    }
+    configurations {}
 
     compileOptions {
         encoding rootProject.ext.java.compile_encoding
@@ -114,7 +125,11 @@ android {
         targetCompatibility rootProject.ext.java.targetCompatibility
     }
 
-    adbOptions{
+    adbOptions{}
+
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
     }
 
     packagingOptions {
@@ -134,28 +149,31 @@ android {
         main.java.srcDirs += 'src/main/kotlin'
     }
 
+    /**
+     * 构建变体产物配置
+     */
     applicationVariants.all { variant ->
+        //产品类型
         def flavorName = variant.flavorName
-        //判断是release还是debug版本
+        //构建类型
         def buildType = variant.buildType.name
-
-        def versionName = 'V' + variant.getVersionName()
-        def versionCode = 'VC' + variant.getVersionCode()
+        def vName = variant.versionName
+        def vCode = variant.versionCode
+        // >=AGP 3.3
         variant.outputs.all  { item ->
             // 使用 item.outputFile 会导致以下警告：
             //  API 'variantOutput.getPackageApplication()' is obsolete and has been replaced with
             // 'variant.getPackageApplicationProvider()'.
-
-            // def optFile = item.outputFile
-            // if(optFile != null && optFile.name.endsWith('.apk')){
-            //     // 对后缀为.apk的文件做命名修改处理
-            //     logger.log(LogLevel.DEBUG, "output Name: ${optFile.name}")
-            //     def fileName = "Greek_${versionName}_${versionCode}_${flavorName}_${buildType}_${releaseTime()}.apk"
-            //     item.outputFileName = fileName
-            // }
-            def fileName = "Greek_${versionName}_${versionCode}_${flavorName}_${buildType}_${releaseTime()}.apk"
-            outputFileName = fileName
+            outputFileName = "Greek_${flavorName}_v${vName}_${vCode}_${buildType}_${releaseTime()}.apk"
         }
+//<AGP 3.3
+//        variant.outputs.all { item ->
+//            def optFile = item.outputFile
+//            if(optFile != null && optFile.name.endsWith('.apk')){
+//                //对后缀为.apk的文件做命名修改处理
+//                item.outputFileName = "Greek_${versionName}_${versionCode}_${flavorName}_${buildType}_${releaseTime()}.apk"
+//            }
+//        }
     }
 }
 
@@ -166,36 +184,27 @@ kapt {
     }
 }
 
-
-def _logPrintDependencieModel(module_name){
-    logger.log(LogLevel.ERROR,"     +--- add ${module_name} to app.")
-}
-
 dependencies {
     println("   The closure to use to configure the dependencies is begin run.")
     implementation fileTree(include: ['*.jar','*.aar'], dir: 'libs')
-    implementation root_dependencies["arouter"]
-    kapt root_dependencies["arouter_compiler"]
+    implementation _rootDependencies["arouter"]
+    kapt _rootDependencies["arouter_compiler"]
 
-    _logPrintDependencieModel(':module-Common')
-    implementation project(':module-Common')
+    implementation createProject(':module-Common')
     if (isHomeModule.toBoolean()) {
-        _logPrintDependencieModel(':module-Home')
-        implementation project(':module-Home')
+        implementation createProject(':module-Home')
     }
     if (isLoginModule.toBoolean()) {
-        _logPrintDependencieModel(':module-Login')
-        implementation project(':module-Login')
+        implementation createProject(':module-Login')
     }
 
-    _logPrintDependencieModel(':module-Demo')
-    implementation project(":module-Demo")
+    implementation createProject(":module-Demo")
 
-    _logPrintDependencieModel(':module-Web')
-    implementation project(":module-Web")
+    implementation createProject(":module-Web")
 
-    _logPrintDependencieModel(':module-Player')
-    implementation project(":module-Player")
+    implementation createProject(":module-Player")
+
+    implementation createProject(":module-Music")
 
     implementation project(':library-unittest')
 
@@ -245,6 +254,21 @@ dependencies {
 
 //    implementation rootProject.ext.dependencies["kangaroo"]
     implementation rootProject.ext.dependencies["xul_cache"]
+}
+
+/**
+ * 创建指定名称的module所在的Project对象
+ * 并输入日志打印
+ * @param moduleName
+ * @return Gradle project.
+ */
+Project createProject(String moduleName){
+    _logPrintDependencieModel(moduleName)
+    return project(moduleName)
+}
+
+def _logPrintDependencieModel(module_name){
+    logger.log(LogLevel.ERROR,"     +--- add ${module_name} to app.")
 }
 
 //

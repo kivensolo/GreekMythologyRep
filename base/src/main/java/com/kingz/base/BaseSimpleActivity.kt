@@ -65,7 +65,7 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
     /**
      * Init viewmodel
      */
-    open fun initViewModel() {}
+    abstract fun initViewModel()
 
     /**
      * Init data logic.
@@ -109,6 +109,8 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
             Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
         }
     }
+
+    fun getStringFromRes(id: Int): String = resources.getString(id)
 
     override fun onDestroy() {
         super.onDestroy()

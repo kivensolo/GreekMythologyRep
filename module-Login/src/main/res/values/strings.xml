@@ -11,4 +11,10 @@
     <string name="edit_username" translatable="false">username</string>
     <string name="edit_password" translatable="false">password</string>
     <string name="confirm_password" translatable="false">confirm password</string>
+
+
+    <string name="user_info_invalid_tips" translatable="false">请输入有效用户信息</string>
+    <string name="user_already_login_tips" translatable="false">存在本地缓存用户信息</string>
+
+
 </resources>

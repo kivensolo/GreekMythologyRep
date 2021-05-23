@@ -20,7 +20,6 @@ interface ISwitcher {
     fun switchFragment(@ButtomType type: Int)
 
     companion object {
-
         const val TYPE_VOD = 0
         const val TYPE_LIVE = 1
         const val TYPE_VIP = 2

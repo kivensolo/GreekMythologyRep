@@ -1,4 +1,4 @@
-apply from: '../../config.gradle'
+apply from: '../../buildsystem/config.gradle'
 apply plugin: 'com.android.library'
 
 android {

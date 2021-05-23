@@ -1,0 +1,47 @@
+
+/**
+ * Clear local plugin cache dir.
+ * @param version  cache local verison.
+ * @return last line
+ */
+static def clearPluginCache(groupId, artifactId, version){
+    def path = "${getGradleUserHome()}\\caches\\modules-2\\files-2.1\\${groupId}\\${artifactId}\\${version}"
+    def gradleCacheFile = new File(path)
+    if(gradleCacheFile.exists()){
+        gradleCacheFile.deleteDir()
+    }
+}
+
+/**
+ * get Gradle-Home path.
+ * @return
+ */
+static def getGradleUserHome(){
+    def DEFAULT_GRADLE_USER_HOME = System.getProperty("user.home") + "/.gradle"
+    def GRADLE_USER_HOME_PROPERTY_KEY = "gradle.user.home"
+    def GRADLE_USER_HOME_ENV_KEY = "GRADLE_USER_HOME"
+
+    def gradleUserHome = System.getProperty(GRADLE_USER_HOME_PROPERTY_KEY)
+    if(gradleUserHome != null){
+        return gradleUserHome
+    }else{
+        gradleUserHome = System.getenv(GRADLE_USER_HOME_ENV_KEY)
+        if(gradleUserHome != null){
+            return gradleUserHome
+        }else{
+            DEFAULT_GRADLE_USER_HOME
+        }
+    }
+}
+
+/**
+ * 获取编译时间
+ * @return 时间值
+ */
+static def releaseTime() {
+    return new Date().format("yyyy-MM-dd_HH-mm").toString()
+}
+
+
+ext.clearPluginCacheByVerison = this.&clearPluginCache
+ext.releaseTime = this.&releaseTime

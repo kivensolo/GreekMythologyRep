@@ -1,0 +1,117 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:viewBindingIgnore="true">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- 简介部分 -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/size_8dp"
+                android:paddingRight="@dimen/size_8dp"
+                android:paddingTop="@dimen/size_6dp">
+
+                <!--影片名称  评分-->
+                <TextView
+                    android:id="@+id/tv_name_video"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginEnd="8dp"
+                    android:layout_toStartOf="@id/arrow_down"
+                    android:gravity="start|center_vertical"
+                    android:textColor="@color/text_dark"
+                    android:textSize="@dimen/sp_24"
+                    android:textStyle="bold"
+                    tools:text="复仇者联盟" />
+                <!-- 向下箭头 -->
+                <ImageView
+                    android:id="@+id/arrow_down"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:padding="@dimen/size_8dp"
+                    android:src="@drawable/ic_arrow_down" />
+
+                <!--更新到多少期-->
+                <TextView
+                    android:id="@+id/tv_episode_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_name_video"
+                    android:layout_marginTop="3dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textColor="#a5a4a4"
+                    android:textSize="@dimen/sp_14"
+                    tools:text="更新至14集/20集全" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="4dp"
+                android:background="@color/colorAccent"
+                android:paddingLeft="@dimen/size_10dp"
+                android:paddingRight="@dimen/size_10dp" />
+
+            <!-- 导演 演员 -->
+            <TextView
+                android:id="@+id/tv_director"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/size_8dp"
+                android:paddingRight="@dimen/size_8dp"
+                android:textColor="@color/text_dark"
+                android:textSize="@dimen/sp_18"
+                android:textStyle="bold"
+                tools:text="3333333333" />
+
+            <TextView
+                android:id="@+id/tv_actor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_2dp"
+                android:paddingLeft="@dimen/size_8dp"
+                android:paddingRight="@dimen/size_8dp"
+                android:textColor="@color/text_dark"
+                android:textSize="@dimen/sp_18"
+                android:textStyle="bold"
+                tools:text="22222222222" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/size_4dp"
+                android:layout_marginTop="@dimen/size_4dp"
+                android:background="@color/colorAccent"
+                android:paddingLeft="@dimen/size_10dp"
+                android:paddingRight="@dimen/size_10dp" />
+
+            <!-- 视频简介-->
+            <TextView
+                android:id="@+id/video_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/size_18dp"
+                android:paddingLeft="@dimen/size_8dp"
+                android:paddingRight="@dimen/size_8dp"
+                android:textColor="@color/text_dark"
+                android:textSize="@dimen/sp_18"
+                tools:text="11111111111111111111222222222222222222222222222222222222222222222222333333333333333333333333333333333333333333333333" />
+        </LinearLayout>
+
+    </ScrollView>
+</RelativeLayout>

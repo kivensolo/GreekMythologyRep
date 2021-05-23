@@ -5,16 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
 import com.kingz.module.wanandroid.bean.UserInfoBean
-import com.kingz.module.wanandroid.repository.LoginDataSource
 import com.kingz.module.wanandroid.response.WanAndroidResponse
 import com.kingz.module.wanandroid.viewmodel.WanAndroidViewModelV2
 import com.zeke.kangaroo.utils.ZLog
 
 class LoginViewModel : WanAndroidViewModelV2() {
-
-    override val remoteDataSource by lazy {
-        LoginDataSource(this)
-    }
 
     // 这种写法就是把LiveData暴露在ViewModel中，而不是放在repository中
     val loginInfoData: MutableLiveData<UserInfoBean> by lazy {

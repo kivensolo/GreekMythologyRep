@@ -18,14 +18,14 @@
             app:layout_constraintVertical_bias="0.666" />
 
     <Button
-            android:id="@+id/play_player"
-            style="@style/demo_btn_style"
-            android:layout_marginStart="12dp"
-            android:text="@string/demo_label_paly"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/full_btn"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.661" />
+        android:id="@+id/play_player"
+        style="@style/demo_btn_style"
+        android:layout_marginStart="12dp"
+        android:text="@string/demo_label_paly"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/full_btn"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.666" />
 
     <Button
             android:id="@+id/pause_player"
@@ -77,8 +77,8 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="PxUsage">
 
-        <FrameLayout
-            android:id="@+id/surface_wrapper"
+        <SurfaceView
+            android:id="@+id/surface_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:focusable="false"
@@ -89,7 +89,7 @@
             tools:layout_height="500px"
             tools:layout_width="800px" >
 
-        </FrameLayout>
+        </SurfaceView>
 
     </LinearLayout>
 

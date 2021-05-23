@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
  * deal below work :
  * [read/decode/compute/encode/send]
  */
-public class HttpServerHandler {
+public class HttpServerHandler implements ISelectableChannelHandler{
     private final NIOHttpServer _server;
     private final SocketChannel _socketChannel;
     private HttpRequestBuilder mRequestBuilder;
@@ -41,121 +41,6 @@ public class HttpServerHandler {
 
     SocketChannel getSocketChannel() {
         return _socketChannel;
-    }
-
-    /**
-     * 内部通知有数据可读取，执行以下流程：
-     * read ---> decode ---> compute
-     */
-    public void notifyReadable() throws IOException {
-        resetRequestBuffer();
-        //read bytes data from soketChannel.
-        int readBytes = _socketChannel.read(mRequestBuffer);
-
-        if (readBytes < 0) { // end is '-1'
-            if (mRequestBuilder == null) {
-                _socketChannel.close(); // close the channel
-                return;
-            }
-            if (mRequestBuilder.isFinished()) {
-                // wait for handling request
-                return;
-            }
-            // if request has no Content-Length, try to finish the request building
-            resetRequestBuffer();
-            HttpServerRequest xulHttpRequest = mRequestBuilder.buildRequest(mRequestBuffer, readBytes);
-            if (xulHttpRequest == null) {
-                // build request failed
-                _socketChannel.close();
-            } else {
-                _internalHandleHttpRequest(xulHttpRequest);
-            }
-            return;
-        }
-
-        if (mRequestBuilder == null) {
-            mRequestBuilder = new HttpRequestBuilder();
-        }
-        resetRequestBuffer();
-        HttpServerRequest xulHttpRequest = mRequestBuilder.buildRequest(mRequestBuffer, readBytes);
-        if (xulHttpRequest != null) {
-            _internalHandleHttpRequest(xulHttpRequest);
-        }
-    }
-
-    /**
-     * 内部通知有数据可写出，执行以下流程：
-     * encode ---> send
-     */
-    public void notifyWritable() throws IOException {
-        if (mResponseBuffer == null) {
-            return;
-        }
-        //send data to client with socketChannel.
-        final SocketChannel socketChannel = _socketChannel;
-        socketChannel.write(mResponseBuffer);
-        if (!mResponseBuffer.hasRemaining()) {
-            //没有剩余的buffer容量了
-            if (_response.hasUserBodyStream()) {
-                // Client has send body data.
-                final Selector selector = _server.getSelector();
-                final HttpServerHandler attachment = this;
-                socketChannel.register(selector, 0, attachment);
-                // Causes the first blocking selection operation return immediately.
-                selector.wakeup();
-                _server.getReactorPool().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-
-                            // 分块时以32个字节为起点
-                            int beginOffset = _sendChunkedData ? 32 : 0;
-                            // 分块时话以2字节为结束点
-                            int endOffset = _sendChunkedData ? 2 : 0;
-                            // 分块的话,一个块8KB?
-                            int sizeLimit = _sendChunkedData ? 8192 : -1;
-                            if (_response == null || !_response.prepareUserBodyData(beginOffset, endOffset, sizeLimit)) {
-                                terminate();
-                                return;
-                            }
-                            int dataSize = _response.getDataSize();
-                            //if response output data <= 0.
-                            if (dataSize <= 0) {
-                                if (_sendChunkedData) {
-                                    _response.writeStream(null);
-                                    mResponseBuffer = ByteBuffer.wrap("0\r\n\r\n".getBytes());
-                                } else {
-                                    terminate();
-                                    return;
-                                }
-                            } else {
-                                // get output data.
-                                byte[] data = _response.getData();
-                                // TODO 看不懂分块的逻辑
-                                if (_sendChunkedData) {
-                                    String dataLength = String.format("%X\r\n", dataSize);
-                                    final byte[] dataLengthBytes = dataLength.getBytes();
-                                    beginOffset -= dataLengthBytes.length;
-                                    System.arraycopy(dataLengthBytes, 0, data, beginOffset, dataLengthBytes.length);
-                                    dataSize += dataLengthBytes.length;
-                                    data[beginOffset + dataSize++] = '\r';
-                                    data[beginOffset + dataSize++] = '\n';
-                                }
-                                //wrap byte[] to buffer
-                                mResponseBuffer = ByteBuffer.wrap(data, beginOffset, dataSize);
-                            }
-                            socketChannel.register(selector, SelectionKey.OP_WRITE, attachment);
-                            selector.wakeup();
-                        } catch (ClosedChannelException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                });
-            } else {
-                socketChannel.close();
-            }
-        }
     }
 
     /**
@@ -222,7 +107,8 @@ public class HttpServerHandler {
     /**
      * Close socket channel and destory HttpServerResponse
      */
-    void terminate() {
+    @Override
+    public void terminate() {
         SocketChannel socketChannel = _socketChannel;
         try {
             if (socketChannel != null) {
@@ -232,6 +118,133 @@ public class HttpServerHandler {
             e.printStackTrace();
         }
         clear();
+    }
+
+    /**
+     * 内部通知有数据可写出，执行以下流程：
+     * encode ---> send
+     */
+    @Override
+    public void notifyWritable(long clock) {
+        if (mResponseBuffer == null) {
+            return;
+        }
+        try {
+            //send data to client with socketChannel.
+            final SocketChannel socketChannel = _socketChannel;
+            socketChannel.write(mResponseBuffer);
+            if (!mResponseBuffer.hasRemaining()) {
+                //没有剩余的buffer容量了
+                if (_response.hasUserBodyStream()) {
+                    // Client has send body data.
+                    final Selector selector = _server.getSelector();
+                    final HttpServerHandler attachment = this;
+                    socketChannel.register(selector, 0, attachment);
+                    // Causes the first blocking selection operation return immediately.
+                    selector.wakeup();
+                    _server.getReactorPool().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                // 分块时以32个字节为起点
+                                int beginOffset = _sendChunkedData ? 32 : 0;
+                                // 分块时话以2字节为结束点
+                                int endOffset = _sendChunkedData ? 2 : 0;
+                                // 分块的话,一个块8KB?
+                                int sizeLimit = _sendChunkedData ? 8192 : -1;
+                                if (_response == null || !_response.prepareUserBodyData(beginOffset, endOffset, sizeLimit)) {
+                                    terminate();
+                                    return;
+                                }
+                                int dataSize = _response.getDataSize();
+                                //if response output data <= 0.
+                                if (dataSize <= 0) {
+                                    if (_sendChunkedData) {
+                                        _response.writeStream(null);
+                                        mResponseBuffer = ByteBuffer.wrap("0\r\n\r\n".getBytes());
+                                    } else {
+                                        terminate();
+                                        return;
+                                    }
+                                } else {
+                                    // get output data.
+                                    byte[] data = _response.getData();
+                                    // TODO 看不懂分块的逻辑
+                                    if (_sendChunkedData) {
+                                        String dataLength = String.format("%X\r\n", dataSize);
+                                        final byte[] dataLengthBytes = dataLength.getBytes();
+                                        beginOffset -= dataLengthBytes.length;
+                                        System.arraycopy(dataLengthBytes, 0, data, beginOffset, dataLengthBytes.length);
+                                        dataSize += dataLengthBytes.length;
+                                        data[beginOffset + dataSize++] = '\r';
+                                        data[beginOffset + dataSize++] = '\n';
+                                    }
+                                    //wrap byte[] to buffer
+                                    mResponseBuffer = ByteBuffer.wrap(data, beginOffset, dataSize);
+                                }
+                                socketChannel.register(selector, SelectionKey.OP_WRITE, attachment);
+                                selector.wakeup();
+                            } catch (ClosedChannelException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    });
+                } else {
+                    socketChannel.close();
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 内部通知有数据可读取，执行以下流程：
+     * read ---> decode ---> compute
+     */
+    @Override
+    public void notifyReadable(long clock) {
+        resetRequestBuffer();
+        try {
+
+            //read bytes data from soketChannel.
+            int readBytes = 0;
+            readBytes = _socketChannel.read(mRequestBuffer);
+
+            if (readBytes < 0) { // end is '-1'
+                if (mRequestBuilder == null) {
+                    _socketChannel.close(); // close the channel
+                    return;
+                }
+                if (mRequestBuilder.isFinished()) {
+                    // wait for handling request
+                    return;
+                }
+                // if request has no Content-Length, try to finish the request building
+                resetRequestBuffer();
+                HttpServerRequest xulHttpRequest = mRequestBuilder.buildRequest(mRequestBuffer, readBytes);
+                if (xulHttpRequest == null) {
+                    // build request failed
+                    _socketChannel.close();
+                } else {
+                    _internalHandleHttpRequest(xulHttpRequest);
+                }
+                return;
+            }
+
+            if (mRequestBuilder == null) {
+                mRequestBuilder = new HttpRequestBuilder();
+            }
+            resetRequestBuffer();
+            HttpServerRequest xulHttpRequest = mRequestBuilder.buildRequest(mRequestBuffer, readBytes);
+            if (xulHttpRequest != null) {
+                _internalHandleHttpRequest(xulHttpRequest);
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void clear() {

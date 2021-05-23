@@ -5,10 +5,13 @@ import android.app.Instrumentation
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.os.Handler
+import android.os.Message
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import androidx.activity.viewModels
+import androidx.annotation.ColorInt
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -19,13 +22,16 @@ import com.kingz.base.BaseVMActivity
 import com.kingz.base.factory.ViewModelFactory
 import com.kingz.database.entity.BaseEntity
 import com.kingz.module.common.base.BaseFragment
+import com.kingz.module.common.ext.startActivity
 import com.kingz.module.common.router.RPath
+import com.kingz.module.common.router.Router
 import com.kingz.module.common.utils.RandomUtils
 import com.kingz.module.home.BuildConfig
 import com.kingz.module.home.R
 import com.kingz.module.wanandroid.WADConstants
 import com.kingz.module.wanandroid.activity.AppBarActivity
 import com.module.slide.SuperSlidingPaneLayout
+import com.module.tools.ColorUtils
 import com.zeke.home.fragments.home.HomeContainerFragment
 import com.zeke.home.fragments.home.HomeLiveFragment
 import com.zeke.home.model.HomeSongModel
@@ -44,8 +50,7 @@ import java.lang.String
  * 首页
  */
 @Route(path = RPath.PAGE_MAIN)
-class HomeActivity : BaseVMActivity(),
-    ISwitcher {
+class HomeActivity : BaseVMActivity(),ISwitcher {
 
     private lateinit var homeVodFragment: HomeContainerFragment
     private lateinit var homeLiveFragment: HomeLiveFragment
@@ -53,6 +58,20 @@ class HomeActivity : BaseVMActivity(),
     private lateinit var panelSlidelLsr: HomePanelSlidelLsr
     private var menuPanel: View? = null
 
+    private var mIsDoubleClieckLogout= false
+    private val MSG_CLICK_LOGOUT_PASS = 0x0001
+    private var mHandler:Handler = Handler(object : Handler.Callback {
+        override fun handleMessage(msg: Message?): Boolean {
+            when(msg!!.what){
+                MSG_CLICK_LOGOUT_PASS -> {
+                    mIsDoubleClieckLogout = false
+                    return true
+                }
+            }
+            return false
+        }
+
+    })
 
     override val viewModel: HomeViewModel by viewModels {
         ViewModelFactory.build { HomeViewModel() }
@@ -71,11 +90,25 @@ class HomeActivity : BaseVMActivity(),
 
     private fun initSlideMenuView() {
         tvCollect?.setOnClickListener {
-            val bundle = Bundle()
-            bundle.putInt(WADConstants.Key.KEY_FRAGEMTN_TYPE, WADConstants.Type.TYPE_TAB_COLLECT)
-            val putExtras = Intent().putExtras(bundle)
-            putExtras.setClass(this, AppBarActivity::class.java)
-            startActivity(putExtras)
+            startActivity<AppBarActivity> {
+                val bundle = Bundle()
+                bundle.putInt(WADConstants.Key.KEY_FRAGEMTN_TYPE,
+                    WADConstants.Type.TYPE_TAB_COLLECT)
+                it.putExtras(bundle)
+            }
+        }
+
+        tvLogout?.setOnClickListener {
+            if (mIsDoubleClieckLogout) {
+                mIsDoubleClieckLogout = false
+                launchIO { viewModel.userLogout() }
+                return@setOnClickListener
+            }
+            showToast(getStringFromRes(R.string.logout_confirm_tips))
+            mIsDoubleClieckLogout = true
+            val msg = Message.obtain()
+            msg.what = MSG_CLICK_LOGOUT_PASS
+            mHandler.sendMessageDelayed(msg, 2 * 1000)
         }
     }
 
@@ -128,12 +161,18 @@ class HomeActivity : BaseVMActivity(),
         viewModel.userInfoLiveData.observe(this, Observer {
             ZLog.d("userInfoLiveData onChanged: $it")
             if (it == null) {
-                tvLogout.visibility = View.INVISIBLE
+                Router.startActivity(RPath.PAGE_LOGIN)
+                finish()
                 return@Observer
             }
             tvUser.text = it.username
             tvLogout.visibility = View.VISIBLE
         })
+    }
+
+    override fun onDestroy() {
+        mHandler.removeCallbacksAndMessages(null)
+        super.onDestroy()
     }
 
     /**
@@ -162,14 +201,17 @@ class HomeActivity : BaseVMActivity(),
         }
     }
 
-    override fun switchFragment(@ISwitcher.ButtomType position: Int) {
-        when (position) {
+    override fun switchFragment(@ISwitcher.ButtomType type: Int) {
+        when (type) {
             ISwitcher.TYPE_VOD -> {
                 ZLog.d("switchFragment:" + BitmapUtils.native_get_Hello())
                 fragmentsChange(homeVodFragment, homeLiveFragment as BaseFragment)
             }
             ISwitcher.TYPE_LIVE -> fragmentsChange(homeLiveFragment, homeVodFragment as BaseFragment)
-            ISwitcher.TYPE_VIP -> fragmentsChange(null, homeVodFragment as BaseFragment)
+            ISwitcher.TYPE_VIP -> {
+//                setNavigationBarColor(resources.getColor(R.color.google_red))
+                fragmentsChange(null, homeVodFragment as BaseFragment)
+            }
             ISwitcher.TYPE_MINE -> fragmentsChange(null, homeVodFragment as BaseFragment)
         }//fragmentsChage(homeLiveFragment,homeVodFragment,homeVipFragment,homeMineFragment);
         //                fragmentsChage(homeVipFragment,homeVodFragment,homeLiveFragment,homeMineFragment);
@@ -216,9 +258,7 @@ class HomeActivity : BaseVMActivity(),
     }
 
     private fun clickVersion(isClick: Boolean) {
-        if (isClick) {
-            addHeart(1)
-        }
+        if (isClick) { addHeart(1) }
     }
 
     inner class HomePanelSlidelLsr : SuperSlidingPaneLayout.SimplePanelSlideListener() {
@@ -229,7 +269,7 @@ class HomeActivity : BaseVMActivity(),
     }
 
     private fun addHeart(count: Int) {
-        for (i in 0 until count) {
+        repeat(count) {
             flutteringLayout.addHeart()
         }
     }
@@ -255,6 +295,20 @@ class HomeActivity : BaseVMActivity(),
             .navigationBarColor(R.color.colorPrimary)
 //            .hideBar(BarHide.FLAG_HIDE_BAR)
             .init()
+    }
+
+    /**
+     * 测试修改导航栏效果
+     */
+    private fun setNavigationBarColor(@ColorInt color:Int){
+        val barParams = ImmersionBar.with(this).barParams
+        if(!barParams.hideNavigationBar){
+            window.navigationBarColor = ColorUtils.blendARGB(
+                color,
+                barParams.navigationBarColorTransform,
+                barParams.navigationBarAlpha
+            )
+        }
     }
 }
 
