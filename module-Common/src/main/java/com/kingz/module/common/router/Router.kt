@@ -1,8 +1,11 @@
 package com.kingz.module.common.router
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.TextUtils
 import com.alibaba.android.arouter.launcher.ARouter
+import com.kingz.module.common.R
+
 
 /**
  * ARouter跳转工具类
@@ -14,10 +17,14 @@ object Router {
         ARouter.getInstance().build(url).navigation()
     }
 
-    fun startActivity(url: String, bundle: Bundle) {
+    @SuppressLint("ObsoleteSdkInt")
+    fun startActivity(url: String, bundle: Bundle, anim:Boolean = true) {
         if (TextUtils.isEmpty(url)) return
-        // Jump with parameters
-        ARouter.getInstance().build(url).with(bundle).navigation()
+        val postCard = ARouter.getInstance().build(url)
+        if(anim){
+            postCard.withTransition(R.anim.zoom_enter,R.anim.zoom_exit)
+        }
+        postCard.with(bundle).navigation()
     }
 
     fun startActivityWithGreen(url: String) {
