@@ -6,6 +6,7 @@ import com.kingz.database.DatabaseApplication
 import com.kingz.database.entity.CookiesEntity
 import com.kingz.database.entity.UserEntity
 import com.kingz.module.common.user.UserInfo
+import com.kingz.module.wanandroid.api.EyepetizerApiService
 import com.kingz.module.wanandroid.api.WanAndroidApiService
 import com.kingz.module.wanandroid.bean.*
 import com.kingz.module.wanandroid.response.WanAndroidResponse
@@ -25,7 +26,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 /**
  * author：ZekeWang
  * date：2021/3/5
- * description： 玩Android的DataSource
+ * description：
+ *  DataSource
  *  Repository的概念分为remote-DataSource和local-DataSource
  */
 open class WanAndroidRemoteDataSource(iActionEvent: IUIActionEvent?)
@@ -218,4 +220,28 @@ class HomeDataSource(iActionEvent: IUIActionEvent?) : WanAndroidRemoteDataSource
         ZLog.d("get Banner ---> ")
         return apiService.bannerData()
     }
+}
+
+/**
+ * 开眼视频远程数据源
+ */
+open class EyepetizerRemoteDataSource(iActionEvent: IUIActionEvent?)
+    : RemoteExtendDataSource<EyepetizerApiService>(
+    iActionEvent = iActionEvent,
+    apiServiceClass = EyepetizerApiService::class.java
+){
+    override val baseUrl: String = "http://baobab.kaiyanapp.com"
+
+    open var apiService = getApiService(baseUrl)
+
+    override fun showToast(msg: String) {
+    }
+
+    /**
+     * 获取分类列表
+     */
+    suspend fun getTabList(): EyepetizerTabListInfo {
+        return apiService.requestTabList()
+    }
+
 }

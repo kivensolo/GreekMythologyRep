@@ -11,6 +11,12 @@ import com.zeke.reactivehttp.base.BaseReactiveViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
+/**
+ * 生命周期顺序为：
+ *  onCreateView()
+ *  |--> onCreateView (自定义: onCreateViewReady)
+ *  \--->onViewCreated
+ */
 abstract class BaseVMFragment< T : BaseReactiveViewModel>
     : BaseLazyFragment() {
 

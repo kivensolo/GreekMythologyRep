@@ -19,8 +19,8 @@ class MainBottomController(private val rootView: View) : View.OnClickListener {
     private var liveImg: ImageView? = null
     private var liveTxt: TextView? = null
     private var vipLayout: View? = null
-    private var vipImg: ImageView? = null
-    private var vipTxt: TextView? = null
+    private var eyepetizerImg: ImageView? = null
+    private var eyepetizerTxt: TextView? = null
     private var mineLayout: View? = null
     private var mineImg: ImageView? = null
     private var mineTxt: TextView? = null
@@ -45,10 +45,10 @@ class MainBottomController(private val rootView: View) : View.OnClickListener {
         liveLayout!!.setOnClickListener(this)
         liveImg = rootView.findViewById(R.id.live_img)
         liveTxt = rootView.findViewById(R.id.live_text)
-        vipLayout = rootView.findViewById(R.id.bottom_vip_layout)
+        vipLayout = rootView.findViewById(R.id.bottom_eyepetizer)
         vipLayout!!.setOnClickListener(this)
-        vipImg = rootView.findViewById(R.id.vip_img)
-        vipTxt = rootView.findViewById(R.id.vip_text)
+        eyepetizerImg = rootView.findViewById(R.id.vip_img)
+        eyepetizerTxt = rootView.findViewById(R.id.eyepetizer_text)
         mineLayout = rootView.findViewById(R.id.bottom_mine_layout)
         mineLayout!!.setOnClickListener(this)
         mineImg = rootView.findViewById(R.id.mine_img)
@@ -62,7 +62,7 @@ class MainBottomController(private val rootView: View) : View.OnClickListener {
     private fun switchCheckState(@ButtomType position: Int) {
         vodTxt?.isEnabled = position == ISwitcher.TYPE_VOD
         liveTxt?.isEnabled = position == ISwitcher.TYPE_LIVE
-        vipTxt?.isEnabled = position == ISwitcher.TYPE_VIP
+        eyepetizerTxt?.isEnabled = position == ISwitcher.TYPE_EYEPETIZER
         mineTxt?.isEnabled = position == ISwitcher.TYPE_MINE
         when (position) {
             ISwitcher.TYPE_VOD -> {
@@ -77,7 +77,7 @@ class MainBottomController(private val rootView: View) : View.OnClickListener {
                     R.drawable.ic_vip_nor, R.drawable.ic_mine_nor
                 )
             }
-            ISwitcher.TYPE_VIP -> {
+            ISwitcher.TYPE_EYEPETIZER -> {
                 siwtchButtomUi(
                     R.drawable.ic_knowlege_nor, R.drawable.ic_live_nor,
                     R.drawable.ic_vip_sel, R.drawable.ic_mine_nor
@@ -95,7 +95,7 @@ class MainBottomController(private val rootView: View) : View.OnClickListener {
     private fun siwtchButtomUi(vod: Int, live: Int, vip: Int, mine: Int) {
         vodImg?.setImageResource(vod)
         liveImg?.setImageResource(live)
-        vipImg?.setImageResource(vip)
+        eyepetizerImg?.setImageResource(vip)
         mineImg?.setImageResource(mine)
     }
 
@@ -115,12 +115,12 @@ class MainBottomController(private val rootView: View) : View.OnClickListener {
                 }
                 currentPosition = ISwitcher.TYPE_LIVE
             }
-            R.id.bottom_vip_layout -> {
-                switchCheckState(ISwitcher.TYPE_VIP)
-                if (currentPosition != ISwitcher.TYPE_VIP && listener != null) {
-                    listener?.switchFragment(ISwitcher.TYPE_VIP)
+            R.id.bottom_eyepetizer -> {
+                switchCheckState(ISwitcher.TYPE_EYEPETIZER)
+                if (currentPosition != ISwitcher.TYPE_EYEPETIZER && listener != null) {
+                    listener?.switchFragment(ISwitcher.TYPE_EYEPETIZER)
                 }
-                currentPosition = ISwitcher.TYPE_VIP
+                currentPosition = ISwitcher.TYPE_EYEPETIZER
             }
             R.id.bottom_mine_layout -> {
                 switchCheckState(ISwitcher.TYPE_MINE)

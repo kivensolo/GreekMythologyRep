@@ -18,6 +18,10 @@ import com.zeke.reactivehttp.base.BaseReactiveViewModel
  * author：ZekeWang
  * date：2021/3/29
  * description： 业务Common层的Fragment
+ *
+ * -> initViewModel()
+ * --> initView()
+ *
  */
 abstract class CommonFragment<T : BaseReactiveViewModel> : BaseVMFragment<T>() {
 

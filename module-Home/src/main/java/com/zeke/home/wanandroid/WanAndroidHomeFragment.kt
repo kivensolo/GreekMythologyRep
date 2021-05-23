@@ -187,9 +187,7 @@ class WanAndroidHomeFragment : CommonFragment<WanAndroidViewModelV2>(),
      * 以懒加载方式加载
      */
     override fun lazyInit() {
-        initViewModel()
-        initView()
-
+        super.lazyInit()
         if(articleAdapter?.itemCount == 1){
             // 无数据时(只有1个HeadView), 才请求数据
             viewModel.getBanner()

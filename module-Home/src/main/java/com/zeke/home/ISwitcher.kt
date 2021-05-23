@@ -12,7 +12,7 @@ interface ISwitcher {
     @IntDef(
         TYPE_VOD,
         TYPE_LIVE,
-        TYPE_VIP,
+        TYPE_EYEPETIZER,
         TYPE_MINE
     )
     annotation class ButtomType
@@ -22,7 +22,7 @@ interface ISwitcher {
     companion object {
         const val TYPE_VOD = 0
         const val TYPE_LIVE = 1
-        const val TYPE_VIP = 2
+        const val TYPE_EYEPETIZER = 2
         const val TYPE_MINE = 3
     }
 }

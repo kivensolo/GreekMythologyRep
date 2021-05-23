@@ -14,7 +14,7 @@
     <ImageView
         android:id="@+id/iv_title_menu"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:src="@drawable/btn_menu_selector"
         android:layout_marginStart="@dimen/size_14dp"
         style="@style/OnClickStyle"/>

@@ -14,6 +14,7 @@ import androidx.activity.viewModels
 import androidx.annotation.ColorInt
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -21,7 +22,6 @@ import com.gyf.immersionbar.ImmersionBar
 import com.kingz.base.BaseVMActivity
 import com.kingz.base.factory.ViewModelFactory
 import com.kingz.database.entity.BaseEntity
-import com.kingz.module.common.base.BaseFragment
 import com.kingz.module.common.ext.startActivity
 import com.kingz.module.common.router.RPath
 import com.kingz.module.common.router.Router
@@ -32,13 +32,13 @@ import com.kingz.module.wanandroid.WADConstants
 import com.kingz.module.wanandroid.activity.AppBarActivity
 import com.module.slide.SuperSlidingPaneLayout
 import com.module.tools.ColorUtils
+import com.zeke.home.eyepetizer.fragemnts.EyepetizerContentFragment
 import com.zeke.home.fragments.home.HomeContainerFragment
 import com.zeke.home.fragments.home.HomeLiveFragment
 import com.zeke.home.model.HomeSongModel
 import com.zeke.home.service.NSDService
 import com.zeke.home.wanandroid.viewmodel.HomeViewModel
 import com.zeke.kangaroo.utils.ZLog
-import com.zeke.utils.BitmapUtils
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.slide_menu_layout.*
 import kotlinx.coroutines.Dispatchers
@@ -52,8 +52,12 @@ import java.lang.String
 @Route(path = RPath.PAGE_MAIN)
 class HomeActivity : BaseVMActivity(),ISwitcher {
 
-    private lateinit var homeVodFragment: HomeContainerFragment
+    // 知识专栏(玩Android、Demo等)
+    private lateinit var homeKnowlegeFragment: HomeContainerFragment
+    // 视频直播
     private lateinit var homeLiveFragment: HomeLiveFragment
+    // 开眼视频
+    private lateinit var homeOpenEyeFragment: EyepetizerContentFragment
 
     private lateinit var panelSlidelLsr: HomePanelSlidelLsr
     private var menuPanel: View? = null
@@ -147,13 +151,15 @@ class HomeActivity : BaseVMActivity(),ISwitcher {
     private fun initFragments() {
         val fragmentManager = supportFragmentManager
         val fragmentTS = fragmentManager.beginTransaction()
-        homeVodFragment = HomeContainerFragment()
+        homeKnowlegeFragment = HomeContainerFragment()
         homeLiveFragment = HomeLiveFragment()
-        fragmentTS.add(R.id.content, homeVodFragment)
-            .show(homeVodFragment)
-        fragmentTS.add(R.id.content, homeLiveFragment)
-            .hide(homeLiveFragment)
-        fragmentTS.commit()
+        homeOpenEyeFragment = EyepetizerContentFragment()
+        fragmentTS.apply {
+            add(R.id.content, homeKnowlegeFragment).show(homeKnowlegeFragment)
+            add(R.id.content, homeLiveFragment).hide(homeLiveFragment)
+            add(R.id.content, homeOpenEyeFragment).hide(homeOpenEyeFragment)
+            commit()
+        }
     }
 
     override fun initViewModel() {
@@ -202,30 +208,47 @@ class HomeActivity : BaseVMActivity(),ISwitcher {
     }
 
     override fun switchFragment(@ISwitcher.ButtomType type: Int) {
+        ZLog.d("switchFragment:$type")
         when (type) {
             ISwitcher.TYPE_VOD -> {
-                ZLog.d("switchFragment:" + BitmapUtils.native_get_Hello())
-                fragmentsChange(homeVodFragment, homeLiveFragment as BaseFragment)
+//                ZLog.d("switchFragment:" + BitmapUtils.native_get_Hello())
+                fragmentsChange(homeKnowlegeFragment,
+                    homeLiveFragment,
+                    homeOpenEyeFragment)
             }
-            ISwitcher.TYPE_LIVE -> fragmentsChange(homeLiveFragment, homeVodFragment as BaseFragment)
-            ISwitcher.TYPE_VIP -> {
+            ISwitcher.TYPE_LIVE -> {
+                fragmentsChange(homeLiveFragment,
+                    homeKnowlegeFragment,
+                    homeOpenEyeFragment)
+            }
+            ISwitcher.TYPE_EYEPETIZER -> {
 //                setNavigationBarColor(resources.getColor(R.color.google_red))
-                fragmentsChange(null, homeVodFragment as BaseFragment)
+                fragmentsChange(homeOpenEyeFragment,
+                    homeKnowlegeFragment,
+                    homeLiveFragment)
             }
-            ISwitcher.TYPE_MINE -> fragmentsChange(null, homeVodFragment as BaseFragment)
+            ISwitcher.TYPE_MINE -> fragmentsChange(null,
+                homeKnowlegeFragment,
+                homeLiveFragment,
+                homeOpenEyeFragment)
         }//fragmentsChage(homeLiveFragment,homeVodFragment,homeVipFragment,homeMineFragment);
         //                fragmentsChage(homeVipFragment,homeVodFragment,homeLiveFragment,homeMineFragment);
         //                fragmentsChage(homeMineFragment,homeVodFragment,homeLiveFragment,homeVipFragment);
     }
 
-    private fun fragmentsChange(block: BaseFragment?, vararg none: BaseFragment) {
+    /**
+     * 切换fragment的显示
+     * @param show 需要进行显示的fragment
+     * @param hide 需要进行隐藏的fragment
+     */
+    private fun fragmentsChange(show: Fragment?, vararg hide: Fragment) {
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
-        for (fragment in none) {
+        for (fragment in hide) {
             fragmentTransaction.hide(fragment)
         }
-        if (block != null) {
-            fragmentTransaction.show(block)
+        if (show != null) {
+            fragmentTransaction.show(show)
         }
         fragmentTransaction.commit()
     }
@@ -292,7 +315,7 @@ class HomeActivity : BaseVMActivity(),ISwitcher {
     override fun initImmersionBar() {
         // Home页面设置Navigation消失无效
         ImmersionBar.with(this)
-            .navigationBarColor(R.color.colorPrimary)
+            .navigationBarColor(R.color.colorPrimaryDark)
 //            .hideBar(BarHide.FLAG_HIDE_BAR)
             .init()
     }

@@ -23,6 +23,7 @@
     <string name="user_error_tips" translatable="false">User Name Error!</string>
     <string name="bottom_knowlege" translatable="false">知识</string>
     <string name="bottom_live" translatable="false">直播</string>
+    <string name="eyepetizer" translatable="false">开眼视频</string>
     <string name="no_use" translatable="false">暂未开发</string>
 
     <!--MagicIndicatorDemo相关-->
