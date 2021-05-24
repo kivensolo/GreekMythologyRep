@@ -15,51 +15,46 @@
     <!--左侧滑动菜单区域-->
     <include layout="@layout/slide_menu_layout" />
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <!--
-            AppbarLayout就是一个竖直方向的LinearLayout,
-            只不过它添加了一些材料的概念和特性，可以定制子View的滑动
-            严重依赖于CoordinatorLayout，用于CoordinatorLayout 的直接子View-->
-        <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            tools:background="@color/colorPrimary"
-            app:elevation="0dp">
+<!--        &lt;!&ndash;-->
+<!--            AppbarLayout就是一个竖直方向的LinearLayout,-->
+<!--            只不过它添加了一些材料的概念和特性，可以定制子View的滑动-->
+<!--            严重依赖于CoordinatorLayout，用于CoordinatorLayout 的直接子View&ndash;&gt;-->
+<!--        <com.google.android.material.appbar.AppBarLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="vertical"-->
+<!--            tools:background="@color/colorPrimary"-->
+<!--            app:elevation="0dp">-->
 
-            <include layout="@layout/top_tool_bar" />
-        </com.google.android.material.appbar.AppBarLayout>
+<!--            <include layout="@layout/top_tool_bar" />-->
+<!--        </com.google.android.material.appbar.AppBarLayout>-->
 
         <!-- 内容区域-->
         <FrameLayout
             android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="?attr/actionBarSize"
-            android:background="@android:color/white"
-            android:contentDescription="@string/content_view_desc"/>
+            app:layout_constraintBottom_toTopOf="@+id/line"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-       <!-- <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/app_fab_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="25dp"
-            android:scaleType="center"
-            android:src="@drawable/ic_back_top"
-            android:visibility="invisible"
-            app:elevation="5dp"
-            app:layout_behavior="com.kingz.module.common.widgets.FloatingActionButtonBehavior"
-            app:pressedTranslationZ="@dimen/dp_8" />-->
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/gray"
+            app:layout_constraintBottom_toTopOf="@+id/main_bottom_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-        <!-- 底部Layout-->
         <include
             android:id="@+id/main_bottom_layout"
             layout="@layout/main_bottom_layout" />
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.module.slide.SuperSlidingPaneLayout>

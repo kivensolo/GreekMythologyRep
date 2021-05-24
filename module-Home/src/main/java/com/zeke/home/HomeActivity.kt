@@ -10,6 +10,7 @@ import android.os.Message
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
+import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.annotation.ColorInt
 import androidx.core.app.ActivityCompat
@@ -41,6 +42,7 @@ import com.zeke.home.service.NSDService
 import com.zeke.home.wanandroid.viewmodel.HomeViewModel
 import com.zeke.kangaroo.utils.ZLog
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.main_bottom_layout.*
 import kotlinx.android.synthetic.main.slide_menu_layout.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -61,7 +63,6 @@ class HomeActivity : BaseVMActivity(),ISwitcher {
     private lateinit var homeOpenEyeFragment: EyepetizerContentFragment
 
     private lateinit var panelSlidelLsr: HomePanelSlidelLsr
-    private var menuPanel: View? = null
 
     private var mIsDoubleClieckLogout= false
     private val MSG_CLICK_LOGOUT_PASS = 0x0001
@@ -86,15 +87,21 @@ class HomeActivity : BaseVMActivity(),ISwitcher {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
+
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+
         initFragments()
-        initBottom()
+
+        initBottomTab()
+
         initSlidingPaneLayout()
-//        initBannerView()
+
         initSlideMenuView()
+
+//        requestPermission()
     }
 
     private fun initSlideMenuView() {
-
         ivLogo?.setOnClickListener {
             val result = PermissionUtils.verifyReadAndWritePermissions(this, 0)
             //TODO 进行本地图片选择或者跳转
@@ -124,13 +131,10 @@ class HomeActivity : BaseVMActivity(),ISwitcher {
         }
     }
 
-//    private fun initBannerView() {
-//        banner?.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE)
-//        banner?.setImageLoader(BannerGlideImageLoader())
-//        banner?.setOnBannerListener { position ->
-//            //进行web页面跳转
-//        }
-//    }
+    //动态申请【外部目录读写权限】
+    private fun requestPermission() {
+        PermissionUtils.requestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    }
 
     private fun initSlidingPaneLayout() {
         panelSlidelLsr = HomePanelSlidelLsr()
@@ -157,17 +161,22 @@ class HomeActivity : BaseVMActivity(),ISwitcher {
      * 初始化首页的Fragment
      */
     private fun initFragments() {
-        val fragmentManager = supportFragmentManager
-        val fragmentTS = fragmentManager.beginTransaction()
         homeKnowlegeFragment = HomeContainerFragment()
         homeLiveFragment = HomeLiveFragment()
         homeOpenEyeFragment = EyepetizerContentFragment()
-        fragmentTS.apply {
-            add(R.id.content, homeKnowlegeFragment).show(homeKnowlegeFragment)
-            add(R.id.content, homeLiveFragment).hide(homeLiveFragment)
-            add(R.id.content, homeOpenEyeFragment).hide(homeOpenEyeFragment)
+
+        with(supportFragmentManager.beginTransaction()){
+            add(R.id.content, homeKnowlegeFragment)
+            add(R.id.content, homeLiveFragment)
+            add(R.id.content, homeOpenEyeFragment)
             commit()
         }
+
+        supportFragmentManager.beginTransaction()
+            .show(homeKnowlegeFragment)
+            .hide(homeLiveFragment)
+            .hide(homeOpenEyeFragment)
+            .commit()
     }
 
     override fun initViewModel() {
@@ -189,12 +198,16 @@ class HomeActivity : BaseVMActivity(),ISwitcher {
         super.onDestroy()
     }
 
-    /**
-     * 初始化底部相关
-     */
-    private fun initBottom() {
-        val bottomController = MainBottomController(findViewById<View>(R.id.main_bottom_layout))
-        bottomController.setListener(this)
+    private fun initBottomTab() {
+        //默认选中页
+        tabKnowlegaPage.isChecked = true
+        tabKnowlegaPage.setTextColor(ContextCompat.getColor(this, R.color.white))
+
+        tabKnowlegaPage.setOnClickListener(this)
+        tabLive.setOnClickListener(this)
+        tabPublish.setOnClickListener(this)
+        tabEyetizer.setOnClickListener(this)
+        tabMine.setOnClickListener(this)
     }
 
     private fun permissionCheck() {
@@ -217,38 +230,42 @@ class HomeActivity : BaseVMActivity(),ISwitcher {
 
     override fun switchFragment(@ISwitcher.ButtomType type: Int) {
         ZLog.d("switchFragment:$type")
+        resetTabState()
         when (type) {
-            ISwitcher.TYPE_VOD -> {
+            ISwitcher.TYPE_KNOWLEGA -> {
 //                ZLog.d("switchFragment:" + BitmapUtils.native_get_Hello())
-                fragmentsChange(homeKnowlegeFragment,
+                tabKnowlegaPage.setTextColor(ContextCompat.getColor(this, R.color.white))
+                fragmentsChange(
+                    homeKnowlegeFragment,
                     homeLiveFragment,
-                    homeOpenEyeFragment)
+                    homeOpenEyeFragment
+                )
             }
             ISwitcher.TYPE_LIVE -> {
-                fragmentsChange(homeLiveFragment,
+                tabLive.setTextColor(ContextCompat.getColor(this, R.color.white))
+                fragmentsChange(
+                    homeLiveFragment,
                     homeKnowlegeFragment,
-                    homeOpenEyeFragment)
+                    homeOpenEyeFragment
+                )
             }
             ISwitcher.TYPE_EYEPETIZER -> {
-//                setNavigationBarColor(resources.getColor(R.color.google_red))
-                fragmentsChange(homeOpenEyeFragment,
+                //setNavigationBarColor(resources.getColor(R.color.google_red))
+                fragmentsChange(
+                    homeOpenEyeFragment,
                     homeKnowlegeFragment,
-                    homeLiveFragment)
+                    homeLiveFragment
+                )
             }
-            ISwitcher.TYPE_MINE -> fragmentsChange(null,
+            ISwitcher.TYPE_MINE -> fragmentsChange(
+                null,
                 homeKnowlegeFragment,
                 homeLiveFragment,
-                homeOpenEyeFragment)
-        }//fragmentsChage(homeLiveFragment,homeVodFragment,homeVipFragment,homeMineFragment);
-        //                fragmentsChage(homeVipFragment,homeVodFragment,homeLiveFragment,homeMineFragment);
-        //                fragmentsChage(homeMineFragment,homeVodFragment,homeLiveFragment,homeVipFragment);
+                homeOpenEyeFragment
+            )
+        }
     }
 
-    /**
-     * 切换fragment的显示
-     * @param show 需要进行显示的fragment
-     * @param hide 需要进行隐藏的fragment
-     */
     private fun fragmentsChange(show: Fragment?, vararg hide: Fragment) {
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
@@ -269,9 +286,10 @@ class HomeActivity : BaseVMActivity(),ISwitcher {
         startActivity(intent)
     }
 
-    fun OnClick(view: View?) {
-        ZLog.d("OnClick view_id=" + view?.id)
-        when (view?.id) {
+    override fun onClick(v: View?) {
+        ZLog.d("OnClick view_id=" + v?.id)
+        when (v?.id) {
+            // ----- 老AppBarLayout
             R.id.iv_title_menu -> {
                 if (slidPanelLayout?.isOpen == true) {
                     slidPanelLayout?.closePane()
@@ -282,10 +300,26 @@ class HomeActivity : BaseVMActivity(),ISwitcher {
             R.id.iv_toolbar_right -> {
                 //TODO 进行搜索页跳转
             }
+            // ----- 老AppBarLayout
+
             R.id.tvVersion -> {
                 clickVersion(true)
             }
+
+            // ---- 新版Buttom
+            R.id.tabKnowlegaPage -> switchFragment(ISwitcher.TYPE_KNOWLEGA)
+            R.id.tabLive -> switchFragment(ISwitcher.TYPE_LIVE)
+            R.id.tabEyetizer -> switchFragment(ISwitcher.TYPE_EYEPETIZER)
+            R.id.tabMine -> switchFragment(ISwitcher.TYPE_MINE)
         }
+    }
+
+    private fun resetTabState() {
+        val unselectedColor = ContextCompat.getColor(this, R.color.color_divider)
+        tabKnowlegaPage.setTextColor(unselectedColor)
+        tabLive.setTextColor(unselectedColor)
+        tabEyetizer.setTextColor(unselectedColor)
+        tabMine.setTextColor(unselectedColor)
     }
 
     private fun clickVersion(isClick: Boolean) {

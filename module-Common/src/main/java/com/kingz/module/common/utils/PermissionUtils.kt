@@ -47,7 +47,9 @@ class PermissionUtils private constructor() {
         fun checkPermission(context: Context, permission: String): Int {
             return ActivityCompat.checkSelfPermission(context, permission)
         }
+
         fun requestPermission(vararg permissions: String?) {}
+
         /**
          * 验证有无读写权限
          * @param activity
