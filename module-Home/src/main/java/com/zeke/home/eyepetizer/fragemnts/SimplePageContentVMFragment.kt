@@ -5,22 +5,25 @@ import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.kingz.base.BaseVMFragment
 import com.kingz.base.factory.ViewModelFactory
 import com.kingz.module.common.bean.MediaParams
 import com.kingz.module.common.router.RPath
 import com.kingz.module.common.router.Router
+import com.kingz.module.github.bean.EyepetizerTabListInfo
 import com.kingz.module.home.R
+import com.kingz.module.wanandroid.fragemnts.CommonFragment
 import com.kingz.module.wanandroid.viewmodel.EyepetizerViewModel
 import com.zeke.home.entity.Live
 import com.zeke.kangaroo.adapter.CommonRecyclerAdapter
+import com.zeke.kangaroo.utils.ZLog
 
 /**
  * author：KingZ
  * date：2019/12/29
  * description：开眼视频的简单内容Fragment
  */
-class SimplePageContentVMFragment : BaseVMFragment<EyepetizerViewModel>() {
+class SimplePageContentVMFragment(var tabInfo: EyepetizerTabListInfo.TabInfoBean.TabListBean) : CommonFragment<EyepetizerViewModel>() {
+
 
     private var mRecycleView: RecyclerView? = null
     var mRV: RVAdapter = RVAdapter()
@@ -34,15 +37,12 @@ class SimplePageContentVMFragment : BaseVMFragment<EyepetizerViewModel>() {
         initRecyclerView()
     }
 
-    override fun lazyInit() {
-        initView()
-        initViewModel()
-    }
-
     override fun initViewModel() {
         super.initViewModel()
-            //TODO 初始化VIewmodel
+        //TODO 初始化VIewmodel
+        ZLog.d("current page tabInfo=$tabInfo")
 //        viewModel.xxxx
+        //TODO
     }
 
     private fun initRecyclerView() {

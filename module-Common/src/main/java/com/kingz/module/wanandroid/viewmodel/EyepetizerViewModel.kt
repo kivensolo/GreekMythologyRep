@@ -3,7 +3,7 @@ package com.kingz.module.wanandroid.viewmodel
 import androidx.lifecycle.MutableLiveData
 import com.kingz.database.AppDatabase
 import com.kingz.module.common.CommonApp
-import com.kingz.module.wanandroid.bean.EyepetizerTabListInfo
+import com.kingz.module.github.bean.EyepetizerTabListInfo
 import com.kingz.module.wanandroid.repository.EyepetizerRemoteDataSource
 import com.zeke.kangaroo.utils.ZLog
 import com.zeke.reactivehttp.base.BaseReactiveViewModel

@@ -25,6 +25,7 @@ import com.kingz.database.entity.BaseEntity
 import com.kingz.module.common.ext.startActivity
 import com.kingz.module.common.router.RPath
 import com.kingz.module.common.router.Router
+import com.kingz.module.common.utils.PermissionUtils
 import com.kingz.module.common.utils.RandomUtils
 import com.kingz.module.home.BuildConfig
 import com.kingz.module.home.R
@@ -93,6 +94,13 @@ class HomeActivity : BaseVMActivity(),ISwitcher {
     }
 
     private fun initSlideMenuView() {
+
+        ivLogo?.setOnClickListener {
+            val result = PermissionUtils.verifyReadAndWritePermissions(this, 0)
+            //TODO 进行本地图片选择或者跳转
+            ZLog.d("verifyReadAndWritePermissions = $result")
+        }
+
         tvCollect?.setOnClickListener {
             startActivity<AppBarActivity> {
                 val bundle = Bundle()

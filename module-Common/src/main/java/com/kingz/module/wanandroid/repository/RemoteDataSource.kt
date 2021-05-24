@@ -6,6 +6,7 @@ import com.kingz.database.DatabaseApplication
 import com.kingz.database.entity.CookiesEntity
 import com.kingz.database.entity.UserEntity
 import com.kingz.module.common.user.UserInfo
+import com.kingz.module.github.bean.EyepetizerTabListInfo
 import com.kingz.module.wanandroid.api.EyepetizerApiService
 import com.kingz.module.wanandroid.api.WanAndroidApiService
 import com.kingz.module.wanandroid.bean.*

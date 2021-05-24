@@ -1,4 +1,4 @@
-package com.kingz.module.wanandroid.bean
+package com.kingz.module.github.bean
 
 /**
  * author: King.Z <br></br>
@@ -6,6 +6,8 @@ package com.kingz.module.wanandroid.bean
  * description: 开眼视频分类列表数据 <br></br>
  *
  * https://github.com/1136535305/Eyepetizer/wiki/%E5%BC%80%E7%9C%BC-API-%E6%8E%A5%E5%8F%A3%E5%88%86%E6%9E%90#tag5
+ *
+ *
  */
 class EyepetizerTabListInfo {
     /**
@@ -40,8 +42,11 @@ class EyepetizerTabListInfo {
         var tabList: List<TabListBean>? = null
 
         class TabListBean {
+            //栏目id
             var id = 0
+            //栏目名称
             var name: String = ""
+            //该栏目详情数据ApI接口Url
             var apiUrl: String = ""
             var tabType = 0
             var nameType = 0

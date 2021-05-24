@@ -10,9 +10,9 @@ import com.google.android.material.tabs.TabLayout
 import com.kingz.base.adapter.BasePagerAdapter
 import com.kingz.base.factory.ViewModelFactory
 import com.kingz.module.common.base.IRvScroller
+import com.kingz.module.github.bean.EyepetizerTabListInfo
+import com.kingz.module.github.bean.EyepetizerTabListInfo.TabInfoBean.TabListBean
 import com.kingz.module.home.R
-import com.kingz.module.wanandroid.bean.EyepetizerTabListInfo
-import com.kingz.module.wanandroid.bean.EyepetizerTabListInfo.TabInfoBean.TabListBean
 import com.kingz.module.wanandroid.fragemnts.CommonFragment
 import com.kingz.module.wanandroid.viewmodel.EyepetizerViewModel
 import com.zeke.kangaroo.utils.ZLog
@@ -80,7 +80,7 @@ class EyepetizerContentFragment : CommonFragment<EyepetizerViewModel>(), IRvScro
      * 根据具体数据创建对应页面的Fragment
      */
     fun createPageFragment(data: TabListBean, position: Int):Fragment?{
-        return SimplePageContentVMFragment()
+        return SimplePageContentVMFragment(data)
     }
 
     inner class PagerAdapter(fm: FragmentManager, creator: PagerFragCreator<TabListBean>):

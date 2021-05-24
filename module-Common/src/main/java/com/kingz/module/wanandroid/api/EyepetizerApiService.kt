@@ -1,7 +1,7 @@
 package com.kingz.module.wanandroid.api
 
 import com.kingz.base.BaseApiService
-import com.kingz.module.wanandroid.bean.EyepetizerTabListInfo
+import com.kingz.module.github.bean.EyepetizerTabListInfo
 import retrofit2.http.GET
 
 /**

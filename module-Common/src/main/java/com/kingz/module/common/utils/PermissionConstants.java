@@ -1,4 +1,4 @@
-package com.kingz.permission;
+package com.kingz.module.common.utils;
 
 import android.Manifest;
 import android.Manifest.permission;
