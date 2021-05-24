@@ -44,13 +44,8 @@ class EyepetizerContentFragment : CommonFragment<EyepetizerViewModel>(), IRvScro
 
         // tableLayout 与 ViewPager 绑定
         tableLayout?.apply {
-            tabMode = TabLayout.MODE_SCROLLABLE
             setPadding(0, 0, 0, 0)
             setupWithViewPager(viewPager)
-            setSelectedTabIndicatorColor(resources.getColor(R.color.hub_yellow))
-            val normalColor = resources.getColor(android.R.color.white)
-            val selectedColor = resources.getColor(R.color.hub_yellow)
-            setTabTextColors(normalColor, selectedColor)
             visibility = View.GONE
         }
 

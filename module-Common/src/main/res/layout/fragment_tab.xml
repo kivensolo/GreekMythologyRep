@@ -15,7 +15,7 @@
             android:background="@color/tab_bg"
             android:paddingStart="18dp"
             android:paddingEnd="18dp"
-            app:tabTextAppearance="@style/custom_tab_layout_style" />
+            app:tabTextAppearance="@style/custom_tab_layout_text_style" />
 
         <!--<ImageView
             android:id="@+id/tab_cover"

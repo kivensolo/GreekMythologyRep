@@ -52,9 +52,23 @@
         <item name="android:background">@color/transparent</item>
     </style>
 
-    <style name="custom_tab_layout_style" parent="AppBaseTheme">
+    <!--
+      TabLayout自定义样式
+        取消指示器:tabIndicatorHeight属性设置0dp，或者给tabSelectedTextColor属性设置透明
+        自身不支持改变指示器宽度，可百度查找解决方案
+        改变tab背景色：tabBackground
+    -->
+    <style name="custom_tab_layout_text_style" parent="AppTheme">
         <item name="textAllCaps">false</item>
         <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="app_tab_layout_style" parent="AppTheme">
+        <item name="tabBackground">@color/tab_bg</item>
+        <item name="tabTextColor">@color/white</item>
+        <item name="tabIndicatorColor">@color/hub_yellow</item>
+        <item name="tabSelectedTextColor">@color/hub_yellow</item>
+        <item name="tabMode">scrollable</item>
     </style>
 
      <!--  按钮圆形波纹效果，通过theme属性引入,
