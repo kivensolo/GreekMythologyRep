@@ -10,7 +10,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import com.gyf.immersionbar.ImmersionBar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -56,10 +55,10 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
      * Init immersion style bar.
      */
     open fun initImmersionBar() {
-        ImmersionBar.with(this)
-             //如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色
-            .statusBarDarkFont(true)
-            .init()
+//        ImmersionBar.with(this)
+////             //如果当前设备支持状态栏字体变色，会设置状态栏字体为黑色
+////            .statusBarDarkFont(true)
+////            .init()
     }
 
     /**

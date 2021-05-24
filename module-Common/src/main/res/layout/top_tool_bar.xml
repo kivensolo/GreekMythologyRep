@@ -10,7 +10,7 @@
     app:contentInsetStart="0dp"
     app:layout_scrollFlags="scroll|enterAlways"
     tools:layout_height="@dimen/size_40dp">
-
+<!--Deprecated-->
     <ImageView
         android:id="@+id/iv_title_menu"
         android:layout_width="wrap_content"

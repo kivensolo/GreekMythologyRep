@@ -1,12 +1,17 @@
 <resources>
     <!--
        API 21+的设备的应用基础主题。
-       在API 21+的设备上，这个主题设置会替换掉 res/values/styles.xml 和 res/values-v14/styles.xml
+       在API 21+的设备上，这个主题设置会替换掉
+        res/values/styles.xml 和 res/values-v14/styles.xml中的AppBaseTheme
     -->
     <style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- API 21 theme customizations can go here. -->
-        <item name="colorPrimary">@color/qianpurple</item>
-        <item name="colorPrimaryDark">@color/fruitpurple</item>
-        <item name="colorAccent">@color/skygreen</item>
+
+        <!--App Bar 的背景色-->
+        <item name="colorPrimary">@color/app_main_color</item>
+        <!-- status bar（状态栏）背景色 -->
+        <item name="colorPrimaryDark">@color/black</item>
+        <!-- 许多控件在选中状态或获取焦点状态下使用这个颜色 -->
+        <item name="colorAccent">@color/app_accent</item>
     </style>
 </resources>

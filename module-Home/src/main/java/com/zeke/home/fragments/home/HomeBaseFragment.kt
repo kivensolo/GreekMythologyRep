@@ -15,7 +15,14 @@ import com.zeke.home.entity.TemplatePageData
 /**
  * time: 2020-2-8 11:38
  * description：首页的几个Fragment的父类
- * 使用 TabLayout + viewPager + fragment 实现切页展示
+ * 使用
+ * |-----Toolbar-----|
+ * |    viewPager    |
+ * |                 |
+ * | loadStatusView  |
+ * |                 |
+ * |-----------------|
+ * 实现切页展示
  */
 abstract class HomeBaseFragment<T : IPresenter> : BaseFragment(), IView {
     lateinit var mPresenter: T
@@ -25,26 +32,31 @@ abstract class HomeBaseFragment<T : IPresenter> : BaseFragment(), IView {
     protected var currentFragment: Fragment? = null
     protected var viewPagerAdapter: HomePagerAdapter? = null
 
-    override fun getLayoutId(): Int {
-        return R.layout.fragment_tab
-    }
+    override fun getLayoutId(): Int = R.layout.fragment_tab
 
     override fun onViewCreated() {
         viewPagerAdapter = HomePagerAdapter(childFragmentManager, PageCreator())
         tableLayout = rootView?.findViewById(R.id.tab_layout)
-        tableLayout?.setPadding(0, 0, 0, 0)
-        tableLayout?.visibility = View.GONE
-
-//        coverView = rootView?.findViewById(R.id.tab_cover)
-
         viewPager = rootView?.findViewById(R.id.viewpager)
-        viewPager?.adapter = viewPagerAdapter
 
-        // tableLayout 与 ViewPager 绑定
-        tableLayout?.setupWithViewPager(viewPager)
+        // viewPager 初始化
+        with(viewPager!!){
+            adapter = viewPagerAdapter
+        }
 
+        //tabLayout 初始化
+        with(tableLayout!!){
+            visibility = View.GONE
+            //tableLayout 与 ViewPager 绑定
+            setupWithViewPager(viewPager)
+        }
         loadStatusView = rootView?.findViewById(R.id.load_status)
         loadStatusView?.showProgress()
+
+        val ivSearch: View? = rootView?.findViewById(R.id.ivSearch)
+        ivSearch?.setOnClickListener {
+//            SearchFragment().show(childFragmentManager, "searchFragment")
+        }
     }
 
     override val isShown: Boolean
@@ -63,6 +75,7 @@ abstract class HomeBaseFragment<T : IPresenter> : BaseFragment(), IView {
     override fun showError() {
         tableLayout?.visibility = View.GONE
         loadStatusView?.showError()
+        //TODO 增加点击重试逻辑
     }
 
     override fun showEmpty() {
@@ -72,14 +85,6 @@ abstract class HomeBaseFragment<T : IPresenter> : BaseFragment(), IView {
 
     override fun showMessage(tips: String) {
     }
-
-    fun notifyPagerAdapterDataChanged() {
-        if(viewPagerAdapter?.hasData()!!){
-            hideLoading()
-        }
-        viewPagerAdapter?.notifyDataSetChanged()
-    }
-
 
     /**
      * 根据具体数据创建对应页面的Fragment

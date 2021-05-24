@@ -12,7 +12,6 @@
     <color name="nav_unselected">@color/deep_gray</color>
     <color name="color_line_divider">@color/gray</color>
     <color name="color_pressed">@color/deep_gray</color>
-    <color name="colorPrimaryLight">@color/green_dark</color>
 
     <color name="text_gary_bkg">#14FFFFFF</color>
 

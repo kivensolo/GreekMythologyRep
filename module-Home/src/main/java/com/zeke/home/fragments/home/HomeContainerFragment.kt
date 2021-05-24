@@ -20,7 +20,6 @@ import com.zeke.home.wanandroid.WanAndroidHomeFragment
  */
 class HomeContainerFragment : HomeBaseFragment<RecomPresenter>(), RecomPageContract.View {
 
-
     companion object{
         // 目前支持的TYPE
         const val TYPE_WAN_ANDROID = "wanAndroid"
@@ -45,8 +44,8 @@ class HomeContainerFragment : HomeBaseFragment<RecomPresenter>(), RecomPageContr
             showEmpty()
             return
         }
+        hideLoading()
         viewPagerAdapter?.setData(data)
-        notifyPagerAdapterDataChanged()
     }
 
     /**

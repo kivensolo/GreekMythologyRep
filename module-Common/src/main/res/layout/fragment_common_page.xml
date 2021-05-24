@@ -45,12 +45,12 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/app_fab_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="47dp"
+        android:layout_height="47dp"
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="53dp"
-        android:scaleType="center"
+        android:scaleType="centerInside"
         android:src="@drawable/ic_back_top"
         android:visibility="invisible"
         app:elevation="5dp"

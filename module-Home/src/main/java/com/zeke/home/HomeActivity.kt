@@ -356,10 +356,10 @@ class HomeActivity : BaseVMActivity(),ISwitcher {
 
     override fun initImmersionBar() {
         // Home页面设置Navigation消失无效
-        ImmersionBar.with(this)
-            .navigationBarColor(R.color.colorPrimaryDark)
-//            .hideBar(BarHide.FLAG_HIDE_BAR)
-            .init()
+//        ImmersionBar.with(this)
+//            .hideBar(BarHide.FLAG_HIDE_STATUS_BAR)
+//            .navigationBarColor(R.color.colorPrimaryDark)
+//            .init()
     }
 
     /**

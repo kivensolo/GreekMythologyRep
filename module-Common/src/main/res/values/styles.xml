@@ -61,14 +61,15 @@
     <style name="custom_tab_layout_text_style" parent="AppTheme">
         <item name="textAllCaps">false</item>
         <item name="android:textSize">15sp</item>
+        <item name="android:maxLines">1</item>
     </style>
 
     <style name="app_tab_layout_style" parent="AppTheme">
-        <item name="tabBackground">@color/tab_bg</item>
         <item name="tabTextColor">@color/white</item>
         <item name="tabIndicatorColor">@color/hub_yellow</item>
         <item name="tabSelectedTextColor">@color/hub_yellow</item>
         <item name="tabMode">scrollable</item>
+        <item name="tabMaxWidth">@dimen/size_55dp</item>
     </style>
 
      <!--  按钮圆形波纹效果，通过theme属性引入,
