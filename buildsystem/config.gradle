@@ -5,7 +5,7 @@ ext {
     android = [compileSdkVersion: 28,
                buildToolsVersion: '28.0.3', //AGP 3.2.1以后默认最低28.0.3
                minSdkVersion    : 21,
-               targetSdkVersion : 22,
+               targetSdkVersion : 23,
                versionCode      : 1,
                versionName      : "1.0.0"]
 
@@ -167,15 +167,21 @@ ext {
             "glide_compiler"     : "com.github.bumptech.glide:compiler:$lib_versions.glide_c",
             "glide_okhttp3"      : "com.github.bumptech.glide:okhttp3-integration:${lib_versions.glide_okhttp}",
 
+            //retrofit2
+            "retrofit2"          : "com.squareup.retrofit2:retrofit:${lib_versions.rtf2}",
+            "retrofit2_gson"     : "com.squareup.retrofit2:converter-gson:${lib_versions.rtf2_2gson}",
+            "retrofit2_rxjava2"  : "com.squareup.retrofit2:adapter-rxjava2:${lib_versions.rtf2_adapter}",
+
+            //RxJava
+            "rxJava"  : "io.reactivex.rxjava2:rxjava:${lib_versions.rxJava}",
+            "rxandroid"  : "io.reactivex.rxjava2:rxandroid:${lib_versions.rxandroid}",
+
             //https://github.com/JessYanCoding/AndroidAutoSize
             "autosize"           : "me.jessyan:autosize:$lib_versions.autosize",
             "autoLayout"         : "com.zhy:autolayout:1.4.5",
 
             //https://github.com/square/leakcanary  https://square.github.io/leakcanary
             "leakcanary"         : "com.squareup.leakcanary:leakcanary-android:$lib_versions.leakcanary",
-
-            //https://github.com/yanzhenjie/AndPermission
-            "permissions"        : "com.yanzhenjie:permission:$lib_versions.permissions",
 
             // My lib
             "kangaroo"           : "com.github.zeke:kangaroo:1.0.6",
@@ -184,8 +190,11 @@ ext {
             //https://github.com/zhihu/Matisse   本地图像和视频选择器
             matisse              : "com.zhihu.android:matisse:0.5.2-beta3",
 
-            //动态权限申请库  https://github.com/getActivity/XXPermissions
-            xxPermissions        :"com.github.getActivity:XXPermissions:$lib_versions.xxPermissions",
+            //动态权限申请库
+            // https://github.com/yanzhenjie/AndPermission
+            "andPermissions"       : "com.yanzhenjie:permission:$lib_versions.permissions",
+            // https://github.com/getActivity/XXPermissions
+            "xxPermissions"        :"com.github.getActivity:XXPermissions:$lib_versions.xxPermissions",
 
             // <-------------- 一个不错的浸式状态栏和沉浸式导航栏管理库 --------- https://github.com/gyf-dev/ImmersionBar
             // 基础依赖包，必须要依赖

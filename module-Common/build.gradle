@@ -4,6 +4,7 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 def root_dependencies = rootProject.ext.dependencies
+def root_test = rootProject.ext.test
 
 
 android {
@@ -41,36 +42,32 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation root_dependencies["appcompat"]
+    implementation root_dependencies["recyclerView"]
 
-    implementation rootProject.ext.dependencies["appcompat"]
-    testImplementation rootProject.ext.test["junit"]
-    androidTestImplementation rootProject.ext.test["test-ext-junit"]
-    androidTestImplementation rootProject.ext.test["support-test-espresso"]
-
-    implementation rootProject.ext.dependencies["recyclerView"]
-
-
-    api project(':database')
     // 工具库由Common引出
     api project(":library-views")
-    api rootProject.ext.dependencies["kangaroo"]
-
-    compileOnly "com.squareup.retrofit2:retrofit:${lib_versions.rtf2}"
-    compileOnly "com.squareup.retrofit2:converter-gson:${lib_versions.rtf2_2gson}"
-    compileOnly "com.squareup.retrofit2:adapter-rxjava2:${lib_versions.rtf2_adapter}"
-
-    compileOnly "io.reactivex.rxjava2:rxjava:${lib_versions.rxJava}"
-    compileOnly "io.reactivex.rxjava2:rxandroid:${lib_versions.rxandroid}"
-
-    // Bugly
-    api 'com.tencent.bugly:crashreport:3.0.0'
-    api 'com.tencent.bugly:nativecrashreport:3.1.0'
-
-
+    api project(':database')
+    api root_dependencies["kangaroo"]
     api root_dependencies["banner"]
     api root_dependencies["smartRefresh_Core"]
     api root_dependencies["smartRefresh_Header_Classics"]
     api root_dependencies["smartRefresh_Footer_Classics"]
     api root_dependencies["recyclerview_adapter"]
     api root_dependencies["LikeButton"]
+
+    // Bugly
+    api 'com.tencent.bugly:crashreport:3.0.0'
+    api 'com.tencent.bugly:nativecrashreport:3.1.0'
+
+    compileOnly root_dependencies["retrofit2"]
+    compileOnly root_dependencies["retrofit2_gson"]
+    compileOnly root_dependencies["retrofit2_rxjava2"]
+    compileOnly root_dependencies["rxJava"]
+    compileOnly root_dependencies["rxandroid"]
+
+    testImplementation root_test["junit"]
+    androidTestImplementation root_test["test-ext-junit"]
+    androidTestImplementation root_test["support-test-espresso"]
+
 }

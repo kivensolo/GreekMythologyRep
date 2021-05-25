@@ -20,6 +20,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.gyf.immersionbar.ImmersionBar
+import com.hjq.permissions.OnPermissionCallback
+import com.hjq.permissions.XXPermissions
 import com.kingz.base.BaseVMActivity
 import com.kingz.base.factory.ViewModelFactory
 import com.kingz.database.entity.BaseEntity
@@ -40,6 +42,7 @@ import com.zeke.home.fragments.home.HomeLiveFragment
 import com.zeke.home.model.HomeSongModel
 import com.zeke.home.service.NSDService
 import com.zeke.home.wanandroid.viewmodel.HomeViewModel
+import com.zeke.kangaroo.utils.ToastUtils
 import com.zeke.kangaroo.utils.ZLog
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.main_bottom_layout.*
@@ -97,8 +100,6 @@ class HomeActivity : BaseVMActivity(),ISwitcher {
         initSlidingPaneLayout()
 
         initSlideMenuView()
-
-//        requestPermission()
     }
 
     private fun initSlideMenuView() {
@@ -134,6 +135,28 @@ class HomeActivity : BaseVMActivity(),ISwitcher {
     //动态申请【外部目录读写权限】
     private fun requestPermission() {
         PermissionUtils.requestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        XXPermissions.with(this)
+            .permission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            .request(object : OnPermissionCallback {
+                override fun onGranted(permissions: MutableList<kotlin.String>?, all: Boolean) {
+                    if (all) {
+                        ToastUtils.show(baseContext, "获取储存权限成功")
+                    } else {
+                        ToastUtils.show(baseContext, "获取部分权限成功，但部分权限未正常授予")
+                    }
+                }
+
+                override fun onDenied(permissions: MutableList<kotlin.String>?, never: Boolean) {
+                    super.onDenied(permissions, never)
+                    if (never) {
+                        ToastUtils.show(baseContext, "被永久拒绝授权，请手动授予储存权限")
+                        // 如果是被永久拒绝就跳转到应用权限系统设置页面
+                        XXPermissions.startPermissionActivity(this@HomeActivity, permissions)
+                    } else {
+                        ToastUtils.show(baseContext, "获取储存权限失败")
+                    }
+                }
+            })
     }
 
     private fun initSlidingPaneLayout() {
