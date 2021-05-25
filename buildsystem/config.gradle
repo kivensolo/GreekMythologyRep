@@ -58,6 +58,7 @@ ext {
             leakcanary            : '2.4',
             permissions         : '2.0.3',
             autosize            : '1.1.2',
+            xxPermissions       : '11.0'
     ]
 
     supports = [
@@ -127,7 +128,7 @@ ext {
             "paging-runtime-ktx"     : "androidx.paging:paging-runtime-ktx:${lib_versions.paging_version}",
 
             // Room数据库
-            "room-common"           : "androidx.room:room-common:${lib_versions.room_version}",
+            "room-common"            : "androidx.room:room-common:${lib_versions.room_version}",
             "room-runtime"           : "androidx.room:room-runtime:${lib_versions.room_version}",
             "room-compiler"          : "androidx.room:room-compiler:${lib_versions.room_version}",
             "room-ktx"               : "androidx.room:room-ktx:${lib_versions.room_version}",
@@ -158,37 +159,42 @@ ext {
             "smartRefresh_Footer_Classics"  : "com.scwang.smart:refresh-footer-classics:$lib_versions.smartRefresh",  //经典加载
 
             // 数据解析库
-            "gson"                   : "com.google.code.gson:gson:$lib_versions.gson",
+            "gson"               : "com.google.code.gson:gson:$lib_versions.gson",
 
             //Glide https://github.com/bumptech/glide
-            "gilde"                  :"com.github.bumptech.glide:glide:${lib_versions.glide}",
-            "glide_compiler"         : "com.github.bumptech.glide:compiler:$lib_versions.glide_c",
-            "glide_okhttp3"          : "com.github.bumptech.glide:okhttp3-integration:${lib_versions.glide_okhttp}",
+            "gilde"              : "com.github.bumptech.glide:glide:${lib_versions.glide}",
+            "gilde_annotations"  : "com.github.bumptech.glide:annotations:${lib_versions.glide}",
+            "glide_compiler"     : "com.github.bumptech.glide:compiler:$lib_versions.glide_c",
+            "glide_okhttp3"      : "com.github.bumptech.glide:okhttp3-integration:${lib_versions.glide_okhttp}",
 
             //https://github.com/JessYanCoding/AndroidAutoSize
-            "autosize"               : "me.jessyan:autosize:$lib_versions.autosize",
-            "autoLayout"             : "com.zhy:autolayout:1.4.5",
+            "autosize"           : "me.jessyan:autosize:$lib_versions.autosize",
+            "autoLayout"         : "com.zhy:autolayout:1.4.5",
 
             //https://github.com/square/leakcanary  https://square.github.io/leakcanary
-            "leakcanary"             : "com.squareup.leakcanary:leakcanary-android:$lib_versions.leakcanary",
+            "leakcanary"         : "com.squareup.leakcanary:leakcanary-android:$lib_versions.leakcanary",
 
             //https://github.com/yanzhenjie/AndPermission
-            "permissions"            : "com.yanzhenjie:permission:$lib_versions.permissions",
+            "permissions"        : "com.yanzhenjie:permission:$lib_versions.permissions",
 
             // My lib
-            "kangaroo"               : "com.github.zeke:kangaroo:1.0.6",
-            "xul_cache"              : "com.github.xul:cache:1.0.0",
+            "kangaroo"           : "com.github.zeke:kangaroo:1.0.6",
+            "xul_cache"          : "com.github.xul:cache:1.0.0",
 
             //https://github.com/zhihu/Matisse   本地图像和视频选择器
             matisse              : "com.zhihu.android:matisse:0.5.2-beta3",
 
-            // https://github.com/gyf-dev/ImmersionBar   一个不错的浸式状态栏和沉浸式导航栏管理库
+            //动态权限申请库  https://github.com/getActivity/XXPermissions
+            xxPermissions        :"com.github.getActivity:XXPermissions:$lib_versions.xxPermissions",
+
+            // <-------------- 一个不错的浸式状态栏和沉浸式导航栏管理库 --------- https://github.com/gyf-dev/ImmersionBar
             // 基础依赖包，必须要依赖
             "immersionbar"         : "com.gyf.immersionbar:immersionbar:3.0.0",
             // fragment快速实现（可选）
             "immersionbar_fragment": "com.gyf.immersionbar:immersionbar-components:3.0.0",
             // kotlin扩展（可选）
             "immersionbar_ktx"     : "com.gyf.immersionbar:immersionbar-ktx:3.0.0",
+            // --------------  一个不错的浸式状态栏和沉浸式导航栏管理库 --------->
 
     ]
 }

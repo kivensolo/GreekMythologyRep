@@ -22,6 +22,7 @@ _keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 def _rootAndroid = rootProject.ext.android
 def _rootDependencies = rootProject.ext.dependencies
+def _rootTest = rootProject.ext.test
 
 android {
     signingConfigs {
@@ -186,10 +187,52 @@ kapt {
 
 dependencies {
     println("   The closure to use to configure the dependencies is begin run.")
-    implementation fileTree(include: ['*.jar','*.aar'], dir: 'libs')
-    implementation _rootDependencies["arouter"]
-    kapt _rootDependencies["arouter_compiler"]
 
+    //  ----------------------- 核心组件 START
+        // ViewModel and LiveData
+    implementation _rootDependencies["lifecycle-extensions"]
+    implementation _rootDependencies["appcompat"]
+    implementation _rootDependencies["kotlin"]
+    implementation _rootDependencies["kotlin-reflect"]
+    implementation _rootDependencies["coroutines-core"]
+    implementation _rootDependencies["coroutines-android"]
+
+    implementation _rootDependencies["gilde"]
+    implementation _rootDependencies["gilde_annotations"]
+    implementation _rootDependencies["glide_okhttp3"]
+    kapt           _rootDependencies["glide_compiler"]
+
+    implementation _rootDependencies["arouter"]
+    kapt           _rootDependencies["arouter_compiler"]
+
+    implementation "com.android.support:support-annotations:28.0.0"
+    kapt "com.android.support:support-annotations:28.0.0"
+        // WorkManager (Java only)
+    implementation 'androidx.work:work-runtime:2.4.0'
+
+    //  ----------------------- 核心组件 END
+
+
+    //  ----------------------- 必备UI组件
+    implementation _rootDependencies["recyclerView"]
+    implementation _rootDependencies["cardView"]
+
+    //  ----------------------- 必备第三方库
+    implementation fileTree(include: ['*.jar','*.aar'], dir: 'libs')
+    implementation _rootDependencies["gson"]
+    implementation _rootDependencies["xxPermissions"] // 动态权限申请库
+    //implementation _rootDependencies["kangaroo"]
+    implementation _rootDependencies["xul_cache"]
+
+    // Test library
+    testImplementation        _rootTest["junit"]
+    androidTestImplementation _rootTest["test-core"]
+    androidTestImplementation _rootTest["test-runner"]
+    androidTestImplementation _rootTest["test-rules"]
+    androidTestImplementation _rootTest["test-ext-junit"]
+    androidTestImplementation _rootTest["support-test-espresso"]
+
+    // ----------------------- 业务组件Module
     implementation createProject(':module-Common')
     if (isHomeModule.toBoolean()) {
         implementation createProject(':module-Home')
@@ -197,35 +240,13 @@ dependencies {
     if (isLoginModule.toBoolean()) {
         implementation createProject(':module-Login')
     }
-
     implementation createProject(":module-Demo")
-
     implementation createProject(":module-Web")
-
     implementation createProject(":module-Player")
-
     implementation createProject(":module-Music")
-
     implementation project(':library-unittest')
 
-//    implementation 'com.getbase:floatingactionbutton:1.10.1'
-
-    // Glide
-    implementation "com.github.bumptech.glide:glide:${lib_versions.glide}"
-    implementation "com.github.bumptech.glide:annotations:${lib_versions.glide}"
-    kapt "com.github.bumptech.glide:compiler:${lib_versions.glide_c}"
-    implementation "com.github.bumptech.glide:okhttp3-integration:${lib_versions.glide_okhttp}"
-    // 兼容AndroidX
-    implementation "com.android.support:support-annotations:28.0.0"
-    kapt "com.android.support:support-annotations:28.0.0"
-
-    implementation rootProject.ext.dependencies["kotlin"]
-    implementation rootProject.ext.dependencies["kotlin-reflect"]
-    implementation rootProject.ext.dependencies["coroutines-core"]
-    implementation rootProject.ext.dependencies["coroutines-android"]
-
-    // Tools Lib
-    implementation rootProject.ext.dependencies["gson"]
+    // -------->>>>>>>>>> 业务组件Module
 
     //RxJava2(RxAndroid) + retrofit2 + okhttp3
 //    implementation "io.reactivex.rxjava2:rxjava:${lib_versions.rxJava}"
@@ -233,27 +254,6 @@ dependencies {
 //    implementation "com.squareup.retrofit2:retrofit:${lib_versions.rtf2}"
 //    implementation "com.squareup.retrofit2:converter-gson:${lib_versions.rtf2_2gson}"
 //    implementation "com.squareup.retrofit2:adapter-rxjava2:${lib_versions.rtf2_adapter}"
-
-    implementation rootProject.ext.dependencies["recyclerView"]
-    implementation rootProject.ext.dependencies["cardView"]
-    implementation rootProject.ext.dependencies["appcompat"]
-
-    // Test library
-    testImplementation rootProject.ext.test["junit"]
-    androidTestImplementation rootProject.ext.test["test-core"]
-    androidTestImplementation rootProject.ext.test["test-runner"]
-    androidTestImplementation rootProject.ext.test["test-rules"]
-    androidTestImplementation rootProject.ext.test["test-ext-junit"]
-    androidTestImplementation rootProject.ext.test["support-test-espresso"]
-
-    // WorkManager (Java only)
-    implementation 'androidx.work:work-runtime:2.4.0'
-
-    // ViewModel and LiveData
-    implementation rootProject.ext.dependencies["lifecycle-extensions"]
-
-//    implementation rootProject.ext.dependencies["kangaroo"]
-    implementation rootProject.ext.dependencies["xul_cache"]
 }
 
 /**
