@@ -16,6 +16,7 @@ include ':module-Login'
 include ':module-Player'
 include ':module-Web'
 include ':module-Music'
+include ':module-Eyepetizer'
 
 def rootDir = settingsDir
 // 自定义lib库Project

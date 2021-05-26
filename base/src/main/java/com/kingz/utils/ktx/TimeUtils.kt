@@ -2,6 +2,9 @@ package com.kingz.utils.ktx
 
 import java.util.*
 
+/**
+ * 根据毫秒返回时分秒
+ */
 fun formatDuration(duration: Long): String {
     var time = duration / 1000
     if (time == 0L && duration > 0) {

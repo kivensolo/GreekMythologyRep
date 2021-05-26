@@ -1,4 +1,4 @@
-package com.kingz.module.github.bean;
+package com.zeke.eyepetizer.bean;
 
 import java.util.List;
 

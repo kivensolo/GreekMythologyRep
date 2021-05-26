@@ -87,6 +87,7 @@ dependencies {
 
     implementation project(':module-Common')
     implementation project(':module-Native')
+    implementation project(':module-Eyepetizer')
 
     implementation root_dependencies["gson"]
 //    implementation "androidx.constraintlayout:constraintlayout:1.1.3"

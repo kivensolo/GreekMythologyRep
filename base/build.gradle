@@ -90,7 +90,7 @@ dependencies {
 
     debugImplementation root_dependencies["leakcanary"]
 
-//    api root_dependencies["andPermissions"]
+    api root_dependencies["andPermissions"]
     api root_dependencies["xxPermissions"]
 
     // 浸式状态栏和沉浸式导航栏管理库

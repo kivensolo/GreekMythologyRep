@@ -1,13 +1,15 @@
-package com.kingz.module.wanandroid.viewmodel
+package com.zeke.eyepetizer.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import com.kingz.database.AppDatabase
 import com.kingz.module.common.CommonApp
-import com.kingz.module.github.bean.EyepetizerTabListInfo
-import com.kingz.module.wanandroid.repository.EyepetizerRemoteDataSource
+import com.zeke.eyepetizer.bean.EyepetizerTabListInfo
+import com.zeke.eyepetizer.bean.EyepetizerTabPageData
+import com.zeke.eyepetizer.respository.EyepetizerRemoteDataSource
 import com.zeke.kangaroo.utils.ZLog
 import com.zeke.reactivehttp.base.BaseReactiveViewModel
 import kotlinx.coroutines.Job
+import retrofit2.http.Url
 
 /**
  * 开眼视频的ViewModel
@@ -23,6 +25,10 @@ open class EyepetizerViewModel : BaseReactiveViewModel() {
         MutableLiveData<EyepetizerTabListInfo>()
     }
 
+    val tabPageDetailLiveData: MutableLiveData<EyepetizerTabPageData> by lazy {
+        MutableLiveData<EyepetizerTabPageData>()
+    }
+
     // 需限定访问权限为protected 防止view层直接访问Model层的DataSource对象
     protected open val remoteDataSource by lazy {
         EyepetizerRemoteDataSource(this)
@@ -33,6 +39,14 @@ open class EyepetizerViewModel : BaseReactiveViewModel() {
             ZLog.d(TAG,"Get tab list.")
             val info = remoteDataSource.getTabList()
             tabListLiveData.postValue(info)
+        }
+    }
+
+    fun getTabPageDetail(@Url url:String) {
+        launchIO {
+            val data = remoteDataSource.getTabPageDetail(url)
+            ZLog.d(TAG,"Get tab page detail. with data.")
+            tabPageDetailLiveData.postValue(data)
         }
     }
 

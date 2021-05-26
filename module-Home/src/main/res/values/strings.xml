@@ -51,8 +51,4 @@
 
     <string name="logout_confirm_tips" translatable="false" tools:ignore="ExtraTranslation">再次点击退出登录</string>
     <string name="logout_tips" translatable="false" tools:ignore="ExtraTranslation">用户已退出</string>
-
-
-
-
 </resources>

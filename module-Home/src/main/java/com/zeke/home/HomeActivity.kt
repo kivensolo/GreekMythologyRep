@@ -36,7 +36,7 @@ import com.kingz.module.wanandroid.WADConstants
 import com.kingz.module.wanandroid.activity.AppBarActivity
 import com.module.slide.SuperSlidingPaneLayout
 import com.module.tools.ColorUtils
-import com.zeke.home.eyepetizer.fragemnts.EyepetizerContentFragment
+import com.zeke.eyepetizer.fragemnts.EyepetizerHomeFragment
 import com.zeke.home.fragments.home.HomeContainerFragment
 import com.zeke.home.fragments.home.HomeLiveFragment
 import com.zeke.home.model.HomeSongModel
@@ -63,7 +63,7 @@ class HomeActivity : BaseVMActivity(),ISwitcher {
     // 视频直播
     private lateinit var homeLiveFragment: HomeLiveFragment
     // 开眼视频
-    private lateinit var homeOpenEyeFragment: EyepetizerContentFragment
+    private lateinit var homeOpenEyeFragment: EyepetizerHomeFragment
 
     private lateinit var panelSlidelLsr: HomePanelSlidelLsr
 
@@ -186,7 +186,7 @@ class HomeActivity : BaseVMActivity(),ISwitcher {
     private fun initFragments() {
         homeKnowlegeFragment = HomeContainerFragment()
         homeLiveFragment = HomeLiveFragment()
-        homeOpenEyeFragment = EyepetizerContentFragment()
+        homeOpenEyeFragment = EyepetizerHomeFragment()
 
         with(supportFragmentManager.beginTransaction()){
             add(R.id.content, homeKnowlegeFragment)

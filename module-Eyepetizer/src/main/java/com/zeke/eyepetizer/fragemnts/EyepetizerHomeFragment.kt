@@ -1,4 +1,4 @@
-package com.zeke.home.eyepetizer.fragemnts
+package com.zeke.eyepetizer.fragemnts
 
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -9,19 +9,18 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.kingz.base.adapter.BasePagerAdapter
 import com.kingz.base.factory.ViewModelFactory
-import com.kingz.module.common.base.IRvScroller
-import com.kingz.module.github.bean.EyepetizerTabListInfo
-import com.kingz.module.github.bean.EyepetizerTabListInfo.TabInfoBean.TabListBean
-import com.kingz.module.home.R
 import com.kingz.module.wanandroid.fragemnts.CommonFragment
-import com.kingz.module.wanandroid.viewmodel.EyepetizerViewModel
+import com.zeke.eyepetizer.bean.EyepetizerTabListInfo
+import com.zeke.eyepetizer.bean.TabListBean
+import com.zeke.eyepetizer.viewmodel.EyepetizerViewModel
 import com.zeke.kangaroo.utils.ZLog
+import com.zeke.moudle_eyepetizer.R
 
 /**
  * time: 2021-5-23 11:38
- * description：首页开眼视频的Fragment
+ * description：开眼视频的首页Fragment
  */
-class EyepetizerContentFragment : CommonFragment<EyepetizerViewModel>(), IRvScroller {
+class EyepetizerHomeFragment : CommonFragment<EyepetizerViewModel>(){
     private var tableLayout: TabLayout? = null
     private var coverView: View? = null
     private var viewPager: ViewPager? = null
@@ -48,19 +47,16 @@ class EyepetizerContentFragment : CommonFragment<EyepetizerViewModel>(), IRvScro
             setupWithViewPager(viewPager)
             visibility = View.GONE
         }
-
-        loadStatusView = rootView?.findViewById(R.id.load_status)
-        loadStatusView?.showProgress()
     }
 
     override fun initViewModel() {
         super.initViewModel()
         viewModel.tabListLiveData.observe(this, Observer { result ->
-            ZLog.d("tabListLiveData onObserver: $result")
+            ZLog.json("TabListLiveData onObserver","$result")
             dismissLoading()
             if(result != null){
                 val tabListInfo = result as EyepetizerTabListInfo
-                viewPagerAdapter?.setData(tabListInfo.tabInfo?.tabList)
+                viewPagerAdapter?.setData(tabListInfo.tabInfo.tabList)
             }
         })
     }
@@ -80,7 +76,8 @@ class EyepetizerContentFragment : CommonFragment<EyepetizerViewModel>(), IRvScro
      * 根据具体数据创建对应页面的Fragment
      */
     fun createPageFragment(data: TabListBean, position: Int):Fragment?{
-        return SimplePageContentVMFragment(data)
+        //TODO
+        return EyepetizerPagerFragment(data.apiUrl)
     }
 
     inner class PagerAdapter(fm: FragmentManager, creator: PagerFragCreator<TabListBean>):
@@ -93,16 +90,7 @@ class EyepetizerContentFragment : CommonFragment<EyepetizerViewModel>(), IRvScro
         }
 
         override fun createTitle(data: TabListBean): String {
-            ZLog.d("createTitle +1: ${data.name}")
             return data.name
         }
-    }
-
-    override fun scrollToTop() {
-//        RvUtils.smoothScrollTop(mRecyclerView)
-    }
-
-    override fun scrollToTopRefresh() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

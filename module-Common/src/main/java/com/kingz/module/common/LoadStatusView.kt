@@ -27,9 +27,9 @@ class LoadStatusView @JvmOverloads constructor(
 
     private var progress : Win10LoaddingView?= null
 //    private var progress: View? = null
-    private var statusText: TextView? = null
-    private var errorIcon: Drawable? = null
-    private var noDataIcon: Drawable? = null
+    private lateinit var statusText: TextView
+    private lateinit var errorIcon: Drawable
+    private lateinit var noDataIcon: Drawable
 
     init {
         initView(context)
@@ -47,21 +47,23 @@ class LoadStatusView @JvmOverloads constructor(
 
         // 错误图标初始化
         errorIcon = resources.getDrawable(R.drawable.ic_load_error, null)
-        errorIcon?.setBounds(0, 0,
-                errorIcon!!.minimumWidth,
-                errorIcon!!.minimumHeight)
-        statusText = TextView(context)
-        statusText?.setTextAppearance(context, R.style.txt_normal_dark)
-        statusText?.gravity = Gravity.CENTER
-        statusText?.compoundDrawablePadding = 96
-        statusText?.setTextSize(TypedValue.COMPLEX_UNIT_PX,44f)
-        statusText?.setLineSpacing(-1f, 1.5f)
-        statusText?.setCompoundDrawables(null, errorIcon, null, null)
-
+        with(errorIcon) {
+            setBounds(0, 0,errorIcon.minimumWidth,errorIcon.minimumHeight)
+        }
         noDataIcon = resources.getDrawable(R.drawable.ic_no_data, null)
-        noDataIcon?.setBounds(0, 0,
-                noDataIcon!!.minimumWidth,
-                noDataIcon!!.minimumHeight)
+        with(noDataIcon) {
+            setBounds(0, 0, noDataIcon.minimumWidth, noDataIcon.minimumHeight)
+        }
+
+        statusText = TextView(context)
+        with(statusText) {
+            setTextAppearance(context, R.style.txt_normal_dark)
+            gravity = Gravity.CENTER
+            compoundDrawablePadding = 96
+            setTextSize(TypedValue.COMPLEX_UNIT_PX, 44f)
+            setLineSpacing(-1f, 1.5f)
+            setCompoundDrawables(null, errorIcon, null, null)
+        }
 
         val progressParams = LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -84,7 +86,7 @@ class LoadStatusView @JvmOverloads constructor(
             visibility = View.VISIBLE
             start()
         }
-        statusText?.visibility = View.GONE
+        statusText.visibility = View.GONE
     }
 
     fun showError(){
@@ -100,7 +102,7 @@ class LoadStatusView @JvmOverloads constructor(
             setSpan(errorSpan, 0, 7, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
             setSpan(error2Span, 8, errorString.length, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
         }
-        statusText?.apply {
+        statusText.apply {
             text = spannableString
             setOnClickListener(listener)
             visibility = View.VISIBLE
@@ -132,12 +134,12 @@ class LoadStatusView @JvmOverloads constructor(
             spannableString.setSpan(error2Span, str.indexOf("\n"),
                     str.length,
                     Spanned.SPAN_INCLUSIVE_EXCLUSIVE)//设置字体颜色
-            statusText?.text = spannableString
+            statusText.text = spannableString
         } else {
-            statusText?.text = str
+            statusText.text = str
         }
-        statusText?.setOnClickListener(onClickListener)
-        statusText?.visibility = View.VISIBLE
+        statusText.setOnClickListener(onClickListener)
+        statusText.visibility = View.VISIBLE
         progress?.apply {
             stop()
             visibility = View.GONE
@@ -150,7 +152,7 @@ class LoadStatusView @JvmOverloads constructor(
             stop()
             visibility = View.GONE
         }
-        statusText?.visibility = View.GONE
+        statusText.visibility = View.GONE
     }
 
 }

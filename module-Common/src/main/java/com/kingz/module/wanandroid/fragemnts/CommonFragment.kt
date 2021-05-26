@@ -33,6 +33,10 @@ abstract class CommonFragment<T : BaseReactiveViewModel> : BaseVMFragment<T>() {
         initView()
     }
 
+    /**
+     * 初始化UI
+     * 若子类使用到全局loading状态UI, 重写时，则需调用super
+     */
     override fun initView() {
         ZLog.d("initView()")
         loadStatusView = rootView?.findViewById(R.id.load_status)

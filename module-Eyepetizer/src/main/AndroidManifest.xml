@@ -1,0 +1,13 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.zeke.moudle_eyepetizer">
+
+    <application android:allowBackup="true">
+        <activity
+            android:name="com.zeke.music.activities.MusicDetailPageActivty"
+            android:configChanges="locale|screenSize|keyboardHidden|orientation"
+            android:launchMode="singleTask"
+            android:screenOrientation="fullSensor"
+            android:theme="@style/PlayTheme"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+    </application>
+</manifest>

@@ -143,10 +143,12 @@ ext {
             "cardView"               : "androidx.cardview:cardview:${lib_versions.cardView}",
             "constraintLayout"       : "androidx.constraintlayout:constraintlayout:${lib_versions.constraint}",
             "material"               : "com.google.android.material:material:$lib_versions.material",
-            // 广告图片轮播控件 https://github.com/youth5201314/banner
+                // 广告图片轮播控件 https://github.com/youth5201314/banner
             "banner"                 : "com.youth.banner:banner:2.1.0",
-            // 收藏、点赞效果控件
+                // 收藏、点赞效果控件
             "LikeButton"             : "com.github.jd-alexander:LikeButton:0.2.3",
+                // Google 开源UI控件
+            "flexbox"                : "com.google.android:flexbox:1.0.0",
 
             // 下拉上拉加载库: https://gitee.com/scwang90/SmartRefreshLayout
             "smartRefresh_Core"      : "com.scwang.smart:refresh-layout-kernel:$lib_versions.smartRefresh",
