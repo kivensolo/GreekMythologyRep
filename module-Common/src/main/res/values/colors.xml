@@ -13,7 +13,8 @@
     <color name="color_line_divider">@color/gray</color>
     <color name="color_pressed">@color/deep_gray</color>
 
-    <color name="text_gary_bkg">#14FFFFFF</color>
+    <!-- 浅灰色颜色，适用于底色为暗色时的蒙层效果   -->
+    <color name="bkg_gary">#14FFFFFF</color>
 
 
     <color name="dkgray">#80808FF0</color>
@@ -192,6 +193,17 @@
     <color name="app_main_color">@color/blue</color>
     <color name="app_main_color_dark">@color/blue_dark</color>
     <color name="app_accent">@color/blue_light</color>
+
+    <!--  白色主题  -->
+    <color name="app_white">@color/white</color>
+    <color name="app_white_gray">@color/white_transparent</color>
+    <color name="app_white_alpha">#efefef</color>
+
+    <!--  黑色主题  -->
+    <color name="app_dark">@color/black</color>
+    <color name="app_dark_gray">@color/black_transparent</color>
+    <color name="app_dark_transparent">@color/transparent_ban</color>
+
 
     <!-- Android L 颜色 -->
     <color name="skygreen">#5FCDDA</color><!--天绿色 -->

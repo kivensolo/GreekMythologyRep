@@ -1,11 +1,11 @@
-package com.zeke.home.wanandroid.viewholder
+package com.zeke.eyepetizer
 
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
-import com.kingz.module.home.R
+import com.zeke.moudle_eyepetizer.R
 
 /**
  * author: King.Z <br>

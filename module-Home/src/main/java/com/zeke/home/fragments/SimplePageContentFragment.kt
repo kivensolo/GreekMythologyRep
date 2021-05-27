@@ -84,7 +84,7 @@ class SimplePageContentFragment : BaseFragment(), IView, View.OnClickListener {
             textView.text = (data as Live).name
 
             if((position / 2) % 2 != 0){ // 偶数行
-                textView.setBackgroundResource(R.color.text_gary_bkg)
+                textView.setBackgroundResource(R.color.bkg_gary)
             }
 
             holder.setOnClickListener {

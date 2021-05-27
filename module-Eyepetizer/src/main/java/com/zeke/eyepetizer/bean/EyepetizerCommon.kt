@@ -155,6 +155,21 @@ data class Header(
         val showHateVideo: Boolean //false
 )
 
+data class ItemTypeBanner(
+        val dataType: String,
+        val id: Int,
+        val title: String,
+        val description: String, //#广告 / 收录于 每日编辑精选
+        val image: String, //http://img.kaiyanapp.com/98beab66d3885a139b54f21e91817c4f.jpeg
+        val actionUrl: String,//eyepetizer://pgc/detail/2162/?title=å¼ç¼å¹¿åç²¾é&userType=PGC&tabIndex=1
+        val adTrack: Any,     // 未使用
+        val shade: Boolean,   // 未使用
+        val label: Any,       // 未使用
+        val labelList: Any,   // 未使用
+        val header: Any,      // 未使用
+        val autoPlay: Boolean // 未使用
+)
+
 
 data class Label(
         val text: String, //广告

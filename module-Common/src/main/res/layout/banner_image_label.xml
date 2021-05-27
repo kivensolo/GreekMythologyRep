@@ -9,18 +9,16 @@
         android:id="@+id/bannerImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        tools:background="@drawable/cat_m"/>
+        android:scaleType="centerCrop"/>
 
     <TextView
         android:id="@+id/numIndicator"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_margin="8dp"
         android:background="@drawable/bg_black_solid_oval"
         android:gravity="center"
-        android:text="1/1"
         android:textColor="#ffffff"
         android:visibility="gone"
         tools:visibility="visible"

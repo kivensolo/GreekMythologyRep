@@ -18,14 +18,23 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.google.android.flexbox.FlexboxLayout
 import com.google.gson.Gson
 import com.kingz.module.common.utils.image.GlideLoader
+import com.youth.banner.Banner
+import com.youth.banner.indicator.CircleIndicator
+import com.youth.banner.transformer.ScaleInTransformer
 import com.zeke.eyepetizer.bean.Item
+import com.zeke.eyepetizer.bean.ItemTypeBanner
 import com.zeke.eyepetizer.bean.cards.item.*
 import com.zeke.eyepetizer.constant.ViewTypeEnum
 import com.zeke.kangaroo.utils.ZLog
 import com.zeke.moudle_eyepetizer.R
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.HashMap
 
+// <editor-fold defaultstate="collapsed" desc="别名属性  Alias property">
+//开眼视频别名设置
+internal typealias BannerItemData = ItemTypeBanner
+// </editor-fold>
 
 /**
  * author: King.Z <br>
@@ -42,6 +51,14 @@ open class EyepetizerPagerAdapter(
 ) : BaseQuickAdapter<Item, BaseViewHolder>(R.layout.item_article, data) {
     private var mContext: Context? = null
 
+// <editor-fold defaultstate="collapsed" desc="业务属性">
+    //banner模板缓存数据: key为模板id,value是数据集
+    private var bannerDataListCache:HashMap<Int,ArrayList<BannerItemData>>?= null
+
+// </editor-fold>
+
+   // <editor-fold defaultstate="collapsed" desc="基础Adapter回调函数">
+    // <editor-fold defaultstate="collapsed" desc="确定子视图类型 Get view type">
     /**
      * 创建每一个子View的Holder前，
      * 重写getDefItemViewType确定每个子View的Type
@@ -50,12 +67,14 @@ open class EyepetizerPagerAdapter(
         val type = data[position].type
         return ViewTypeEnum.getViewTypeEnum(type).value
     }
+    // </editor-fold>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         mContext = parent.context
         return super.onCreateViewHolder(parent, viewType)
     }
 
+    // <editor-fold defaultstate="collapsed" desc="根据类型创建模板视图实例 Create View holder">
     override fun onCreateDefViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         val inflater = LayoutInflater.from(parent.context)
 
@@ -81,6 +100,7 @@ open class EyepetizerPagerAdapter(
             }
         return BaseViewHolder(viewHolder.itemView)
     }
+    // </editor-fold>
 
     override fun convert(holder: BaseViewHolder, item: Item) {
         when (ViewTypeEnum.getViewTypeEnum(item.type).value) {
@@ -98,8 +118,11 @@ open class EyepetizerPagerAdapter(
     public override fun getDefItemCount(): Int {
         return super.getDefItemCount()
     }
+   // </editor-fold>
 
-    //**********************************************   下面是各种类型的ItemView 初始化渲染方法   *******************************************************
+    // <editor-fold defaultstate="collapsed" desc="各种子模板初始化  Init item views">
+
+    // <editor-fold defaultstate="collapsed" desc="结尾模板  Template End">
     /**
      * 没有更多数据，到底部的提示ItemView
      */
@@ -108,10 +131,9 @@ open class EyepetizerPagerAdapter(
             mContext!!.assets, "fonts/Lobster-1.4.otf"
         )
     }
+    // </editor-fold>
 
-    /**
-     * 初始化TextTileView
-     */
+    // <editor-fold defaultstate="collapsed" desc="标题模板  Template Title">
     private fun initTextCardView(holder: BaseViewHolder, item: Item) {
         val jsonObject = item.data
         val textCard = Gson().fromJson(jsonObject, TextCard::class.java)
@@ -140,10 +162,9 @@ open class EyepetizerPagerAdapter(
             }
         }
     }
+    // </editor-fold>
 
-    /**
-     * 初始化摘要模板
-     */
+    // <editor-fold defaultstate="collapsed" desc="摘要模板  Template Brief">
     private fun initBriefCardView(holder: BaseViewHolder, item: Item) {
 
         val jsonObject = item.data
@@ -167,10 +188,9 @@ open class EyepetizerPagerAdapter(
             GlideLoader.loadNetCircleImage(mContext!!, ivFeed, iconUrl)
         }
     }
+    // </editor-fold>
 
-    /**
-     * 初始化带播放器的卡片式模板
-     */
+    // <editor-fold defaultstate="collapsed" desc="卡片播放器模板  Template video small">
     private fun initVideoSmallCardView(holder: BaseViewHolder, item: Item) {
         val jsonObject = item.data
         val videoSmallCard = Gson().fromJson(jsonObject, VideoSmallCard::class.java)
@@ -202,10 +222,9 @@ open class EyepetizerPagerAdapter(
         // init Event
 //        holder.itemView.setOnClickListener { startVideoActivity(videoId, videoTitle, videoFeedUrl, videoPlayUrl, videoSmallCard.cover.blurred) }
     }
+    // </editor-fold>
 
-    /**
-     * 初始化评论模板
-     */
+    // <editor-fold defaultstate="collapsed" desc="评论模板  Template dynamic info">
     private fun initDynamicInfoCardView(holder: BaseViewHolder, item: Item) {
         val jsonObject = item.data
         val dynamicInfoCard = Gson().fromJson(jsonObject, DynamicInfoCard::class.java)
@@ -250,11 +269,13 @@ open class EyepetizerPagerAdapter(
         //init Event
 //        holder.getView<ImageView>(R.id.bg).setOnClickListener { startVideoActivity(videoId, videoTitle, videoFeedUrl, videoPlayUrl, dynamicInfoCard.simpleVideo.cover.blurred) }
     }
+    // </editor-fold>
 
     /**
      * 自动播放模板
      */
     private fun initAutoPlayFollowCardView(holder: BaseViewHolder, item: Item) {
+
         val jsonObject = item.data
         val autoPlayFollowCard = Gson().fromJson(jsonObject, AutoPlayFollowCard::class.java)
         val iconUrl = autoPlayFollowCard.header.icon                                        //头像Url
@@ -304,41 +325,52 @@ open class EyepetizerPagerAdapter(
         }
     }
 
+    // <editor-fold defaultstate="collapsed" desc="轮播图模板  Template Banner">
     private fun initSquareCardCollectionView(holder: BaseViewHolder, item: Item) {
-        //        val itemSquareCardCollectionBinding = DataBindingUtil.getBinding<ItemSquareCardCollectionBinding>(holder.itemView)
-//
-//        //init data
-//        val jsonObject = mDataList[position].data
-//        val squareCardCollection = Gson().fromJson(jsonObject, SquareCardCollection::class.java)
-//
-//
-//        val imageList = ArrayList<String>()
-//        val title = squareCardCollection.header.title
-//
-//        squareCardCollection.itemList.forEach {
-//            val banner2 = Gson().fromJson(it.data, FollowCard::class.java)
-//            imageList.add(banner2.header.icon)
-//            LogUtil.json(Gson().toJson(squareCardCollection))
-//        }
-//
-//
-//
-//        with(itemSquareCardCollectionBinding!!) {
-//            tvTitle.text = title
-//
-//
-//            banner.setImages(imageList)
-//            banner.setImageLoader(object : com.youth.banner.loader.ImageLoader() {
-//                override fun displayImage(context: Context?, path: Any?, imageView: ImageView) {
-//                    // ImageLoader.loadNetImageWithCorner(mContext, imageView, path as String)
-//                    LogUtil.d(path.toString())
-//                }
-//            })
-//            banner.start()
-//        }
-//
-//
+        //init data
+        val jsonObject = item.data
+        val squareCardCollection = Gson().fromJson(jsonObject,
+            SquareCardCollection::class.java)
+        var headerList = ArrayList<ItemTypeBanner>()
+        val id = squareCardCollection.header.id
+        val title = squareCardCollection.header.title
+        ZLog.d("轮播图模板+1  Title=$title")
+        if(bannerDataListCache == null){
+            bannerDataListCache = HashMap()
+        }
+        val headerListData = bannerDataListCache?.get(id)
+        if(headerListData == null){
+            ZLog.d("轮播图模板 No cached list.")
+            squareCardCollection.itemList.forEach {
+                val banner = Gson().fromJson(it.data, ItemTypeBanner::class.java)
+//                ZLog.d("轮播图模板 add banner2:$banner")
+                headerList.add(banner)
+            }
+            bannerDataListCache?.put(id, headerList)
+        }else{
+            ZLog.d("轮播图模板 Find cached list.")
+            return
+        }
+
+        holder.getView<TextView>(R.id.tvTitle).text = title
+        val bannerLayout = holder.getView<Banner<ItemTypeBanner,
+                TemplateBannerAdapter<ItemTypeBanner>>>(R.id.banner)
+        if (bannerLayout.adapter == null) {
+            ZLog.d("轮播图模板 banner初始化.")
+            bannerLayout.apply {
+                adapter = TemplateBannerAdapter(null)
+                setPageTransformer(ScaleInTransformer())
+                indicator = CircleIndicator(context)
+                // init Event
+                setOnBannerListener { data, _ ->
+                    // todo
+                }
+                bannerLayout.setDatas(headerList)
+            }
+        }
+
     }
+    // </editor-fold>
 
 
     private fun initFollowCardView(holder: BaseViewHolder, item: Item) {
@@ -388,7 +420,9 @@ open class EyepetizerPagerAdapter(
         }
 
     }
+    // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="临时工具函数">
     //TODO 搞到工具类中去
     open fun getFormatHMS(t: Long): String? {
         val h = (t / 3600000).toInt()
@@ -408,6 +442,13 @@ open class EyepetizerPagerAdapter(
             SimpleDateFormat(dateFormat, Locale.getDefault())
         val date = Date(timeStamp)
         return sdf.format(date)
+    }
+    // </editor-fold>
+
+    override fun onViewDetachedFromWindow(holder: BaseViewHolder) {
+        super.onViewDetachedFromWindow(holder)
+        bannerDataListCache?.clear()
+        bannerDataListCache = null
     }
 }
 
