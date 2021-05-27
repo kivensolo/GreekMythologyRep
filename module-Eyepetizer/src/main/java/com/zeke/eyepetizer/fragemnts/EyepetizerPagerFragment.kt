@@ -11,6 +11,7 @@ import com.kingz.base.factory.ViewModelFactory
 import com.kingz.module.common.base.IRvScroller
 import com.kingz.module.common.utils.RvUtils
 import com.kingz.module.wanandroid.fragemnts.CommonFragment
+import com.scwang.smart.refresh.header.MaterialHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.constant.RefreshState
@@ -36,7 +37,7 @@ class EyepetizerPagerFragment(
 ) : CommonFragment<EyepetizerViewModel>(), IRvScroller {
 
 
-   // <editor-fold defaultstate="collapsed" desc="页面控件 Widgets">
+   // <editor-fold defaultstate="collapsed" desc="控件属性 Widgets">
     private lateinit var mRecyclerView: RecyclerView
     private var eyepetizerAdapter: EyepetizerPagerAdapter? = null
     private var swipeRefreshLayout: SmartRefreshLayout? = null
@@ -127,9 +128,11 @@ class EyepetizerPagerFragment(
         }
     }
 
+    // <editor-fold defaultstate="collapsed" desc="智能刷新控件初始化">
     private fun initSwipeRefreshLayout() {
         swipeRefreshLayout = rootView?.findViewById(R.id.swipeRefreshLayout)!!
         swipeRefreshLayout?.apply {
+            setRefreshHeader(MaterialHeader(context))
             setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
                 override fun onRefresh(refreshLayout: RefreshLayout) {
                     ZLog.d("onRefresh")
@@ -141,15 +144,15 @@ class EyepetizerPagerFragment(
                 override fun onLoadMore(refreshLayout: RefreshLayout) {
                     ZLog.d("onLoadMore  state=$state")
                     if(!TextUtils.isEmpty(nextPageUrl)){
-//                      apiUrl = nextPageUrl!!
                         requestTabPageDetail(nextPageUrl!!)
                     }else{
-                        finishLoadMore(500/*,false*/)//传入false表示加载失败
+                        finishLoadMoreWithNoMoreData()
                     }
                 }
             })
         }
     }
+    // </editor-fold>
     // </editor-fold>
 
 
