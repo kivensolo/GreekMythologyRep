@@ -17,6 +17,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.google.android.flexbox.FlexboxLayout
 import com.google.gson.Gson
+import com.kingz.module.common.ext.startActivity
 import com.kingz.module.common.utils.image.GlideLoader
 import com.youth.banner.Banner
 import com.youth.banner.indicator.CircleIndicator
@@ -25,6 +26,7 @@ import com.zeke.eyepetizer.bean.Item
 import com.zeke.eyepetizer.bean.ItemTypeBanner
 import com.zeke.eyepetizer.bean.cards.item.*
 import com.zeke.eyepetizer.constant.ViewTypeEnum
+import com.zeke.eyepetizer.videodetail.VideoDetailPlayActivity
 import com.zeke.kangaroo.utils.ZLog
 import com.zeke.moudle_eyepetizer.R
 import java.text.SimpleDateFormat
@@ -190,7 +192,7 @@ open class EyepetizerPagerAdapter(
     }
     // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="卡片播放器模板  Template video small">
+    // <editor-fold defaultstate="collapsed" desc="左播放器+右Title 模板  Template video small">
     private fun initVideoSmallCardView(holder: BaseViewHolder, item: Item) {
         val jsonObject = item.data
         val videoSmallCard = Gson().fromJson(jsonObject, VideoSmallCard::class.java)
@@ -220,7 +222,12 @@ open class EyepetizerPagerAdapter(
         GlideLoader.loadNetImageWithCorner(mContext!!, ivFeed, videoFeedUrl)
 
         // init Event
-//        holder.itemView.setOnClickListener { startVideoActivity(videoId, videoTitle, videoFeedUrl, videoPlayUrl, videoSmallCard.cover.blurred) }
+        holder.itemView.setOnClickListener {
+            startVideoActivity(
+                videoId, videoTitle, videoFeedUrl,
+                videoPlayUrl, videoSmallCard.cover.blurred
+            )
+        }
     }
     // </editor-fold>
 
@@ -267,13 +274,19 @@ open class EyepetizerPagerAdapter(
             if (ifHotReply) View.VISIBLE else View.GONE
 
         //init Event
-//        holder.getView<ImageView>(R.id.bg).setOnClickListener { startVideoActivity(videoId, videoTitle, videoFeedUrl, videoPlayUrl, dynamicInfoCard.simpleVideo.cover.blurred) }
+        holder.getView<View>(R.id.bg).setOnClickListener {
+            startVideoActivity(
+                videoId,
+                videoTitle,
+                videoFeedUrl,
+                videoPlayUrl,
+                dynamicInfoCard.simpleVideo.cover.blurred
+            )
+        }
     }
     // </editor-fold>
 
-    /**
-     * 自动播放模板
-     */
+   // <editor-fold defaultstate="collapsed" desc="AutoPlayFollow">
     private fun initAutoPlayFollowCardView(holder: BaseViewHolder, item: Item) {
 
         val jsonObject = item.data
@@ -319,11 +332,18 @@ open class EyepetizerPagerAdapter(
             itemView.findViewById<TextView>(R.id.tvTag).text = itemTag.name
             flexLayout.addView(itemView, layoutParams)
         }
-        // TODO init  Event
-        ivVideoCover.setOnClickListener {
-            //                startVideoActivity(videoId, title, videoCoverUrl, playUrl, autoPlayFollowCard.content.data.cover.blurred)
-        }
+        // init Event
+       ivVideoCover.setOnClickListener {
+           startVideoActivity(
+               videoId,
+               title,
+               videoCoverUrl,
+               playUrl,
+               autoPlayFollowCard.content.data.cover.blurred
+           )
+       }
     }
+   // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="轮播图模板  Template Banner">
     private fun initSquareCardCollectionView(holder: BaseViewHolder, item: Item) {
@@ -373,6 +393,7 @@ open class EyepetizerPagerAdapter(
     // </editor-fold>
 
 
+    // <editor-fold defaultstate="collapsed" desc="上播放器+下Title模板  Template FollowCard">
     private fun initFollowCardView(holder: BaseViewHolder, item: Item) {
         val jsonObject = item.data
         val followCard = Gson().fromJson(jsonObject, FollowCard::class.java)
@@ -416,10 +437,11 @@ open class EyepetizerPagerAdapter(
         }
 
         bkgImage.setOnClickListener {
-            //TODO 跳转视频播放页 startVideoActivity
+            startVideoActivity(videoId,title,feedUrl,playUrl,followCard.content.data.cover.blurred)
         }
 
     }
+    // </editor-fold>
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="临时工具函数">
@@ -449,6 +471,21 @@ open class EyepetizerPagerAdapter(
         super.onViewDetachedFromWindow(holder)
         bannerDataListCache?.clear()
         bannerDataListCache = null
+    }
+
+
+
+    //启动视频播放页面
+    private fun startVideoActivity(videoId: String, videoTitle: String, videoFeedUrl: String, videoPlayUrl: String, videoBgUrl: String) {
+        mContext?.startActivity<VideoDetailPlayActivity> {
+            it.apply {
+                putExtra("VIDEO_ID", videoId)
+                putExtra("VIDEO_BG", videoBgUrl)
+                putExtra("VIDEO_TITLE", videoTitle)
+                putExtra("VIDEO_FEED_URL", videoFeedUrl)
+                putExtra("VIDEO_PLAY_URL", videoPlayUrl)
+            }
+        }
     }
 }
 

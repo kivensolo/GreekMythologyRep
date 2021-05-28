@@ -68,7 +68,6 @@ class EyepetizerPagerFragment(
             dismissLoading()
             showErrorView(false)
             launchIO {
-
                 if (!TextUtils.isEmpty(it.nextPageUrl)) {
                     nextPageUrl = it.nextPageUrl
                 }else{
@@ -182,7 +181,7 @@ class EyepetizerPagerFragment(
                     addData(data.itemList)
                 } else {
                     if (swipeRefreshLayout!!.state == RefreshState.Refreshing) {
-                        addData(data.itemList)
+                        setList(data.itemList)
                     } else {
                         val defItemCount = getDefItemCount()
                         addData(defItemCount, data.itemList)
