@@ -8,9 +8,17 @@
         <item name="android:layout_weight">1</item>
         <item name="android:button">@null</item>
         <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/color_divider</item>
         <item name="android:drawablePadding">2dp</item>
         <item name="android:background">@null</item>
+    </style>
+    <style name="bottomTab_Green_Style" parent="bottomTab">
+        <item name="android:textColor">@color/main_bottom_green_color</item>
+    </style>
+    <style name="bottomTab_Yellow_Style" parent="bottomTab">
+        <item name="android:textColor">@color/main_bottom_yellow_color</item>
+    </style>
+    <style name="bottomTab_Red_Style" parent="bottomTab">
+        <item name="android:textColor">@color/main_bottom_red_color</item>
     </style>
 
     <style name="hub_round_btn_style">

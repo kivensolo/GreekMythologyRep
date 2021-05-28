@@ -224,7 +224,6 @@ class HomeActivity : BaseVMActivity(),ISwitcher {
     private fun initBottomTab() {
         //默认选中页
         tabKnowlegaPage.isChecked = true
-        tabKnowlegaPage.setTextColor(ContextCompat.getColor(this, R.color.white))
 
         tabKnowlegaPage.setOnClickListener(this)
         tabLive.setOnClickListener(this)
@@ -253,25 +252,21 @@ class HomeActivity : BaseVMActivity(),ISwitcher {
 
     override fun switchFragment(@ISwitcher.ButtomType type: Int) {
         ZLog.d("switchFragment:$type")
-        resetTabState()
         when (type) {
             ISwitcher.TYPE_KNOWLEGA -> {
 //                ZLog.d("switchFragment:" + BitmapUtils.native_get_Hello())
-                tabKnowlegaPage.setTextColor(ContextCompat.getColor(this, R.color.white))
                 fragmentsChange(
                     homeKnowlegeFragment,
                     homeLiveFragment,
                     homeOpenEyeFragment
                 )
             }
-            ISwitcher.TYPE_LIVE -> {
-                tabLive.setTextColor(ContextCompat.getColor(this, R.color.white))
-                fragmentsChange(
-                    homeLiveFragment,
-                    homeKnowlegeFragment,
-                    homeOpenEyeFragment
-                )
-            }
+            ISwitcher.TYPE_LIVE -> fragmentsChange(
+                homeLiveFragment,
+                homeKnowlegeFragment,
+                homeOpenEyeFragment
+            )
+
             ISwitcher.TYPE_EYEPETIZER -> {
                 //setNavigationBarColor(resources.getColor(R.color.google_red))
                 fragmentsChange(
@@ -335,14 +330,6 @@ class HomeActivity : BaseVMActivity(),ISwitcher {
             R.id.tabEyetizer -> switchFragment(ISwitcher.TYPE_EYEPETIZER)
             R.id.tabMine -> switchFragment(ISwitcher.TYPE_MINE)
         }
-    }
-
-    private fun resetTabState() {
-        val unselectedColor = ContextCompat.getColor(this, R.color.color_divider)
-        tabKnowlegaPage.setTextColor(unselectedColor)
-        tabLive.setTextColor(unselectedColor)
-        tabEyetizer.setTextColor(unselectedColor)
-        tabMine.setTextColor(unselectedColor)
     }
 
     private fun clickVersion(isClick: Boolean) {

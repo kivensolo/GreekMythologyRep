@@ -12,6 +12,7 @@ object RPath {
     const val PAGE_IJK_DMEO = "/module_MPlayer/jikDemoPage"
 
     const val PAGE_MUSIC_DETAIL = "/module_Music/detailPage"
+    const val PAGE_EYE_DETAIL = "/module_Eyepetizer/detailVideoPage"
     // 公共类型，带有appBar的页面
     const val PAGE_COMMON_APPBAR = "/module_Common/CommonAppBarPage"
 }

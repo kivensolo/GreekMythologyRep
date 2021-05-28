@@ -65,9 +65,9 @@
     </style>
 
     <style name="app_tab_layout_style" parent="AppTheme">
-        <item name="tabTextColor">@color/white</item>
-        <item name="tabIndicatorColor">@color/hub_yellow</item>
-        <item name="tabSelectedTextColor">@color/hub_yellow</item>
+        <item name="tabTextColor">@color/gray</item>
+        <item name="tabIndicatorColor">@color/black_transparent</item>
+        <item name="tabSelectedTextColor">@color/black</item>
         <item name="tabMode">scrollable</item>
         <item name="tabMaxWidth">@dimen/size_55dp</item>
     </style>

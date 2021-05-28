@@ -12,13 +12,13 @@
 
     <RadioButton
         android:id="@+id/tabKnowlegaPage"
-        style="@style/bottomTab"
+        style="@style/bottomTab_Green_Style"
         android:drawableTop="@drawable/tab_knowlega_icon"
         android:text="@string/bottom_knowlege"/>
 
     <RadioButton
         android:id="@+id/tabLive"
-        style="@style/bottomTab"
+        style="@style/bottomTab_Red_Style"
         android:drawableTop="@drawable/tab_vod_icon"
         android:text="@string/bottom_live"/>
 
@@ -32,13 +32,13 @@
 
     <RadioButton
         android:id="@+id/tabEyetizer"
-        style="@style/bottomTab"
+        style="@style/bottomTab_Yellow_Style"
         android:drawableTop="@drawable/tab_eyepetizer_icon"
         android:text="@string/eyepetizer"/>
 
     <RadioButton
         android:id="@+id/tabMine"
-        style="@style/bottomTab"
+        style="@style/bottomTab_Green_Style"
         android:drawableTop="@drawable/tab_mine_icon"
         android:text="@string/no_use"/>
 
