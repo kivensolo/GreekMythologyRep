@@ -61,9 +61,8 @@ class EyepetizerHomeFragment : CommonFragment<EyepetizerViewModel>(){
         })
     }
 
-    override fun lazyInit() {
-        super.lazyInit()
-        //TODO initData
+    override fun initData() {
+        super.initData()
         viewModel.getTabList()
     }
 

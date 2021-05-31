@@ -3,6 +3,7 @@ package com.kingz.module.wanandroid.fragemnts
 import android.app.Service
 import android.os.VibrationEffect
 import android.os.Vibrator
+import androidx.annotation.CallSuper
 import com.alibaba.android.arouter.launcher.ARouter
 import com.kingz.base.BaseVMFragment
 import com.kingz.module.common.LoadStatusView
@@ -28,20 +29,25 @@ abstract class CommonFragment<T : BaseReactiveViewModel> : BaseVMFragment<T>() {
     //公共Loading控件
     protected var loadStatusView: LoadStatusView? = null
 
+    @CallSuper
     override fun lazyInit() {
         initViewModel()
         initView()
+        initData()
     }
 
     /**
      * 初始化UI
      * 若子类使用到全局loading状态UI, 重写时，则需调用super
      */
+    @CallSuper
     override fun initView() {
         ZLog.d("initView()")
         loadStatusView = rootView?.findViewById(R.id.load_status)
         loadStatusView?.showProgress()
     }
+
+    open fun initData() {}
 
     override fun onViewDestory() {
         ZLog.d("onViewDestory.")

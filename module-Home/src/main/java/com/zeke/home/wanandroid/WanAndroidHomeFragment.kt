@@ -182,13 +182,9 @@ class WanAndroidHomeFragment : CommonFragment<WanAndroidViewModelV2>(),
         ZLog.d("onViewCreated")
     }
 
-
-    /**
-     * 以懒加载方式加载
-     */
-    override fun lazyInit() {
-        super.lazyInit()
-        if(articleAdapter?.itemCount == 1){
+    override fun initData() {
+        super.initData()
+        if (articleAdapter?.itemCount == 1) {
             // 无数据时(只有1个HeadView), 才请求数据
             viewModel.getBanner()
             requestArticalData(0)

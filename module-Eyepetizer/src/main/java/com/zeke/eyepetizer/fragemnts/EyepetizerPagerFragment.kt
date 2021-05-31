@@ -78,8 +78,6 @@ class EyepetizerPagerFragment(
             }
 
         })
-
-        initData()
     }
 
     /**
@@ -157,9 +155,10 @@ class EyepetizerPagerFragment(
 
  // <editor-fold defaultstate="collapsed" desc="数据处理 Data deal">
 
-    private fun initData() {
+    override fun initData() {
         requestTabPageDetail(apiUrl)
     }
+
     private fun refreshTabPageDetail(){
         viewModel.getTabPageDetail(apiUrl)
     }

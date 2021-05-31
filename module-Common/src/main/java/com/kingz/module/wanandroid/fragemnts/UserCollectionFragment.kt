@@ -100,8 +100,8 @@ class UserCollectionFragment : CommonFragment<WanAndroidViewModelV2>() {
         }
     }
 
-    override fun lazyInit() {
-        super.lazyInit()
+    override fun initData() {
+        super.initData()
         ZLog.d("articleAdapter?.itemCount = ${articleAdapter?.itemCount}")
         getMyCollectArticalData()
     }

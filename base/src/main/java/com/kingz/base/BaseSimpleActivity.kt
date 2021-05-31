@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.annotation.CallSuper
 import androidx.annotation.LayoutRes
 import androidx.annotation.RestrictTo
 import androidx.appcompat.app.AppCompatActivity
@@ -78,6 +79,7 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
      * 默认会添加一个Progress
      */
     @RestrictTo(RestrictTo.Scope.SUBCLASSES)
+    @CallSuper
     open fun initView(savedInstanceState: Bundle?) {
         progress = ProgressBar(baseContext)
         val progressParams = FrameLayout.LayoutParams(

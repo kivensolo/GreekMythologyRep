@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.CallSuper
 import androidx.lifecycle.lifecycleScope
 import com.zeke.reactivehttp.base.BaseReactiveViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -63,6 +64,7 @@ abstract class BaseVMFragment< T : BaseReactiveViewModel>
     open fun onViewDestory(){}
 
     /** VIewModel中持有的UI数据监听 */
+    @CallSuper
     open fun initViewModel() {}
 
     /** 子类重写 获取layoutId **/
