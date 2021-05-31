@@ -28,7 +28,6 @@ public abstract class PlayerActivity extends BaseVMActivity {
     protected static final String TAG_VOD_PLAY = "vod_play";
     protected static final String TAG_VOD_INFO = "vod_info";
     protected static final String TAG_VOD_DETAIL = "vod_detail";
-    protected static final int INVALID_LAYOUT_ID = -1;
 
     //播放部分的layout params
     protected LinearLayout.LayoutParams portraitParams;

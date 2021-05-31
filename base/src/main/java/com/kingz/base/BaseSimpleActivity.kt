@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.annotation.LayoutRes
+import androidx.annotation.RestrictTo
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -21,7 +23,6 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
 
     //优化思路: 全局单例weakRefebceDialog,显示的地方直接show,隐藏的地方直接dismiss
     private var progress: View? = null
-    var INVALID_LAYOUT_ID:Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,16 +38,15 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
 
     private fun initContentView() {
         val contentLayout = getContentLayout()
-        if (contentLayout != INVALID_LAYOUT_ID) {
+        if (contentLayout != R.layout.layout_invalid) {
             setContentView(contentLayout)
         } else {
             setContentView(getContentView())
         }
     }
 
-    /**
-     * Get layout id.
-     */
+
+    @LayoutRes
     abstract fun getContentLayout(): Int
 
     open fun getContentView():View? {return null}
@@ -64,17 +64,20 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
     /**
      * Init viewmodel
      */
+    @RestrictTo(RestrictTo.Scope.SUBCLASSES)
     abstract fun initViewModel()
 
     /**
      * Init data logic.
      */
+    @RestrictTo(RestrictTo.Scope.SUBCLASSES)
     abstract fun initData(savedInstanceState: Bundle?)
 
     /**
      * Init View.
      * 默认会添加一个Progress
      */
+    @RestrictTo(RestrictTo.Scope.SUBCLASSES)
     open fun initView(savedInstanceState: Bundle?) {
         progress = ProgressBar(baseContext)
         val progressParams = FrameLayout.LayoutParams(

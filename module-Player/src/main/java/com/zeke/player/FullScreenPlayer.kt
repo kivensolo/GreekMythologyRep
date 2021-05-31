@@ -78,7 +78,7 @@ class FullScreenPlayer : PlayerActivity(),CustomAdapt {
         super.onDestroy()
     }
 
-    override fun getContentLayout(): Int = INVALID_LAYOUT_ID
+    override fun getContentLayout(): Int = R.layout.layout_invalid
 
     override fun initData(savedInstanceState: Bundle?) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
