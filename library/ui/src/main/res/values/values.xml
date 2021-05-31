@@ -189,7 +189,7 @@
         <attr format="color" name="strokeColor_true"/>
 
 
-        <!-- 这里最终舍弃了系统clickable的方案，因为系统系统主动设置setOnClickListener后，会主动设置成true,所以这里采用自定义 -->
+        <!-- 这里最终舍弃了系统clickable的方案，因为系统主动设置setOnClickListener后，会主动设置成true,所以这里采用自定义 -->
         <attr format="boolean" name="clickable"/>
         <!-- clickable为false时，要展示的图片或颜色-->
         <attr format="reference|color" name="layoutBackground_clickFalse"/>

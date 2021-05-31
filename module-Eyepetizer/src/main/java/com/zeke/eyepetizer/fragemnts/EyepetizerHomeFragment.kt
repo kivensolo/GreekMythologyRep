@@ -22,7 +22,6 @@ import com.zeke.moudle_eyepetizer.R
  */
 class EyepetizerHomeFragment : CommonFragment<EyepetizerViewModel>(){
     private var tableLayout: TabLayout? = null
-    private var coverView: View? = null
     private var viewPager: ViewPager? = null
     private var currentFragment: Fragment? = null
     private var viewPagerAdapter: PagerAdapter? = null
@@ -37,7 +36,6 @@ class EyepetizerHomeFragment : CommonFragment<EyepetizerViewModel>(){
         super.initView()
         viewPagerAdapter = PagerAdapter(childFragmentManager, PageCreator())
         tableLayout = rootView?.findViewById(R.id.tab_layout)
-//        coverView = rootView?.findViewById(R.id.tab_cover)
         viewPager = rootView?.findViewById(R.id.viewpager)
         viewPager?.adapter = viewPagerAdapter
 

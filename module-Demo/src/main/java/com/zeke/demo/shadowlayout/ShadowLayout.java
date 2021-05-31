@@ -26,6 +26,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
@@ -67,8 +68,10 @@ public class ShadowLayout extends FrameLayout {
     private Drawable layoutBackground_true;
     private View firstView;
 
+    @ColorInt
     private int mBackGroundColor;
     private int mBackGroundColor_true = DEFAULT_CODE;
+    @ColorInt
     private int mShadowColor;
     /** 阴影的扩散范围 */
     private float mShadowLimit;
@@ -77,12 +80,7 @@ public class ShadowLayout extends FrameLayout {
     /** X|Y 方向偏移量 */
     private float mShadowOffsetX;
     private float mShadowOffsetY;
-    /** 四周阴影控制开关 */
-    private boolean leftShow;
-    private boolean rightShow;
-    private boolean topShow;
-    private boolean bottomShow;
-    private Paint shadowPaint;
+
     private Paint paint;
 
     private int leftPadding;
@@ -94,7 +92,17 @@ public class ShadowLayout extends FrameLayout {
 
     //ShadowLayout的样式，默认为pressed.
     private SelectorType selectorType = SelectorType.PRESS;
+    // <editor-fold defaultstate="collapsed" desc="阴影变量属性 Virable of shadow">
+    //是否显示阴影
     private boolean isShowShadow = true;
+    //四周阴影控制开关
+    private boolean leftShow;
+    private boolean rightShow;
+    private boolean topShow;
+    private boolean bottomShow;
+    private Paint shadowPaint;
+    // </editor-fold>
+
     private boolean isSym;
 
     //增加各个圆角的属性
@@ -152,6 +160,7 @@ public class ShadowLayout extends FrameLayout {
         }
     }
 
+    // <editor-fold defaultstate="collapsed" desc="构造函数">
     public ShadowLayout(Context context) {
         this(context, null);
     }
@@ -165,6 +174,7 @@ public class ShadowLayout extends FrameLayout {
         super(context, attrs, defStyleAttr);
         initView(context, attrs);
     }
+    // </editor-fold>
 
 
     public void setClickable(boolean clickable) {
@@ -542,6 +552,7 @@ public class ShadowLayout extends FrameLayout {
         }
     }
 
+    // <editor-fold defaultstate="collapsed" desc="UI初始化  Init ui">
     private void initView(Context context, AttributeSet attrs) {
         initAttributes(attrs);
         shadowPaint = new Paint();
@@ -565,9 +576,8 @@ public class ShadowLayout extends FrameLayout {
         paint.setColor(mBackGroundColor);
 
         setPadding();
-
-
     }
+    // </editor-fold>
 
     //将画笔附上 渐变色
     public void gradient(Paint paint) {
@@ -762,6 +772,7 @@ public class ShadowLayout extends FrameLayout {
     }
 
 
+    // <editor-fold defaultstate="collapsed" desc="自定义属性解析  Attributes parse">
     private void initAttributes(AttributeSet attrs) {
         TypedArray attr = getContext().obtainStyledAttributes(attrs, R.styleable.ShadowLayout);
         if (attr == null) {
@@ -891,6 +902,7 @@ public class ShadowLayout extends FrameLayout {
             attr.recycle();
         }
     }
+    // </editor-fold>
 
     /**
      * 初始化阴影偏移量
@@ -1377,7 +1389,7 @@ public class ShadowLayout extends FrameLayout {
     }
 
 
-    public void isAddAlpha(int color) {
+    public void isAddAlpha(@ColorInt int color) {
         //获取单签颜色值的透明度，如果没有设置透明度，默认加上#2a
         if (Color.alpha(color) == 255) {
             String red = Integer.toHexString(Color.red(color));
