@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 import com.kingz.module.common.AppLifeCycle
 import com.kingz.module.common.CommonApp
@@ -69,6 +70,7 @@ abstract class BaseFragment : Fragment() {
     }
 
     /** 设置布局id*/
+    @LayoutRes
     abstract fun getLayoutId(): Int
 
     /** 进行初始化操作，在onCreateView中调用*/

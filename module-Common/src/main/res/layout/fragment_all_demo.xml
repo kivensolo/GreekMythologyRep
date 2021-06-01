@@ -9,9 +9,8 @@
         android:layout_height="match_parent"
         android:id="@android:id/list"
         android:dividerHeight="1dp"
-        android:divider="@color/lightskyblue"
-        android:background="@color/black"
-        android:cacheColorHint="@color/cornflowerblue"
+        android:divider="@color/gray"
+        android:cacheColorHint="@color/gray"
         android:groupIndicator="@null">
 	</com.zeke.kangaroo.view.animation.AnimatedExpandableListView>
 

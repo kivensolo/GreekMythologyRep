@@ -20,10 +20,8 @@ import com.zeke.kangaroo.view.animation.AnimatedExpandableListView
  * date：2020/2/15
  * description：动画伸缩扩展列表的Demo样例Fragment
  */
-class ExpandableDemoFragment : BaseFragment()
-        , DemoContract.View
-        , ExpandableListView.OnChildClickListener
-        , View.OnClickListener {
+class ExpandableDemoFragment : BaseFragment(), DemoContract.View,
+    ExpandableListView.OnChildClickListener, View.OnClickListener {
 
     private var mPresenter: DemoPresenter = DemoPresenter(this)
     private var expandAdapter: DemoFragmentExpandableListAdapter? = null
@@ -52,10 +50,11 @@ class ExpandableDemoFragment : BaseFragment()
     override fun onViewCreated() {
         listView = rootView?.findViewById(android.R.id.list)
         expandAdapter = DemoFragmentExpandableListAdapter(context)
-        listView!!.setAdapter(expandAdapter)
-        listView!!.setOnGroupClickListener(ImpOnGroupClickListener())
-        listView!!.setOnChildClickListener(this)
-
+        listView?.apply {
+            setAdapter(expandAdapter)
+            setOnGroupClickListener(ImpOnGroupClickListener())
+            setOnChildClickListener(this@ExpandableDemoFragment)
+        }
         mPresenter.getDemoInfo(activity!!)
     }
 

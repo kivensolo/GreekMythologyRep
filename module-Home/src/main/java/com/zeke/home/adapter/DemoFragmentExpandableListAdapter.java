@@ -85,28 +85,24 @@ public class DemoFragmentExpandableListAdapter extends AnimatedExpandableListVie
         GroupHolder viewHolder;
         if (null == convertView) {
             viewHolder = new GroupHolder();
-            convertView = mInflater.inflate(
-                    R.layout.expand_group_layout,
-                    null,
-                    false);
-            viewHolder.itemText = (TextView) convertView.findViewById(R.id.parent_group);
-            viewHolder.indictorImg = (ImageView) convertView.findViewById(R.id.parent_group_img);
+            convertView = mInflater.inflate(R.layout.expand_group_layout,null, false);
+            viewHolder.itemText = convertView.findViewById(R.id.parent_group);
+            viewHolder.indictorImg = convertView.findViewById(R.id.parent_group_img);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (GroupHolder) convertView.getTag();
         }
-        viewHolder.itemText.setTextSize(20);
         viewHolder.itemText.setGravity(Gravity.CENTER_VERTICAL | Gravity.START);
 //        viewHolder.itemText.setText(groupList.get(groupPosition));
         viewHolder.itemText.setText(sampleGroups.get(groupPosition).getTitle());
         if (isExpanded) {
-            convertView.setBackground(mContext.getResources().getDrawable(R.color.hub_yellow_light));
-            viewHolder.itemText.setTextColor(mContext.getResources().getColor(R.color.black));
-            viewHolder.indictorImg.setBackground(mContext.getResources().getDrawable(R.drawable.down_arrow));
+            convertView.setBackground(mContext.getResources().getDrawable(R.color.darkgrey));
+            viewHolder.itemText.setTextColor(mContext.getResources().getColor(R.color.hub_yellow));
+            viewHolder.indictorImg.setBackground(mContext.getResources().getDrawable(R.drawable.ic_down_arrow));
         } else {
             convertView.setBackground(mContext.getResources().getDrawable(R.color.transparent));
-            viewHolder.itemText.setTextColor(mContext.getResources().getColor(R.color.mediumaquamarine));
-            viewHolder.indictorImg.setBackground(mContext.getResources().getDrawable(R.drawable.right_arrow));
+            viewHolder.itemText.setTextColor(mContext.getResources().getColor(R.color.black));
+            viewHolder.indictorImg.setBackground(mContext.getResources().getDrawable(R.drawable.ic_right_arrow));
         }
         return convertView;
     }
@@ -120,13 +116,11 @@ public class DemoFragmentExpandableListAdapter extends AnimatedExpandableListVie
         if (null == convertView) {
             viewHolder = new ChildHolder();
             convertView = mInflater.inflate(R.layout.expand_child_layout, null, false);
-            viewHolder.itemText = (TextView) convertView.findViewById(R.id.child_group);
+            viewHolder.itemText = convertView.findViewById(R.id.child_group);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ChildHolder) convertView.getTag();
         }
-        viewHolder.itemText.setTextSize(20);
-        viewHolder.itemText.setGravity(Gravity.CENTER_VERTICAL | Gravity.START);
         viewHolder.itemText.setText(sampleGroups.get(groupPosition).getSampleByIndex(childPosition).getName());
         return convertView;
     }
