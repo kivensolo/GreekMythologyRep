@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.zeke.demo.R
-import kotlinx.android.synthetic.main.activity_appbarlayout_demo.*
+import kotlinx.android.synthetic.main.layout_bars_test.*
 
 /**
  * author：ZekeWang

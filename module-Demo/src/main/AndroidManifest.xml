@@ -39,6 +39,8 @@
         <!--   AppBarLayout 相关页面     -->
         <activity android:name="com.zeke.demo.meterial.AppBarLayoutDemoActivity" />
 
+        <activity android:name="com.zeke.demo.meterial.ImmersionBarDemoActivity" />
+
         <activity
             android:name="com.zeke.demo.meterial.CollapseToolbarNoramalActivity"
             android:theme="@style/AppTheme" />

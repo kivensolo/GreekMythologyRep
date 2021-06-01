@@ -214,6 +214,10 @@
       {
         "name": "AppBarLayout效果",
         "class": "com.zeke.demo.meterial.AppBarLayoutDemoActivity"
+      },
+      {
+        "name": "沉浸式效果测试",
+        "class": "com.zeke.demo.meterial.ImmersionBarDemoActivity"
       }
     ]
   },

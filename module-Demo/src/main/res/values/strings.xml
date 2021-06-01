@@ -35,13 +35,25 @@
 
      <!--Shadow 效果测试页面-->
     <string name="shadow_title" translatable="false">ShadowLayout预览</string>
-    <string name="shadow_content">嵌套控件</string>
+    <string name="shadow_content" translatable="false">嵌套控件</string>
     <string name="shadow_color_title">阴影颜色(R，G，B):</string>
     <string name="shadow_limit_title">阴影扩撒程度:</string>
     <string name="shadow_offsetx_title">阴影X偏移量:</string>
     <string name="shadow_offsety_title">阴影Y偏移量:</string>
     <string name="shadow_round_title">圆角大小:</string>
     <string name="shadow_alpha_title">透明度:</string>
+
+
     <string name="appbarlayout_one_child">AppBarLayout只有1个Child</string>
     <string name="collapseToolBarDemo">滑动时上部分折叠效果</string>
+
+    <!-- BarsLayout 测试页面   -->
+    <string name="bars_title">ImmersionBar 效果测试</string>
+    <string name="transparent_status_bar">全屏&amp;Bars透明(布局入侵)</string>
+    <string name="hide_status_bar">隐藏状态&amp;导航栏</string>
+    <string name="change_status_bar_coor">改变Bars颜色同ActionBar</string>
+    <string name="change_status_bar_text_coor">Light模式</string>
+    <string name="hide_navigation_bar">只隐藏导航栏</string>
+    <string name="reset_bars">恢复Bars初始状态</string>
+    <string name="change_navigation_bar_coor">改变导航栏颜色</string>
 </resources>

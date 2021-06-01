@@ -158,6 +158,7 @@ public class MusicPosterPages extends BaseActivity {
         view.setItemAnimator(new DefaultItemAnimator());
         view.setAnimation(deleteAnimation);
     }
+// <editor-fold defaultstate="collapsed" desc="子View触摸辅助类">
 
     /**
      * ItemView 的触摸辅助回调类
@@ -206,7 +207,7 @@ public class MusicPosterPages extends BaseActivity {
 
         @Override
         public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-            //如果设置了非0的swipeFlags，我们在滑动item的时候就会回调onSwiped的方法
+            //如果设置了非0的swipeFlags，在滑动item的时候就会回调onSwiped的方法
         }
 
         //当长按选中item的时候（拖拽开始的时候）调用
@@ -229,10 +230,11 @@ public class MusicPosterPages extends BaseActivity {
         @Override
         public boolean isLongPressDragEnabled() {
             //告诉ItemTouchHelper是否需要RecyclerView支持长按拖拽(这是整体的设置)
-            return false;
+            return true;
         }
 
     }
+// </editor-fold>
 
 
     /**
