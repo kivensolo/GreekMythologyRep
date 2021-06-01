@@ -68,13 +68,11 @@ class HomeContainerFragment : HomeBaseFragment<RecomPresenter>(), RecomPageContr
         get() = activity != null && (activity as BaseActivity)
                 .isActivityShow && isVisible
 
+    /**
+     *
+     */
     override fun onViewCreated() {
         super.onViewCreated()
-        tableLayout?.setSelectedTabIndicatorColor(resources.getColor(R.color.hub_yellow))
-        val normalColor = resources.getColor(android.R.color.white)
-        val selectedColor = resources.getColor(R.color.hub_yellow)
-        tableLayout?.setTabTextColors(normalColor, selectedColor)
-
         mPresenter.getPageContent(activity!!)
     }
 

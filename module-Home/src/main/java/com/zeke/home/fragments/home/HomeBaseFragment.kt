@@ -1,6 +1,7 @@
 package com.zeke.home.fragments.home
 
 import android.view.View
+import androidx.annotation.CallSuper
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.viewpager.widget.ViewPager
@@ -15,6 +16,9 @@ import com.zeke.home.entity.TemplatePageData
 /**
  * time: 2020-2-8 11:38
  * description：首页的几个Fragment的父类
+ *
+ *  MVP结构
+ *
  * 使用
  * |-----Toolbar-----|
  * |    viewPager    |
@@ -34,6 +38,7 @@ abstract class HomeBaseFragment<T : IPresenter> : BaseFragment(), IView {
 
     override fun getLayoutId(): Int = R.layout.fragment_tab
 
+    @CallSuper
     override fun onViewCreated() {
         viewPagerAdapter = HomePagerAdapter(childFragmentManager, PageCreator())
         tableLayout = rootView?.findViewById(R.id.tab_layout)
@@ -45,11 +50,19 @@ abstract class HomeBaseFragment<T : IPresenter> : BaseFragment(), IView {
         }
 
         //tabLayout 初始化
-        with(tableLayout!!){
+        with(tableLayout!!) {
             visibility = View.GONE
+
+            // 设置文字默认及选中样式
+            setSelectedTabIndicatorColor(resources.getColor(R.color.ic_green_light))
+            val normalColor = resources.getColor(android.R.color.black)
+            val selectedColor = resources.getColor(R.color.ic_green_light)
+            setTabTextColors(normalColor, selectedColor)
+
             //tableLayout 与 ViewPager 绑定
             setupWithViewPager(viewPager)
         }
+
         loadStatusView = rootView?.findViewById(R.id.load_status)
         loadStatusView?.showProgress()
 

@@ -96,8 +96,8 @@ public class DemoFragmentExpandableListAdapter extends AnimatedExpandableListVie
 //        viewHolder.itemText.setText(groupList.get(groupPosition));
         viewHolder.itemText.setText(sampleGroups.get(groupPosition).getTitle());
         if (isExpanded) {
-            convertView.setBackground(mContext.getResources().getDrawable(R.color.darkgrey));
-            viewHolder.itemText.setTextColor(mContext.getResources().getColor(R.color.hub_yellow));
+            convertView.setBackground(mContext.getResources().getDrawable(R.color.ic_green_light));
+            viewHolder.itemText.setTextColor(mContext.getResources().getColor(R.color.white));
             viewHolder.indictorImg.setBackground(mContext.getResources().getDrawable(R.drawable.ic_down_arrow));
         } else {
             convertView.setBackground(mContext.getResources().getDrawable(R.color.transparent));
