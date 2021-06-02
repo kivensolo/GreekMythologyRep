@@ -15,7 +15,7 @@
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:srlPrimaryColor="@color/app_accent"
+        app:srlPrimaryColor="@color/colorPrimary"
         app:srlAccentColor="@color/text_dark"
         app:srlEnablePreviewInEditMode="true"
         app:srlEnableLoadMoreWhenContentNotFull="false">

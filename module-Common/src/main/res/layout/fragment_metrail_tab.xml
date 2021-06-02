@@ -9,7 +9,7 @@
         style="@style/app_tab_layout_style"
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_33dp"
-        android:background="@color/app_main_color"
+        android:background="@color/colorPrimary"
         android:paddingStart="18dp"
         android:paddingEnd="18dp"
         app:contentInsetStart="0dp"

@@ -8,10 +8,10 @@
         <!-- API 21 theme customizations can go here. -->
 
         <!--App Bar 的背景色-->
-        <item name="colorPrimary">@color/app_main_color</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
         <!-- status bar（状态栏）背景色 -->
         <item name="colorPrimaryDark">@color/black</item>
         <!-- 许多控件在选中状态或获取焦点状态下使用这个颜色 -->
-        <item name="colorAccent">@color/app_accent</item>
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
 </resources>

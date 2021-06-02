@@ -9,14 +9,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="56dp"
-        android:background="@color/palevioletred"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:cornerRadius="@dimen/dp_8"
-        app:shadowColor="@color/text_yellow"
-        app:shadowLimit="@dimen/dp_6"
-        app:strokeColor="@color/lightgreen">
+        app:cornerRadius="@dimen/dp_2"
+        app:shadowLimit="@dimen/dp_12"
+        app:shapeMode="ripple"
+        app:shadowColor="@color/google_blue"
+        app:strokeColor="@color/google_yellow">
+
         <TextView
             android:id="@+id/txt_test"
             android:layout_width="100dp"

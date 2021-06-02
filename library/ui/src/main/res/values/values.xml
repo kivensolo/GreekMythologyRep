@@ -127,6 +127,13 @@
 
    <!-- ShadowLayout自定义样式属性 -->
    <declare-styleable name="ShadowLayout">
+        <!-- 边框样式
+            宽度，颜色，圆角x-radius，圆角y-radius，位置
+            宽度，颜色，位置
+            eg: 8,E01595EF,12,12,0.35
+        -->
+        <attr format="string" name="border"/>
+
         <!-- 1、关于阴影 -->
         <!--阴影：是否要显示阴影，可能有只想用shape和selector功能，不想要阴影-->
         <attr format="boolean" name="shadowHidden"/>
@@ -181,7 +188,7 @@
         <!-- 为true的默认背景，必须搭配layoutBackground属性使用。否则报错-->
         <attr format="reference|color" name="layoutBackground_true"/>
 
-        <!-- stroke样式，stroke的宽度-->
+        <!-- 4、stroke样式，stroke的宽度-->
         <attr format="dimension" name="strokeWith"/>
         <!-- 为false时，默认的stoke颜色值，可单独使用-->
         <attr format="color" name="strokeColor"/>
@@ -195,7 +202,7 @@
         <attr format="reference|color" name="layoutBackground_clickFalse"/>
 
 
-       <!-- 4、关于填充的渐变色 -->
+       <!-- 5、关于填充的渐变色 -->
         <!-- 如果设置了渐变色。那么将以渐变色为主。layoutBackground属性将无效 -->
         <!-- 渐变的起始颜色 -->
         <attr name="startColor" format="color" />
