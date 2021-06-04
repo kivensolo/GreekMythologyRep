@@ -13,6 +13,7 @@ buildscript {
         maven { url 'https://maven.aliyun.com/repository/public'}   //central仓和jcenter仓的聚合仓
         maven { url 'https://maven.aliyun.com/repository/google' }
         maven { url "https://jitpack.io" }
+        mavenCentral()
 
         //maven { url uri('D:/repos')}  //local repositories
     }
@@ -31,11 +32,14 @@ allprojects {
         maven{ url 'https://maven.aliyun.com/repository/public'}
         maven { url 'https://maven.aliyun.com/repository/google' }
         maven { url "https://jitpack.io" }
-        maven{
-            url 'https://dl.bintray.com/kivensolo/maven'
-            //查看有哪些版本可以下载
-            //https://dl.bintray.com/kivensolo/maven/com/github/zeke/kangaroo/
-        }
+        mavenCentral()
+
+        //自己的Jcenter仓库 已废弃2021/05
+//        maven{
+//            url 'https://dl.bintray.com/kivensolo/maven'
+//            //查看有哪些版本可以下载
+//            //https://dl.bintray.com/kivensolo/maven/com/github/zeke/kangaroo/
+//        }
     }
 
 }
