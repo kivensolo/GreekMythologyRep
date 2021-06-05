@@ -12,7 +12,7 @@ import com.kingz.module.common.base.BaseActivity
 import com.kingz.module.common.base.BaseFragment
 import com.kingz.module.common.base.IPresenter
 import com.kingz.module.common.bean.MediaParams
-import com.module.tools.ScreenTools
+import com.zeke.kangaroo.utils.ScreenDisplayUtils
 import com.zeke.kangaroo.utils.VolumeUtils
 import com.zeke.module_player.R
 import com.zeke.play.BasePlayPop
@@ -35,12 +35,15 @@ import kotlin.math.min
  * 支持正常的播控操作
  */
 class PlayFragment : BaseFragment(), IPlayerView, CustomAdapt {
-    var mUiSwitcher: PlayerUiSwitcher? = null
-        private set
-    private var playPresenter: PlayPresenter? = null
-    private var playView: SurfaceView? = null
     private var mediaParams: MediaParams? = null
     private val basePlayPop: BasePlayPop? = null
+    //UI交互控制器
+    var mUiSwitcher: PlayerUiSwitcher? = null
+        private set
+    //播放行为控制器
+    private var playPresenter: PlayPresenter? = null
+    private var playView: SurfaceView? = null
+    //手势控制
     private var gestureDetector: GestureDetector? = null
     private var gestureDetectorLsr: PlayerGestureListener? = null
 
@@ -79,14 +82,14 @@ class PlayFragment : BaseFragment(), IPlayerView, CustomAdapt {
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated() {
-        playView = rootView?.findViewById(R.id.play_view)
+        playView = rootView?.findViewById(R.id.surface_container)
         //playView.setOnClickListener(this);
         playView?.setOnTouchListener { _, event ->
             if (mUiSwitcher?.isLocked == false) {
                 gestureDetector?.onTouchEvent(event)
             }
             if (event.action == MotionEvent.ACTION_UP) {
-                if (mUiSwitcher!!.isGestureViewVisible) {
+                if (mUiSwitcher!!.isUiComponentsVisible) {
                     if (mUiSwitcher!!.isSeekingByGesture) {
                         val durationOffSet = mUiSwitcher!!.seekingDurationByGesture
                         val currentPosition = playPresenter!!.currentPosition
@@ -96,7 +99,7 @@ class PlayFragment : BaseFragment(), IPlayerView, CustomAdapt {
                             this.play()
                         }
                     }
-                    mUiSwitcher?.isGestureViewVisible = false
+                    mUiSwitcher?.setCompoentsVisible(false)
                 }
                 if (mUiSwitcher!!.isLocked) {
                     mUiSwitcher?.switchVisibleState()
@@ -202,7 +205,7 @@ class PlayFragment : BaseFragment(), IPlayerView, CustomAdapt {
             mActivity?.requestedOrientation = orientation
             playView?.postDelayed({
                 //2秒后，横竖屏在由重力感应决定
-                if (isShown && autoRotation == 1 && !mUiSwitcher!!.isLocked) {
+                if (isViewVisible && autoRotation == 1 && !mUiSwitcher!!.isLocked) {
                     mActivity!!.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
                 }
             }, ORIENTATION_CHANGE_DELAY_MS)
@@ -216,8 +219,8 @@ class PlayFragment : BaseFragment(), IPlayerView, CustomAdapt {
     override fun hideLoading() {}
     override fun showError(listener: View.OnClickListener?) {}
     override fun showEmpty(listener: View.OnClickListener?) {}
-    override val isShown: Boolean
-        get() = activity != null && (activity as BaseActivity?)!!.isActivityShow && isVisible
+    override val isViewVisible: Boolean
+        get() = activity != null && (activity as BaseActivity?)!!.isActivityShow && isViewVisible
 
     override fun showMessage(tips: String?) {}
     override fun getPlayView(): View? = playView
@@ -283,7 +286,7 @@ class PlayFragment : BaseFragment(), IPlayerView, CustomAdapt {
         private val seekProtectTime = 3 * 1000L
 
         override fun onGestureLeftTB(ratio: Float) { //            ZLog.d(TAG,"onGesture LeftTB ratio=" + ratio);
-            ScreenTools.setScreenBrightness(activity, ratio)
+            ScreenDisplayUtils.setScreenBrightness(activity, ratio)
             mUiSwitcher?.updateBrightness(ratio)
         }
 

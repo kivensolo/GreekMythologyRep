@@ -56,8 +56,8 @@ class VodInfoFragment : BaseFragment(), IPlayerView {
     //影片信息
     private var mVideoInfo: VideoInfo? = null
 
-    override val isShown: Boolean
-        get() = activity != null && (activity as BaseActivity).isActivityShow && isVisible
+    override val isViewVisible: Boolean
+        get() = activity != null && (activity as BaseActivity).isActivityShow && isViewVisible
     override fun getLayoutId(): Int = R.layout.detailpage_vodinfo_layout
 
     override fun onCreateViewReady() {

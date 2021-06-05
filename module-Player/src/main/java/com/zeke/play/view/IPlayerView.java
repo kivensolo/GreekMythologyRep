@@ -7,6 +7,7 @@ import com.kingz.module.common.base.IAppView;
 /**
  * date：2019/7/30
  * description：播放器顶层View接口
+ * TODO 把IPLayerView和IAppView隔离开
  */
 
 public interface IPlayerView extends IAppView,View.OnClickListener {

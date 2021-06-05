@@ -36,6 +36,11 @@ public class PlayPresenter extends AbsBasePresenter implements IPlayerEventsCall
         seekBarChangeListener = new PlaySeekBarChangeListener();
     }
 
+    public void changePlayerKernel(IPlayer player){
+        //TODO 判断是否相同
+        this.mPlayer = player;
+    }
+
     public void setPlayParams(MediaParams params){
         mPlayParams = params;
     }

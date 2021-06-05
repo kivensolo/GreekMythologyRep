@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FF979797">
+
+    <Button
+        android:id="@+id/full_btn"
+        style="@style/demo_btn_style"
+        android:text="full"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.061"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.519" />
+
+    <Button
+        android:id="@+id/play_player"
+        style="@style/demo_btn_style"
+        android:layout_marginStart="16dp"
+        android:text="paly"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/full_btn"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.519" />
+
+    <Button
+        android:id="@+id/pause_player"
+        style="@style/demo_btn_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="5dp"
+        android:text="pause"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/full_btn"
+        app:layout_constraintTop_toBottomOf="@+id/play_player"
+        app:layout_constraintVertical_bias="0.08" />
+
+    <Button
+        android:id="@+id/release_player"
+        style="@style/demo_btn_style"
+        android:layout_marginStart="40dp"
+        android:text="Release"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/play_player"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.519" />
+
+    <Button
+        android:id="@+id/rebuild_player"
+        style="@style/demo_btn_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="5dp"
+        android:text="Rebuild"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/pause_player"
+        app:layout_constraintTop_toBottomOf="@+id/release_player"
+        app:layout_constraintVertical_bias="0.083" />
+
+    <LinearLayout
+        android:id="@+id/videoPlayer_layout"
+        android:layout_width="350dp"
+        android:layout_height="250dp"
+        android:background="@android:color/holo_blue_dark"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="PxUsage">
+
+        <com.zeke.play.wigets.SimpleZPlayerView
+            android:id="@+id/player_view"
+            android:layout_width="300dp"
+            android:layout_height="200dp"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_height="500px"
+            tools:layout_width="800px" >
+        </com.zeke.play.wigets.SimpleZPlayerView>
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

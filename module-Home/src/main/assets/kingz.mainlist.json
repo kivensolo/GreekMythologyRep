@@ -177,6 +177,9 @@
       },{
         "name": "IJK SampleList(Not ready)",
         "class": "com.zeke.play.activities.IJKSampleMediaActivity"
+      },{
+        "name": "ZPlayerView Test",
+        "class": "com.zeke.play.activities.ZPlayerViewTest"
       }
     ]
   },

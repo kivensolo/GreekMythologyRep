@@ -24,7 +24,7 @@ interface IAppView {
     /**
      * 是否可见
      */
-    val isShown: Boolean
+    val isViewVisible: Boolean
 
     /**
      * 弹出吐司

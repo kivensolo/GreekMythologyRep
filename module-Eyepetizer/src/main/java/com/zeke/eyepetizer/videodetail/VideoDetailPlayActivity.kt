@@ -3,6 +3,7 @@ package com.zeke.eyepetizer.videodetail
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.kingz.base.BaseVMActivity
+import com.kingz.module.common.bean.MediaParams
 import com.kingz.module.common.router.RPath
 import com.kingz.module.common.utils.image.GlideLoader
 import com.zeke.eyepetizer.bean.Data
@@ -24,6 +25,9 @@ class VideoDetailPlayActivity : BaseVMActivity() {
         const val TAG = "VideoDetailPlayActivity"
     }
 
+    //视频参数
+    private var mediaParams: MediaParams? = null
+
     //data from intent
     private lateinit var videoId: String                  //视频标志ID
     private lateinit var videoTitle: String               //视频标题
@@ -42,25 +46,31 @@ class VideoDetailPlayActivity : BaseVMActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        parseIntent()
-
-        //背景图片加载
-        GlideLoader.loadNetBitmap(this, blurredBackgroundUrl) {
-            root.background = it
-        }
         // 播放器初始化
 
         // 列表初始化
     }
 
     private fun parseIntent() {
-        videoId = intent.getStringExtra("VIDEO_ID")
-        videoTitle = intent.getStringExtra("VIDEO_TITLE")
-        videoFeedUrl = intent.getStringExtra("VIDEO_FEED_URL")
-        videoPlayUrl = intent.getStringExtra("VIDEO_PLAY_URL")
-        blurredBackgroundUrl = intent.getStringExtra("VIDEO_BG")
+        mediaParams = intent.getParcelableExtra(MediaParams.PARAMS_KEY)
+
+//        videoId = intent.getStringExtra("VIDEO_ID")
+//        videoTitle = intent.getStringExtra("VIDEO_TITLE")
+//        videoFeedUrl = intent.getStringExtra("VIDEO_FEED_URL")
+//        videoPlayUrl = intent.getStringExtra("VIDEO_PLAY_URL")
+//        blurredBackgroundUrl = intent.getStringExtra("VIDEO_BG")
     }
 
     override fun initData(savedInstanceState: Bundle?) {
+        parseIntent()
+        with(videoPlayer) {
+            setDataSource(mediaParams!!)
+            open()
+        }
+
+        //背景图片加载
+        GlideLoader.loadNetBitmap(this, mediaParams?.videoBkg ?: "") {
+            root.background = it
+        }
     }
 }

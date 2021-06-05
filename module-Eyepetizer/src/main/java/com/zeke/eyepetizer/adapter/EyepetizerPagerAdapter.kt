@@ -17,6 +17,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.google.android.flexbox.FlexboxLayout
 import com.google.gson.Gson
+import com.kingz.module.common.bean.MediaParams
 import com.kingz.module.common.ext.startActivity
 import com.kingz.module.common.utils.image.GlideLoader
 import com.youth.banner.Banner
@@ -473,17 +474,20 @@ open class EyepetizerPagerAdapter(
         bannerDataListCache = null
     }
 
-
-
     //启动视频播放页面
-    private fun startVideoActivity(videoId: String, videoTitle: String, videoFeedUrl: String, videoPlayUrl: String, videoBgUrl: String) {
+    private fun startVideoActivity(videoId: String, videoTitle: String,
+                                   videoFeedUrl: String, videoPlayUrl: String,
+                                   videoBgUrl: String) {
         mContext?.startActivity<VideoDetailPlayActivity> {
             it.apply {
-                putExtra("VIDEO_ID", videoId)
-                putExtra("VIDEO_BG", videoBgUrl)
-                putExtra("VIDEO_TITLE", videoTitle)
-                putExtra("VIDEO_FEED_URL", videoFeedUrl)
-                putExtra("VIDEO_PLAY_URL", videoPlayUrl)
+                putExtra(MediaParams.PARAMS_KEY, MediaParams().apply {
+                    this.videoId = videoId
+                    this.videoUrl = videoPlayUrl
+                    this.videoBkg = videoBgUrl
+                    this.videoName = videoTitle
+                    this.videoType = "vod"
+                })
+//                putExtra("VIDEO_FEED_URL", videoFeedUrl)
             }
         }
     }

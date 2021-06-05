@@ -17,11 +17,10 @@ import com.zeke.play.presenter.PlayPresenter;
 public class PlayerUiSwitcher {
     private static final String TAG = PlayerUiSwitcher.class.getSimpleName();
 
-//    private IMediaPlayer _mp;
-
     private PlayPresenter _presenter;
     private View rootView;
     private TopBarController topBarController;
+    private CenterBarController centerBarController;
     private BottomBarController bottomBarController;
     private LockPanelController lockPanelController;
     private CoverPanelController coverPanelController;
@@ -33,6 +32,7 @@ public class PlayerUiSwitcher {
     private static final int SCREEN_UNSPECIFIED = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
     private static final int CONTROLLER_DELAY_GONE_MS = 5000;
 
+    // <editor-fold defaultstate="collapsed" desc="自动隐藏组件">
     /**
      * 显示和关闭 各个状态栏的Runnable
      */
@@ -45,12 +45,14 @@ public class PlayerUiSwitcher {
                     bottomBarController);
         }
     };
+    // </editor-fold>
 
     public PlayerUiSwitcher(PlayPresenter playPresenter, View view) {
         _presenter = playPresenter;
         rootView = view;
         bufferLoadView = rootView.findViewById(R.id.play_load_layout);
         topBarController = new TopBarController(view);
+        centerBarController = new CenterBarController(view);
         bottomBarController = new BottomBarController(view);
         lockPanelController = new LockPanelController(view);
         coverPanelController = new CoverPanelController(view);
@@ -61,6 +63,7 @@ public class PlayerUiSwitcher {
     public void setOnClickListener(View.OnClickListener listener) {
         rootView.setOnClickListener(listener);
         topBarController.setOnClickListener(listener);
+        centerBarController.setOnClickListener(listener);
         bottomBarController.setOnClickListener(listener);
         coverPanelController.setOnClickListener(listener);
         lockPanelController.setOnClickListener(new View.OnClickListener() {
@@ -97,7 +100,7 @@ public class PlayerUiSwitcher {
         return gestureViewController.getDurationOffset();
     }
 
-    public void setGestureViewVisible(boolean display) {
+    public void setCompoentsVisible(boolean display) {
         showControllerBar(display, gestureViewController);
     }
 
@@ -130,9 +133,9 @@ public class PlayerUiSwitcher {
     }
 
     /**
-     * 手势交互界面是否Visible
+     * UI组件否Visible
      */
-    public boolean isGestureViewVisible() {
+    public boolean isUiComponentsVisible() {
         return gestureViewController.isShown();
     }
 
@@ -191,7 +194,6 @@ public class PlayerUiSwitcher {
      * 播放状态
      */
     public void showPlayStateView() {
-
         bottomBarController.showPlayState();
     }
 
@@ -239,6 +241,7 @@ public class PlayerUiSwitcher {
 
     /**
      * 更新视频播放的进度显示
+     * TODO 增加功能：隐藏时，是否在播放器底部显示进度条
      */
     public void updatePlayProgressView(boolean isDragging, int postion) {
         bottomBarController.setPosition(isDragging ? postion : _presenter.getCurrentPosition());
@@ -255,6 +258,14 @@ public class PlayerUiSwitcher {
             gestureViewController.show();
         }
         gestureViewController.setDuration(duration);
+    }
+
+    public void setCenterPauseIconVisible(boolean visible) {
+        if (visible) {
+            centerBarController.show();
+        } else {
+            centerBarController.close();
+        }
     }
 
     /**

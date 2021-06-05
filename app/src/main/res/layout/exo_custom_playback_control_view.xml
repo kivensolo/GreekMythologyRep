@@ -93,7 +93,7 @@
         android:layout_marginEnd="14dp"
         android:layout_marginTop="23dp"
         android:contentDescription="@string/full_play"
-        android:src="@drawable/full_icon"
+        android:src="@mipmap/full_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 

@@ -17,5 +17,11 @@
             android:launchMode="singleTop"
             android:theme="@style/PlayTheme"
             android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name="com.zeke.play.activities.ZPlayerViewTestPage"
+            android:configChanges="locale|screenSize|keyboardHidden|orientation"
+            android:launchMode="singleTop"
+            android:theme="@style/PlayTheme"
+            android:windowSoftInputMode="stateAlwaysHidden" />
     </application>
 </manifest>
