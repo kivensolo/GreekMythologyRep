@@ -41,7 +41,7 @@ class LoggingInterceptor : Interceptor {
         val protocolVersion = connection?.protocol() ?: Protocol.HTTP_1_1
 
         // ---------Request-Line Info:
-        // eg: "Get wwww.nininin.com HTTP/1.1(xxx-byte body)"
+        // eg: "Get wwww.nininin.com http/1.1(xxx-byte body)"
         var requestStart = "\n${request.method()} $url $protocolVersion"
         val requestBody = request.body()
         val hasRequestBody = requestBody != null
@@ -86,7 +86,7 @@ class LoggingInterceptor : Interceptor {
         val endTime = System.nanoTime()
         val headers = response.headers()
         ZLog.d(
-            String.format( "<=== TIME(%.1fms)%n%s",
+            String.format( "%nCOMPLETE in [%.1fms] %n%s",
                 (endTime - startTime) / 1e6,  // aka: 1x10^6
                 headers
             )

@@ -230,6 +230,7 @@ public class OkHttpClientManager {
                 .connectTimeout(connectTimeOut, TimeUnit.MILLISECONDS)
                 .readTimeout(readTimeOut, TimeUnit.MILLISECONDS)
                 .writeTimeout(writeTimeOut, TimeUnit.MILLISECONDS);
+//                .cache(new Cache());//TODO 网络缓存配置
         configInterceptors(builder);
 
         return builder;
