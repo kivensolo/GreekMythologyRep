@@ -109,7 +109,7 @@ android {
         }
 
         Beijing{
-            minSdkVersion android.minSdkVersion
+            minSdkVersion _rootAndroid.minSdkVersion
 
             manifestPlaceholders = [
                     BUGLY_APP_ID: "@string/app_bugly_appid"
