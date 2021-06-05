@@ -10,6 +10,9 @@ import android.graphics.RectF;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 
+/**
+ * 自定义Transform,基于CenterCrop，添加圆角效果。
+ */
 public class CenterCropRoundCornerTransform extends CenterCrop {
 
     private int radius = 0;
@@ -30,11 +33,7 @@ public class CenterCropRoundCornerTransform extends CenterCrop {
     private Bitmap roundCrop(BitmapPool pool, Bitmap source) {
         if (source == null)
             return null;
-        Bitmap result = pool.get(source.getWidth(), source.getHeight(),
-                Bitmap.Config.ARGB_8888);
-        if (result == null) {
-            result = Bitmap.createBitmap(source.getWidth(), source.getHeight(), Bitmap.Config.ARGB_8888);
-        }
+        Bitmap result = pool.get(source.getWidth(), source.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(result);
         Paint paint = new Paint();
         paint.setShader(new BitmapShader(source, BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP));
