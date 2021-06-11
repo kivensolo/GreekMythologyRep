@@ -77,7 +77,7 @@ open class EyepetizerPagerAdapter(
         return super.onCreateViewHolder(parent, viewType)
     }
 
-    // <editor-fold defaultstate="collapsed" desc="根据类型创建模板视图实例 Create View holder">
+    // <editor-fold defaultstate="collapsed" desc="Create & Bind View holder">
     override fun onCreateDefViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         val inflater = LayoutInflater.from(parent.context)
 
@@ -103,7 +103,6 @@ open class EyepetizerPagerAdapter(
             }
         return BaseViewHolder(viewHolder.itemView)
     }
-    // </editor-fold>
 
     override fun convert(holder: BaseViewHolder, item: Item) {
         when (ViewTypeEnum.getViewTypeEnum(item.type).value) {
@@ -117,6 +116,8 @@ open class EyepetizerPagerAdapter(
             ViewTypeEnum.SquareCardCollection.value -> initSquareCardCollectionView(holder, item)
         }
     }
+    // </editor-fold>
+
 
     public override fun getDefItemCount(): Int {
         return super.getDefItemCount()

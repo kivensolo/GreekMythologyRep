@@ -1,6 +1,7 @@
 package com.zeke.eyepetizer.respository
 
 import com.zeke.eyepetizer.api.EyepetizerApiService
+import com.zeke.eyepetizer.bean.Data
 import com.zeke.eyepetizer.bean.EyepetizerTabListInfo
 import com.zeke.eyepetizer.bean.EyepetizerTabPageData
 import com.zeke.network.interceptor.CommonParamsInterceptor
@@ -21,7 +22,7 @@ open class EyepetizerRemoteDataSource(iActionEvent: IUIActionEvent?)
     iActionEvent = iActionEvent,
     apiServiceClass = EyepetizerApiService::class.java
 ){
-    override val baseUrl: String = "http://baobab.kaiyanapp.com"
+    override val baseUrl: String = "http://baobab.kaiyanapp.com/api/"
 
     open var apiService = getApiService(baseUrl)
 
@@ -61,18 +62,24 @@ open class EyepetizerRemoteDataSource(iActionEvent: IUIActionEvent?)
     override fun showToast(msg: String) {
     }
 
-    /**
-     * 获取分类列表
-     */
+    //获取分类列表
     suspend fun getTabList(): EyepetizerTabListInfo {
         return apiService.requestTabList()
     }
 
-    /**
-     * 获取分类的页面详情数据
-     */
+    //获取分类的页面详情数据
     suspend fun getTabPageDetail(@Url url: String): EyepetizerTabPageData {
         return apiService.requestTabPageData(url)
+    }
+
+    //获取影片详情数据
+    suspend fun getVideoDetailData(videoId: String): Data {
+        return apiService.getVideoDetail(videoId)
+    }
+
+    //获取影片相关推荐数据
+    suspend fun getVideoRelatedData(videoId: String): EyepetizerTabPageData {
+        return apiService.getVideoRelated(videoId)
     }
 
 }

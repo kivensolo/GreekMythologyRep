@@ -15,7 +15,7 @@ import retrofit2.http.Url
 interface EyepetizerApiService : BaseApiService {
 
     // 获取【首页】栏目列表
-    @GET("/api/v5/index/tab/list")
+    @GET("v5/index/tab/list")
     suspend fun requestTabList(): EyepetizerTabListInfo
 
     // 获取指定栏目详情数据
@@ -24,9 +24,9 @@ interface EyepetizerApiService : BaseApiService {
 
     //根据视频Id获取该视频的详细信息    例子：http://baobab.kaiyanapp.com/api/v2/video/127373
     @GET("v2/video/{videoId}")
-    fun getVideoDetail(@Path("videoId") videoId: String): Data
+    suspend fun getVideoDetail(@Path("videoId") videoId: String): Data
 
     //获取【视频播放页】一些额外信息，如该视频的相关推荐
     @GET("v4/video/related")
-    fun getVideoRelated(@Query("id") videoId: String): EyepetizerTabPageData
+    suspend fun getVideoRelated(@Query("id") videoId: String): EyepetizerTabPageData
 }

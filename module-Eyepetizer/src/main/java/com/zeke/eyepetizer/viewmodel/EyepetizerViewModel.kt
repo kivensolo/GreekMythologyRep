@@ -1,10 +1,12 @@
 package com.zeke.eyepetizer.viewmodel
 
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.kingz.database.AppDatabase
 import com.kingz.module.common.CommonApp
 import com.zeke.eyepetizer.bean.EyepetizerTabListInfo
 import com.zeke.eyepetizer.bean.EyepetizerTabPageData
+import com.zeke.eyepetizer.bean.VideoDetailMergeData
 import com.zeke.eyepetizer.respository.EyepetizerRemoteDataSource
 import com.zeke.kangaroo.utils.ZLog
 import com.zeke.reactivehttp.base.BaseReactiveViewModel
@@ -29,6 +31,11 @@ open class EyepetizerViewModel : BaseReactiveViewModel() {
         MutableLiveData<EyepetizerTabPageData>()
     }
 
+    val detailPageLiveData: MediatorLiveData<VideoDetailMergeData> by lazy {
+        MediatorLiveData<VideoDetailMergeData>()
+    }
+
+
     // 需限定访问权限为protected 防止view层直接访问Model层的DataSource对象
     protected open val remoteDataSource by lazy {
         EyepetizerRemoteDataSource(this)
@@ -47,6 +54,15 @@ open class EyepetizerViewModel : BaseReactiveViewModel() {
             val data = remoteDataSource.getTabPageDetail(url)
             ZLog.d(TAG,"Get tab page detail. with data.")
             tabPageDetailLiveData.postValue(data)
+        }
+    }
+
+    fun getVideoDetailAndReleatedData(videoId: String){
+        launchIO {
+            val detailTask = asyncIO { remoteDataSource.getVideoDetailData(videoId) }
+            val relatedTask = asyncIO { remoteDataSource.getVideoRelatedData(videoId) }
+            val result = VideoDetailMergeData(detailTask.await(), relatedTask.await())
+            detailPageLiveData.postValue(result)
         }
     }
 

@@ -8,7 +8,7 @@ import com.google.gson.JsonObject
  * description: 开眼栏目详情数据
  */
 data class EyepetizerTabPageData(
-    val itemList: List<Item>,
+    val itemList: MutableList<Item>,
     val count: Int, // 16
     val total: Int, // 0
     val nextPageUrl: String, //http://baobab.kaiyanapp.com/api/v5/index/tab/discovery?start=0

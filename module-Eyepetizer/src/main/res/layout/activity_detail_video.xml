@@ -9,7 +9,7 @@
     <com.zeke.play.wigets.SimpleZPlayerView
         android:id="@+id/videoPlayer"
         android:layout_width="match_parent"
-        android:layout_height="220dp"
+        android:layout_height="205dp"
         tools:background="@color/yello"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
