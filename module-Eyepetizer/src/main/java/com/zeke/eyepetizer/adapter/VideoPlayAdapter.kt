@@ -4,13 +4,16 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.TranslateAnimation
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import com.google.android.flexbox.FlexboxLayout
 import com.google.gson.Gson
 import com.kingz.module.common.utils.image.GlideLoader
+import com.zeke.eyepetizer.anim.TiaoZiUtil
 import com.zeke.eyepetizer.bean.Data
 import com.zeke.eyepetizer.bean.Item
 import com.zeke.eyepetizer.bean.cards.item.VideoSmallCard
@@ -86,39 +89,57 @@ class VideoPlayAdapter : RecyclerView.Adapter<BaseViewHolder>() {
 
 
     private fun initHeaderView(holder: BaseViewHolder) {
-        //TODO 优化
-//
-//        //视频标题、内容
-//        with(itemBeanForClientCardBinding!!) {
-//            tvVideoTitle.text = mHeaderData?.title
-//            tvCategory.text = "#${mHeaderData?.category}"
-//            tvVideoDescription.text = mHeaderData?.description
-//
-//
-//            tvCollectionCount.text = mHeaderData?.consumption?.collectionCount.toString()
-//            tvShare.text = mHeaderData?.consumption?.shareCount.toString()
-//            tvReply.text = mHeaderData?.consumption?.replyCount.toString()
-//
-//            tagsContainer.removeAllViews()
-//            mHeaderData?.tags?.forEach { itemTag ->
-//                val itemView = android.view.LayoutInflater.from(mContext).inflate(R.layout.video_tag, tagsContainer, false)
-//                val ivTag = itemView.findViewById<ImageView>(R.id.ivTag)
-//                val tvTag = itemView.findViewById<TextView>(R.id.tvTag)
-//
-//                tvTag.text = "#" + itemTag.name + "#"
-//                ImageLoader.loadNetImageWithCornerAndShade(mContext, ivTag, itemTag.headerImage, placeHolderId = R.drawable.corner_4_solid_dark_light)
-//                tagsContainer.addView(itemView)
-//            }
-//
-//
-//            tvAuthor.text = mHeaderData?.author?.name
-//            tvSlogan.text = mHeaderData?.author?.description
-//            ImageLoader.loadNetCircleImage(mContext, ivAvatar, mHeaderData?.author?.icon)
-//        }
+        //视频标题
+        val tvVideoTitleView = holder.getView<TextView>(R.id.tvVideoTitle)
+        tvVideoTitleView.text = mHeaderData?.title
+        //视频分类
+        holder.getView<TextView>(R.id.tvCategory).text = "#${mHeaderData?.category}"
+        //视频描述
+        holder.getView<TextView>(R.id.tvVideoDescription).text = mHeaderData?.description
+        //收藏总数
+        val tvCollectionCountView = holder.getView<TextView>(R.id.tvCollectionCount)
+        tvCollectionCountView.text = mHeaderData?.consumption?.collectionCount.toString()
+        //分享总数
+        val tvShareView = holder.getView<TextView>(R.id.tvShare)
+        tvShareView.text = mHeaderData?.consumption?.shareCount.toString()
+        //评论回复数量
+        val tvReplyView = holder.getView<TextView>(R.id.tvReply)
+        tvReplyView.text = mHeaderData?.consumption?.replyCount.toString()
 
+        val tvPreloadView = holder.getView<TextView>(R.id.tvPreload)
+        val tvAuthorView = holder.getView<TextView>(R.id.tvAuthor)
+        val tvSloganView = holder.getView<TextView>(R.id.tvSlogan)
+        val ivAvatarView = holder.getView<ImageView>(R.id.ivAvatar)
+        //标签容器(图片+文字)
+        val tagsContainer = holder.getView<FlexboxLayout>(R.id.tagsContainer)
+        tagsContainer.removeAllViews()
 
-//        startAnimate(itemBeanForClientCardBinding)
+        mHeaderData?.tags?.forEach { itemTag ->
+            val itemView = LayoutInflater.from(mContext)
+                .inflate(R.layout.video_tag, tagsContainer, false)
+            val ivTag = itemView.findViewById<ImageView>(R.id.ivTag)
+            val tvTag = itemView.findViewById<TextView>(R.id.tvTag)
+            tvTag.text = "#" + itemTag.name + "#"
+            GlideLoader.loadNetImageWithCornerAndShade(
+                mContext!!,
+                ivTag,
+                itemTag.headerImage,
+                placeHolderId = R.drawable.corner_4_solid_dark_light
+            )
+            tagsContainer.addView(itemView)
+            tvAuthorView.text = mHeaderData?.author?.name
+            tvSloganView.text = mHeaderData?.author?.description
+            GlideLoader.loadNetCircleImage(mContext!!, ivAvatarView, mHeaderData?.author?.icon)
+        }
 
+        //init Animate
+        val translationAnim = TranslateAnimation(0f, 0f, -80f, 0f)
+        translationAnim.duration = 400
+        tvShareView.startAnimation(translationAnim)
+        tvReplyView.startAnimation(translationAnim)
+        tvPreloadView.startAnimation(translationAnim)
+        tvCollectionCountView.startAnimation(translationAnim)
+        TiaoZiUtil(tvVideoTitleView, mHeaderData?.title, 50)
     }
 
     private fun initRelatedView(holder: BaseViewHolder, item: Item) {
@@ -155,7 +176,7 @@ class VideoPlayAdapter : RecyclerView.Adapter<BaseViewHolder>() {
         )
 
         holder.itemView.setOnClickListener {
-            //             changePlayVideo(position)
+            //             changePlayVideo(position - 1) // -1 是由于Header的存在
         }
 //        with(itemVideoSmallCardBinding!!) {
 //            //init view
@@ -168,24 +189,6 @@ class VideoPlayAdapter : RecyclerView.Adapter<BaseViewHolder>() {
 //            }
 //        }
     }
-
-
-//    private fun startAnimate(binding: ItemBeanForClientCardBinding) {
-//
-//
-//        //init Animate
-//        val translationAnim = TranslateAnimation(0f, 0f, -80f, 0f)
-//        translationAnim.duration = 400
-//
-//        with(binding) {
-//            binding.tvShare.startAnimation(translationAnim)
-//            binding.tvReply.startAnimation(translationAnim)
-//            binding.tvPreload.startAnimation(translationAnim)
-//            binding.tvCollectionCount.startAnimation(translationAnim)
-//
-//            TiaoZiUtil(tvVideoTitle, mHeaderData?.title, 50)
-//        }
-//    }
 
     //没有更多数据，到底部的提示ItemView
     private fun initTheEndView(holder: BaseViewHolder) {

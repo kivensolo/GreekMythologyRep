@@ -123,16 +123,10 @@
         android:background="#35222222"
         android:padding="10dp"
         app:alignContent="stretch"
-
         app:alignItems="stretch"
-
         app:flexDirection="row"
-
         app:flexWrap="nowrap"
-
-        app:justifyContent="space_between"
-
-        />
+        app:justifyContent="space_between"/>
 
 
     <View

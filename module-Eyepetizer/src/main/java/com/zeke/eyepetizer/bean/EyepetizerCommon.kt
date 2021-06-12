@@ -91,9 +91,9 @@ data class Provider(
 )
 
 data class Consumption(
-        val collectionCount: Int, //614
-        val shareCount: Int, //464
-        val replyCount: Int //34
+        val collectionCount: Int, //收藏总数 614
+        val shareCount: Int, //分享总数 464
+        val replyCount: Int //评论回复数量 34
 )
 
 data class PlayInfo(
