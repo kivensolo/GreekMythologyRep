@@ -173,9 +173,6 @@ public abstract class BasePlayer implements IPlayer,
         changeState(STATE_PAUSED | STATE_STOPPED, STATE_PLAYING);
         removeHandler();
         playerHandler.post(getLifecyclerRunnable());
-        if (playerListener != null) {
-            playerListener.onPlay();
-        }
     }
 
     @CallSuper
