@@ -14,8 +14,8 @@ class SurfaceViewRender(context: Context,
                         override val iPlayer: IPlayer) :
         SurfaceView(context),
         SurfaceHolder.Callback,
-        IRender,
-        IPlayer by iPlayer {
+        IRender{
+//        IPlayer by iPlayer {
 
     override var renderCallback: SurfaceRenderCallback? = null
 

@@ -6,8 +6,14 @@ import android.net.Uri;
 import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceHolder;
+
 import com.kingz.library.player.BasePlayer;
 import com.kingz.library.player.IPlayer;
+import com.kingz.library.player.TrackInfo;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 import tv.danmaku.ijk.media.player.IjkTimedText;
@@ -31,7 +37,7 @@ public class IJKPlayer extends BasePlayer implements IJKMediaPlayerListeners {
     }
 
     @Override
-    public Runnable getLoopRunnable() {
+    public Runnable getLifecyclerRunnable() {
         return loopRunnable;
     }
 
@@ -48,9 +54,9 @@ public class IJKPlayer extends BasePlayer implements IJKMediaPlayerListeners {
                 //解决pause之后 play会跳一秒时间的问题
                 currentPosition += PLAYER_UPDATE_INTERVAL_MS;
             }
-            mainHandler.postDelayed(this, PLAYER_UPDATE_INTERVAL_MS);
-            if (playCallBack != null) {
-                playCallBack.onPlayerTimingUpdate();
+            playerHandler.postDelayed(this, PLAYER_UPDATE_INTERVAL_MS);
+            if (playerListener != null) {
+                playerListener.onPlayerTimingUpdate();
             }
         }
     };
@@ -94,8 +100,8 @@ public class IJKPlayer extends BasePlayer implements IJKMediaPlayerListeners {
             player.prepareAsync();
         } catch (Exception e) {
             Log.e(TAG, "set play uri error:" + e.getMessage());
-            if (playCallBack != null) {
-                playCallBack.onError(MEDIA_ERROR_CUSTOM_ERROR, -1);
+            if (playerListener != null) {
+                playerListener.onError(this, MEDIA_ERROR_CUSTOM_ERROR, -1);
             }
         }
     }
@@ -125,8 +131,8 @@ public class IJKPlayer extends BasePlayer implements IJKMediaPlayerListeners {
 
     @Override
     public void onBufferingUpdate(IMediaPlayer iMediaPlayer, int percent) {
-        if (playCallBack != null) {
-            playCallBack.onBufferingUpdate(percent);
+        if (playerListener != null) {
+//            playerListener.onBufferingUpdate(percent);
         }
     }
 
@@ -134,27 +140,26 @@ public class IJKPlayer extends BasePlayer implements IJKMediaPlayerListeners {
     public void onCompletion(IMediaPlayer iMediaPlayer) {
         if (currentPosition < getDuration() - 5000) {
             //解决播放过程中断网的情况下 回调的onCompletion  不是onError
-            if (playCallBack != null) {
-                playCallBack.onError(-10000, -1);
+            if (playerListener != null) {
+                playerListener.onError(this, -10000, -1);
             }
         } else {
-            if (playCallBack != null) {
-                playCallBack.onCompletion();
+            if (playerListener != null) {
+                playerListener.onCompletion(this);
             }
         }
-        mainHandler.removeCallbacksAndMessages(null);
+        playerHandler.removeCallbacksAndMessages(null);
     }
 
     @Override
     public boolean onError(IMediaPlayer iMediaPlayer, int what, int extra) {
         Log.e(TAG, "play error: what is" + what + ",  extra is " + extra);
-        mIsPrepared = false;
-        mIsPaused = false;
-        mIsBufferIng = false;
-        if (playCallBack != null) {
-            playCallBack.onError(what, extra);
+        //remove buffering
+        changeState(STATE_BUFFERING, 0);
+        if (playerListener != null) {
+            playerListener.onError(this, what, extra);
         }
-        mainHandler.removeCallbacksAndMessages(null);
+        playerHandler.removeCallbacksAndMessages(null);
         return false;
     }
 
@@ -163,18 +168,22 @@ public class IJKPlayer extends BasePlayer implements IJKMediaPlayerListeners {
         Log.d(TAG, "onInfo: what is" + what + ",  extra is " + extra);
         switch (what) {
             case MEDIA_INFO_BUFFERING_START:
-                mIsBufferIng = true;
-                if (playCallBack != null) {
-                    playCallBack.onBufferStart();
+                if (!hasState(STATE_BUFFERING)) {
+                    changeState(STATE_BUFFERING);
+                }
+                if (playerListener != null) {
+                    playerListener.onBuffering(this, true,100f);
                 }
                 break;
             case MEDIA_INFO_BUFFERING_END:
-                mIsBufferIng = false;
-                playCallBack.onBufferEnd();
+                if (hasState(STATE_BUFFERING)) {
+                    changeState(STATE_BUFFERING, 0);
+                }
+                playerListener.onBuffering(this, false,0f);
                 break;
             default:
-                if (playCallBack != null) {
-                    playCallBack.onInfo(what, extra);
+                if (playerListener != null) {
+                    playerListener.onInfo(this, what, extra);
                 }
                 break;
         }
@@ -183,23 +192,22 @@ public class IJKPlayer extends BasePlayer implements IJKMediaPlayerListeners {
 
     @Override
     public void onPrepared(IMediaPlayer iMediaPlayer) {
-        mIsPrepared = true;
-        if (playCallBack != null) {
-            playCallBack.onPrepared();
+        if (playerListener != null) {
+            playerListener.onPrepared(this);
         }
     }
 
     @Override
     public void onSeekComplete(IMediaPlayer iMediaPlayer) {
-        if (playCallBack != null) {
-            playCallBack.onSeekComplete();
+        if (playerListener != null) {
+            playerListener.onSeekComplete(this);
         }
     }
 
     @Override
     public void onTimedText(IMediaPlayer iMediaPlayer, IjkTimedText ijkTimedText) {
-        if (playCallBack != null) {
-            playCallBack.onTimedText(null);
+        if (playerListener != null) {
+            playerListener.onTimedText(null);
         }
     }
     @Override
@@ -227,8 +235,8 @@ public class IJKPlayer extends BasePlayer implements IJKMediaPlayerListeners {
 
 
     @Override
-    public void release() {
-        super.release();
+    public void destory() {
+        super.destory();
         if (player != null) {
             player.reset();
             player.release();
@@ -258,7 +266,62 @@ public class IJKPlayer extends BasePlayer implements IJKMediaPlayerListeners {
     }
 
     @Override
-    public IPlayer getMediaPlayer() {
+    public IPlayer getIPlayer() {
         return this;
+    }
+
+    @Override
+    public void stop() {
+        IjkMediaPlayer mp = player;
+        if (mp == null) {
+            return;
+        }
+        super.stop();
+        if (hasAnyState(STATE_REBUILD | STATE_RELEASE)) {
+            changeState(playerState & ~(STATE_REBUILD | STATE_RELEASE), 0);
+        } else {
+            changeState(playerState, STATE_STOPPED);
+        }
+        mp.reset();
+    }
+
+    @Override
+    public void setDataSource(@NotNull String url) {
+
+    }
+
+    @Override
+    public void setAudioTrack(@Nullable TrackInfo stcTrackInfo) {
+
+    }
+
+    @Override
+    public void setSoundTrack(@Nullable String soundTrack) {
+
+    }
+
+    @Override
+    public void setBufferTimeOutThreshold(long threshold) {
+
+    }
+
+    @Override
+    public void setMirrorPlay() {
+
+    }
+
+    @Override
+    public float getCurrentLoadSpeed() {
+        return 0;
+    }
+
+    @Override
+    public void setPlayerOptions(int playerOptionCategory, @NotNull String optionName, @NotNull String optionValue) {
+
+    }
+
+    @Override
+    public void setPlayerOptions(int playerOptionCategory, @NotNull String optionName, long optionValue) {
+
     }
 }

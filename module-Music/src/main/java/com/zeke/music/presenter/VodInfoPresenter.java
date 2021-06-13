@@ -2,9 +2,12 @@ package com.zeke.music.presenter;
 
 import android.media.TimedText;
 
-import com.kingz.library.player.IPlayerEventsCallBack;
+import com.kingz.library.player.IPlayer;
+import com.kingz.library.player.IPlayerEventsListener;
 import com.zeke.music.fragments.VodInfoFragment;
 import com.zeke.play.presenter.AbsBasePresenter;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * author：KingZ
@@ -12,7 +15,7 @@ import com.zeke.play.presenter.AbsBasePresenter;
  * description：影片信息Presenter  用于处理影片信息获取业务
  */
 
-public class VodInfoPresenter extends AbsBasePresenter implements IPlayerEventsCallBack {
+public class VodInfoPresenter extends AbsBasePresenter implements IPlayerEventsListener {
     private VodInfoFragment vodInfoFragment;
 
     public VodInfoPresenter(VodInfoFragment vodInfoFragment) {
@@ -30,7 +33,7 @@ public class VodInfoPresenter extends AbsBasePresenter implements IPlayerEventsC
     }
 
     @Override
-    public void onPrepared() {
+    public void onPrepared(IPlayer player) {
 
     }
 
@@ -40,31 +43,17 @@ public class VodInfoPresenter extends AbsBasePresenter implements IPlayerEventsC
     }
 
     @Override
-    public void onError(int what, int extra) {
+    public boolean onError(IPlayer player,int what, int extra) {
+        return false;
     }
 
     @Override
-    public void onBufferStart() {
-
-    }
-
-    @Override
-    public void onBufferEnd() {
+    public void onCompletion(IPlayer player) {
 
     }
 
     @Override
-    public void onBufferingUpdate(int percent) {
-
-    }
-
-    @Override
-    public void onCompletion() {
-
-    }
-
-    @Override
-    public void onSeekComplete() {
+    public void onSeekComplete(IPlayer player) {
 
     }
 
@@ -74,7 +63,7 @@ public class VodInfoPresenter extends AbsBasePresenter implements IPlayerEventsC
     }
 
     @Override
-    public boolean onInfo(int what, int extra) {
+    public boolean onInfo(IPlayer player, int what, int extra) {
         return false;
     }
 
@@ -95,6 +84,36 @@ public class VodInfoPresenter extends AbsBasePresenter implements IPlayerEventsC
 
     @Override
     public void onViewDestroyed() {
+
+    }
+
+    @Override
+    public void onPrepareTimeout(@NotNull IPlayer xmp) {
+
+    }
+
+    @Override
+    public void onBuffering(@NotNull IPlayer xmp, boolean buffering, float percentage) {
+
+    }
+
+    @Override
+    public void onBufferTimeout(@NotNull IPlayer xmp) {
+
+    }
+
+    @Override
+    public void onSeekComplete(@NotNull IPlayer xmp, long pos) {
+
+    }
+
+    @Override
+    public void onVideoSizeChanged(@NotNull IPlayer player, int mVideoWidth, int mVideoHeight) {
+
+    }
+
+    @Override
+    public void onVideoFirstFrameShow(@NotNull IPlayer player) {
 
     }
 }

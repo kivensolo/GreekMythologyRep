@@ -7,11 +7,13 @@ import android.widget.SeekBar;
 
 import com.google.android.exoplayer2.Player;
 import com.kingz.library.player.IPlayer;
-import com.kingz.library.player.IPlayerEventsCallBack;
+import com.kingz.library.player.IPlayerEventsListener;
 import com.kingz.library.player.exo.ExoPlayer;
 import com.kingz.module.common.bean.MediaParams;
 import com.zeke.kangaroo.utils.ZLog;
 import com.zeke.play.view.IPlayerView;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * author：KingZ
@@ -21,7 +23,7 @@ import com.zeke.play.view.IPlayerView;
  * 视频地址：http://www.zhiboo.net/
  * TODO 画面模式调整，
  */
-public class PlayPresenter extends AbsBasePresenter implements IPlayerEventsCallBack {
+public class PlayPresenter extends AbsBasePresenter implements IPlayerEventsListener {
     private IPlayerView playerView;
     private IPlayer mPlayer;
     private MediaParams mPlayParams;
@@ -48,14 +50,14 @@ public class PlayPresenter extends AbsBasePresenter implements IPlayerEventsCall
 
     @Override
     public void onCreateView() {
-        mPlayer.setPlayerView(playerView.getPlayView());
-        mPlayer.setPlayerEventCallBack(this);
+        mPlayer.initRenderView(playerView.getPlayView());
+        mPlayer.setPlayerEventListener(this);
     }
 
     public void startPlay() {
         if(mPlayParams == null){
             ZLog.e("No play source.Please confirm playparams!!!");
-            onError(ERROR_PLAY_PARAMS, -1);
+            onError(mPlayer, ERROR_PLAY_PARAMS, -1);
             return;
         }
         Uri playUri = Uri.parse(mPlayParams.getVideoUrl());
@@ -71,7 +73,7 @@ public class PlayPresenter extends AbsBasePresenter implements IPlayerEventsCall
      * 切换播放状态
      */
     public void togglePlay(){
-        if(mPlayer.isPlaying()){
+        if(isPlayeing()){
             pause();
         }else{
             play();
@@ -93,12 +95,12 @@ public class PlayPresenter extends AbsBasePresenter implements IPlayerEventsCall
     }
 
     private void release() {
-        mPlayer.release();
+        mPlayer.destory();
     }
 
     public void reset(){
         mPlayer.pause();
-        mPlayer.release();
+        mPlayer.destory();
     }
 
     public void seekTo(long progress) {
@@ -135,7 +137,7 @@ public class PlayPresenter extends AbsBasePresenter implements IPlayerEventsCall
     }
 
     @Override
-    public void onPrepared() {
+    public void onPrepared(IPlayer player) {
         Log.d(TAG, "onPrepared()");
         playerView.showPlayingView();
     }
@@ -146,31 +148,17 @@ public class PlayPresenter extends AbsBasePresenter implements IPlayerEventsCall
     }
 
     @Override
-    public void onError(int what, int extra) {
+    public boolean onError(IPlayer player, int what, int extra) {
+        return false;
     }
 
     @Override
-    public void onBufferStart() {
-
-    }
-
-    @Override
-    public void onBufferEnd() {
+    public void onCompletion(IPlayer player) {
 
     }
 
     @Override
-    public void onBufferingUpdate(int percent) {
-
-    }
-
-    @Override
-    public void onCompletion() {
-
-    }
-
-    @Override
-    public void onSeekComplete() {
+    public void onSeekComplete(IPlayer player) {
 
     }
 
@@ -186,7 +174,7 @@ public class PlayPresenter extends AbsBasePresenter implements IPlayerEventsCall
     }
 
     @Override
-    public boolean onInfo(int what, int extra) {
+    public boolean onInfo(IPlayer player,int what, int extra) {
         Log.d(TAG, "onInfo what=" + what + "; extra=" + extra);
         return false;
     }
@@ -221,6 +209,36 @@ public class PlayPresenter extends AbsBasePresenter implements IPlayerEventsCall
 
     public String getPlayMode(){
         return mPlayParams.getVideoType();
+    }
+
+    @Override
+    public void onPrepareTimeout(@NotNull IPlayer xmp) {
+
+    }
+
+    @Override
+    public void onBuffering(@NotNull IPlayer xmp, boolean buffering, float percentage) {
+
+    }
+
+    @Override
+    public void onBufferTimeout(@NotNull IPlayer xmp) {
+
+    }
+
+    @Override
+    public void onSeekComplete(@NotNull IPlayer xmp, long pos) {
+
+    }
+
+    @Override
+    public void onVideoSizeChanged(@NotNull IPlayer player, int mVideoWidth, int mVideoHeight) {
+
+    }
+
+    @Override
+    public void onVideoFirstFrameShow(@NotNull IPlayer player) {
+
     }
 
     class PlaySeekBarChangeListener implements SeekBar.OnSeekBarChangeListener {

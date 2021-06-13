@@ -28,17 +28,51 @@ interface IPlayer {
     fun play()
 
     fun pause()
-    fun release()
+
+    fun stop()
+
+    fun destory()
+
     fun seekTo(msec: Long)
-    // -------------------- 设置api ---------------
-    fun setPlayerView(playView: View?)
 
     fun setDataSource(uri: Uri?)
-    fun setPlayerEventCallBack(callBack: IPlayerEventsCallBack?)
+
+    //TODO
+    fun setDataSource(url: String)
+
+    /**
+     * 初始化画面渲染的View
+     * SurfaceView或者TextureView
+     */
+    fun initRenderView(renderView: View?)
+
+
+    // <editor-fold defaultstate="collapsed" desc="Getter & Setter">
+    fun getIPlayer(): IPlayer
+
+    fun setPlayerEventListener(callBack: IPlayerEventsListener?)
+
     fun selectAudioTrack(audioTrackIndex: Int)
+
     fun setDisplayHolder(holder: SurfaceHolder?)
+
     fun setSurface(surface: Surface?)
+
+    /**
+     * 设置音轨
+     *
+     * @param stcTrackInfo
+     */
+    fun setAudioTrack(stcTrackInfo: TrackInfo?)
+
     fun getAudioTrack(): IntArray
+
+    /**
+     * 设置声道
+     *
+     * @param soundTrack
+     */
+    fun setSoundTrack(soundTrack: String?)
 
     /**
      * 设置播放速率
@@ -52,11 +86,49 @@ interface IPlayer {
      * @param bufferSize 缓冲区大小  单位kb
      */
     fun setBufferSize(bufferSize: Int)
+    // </editor-fold>
 
-    val isPrepared: Boolean
-    val isPlaying: Boolean
-    val isBuffering: Boolean
-    val isPaused: Boolean
+    // <editor-fold defaultstate="collapsed" desc="功能扩展">
+    /**
+     * 设置缓冲超时的阈值
+     *
+     * @param threshold
+     */
+    fun setBufferTimeOutThreshold(threshold: Long)
+
+    /**
+     * 设置镜像播放 TODO 未实现
+     */
+    fun setMirrorPlay()
+
+    /**
+     * 获取当前缓冲速度
+     *
+     * @return 单位KB/s
+     */
+    fun getCurrentLoadSpeed(): Float
+
+    /**
+     * 外部设置ffmpeg参数方法
+     *
+     * @param playerOptionCategory 设置类型
+     * @param optionName           参数名称
+     * @param optionValue          参数值
+     */
+    fun setPlayerOptions( playerOptionCategory: Int,
+                          optionName: String,
+        optionValue: String
+    )
+
+    fun setPlayerOptions(
+        playerOptionCategory: Int,
+        optionName: String,
+        optionValue: Long
+    )
+
+    // </editor-fold>
+
+    fun isPlaying():Boolean
 
     val currentURI: Uri?
 
@@ -88,7 +160,5 @@ interface IPlayer {
      * @return 位图数据
      */
     val currentThumb: Bitmap?
-
-    val mediaPlayer: IPlayer?
 
 }

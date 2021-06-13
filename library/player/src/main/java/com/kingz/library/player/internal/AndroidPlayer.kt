@@ -10,6 +10,8 @@ import android.view.Surface
 import android.view.SurfaceHolder
 import com.kingz.library.player.BasePlayer
 import com.kingz.library.player.IPlayer
+import com.kingz.library.player.IPlayer.Companion.MEDIA_INFO_VIDEO_RENDERING_START
+import com.kingz.library.player.TrackInfo
 import com.kingz.utils.runSafely
 
 /**
@@ -17,19 +19,21 @@ import com.kingz.utils.runSafely
  * date：2019/7/30
  * description：Android原生播放器
  */
-class AndroidPlayer(context: Context?) : BasePlayer(), AndroidMediaPlayerListeners {
+class AndroidPlayer(context: Context?) : BasePlayer(){
     private var mInternalMediaPlayer: MediaPlayer?
     private var bufferPercent = 0
 
-    override fun selectAudioTrack(audioTrackIndex: Int) {}
-    override fun setDisplayHolder(holder: SurfaceHolder?) {
-        //TODO
+
+    private val isSeeking = false
+    private val mIsBuffering = false
+    private var isAutoPlayWhenRedy = false
+
+    init {
+        mContext = context
+        mInternalMediaPlayer = MediaPlayer()
+        mInternalMediaPlayer?.setScreenOnWhilePlaying(true)
+        attachListener()
     }
-    override fun setSpeed(speed: Float) {} // Internal mediaPlayer is unsupport speed.
-    override fun setBufferSize(bufferSize: Int) {}
-    override fun onSurfaceTextureUpdated(surface: SurfaceTexture) {}
-    override val mediaPlayer: IPlayer
-        get() = this
 
     companion object {
         private val TAG = AndroidPlayer::class.java.simpleName
@@ -37,11 +41,37 @@ class AndroidPlayer(context: Context?) : BasePlayer(), AndroidMediaPlayerListene
         private const val SEEK_PROTECT_TIME_MS = 10 * 1000
     }
 
-    init {
-        mContext = context
-        mInternalMediaPlayer = MediaPlayer()
-        attachListener()
+    override fun selectAudioTrack(audioTrackIndex: Int) {}
+
+    override fun setDisplayHolder(holder: SurfaceHolder?) {
+        //TODO
     }
+
+    override fun setSpeed(speed: Float) {} // Internal mediaPlayer is unsupport speed.
+
+    override fun setPlayerOptions(
+        playerOptionCategory: Int,
+        optionName: String,
+        optionValue: String
+    ) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun setPlayerOptions(
+        playerOptionCategory: Int,
+        optionName: String,
+        optionValue: Long
+    ) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun setMirrorPlay() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun setBufferSize(bufferSize: Int) {}
+
+    override fun onSurfaceTextureUpdated(surface: SurfaceTexture) {}
 
     override fun play() {
         super.play()
@@ -49,7 +79,7 @@ class AndroidPlayer(context: Context?) : BasePlayer(), AndroidMediaPlayerListene
             mInternalMediaPlayer?.start()
         }, {
             Log.e(TAG, "play error:" + it.message)
-            playCallBack?.onError(IPlayer.MEDIA_ERROR_PLAY_STATUS, -1)
+            playerListener?.onError(this,IPlayer.MEDIA_ERROR_PLAY_STATUS, -1)
         })
     }
 
@@ -71,12 +101,16 @@ class AndroidPlayer(context: Context?) : BasePlayer(), AndroidMediaPlayerListene
             mInternalMediaPlayer?.pause()
         }, {
             Log.e(TAG, "pause error:" + it.message)
-            playCallBack?.onError(IPlayer.MEDIA_ERROR_PLAY_STATUS, -1)
+            playerListener?.onError(this,IPlayer.MEDIA_ERROR_PLAY_STATUS, -1)
         })
     }
 
-    override fun release() {
-        super.release()
+    override fun stop() {
+        super.stop()
+    }
+
+    override fun destory() {
+        super.destory()
         if (mInternalMediaPlayer == null) {
             return
         }
@@ -94,20 +128,28 @@ class AndroidPlayer(context: Context?) : BasePlayer(), AndroidMediaPlayerListene
         mInternalMediaPlayer = null
     }
 
-    override fun onBufferingUpdate(mp: MediaPlayer, percent: Int) {
+    override fun setAudioTrack(stcTrackInfo: TrackInfo?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    private fun onBufferingUpdate(mp: MediaPlayer, percent: Int) {
         bufferPercent = percent
-        playCallBack?.onBufferingUpdate(percent)
+        // 后续可以做预加载更新 onPreLoadPosition
     }
 
-    override fun onCompletion(mp: MediaPlayer) {
-        playCallBack?.onCompletion()
-        mainHandler.removeCallbacksAndMessages(null)
+    private fun onCompletion(mp: MediaPlayer) {
+           if (isMediaStopped()) {
+            return
+        }
+        changeState(STATE_COMPLETED)
+        playerListener?.onCompletion(this)
+        playerHandler.removeCallbacksAndMessages(null)
     }
 
-    override fun onError(mp: MediaPlayer, what: Int, extra: Int): Boolean {
-        mIsPrepared = false
-        mIsPaused = false
-        mIsBufferIng = false
+    private fun onError(mp: MediaPlayer?, what: Int, extra: Int):Boolean {
+        changeState(STATE_BUFFERING, 0)
+
+        changeState(STATE_ERROR)
         when (what) {
             MediaPlayer.MEDIA_ERROR_SERVER_DIED ->
                 Log.e(TAG, "play error: MEDIA_ERROR_SERVER_DIED , extra:$extra")
@@ -116,62 +158,81 @@ class AndroidPlayer(context: Context?) : BasePlayer(), AndroidMediaPlayerListene
             else ->
                 Log.e(TAG, "play error: what is$what,  extra is $extra")
         }
-        playCallBack?.onError(what, extra)
-        mainHandler.removeCallbacksAndMessages(null)
+        playerHandler.removeCallbacksAndMessages(null)
+
         //mInternalMediaPlayer.reset();//重用Error状态的MediaPlayer对象
-        return false
+        return playerListener?.onError(this, what, extra)?:true
     }
 
-    override fun onInfo(mp: MediaPlayer, what: Int, extra: Int): Boolean {
-        Log.d(TAG, "onInfo: what is$what,  extra is $extra")
+    private fun onInfo(mp: MediaPlayer, what: Int, extra: Int): Boolean {
+        if (isMediaStopped()) {
+            return false
+        }
         when (what) {
             IPlayer.MEDIA_INFO_BUFFERING_START -> {
-                mIsBufferIng = true
-                playCallBack?.onBufferStart()
+                 if (!hasState(STATE_BUFFERING)) {
+                    changeState(STATE_BUFFERING)
+                }
+                playerListener?.onBuffering(this,true,100f)
             }
             IPlayer.MEDIA_INFO_BUFFERING_END -> {
-                mIsBufferIng = false
-                playCallBack?.onBufferEnd()
+                if (hasState(STATE_BUFFERING)) {
+                    changeState(STATE_BUFFERING, 0)
+                }
+                playerListener?.onBuffering(this,false,0f)
             }
-            else ->  playCallBack?.onInfo(what, extra)
-
+            MEDIA_INFO_VIDEO_RENDERING_START ->{
+                playerListener?.onVideoFirstFrameShow(this)
+            }
         }
         return false
     }
 
-    override fun onPrepared(mp: MediaPlayer) {
-        mIsPrepared = true
-        playCallBack?.onPrepared()
+    private fun onPrepared(mp: MediaPlayer) {
+//        handleTrackInfo()
+        changeState(STATE_PREPARED)
+        if (isAutoPlayWhenRedy) {
+            isAutoPlayWhenRedy = false
+            mInternalMediaPlayer?.start()
+            changeState(STATE_PLAYING)
+        }
+//      mSurface?.requestLayout()
+        playerListener?.onPrepared(this)
     }
 
-    override fun onSeekComplete(mp: MediaPlayer) {
-        playCallBack?.onSeekComplete()
+    private fun onSeekComplete(mp: MediaPlayer?) {
+        playerListener?.onSeekComplete(this)
     }
 
-    override fun onTimedText(mp: MediaPlayer, text: TimedText) {
-        playCallBack?.onTimedText(text)
+    private fun onTimedText(mp: MediaPlayer?, text: TimedText) {
+        playerListener?.onTimedText(text)
     }
 
     override fun setSurface(surface: Surface?) {
-        playCallBack?.onSeekComplete()
+        playerListener?.onSeekComplete(this)
     }
 
     override fun attachListener() {
-        mInternalMediaPlayer?.setOnPreparedListener(this)
-        mInternalMediaPlayer?.setOnErrorListener(this)
-        mInternalMediaPlayer?.setOnBufferingUpdateListener(this)
-        mInternalMediaPlayer?.setOnSeekCompleteListener(this)
-        mInternalMediaPlayer?.setOnCompletionListener(this)
-        mInternalMediaPlayer?.setOnInfoListener(this)
+        val playerListners = PlayerCallBack()
+        mInternalMediaPlayer?.apply {
+            setOnPreparedListener(playerListners)
+            setOnErrorListener(playerListners)
+            setOnBufferingUpdateListener(playerListners)
+            setOnSeekCompleteListener(playerListners)
+            setOnCompletionListener(playerListners)
+            setOnInfoListener(playerListners)
+        }
     }
 
     override fun detachListener() {
-        mInternalMediaPlayer?.setOnPreparedListener(null)
-        mInternalMediaPlayer?.setOnErrorListener(null)
-        mInternalMediaPlayer?.setOnBufferingUpdateListener(null)
-        mInternalMediaPlayer?.setOnSeekCompleteListener(null)
-        mInternalMediaPlayer?.setOnCompletionListener(null)
-        mInternalMediaPlayer?.setOnInfoListener(null)
+        mInternalMediaPlayer?.apply {
+            setOnPreparedListener(null)
+            setOnErrorListener(null)
+            setOnBufferingUpdateListener(null)
+            setOnSeekCompleteListener(null)
+            setOnCompletionListener(null)
+            setOnInfoListener(null)
+        }
     }
 
     override fun seekTo(msec: Long) {
@@ -183,8 +244,12 @@ class AndroidPlayer(context: Context?) : BasePlayer(), AndroidMediaPlayerListene
             mInternalMediaPlayer?.seekTo(seekTo.toInt())
         }, {
             Log.e(TAG, "seek error:" + it.message)
-            playCallBack?.onError(IPlayer.MEDIA_ERROR_SEEK_STATUS, -1)
+            onError(null,IPlayer.MEDIA_ERROR_SEEK_STATUS, -1)
         })
+    }
+
+    override fun setSoundTrack(soundTrack: String?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override val duration: Long
@@ -213,7 +278,65 @@ class AndroidPlayer(context: Context?) : BasePlayer(), AndroidMediaPlayerListene
             mInternalMediaPlayer?.prepareAsync()
         } catch (e: Exception) {
             Log.e(TAG, "set play uri error:" + e.message)
-            playCallBack?.onError(IPlayer.MEDIA_ERROR_CUSTOM_ERROR, -1)
+            playerListener?.onError(this, IPlayer.MEDIA_ERROR_CUSTOM_ERROR, -1)
+        }
+    }
+
+    override fun setDataSource(url: String) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun getCurrentLoadSpeed(): Float {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun setBufferTimeOutThreshold(threshold: Long) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+// <editor-fold defaultstate="collapsed" desc="播放器状态判断">
+
+    private fun isMediaStopped(): Boolean {
+        return hasAnyState(
+            STATE_IDLE,
+            STATE_INITIALIZED,
+            STATE_STOPPED,
+            STATE_RELEASE,
+            STATE_UNINITIALIZED,
+            STATE_COMPLETED,
+            STATE_ERROR
+        )
+    }
+// </editor-fold>
+
+    inner class PlayerCallBack : AndroidMediaPlayerListeners {
+        override fun onSeekComplete(mp: MediaPlayer) {
+            this@AndroidPlayer.onSeekComplete(mp)
+        }
+
+        override fun onInfo(mp: MediaPlayer, what: Int, extra: Int): Boolean {
+            Log.d(TAG, "onInfo: what is$what,  extra is $extra")
+            return this@AndroidPlayer.onInfo(mp, what, extra)
+        }
+
+        override fun onTimedText(mp: MediaPlayer, text: TimedText) {
+            this@AndroidPlayer.onTimedText(mp, text)
+        }
+
+        override fun onPrepared(mp: MediaPlayer) {
+            this@AndroidPlayer.onPrepared(mp)
+        }
+
+        override fun onBufferingUpdate(mp: MediaPlayer, percent: Int) {
+            this@AndroidPlayer.onBufferingUpdate(mp, percent)
+        }
+
+        override fun onCompletion(mp: MediaPlayer) {
+            this@AndroidPlayer.onCompletion(mp)
+        }
+
+        override fun onError(mp: MediaPlayer, what: Int, extra: Int): Boolean {
+            return this@AndroidPlayer.onError(mp, what, extra)
         }
     }
 }

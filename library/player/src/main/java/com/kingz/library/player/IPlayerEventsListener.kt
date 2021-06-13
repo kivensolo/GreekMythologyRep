@@ -8,28 +8,38 @@ import android.media.TimedText
  * description：
  *  业务层级播放器事件回调接口
  */
-interface IPlayerEventsCallBack {
+interface IPlayerEventsListener {
     /**
      * 开始播放，调用play之后就会回调这方法
      * 可以在这个回调里面更新外部UI
      */
     fun onPlay()
 
-    fun onPrepared()
+    fun onPrepared(player:IPlayer)
 
-    fun onError(what: Int, extra: Int)
+    fun onPrepareTimeout(xmp: IPlayer)
 
-    fun onBufferStart()
+    fun onError(player:IPlayer,what: Int, extra: Int):Boolean
 
-    fun onBufferEnd()
+    fun onBuffering(xmp: IPlayer, buffering: Boolean, percentage: Float)
 
-    fun onBufferingUpdate(percent: Int)
+    fun onBufferTimeout(xmp: IPlayer)
 
-    fun onCompletion()
+    fun onCompletion(player:IPlayer)
 
-    fun onSeekComplete()
+    fun onSeekComplete(player:IPlayer)
 
-    fun onInfo(what: Int, extra: Int): Boolean
+    fun onSeekComplete(xmp: IPlayer, pos: Long)
+
+    fun onInfo(player:IPlayer, what: Int, extra: Int): Boolean
+
+    fun onVideoSizeChanged(
+        player: IPlayer,
+        mVideoWidth: Int,
+        mVideoHeight: Int
+    )
+
+    fun onVideoFirstFrameShow(player: IPlayer)
 
     /**
      * @param text   字幕内容

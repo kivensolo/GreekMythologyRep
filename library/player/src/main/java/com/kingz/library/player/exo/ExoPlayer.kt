@@ -12,6 +12,7 @@ import android.view.TextureView
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.Player.RepeatMode
 import com.google.android.exoplayer2.drm.*
+import com.google.android.exoplayer2.drm.DrmSession.STATE_RELEASED
 import com.google.android.exoplayer2.source.*
 import com.google.android.exoplayer2.source.MediaSource.MediaPeriodId
 import com.google.android.exoplayer2.source.MediaSourceEventListener.LoadEventInfo
@@ -29,6 +30,7 @@ import com.kingz.library.player.BasePlayer
 import com.kingz.library.player.IPlayer
 import com.kingz.library.player.IPlayer.Companion.MEDIA_INFO_BUFFERING_END
 import com.kingz.library.player.IPlayer.Companion.MEDIA_INFO_BUFFERING_START
+import com.kingz.library.player.TrackInfo
 import com.kingz.library.player.helper.TrackSelectionHelper
 import java.io.IOException
 import java.net.CookieHandler
@@ -42,92 +44,6 @@ import java.util.*
  * description：EXO
  */
 class ExoPlayer(context: Context) : BasePlayer() {
-
-    /**
-     * 关于Player.EventListene接口：
-     * 两个最重要的是[ExoPlayerEvents.onPlayerStateChanged]和[ExoPlayerEvents.onPlayerError]
-     * 具体的参见<a herf="https://exoplayer.dev/doc/reference/com/google/android/exoplayer2/Player.EventListener.html">JavaDoc</a>>
-     */
-    private inner class ExoPlayerEvents : Player.EventListener {
-        override fun onTimelineChanged(timeline: Timeline, manifest: Any?, reason: Int) {
-            logD("PlayerEvent:: onTimelineChanged() $timeline")
-        }
-
-        override fun onTracksChanged(
-            trackGroups: TrackGroupArray,
-            trackSelections: TrackSelectionArray
-        ) {
-            logD("PlayerEvent:: onTracksChanged() $trackGroups $trackSelections")
-        }
-
-        /**
-         * Called when the player starts or stops loading the source.
-         */
-        override fun onLoadingChanged(isLoading: Boolean) {
-            logD("PlayerEvent:: onLoadingChanged $isLoading")
-        }
-
-        /**
-         * 当 <a herf="https://exoplayer.dev/doc/reference/com/google/android/exoplayer2/Player.html#getPlayWhenReady--">Player.getPlayWhenReady()</a>>
-         * 或者<a herf="https://exoplayer.dev/doc/reference/com/google/android/exoplayer2/Player.html#getPlaybackState--">Player.getPlaybackState()</a>>
-         * 的返回值改变的时候被调用.
-         *
-         *
-         * playbackState一共有四个状态:
-         * Player.STATE_IDLE : 初始化状态，当播放器stopped或者playback失败的时候，
-         * Player.STATE_BUFFERING: 缓冲状态
-         * Player.STATE_READY: 播放器能够立即从当前位置开始播放
-         * Player.STATE_ENDED：播放器播完了所有媒体资源
-         *
-         * playWhenReady的flag是为了表示用户的播放意图，
-         * 播放器只有在playWhenReady=true和状态为Player.STATE_READY时才能播放。
-         */
-        override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
-            val stateString: String
-            when (playbackState) {
-                Player.STATE_BUFFERING -> {
-                    stateString = "ExoPlayer.STATE_BUFFERING -"
-                    onInfo(MEDIA_INFO_BUFFERING_START)
-                }
-                Player.STATE_ENDED -> {
-                    stateString = "ExoPlayer.STATE_ENDED     -"
-                    onCompletion()
-                }
-                Player.STATE_IDLE -> stateString = "ExoPlayer.STATE_IDLE      -"
-                Player.STATE_READY -> {
-                    stateString = "ExoPlayer.STATE_READY     -"
-                    if (!isPrepared) {
-                        onPrepared()
-                    }
-                    if (isBuffering) {
-                        onInfo(MEDIA_INFO_BUFFERING_END)
-                    }
-                }
-                else -> stateString = "UNKNOWN_STATE             -"
-            }
-            Log.d(TAG, "changed state to $stateString playWhenReady: $playWhenReady")
-        }
-
-        override fun onRepeatModeChanged(repeatMode: Int) {}
-        override fun onShuffleModeEnabledChanged(shuffleModeEnabled: Boolean) {}
-        override fun onPlayerError(error: ExoPlaybackException) {
-            error.printStackTrace()
-            logD("PlayerEvent:: onPlayerError()" + error.message)
-            mIsPrepared = false
-            mIsPaused = false
-            mIsBufferIng = false
-            if (playCallBack != null) {
-                playCallBack.onError(IPlayer.MEDIA_ERROR_CUSTOM_ERROR, 0)
-            }
-        }
-
-        override fun onPositionDiscontinuity(reason: Int) {
-            logD("PlayerEvent:: onPositionDiscontinuity()$reason")
-        }
-
-        override fun onPlaybackParametersChanged(playbackParameters: PlaybackParameters) {}
-        override fun onSeekProcessed() {}
-    }
 
     companion object {
         private val TAG = ExoPlayer::class.java.simpleName
@@ -164,13 +80,6 @@ class ExoPlayer(context: Context) : BasePlayer() {
         init()
     }
 
-    private fun onPrepared() {
-        mIsPrepared = true
-        if (playCallBack != null) {
-            playCallBack.onPrepared()
-        }
-    }
-
     override fun seekTo(msec: Long) {
         val duration = player?.duration
         var seekTo: Long = if (msec < 0) 0 else msec
@@ -178,6 +87,10 @@ class ExoPlayer(context: Context) : BasePlayer() {
             seekTo -= 10000
         }
         player?.seekTo(seekTo)
+    }
+
+    override fun setSoundTrack(soundTrack: String?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     /**
@@ -190,6 +103,17 @@ class ExoPlayer(context: Context) : BasePlayer() {
         prepare()
     }
 
+    override fun setDataSource(url: String) {
+    }
+
+    override fun getCurrentLoadSpeed(): Float {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun setBufferTimeOutThreshold(threshold: Long) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun selectAudioTrack(audioTrackIndex: Int) {
         setSelectedTrack(RendererType.AUDIO, audioTrackIndex, 0)
     }
@@ -198,6 +122,10 @@ class ExoPlayer(context: Context) : BasePlayer() {
         if(holder != null){
             player?.setVideoSurfaceHolder(holder)
         }
+    }
+
+    override fun setAudioTrack(stcTrackInfo: TrackInfo?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     /**
@@ -236,10 +164,29 @@ class ExoPlayer(context: Context) : BasePlayer() {
             eventListener.onPlayerError(ExoPlaybackException.createForSource(IOException("no uris")))
             return
         }
+
+        if (hasAnyState(STATE_PREPARED or STATE_PREPARING or STATE_ERROR)) {
+            player?.stop()
+        }
+        if (hasAnyState(STATE_REBUILD or STATE_RELEASED)) {
+            changeState(
+                STATE_REBUILD or
+                        STATE_RELEASED or
+                        STATE_PREPARED or
+                        STATE_PREPARING or
+                        STATE_STOPPED or
+                        STATE_ERROR, 0
+            )
+//            createPlayer(mContext) //TODO 进行播放器重建
+        }
+        if(player == null){
+            return
+        }
+
         val mediaSources = arrayOfNulls<MediaSource>(uris.size)
         for (i in uris.indices) {
             mediaSources[i] = createMediaSource(uris[i]!!, extensions[i])
-            mediaSources[i]!!.addEventListener(mainHandler, CustomMediaSourceEventListener())
+            mediaSources[i]!!.addEventListener(playerHandler, CustomMediaSourceEventListener())
         }
         val mediaSource = if (mediaSources.size == 1) {
             mediaSources[0]
@@ -247,15 +194,22 @@ class ExoPlayer(context: Context) : BasePlayer() {
             ConcatenatingMediaSource(*mediaSources)
         }
         player?.prepare(mediaSource!!)
+
+        changeState(STATE_PREPARING or STATE_PREPARED,
+            STATE_PREPARING)
     }
 
     private fun addListenerWithPlayer() {
-        player?.addListener(eventListener)
         eventLogger = EventLogger(trackSelector)
-        player?.addMetadataOutput { metadata -> Log.d(TAG, "onMetadata()  metaData=$metadata") }
-        // addAudioDebugListener\addVideoDebugListener ... is deprecated.
-// Use AnalyticsListener to get more detailed debug information
-        player?.addAnalyticsListener(eventLogger!!)
+        player?.apply {
+            addListener(eventListener)
+            // addAudioDebugListener\addVideoDebugListener ... is deprecated.
+            // Use AnalyticsListener to get more detailed debug information
+            addAnalyticsListener(eventLogger!!)
+            addMetadataOutput {
+                metadata -> Log.d(TAG, "onMetadata()  metaData=$metadata")
+            }
+        }
     }
 
     private fun createTrackSelector() {
@@ -355,6 +309,26 @@ class ExoPlayer(context: Context) : BasePlayer() {
         player?.setPlaybackParameters(PlaybackParameters(speed, 1.0f))
     }
 
+    override fun setPlayerOptions(
+        playerOptionCategory: Int,
+        optionName: String,
+        optionValue: String
+    ) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun setPlayerOptions(
+        playerOptionCategory: Int,
+        optionName: String,
+        optionValue: Long
+    ) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun setMirrorPlay() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     fun setRepeatMode(@RepeatMode repeatMode: Int) {
         player?.repeatMode = repeatMode
     }
@@ -370,6 +344,14 @@ class ExoPlayer(context: Context) : BasePlayer() {
             } else if (playView is SurfaceView) {
                 setVideoSurfaceView(playView as SurfaceView)
             }
+        }
+    }
+
+    override fun stop() {
+        super.stop()
+        player ?: return
+        if (hasAnyState(STATE_PREPARED or STATE_PREPARING or STATE_ERROR)) {
+            player?.stop()
         }
     }
 
@@ -391,7 +373,7 @@ class ExoPlayer(context: Context) : BasePlayer() {
         return DefaultHttpDataSourceFactory("kingz_exo_media_player", bandwidthMeter)
     }
 
-    private fun releasePlayer() {
+    private fun destoryPlayer() {
         player?.release()
         player = null
         eventLogger = null
@@ -400,10 +382,10 @@ class ExoPlayer(context: Context) : BasePlayer() {
     override val currentURI: Uri
         get() = if (uris.isEmpty()) Uri.parse("") else uris[0]!!
 
-    override fun release() {
-        super.release()
+    override fun destory() {
+        super.destory()
         reset()
-        releasePlayer()
+        destoryPlayer()
     }
 
     override fun play() {
@@ -416,8 +398,13 @@ class ExoPlayer(context: Context) : BasePlayer() {
         player?.playWhenReady = false
     }
 
-    override val isPlaying: Boolean
-        get() = player?.playWhenReady ?: false
+    override fun isPlaying(): Boolean{
+        return player != null && hasState(STATE_PLAYING or STATE_PREPARED)
+                && !hasAnyState(
+                    STATE_STOPPED
+                    or STATE_UNINITIALIZED
+                    or STATE_RELEASED)
+    }
 
     override val duration: Long
         get() = player?.duration ?: 0L
@@ -432,11 +419,11 @@ class ExoPlayer(context: Context) : BasePlayer() {
      * 缓冲的位置（具体进度）
      */
     override val bufferedPosition: Long
-        get() = player?.bufferedPosition ?: 0L
+        get() = getIPlayer().bufferedPosition
 
     fun onCompletion() {
-        release()
-        playCallBack?.onCompletion()
+        destory()
+        playerListener?.onCompletion(this)
     }
 
     fun onInfo(what: Int) {
@@ -447,14 +434,18 @@ class ExoPlayer(context: Context) : BasePlayer() {
         logD("onInfo():$s")
         when (what) {
             MEDIA_INFO_BUFFERING_START -> {
-                mIsBufferIng = true
-                playCallBack?.onBufferStart()
+                if (!hasState(STATE_BUFFERING)) {
+                    changeState(STATE_BUFFERING)
+                }
+                playerListener?.onBuffering(this,true,100f)
             }
             MEDIA_INFO_BUFFERING_END -> {
-                mIsBufferIng = false
-                playCallBack?.onBufferEnd()
+                if (hasState(STATE_BUFFERING)) {
+                    changeState(STATE_BUFFERING, 0)
+                }
+                playerListener?.onBuffering(this,false,0f)
             }
-            else -> playCallBack?.onInfo(what, -1)
+            else -> playerListener?.onInfo(this, what, -1)
 
         }
     }
@@ -474,9 +465,6 @@ class ExoPlayer(context: Context) : BasePlayer() {
         }
 
     }
-
-    override val mediaPlayer: IPlayer
-        get() = this
 
     private fun getExoMediaRendererType(exoPlayerTrackType: Int): RendererType? {
         return when (exoPlayerTrackType) {
@@ -671,4 +659,116 @@ class ExoPlayer(context: Context) : BasePlayer() {
             logD("onDownstreamFormatChanged")
         }
     }
+
+
+    /**
+     * 关于Player.EventListene接口：
+     * 两个最重要的是[ExoPlayerEvents.onPlayerStateChanged]和[ExoPlayerEvents.onPlayerError]
+     * 具体的参见<a herf="https://exoplayer.dev/doc/reference/com/google/android/exoplayer2/Player.EventListener.html">JavaDoc</a>>
+     */
+    private inner class ExoPlayerEvents : Player.EventListener {
+        override fun onTimelineChanged(timeline: Timeline, manifest: Any?, reason: Int) {
+            logD("PlayerEvent:: onTimelineChanged() $timeline")
+        }
+
+        override fun onTracksChanged(
+            trackGroups: TrackGroupArray,
+            trackSelections: TrackSelectionArray
+        ) {
+            logD("PlayerEvent:: onTracksChanged() $trackGroups $trackSelections")
+        }
+
+        /**
+         * Called when the player starts or stops loading the source.
+         */
+        override fun onLoadingChanged(isLoading: Boolean) {
+            logD("PlayerEvent:: onLoadingChanged $isLoading")
+        }
+
+        /**
+         * 当 <a herf="https://exoplayer.dev/doc/reference/com/google/android/exoplayer2/Player.html#getPlayWhenReady--">Player.getPlayWhenReady()</a>>
+         * 或者<a herf="https://exoplayer.dev/doc/reference/com/google/android/exoplayer2/Player.html#getPlaybackState--">Player.getPlaybackState()</a>>
+         * 的返回值改变的时候被调用.
+         *
+         *
+         * playbackState一共有四个状态:
+         * Player.STATE_IDLE : 初始化状态，当播放器stopped或者playback失败的时候，
+         * Player.STATE_BUFFERING: 缓冲状态
+         * Player.STATE_READY: 播放器能够立即从当前位置开始播放（开始或者缓冲结束）
+         * Player.STATE_ENDED：播放器播完了所有媒体资源
+         *
+         * playWhenReady的flag是为了表示用户的播放意图，
+         * 播放器只有在playWhenReady=true和状态为Player.STATE_READY时才能播放。
+         */
+        override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
+            val stateString: String
+            when (playbackState) {
+                Player.STATE_BUFFERING -> {
+                    stateString = "ExoPlayer.STATE_BUFFERING -"
+                    onInfo(MEDIA_INFO_BUFFERING_START)
+                }
+                Player.STATE_ENDED -> {
+                    stateString = "ExoPlayer.STATE_ENDED     -"
+                    onCompletion()
+                }
+                Player.STATE_IDLE -> stateString = "ExoPlayer.STATE_IDLE      -"
+                Player.STATE_READY -> {
+                    //STATE_READY在buffer之后也会回调,所以做状态判断
+                    stateString = "ExoPlayer.STATE_READY     -"
+                    if (!isReady()) {
+                        onPrepared()
+                        playerListener?.onVideoFirstFrameShow(this@ExoPlayer)
+                    }else if (isBuffering()) {
+                        onInfo(MEDIA_INFO_BUFFERING_END)
+                    }
+                }
+                else -> stateString = "UNKNOWN_STATE             -"
+            }
+            Log.d(TAG, "changed state to $stateString playWhenReady: $playWhenReady")
+        }
+
+        override fun onRepeatModeChanged(repeatMode: Int) {}
+        override fun onShuffleModeEnabledChanged(shuffleModeEnabled: Boolean) {}
+        override fun onPlayerError(error: ExoPlaybackException) {
+            val rendererIndex = error.rendererIndex //错误标识
+//            error.type  //错误详细信息
+//            error.printStackTrace()
+            logD(">>>>>>>>>>>>>>>PlayerEvent:: onPlayerError() " +
+                    "code=$rendererIndex, msg=${error.message}")
+            //remove buffering
+            changeState(STATE_BUFFERING, 0)
+            changeState(0, STATE_ERROR)
+            if (rendererIndex == MEDIA_ERROR_SERVER_DIED) {
+                changeState(0, STATE_REBUILD)
+            }
+            playerListener?.onError(this@ExoPlayer, IPlayer.MEDIA_ERROR_CUSTOM_ERROR, 0)
+        }
+
+        override fun onPositionDiscontinuity(reason: Int) {
+            logD("PlayerEvent:: onPositionDiscontinuity()$reason")
+        }
+
+        override fun onPlaybackParametersChanged(playbackParameters: PlaybackParameters) {}
+        override fun onSeekProcessed() {}
+    }
+
+    private fun onPrepared() {
+        changeState(STATE_PREPARING, STATE_PREPARED)
+        if (hasState(STATE_EXO_SEEKING)) {
+//            seekToTarget(seekTarget)
+        } else if (hasState(STATE_PLAYING)) {
+            player?.playWhenReady = true
+        }
+
+        playerListener?.onPrepared(this)
+    }
+
+    private fun isReady():Boolean{
+        return player != null && hasAnyState(STATE_PREPARED)
+    }
+    private fun isBuffering():Boolean{
+        return player != null && hasAnyState(STATE_BUFFERING)
+    }
+
+
 }

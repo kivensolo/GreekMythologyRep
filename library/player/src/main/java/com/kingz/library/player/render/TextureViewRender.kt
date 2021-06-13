@@ -14,8 +14,8 @@ import com.kingz.library.player.IPlayer
 class TextureViewRender( context: Context, override val iPlayer: IPlayer) :
         TextureView(context),
         TextureView.SurfaceTextureListener,
-        IRender,
-        IPlayer by iPlayer {
+        IRender{
+//        IPlayer by iPlayer {
 
     override var renderCallback: SurfaceRenderCallback? = null
 
