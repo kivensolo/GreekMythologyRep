@@ -9,11 +9,6 @@ import android.media.TimedText
  *  业务层级播放器事件回调接口
  */
 interface IPlayerEventsListener {
-    /**
-     * 开始播放，调用play之后就会回调这方法
-     * 可以在这个回调里面更新外部UI
-     */
-    fun onPlay()
 
     fun onPrepared(player:IPlayer)
 

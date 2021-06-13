@@ -143,11 +143,6 @@ public class PlayPresenter extends AbsBasePresenter implements IPlayerEventsList
     }
 
     @Override
-    public void onPlay() {
-
-    }
-
-    @Override
     public boolean onError(IPlayer player, int what, int extra) {
         return false;
     }
