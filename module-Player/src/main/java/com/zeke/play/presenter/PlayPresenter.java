@@ -158,14 +158,9 @@ public class PlayPresenter extends AbsBasePresenter implements IPlayerEventsList
     }
 
     @Override
-    public void onPlayerTimingUpdate() {
-//        long position = mPlayer.getCurrentPosition();
-//        long duration = mPlayer.getDuration();
-        if (!isDraggingSeekBar) {
-            //不是拖动中才自动更新进度
-            playerView.updatePlayProgressView(false, -1);
-        }
-
+    public void onPlayerTimingUpdate(IPlayer player,long position) {
+//        ZLog.d("onPlayerTimingUpdate position=" + position);
+        playerView.updatePlayProgressView(isDraggingSeekBar, position);
     }
 
     @Override

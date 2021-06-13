@@ -47,8 +47,9 @@ interface IPlayerEventsListener {
 
     fun onViewDestroyed()
 
-     /**
-     * 播放器定时刷新回调  主要用于更新UI
+    /**
+     * 播放器定时刷新回调  主要用于更新UI组件
      */
-    fun onPlayerTimingUpdate()
+    fun onPlayerTimingUpdate(player: IPlayer, pos: Long)
+
 }

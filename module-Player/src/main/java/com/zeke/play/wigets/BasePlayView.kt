@@ -347,7 +347,7 @@ abstract class BasePlayView @JvmOverloads constructor(
 
     override fun getPlayView(): View? = renderView
 
-    override fun updatePlayProgressView(isDrag: Boolean, postion: Int) {
+    override fun updatePlayProgressView(isDrag: Boolean, postion: Long) {
         mUiSwitcher?.updatePlayProgressView(isDrag, postion)
     }
 

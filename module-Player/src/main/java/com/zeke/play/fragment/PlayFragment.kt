@@ -261,7 +261,7 @@ class PlayFragment : BaseFragment(), IPlayerView, CustomAdapt {
     }
 
     //TODO 更新进度条
-    override fun updatePlayProgressView(isDrag: Boolean, postion: Int) {
+    override fun updatePlayProgressView(isDrag: Boolean, postion: Long) {
         mUiSwitcher?.updatePlayProgressView(isDrag, postion)
     }
 

@@ -225,7 +225,7 @@ class VodInfoFragment : BaseFragment(), IPlayerView {
     override fun showPauseStateView() {}
     override fun showFlowTipsView() {}
     override fun switchVisibleState() {}
-    override fun updatePlayProgressView(isDrag: Boolean, postion: Int) {}
+    override fun updatePlayProgressView(isDrag: Boolean, postion: Long) {}
     override fun repostControllersDismissTask(enable: Boolean) {}
     override fun dismissPop() {}
 }

@@ -373,5 +373,15 @@
                 android:src="@mipmap/full_icon" />
         </LinearLayout>
     </RelativeLayout>
-
+    <SeekBar
+        tools:layout_marginBottom="@dimen/size_40dp"
+        android:layout_alignParentBottom="true"
+        android:gravity="bottom"
+        android:id="@+id/player_bottom_inline_parogress"
+        style="@style/player_bottomline_seekbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:max="100"
+        android:progress="33" />
 </RelativeLayout>

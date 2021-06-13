@@ -74,7 +74,7 @@ public interface IPlayerView extends IAppView,View.OnClickListener {
      * @param isDrag    是否拖动中
      * @param postion   当前进度位置  isDrag为false的时候，参数无效
      */
-    void updatePlayProgressView(boolean isDrag,int postion);
+    void updatePlayProgressView(boolean isDrag,long postion);
 
     /**
      * 开启关闭定时消失蒙层

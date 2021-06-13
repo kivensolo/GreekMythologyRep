@@ -56,7 +56,7 @@ public class IJKPlayer extends BasePlayer implements IJKMediaPlayerListeners {
             }
             playerHandler.postDelayed(this, PLAYER_UPDATE_INTERVAL_MS);
             if (playerListener != null) {
-                playerListener.onPlayerTimingUpdate();
+                playerListener.onPlayerTimingUpdate(IJKPlayer.this,currentPosition);
             }
         }
     };

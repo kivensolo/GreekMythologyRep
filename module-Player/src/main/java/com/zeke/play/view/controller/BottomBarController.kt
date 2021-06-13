@@ -50,6 +50,12 @@ class BottomBarController(view: View) : BaseController() {
         }
     }
 
+    fun onProgressUpdate(position: Long,duration: Long){
+        setPosition(position)
+        setDuration(duration)
+        //TODO  增加功能：隐藏时，是否在播放器底部显示进度条
+    }
+
     fun setPlayMode(@PlayMode mode: String) {
         playMode = mode
     }

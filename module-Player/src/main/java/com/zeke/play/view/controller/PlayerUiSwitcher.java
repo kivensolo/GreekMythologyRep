@@ -26,11 +26,13 @@ public class PlayerUiSwitcher {
     private CoverPanelController coverPanelController;
     private GestureViewController gestureViewController;
     private SettingPanelController settingPanelController;
-
     private View bufferLoadView;
     private static final int SCREEN_LANSCAPE = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
     private static final int SCREEN_UNSPECIFIED = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
     private static final int CONTROLLER_DELAY_GONE_MS = 5000;
+
+    private SeekBar bottomProgressHideBar;
+    private boolean openBottomBarFunction = true;
 
     // <editor-fold defaultstate="collapsed" desc="自动隐藏组件">
     /**
@@ -51,6 +53,7 @@ public class PlayerUiSwitcher {
         _presenter = playPresenter;
         rootView = view;
         bufferLoadView = rootView.findViewById(R.id.play_load_layout);
+        bottomProgressHideBar = rootView.findViewById(R.id.player_bottom_inline_parogress);
         topBarController = new TopBarController(view);
         centerBarController = new CenterBarController(view);
         bottomBarController = new BottomBarController(view);
@@ -241,11 +244,14 @@ public class PlayerUiSwitcher {
 
     /**
      * 更新视频播放的进度显示
-     * TODO 增加功能：隐藏时，是否在播放器底部显示进度条
      */
-    public void updatePlayProgressView(boolean isDragging, int postion) {
-        bottomBarController.setPosition(isDragging ? postion : _presenter.getCurrentPosition());
-        bottomBarController.setDuration(_presenter.getDuration());
+    public void updatePlayProgressView(boolean isDragging, long position) {
+        long duration = _presenter.getDuration();
+        bottomBarController.onProgressUpdate(position, duration);
+        if(bottomProgressHideBar != null){
+            long progressLength = position  * 100/ duration;
+            bottomProgressHideBar.setProgress((int) progressLength);
+        }
     }
 
     /**
@@ -297,6 +303,9 @@ public class PlayerUiSwitcher {
      * 显示和关闭 各个状态栏
      */
     private void showControllerBar(boolean display, Displayable... controller) {
+        if(bottomProgressHideBar != null && openBottomBarFunction){
+            bottomProgressHideBar.setVisibility(display ? View.GONE : View.VISIBLE);
+        }
         for (Displayable v : controller) {
             if (display) {
                 v.show();

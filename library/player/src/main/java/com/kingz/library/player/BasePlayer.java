@@ -69,7 +69,7 @@ public abstract class BasePlayer implements IPlayer,
         public void run() {
             playerHandler.postDelayed(this, PLAYER_UPDATE_INTERVAL_MS);
             if (playerListener != null) {
-                playerListener.onPlayerTimingUpdate();
+                playerListener.onPlayerTimingUpdate(BasePlayer.this, getCurrentPosition());
             }
         }
     };

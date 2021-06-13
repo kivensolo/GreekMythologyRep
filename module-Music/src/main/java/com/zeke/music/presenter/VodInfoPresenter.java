@@ -53,7 +53,7 @@ public class VodInfoPresenter extends AbsBasePresenter implements IPlayerEventsL
     }
 
     @Override
-    public void onPlayerTimingUpdate() {
+    public void onPlayerTimingUpdate(IPlayer player,long position) {
 
     }
 
