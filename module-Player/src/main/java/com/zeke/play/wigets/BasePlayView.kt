@@ -147,9 +147,18 @@ abstract class BasePlayView @JvmOverloads constructor(
         playPresenter?.play()
     }
 
+    open fun pause() {
+        playPresenter?.onPause()
+    }
+
     open fun stop() {
         playPresenter?.onStop()
     }
+
+    open fun release() {
+        playPresenter?.reset()
+    }
+
     // </editor-fold>
 
     /**

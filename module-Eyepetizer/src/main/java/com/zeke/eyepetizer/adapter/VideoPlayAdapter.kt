@@ -30,6 +30,7 @@ class VideoPlayAdapter : RecyclerView.Adapter<BaseViewHolder>() {
     //data
     var mHeaderData: Data? = null
     var mRelatedData = ArrayList<Item>()
+    lateinit var onRelatedItemClick: (item: Item) -> Unit
 
 
     enum class ItemType(var value: Int) {
@@ -176,18 +177,8 @@ class VideoPlayAdapter : RecyclerView.Adapter<BaseViewHolder>() {
         )
 
         holder.itemView.setOnClickListener {
-            //             changePlayVideo(position - 1) // -1 是由于Header的存在
+             onRelatedItemClick(item)
         }
-//        with(itemVideoSmallCardBinding!!) {
-//            //init view
-//            tvCatogory.setTextColor(mContext.resources.getColor(R.color.white))
-//
-//
-//            //init Event
-//            holder.itemView.setOnClickListener {
-//                onItemClick.invoke(position - 1)    // -1 是由于Header的存在
-//            }
-//        }
     }
 
     //没有更多数据，到底部的提示ItemView

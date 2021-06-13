@@ -31,6 +31,7 @@ public class PlayPresenter extends AbsBasePresenter implements IPlayerEventsCall
     public static final int ERROR_PLAY_PARAMS = 0x0001;
 
     public PlayPresenter(IPlayer player, IPlayerView playerView) {
+        ZLog.d("init play presenter. " + player.getClass().getSimpleName());
         this.mPlayer = player;
         this.playerView = playerView;
         seekBarChangeListener = new PlaySeekBarChangeListener();
@@ -116,7 +117,7 @@ public class PlayPresenter extends AbsBasePresenter implements IPlayerEventsCall
     }
 
     @Override
-    public void onStop() {
+    public void onStop() {//为啥onStop是Pause???
         mPlayer.pause();
     }
 
