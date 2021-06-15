@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentPagerAdapter
 import com.zeke.demo.R
 import com.zeke.demo.base.AbsDemoActivity
 import com.zeke.demo.draw.base_api.*
 import com.zeke.demo.draw.canvas.CanvasDemoViewGroup
 import com.zeke.demo.draw.paint.*
+import com.zeke.demo.draw.path.ShadowLineChartView
 import com.zeke.demo.draw.text.*
 import com.zeke.demo.fragments.CardVerticalDemoFragment
 import com.zeke.demo.model.CardItemModel
@@ -23,51 +26,62 @@ class PracticeDrawActivity : AbsDemoActivity() {
     override fun inflatePageData() {
         // 1-1 基础api展示数据
         val cardData1: MutableList<CardItemModel> = ArrayList()
-        cardData1.add(CardItemModel("canvas.drawColor(Color.YELLOW)", Practice1ColorView(this)))
-        cardData1.add(CardItemModel("drawCircle", Practice2CircleView(this)))
-        cardData1.add(CardItemModel("drawRect", Practice3RectView(this)))
-        cardData1.add(CardItemModel("drawPoint: ROUND、BUTT、SQUARE", Practice4PointView(this)))
-        cardData1.add(CardItemModel("drawOval", Practice5OvalView(this)))
-        cardData1.add(CardItemModel("drawLine", Practice6LineView(this)))
-        cardData1.add(CardItemModel("drawArc", Practice7ArcView(this)))
-        cardData1.add(CardItemModel("drawPath", Practice8PathView(this)))
+        cardData1.apply {
+            add(CardItemModel("canvas.drawColor(Color.YELLOW)", Practice1ColorView(this@PracticeDrawActivity)))
+            add(CardItemModel("drawCircle", Practice2CircleView(this@PracticeDrawActivity)))
+            add(CardItemModel("drawRect", Practice3RectView(this@PracticeDrawActivity)))
+            add(CardItemModel("drawPoint: ROUND、BUTT、SQUARE", Practice4PointView(this@PracticeDrawActivity)))
+            add(CardItemModel("drawOval", Practice5OvalView(this@PracticeDrawActivity)))
+            add(CardItemModel("drawLine", Practice6LineView(this@PracticeDrawActivity)))
+            add(CardItemModel("drawArc", Practice7ArcView(this@PracticeDrawActivity)))
+            add(CardItemModel("drawPath", Practice8PathView(this@PracticeDrawActivity)))
+        }
 
         val cardData2: MutableList<CardItemModel> = ArrayList()
-        cardData2.add(CardItemModel("线性着色器展示", Paint1ShaderView(this)))
-        cardData2.add(CardItemModel("BitmapShader", Paint2BitmapShaderView(this)))
-        cardData2.add(CardItemModel("ComposeShader(未生效)", Paint3ComposeShaderView(this)))
-        cardData2.add(CardItemModel("ColorFilter", Paint4ColorFilterView(this)))
-        cardData2.add(CardItemModel("Xfermode(离屏缓冲 未生效)", Paint5XfermodeView(this)))
+        cardData2.apply {
+            add(CardItemModel("线性着色器展示", Paint1ShaderView(this@PracticeDrawActivity)))
+            add(CardItemModel("BitmapShader", Paint2BitmapShaderView(this@PracticeDrawActivity)))
+            add(CardItemModel("ComposeShader(未生效)", Paint3ComposeShaderView(this@PracticeDrawActivity)))
+            add(CardItemModel("ColorFilter", Paint4ColorFilterView(this@PracticeDrawActivity)))
+            add(CardItemModel("Xfermode(离屏缓冲 未生效)", Paint5XfermodeView(this@PracticeDrawActivity)))
+        }
 
         val cardData3: MutableList<CardItemModel> = ArrayList()
-        cardData3.add(CardItemModel("简单效果使用", Paint6NormalEffectView(this)))
-        cardData3.add(CardItemModel("PathEffect", Paint7PathEffectView(this)))
-        cardData3.add(CardItemModel("ShadowLayer(在下面附加效果)", Paint8ShadowLayerView(this)))
-        cardData3.add(CardItemModel("MaskFilter(在上面附加效果)", Paint9MaskFilterView(this)))
-        cardData3.add(CardItemModel("getPath", Paint10GetPathView(this)))
+        cardData3.apply {
+            add(CardItemModel("简单效果使用", Paint6NormalEffectView(this@PracticeDrawActivity)))
+            add(CardItemModel("PathEffect", Paint7PathEffectView(this@PracticeDrawActivity)))
+            add(CardItemModel("PathEffectV2", ShadowLineChartView(this@PracticeDrawActivity)))
+            add(CardItemModel("ShadowLayer(在下面附加效果)", Paint8ShadowLayerView(this@PracticeDrawActivity)))
+            add(CardItemModel("MaskFilter(在上面附加效果)", Paint9MaskFilterView(this@PracticeDrawActivity)))
+            add(CardItemModel("getPath", Paint10GetPathView(this@PracticeDrawActivity)))
+        }
 
         val cardData4: MutableList<CardItemModel> = ArrayList()
-        cardData4.add(CardItemModel("文字效果绘制API", Paint11TextEffecsView(this)))
-        cardData4.add(CardItemModel("文字尺寸绘制API", Paint12TextDimensionView(this)))
-        cardData4.add(CardItemModel("FontMetric", Paint13FontMetricView(this)))
-        cardData4.add(CardItemModel("drawTextOnPath()", Paint14TextOnPathView(this)))
-        cardData4.add(CardItemModel("文字换行绘制 StaticLayout", Paint15TextStaticLayoutView(this)))
+        cardData4.apply {
+            add(CardItemModel("文字效果绘制API", Paint11TextEffecsView(this@PracticeDrawActivity)))
+            add(CardItemModel("文字尺寸绘制API", Paint12TextDimensionView(this@PracticeDrawActivity)))
+            add(CardItemModel("FontMetric", Paint13FontMetricView(this@PracticeDrawActivity)))
+            add(CardItemModel("drawTextOnPath()", Paint14TextOnPathView(this@PracticeDrawActivity)))
+            add(CardItemModel("文字换行绘制 StaticLayout", Paint15TextStaticLayoutView(this@PracticeDrawActivity)))
+        }
 
         val cardData5: MutableList<CardItemModel> = ArrayList()
-        cardData5.add(CardItemModel("Canvas练习", CanvasDemoViewGroup(this)))
+        cardData5.add(CardItemModel("Canvas练习", CanvasDemoViewGroup(this@PracticeDrawActivity)))
 
         // 初始化Page数据
-        pageModels.add(DemoContentModel(getString(R.string.draw_1_1), cardData1))
-        pageModels.add(DemoContentModel(getString(R.string.draw_paint_color), cardData2))
-        pageModels.add(DemoContentModel(getString(R.string.draw_paint_effect), cardData3))
-        pageModels.add(DemoContentModel(getString(R.string.draw_text), cardData4))
-        pageModels.add(DemoContentModel("1.4 画布练习", cardData5))
+        with(pageModels) {
+            add(DemoContentModel(getString(R.string.draw_1_1), cardData1))
+            add(DemoContentModel(getString(R.string.draw_paint_color), cardData2))
+            add(DemoContentModel(getString(R.string.draw_paint_effect), cardData3))
+            add(DemoContentModel(getString(R.string.draw_text), cardData4))
+            add(DemoContentModel("1.4 画布练习", cardData5))
+        }
     }
 
     override fun initPagerAdapter() {
         super.initPagerAdapter()
-        pager?.adapter = object : androidx.fragment.app.FragmentPagerAdapter(supportFragmentManager) {
-            override fun getItem(position: Int): androidx.fragment.app.Fragment {
+        pager?.adapter = object : FragmentPagerAdapter(supportFragmentManager) {
+            override fun getItem(position: Int): Fragment {
                 val fragment = CardVerticalDemoFragment()
                 fragment.initData(pageModels[position])
                 return fragment
@@ -93,7 +107,7 @@ class PracticeDrawActivity : AbsDemoActivity() {
             }
         }
         // 设置缓存的试图数据是当前页的左边2+右边2
-        pager?.offscreenPageLimit = 4
+//        pager?.offscreenPageLimit = 4
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

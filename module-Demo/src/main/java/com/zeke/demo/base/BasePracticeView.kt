@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
+import androidx.annotation.Dimension
 import com.zeke.demo.model.CardItemConst
 import com.zeke.kangaroo.utils.UIUtils
 
@@ -65,6 +66,7 @@ open class BasePracticeView @JvmOverloads constructor(
         return CardItemConst.NORMAL_WIDTH
     }
 
+    @Dimension(unit = Dimension.PX)
     open fun getViewHeight():Int{
         return CardItemConst.NORMAL_HEIGHT
     }

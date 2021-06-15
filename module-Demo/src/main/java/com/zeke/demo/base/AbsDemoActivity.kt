@@ -29,11 +29,13 @@ abstract class AbsDemoActivity : BaseActivity() {
     open fun initViews(){
         val normalColor = resources.getColor(android.R.color.white)
         val selectedColor = resources.getColor(R.color.hub_yellow)
-        tabLayout?.tabMode = TabLayout.MODE_SCROLLABLE
-        tabLayout?.setTabTextColors(normalColor, selectedColor)
-        tabLayout?.setupWithViewPager(pager)
-
-        pager = findViewById<View>(R.id.viewpager) as androidx.viewpager.widget.ViewPager
+        pager = findViewById<View>(R.id.viewpager) as ViewPager
+        tabLayout = findViewById<View>(R.id.tab_layout) as TabLayout
+        tabLayout?.apply {
+            tabMode = TabLayout.MODE_SCROLLABLE
+            setTabTextColors(normalColor, selectedColor)
+            setupWithViewPager(pager)
+        }
     }
 
     /**

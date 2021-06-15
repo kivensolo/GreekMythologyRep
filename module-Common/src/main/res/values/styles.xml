@@ -56,6 +56,10 @@
         <item name="textAllCaps">false</item>
         <item name="android:textSize">15sp</item>
         <item name="android:maxLines">1</item>
+        <item name="tabTextColor">@color/gray</item>
+        <item name="tabIndicatorColor">@color/black_transparent</item>
+        <item name="tabSelectedTextColor">@color/black</item>
+        <item name="tabMode">scrollable</item>
     </style>
 
     <style name="app_tab_layout_style" parent="AppTheme">
