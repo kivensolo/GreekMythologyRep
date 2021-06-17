@@ -97,7 +97,7 @@ class Paint7PathEffectView @JvmOverloads constructor(
         //初始化每个效果
         makeEffects(mEffects, mPhase)
         mPhase += 1f
-        invalidate()
+//        invalidate()
 
         for (i in mEffects.indices) {
             paint.pathEffect = mEffects[i]

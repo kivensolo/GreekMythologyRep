@@ -27,7 +27,7 @@ abstract class AbsDemoActivity : BaseActivity() {
     }
 
     open fun initViews(){
-        val normalColor = resources.getColor(android.R.color.white)
+        val normalColor = resources.getColor(android.R.color.black)
         val selectedColor = resources.getColor(R.color.hub_yellow)
         pager = findViewById<View>(R.id.viewpager) as ViewPager
         tabLayout = findViewById<View>(R.id.tab_layout) as TabLayout
@@ -36,6 +36,8 @@ abstract class AbsDemoActivity : BaseActivity() {
             setTabTextColors(normalColor, selectedColor)
             setupWithViewPager(pager)
         }
+        findViewById<View>(R.id.iv_tab_menu).visibility = View.GONE
+        findViewById<View>(R.id.ivSearch).visibility = View.GONE
     }
 
     /**
