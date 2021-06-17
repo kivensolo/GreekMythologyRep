@@ -57,7 +57,7 @@
     <View
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:layout_constraintStart_toStartOf="parent"
-        android:id="@+id/vHDivider_a"
+        android:id="@+id/divider_line"
         android:background="@color/gray"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"/>
@@ -69,7 +69,8 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"/>
+        app:layout_constraintTop_toBottomOf="@+id/divider_line"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <com.kingz.module.common.LoadStatusView
         android:id="@+id/load_status"

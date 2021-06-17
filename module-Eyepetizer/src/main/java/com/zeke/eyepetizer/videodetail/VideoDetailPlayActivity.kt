@@ -67,7 +67,6 @@ class VideoDetailPlayActivity : BaseVMActivity() {
 //            ZLog.d("Video detail page recom data is ok :$it")
             mPageData = result
             if(result != null){
-                //TODO 详情数据如何处理？
                 videoRecycler.visibility = View.VISIBLE
                 mAdapter.setData(result.detailData, result.relatedData.itemList)
             }
