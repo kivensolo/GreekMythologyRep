@@ -58,6 +58,34 @@
     ]
   },
   {
+    "name": "Custom controls",
+    "desc": "自定义控件",
+    "samples": [
+      {
+        "name": "Custom controls",
+        "class": "com.kingz.pages.CustomViewsPage"
+      },
+      {
+        "name": "新版自定义View/控件展示页面",
+        "class": "com.zeke.demo.customview.CustomViewsDemoActivity"
+      },
+      {
+        "name": "ShadowLayout",
+        "class": "com.zeke.demo.shadowlayout.ShadowLayoutDemoActivity"
+      }
+    ]
+  },
+  {
+    "name": "Device",
+    "desc": "与设备交互",
+    "samples": [
+      {
+        "name": "Bluetooth",
+        "class": "com.zeke.demo.device.BLEDemo"
+      }
+    ]
+  },
+  {
     "name": "Original",
     "desc": "原生基本控件",
     "samples": [
@@ -113,24 +141,6 @@
       {
         "name": "Glide",
         "class": "com.zeke.ktx.demo.glide.GlideCardDemoActivity"
-      }
-    ]
-  },
-  {
-    "name": "Custom controls",
-    "desc": "自定义控件",
-    "samples": [
-      {
-        "name": "Custom controls",
-        "class": "com.kingz.pages.CustomViewsPage"
-      },
-      {
-        "name": "新版自定义View/控件展示页面",
-        "class": "com.zeke.demo.customview.CustomViewsDemoActivity"
-      },
-      {
-        "name": "ShadowLayout",
-        "class": "com.zeke.demo.shadowlayout.ShadowLayoutDemoActivity"
       }
     ]
   },
