@@ -43,7 +43,7 @@
 
         <activity android:name="com.zeke.demo.fragments.FragementLifeCycleTestPage" />
 
-        <activity android:name=".device.BLEDemo" />
+        <activity android:name=".device.bluetooth.BleDemoActivity" />
 
         <!--   AppBarLayout 相关页面     -->
         <activity android:name="com.zeke.demo.meterial.AppBarLayoutDemoActivity" />

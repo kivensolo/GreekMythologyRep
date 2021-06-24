@@ -29,15 +29,13 @@
         android:text="连接蓝牙"
         app:layout_constraintStart_toEndOf="@+id/change_bluetooth"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/ble_device_list"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/device_find_recycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:textAllCaps="false"
-        android:background="@color/gray"
-        android:textColor="@color/white"
-        android:textSize="@dimen/size_20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/find_bluetooth_device" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/find_bluetooth_device"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

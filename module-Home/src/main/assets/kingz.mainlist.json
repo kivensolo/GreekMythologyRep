@@ -81,7 +81,7 @@
     "samples": [
       {
         "name": "Bluetooth",
-        "class": "com.zeke.demo.device.BLEDemo"
+        "class": "com.zeke.demo.device.bluetooth.BleDemoActivity"
       }
     ]
   },

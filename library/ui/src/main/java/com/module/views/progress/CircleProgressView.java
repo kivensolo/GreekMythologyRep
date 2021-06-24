@@ -159,8 +159,8 @@ public class CircleProgressView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        int centre = Math.min(getWidth(),getHeight()) / 2;                // 获取圆心的x坐标
-        int radius = centre - mCircleWidth / 2 - 10;     // 半径(防止切View的边缘)
+        int centre = Math.min(getWidth(),getHeight()) / 2;  // 获取圆心的x坐标
+        int radius = centre - mCircleWidth / 2 - 10;        // 半径(防止切View的边缘)
 
         //设置一个弧的矩形区域(圆的直径长度)
         RectF oval = new RectF(centre - radius,centre - radius,centre + radius,centre + radius);

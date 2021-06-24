@@ -28,15 +28,13 @@ data class ResponseResult<out T>(
             return ResponseResult(-1,msg, data,  Status.FAILURE)
         }
 
+        @JvmOverloads
         fun <T> error(msg: String, data: T? = null): ResponseResult<T> {
             return ResponseResult(-1,msg, data,  Status.ERROR)
         }
 
-        fun <T> loading(): ResponseResult<T> {
-            return ResponseResult(-2,null, null,  Status.LOADING)
-        }
-
-        fun <T> loading(data: T?): ResponseResult<T> {
+        @JvmOverloads
+        fun <T> loading(data: T? = null): ResponseResult<T> {
             return ResponseResult(-2,null, data,  Status.LOADING)
         }
     }
