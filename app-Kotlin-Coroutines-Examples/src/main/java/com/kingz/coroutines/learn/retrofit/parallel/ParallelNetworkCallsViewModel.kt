@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kingz.base.response.ResponseResult
-import com.kingz.coroutines.data.api.ApiHelper
+import com.kingz.coroutines.data.api.IUserAPIFunc
 import com.kingz.coroutines.data.local.DatabaseHelper
 import com.kingz.coroutines.data.model.ApiUser
 import kotlinx.coroutines.async
@@ -23,8 +23,8 @@ import kotlinx.coroutines.launch
  * This is useful when you want to make network calls in parallel which are independent of each other.
  */
 class ParallelNetworkCallsViewModel(
-        private val apiHelper: ApiHelper,
-        private val dbHelper: DatabaseHelper
+    private val apiHelper: IUserAPIFunc,
+    private val dbHelper: DatabaseHelper
 ) : ViewModel() {
     private val users = MutableLiveData<ResponseResult<List<ApiUser>>>()
 

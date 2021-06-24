@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kingz.base.response.ResponseResult
-import com.kingz.coroutines.data.api.ApiHelper
+import com.kingz.coroutines.data.api.IUserAPIFunc
 import com.kingz.coroutines.data.local.DatabaseHelper
 import com.kingz.coroutines.data.model.ApiUser
 import kotlinx.coroutines.async
@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
 
 class IgnoreErrorAndContinueViewModel(
-    private val apiHelper: ApiHelper,
+    private val apiHelper: IUserAPIFunc,
     private val dbHelper: DatabaseHelper
 ) : ViewModel() {
 

@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kingz.base.response.ResponseResult
-import com.kingz.coroutines.data.api.ApiHelper
+import com.kingz.coroutines.data.api.IUserAPIFunc
 import com.kingz.coroutines.data.local.DatabaseHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -13,8 +13,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class LongRunningTaskViewModel(
-        private val apiHelper: ApiHelper,
-        private val dbHelper: DatabaseHelper
+    private val apiHelper: IUserAPIFunc,
+    private val dbHelper: DatabaseHelper
 ) : ViewModel() {
 
     private val status = MutableLiveData<ResponseResult<String>>()

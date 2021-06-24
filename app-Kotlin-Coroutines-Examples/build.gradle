@@ -62,6 +62,7 @@ dependencies {
     androidTestImplementation rootProject.ext.test["support-test-espresso"]
 
     implementation project(':module-Common')
+    implementation project(':library-network')
 
     // Room-compiler
     kapt rootProject.ext.dependencies["room-compiler"]
@@ -85,16 +86,7 @@ dependencies {
     // 图片加载框架
     implementation "com.github.bumptech.glide:glide:4.11.0"
 
-    // 网络组件
-    implementation "com.squareup.retrofit2:retrofit:${lib_versions.rtf2}"
-    implementation "com.squareup.retrofit2:converter-gson:${lib_versions.rtf2_2gson}"
-    implementation "com.squareup.retrofit2:adapter-rxjava2:${lib_versions.rtf2_adapter}"
     implementation "com.squareup.okhttp3:logging-interceptor:3.12.1"
-
-
-
-    implementation project(':library-network')
-
 
     // Android-Debug-Database
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'

@@ -1,18 +1,19 @@
-package com.mindorks.example.coroutines.learn.task.twotasks
+package com.kingz.coroutines.learn.task.twotasks
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kingz.base.response.ResponseResult
-import com.kingz.coroutines.data.api.IUserAPIFunc
+import com.kingz.coroutines.data.api.UserServiceApi
 import com.kingz.coroutines.data.local.DatabaseHelper
+import com.zeke.reactivehttp.datasource.BaseRemoteDataSource
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class TwoLongRunningTasksViewModel(
-    private val apiHelper: IUserAPIFunc,
+class TwoLongRunningTasksViewModelV2(
+    private val remoteDataSource: BaseRemoteDataSource<UserServiceApi>,
     private val dbHelper: DatabaseHelper
 ) : ViewModel() {
 

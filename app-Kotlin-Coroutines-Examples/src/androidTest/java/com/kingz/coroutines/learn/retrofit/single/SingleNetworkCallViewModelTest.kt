@@ -3,7 +3,7 @@ package com.kingz.coroutines.learn.retrofit.single
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.kingz.base.response.ResponseResult
-import com.kingz.coroutines.data.api.ApiHelper
+import com.kingz.coroutines.data.api.IUserAPIFunc
 import com.kingz.coroutines.data.local.DatabaseHelper
 import com.kingz.coroutines.data.model.ApiUser
 import com.kingz.coroutines.utils.TestCoroutineRule
@@ -35,7 +35,7 @@ class SingleNetworkCallViewModelTest {
     val testCoroutineRule = TestCoroutineRule()
 
     @Mock
-    private lateinit var apiHelper: ApiHelper
+    private lateinit var apiHelper: IUserAPIFunc
 
     @Mock
     private lateinit var databaseHelper: DatabaseHelper

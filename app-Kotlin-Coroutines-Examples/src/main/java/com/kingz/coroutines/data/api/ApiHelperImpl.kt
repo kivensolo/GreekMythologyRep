@@ -1,6 +1,7 @@
 package com.kingz.coroutines.data.api
 
-class ApiHelperImpl(private val userServiceApi: UserServiceApi) : ApiHelper {
+@Deprecated("后续被dataSource替换")
+class ApiHelperImpl(private val userServiceApi: UserServiceApi) : IUserAPIFunc {
 
     override suspend fun getUsers() = userServiceApi.getUsers()
 

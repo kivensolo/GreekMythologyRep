@@ -3,7 +3,7 @@ package com.kingz.coroutines.data.api
 import com.kingz.coroutines.data.model.ApiUser
 
 
-interface ApiHelper {
+interface IUserAPIFunc {
 
     suspend fun getUsers(): List<ApiUser>
 

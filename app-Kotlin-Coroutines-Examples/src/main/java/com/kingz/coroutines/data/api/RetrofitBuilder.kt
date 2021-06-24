@@ -1,6 +1,5 @@
 package com.kingz.coroutines.data.api
 
-import com.kingz.coroutines.data.api.wandroid.WAndroidApi
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -16,9 +15,6 @@ object RetrofitBuilder {
 
     val githubApiService: GitHubApiService = buildRetrofit(GitHubApiService.BASE_URL)
             .create(GitHubApiService::class.java)
-
-    val wAndroidApi: WAndroidApi = buildRetrofit(WAndroidApi.BASE_URL)
-            .create(WAndroidApi::class.java)
 
     val loggingInterceptor = HttpLoggingInterceptor(HttpLoggingInterceptor.Logger {})
             .setLevel(HttpLoggingInterceptor.Level.BODY)
