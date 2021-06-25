@@ -12,37 +12,37 @@ import kotlin.math.pow
  */
 class BluetoothDeviceWrapper(
     rssi: Int,  //信号强度
-    var mDevice: BluetoothDevice? = null
+    var device: BluetoothDevice? = null
 ) : Comparable<BluetoothDeviceWrapper> {
 
     /**
      * 距离
      */
-    var mDistance = 0.0
+    var distance = 0.0
 
     /**
      * 发射端和接收端相隔1米时的信号强度 A
      * 需要根据实际环境进行检测得出
      */
-    var A_Value = 60.0
+    var aValue = 60.0
     /**
      * 环境衰减因子n, 需要根据实际环境进行检测得出
      */
-    var n_Value = 2.5
+    var nValue = 2.5
 
     init {
-        mDistance = getDistance(rssi)
+        distance = getDistance(rssi)
     }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other == null || javaClass != other.javaClass) return false
         val wrapper = other as BluetoothDeviceWrapper
-        return mDevice?.equals(wrapper.mDevice)?:false
+        return device?.equals(wrapper.device)?:false
     }
 
     override fun hashCode(): Int {
-        return mDevice.hashCode()
+        return device.hashCode()
     }
 
     /**
@@ -53,16 +53,16 @@ class BluetoothDeviceWrapper(
      */
     private fun getDistance(rssi: Int): Double {
         val iRssi = abs(rssi)
-        val power = (iRssi - A_Value) / (10 * n_Value)
+        val power = (iRssi - aValue) / (10 * nValue)
         return 10.0.pow(power)
     }
 
     override fun compareTo(other: BluetoothDeviceWrapper): Int {
         return when {
-            mDistance < other.mDistance -> {
+            distance < other.distance -> {
                 -1
             }
-            mDistance > other.mDistance -> {
+            distance > other.distance -> {
                 1
             }
             else -> {

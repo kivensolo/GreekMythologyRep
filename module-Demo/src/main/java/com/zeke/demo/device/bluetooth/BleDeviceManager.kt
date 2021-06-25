@@ -7,7 +7,6 @@ import android.bluetooth.le.ScanFilter
 import android.bluetooth.le.ScanResult
 import android.bluetooth.le.ScanSettings
 import android.content.Context
-import android.content.Intent
 import android.os.Build
 import android.os.Handler
 import android.os.Message
@@ -43,7 +42,7 @@ import kotlin.collections.HashMap
  * 坑点记录:
  *  1.通知开启后，才能读到数据，否则读不到。
  *  2.发送数据时，如果一包数据超过20字节，需要分包发送，一次最多发送二十字节。
- *    接受也是。
+ *    接收也是。
  *  3.每次发送数据或者数据分包发送时， 操作间要有至少15ms的间隔
  *  4.有的蓝牙产品，发现获取不到需要的特征，后来打断点，发现他们蓝牙设备的通知特征根本没有，是他们给错协议了。。。
  *     所以建议各位开发的时候，如果一直连接失败，也可以查看一下写特征和通知特征是否为空，
@@ -51,7 +50,7 @@ import kotlin.collections.HashMap
  *  5.蓝牙如果出现扫描不到的情况，那是因为手机没有开启定位权限，清单文件中写上定位权限，代码中在动态获取下就OK了。
  *
  */
-class BLEDeviceManager(val context: Context) {
+class BleDeviceManager(val context: Context) {
 
     val ACTION_GATT_CONNECTED = "com.example.bluetooth.le.ACTION_GATT_CONNECTED"
     val ACTION_GATT_SERVICES_DISCOVERED =
@@ -96,8 +95,9 @@ class BLEDeviceManager(val context: Context) {
     private val STATE_CONNECTING = 2    //正在连接
     private val STATE_CONNECTED = 3     //已连接
     private val STATE_DISCONNECTED = 4  //已断开连接
-    private val STATE_REMOVE_BONDING = 5 //正在删除绑定
-    private val STATE_SEARCHING = 6
+    private val STATE_DISSTATE_CONNECTING = 5  //已断开连接
+    private val STATE_REMOVE_BONDING = 6 //正在删除绑定
+    private val STATE_SEARCHING = 7
     /**
      * Current State
      */
@@ -119,14 +119,42 @@ class BLEDeviceManager(val context: Context) {
 //          BluetoothAdapter.getDefaultAdapter()
 //    }
     private var bluetoothAdapter: BluetoothAdapter? = null
+    /**
+     * Support API for the Bluetooth GATT Profile
+     */
+    private var bluetoothGatt: BluetoothGatt? = null
+    var writeCharacter: BluetoothGattCharacteristic? = null
+    var readCharacter: BluetoothGattCharacteristic? = null
 
-    private val BluetoothAdapter.isDisabled: Boolean
-        get() = !isEnabled
+    //------------- Some BluetoothProfiles
+    private var bluetoothHealth: BluetoothHealth? = null
+    private val profileListener = object : BluetoothProfile.ServiceListener{
+        override fun onServiceConnected(profile: Int, proxy: BluetoothProfile?) {
+            ZLog.e("onServiceConnected: profile=$profile  proxy=$proxy")
+            if (profile == BluetoothProfile.HEALTH){
+                bluetoothHealth = proxy as BluetoothHealth
+            }
+        }
 
+        override fun onServiceDisconnected(profile: Int) {
+            ZLog.e("onServiceDisconnected: ")
+            if (profile == BluetoothProfile.HEALTH){
+                bluetoothHealth = null
+            }
+        }
+
+    }
     private var leScanCallback: BleScanCallBack? = null
 
-
     private val mHandler = BLEManagerHandler()
+
+
+    //TODO 按照具体情况设置UUID
+    private val UUID_SERVICE: UUID = UUID.fromString("0000D459-0000-1000-8000-00805F9B34FB")
+    private val UUID_WRITE: UUID = UUID.fromString("00000013-0000-1000-8000-00805F9B34FB")
+    private val UUID_NOTIFY: UUID = UUID.fromString("00000014-0000-1000-8000-00805F9B34FB")
+    private val UUID_INDICATE: UUID = UUID.fromString("00000015-0000-1000-8000-00805F9B34FB")
+
 
     init {
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
@@ -184,6 +212,14 @@ class BLEDeviceManager(val context: Context) {
         return bluetoothAdapter?.bondedDevices
     }
 
+    /**
+     * 获取Profile
+     * @param profile eg: BluetoothProfile.HEALTH
+     */
+    fun getProfile(profile: Int, lsr: BluetoothProfile.ServiceListener) {
+        bluetoothAdapter?.getProfileProxy(context, lsr, profile)
+    }
+
     fun startDiscovery() {
         val isSuccess = bluetoothAdapter?.startDiscovery()
         ZLog.d("startFindDevices success? = $isSuccess")
@@ -220,13 +256,17 @@ class BLEDeviceManager(val context: Context) {
     }
 
     /**
-     * 连接到 GATT 服务器
+     * Connect BLE devices with GATT
+     * @param target Wrapper of BluetoothDevice
      * @return BluetoothGatt
      */
-    fun connectGattServer(target: BluetoothDeviceWrapper): BluetoothGatt? {
-        ZLog.e("connectGattServer: ${target.mDevice?.name}")
+    fun connectDevice(target: BluetoothDeviceWrapper) {
+        ZLog.e("connectGattServer: ${target.device?.name}")
+        //Stop first
+        bluetoothAdapter?.bluetoothLeScanner?.stopScan(leScanCallback)
+
         //false: 可用时不自动连接到 BLE 设备
-        return target.mDevice?.connectGatt(context, false, BleGattCallback())
+        bluetoothGatt = target.device?.connectGatt(context, false, BleGattCallback())
     }
 
     open class BleScanCallBack : ScanCallback() {
@@ -252,6 +292,7 @@ class BLEDeviceManager(val context: Context) {
         }
     }
 
+
     /**
      * BLE设备向客户端传递信息的回调
      * TODO 开一个Service
@@ -259,34 +300,69 @@ class BLEDeviceManager(val context: Context) {
     inner class BleGattCallback : BluetoothGattCallback() {
 
         /**
+         * Open notification channle.
+         * NOTICE: Befor read data, must enable notification
+         */
+        private fun enableNotification(
+            enable: Boolean,
+            characteristic: BluetoothGattCharacteristic?
+        ): Boolean {
+            if (bluetoothGatt == null) {
+                ZLog.e("bluetoothGatt is null.")
+                return false
+            }
+            if (bluetoothGatt?.setCharacteristicNotification(characteristic, enable) == false) {
+                ZLog.e("Notification status was set failed.")
+                return false
+            }
+            //蓝牙标准Notification UUID
+            val clientConfig =
+                characteristic?.getDescriptor(UUID.fromString("00002902-0000-1000-8000-00805f9b34fb"))
+                    ?: return false
+            if (enable) {
+                clientConfig.value = BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
+            } else {
+                clientConfig.value = BluetoothGattDescriptor.DISABLE_NOTIFICATION_VALUE
+            }
+            return bluetoothGatt?.writeDescriptor(clientConfig) ?: false
+        }
+
+        /**
          * 连接状态发生改变时回调:
-         * Zlog: [ (BLEDeviceManager.kt:218)#ConnectGattServer ] connectGattServer: MITV-1CC21
-         * BluetoothGatt: connect() - device: D4:5E:EC:D1:CC:21, auto: false
-         * BluetoothGatt: registerApp()
-         * BluetoothGatt: registerApp() - UUID=1fa61be8-9f0c-435e-8958-b63a1b64b0e6
-         * BluetoothGatt: onClientRegistered() - status=0 clientIf=7
-         * BluetoothGatt: onClientConnectionState() - status=0 clientIf=7 device=D4:5E:EC:D1:CC:21
-         * Zlog: [ (BLEDeviceManager.kt:321)#OnConnectionStateChange ] onConnectionStateChange()
+         * Connect Steps:
+         *  registerApp()
+         *  |_onClientRegistered() - status=0 clientIf=7
+         *  |__onClientConnectionState - status=0 clientIf=7 device=D4:5E:EC:D1:CC:21
+         *
+         *  BLEDeviceManager.kt#OnConnectionStateChange: onConnectionStateChange()
+         *
          */
         override fun onConnectionStateChange(gatt: BluetoothGatt?, status: Int, newState: Int) {
             ZLog.d("onConnectionStateChange() ")
-            val intentAction: String
             when (newState) {
                 BluetoothProfile.STATE_CONNECTED -> {
-//                    intentAction = ACTION_GATT_CONNECTED
                     currentState = STATE_CONNECTED
-//                    broadcastUpdate(intentAction)
-//                    Log.i(TAG, "Connected to GATT server.")
-//                    Log.i(
-//                        TAG, "Attempting to start service discovery: " +
-//                                bluetoothGatt?.discoverServices()
-//                    )
+                    ZLog.d("Connected to GATT server.")
+                    ZLog.d(
+                        "Attempting to start service discovery: " +
+                                bluetoothGatt?.discoverServices()
+                    )
                 }
+
+                BluetoothProfile.STATE_CONNECTING -> {
+                    currentState = STATE_CONNECTING
+                    ZLog.d("Connecting from GATT server.")
+
+                }
+
+                BluetoothProfile.STATE_DISCONNECTING -> {
+                    currentState = STATE_DISSTATE_CONNECTING
+                    ZLog.d("Disconnecting from GATT server.")
+                }
+
                 BluetoothProfile.STATE_DISCONNECTED -> {
-//                    intentAction = Companion.ACTION_GATT_DISCONNECTED
+                    ZLog.e("Disconnected from GATT server. ")
                     currentState = STATE_DISCONNECTED
-//                    Log.i(TAG, "Disconnected from GATT server.")
-//                    broadcastUpdate(intentAction)
                 }
             }
         }
@@ -303,6 +379,10 @@ class BLEDeviceManager(val context: Context) {
         ) {
             ZLog.d("onCharacteristicRead() ")
             super.onCharacteristicRead(gatt, characteristic, status)
+            when (status) {
+                BluetoothGatt.GATT_SUCCESS -> {
+                }
+            }
         }
 
         override fun onCharacteristicWrite(
@@ -314,17 +394,61 @@ class BLEDeviceManager(val context: Context) {
             super.onCharacteristicWrite(gatt, characteristic, status)
         }
 
+        /**
+         * 监听notify通道数据
+         */
         override fun onCharacteristicChanged(
             gatt: BluetoothGatt?,
             characteristic: BluetoothGattCharacteristic?
         ) {
-            ZLog.d("onCharacteristicChanged() ")
+            ZLog.d("onCharacteristicChanged() command:${characteristic?.value}")
             super.onCharacteristicChanged(gatt, characteristic)
         }
 
         override fun onServicesDiscovered(gatt: BluetoothGatt?, status: Int) {
-            ZLog.d("onServicesDiscovered() ")
             super.onServicesDiscovered(gatt, status)
+            ZLog.d("onServicesDiscovered() ")
+            if (gatt == null) {
+                ZLog.e("onServicesDiscovered() gatt == null")
+            }
+            var characteristicNotify: BluetoothGattCharacteristic?
+            var characteristicRead: BluetoothGattCharacteristic?
+            gatt?.apply {
+                characteristicNotify = getService(UUID_SERVICE)?.getCharacteristic(UUID_NOTIFY)
+                characteristicRead = getService(UUID_SERVICE)?.getCharacteristic(UUID_INDICATE)
+                enableNotification(true, characteristicNotify)
+                readCharacteristic(characteristicRead)
+            }
+
+            when (status) {
+                BluetoothGatt.GATT_SUCCESS -> {
+                    val serviceList = gatt?.services
+                    serviceList?.forEach { service ->
+                        if (UUID_SERVICE == service.uuid) {
+                            val characterList = service.characteristics
+                            characterList.forEach { character ->
+                                if (UUID_WRITE == character.uuid) {
+                                    writeCharacter = character
+                                    ZLog.d(
+                                        "onServicesDiscovered(writeCharacter):" +
+                                                """serviceUUID=${service.uuid}  serviceType=${service.type}
+                                            characterUuid=${character.uuid}  characterValue=${character.value}"""
+                                    )
+                                } else if (UUID_INDICATE == character.uuid) {
+                                    readCharacter = character
+                                    ZLog.d(
+                                        "onServicesDiscovered(readCharacter):" +
+                                                """serviceUUID=${service.uuid}  serviceType=${service.type}
+                                            characterUuid=${character.uuid}  characterValue=${character.value}"""
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+                else -> ZLog.d("onServicesDiscovered received: $status")
+            }
+
         }
 
         override fun onPhyUpdate(gatt: BluetoothGatt?, txPhy: Int, rxPhy: Int, status: Int) {
@@ -365,48 +489,6 @@ class BLEDeviceManager(val context: Context) {
             super.onDescriptorRead(gatt, descriptor, status)
         }
 
-    }
-
-    private fun broadcastUpdate(action: String) {
-        val intent = Intent(action)
-        context.sendBroadcast(intent)
-    }
-
-    private fun broadcastUpdate(action: String, characteristic: BluetoothGattCharacteristic) {
-        val intent = Intent(action)
-
-        // This is special handling for the Heart Rate Measurement profile. Data
-        // parsing is carried out as per profile specifications.
-        when (characteristic.uuid) {
-//            UUID_HEART_RATE_MEASUREMENT -> {
-//                val flag = characteristic.properties
-//                val format = when (flag and 0x01) {
-//                    0x01 -> {
-//                        Log.d(TAG, "Heart rate format UINT16.")
-//                        BluetoothGattCharacteristic.FORMAT_UINT16
-//                    }
-//                    else -> {
-//                        Log.d(TAG, "Heart rate format UINT8.")
-//                        BluetoothGattCharacteristic.FORMAT_UINT8
-//                    }
-//                }
-//                val heartRate = characteristic.getIntValue(format, 1)
-//                Log.d(TAG, String.format("Received heart rate: %d", heartRate))
-//                intent.putExtra(Companion.EXTRA_DATA, (heartRate).toString())
-//            }
-//            else -> {
-//                // For all other profiles, writes the data formatted in HEX.
-//                val data: ByteArray? = characteristic.value
-//                if (data?.isNotEmpty() == true) {
-//                    val hexString: String = data.joinToString(separator = " ") {
-//                        String.format("%02X", it)
-//                    }
-//                    intent.putExtra(Companion.EXTRA_DATA, "$data\n$hexString")
-//                }
-//            }
-
-        }
-        context.sendBroadcast(intent)
     }
 
     inner class BLEManagerHandler : Handler() {

@@ -20,9 +20,9 @@ class BleAdapter @JvmOverloads constructor(
 
     override fun convert(holder: BaseViewHolder, item: BluetoothDeviceWrapper) {
         holder.apply {
-            setText(R.id.le_device_name, item.mDevice?.name ?: "未知设备")
-            setText(R.id.le_device_address, item.mDevice?.address)
-            setText(R.id.le_device_distance, String.format("距离(m):%.2f", item.mDistance))
+            setText(R.id.le_device_name, item.device?.name ?: "未知设备")
+            setText(R.id.le_device_address, item.device?.address)
+            setText(R.id.le_device_distance, String.format("距离(m):%.2f", item.distance))
             itemView.setOnClickListener {
                 clickListener?.onClick(item, holder.adapterPosition)
             }

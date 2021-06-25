@@ -26,7 +26,7 @@ import kotlin.collections.HashMap
  */
 class BleDemoActivity : BaseVMActivity() {
 
-    private var bleManager: BLEDeviceManager? = null
+    private var bleManager: BleDeviceManager? = null
     private var serviceUUID = UUID.fromString("0000D459-0000-1000-8000-00805F9B34FB")
 
     //写通道(App-->BLE)uuid
@@ -216,13 +216,13 @@ class BleDemoActivity : BaseVMActivity() {
         bleAadapter?.apply {
             clickListener = object : BleAdapter.DeviceClickListener {
                 override fun onClick(item: BluetoothDeviceWrapper, adapterPosition: Int) {
-                    bleManager?.connectGattServer(item)
+                    bleManager?.connectDevice(item)
                 }
             }
         }
 
-        bleManager = BLEDeviceManager(lContext!!).apply {
-            setScanCallBack(object : BLEDeviceManager.BleScanCallBack() {
+        bleManager = BleDeviceManager(lContext!!).apply {
+            setScanCallBack(object : BleDeviceManager.BleScanCallBack() {
                 override fun onScanResult(callbackType: Int, result: ScanResult) {
                     super.onScanResult(callbackType, result)
                     val deviceWrapper = BluetoothDeviceWrapper(
@@ -232,7 +232,7 @@ class BleDemoActivity : BaseVMActivity() {
                     bleAadapter?.apply {
                         runOnUiThread {
                             for (datum in data) {
-                                if(TextUtils.equals(datum.mDevice?.address,
+                                if(TextUtils.equals(datum.device?.address,
                                         result.device.address)){
                                     return@runOnUiThread
                                 }
