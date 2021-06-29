@@ -14,7 +14,9 @@ import com.zeke.demo.base.BasePracticeView
  * date:  2020/3/15 14:27 <br>
  * description:  <br>
  *     "Xfermode" 其实就是 "Transfer mode"，用 "X" 来代替 "Trans" 是一些美国人喜欢用的简写方式。
- *     通俗地说，其实就是要以绘制的内容作为源图像，以 View 中已有的内容作为目标图像，
+ *     通俗地说，其实就是：
+ *     1. 以绘制的内容作为源图像Src;
+ *     2. 以 View 中已有的内容作为目标图像Dst;
  *     选取一个 PorterDuff.Mode 作为绘制内容的颜色处理方案。
  *
  *  重点在离屏缓冲：

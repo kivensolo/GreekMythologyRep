@@ -92,6 +92,9 @@ class CustomViewsDemoActivity : AbsCardDemoActivity() {
 //            xAxis.enableGridDashedLine(10f, 10f, 0f)
             xAxis.position = XAxis.XAxisPosition.BOTTOM
             xAxis.setDrawGridLines(false)
+            //左/右侧间距 value值 不是px
+            xAxis.axisMinimum = 0.5f
+            xAxis.axisMaximum = 0.5f
 //            xAxis.axisLineColor = Color.TRANSPARENT
             // 禁止右轴
             axisRight.isEnabled = false
