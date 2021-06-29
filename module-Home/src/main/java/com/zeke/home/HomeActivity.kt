@@ -58,6 +58,18 @@ import java.lang.String
 @Route(path = RPath.PAGE_MAIN)
 class HomeActivity : BaseVMActivity(),ISwitcher {
 
+    /*companion object {
+        const val TAG = "HomeActivity"
+
+        val tabMap = linkedMapOf(
+            "知识" to R.drawable.tab_knowlega_icon,
+            "直播" to R.drawable.tab_vod_icon,
+            "" to R.drawable.publish_add,
+            "开眼视频" to R.drawable.tab_eyepetizer_icon,
+            "我的" to R.drawable.tab_mine_icon
+        )
+    }*/
+
     // 知识专栏(玩Android、Demo等)
     private lateinit var homeKnowlegeFragment: HomeContainerFragment
     // 视频直播
@@ -222,6 +234,31 @@ class HomeActivity : BaseVMActivity(),ISwitcher {
     }
 
     private fun initBottomTab() {
+       /* // TODO 内容区域的ViewPager2适配器
+        contentViewPager.adapter = object : FragmentStateAdapter(this) {
+            override fun getItemCount(): Int = tabMap.size
+
+            override fun createFragment(position: Int): Fragment = when (position) {
+                0 -> HomeContainerFragment()
+                1 -> HomeLiveFragment()
+                2 -> EyepetizerHomeFragment()
+                3 -> EyepetizerHomeFragment()
+                else -> EyepetizerHomeFragment()
+            }
+        }
+        TabLayoutMediator(appBottomTabLayout,contentViewPager){ tab, position ->
+            val key = tabMap.keys.elementAt(position)
+            tab.text = key
+            tab.setIcon(tabMap[key]!!)
+        }.attach()
+
+         // 设置tabIcon和tabText的间距
+        for (i in 0 .. appBottomTabLayout.tabCount) {
+            val params = appBottomTabLayout.getTabAt(i)?.view?.getChildAt(0)?.layoutParams as LinearLayout.LayoutParams?
+            params?.bottomMargin = 3
+            appBottomTabLayout.getTabAt(i)?.view?.getChildAt(0)?.layoutParams = params
+        }*/
+
         //默认选中页
         tabKnowlegaPage.isChecked = true
 
