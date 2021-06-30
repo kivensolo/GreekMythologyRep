@@ -251,6 +251,10 @@
       {
         "name": "PracticeDrawDemo",
         "class": "com.zeke.demo.draw.PracticeDrawActivity"
+      },
+      {
+        "name": "PracticeLayout",
+        "class": "com.zeke.demo.draw.PracticeLayoutActivity"
       }
     ]
   },

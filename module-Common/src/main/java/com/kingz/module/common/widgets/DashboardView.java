@@ -153,7 +153,7 @@ public class DashboardView extends View {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         // 获取原来的测量结果
 //        getMeasuredWidth();getMeasuredHeight();
-        // 利用原来的测量结果计算新的尺寸
+        // 利用原来的测量结果,根据自己的需求计算新的尺寸
         int width = measureView(widthMeasureSpec);
         int height = measureView(heightMeasureSpec);
         // 保存计算后的结果

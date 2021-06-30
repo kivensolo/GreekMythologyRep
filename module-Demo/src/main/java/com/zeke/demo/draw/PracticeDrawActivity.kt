@@ -2,10 +2,6 @@ package com.zeke.demo.draw
 
 import android.os.Bundle
 import android.view.Menu
-import android.view.ViewGroup
-import android.widget.LinearLayout
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentPagerAdapter
 import com.zeke.demo.R
 import com.zeke.demo.base.AbsDemoActivity
 import com.zeke.demo.draw.base_api.*
@@ -13,7 +9,6 @@ import com.zeke.demo.draw.canvas.CanvasDemoViewGroup
 import com.zeke.demo.draw.paint.*
 import com.zeke.demo.draw.path.ShadowLineChartView
 import com.zeke.demo.draw.text.*
-import com.zeke.demo.fragments.CardVerticalDemoFragment
 import com.zeke.demo.model.CardItemModel
 import com.zeke.demo.model.DemoContentModel
 import java.util.*
@@ -76,38 +71,6 @@ class PracticeDrawActivity : AbsDemoActivity() {
             add(DemoContentModel(getString(R.string.draw_text), cardData4))
             add(DemoContentModel("1.4 画布练习", cardData5))
         }
-    }
-
-    override fun initPagerAdapter() {
-        super.initPagerAdapter()
-        pager?.adapter = object : FragmentPagerAdapter(supportFragmentManager) {
-            override fun getItem(position: Int): Fragment {
-                val fragment = CardVerticalDemoFragment()
-                fragment.initData(pageModels[position])
-                return fragment
-            }
-
-            override fun getCount(): Int {
-                return pageModels.size
-            }
-
-            override fun getPageTitle(position: Int): CharSequence? {
-                return pageModels[position].title
-            }
-
-            override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
-                val rootRecycleView = (`object` as androidx.fragment.app.Fragment).view
-                val contentView = rootRecycleView?.findViewById<LinearLayout>(R.id.card_content_layout)
-                if (contentView != null && contentView.childCount > 0) {
-                    contentView.removeAllViews()
-                }
-
-                // 将所有Fragment的视图保存下来
-                // super.destroyItem(container, position, `object`)
-            }
-        }
-        // 设置缓存的试图数据是当前页的左边2+右边2
-//        pager?.offscreenPageLimit = 4
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,6 +1,5 @@
 package com.zeke.demo.base
 
-import com.zeke.demo.fragments.CardVerticalDemoFragment
 import com.zeke.demo.model.CardItemModel
 
 /**
@@ -20,24 +19,5 @@ abstract class AbsCardDemoActivity : AbsDemoActivity() {
     override fun inflatePageData() {
         super.inflatePageData()
         initCardListData()
-    }
-
-    override fun initPagerAdapter() {
-        super.initPagerAdapter()
-        pager?.adapter = object : androidx.fragment.app.FragmentPagerAdapter(supportFragmentManager) {
-            override fun getItem(position: Int): androidx.fragment.app.Fragment {
-                val fragment = CardVerticalDemoFragment()
-                fragment.initData(pageModels[position])
-                return fragment
-            }
-
-            override fun getCount(): Int {
-                return pageModels.size
-            }
-
-            override fun getPageTitle(position: Int): CharSequence? {
-                return pageModels[position].title
-            }
-        }
     }
 }
