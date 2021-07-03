@@ -34,7 +34,7 @@ class PickerViewUseDemoActivity : AppCompatActivity() {
     private var tpViewAsDialog: TimePickerView? = null
     private var tpViewNormal: TimePickerView? = null
 
-    private var mOptionsPickerView: OptionsPickerView<String>? = null
+    private var areaOptionsPickerView: OptionsPickerView<String>? = null
     private val options1Items: MutableList<String> = ArrayList()
     private val options2Items: MutableList<MutableList<String>> = ArrayList()
 
@@ -47,13 +47,15 @@ class PickerViewUseDemoActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         initTimePicker()
 
-
         initOptionsPicker()
     }
 
+    /**
+     * 初始化自定义数据选择器
+     */
     private fun initOptionsPicker() {
         getOptionData()
-        mOptionsPickerView = OptionsPickerBuilder(this,
+        areaOptionsPickerView = OptionsPickerBuilder(this,
             OnOptionsSelectListener { options1: Int, options2: Int, options3: Int, view: View ->
                 //返回的分别是三个级别的选中位置
                 Log.i(TAG, "options1=${options1}, options2=${options2}, options3=${options3}")
@@ -70,22 +72,37 @@ class PickerViewUseDemoActivity : AppCompatActivity() {
             .setTextColorCenter(Color.LTGRAY)
             .isRestoreItem(true)//切换时是否还原，设置默认选中第一项。
             .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
-            .setLabels("省", "市", "区")
+            .setLabels("" +
+                    "", "市", "区")
             .setOutSideColor(0x00000000) //设置外部遮罩颜色
             .setOptionsSelectChangeListener { options1: Int, options2: Int, options3: Int ->
                 val str = "options1: $options1\noptions2: $options2\noptions3: $options3"
                 Toast.makeText(this@PickerViewUseDemoActivity, str, Toast.LENGTH_SHORT).show()
             }
             .build()
-        mOptionsPickerView?.setPicker(options1Items, options2Items)
+        areaOptionsPickerView?.setPicker(options1Items, options2Items)
 
         show_area_options.setOnClickListener {
-            mOptionsPickerView?.show()
+            areaOptionsPickerView?.show()
+        }
+
+        val simpleOptionsPickerView = SimpleOptionsPickerBuilder(this)
+            .setUnitLabels("cm")
+            .setTitleText("省份选择")
+            .setTitleColor(Color.WHITE)
+            .build<String>()
+        // ----- 演示单个数值选择的效果
+        simpleOptionsPickerView.setPicker(options1Items)
+        show_custom_single_picker.setOnClickListener {
+            simpleOptionsPickerView.show()
         }
     }
 
+    /**
+     * 时间(日历日期)选择器初始化
+     * Dialog 模式下，在底部弹出
+     */
     private fun initTimePicker() {
-        //Dialog 模式下，在底部弹出
         val startDate = Calendar.getInstance()
         val years = startDate.get(Calendar.YEAR)    //年
         val months = startDate.get(Calendar.MONTH)  //月份
@@ -95,21 +112,27 @@ class PickerViewUseDemoActivity : AppCompatActivity() {
         val second = startDate[Calendar.SECOND]     //秒
         //startDate.set(2010,1,23);
         //设置开始时间
-        startDate.set(years, months, days, hour, minute, second)
+        startDate.set(1900, 1, 1) //从1900年开始
+//        startDate.set(years, months, days, hour, minute, second)
 
         val endDate = Calendar.getInstance()
         // endDate.set(2069,2,28);//设置结束时间
-        endDate.set(years + 5, months, days, hour, minute, second)
+//        endDate.set(years + 5, months, days, hour, minute, second)
+        endDate.set(years, months, days, hour, minute, second)
         tpViewAsDialog = TimePickerBuilder(this,
             OnTimeSelectListener { date, _ ->
                 Toast.makeText(this, getTime(date), Toast.LENGTH_SHORT).show()
                 //Log.i("pvTime", "onTimeSelect");
             })
             .setRangDate(startDate, endDate)    //设置开始时间和结束时间，不设置就是全部时间
-            .setType(booleanArrayOf(true, true, true, true, true, false)) //控制年月日时分秒的显示和隐藏
+            .setType(booleanArrayOf(true, true, true, false, false, false)) //控制年月日时分秒的显示和隐藏
             .isDialog(true)     //默认设置false ，内部实现将DecorView 作为它的父控件。
-            .setItemVisibleCount(9)     //若设置偶数，实际值会加1（比如设置6，则最大可见条目为7）
+            .setItemVisibleCount(7)     //若设置偶数，实际值会加1（比如设置6，则最大可见条目为7）
             .setLineSpacingMultiplier(2.0f)
+            .setTitleText("生日")
+            .setTitleSize(17)
+            .setCancelColor(Color.RED)
+            .setTitleBgColor(Color.BLACK)
             .isAlphaGradient(true)
             .addOnCancelClickListener {
                 Log.i(TAG, "onCancelClickListener")
@@ -156,8 +179,24 @@ class PickerViewUseDemoActivity : AppCompatActivity() {
             .build()
 
 
-        show_from_buttom_as_dialog.setOnClickListener {tpViewAsDialog?.show()}
+        show_from_bottom_as_dialog.setOnClickListener {tpViewAsDialog?.show()}
         show_not_as_dialog.setOnClickListener {tpViewNormal?.show()}
+
+
+        //Demo-4 自定义日期选择时间
+        val birthdayPickerView = BirthdayPickerCreater(this)
+            .setCancelClickListener { }
+            .setTimeSelectChangeListener { }
+            .setTimeSelectListener { date, v ->
+                Toast.makeText(this, getTime(date), Toast.LENGTH_SHORT).show()
+            }
+            .setDialog(true)
+            .buildPickerView()
+        show_custom_calendar_options.setOnClickListener {
+            birthdayPickerView.show()
+        }
+
+
     }
 
     private fun getTime(date: Date): String? {
