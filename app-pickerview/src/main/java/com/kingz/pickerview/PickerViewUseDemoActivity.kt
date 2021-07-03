@@ -93,6 +93,7 @@ class PickerViewUseDemoActivity : AppCompatActivity() {
             .build<String>()
         // ----- 演示单个数值选择的效果
         simpleOptionsPickerView.setPicker(options1Items)
+        simpleOptionsPickerView.setSelectOptions(options1Items.size - 1)
         show_custom_single_picker.setOnClickListener {
             simpleOptionsPickerView.show()
         }
