@@ -24,6 +24,12 @@ public class TimePickerBuilder {
     private PickerOptions mPickerOptions;
 
     //Required
+    public TimePickerBuilder(Context context) {
+        mPickerOptions = new PickerOptions(PickerOptions.TYPE_PICKER_TIME);
+        mPickerOptions.context = context;
+    }
+
+    //Required
     public TimePickerBuilder(Context context, OnTimeSelectListener listener) {
         mPickerOptions = new PickerOptions(PickerOptions.TYPE_PICKER_TIME);
         mPickerOptions.context = context;
@@ -306,6 +312,14 @@ public class TimePickerBuilder {
      */
     public TimePickerBuilder setTimeSelectChangeListener(OnTimeSelectChangeListener listener) {
         mPickerOptions.timeSelectChangeListener = listener;
+        return this;
+    }
+
+    /**
+     * 确定时的回调监听。
+     */
+    public TimePickerBuilder setTimeSelectListener(OnTimeSelectListener listener) {
+        mPickerOptions.timeSelectListener = listener;
         return this;
     }
 

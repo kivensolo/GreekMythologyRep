@@ -42,6 +42,15 @@ public class WheelView extends View {
         FILL, WRAP, CIRCLE
     }
 
+    /**
+     * 附加单位的绘制位置模式
+     * 目前只在isCenterLabel为true的情况有效
+     */
+    public enum LabelAlignMode {
+        RIGHT_OF_CONTENT_TEXT, //吸附于文字的右侧
+        RIGHT_OF_VIEW          //位于滚轮控件最右侧
+    }
+
     private static final String[] TIME_NUM = {"00", "01", "02", "03", "04", "05", "06", "07", "08", "09"};
 
     private DividerType dividerType;//分隔线类型
@@ -65,6 +74,7 @@ public class WheelView extends View {
     private WheelAdapter adapter;
 
     private String label;//附加单位
+    private LabelAlignMode labelAlignMode = LabelAlignMode.RIGHT_OF_VIEW; //附加单位的模式
     private int textSize;//选项的文字大小
     private int maxTextWidth;
     private int maxTextHeight;
@@ -117,7 +127,8 @@ public class WheelView extends View {
     private int widthMeasureSpec;
 
     private int mGravity = Gravity.CENTER;
-    private int drawCenterContentStart = 0;//中间选中文字开始绘制位置
+    private int drawCenterContentStart = 0; //中间选中文字开始绘制位置
+    private int centerContentTextWidth = 0; //中间选中文字的宽度
     private int drawOutContentStart = 0;//非中间文字开始绘制位置
     private static final float SCALE_CONTENT = 0.8F;//非中间文字则用此控制高度，压扁形成3d错觉
     private float CENTER_CONTENT_OFFSET;//偏移量
@@ -440,13 +451,6 @@ public class WheelView extends View {
             canvas.drawLine(0.0F, secondLineY, measuredWidth, secondLineY, paintIndicator);
         }
 
-        //只显示选中项Label文字的模式，并且Label文字不为空，则进行绘制
-        if (!TextUtils.isEmpty(label) && isCenterLabel) {
-            //绘制文字，靠右并留出空隙
-            int drawRightContentStart = measuredWidth - getTextWidth(paintCenterText, label);
-            canvas.drawText(label, drawRightContentStart - CENTER_CONTENT_OFFSET, centerY, paintCenterText);
-        }
-
         // 设置数组中每个元素的值
         int counter = 0;
         while (counter < itemsVisible) {
@@ -528,6 +532,7 @@ public class WheelView extends View {
                     //让文字居中
                     float Y = maxTextHeight - CENTER_CONTENT_OFFSET;//因为圆弧角换算的向下取值，导致角度稍微有点偏差，加上画笔的基线会偏上，因此需要偏移量修正一下
                     canvas.drawText(contentText, drawCenterContentStart, Y, paintCenterText);
+                    saveCenterContentTextWith(contentText);
                     //设置选中项
                     selectedItem = preCurrentIndex - (itemsVisible / 2 - counter);
                 } else {
@@ -545,6 +550,31 @@ public class WheelView extends View {
             }
             counter++;
         }
+
+       //只显示选中项Label文字的模式，并且Label文字不为空，则进行绘制
+        if (!TextUtils.isEmpty(label) && isCenterLabel) {
+            //绘制附加单位文字
+            if (labelAlignMode == LabelAlignMode.RIGHT_OF_VIEW) {
+                // 靠最右模式
+                int drawRightContentStart = measuredWidth - getTextWidth(paintCenterText, label);
+                canvas.drawText(label, drawRightContentStart - CENTER_CONTENT_OFFSET, centerY, paintCenterText);
+            } else if (labelAlignMode == LabelAlignMode.RIGHT_OF_CONTENT_TEXT) {
+                // 靠文字右侧的吸附模式 与文字的间隔为2倍的CENTER_CONTENT_OFFSET
+                int drawRightLebelStartX = (int) ((measuredWidth + centerContentTextWidth) / 2 + CENTER_CONTENT_OFFSET * 2);
+                canvas.drawText(label, drawRightLebelStartX, centerY, paintCenterText);
+            }
+        }
+
+    }
+
+    /**
+     * 储存当前中间选中文本的宽度
+     * @param contentText 选中文字
+     */
+    private void saveCenterContentTextWith(String contentText) {
+        Rect rect = new Rect();
+        paintCenterText.getTextBounds(contentText, 0, contentText.length(), rect);
+        centerContentTextWidth = rect.width();
     }
 
     //设置文字倾斜角度，透明度
@@ -624,6 +654,7 @@ public class WheelView extends View {
     private void measuredCenterContentStart(String content) {
         Rect rect = new Rect();
         paintCenterText.getTextBounds(content, 0, content.length(), rect);
+        Log.d("kingz","measuredCenterContentStart  centerContentTextWidth="+centerContentTextWidth);
         switch (mGravity) {
             case Gravity.CENTER://显示内容居中
                 if (isOptions || label == null || label.equals("") || !isCenterLabel) {
@@ -750,6 +781,14 @@ public class WheelView extends View {
         this.label = label;
     }
 
+    public void setLabelAlignMode(LabelAlignMode mode) {
+        labelAlignMode = mode;
+    }
+
+    /**
+     * 是否只显示中间选中项的Label
+     * @param isCenterLabel true|false
+     */
     public void isCenterLabel(boolean isCenterLabel) {
         this.isCenterLabel = isCenterLabel;
     }

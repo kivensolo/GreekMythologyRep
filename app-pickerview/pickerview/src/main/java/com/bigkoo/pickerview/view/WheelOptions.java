@@ -246,6 +246,16 @@ public class WheelOptions<T> {
     }
 
     /**
+     * 设置选项的单位文字对齐方式
+     * @param mode LabelAlignMode
+     */
+    public void setLabelsAlignMode(WheelView.LabelAlignMode mode){
+        wv_option1.setLabelAlignMode(mode);
+        wv_option2.setLabelAlignMode(mode);
+        wv_option3.setLabelAlignMode(mode);
+    }
+
+    /**
      * 设置x轴偏移量
      */
     public void setTextXOffset(int x_offset_one, int x_offset_two, int x_offset_three) {

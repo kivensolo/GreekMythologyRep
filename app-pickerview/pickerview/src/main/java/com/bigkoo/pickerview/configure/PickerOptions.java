@@ -42,6 +42,8 @@ public class PickerOptions {
 
     //options picker
     public String label1, label2, label3;//单位字符
+    //单位字符的显示模式
+    public WheelView.LabelAlignMode labelAlignMode;
     public int option1, option2, option3;//默认选中项
     public int x_offset_one, x_offset_two, x_offset_three;//x轴偏移量
 
