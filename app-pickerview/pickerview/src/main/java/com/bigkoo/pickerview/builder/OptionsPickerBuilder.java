@@ -25,6 +25,11 @@ public class OptionsPickerBuilder {
 
 
     //Required
+    public OptionsPickerBuilder(Context context) {
+        mPickerOptions = new PickerOptions(PickerOptions.TYPE_PICKER_OPTIONS);
+        mPickerOptions.context = context;
+    }
+
     public OptionsPickerBuilder(Context context, OnOptionsSelectListener listener) {
         mPickerOptions = new PickerOptions(PickerOptions.TYPE_PICKER_OPTIONS);
         mPickerOptions.context = context;
@@ -149,6 +154,11 @@ public class OptionsPickerBuilder {
         mPickerOptions.label1 = label1;
         mPickerOptions.label2 = label2;
         mPickerOptions.label3 = label3;
+        return this;
+    }
+
+    protected OptionsPickerBuilder setLabelAlignMode(WheelView.LabelAlignMode mode) {
+        mPickerOptions.labelAlignMode = mode;
         return this;
     }
 
