@@ -150,6 +150,11 @@ android {
         main.java.srcDirs += 'src/main/kotlin'
     }
 
+    //  启用View Binding
+    viewBinding {
+        enabled = true
+    }
+
     /**
      * 构建变体产物配置
      */

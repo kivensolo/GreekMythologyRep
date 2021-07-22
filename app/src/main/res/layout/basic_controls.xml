@@ -1,210 +1,269 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools" android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:ignore="HardcodedText">
 
     <LinearLayout
-            android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:background="@color/orange_red"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_4"
+                android:text="纯文本展示"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_16"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/withStartDrawableLTRTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_4"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:drawablePadding="@dimen/size_4dp"
+                android:text="文本+左侧图片展示(LTR)"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_16"
+                app:layout_constraintStart_toEndOf="@+id/textView"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/withStartDrawableRTLTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:drawablePadding="@dimen/size_4dp"
+                android:text="文本+左侧图片展示(RTL)"
+                android:layoutDirection="rtl"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_16"
+                app:layout_constraintStart_toStartOf="@+id/withStartDrawableLTRTextView"
+                app:layout_constraintTop_toBottomOf="@+id/withStartDrawableLTRTextView" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:weightSum="1">
+            android:orientation="horizontal">
 
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            <Button android:id="@+id/button"
-                    android:text="Save"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-            <Button android:id="@+id/button_disabled"
-                    android:text="Save"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            <EditText android:id="@+id/edit"
-                      android:labelFor="@+id/edit"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"/>
-
-            <EditText android:id="@+id/edit2"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      tools:ignore="LabelFor"/>
-
-        </LinearLayout>
-
-        <CheckBox android:id="@+id/check1"
-                  android:paddingBottom="24sp"
-                  android:paddingTop="24sp"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="checkbox_1"/>
-
-        <CheckBox android:id="@+id/check2"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="checkbox_2"/>
-
-        <RadioGroup
+            <EditText
+                android:id="@+id/edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:labelFor="@+id/edit" />
 
-            <RadioButton android:id="@+id/radio1"
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"
-                         android:text="radiobutton_1"/>
+            <EditText
+                android:id="@+id/edit2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:ignore="LabelFor" />
 
-            <RadioButton android:id="@+id/radio2"
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"
-                         android:text="radiobutton_2"/>
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/check1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="24sp"
+            android:paddingBottom="24sp"
+            android:text="checkbox_1" />
+
+        <CheckBox
+            android:id="@+id/check2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="checkbox_2" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radio1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="radiobutton_1" />
+
+            <RadioButton
+                android:id="@+id/radio2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="radiobutton_2" />
 
         </RadioGroup>
 
-        <CheckBox android:id="@+id/star"
-                  style="?android:attr/starStyle"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="star"/>
+        <CheckBox
+            android:id="@+id/star"
+            style="?android:attr/starStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="star" />
 
         <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:rating="2"
+            android:stepSize="0.5" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/mediumorchid"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/size_5dp">
+
+            <ToggleButton
+                android:id="@+id/toggle1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/ratingBar"
-                android:stepSize="0.5"
-                android:rating="2"
-                android:numStars="5"/>
+                android:checked="true"
+                android:text="开关按钮"
+                android:textOff="关关"
+                android:textOn="开开"
+                app:layout_constraintEnd_toStartOf="@+id/toggle2"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/mediumorchid">
-            <ToggleButton android:id="@+id/toggle1"
-                          android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"
-                          android:text="开关按钮"
-                          android:textOn="开开"
-                          android:textOff="关关"
-                          android:checked="true"/>
-
-            <ToggleButton android:id="@+id/toggle2"
-                          android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"/>
+            <ToggleButton
+                android:id="@+id/toggle2"
+                app:layout_constraintStart_toEndOf="@+id/toggle1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
             <Switch
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="网络连接"
-                    android:paddingLeft="20dp"
-                    android:layout_marginLeft="10dp"
-                    android:id="@+id/switch1"
-                    android:checked="true"/>
-        </LinearLayout>
-
-
-        <Spinner android:id="@+id/spinner1"
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:drawSelectorOnTop="true"/>
-
-        <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/switch1"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dip"
-                android:text="textColorPrimary"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:focusable="true"/>
+                android:layout_marginStart="16dp"
+                android:background="@color/bkg_gary"
+                android:checked="true"
+                android:drawableStart="@drawable/ic_refresh"
+                android:buttonTint="@color/white"
+                android:text="我是Switch控件,处于打开状态"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toggle1" />
+
+            <Switch
+               app:layout_constraintStart_toStartOf="@+id/switch1"
+                app:layout_constraintTop_toBottomOf="@+id/switch1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <Spinner
+            android:id="@+id/spinner1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawSelectorOnTop="true" />
 
         <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dip"
-                android:text="textColorSecondary"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="?android:attr/textColorSecondary"
-                android:focusable="true"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip"
+            android:focusable="true"
+            android:text="textColorPrimary"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dip"
-                android:text="textColorTertiary"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="?android:attr/textColorTertiary"
-                android:focusable="true"
-        />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip"
+            android:focusable="true"
+            android:text="textColorSecondary"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="?android:attr/textColorSecondary" />
 
         <TextView
-                style="?android:attr/listSeparatorTextViewStyle"
-                android:text="listSeparatorTextViewStyle"
-                android:layout_marginTop="5dip"
-        />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip"
+            android:focusable="true"
+            android:text="textColorTertiary"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="?android:attr/textColorTertiary" />
+
+        <TextView
+            style="?android:attr/listSeparatorTextViewStyle"
+            android:layout_marginTop="5dip"
+            android:text="listSeparatorTextViewStyle" />
 
         <RelativeLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/black"
-                android:layout_marginTop="10dp"
-                android:padding="3dp">
-            <Button
-                    android:id="@+id/btn_gridView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="GridView"
-                    android:layout_marginStart="10dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:background="@drawable/selector_radius_buttons"/>
-            <Button
-                    android:id="@+id/btn_dialog_frament_id"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:text="自定义DialogFrament"
-                    android:background="@drawable/selector_radius_buttons"
-                    android:layout_alignTop="@+id/btn_gridView"
-                    android:layout_toEndOf="@+id/show_popup_window"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/black"
+            android:orientation="horizontal"
+            android:padding="3dp">
 
             <Button
-                    android:id="@+id/show_popup_window"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/btn_gridView"
-                    android:layout_marginTop="3dp"
-                    android:layout_marginStart="10dp"
-                    android:text="@string/popwin"
-                    android:background="@drawable/selector_radius_buttons"/>
+                android:id="@+id/btn_gridView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/selector_radius_buttons"
+                android:text="GridView"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btn_dialog_frament_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/btn_gridView"
+                android:layout_toEndOf="@+id/show_popup_window"
+                android:background="@drawable/selector_radius_buttons"
+                android:text="自定义DialogFrament"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/show_popup_window"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/btn_gridView"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/selector_radius_buttons"
+                android:text="@string/popwin" />
 
         </RelativeLayout>
 
 
-        <Gallery android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:id="@+id/gallery_area"
-                 android:layout_marginTop="10dp">
-        </Gallery>
+        <Gallery
+            android:id="@+id/gallery_area"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"></Gallery>
 
         <TextView
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:layout_marginTop="200dip"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="(And all inside of a ScrollView!)"
-        />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="200dip"
+            android:text="(And all inside of a ScrollView!)"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
     </LinearLayout>
 
