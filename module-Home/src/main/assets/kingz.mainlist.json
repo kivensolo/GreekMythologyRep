@@ -116,6 +116,10 @@
       {
         "name": "Fragment Lifecycle",
         "class": "com.zeke.demo.fragments.FragementLifeCycleTestPage"
+      },
+      {
+        "name": "WebView",
+        "class": "com.kingz.view.webview.WebViewActivity"
       }
     ]
   },
