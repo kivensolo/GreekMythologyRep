@@ -85,7 +85,7 @@ public class DemoFragmentExpandableListAdapter extends AnimatedExpandableListVie
         GroupHolder viewHolder;
         if (null == convertView) {
             viewHolder = new GroupHolder();
-            convertView = mInflater.inflate(R.layout.expand_group_layout,null, false);
+            convertView = mInflater.inflate(R.layout.expand_group_layout,parent, false);
             viewHolder.itemText = convertView.findViewById(R.id.parent_group);
             viewHolder.indictorImg = convertView.findViewById(R.id.parent_group_img);
             convertView.setTag(viewHolder);

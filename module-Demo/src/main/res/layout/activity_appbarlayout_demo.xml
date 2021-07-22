@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black_transparent"
-    tools:ignore="MissingDefaultResource">
+    tools:ignore="MissingDefaultResource"
+    tools:viewBindingIgnore="true">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"

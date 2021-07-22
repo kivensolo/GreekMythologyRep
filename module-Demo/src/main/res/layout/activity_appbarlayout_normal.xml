@@ -8,7 +8,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
-    tools:ignore="MissingDefaultResource">
+    tools:ignore="MissingDefaultResource"
+    tools:viewBindingIgnore="true">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
