@@ -50,7 +50,7 @@ public class LogTextBox extends androidx.appcompat.widget.AppCompatTextView {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if(borderFlag){
-            ViewUtils.setViewBorder(this,canvas,borderPaint);
+            ViewUtils.setViewBorder(this, canvas, borderPaint);
         }
     }
 

@@ -13,7 +13,7 @@ import kotlinx.coroutines.withContext
  * description: 基类
  */
 // abstract class BaseActivity : AutoLayoutActivity() {
-@Deprecated("被BaseVMActivity代替")
+@Deprecated("老版本Base  新的用BaseVMActivity代替")
 abstract class BaseActivity : AppCompatActivity() {
     private val TAG = BaseActivity::class.java.simpleName
 
