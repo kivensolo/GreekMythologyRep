@@ -139,6 +139,10 @@
         "class": "com.kingz.graphics.Arcs"
       },
       {
+        "name": "PathDemo",
+        "class": "com.kingz.graphics.PathDemoActivity"
+      },
+      {
         "name": "MemoryCheck",
         "class": "com.kingz.pages.photo.memory.MemoryCheck"
       },
