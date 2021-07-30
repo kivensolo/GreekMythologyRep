@@ -95,10 +95,11 @@ public class ScreenTools {
      * 获得状态栏的高度
      *
      * @param context 上下文
-     * @return
+     * @return px value
      */
     public static int getStatusHeight(Context context) {
         int statusHeight = -1;
+        //原生系统支持的反射方式
         try {
             Class<?> clazz = Class.forName("com.android.internal.R$dimen");
             Object object = clazz.newInstance();
@@ -106,6 +107,14 @@ public class ScreenTools {
             statusHeight = context.getResources().getDimensionPixelSize(height);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        //上述反射方式在部分国产手机系统上无法获取高度，可通过以下方式获取
+        if(statusHeight == -1){
+            int resourceId = context.getResources().getIdentifier(
+                    "status_bar_height", "dimen", "android");
+            if (resourceId > 0) {
+                statusHeight = context.getResources().getDimensionPixelSize(resourceId);
+            }
         }
         return statusHeight;
     }
