@@ -127,12 +127,6 @@
 
    <!-- ShadowLayout自定义样式属性 -->
    <declare-styleable name="ShadowLayout">
-        <!-- 边框样式
-            宽度，颜色，圆角x-radius，圆角y-radius，位置
-            宽度，颜色，位置
-            eg: 8,E01595EF,12,12,0.35
-        -->
-        <attr format="string" name="border"/>
 
         <!-- 1、关于阴影 -->
         <!--阴影：是否要显示阴影，可能有只想用shape和selector功能，不想要阴影-->

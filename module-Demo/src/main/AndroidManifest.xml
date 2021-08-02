@@ -17,6 +17,9 @@
         <activity
             android:name="com.zeke.demo.draw.PracticeLayoutActivity"
             android:theme="@style/AppTheme" />
+        <activity
+            android:name="com.zeke.demo.draw.SmartImageDemoActivity"
+            android:theme="@style/AppTheme" />
 
         <activity
             android:name="com.zeke.demo.colormatrix.ColorMatrixDemo"

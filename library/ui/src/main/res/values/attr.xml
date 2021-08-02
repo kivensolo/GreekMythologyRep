@@ -52,6 +52,15 @@
     </declare-styleable>
 
 
+    <declare-styleable name="SmartImageView">
+        <attr name="border" format="string" />
+        <attr name="render_mode">
+            <enum name="clip" value="0" />
+            <enum name="xfermode" value="1" />
+        </attr>
+    </declare-styleable>
+
+
     <declare-styleable name="FlutteringLayout"
         desc="桃心飘动的自定义layout属性">
         <attr name="heart_enter_duration" format="integer" />

@@ -168,8 +168,9 @@
         <!--BitMap测试页面-->
         <activity
             android:name="com.kingz.pages.photo.BitmapPhotosActivity"
-            android:screenOrientation="fullSensor"
-            android:theme="@style/AppTheme" />
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme"
+            tools:ignore="LockedOrientationActivity" />
 
         <activity
             android:name="com.kingz.pages.photo.memory.MemoryCheck"

@@ -263,6 +263,10 @@
       {
         "name": "PracticeLayout",
         "class": "com.zeke.demo.draw.PracticeLayoutActivity"
+      },
+      {
+        "name": "CircleImageDemo",
+        "class": "com.zeke.demo.draw.SmartImageDemoActivity"
       }
     ]
   },
