@@ -9,7 +9,7 @@ import com.zeke.demo.R
  * date：2021/6/24
  * description：
  */
-class BleAdapter @JvmOverloads constructor(
+class BleRecyclerAdapter @JvmOverloads constructor(
     data: MutableList<BluetoothDeviceWrapper>? = null
 ) : BaseQuickAdapter<BluetoothDeviceWrapper, BaseViewHolder>(R.layout.item_ble_device_info, data) {
     var clickListener: DeviceClickListener? = null

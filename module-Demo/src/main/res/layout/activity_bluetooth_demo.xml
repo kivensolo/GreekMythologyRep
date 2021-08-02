@@ -31,13 +31,29 @@
         android:text="连接蓝牙"
         app:layout_constraintStart_toEndOf="@+id/change_bluetooth"
         app:layout_constraintTop_toTopOf="parent" />
+    <Button
+        android:id="@+id/disconnect_bluetooth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:text="断开蓝牙"
+        app:layout_constraintEnd_toEndOf="@+id/find_bluetooth_device"
+        app:layout_constraintTop_toBottomOf="@+id/find_bluetooth_device" />
+    <Button
+        android:id="@+id/readConfig"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:text="读取蓝牙版本数据"
+        app:layout_constraintStart_toEndOf="@+id/disconnect_bluetooth"
+        app:layout_constraintTop_toBottomOf="@+id/find_bluetooth_device" />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/device_find_recycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/find_bluetooth_device"
+        app:layout_constraintTop_toBottomOf="@id/disconnect_bluetooth"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -27,12 +27,16 @@ import kotlin.collections.HashMap
 class BleDemoActivity : BaseVMActivity() {
 
     private var bleManager: BleDeviceManager? = null
-    private var serviceUUID = UUID.fromString("0000D459-0000-1000-8000-00805F9B34FB")
+    private var nrfServiceUUID = UUID.fromString("68680001-0000-5049-484E-4B3201000000")
+    //配置特征码UUID
+    private val configCharactUuid = UUID.fromString("68680002-0000-5049-484E-4B3201000000")
+    //绑定指令（iOS 专用）
+    private val notifyCharactUuid = UUID.fromString("68680003-0000-5049-484E-4B3201000000")
 
-    //写通道(App-->BLE)uuid
-    private val writeCharactUuid = UUID.fromString("00000013-0000-1000-8000-00805f9b34fb")
-    //通知通道(BLE-->App) uuid
-    private val notifyCharactUuid = UUID.fromString("00000014-0000-1000-8000-00805f9b34fb")
+    private var apolloServiceUUID = UUID.fromString("68680001-0000-5049-484E-4B3202000000")
+    private val uartCharactUuid = UUID.fromString("68680002-0000-5049-484E-4B3202000000")
+    private val flashCharactUuid = UUID.fromString("68680003-0000-5049-484E-4B3202000000")
+
     //indicate通道(BLE-->App) uuid
     private val indicateCharactUuid = UUID.fromString("00000015-0000-1000-8000-00805f9b34fb")
 
@@ -41,7 +45,7 @@ class BleDemoActivity : BaseVMActivity() {
 
     var blGatt: BluetoothGatt? = null
 
-    var bleAadapter: BleAdapter? = BleAdapter()
+    var bleAadapter: BleRecyclerAdapter? = BleRecyclerAdapter()
 
 
     // <editor-fold defaultstate="collapsed" desc="蓝牙扫描结果广播接收器">
@@ -179,11 +183,10 @@ class BleDemoActivity : BaseVMActivity() {
                             ZLog.d("status=$status, newState=$newState")
                             if (status == BluetoothGatt.STATE_CONNECTED) {
                                 ZLog.d("STATE_CONNECTED")
-                                // 连接成功
-                                //获取服务
+                                // 连接成功  //获取服务
                                 blGatt?.discoverServices()
                             } else if (status == BluetoothGatt.STATE_DISCONNECTED) {
-                                ZLog.d("STATE_DISCONNECTED")
+                                ZLog.e("STATE_DISCONNECTED")
                                 //断开连接
                             }
                             super.onConnectionStateChange(gatt, status, newState)
@@ -214,7 +217,7 @@ class BleDemoActivity : BaseVMActivity() {
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
         bleAadapter?.apply {
-            clickListener = object : BleAdapter.DeviceClickListener {
+            clickListener = object : BleRecyclerAdapter.DeviceClickListener {
                 override fun onClick(item: BluetoothDeviceWrapper, adapterPosition: Int) {
                     bleManager?.connectDevice(item)
                 }
@@ -262,15 +265,26 @@ class BleDemoActivity : BaseVMActivity() {
             startScanDevices()
         }
         change_bluetooth.setOnClickListener {
-            //            mBluetoothAdapter?.
-            val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
-            startActivityForResult(enableBtIntent, 1)
+            if(bleManager?.isEnable() == true){
+                bleManager?.enableBluetooth(false)
+            }else{
+                val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+                startActivityForResult(enableBtIntent, 1)
+            }
         }
 
         //连接蓝牙设备
         connect_bluetooth.setOnClickListener {
             //fisrt cancel
             bleManager?.stopScan()
+        }
+
+        disconnect_bluetooth?.setOnClickListener {
+            bleManager?.disconectDevice()
+        }
+
+        readConfig?.setOnClickListener {
+            bleManager?.readBleVersionCharacter()
         }
     }
 
@@ -290,7 +304,7 @@ class BleDemoActivity : BaseVMActivity() {
             for (charactertistic in service.characteristics) {
                 ZLog.d("BluetoothGattCharacteristic --->$charactertistic ")
                 when (charactertistic.uuid) {
-                    writeCharactUuid -> {
+                    configCharactUuid -> {
                         //根据写UUID找到写特征
                         bluetoothGattCharacteristicWrite = charactertistic
                     }

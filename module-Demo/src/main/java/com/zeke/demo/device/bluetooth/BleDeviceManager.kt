@@ -90,13 +90,13 @@ class BleDeviceManager(val context: Context) {
 
 
     /**************  当前状态定义区 *****************/
-    private val STATE_DEFAULT = 0 //默认状态，什么都没干
-    private val STATE_BONDING = 1 //正在绑定
-    private val STATE_CONNECTING = 2    //正在连接
-    private val STATE_CONNECTED = 3     //已连接
-    private val STATE_DISCONNECTED = 4  //已断开连接
-    private val STATE_DISSTATE_CONNECTING = 5  //已断开连接
-    private val STATE_REMOVE_BONDING = 6 //正在删除绑定
+    private val STATE_DEFAULT = 0               //默认状态，什么都没干
+    private val STATE_BONDING = 1               //正在绑定
+    private val STATE_CONNECTING = 2            //正在连接
+    private val STATE_CONNECTED = 3             //已连接
+    private val STATE_DISCONNECTED = 4          //已断开连接
+    private val STATE_DISSTATE_CONNECTING = 5   //已断开连接
+    private val STATE_REMOVE_BONDING = 6        //正在删除绑定
     private val STATE_SEARCHING = 7
     /**
      * Current State
@@ -123,8 +123,10 @@ class BleDeviceManager(val context: Context) {
      * Support API for the Bluetooth GATT Profile
      */
     private var bluetoothGatt: BluetoothGatt? = null
-    var writeCharacter: BluetoothGattCharacteristic? = null
-    var readCharacter: BluetoothGattCharacteristic? = null
+    var configCharacter: BluetoothGattCharacteristic? = null
+    var controlCharacter: BluetoothGattCharacteristic? = null
+    var uartCharacter: BluetoothGattCharacteristic? = null
+    var flashCharacter: BluetoothGattCharacteristic? = null
 
     //------------- Some BluetoothProfiles
     private var bluetoothHealth: BluetoothHealth? = null
@@ -148,11 +150,19 @@ class BleDeviceManager(val context: Context) {
 
     private val mHandler = BLEManagerHandler()
 
+    //北斗手表NRF_SERVICE
+    private val UUID_OF_NRF_SERVICE: UUID = UUID.fromString("68680001-0000-5049-484E-4B3201000000")
+    private val UUID_OF_CONFIG_CHARACT: UUID = UUID.fromString("68680002-0000-5049-484E-4B3201000000")
+    private val UUID_OF_CONTROL_CHARACT: UUID = UUID.fromString("68680003-0000-5049-484E-4B3201000000")
 
-    //TODO 按照具体情况设置UUID
-    private val UUID_SERVICE: UUID = UUID.fromString("0000D459-0000-1000-8000-00805F9B34FB")
-    private val UUID_WRITE: UUID = UUID.fromString("00000013-0000-1000-8000-00805F9B34FB")
+    //北斗手表APOLLO_SERVICE
+    private val UUID_OF_APOLLO_SERVICE: UUID = UUID.fromString("68680001-0000-5049-484E-4B3202000000")
+    private val UUID_OF_UARTCHARACT: UUID = UUID.fromString("68680002-0000-5049-484E-4B3202000000")
+    private val UUID_OF_FLASHCHARACT: UUID = UUID.fromString("68680003-0000-5049-484E-4B3202000000")
+
+    //蓝牙标准NOTIFY
     private val UUID_NOTIFY: UUID = UUID.fromString("00000014-0000-1000-8000-00805F9B34FB")
+    //indicate通道(BLE-->App) uuid
     private val UUID_INDICATE: UUID = UUID.fromString("00000015-0000-1000-8000-00805F9B34FB")
 
 
@@ -206,10 +216,39 @@ class BleDeviceManager(val context: Context) {
     }
 
     /**
+     * 切换蓝牙状态
+     */
+    fun enableBluetooth(enable: Boolean) {
+        if (enable) bluetoothAdapter?.enable() else bluetoothAdapter?.disable()
+    }
+
+    /**
      * 获取绑定设备列表
      */
     fun getBoudedDevices(): Set<BluetoothDevice>? {
         return bluetoothAdapter?.bondedDevices
+    }
+
+    fun disconectDevice(){
+        bluetoothGatt?.apply {
+            disconnect() //触发BluetoothGattCallback#onConnectionStateChange()的回调 回调断开连接信息，
+            close()
+        }
+    }
+
+    fun readBleVersionCharacter(){
+        //写入需要传递给外设的特征值（即传递给外设的信息）
+        val byteArray = ByteArray(20)
+        //模拟寻找腕表
+        byteArray[0] = 0x16
+        byteArray[1] = 0x00000001
+        controlCharacter?.value = byteArray
+        bluetoothGatt?.writeCharacteristic(controlCharacter)
+//        val byteArray = ByteArray(20).apply {
+//            this[0] = 0x07
+//        }
+//        configCharacter?.value = byteArray
+//        bluetoothGatt?.writeCharacteristic(configCharacter)
     }
 
     /**
@@ -235,9 +274,7 @@ class BleDeviceManager(val context: Context) {
 //        它会提供一组 UUID 对象，用于指定App支持的 GATT 服务。
 
         val scanner = bluetoothAdapter?.bluetoothLeScanner
-        //如何设置过滤？
         val filter = ScanFilter.Builder().build()
-        //如何配置？
         val settings = ScanSettings.Builder()
 //            .setCallbackType(ScanSettings.CALLBACK_TYPE_ALL_MATCHES)
 //            .setNumOfMatches(ScanSettings.MATCH_NUM_ONE_ADVERTISEMENT)
@@ -303,10 +340,7 @@ class BleDeviceManager(val context: Context) {
          * Open notification channle.
          * NOTICE: Befor read data, must enable notification
          */
-        private fun enableNotification(
-            enable: Boolean,
-            characteristic: BluetoothGattCharacteristic?
-        ): Boolean {
+        private fun enableNotification(enable: Boolean,characteristic: BluetoothGattCharacteristic?): Boolean {
             if (bluetoothGatt == null) {
                 ZLog.e("bluetoothGatt is null.")
                 return false
@@ -342,11 +376,8 @@ class BleDeviceManager(val context: Context) {
             when (newState) {
                 BluetoothProfile.STATE_CONNECTED -> {
                     currentState = STATE_CONNECTED
-                    ZLog.d("Connected to GATT server.")
-                    ZLog.d(
-                        "Attempting to start service discovery: " +
-                                bluetoothGatt?.discoverServices()
-                    )
+                    ZLog.e("Connected to GATT server.")
+                    ZLog.d("Attempting to start service discovery: ${bluetoothGatt?.discoverServices()}")
                 }
 
                 BluetoothProfile.STATE_CONNECTING -> {
@@ -372,12 +403,15 @@ class BleDeviceManager(val context: Context) {
             super.onReadRemoteRssi(gatt, rssi, status)
         }
 
+        /**
+         * 特征值读取成功回调
+         */
         override fun onCharacteristicRead(
             gatt: BluetoothGatt?,
             characteristic: BluetoothGattCharacteristic?,
             status: Int
         ) {
-            ZLog.d("onCharacteristicRead() ")
+            ZLog.d("数据读取成功 ")
             super.onCharacteristicRead(gatt, characteristic, status)
             when (status) {
                 BluetoothGatt.GATT_SUCCESS -> {
@@ -385,12 +419,19 @@ class BleDeviceManager(val context: Context) {
             }
         }
 
+        /**
+         * 特征值写入成功回调
+         */
         override fun onCharacteristicWrite(
             gatt: BluetoothGatt?,
             characteristic: BluetoothGattCharacteristic?,
             status: Int
         ) {
-            ZLog.d("onCharacteristicWrite() ")
+            ZLog.d("数据写入成功 ${characteristic?.value}")
+            if (status == BluetoothGatt.GATT_SUCCESS) {
+                //获取写入到外设的特征值
+                ZLog.d("Data is ${characteristic?.value}")
+            }
             super.onCharacteristicWrite(gatt, characteristic, status)
         }
 
@@ -401,46 +442,61 @@ class BleDeviceManager(val context: Context) {
             gatt: BluetoothGatt?,
             characteristic: BluetoothGattCharacteristic?
         ) {
+            //TODO 手表发送查找手机的数据， [19,1,0,0....]   [19,2,0,0....]
             ZLog.d("onCharacteristicChanged() command:${characteristic?.value}")
             super.onCharacteristicChanged(gatt, characteristic)
         }
 
         override fun onServicesDiscovered(gatt: BluetoothGatt?, status: Int) {
             super.onServicesDiscovered(gatt, status)
-            ZLog.d("onServicesDiscovered() ")
+            ZLog.d("onServicesDiscovered() status=${status}")
             if (gatt == null) {
                 ZLog.e("onServicesDiscovered() gatt == null")
             }
-            var characteristicNotify: BluetoothGattCharacteristic?
-            var characteristicRead: BluetoothGattCharacteristic?
             gatt?.apply {
-                characteristicNotify = getService(UUID_SERVICE)?.getCharacteristic(UUID_NOTIFY)
-                characteristicRead = getService(UUID_SERVICE)?.getCharacteristic(UUID_INDICATE)
-                enableNotification(true, characteristicNotify)
-                readCharacteristic(characteristicRead)
+                val characteristicConfig =
+                    getService(UUID_OF_NRF_SERVICE)?.getCharacteristic(UUID_OF_CONFIG_CHARACT)
+                val characteristicControl =
+                    getService(UUID_OF_NRF_SERVICE)?.getCharacteristic(UUID_OF_CONTROL_CHARACT)
+
+                enableNotification(true, characteristicConfig)
+                enableNotification(true, characteristicControl)
+
+                readCharacteristic(characteristicConfig)
+                readCharacteristic(characteristicControl)
             }
 
             when (status) {
                 BluetoothGatt.GATT_SUCCESS -> {
                     val serviceList = gatt?.services
                     serviceList?.forEach { service ->
-                        if (UUID_SERVICE == service.uuid) {
+                        if (UUID_OF_NRF_SERVICE == service.uuid) {
                             val characterList = service.characteristics
                             characterList.forEach { character ->
-                                if (UUID_WRITE == character.uuid) {
-                                    writeCharacter = character
-                                    ZLog.d(
-                                        "onServicesDiscovered(writeCharacter):" +
-                                                """serviceUUID=${service.uuid}  serviceType=${service.type}
-                                            characterUuid=${character.uuid}  characterValue=${character.value}"""
-                                    )
-                                } else if (UUID_INDICATE == character.uuid) {
-                                    readCharacter = character
-                                    ZLog.d(
-                                        "onServicesDiscovered(readCharacter):" +
-                                                """serviceUUID=${service.uuid}  serviceType=${service.type}
-                                            characterUuid=${character.uuid}  characterValue=${character.value}"""
-                                    )
+                                when (character.uuid) {
+                                    UUID_OF_CONFIG_CHARACT -> {
+                                        configCharacter = character
+                                        ZLog.e(
+                                            """Get Config Character:
+                                             serviceUUID=${service.uuid}  characterUuid=${character.uuid}  
+                                            serviceType=${service.type} characterValue=${character.value}"""
+                                        )
+                                    }
+                                    UUID_OF_CONTROL_CHARACT -> {
+                                        controlCharacter = character
+                                         ZLog.e(
+                                            """Get Control Character: 
+                                            serviceUUID=${service.uuid}  characterUuid=${character.uuid}  
+                                            serviceType=${service.type} characterValue=${character.value}"""
+                                        )
+                                    }
+                                    else ->{
+                                       ZLog.d(
+                                            """Get Other Character: 
+                                            serviceUUID=${service.uuid}  characterUuid=${character.uuid}  
+                                            serviceType=${service.type} characterValue=${character.value}"""
+                                        )
+                                    }
                                 }
                             }
                         }
