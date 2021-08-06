@@ -233,6 +233,7 @@
     <color name="ic_green_light">#07924d</color>
     <color name="ic_red_light">#d72a0f</color>
     <color name="ic_yellow_light">#f8bd0b</color>
+    <color name="ic_yellow_light_v2">#7ff8bd0b</color>
     <color name="ic_black_gray">@color/black_transparent</color>
 
     <color name="mplayer_seekbar_played">#55E1FA</color>

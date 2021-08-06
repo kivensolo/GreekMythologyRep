@@ -44,39 +44,50 @@ class SmartImageView @JvmOverloads constructor(
     private var renderMode: Int = DEFAULT_MODE_CLIP
 
     //-------- PropParsers --------
-    private var borderProparser: ParsedStyle_Border
+    private var borderProparser: ParsedStyle_Border? = null
+    private var borderDashPattern: ParsedStyle_Border_Dash_Pattern? = null
+    private var borderEffect: DashPathEffect? = null
 
     init {
         setLayerType(View.LAYER_TYPE_SOFTWARE, null)
         val ta = context.obtainStyledAttributes(attrs, R.styleable.SmartImageView)
         renderMode = ta.getInt(R.styleable.SmartImageView_render_mode, 0)
-        borderProparser = SmartPropParser(context, ta).getParsedValue(R.styleable.SmartImageView_border)
+        val smartPropParser = SmartPropParser(context, ta)
+        borderProparser = smartPropParser.getParsedValue<ParsedStyle_Border>(R.styleable.SmartImageView_border)
+        borderDashPattern = smartPropParser.getParsedValue<ParsedStyle_Border_Dash_Pattern>(R.styleable.SmartImageView_border_dash)
         ta.recycle()
 
-
+        borderEffect = if(borderProparser == null){
+            null
+        }else{
+            borderDashPattern?.getEffectObject()
+        }
         paint.style = Paint.Style.STROKE
         paint.color = Color.RED
         paint.isDither = true
         paint.isAntiAlias = true
-        paint.strokeWidth = borderProparser.size
+        paint.strokeWidth = borderProparser?.size?:0f
         strokeOffset = paint.strokeWidth / 2
     }
 
     private fun createCircleBitmap(): Bitmap {
         val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+         if(borderProparser == null){
+            return bitmap
+        }
         val canvas = Canvas(bitmap)
         paint.style = Paint.Style.FILL
-        if (borderProparser.radiiArrayMode) {
+        if (borderProparser?.radiiArrayMode != false) {
             clipPath.addRoundRect(
                 bounds,
-                borderProparser.radii,
+                borderProparser?.radii,
                 Path.Direction.CW
             )
         } else {
             clipPath.addRoundRect(
                 bounds,
-                borderProparser.xRadius,
-                borderProparser.yRadius,
+                borderProparser?.xRadius?:0f,
+                borderProparser?.yRadius?:0f,
                 Path.Direction.CW
             )
         }
@@ -94,17 +105,17 @@ class SmartImageView @JvmOverloads constructor(
         )
         if (renderMode == DEFAULT_MODE_CLIP) {
             val saveLayer = canvas.saveLayer(bounds, null)
-            if(borderProparser.radiiArrayMode){
+            if (borderProparser?.radiiArrayMode != false) {
                 clipPath.addRoundRect(
                     bounds,
-                    borderProparser.radii,
+                    borderProparser?.radii,
                     Path.Direction.CW
                 )
             }else{
                 clipPath.addRoundRect(
                     bounds,
-                    borderProparser.xRadius,
-                    borderProparser.yRadius,
+                    borderProparser?.xRadius?:0f,
+                    borderProparser?.yRadius?:0f,
                     Path.Direction.CW
                 )
             }
@@ -131,22 +142,44 @@ class SmartImageView @JvmOverloads constructor(
     }
 
     private fun drawBorders(canvas: Canvas) {
-        drawRectFBorder(canvas, borderProparser.size.toInt(),
-            borderProparser.color, bounds,
-            borderProparser.radii)
+        if(borderProparser == null) return
+        val size: Int = if (borderProparser?.size != null) {
+            borderProparser!!.size.toInt()
+        } else {
+            0
+        }
+
+        drawRectFBorder(
+            canvas, size,
+            borderProparser!!.color,
+            bounds,
+            borderProparser!!.radii
+        )
+
+        if (borderEffect != null) {
+            paint.pathEffect = null
+        }
     }
 
-    private fun drawRectFBorder(canvas: Canvas, borderWidth: Int,
-                                borderColor: Int, rectF: RectF,
-                                radii: FloatArray) {
-        initBorderPaint(borderWidth, borderColor)
-        clipPath.addRoundRect(rectF, radii, Path.Direction.CCW)
-        canvas.drawPath(clipPath, paint)
-        clipPath.reset()
+    private fun drawRectFBorder(
+        canvas: Canvas, borderWidth: Int,
+        borderColor: Int, rectF: RectF,
+        radii: FloatArray
+    ) {
+        if (borderWidth > 0.1f && (borderColor and 0xFF000000.toInt()) != 0) {
+            initBorderPaint(borderWidth, borderColor)
+            clipPath.addRoundRect(rectF, radii, Path.Direction.CCW)
+            canvas.drawPath(clipPath, paint)
+            clipPath.reset()
+        }
+
     }
 
     private fun initBorderPaint(borderWidth: Int, borderColor: Int) {
         clipPath.reset()
+        if(borderEffect != null){
+            paint.pathEffect = borderEffect
+        }
         paint.style = Paint.Style.STROKE
         paint.strokeWidth = borderWidth.toFloat() * 2
         paint.color = borderColor
