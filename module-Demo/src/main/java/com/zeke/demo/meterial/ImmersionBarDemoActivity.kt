@@ -10,19 +10,21 @@ import kotlinx.android.synthetic.main.activity_appbarlayout_demo.*
 /**
  * author：ZekeWang
  * date：2021/2/28
- * description：Bars效果切换的Demo展示
+ * description：
+ *  沉浸式Demo测试
  *
  *  - View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
- *    Activity全屏显示，但导航栏不会被隐藏覆盖，导航栏依然可见，Activity底部布局部分会被导航栏遮住(布局入侵)
+ *      Activity全屏显示，但导航栏不会被隐藏覆盖，导航栏依然可见，Activity底部布局部分会被导航栏遮住(布局入侵)
  *  - View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
- *    Activity全屏显示，但状态栏不会被隐藏覆盖，状态栏依然可见，Activity顶端布局部分会被状态栏遮住。
+ *      Activity全屏显示，但状态栏不会被隐藏覆盖，状态栏依然可见，Activity顶端布局部分会被状态栏遮住。
  *  - View.SYSTEM_UI_FLAG_LAYOUT_STABLE
- *    防止系统栏隐藏时内容区域大小发生变化
+ *      防止系统栏隐藏时内容区域大小发生变化
  */
 class ImmersionBarDemoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_appbarlayout_demo)
+
         transparent_status?.setOnClickListener {
             // 手动模式
             // <= 4.4

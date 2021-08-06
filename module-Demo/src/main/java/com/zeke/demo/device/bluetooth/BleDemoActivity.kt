@@ -33,13 +33,6 @@ class BleDemoActivity : BaseVMActivity() {
     //绑定指令（iOS 专用）
     private val notifyCharactUuid = UUID.fromString("68680003-0000-5049-484E-4B3201000000")
 
-    private var apolloServiceUUID = UUID.fromString("68680001-0000-5049-484E-4B3202000000")
-    private val uartCharactUuid = UUID.fromString("68680002-0000-5049-484E-4B3202000000")
-    private val flashCharactUuid = UUID.fromString("68680003-0000-5049-484E-4B3202000000")
-
-    //indicate通道(BLE-->App) uuid
-    private val indicateCharactUuid = UUID.fromString("00000015-0000-1000-8000-00805f9b34fb")
-
     private var bluetoothGattCharacteristicWrite: BluetoothGattCharacteristic? = null
     private var bluetoothGattCharacteristicNotify: BluetoothGattCharacteristic? = null
 
