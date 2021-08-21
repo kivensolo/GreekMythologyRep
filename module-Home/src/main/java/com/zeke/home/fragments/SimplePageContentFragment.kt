@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kingz.module.common.IView
 import com.kingz.module.common.base.BaseFragment
 import com.kingz.module.common.bean.MediaParams
-import com.kingz.module.common.router.RPath
 import com.kingz.module.common.router.Router
+import com.kingz.module.common.router.RouterConfig
 import com.kingz.module.home.R
 import com.zeke.home.entity.Live
 import com.zeke.kangaroo.adapter.CommonRecyclerAdapter
@@ -88,7 +88,7 @@ class SimplePageContentFragment : BaseFragment(), IView, View.OnClickListener {
             }
 
             holder.setOnClickListener {
-                Router.startActivity(RPath.PAGE_PLAYER, Bundle().apply {
+                Router.startActivity(RouterConfig.PAGE_PLAYER, Bundle().apply {
                     putParcelable(MediaParams.PARAMS_KEY ,MediaParams().apply{
                         videoName = data.name
                         videoUrl = data.live

@@ -1,9 +1,9 @@
 package com.kingz.module.common.router
 
 /**
- * ARouter路径
+ * ARouter配置
  */
-object RPath {
+object RouterConfig {
     const val PAGE_MAIN = "/modle_Home/main"
     const val PAGE_LOGIN = "/module_Login/login"
     const val PAGE_WEB = "/module_Web/web"
@@ -15,4 +15,11 @@ object RPath {
     const val PAGE_EYE_DETAIL = "/module_Eyepetizer/detailVideoPage"
     // 公共类型，带有appBar的页面
     const val PAGE_COMMON_APPBAR = "/module_Common/CommonAppBarPage"
+
+
+
+    /*------------路由参数 Start---------------------*/
+    const val PARAM_WEB_ARTICAL_INFO = "PARAM_WEB_ARTICAL"
+
+
 }

@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.kingz.module.common.bean.MediaParams
-import com.kingz.module.common.router.RPath
+import com.kingz.module.common.router.RouterConfig
 import com.zeke.kangaroo.utils.ZLog
 import com.zeke.module_player.R
 import com.zeke.module_player.databinding.FullPlayerPageBinding
@@ -20,7 +20,7 @@ import me.jessyan.autosize.internal.CustomAdapt
  * date：2021/1/19
  * description：直播播放器
  */
-@Route(path = RPath.PAGE_PLAYER)
+@Route(path = RouterConfig.PAGE_PLAYER)
 class FullScreenPlayer : PlayerActivity(),CustomAdapt {
     private var playFragment: PlayFragment? = null
     private lateinit var fullPlayerPageBinding: FullPlayerPageBinding

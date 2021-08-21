@@ -16,8 +16,8 @@ import com.gyf.immersionbar.ImmersionBar
 import com.kingz.base.BaseVMActivity
 import com.kingz.database.DatabaseApplication
 import com.kingz.database.entity.UserEntity
-import com.kingz.module.common.router.RPath
 import com.kingz.module.common.router.Router
+import com.kingz.module.common.router.RouterConfig
 import com.kingz.module.common.user.UserInfo
 import com.kingz.module.wanandroid.bean.Data
 import com.kingz.module.wanandroid.bean.UserInfoBean
@@ -32,7 +32,7 @@ import kotlinx.coroutines.*
  * date:  2020/7/8 19:03 <br>
  * description: 应用启动欢迎 & 登录页面 <br>
  */
-@Route(path = RPath.PAGE_LOGIN)
+@Route(path = RouterConfig.PAGE_LOGIN)
 class SplashActivity : BaseVMActivity(), View.OnClickListener {
 
     private var inputType = InputType.NONE
@@ -297,7 +297,7 @@ class SplashActivity : BaseVMActivity(), View.OnClickListener {
     private fun openMainPage() {
         GlobalScope.launch {
             delay(3000)
-            Router.startActivity(RPath.PAGE_MAIN)
+            Router.startActivity(RouterConfig.PAGE_MAIN)
             finish()
         }
     }

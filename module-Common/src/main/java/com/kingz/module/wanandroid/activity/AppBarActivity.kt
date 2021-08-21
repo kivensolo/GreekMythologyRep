@@ -9,7 +9,7 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.kingz.base.BaseVMActivity
 import com.kingz.base.factory.ViewModelFactory
 import com.kingz.module.common.R
-import com.kingz.module.common.router.RPath
+import com.kingz.module.common.router.RouterConfig
 import com.kingz.module.wanandroid.WADConstants
 import com.kingz.module.wanandroid.fragemnts.UserCollectionFragment
 import com.kingz.module.wanandroid.viewmodel.WanAndroidViewModelV2
@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.include_toolbar_back.*
  * date：2021/2/28
  * description：带有AppBar的Layout页面
  */
-@Route(path = RPath.PAGE_COMMON_APPBAR)
+@Route(path = RouterConfig.PAGE_COMMON_APPBAR)
 class AppBarActivity : BaseVMActivity() {
     // 当前fragment
     private var curFragment: Fragment? = null

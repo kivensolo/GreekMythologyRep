@@ -301,7 +301,11 @@ class WanAndroidHomeFragment : CommonFragment<WanAndroidViewModelV2>(),
             setPageTransformer(ScaleInTransformer())
             indicator = CircleIndicator(context)
             setOnBannerListener { data, _ ->
-                openWeb((data as BannerItem).url)
+                openWeb(Article().apply {
+                    val bannerItem = data as BannerItem
+                    link = bannerItem.url
+                    id = bannerItem.id
+                })
             }
         }
         articleAdapter?.setHeaderView(view = banner!!)

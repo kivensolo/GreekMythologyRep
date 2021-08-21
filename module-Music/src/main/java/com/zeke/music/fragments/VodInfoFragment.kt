@@ -17,8 +17,8 @@ import com.chad.library.adapter.base.animation.ScaleInAnimation
 import com.kingz.module.common.base.BaseActivity
 import com.kingz.module.common.base.BaseFragment
 import com.kingz.module.common.base.IPresenter
-import com.kingz.module.common.router.RPath
 import com.kingz.module.common.router.Router
+import com.kingz.module.common.router.RouterConfig
 import com.zeke.kangaroo.utils.ZLog
 import com.zeke.module_player.R
 import com.zeke.music.activities.MusicDetailPageActivty
@@ -33,7 +33,7 @@ import com.zeke.play.view.IPlayerView
  * date：2019/7/30
  * description：影片简单样式详情的Fragment
  */
-@Route(path = RPath.PAGE_MUSIC_DETAIL)
+@Route(path = RouterConfig.PAGE_MUSIC_DETAIL)
 class VodInfoFragment : BaseFragment(), IPlayerView {
     private var vodInfoPresenter: VodInfoPresenter? = null
     private var mScrollView: ScrollView? = null
@@ -105,7 +105,7 @@ class VodInfoFragment : BaseFragment(), IPlayerView {
             videoRecomAdapter = VideoRecomAdapter().apply {
                 adapterAnimation = ScaleInAnimation()
                 setOnItemClickListener { adapter, _, position ->
-                    Router.startActivity(RPath.PAGE_MUSIC_DETAIL, Bundle().apply {
+                    Router.startActivity(RouterConfig.PAGE_MUSIC_DETAIL, Bundle().apply {
                         val relatedInfo: RelatedVideoInfo =
                             adapter.getItem(position) as RelatedVideoInfo
                         ZLog.d("open detail page with video:${relatedInfo.videoName}," +
