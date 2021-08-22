@@ -74,6 +74,8 @@ class Article() : Parcelable {
     var isTop = false
     var originId = 0
 
+
+
     constructor(parcel: Parcel) : this() {
         apkLink = parcel.readString()
         audit = parcel.readInt()

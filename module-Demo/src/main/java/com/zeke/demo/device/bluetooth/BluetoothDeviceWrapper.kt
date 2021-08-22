@@ -59,15 +59,9 @@ class BluetoothDeviceWrapper(
 
     override fun compareTo(other: BluetoothDeviceWrapper): Int {
         return when {
-            distance < other.distance -> {
-                -1
-            }
-            distance > other.distance -> {
-                1
-            }
-            else -> {
-                0
-            }
+            distance < other.distance -> -1
+            distance > other.distance ->  1
+            else -> 0
         }
     }
 }

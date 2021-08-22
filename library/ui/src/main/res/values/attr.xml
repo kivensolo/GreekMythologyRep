@@ -54,6 +54,7 @@
 
     <declare-styleable name="SmartImageView">
         <attr name="border" format="string" />
+        <attr name="border_dash" format="string" />
         <attr name="render_mode">
             <enum name="clip" value="0" />
             <enum name="xfermode" value="1" />

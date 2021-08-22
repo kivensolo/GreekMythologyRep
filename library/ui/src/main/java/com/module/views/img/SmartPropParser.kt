@@ -2,23 +2,36 @@ package com.module.views.img
 
 import android.content.Context
 import android.content.res.TypedArray
+import android.graphics.DashPathEffect
 import android.text.TextUtils
 import android.util.Log
+import android.util.Pair
 import androidx.annotation.StyleableRes
 import com.module.views.R
+import java.util.*
+import kotlin.collections.HashMap
+import kotlin.collections.set
 
 //SmartImageView各参数解析器
 
-class SmartPropParser(private val context: Context,
-private val typedAttr: TypedArray) {
+class SmartPropParser(
+    private val context: Context,
+    private val typedAttr: TypedArray
+) {
     private val TAG: String = SmartPropParser::class.java.simpleName
     private var _typedArrayParserMap = HashMap<@StyleableRes Int, ParseInvoker>()
 
     init {
         //初始化注册自定义属性
         _typedArrayParserMap[R.styleable.SmartImageView_border] = object : ParseInvoker() {
-            override fun doParse(context:Context, typeArr: TypedArray): Any {
+            override fun doParse(context: Context, typeArr: TypedArray): Any? {
                 return ParsedStyle_Border.doParse(context, typeArr)
+            }
+        }
+
+        _typedArrayParserMap[R.styleable.SmartImageView_border_dash] = object : ParseInvoker() {
+            override fun doParse(context: Context, typeArr: TypedArray): Any? {
+                return ParsedStyle_Border_Dash_Pattern.doParse(context, typeArr)
             }
         }
     }
@@ -26,19 +39,23 @@ private val typedAttr: TypedArray) {
     /**
      * 获取解析到的值
      */
-    fun <T> getParsedValue(@StyleableRes attrId: Int): T {
+    fun <T> getParsedValue(@StyleableRes attrId: Int): T? {
         val parseInvoker = _typedArrayParserMap[attrId]
         if (parseInvoker == null) {
             Log.e(TAG, "unsupported Styleable: $attrId")
             throw IllegalArgumentException("unsupported Styleable: $attrId, Please init first !!!")
         }
         val parsed = parseInvoker.doParse(context, typedAttr)
-        @Suppress("UNCHECKED_CAST")
-        return  parsed as T
+        if(parsed == null){
+            return null
+        }else{
+            @Suppress("UNCHECKED_CAST")
+            return  parsed as T
+        }
     }
 
     abstract class ParseInvoker {
-        abstract fun doParse(context:Context, typeArr: TypedArray): Any
+        abstract fun doParse(context: Context, typeArr: TypedArray): Any?
     }
 }
 
@@ -61,7 +78,7 @@ class ParsedStyle_Border {
     var color = -0x1000000
 
     companion object {
-        fun doParse(context:Context, prop: TypedArray): ParsedStyle_Border {
+        fun doParse(context: Context, prop: TypedArray): ParsedStyle_Border? {
             val borderObj = ParsedStyle_Border()
             val density = context.resources.displayMetrics.density
             val borderVal = prop.getString(R.styleable.SmartImageView_border)
@@ -128,6 +145,88 @@ class ParsedStyle_Border {
                 }
             }
             return borderObj
+        }
+    }
+}
+
+/**
+ * 元素边框模式。可以实现各类虚线效果
+ * pattern_val1, pattern_val2 // ON&OFF的距离值
+ * phase, pattern_val1, pattern_val2[, pattern_valN…]
+ */
+class ParsedStyle_Border_Dash_Pattern {
+    //offset into the intervals array
+    var phase = 0.0f
+    //array of ON and OFF distances
+    lateinit var pattern: FloatArray
+    private lateinit var _cachedEffectObject: MutableList<Pair<Int, DashPathEffect>>
+    private val MAX_CACHED_EFFECT_OBJECT = 4
+
+    @Suppress("SENSELESS_COMPARISON")
+    fun getEffectObject(): DashPathEffect? {
+        if (!::pattern.isInitialized) {
+            return null
+        }
+        if (!::_cachedEffectObject.isInitialized) {
+            _cachedEffectObject = ArrayList()
+        }
+        //xul中缓存了多个放大级别的Dash
+        val scalarVal: Int = ParseUtils.roundToInt(100f)
+        for (i in _cachedEffectObject.indices) {
+            val effectPair = _cachedEffectObject[i]
+            if (effectPair.first == scalarVal) {
+                if (i != 0) {
+                    _cachedEffectObject.removeAt(i)
+                    _cachedEffectObject.add(0, effectPair)
+                }
+                return effectPair.second
+            }
+        }
+        // not found
+        while (_cachedEffectObject.size >= MAX_CACHED_EFFECT_OBJECT) {
+            _cachedEffectObject.removeAt(_cachedEffectObject.size - 1)
+        }
+        val scaledPattern = FloatArray(pattern.size)
+        for (i in pattern.indices) {
+            scaledPattern[i] = pattern[i]
+        }
+        val effect = DashPathEffect(scaledPattern, phase)
+        _cachedEffectObject.add(Pair.create(scalarVal, effect))
+        return effect
+    }
+
+    companion object {
+        fun doParse(context: Context, prop: TypedArray): Any? {
+            val borderDashObj = ParsedStyle_Border_Dash_Pattern()
+            val density = context.resources.displayMetrics.density
+            val borderDashValue = prop.getString(R.styleable.SmartImageView_border_dash)
+            if (!TextUtils.isEmpty(borderDashValue)) {
+                val patternParams = borderDashValue.split(",")
+                when {
+                    patternParams.size < 2 -> {}
+                    patternParams.size == 2 -> {
+                        with(borderDashObj) {
+                            pattern = FloatArray(2).apply {
+                                this[0] = ParseUtils.tryParseFloat(patternParams[0], 5.0f) * density
+                                this[1] = ParseUtils.tryParseFloat(patternParams[1], 5.0f) * density
+                            }
+                        }
+                    } // 3,12,24,48
+                    else -> { // >2
+                        with(borderDashObj) {
+                            pattern = FloatArray(patternParams.size - 1)
+                            phase = ParseUtils.tryParseFloat(patternParams[0], 0.0f) * density
+                        }
+                        for (i in borderDashObj.pattern.indices) {
+                            borderDashObj.pattern[i] =
+                                ParseUtils.tryParseFloat(patternParams[i + 1], 5.0f) * density
+                        }
+                    }
+                }
+                return borderDashObj
+            }else{
+                return null
+            }
         }
     }
 }

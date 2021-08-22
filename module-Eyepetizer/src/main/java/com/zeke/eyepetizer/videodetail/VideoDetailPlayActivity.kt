@@ -10,7 +10,7 @@ import com.google.gson.Gson
 import com.kingz.base.BaseVMActivity
 import com.kingz.base.factory.ViewModelFactory
 import com.kingz.module.common.bean.MediaParams
-import com.kingz.module.common.router.RPath
+import com.kingz.module.common.router.RouterConfig
 import com.kingz.module.common.utils.image.GlideLoader
 import com.zeke.eyepetizer.adapter.VideoPlayAdapter
 import com.zeke.eyepetizer.bean.Item
@@ -25,7 +25,7 @@ import kotlinx.android.synthetic.main.activity_detail_video.*
  * date：2021/5/28
  * description：开眼视频带播放器的详情页
  */
-@Route(path = RPath.PAGE_EYE_DETAIL)
+@Route(path = RouterConfig.PAGE_EYE_DETAIL)
 class VideoDetailPlayActivity : BaseVMActivity() {
 
     //static

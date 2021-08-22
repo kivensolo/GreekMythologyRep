@@ -10,6 +10,7 @@
         android:src="@drawable/marvel_qiyi"
         android:scaleType="centerCrop"
         app:border="5,ff00ff00,100,100"
+        app:border_dash="3,3"
         app:render_mode="clip"
         android:background="@color/gray"
         android:layout_marginTop="50dp"

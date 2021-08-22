@@ -150,6 +150,10 @@ class BleDeviceManager(val context: Context) {
 
     private val mHandler = BLEManagerHandler()
 
+    // ---------- 标准蓝牙 标准蓝牙service
+    private val UUID_STANDARD_SERVICE: UUID = UUID.fromString("0000xxxx-0000-1000-8000-00805F9B34FB")
+
+
     //北斗手表NRF_SERVICE
     private val UUID_OF_NRF_SERVICE: UUID = UUID.fromString("68680001-0000-5049-484E-4B3201000000")
     private val UUID_OF_CONFIG_CHARACT: UUID = UUID.fromString("68680002-0000-5049-484E-4B3201000000")
@@ -309,6 +313,9 @@ class BleDeviceManager(val context: Context) {
     open class BleScanCallBack : ScanCallback() {
         open fun onScanStop() {}
 
+        /**
+         *  Callback when a BLE advertisement has been found.
+         */
         override fun onScanResult(callbackType: Int, result: ScanResult) {
 //            val deviceWrapper = BluetoothDeviceWrapper(
 //                result.rssi,
@@ -329,6 +336,32 @@ class BleDeviceManager(val context: Context) {
         }
     }
 
+    /**
+     * Open notification channle.
+     * 【NOTICE】: Befor read data, must enable notification
+     */
+    private fun enableNotification( enable: Boolean,
+                                    characteristic: BluetoothGattCharacteristic?
+    ): Boolean {
+        if (bluetoothGatt == null) {
+            ZLog.e("bluetoothGatt is null.")
+            return false
+        }
+        if (bluetoothGatt?.setCharacteristicNotification(characteristic, enable) == false) {
+            ZLog.e("Notification status was set failed.")
+            return false
+        }
+        //蓝牙标准Notification UUID
+        val clientConfig =
+            characteristic?.getDescriptor(UUID.fromString("00002902-0000-1000-8000-00805f9b34fb"))
+                ?: return false
+        if (enable) {
+            clientConfig.value = BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
+        } else {
+            clientConfig.value = BluetoothGattDescriptor.DISABLE_NOTIFICATION_VALUE
+        }
+        return bluetoothGatt?.writeDescriptor(clientConfig) ?: false
+    }
 
     /**
      * BLE设备向客户端传递信息的回调
@@ -336,30 +369,6 @@ class BleDeviceManager(val context: Context) {
      */
     inner class BleGattCallback : BluetoothGattCallback() {
 
-        /**
-         * Open notification channle.
-         * NOTICE: Befor read data, must enable notification
-         */
-        private fun enableNotification(enable: Boolean,characteristic: BluetoothGattCharacteristic?): Boolean {
-            if (bluetoothGatt == null) {
-                ZLog.e("bluetoothGatt is null.")
-                return false
-            }
-            if (bluetoothGatt?.setCharacteristicNotification(characteristic, enable) == false) {
-                ZLog.e("Notification status was set failed.")
-                return false
-            }
-            //蓝牙标准Notification UUID
-            val clientConfig =
-                characteristic?.getDescriptor(UUID.fromString("00002902-0000-1000-8000-00805f9b34fb"))
-                    ?: return false
-            if (enable) {
-                clientConfig.value = BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
-            } else {
-                clientConfig.value = BluetoothGattDescriptor.DISABLE_NOTIFICATION_VALUE
-            }
-            return bluetoothGatt?.writeDescriptor(clientConfig) ?: false
-        }
 
         /**
          * 连接状态发生改变时回调:

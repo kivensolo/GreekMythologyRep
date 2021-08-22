@@ -26,8 +26,8 @@ import com.kingz.base.BaseVMActivity
 import com.kingz.base.factory.ViewModelFactory
 import com.kingz.database.entity.BaseEntity
 import com.kingz.module.common.ext.startActivity
-import com.kingz.module.common.router.RPath
 import com.kingz.module.common.router.Router
+import com.kingz.module.common.router.RouterConfig
 import com.kingz.module.common.utils.PermissionUtils
 import com.kingz.module.common.utils.RandomUtils
 import com.kingz.module.home.BuildConfig
@@ -55,7 +55,7 @@ import java.lang.String
 /**
  * 首页
  */
-@Route(path = RPath.PAGE_MAIN)
+@Route(path = RouterConfig.PAGE_MAIN)
 class HomeActivity : BaseVMActivity(),ISwitcher {
 
     /*companion object {
@@ -219,7 +219,7 @@ class HomeActivity : BaseVMActivity(),ISwitcher {
         viewModel.userInfoLiveData.observe(this, Observer {
             ZLog.d("userInfoLiveData onChanged: $it")
             if (it == null) {
-                Router.startActivity(RPath.PAGE_LOGIN)
+                Router.startActivity(RouterConfig.PAGE_LOGIN)
                 finish()
                 return@Observer
             }
