@@ -1,5 +1,15 @@
 [
   {
+    "name": "JetPack",
+    "desc": "JetPack",
+    "samples": [
+      {
+        "name": "Paging3 Demo",
+        "class": "com.zeke.demo.jetpack.paging.PagingDemoActivity"
+      }
+    ]
+  },
+  {
     "name": "Animation",
     "desc": "ViewAimation",
     "samples": [
@@ -192,10 +202,12 @@
       {
         "name": "Detail-With-ExoPlayer",
         "class": "com.zeke.music.activities.MusicDetailPageActivty"
-      },{
+      },
+      {
         "name": "IJK SampleList(Not ready)",
         "class": "com.zeke.play.activities.IJKSampleMediaActivity"
-      },{
+      },
+      {
         "name": "ZPlayerView Test",
         "class": "com.zeke.play.activities.ZPlayerViewTest"
       }
@@ -280,5 +292,4 @@
       }
     ]
   }
-
 ]

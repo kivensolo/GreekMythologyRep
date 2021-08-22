@@ -16,7 +16,7 @@ import kotlinx.coroutines.awaitAll
  *  RemoteExtendDataSource 交由外部来继承实现，包含了所有的网络请求方法，
  *  外部仅需要根据实际情况来实现三个必要的字段和方法即可
  *
- *  内部提供了 2个/3个 接口同时并发请求的方法。
+ *  内部提供了 2个/3个 接口同时并发请求的方法。(async实现)
  *
  * 当所有接口都请求成功时，会通过 onSuccess 方法并传出请求结果
  * 当包含的某个接口请求失败时，则会直接回调 onFail 方法

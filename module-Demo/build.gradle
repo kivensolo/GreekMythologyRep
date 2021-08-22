@@ -1,6 +1,15 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+apply {
+    plugin 'com.android.library'
+    plugin 'kotlin-android'
+    plugin 'kotlin-android-extensions'
+
+    from '../buildsystem/config.gradle'
+    from '../buildsystem/utils.gradle'
+}
+
+def _rootAndroid = rootProject.ext.android
+def _rootDependencies = rootProject.ext.dependencies
+def _rootTest = rootProject.ext.test
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
@@ -27,28 +36,47 @@ android {
         // 设置jvm target为1.8 否则某些ktx的语法糖无法使用
         jvmTarget = "1.8"
     }
+
+    packagingOptions {
+        exclude 'META-INF/kotlinx-coroutines-core.kotlin_module'
+    }
 }
 
 dependencies {
+    implementation project(':module-Common')
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation rootProject.ext.dependencies["appcompat"]
     testImplementation rootProject.ext.test["junit"]
     androidTestImplementation rootProject.ext.test["test-ext-junit"]
     androidTestImplementation rootProject.ext.test["support-test-espresso"]
-    implementation project(':module-Common')
+    implementation "androidx.annotation:annotation:1.1.0"
 
-//    implementation project(":")
+    // ViewModel
+    implementation _rootDependencies["lifecycle-viewmodel-ktx"]
+
+    // 协程基础
+    implementation _rootDependencies["coroutines-core"]
+    implementation _rootDependencies["coroutines-android"]
 
     // Glide
-    compileOnly "com.github.bumptech.glide:glide:${lib_versions.glide}"
-    compileOnly "com.github.bumptech.glide:annotations:${lib_versions.glide}"
+    implementation _rootDependencies["gilde"]
+    implementation _rootDependencies["gilde_annotations"]
+    implementation _rootDependencies["glide_okhttp3"]
+//    kapt _rootDependencies["glide_compiler"]
     annotationProcessor "com.github.bumptech.glide:compiler:${lib_versions.glide_c}"
-    compileOnly "com.github.bumptech.glide:okhttp3-integration:${lib_versions.glide_okhttp}"
-    // 兼容AndroidX
-    compileOnly "com.android.support:support-annotations:28.0.0"
-    annotationProcessor "com.android.support:support-annotations:28.0.0"
+
+    // retrofit2
+    implementation _rootDependencies["retrofit2"]
+    implementation _rootDependencies["retrofit2_gson"]
 
     // 图形库 https://github.com/PhilJay/MPAndroidChart
     implementation "com.github.PhilJay:MPAndroidChart:v3.1.0"
+
+    // Paging3
+    implementation "androidx.paging:paging-runtime:3.0.0"
+
+//    compileOnly _rootDependencies["gilde_annotations"]
+
 }
