@@ -13,7 +13,7 @@ import com.zeke.kangaroo.utils.ZLog
  * date：2021/1/28
  * description：首页数据的Repository
  */
-@Deprecated(message = "被/api/v5/index/tab/list代替")
+@Deprecated(message = "被HomeDataSource代替")
 class HomeRepository(private val apiServer:WanAndroidApiService) : WanAndroidRepository(apiServer) {
 
     /** 进行文章列表获取 */

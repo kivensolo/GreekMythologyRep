@@ -1,4 +1,4 @@
-package com.mindorks.example.coroutines.learn.task.twotasks
+package com.kingz.coroutines.learn.task.twotasks
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -34,18 +34,75 @@ class TwoLongRunningTasksViewModel(
         }
     }
 
+    fun startLongRunningTaskWithCallBack() {
+        viewModelScope.launch {
+            status.postValue(ResponseResult.loading(null))
+            try {
+                // 异步执行多个task, 并等待他们执行完毕   async{} + await()
+                val resultOneDeferred = async { doLongRunningTaskOneWithCallback() }
+                val resultTwoDeferred = async { doLongRunningTaskTwoWithCallback() }
+                val combinedResult = resultOneDeferred.await() + "," + resultTwoDeferred.await()
+
+                status.postValue(ResponseResult.success("Task Completed : $combinedResult"))
+            } catch (e: Exception) {
+                status.postValue(ResponseResult.error("Something Went Wrong", null))
+            }
+        }
+    }
+
     fun getStatus(): LiveData<ResponseResult<String>> {
         return status
     }
 
+    /**
+     * 不带Callback的异步流程模拟
+     */
     private suspend fun doLongRunningTaskOne(): String {
         delay(5000)
         return "One"
     }
 
+    /**
+     * 带Callback的异步流程模拟
+     */
+    private suspend fun doLongRunningTaskOneWithCallback(): String {
+        var result = ""
+        callback({
+            result = "One success"
+        },{
+            result = "One error"
+        })
+        return result
+    }
+
+
+    /**
+     * 不带Callback的异步流程模拟
+     */
     private suspend fun doLongRunningTaskTwo(): String {
         delay(8000)
         return "Two"
     }
 
+    /**
+     * 带Callback的异步流程模拟
+     */
+    private suspend fun doLongRunningTaskTwoWithCallback(): String {
+        delay(8000)
+        var result = ""
+        callback({
+            result = " Two success"
+        },{
+            result = " Two error"
+        })
+        return result
+    }
+
+    /**
+     * 模拟网络callback
+     */
+    private suspend fun callback(onSuccess:()->Unit, onError:()->Unit){
+        delay(1000)
+        onSuccess()
+    }
 }
