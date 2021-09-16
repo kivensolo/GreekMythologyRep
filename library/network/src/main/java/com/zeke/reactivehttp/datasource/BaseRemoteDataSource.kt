@@ -121,6 +121,7 @@ abstract class BaseRemoteDataSource<Api : Any>(
     }
 
     protected fun handleException(throwable: Throwable, callback: BaseRequestCallback?) {
+
         if (callback == null) {
             return
         }
@@ -202,6 +203,8 @@ abstract class BaseRemoteDataSource<Api : Any>(
         iUiActionEvent?.dismissLoading()
     }
 
-    abstract fun showToast(msg: String)
+    protected open fun showToast(msg: String){
+
+    }
 
 }

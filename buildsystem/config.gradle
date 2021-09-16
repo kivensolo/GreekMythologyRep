@@ -207,5 +207,8 @@ ext {
             "immersionbar_ktx"     : "com.gyf.immersionbar:immersionbar-ktx:3.0.0",
             // --------------  一个不错的浸式状态栏和沉浸式导航栏管理库 --------->
 
+            //paging3 分页加载
+            "pagging3"             : "androidx.paging:paging-runtime:3.0",
+
     ]
 }

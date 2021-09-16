@@ -6,11 +6,6 @@ package com.kingz.module.wanandroid;
  * description: WanAndroid的常量类  <br>
  */
 public interface WADConstants {
-    String KEY_URL = "key_url";
-    String KEY_TITLE = "key_title";
-    String KEY_AUTHOR = "key_author";
-    String KEY_ID = "key_id";
-    String KEY_KEY = "key_key";
     String KEY_IS_COLLECT = "key_is_collect";
     String KEY_IS_LOGIN = "key_is_login";
     String KEY_TREE = "key_tree";

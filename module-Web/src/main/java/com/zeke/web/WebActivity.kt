@@ -17,18 +17,20 @@ import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.just.agentweb.AgentWeb
 import com.just.agentweb.WebChromeClient
 import com.just.agentweb.WebViewClient
 import com.kingz.base.BaseVMActivity
 import com.kingz.base.factory.ViewModelFactory
-import com.kingz.module.common.router.RPath
+import com.kingz.module.common.router.RouterConfig
 import com.kingz.module.wanandroid.WADConstants
+import com.kingz.module.wanandroid.bean.Article
 import com.kingz.module.wanandroid.viewmodel.WanAndroidViewModelV2
 import kotlinx.android.synthetic.main.web_activity.*
 
-@Route(path = RPath.PAGE_WEB)
+@Route(path = RouterConfig.PAGE_WEB)
 class WebActivity : BaseVMActivity(),
     PopupMenu.OnMenuItemClickListener {
 
@@ -37,13 +39,11 @@ class WebActivity : BaseVMActivity(),
     }
 
     var agentWeb: AgentWeb? = null
-    private var mId = 0
-    private var mTitle: String? = null
-    /**
-     * 初次打开时的url
-     */
-    private var mUrl: String? = null
-    private var mAuthor: String? = null
+
+    @JvmField
+    @Autowired(name = RouterConfig.PARAM_WEB_ARTICAL_INFO)
+    var atricalInfo: Article? = null
+
     /**
      * 当前url
      */
@@ -73,16 +73,11 @@ class WebActivity : BaseVMActivity(),
     }
 
     override fun initData(savedInstanceState: Bundle?) {
-        val intent = intent
-        mTitle = intent.getStringExtra(WADConstants.KEY_TITLE)
-        mUrl = intent.getStringExtra(WADConstants.KEY_URL)
-        mAuthor = intent.getStringExtra(WADConstants.KEY_AUTHOR)
-        mId = intent.getIntExtra(WADConstants.KEY_ID, -1)
-        isCollect = intent.getBooleanExtra(WADConstants.KEY_IS_COLLECT, false)
+        isCollect = atricalInfo?.collect ?: false
         isStatus = isCollect
-        isArticle = mId > 0
-        setTitleText(mTitle)
-        loadUrl(mUrl)
+        isArticle = (atricalInfo?.id ?: -1) > 0
+        setTitleText(atricalInfo?.title)
+        loadUrl(atricalInfo?.link)
     }
 
     override fun onResume() {
