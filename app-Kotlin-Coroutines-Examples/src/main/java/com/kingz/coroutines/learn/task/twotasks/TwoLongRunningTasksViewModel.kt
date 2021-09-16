@@ -102,6 +102,7 @@ class TwoLongRunningTasksViewModel(
      * 模拟网络callback
      */
     private suspend fun callback(onSuccess:()->Unit, onError:()->Unit){
+        // 这里是挂起函数的调用，如果是java函数，则仍然是异步执行，，无法挂起。那么，如何执行挂起异步任务呢？？？
         delay(1000)
         onSuccess()
     }
