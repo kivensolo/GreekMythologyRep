@@ -14,7 +14,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.annotation.StringRes
-import com.module.views.loading.Win10LoaddingView
+import com.module.views.loading.Win10LoadingView
 
 /**
  * description: 加载、重试、错误状态的视图
@@ -25,7 +25,7 @@ class LoadStatusView @JvmOverloads constructor(
     defStyleAttr: Int = 0    // 注意这个attr的默认值,有的控件不一定是0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
-    private var progress : Win10LoaddingView?= null
+    private var progress : Win10LoadingView?= null
 //    private var progress: View? = null
     private lateinit var statusText: TextView
     private lateinit var errorIcon: Drawable
@@ -37,11 +37,11 @@ class LoadStatusView @JvmOverloads constructor(
 
     private fun initView(context: Context) {
 //      progress = ProgressBar(context)
-        progress = Win10LoaddingView(context).apply {
+        progress = Win10LoadingView(context).apply {
             setStrokeWidth(18)
             setColor(resources.getColor(R.color.skygreen_b))
             setDuration(3000)
-            setType(Win10LoaddingView.LoadingType.DOTS)
+            setType(Win10LoadingView.LoadingType.DOTS)
         }
 //        progress.setIndeterminateDrawable()
 

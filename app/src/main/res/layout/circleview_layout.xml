@@ -40,7 +40,7 @@
                           android:orientation="horizontal">
                 <com.module.views.progress.CircleProgressView
                         android:id="@+id/view_circle_progress"
-                        android:layout_width="0dip"
+                        android:layout_width="0dp"
                         android:layout_height="300dp"
                         android:layout_weight="3"
                         android:layout_gravity="start"
@@ -49,9 +49,9 @@
                         zhi:innerColor="#dd5656"
                         zhi:outerColor="#88ff22"
                         zhi:speed="20"/>
-                <com.module.views.loading.Win10LoaddingView
+                <com.module.views.loading.Win10LoadingView
                         android:id="@+id/win10loadding"
-                        android:layout_width="0dip"
+                        android:layout_width="0dp"
                         android:layout_height="300dp"
                         android:layout_weight="5"
                         android:background="@color/green"/>
@@ -72,23 +72,19 @@
                         android:layout_alignParentStart="true"
                         android:layout_marginStart="64dp"/>
                 <Button
-                        android:id="@+id/win10loadding_btn"
+                        android:id="@+id/win10loading_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:background="@drawable/selector_radius_buttons"
                         android:focusable="true"
-                        android:text="Dialog"
+                        android:text="Win10Start"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentEnd="true"
                         android:layout_marginEnd="60dp"/>
             </RelativeLayout>
 
         </LinearLayout>
-
-        <com.kingz.customviews.porterduffmode.DuffTestView
-                android:layout_width="match_parent"
-                android:layout_height="108dp"/>
 
         <LinearLayout
                 android:layout_width="match_parent"

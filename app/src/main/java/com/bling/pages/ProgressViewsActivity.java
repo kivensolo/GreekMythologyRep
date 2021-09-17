@@ -12,17 +12,15 @@ import android.widget.Button;
 
 import com.kingz.customdemo.R;
 import com.kingz.customviews.text.ColorTrackView;
-import com.module.views.loading.Win10LoaddingView;
+import com.module.views.loading.Win10LoadingView;
 import com.module.views.progress.CircleProgressView;
 import com.module.views.progress.HorizontalProgressBarWithNumber;
 import com.module.views.progress.RoundProgressBarWidthNumber;
 
 /**
- * Copyright(C) 2015, 北京视达科科技有限公司
- * All rights reserved.
  * author: King.Z
  * date:  2016/1/22 16:56
- * description: 各种进度条页面展示
+ * description: 各种进度条组件展示
  * 1.基础的环形进度条
  * 2.仿win10加载圈
  * 3.歌词跑马灯效果View
@@ -33,7 +31,7 @@ import com.module.views.progress.RoundProgressBarWidthNumber;
 public class ProgressViewsActivity extends Activity {
 
     private CircleProgressView circleProgressView;
-    private Win10LoaddingView win10LoaddingView;
+    private Win10LoadingView win10LoadingView;
     private ColorTrackView colorTrackView;
     private Button btn_start;
     private Button btn_Dialog;
@@ -50,35 +48,34 @@ public class ProgressViewsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.circleview_layout);
         initCircleProgress();
-        initWin10Loadding();
+        initWin10Loading();
         initColorTrack();
         initProgressBarWithNumber();
     }
 
     private void initProgressBarWithNumber() {
-        mProgressBar = (HorizontalProgressBarWithNumber) findViewById(R.id.id_progressbar01);
-        mRoundProgressBar = (RoundProgressBarWidthNumber) findViewById(R.id.id_progress02);
-        mRoundProgressBar2 = (RoundProgressBarWidthNumber) findViewById(R.id.id_progress03);
+        mProgressBar = findViewById(R.id.id_progressbar01);
+        mRoundProgressBar = findViewById(R.id.id_progress02);
+        mRoundProgressBar2 = findViewById(R.id.id_progress03);
         mHandler.sendEmptyMessage(MSG_PROGRESS_UPDATE);
     }
 
-    private void initWin10Loadding() {
-        btn_Dialog = (Button) findViewById(R.id.win10loadding_btn);
-        win10LoaddingView = (Win10LoaddingView) findViewById(R.id.win10loadding);
-        btn_Dialog.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
+    private void initWin10Loading() {
+        btn_Dialog = findViewById(R.id.win10loading_btn);
+        win10LoadingView = findViewById(R.id.win10loadding);
+        win10LoadingView.setType(Win10LoadingView.LoadingType.DOTS);
+        btn_Dialog.setOnClickListener(v -> {
+            win10LoadingView.start();
         });
     }
 
     private void initColorTrack() {
-        colorTrackView = (ColorTrackView) findViewById(R.id.id_changeTextColorView);
+        colorTrackView = findViewById(R.id.id_changeTextColorView);
     }
 
     private void initCircleProgress() {
-        btn_start = (Button) findViewById(R.id.start_circle_progress);
-        circleProgressView = (CircleProgressView) findViewById(R.id.view_circle_progress);
+        btn_start = findViewById(R.id.start_circle_progress);
+        circleProgressView = findViewById(R.id.view_circle_progress);
         circleProgressView.setCircleDrawFinishedListner(new CircleProgressView.ICircleDrawFinished() {
             @Override
             public void onFinished() {
@@ -120,6 +117,12 @@ public class ProgressViewsActivity extends Activity {
             }
         }
     };
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        win10LoadingView.stop();
+    }
 
     public class CircleDrawStartListener implements CircleProgressView.ICircleDrawStart {
         @Override

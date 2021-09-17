@@ -39,9 +39,9 @@ public class CustomViewsPage extends  Activity implements OnItemClickListener{
 
  		//1:加载ListView布局
 		setContentView(R.layout.customview_main);
-		ListView listView = (ListView) findViewById(R.id.widgetsListView_id);
+		ListView listView = findViewById(R.id.widgetsListView_id);
 		//2:初始化适配器
-		mAdapter = new ArrayAdapter<ListBillData>(this, R.layout.list_bill);
+		mAdapter = new ArrayAdapter<>(this, R.layout.list_bill);
 		//3：为LisView设置数据适配器
 		listView.setAdapter(mAdapter);
 		addData();
@@ -50,8 +50,8 @@ public class CustomViewsPage extends  Activity implements OnItemClickListener{
 
 	private void addData() {
 		mAdapter.add(new ListBillData(this,"ShapeDrawOval",new Intent(this,ShapeDrawOval.class)));
-		mAdapter.add(new ListBillData(this,"ProgressViews",new Intent(this,ProgressViewsActivity.class)));
-		mAdapter.add(new ListBillData(this,"Customer SeekBar",new Intent(this,UsingCustomSeekBar.class)));
+		mAdapter.add(new ListBillData(this,"各种Progress控件",new Intent(this,ProgressViewsActivity.class)));
+		mAdapter.add(new ListBillData(this,"进度条",new Intent(this,UsingCustomSeekBar.class)));
 		mAdapter.add(new ListBillData(this,"自定义ListView",new Intent(this,CustomListViewActivity.class)));
 		mAdapter.add(new ListBillData(this,"ListView-----左右滑动删除",new Intent(this,SliderListViewActivity.class)));
 		mAdapter.add(new ListBillData(this,"View 的Drag & Fling",new Intent(this,SoapFlingActivity.class)));
@@ -59,7 +59,7 @@ public class CustomViewsPage extends  Activity implements OnItemClickListener{
 		mAdapter.add(new ListBillData(this,"WebAPP测试",new Intent(this,WebViewActivity.class)));
 		mAdapter.add(new ListBillData(this,"WZViewPager",new Intent(this,ViewPagerAnimationDemoActivity.class)));
 		mAdapter.add(new ListBillData(this,"贝塞尔水波曲线",new Intent(this,WaveLoadingActivity.class)));
-		mAdapter.add(new ListBillData(this,"可缩放的ImageView",new Intent(this, PhotoViewMainActivity.class)));
+		mAdapter.add(new ListBillData(this,"可收拾缩放的ImageView",new Intent(this, PhotoViewMainActivity.class)));
 	}
 
 	@Override

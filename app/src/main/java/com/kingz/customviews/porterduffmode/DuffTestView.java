@@ -11,8 +11,6 @@ import android.view.View;
 import com.kingz.customdemo.R;
 
 /**
- * Copyright(C) 2016, 北京视达科科技有限公司
- * All rights reserved.
  * author: King.Z
  * date:  2016/5/29 17:05
  * description:
