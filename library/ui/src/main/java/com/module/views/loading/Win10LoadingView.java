@@ -54,12 +54,12 @@ public class Win10LoadingView extends View {
     /**
      * 是否是Debug模式
      */
-    private boolean DEBUG = true;
+    private boolean DEBUG = false;
 
     private float x;
     private float y;
     // 圆形半径dp值
-    private float radius = UIUtil.INSTANCE.dip2px(getContext(), 20);
+    private float radius = UIUtil.INSTANCE.dip2px(getContext(), 25);
     private LoadingType mType = LoadingType.NORMAL;
 
     public enum LoadingType{
