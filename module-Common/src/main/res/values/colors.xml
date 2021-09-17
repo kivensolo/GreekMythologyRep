@@ -190,6 +190,20 @@
     <color name="app_dark_gray">@color/black_transparent</color>
     <color name="app_dark_transparent">@color/transparent_ban</color>
 
+    <!--  App主色调：亮绿色  -->
+    <color name="app_light_green">#ff20D38F</color>
+    <color name="app_light_green_translucent">#8420D38F</color>
+    <color name="app_dark_green">#ff33BCB7</color>
+    <color name="app_dark_green_marker">#ff1DB6BF</color>
+    <color name="app_purple">#ff854ECA</color>
+    <color name="app_yellow">#ffFFED48</color>
+    <color name="app_red">#ffE84749</color>
+    <color name="app_card_color">#ff303030</color>
+    <color name="text_color_gray">#ffdedede</color>
+    <color name="text_color_70">#ff707070</color>
+    <color name="background_spc_item">#ff404040</color>
+    <color name="divider_color">#ff404040</color>
+    <!--  App主色调  End  -->
 
     <!-- Android L 颜色 -->
     <color name="skygreen">#5FCDDA</color><!--天绿色 -->
