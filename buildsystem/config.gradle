@@ -209,6 +209,6 @@ ext {
 
             //paging3 分页加载
             "pagging3"             : "androidx.paging:paging-runtime:3.0",
-
+            "palette"             : "androidx.palette:palette:1.0.0",
     ]
 }

@@ -78,5 +78,6 @@ dependencies {
     implementation "androidx.paging:paging-runtime:3.0.0"
 
 //    compileOnly _rootDependencies["gilde_annotations"]
-
+    // palette
+    implementation _rootDependencies["palette"]
 }

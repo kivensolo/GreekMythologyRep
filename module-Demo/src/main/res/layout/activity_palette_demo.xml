@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/palette_img"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:background="@drawable/palette"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/muted"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_30dp"
+        android:layout_margin="@dimen/dp_10"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="柔和的颜色"
+        android:textSize="@dimen/size_16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/palette_img" />
+
+    <TextView
+        android:id="@+id/dark_muted"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_30dp"
+        android:layout_margin="@dimen/dp_10"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="柔和且暗的颜色"
+        android:textSize="@dimen/size_16sp"
+        app:layout_constraintEnd_toEndOf="@+id/muted"
+        app:layout_constraintStart_toStartOf="@+id/muted"
+        app:layout_constraintTop_toBottomOf="@+id/muted" />
+
+    <TextView
+        android:id="@+id/light_muted"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_30dp"
+        android:layout_margin="@dimen/dp_10"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="柔和且亮的颜色"
+        android:textSize="@dimen/size_16sp"
+        app:layout_constraintEnd_toEndOf="@+id/light_vibrant"
+        app:layout_constraintStart_toStartOf="@+id/light_vibrant"
+        app:layout_constraintTop_toBottomOf="@+id/dark_muted" />
+
+
+    <TextView
+        android:id="@+id/vibrant"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_30dp"
+        android:layout_margin="@dimen/dp_10"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="鲜艳的颜色"
+        android:textSize="@dimen/size_16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/light_muted" />
+
+
+    <TextView
+        android:id="@+id/dark_vibrant"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_30dp"
+        android:layout_margin="@dimen/dp_10"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="鲜艳且暗的颜色"
+        android:textSize="@dimen/size_16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vibrant" />
+
+    <TextView
+        android:id="@+id/light_vibrant"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_30dp"
+        android:layout_margin="@dimen/dp_10"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="鲜艳且亮的颜色"
+        android:textSize="@dimen/size_16sp"
+        app:layout_constraintEnd_toEndOf="@+id/dark_vibrant"
+        app:layout_constraintStart_toStartOf="@+id/dark_vibrant"
+        app:layout_constraintTop_toBottomOf="@+id/dark_vibrant" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

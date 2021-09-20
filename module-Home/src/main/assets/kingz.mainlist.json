@@ -134,8 +134,12 @@
     ]
   },
   {
-    "name": "Graphics",
+    "name": "Images & Graphics",
     "samples": [
+      {
+        "name": "Palette",
+        "class": "com.zeke.demo.meterial.PaletteDemoActivity"
+      },
       {
         "name": "BitMapOverall",
         "class": "com.kingz.pages.photo.BitmapPhotosActivity"
