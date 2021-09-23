@@ -7,6 +7,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.kingz.database.config.DBConfig
 import com.kingz.database.dao.*
 import com.kingz.database.entity.*
 
@@ -42,14 +43,14 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun getSongDao(): SongDao
     abstract fun getAlbumDao(): AlbumDao
     abstract fun getUserDao(): UserDao
-    abstract fun getCookoesDao(): CookiesDao
+    abstract fun getCookiesDao(): CookiesDao
     abstract fun getCollectArticleDao(): CollectionArticleDao
 
 
     val databaseCreated = MutableLiveData<Boolean?>()
 
     companion object {
-        private const val DATA_BASE_NAME = "greek-mythology-db"
+        private const val DATA_BASE_NAME = DBConfig.DATA_BASE_NAME
         @Volatile
         private var INSTANCE: AppDatabase? = null
 
@@ -116,7 +117,7 @@ abstract class AppDatabase : RoomDatabase() {
                      * 表名: 大小写有影响
                      * DEFAULT 无用
                      */
-                    execSQL("CREATE TABLE IF NOT EXISTS collect_article (" +
+                    execSQL("CREATE TABLE IF NOT EXISTS ${DBConfig.TAB_NAME_OF_COLLECT_ARTICLE} (" +
                             "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
                             "title_id INTEGER NOT NULL DEFAULT 1," +
                             "date TEXT NOT NULL DEFAULT '1970-1-1 00:00'," +
@@ -141,7 +142,7 @@ abstract class AppDatabase : RoomDatabase() {
                      * INSERT INTO table_name (COLUMN_1_NAME, COLUMN_2_NAME,...) VALUES (Value1, Value2,....)
                      *
                      */
-                    execSQL("INSERT INTO collect_article VALUES(10,10086,'2021-04-02','学Android从入门到放弃','http://www.baidu.com','98.8')")
+                    execSQL("INSERT INTO ${DBConfig.TAB_NAME_OF_COLLECT_ARTICLE} VALUES(10,10086,'2021-04-02','学Android从入门到放弃','http://www.baidu.com','98.8')")
 
 
                     /**
@@ -160,7 +161,7 @@ abstract class AppDatabase : RoomDatabase() {
          */
         private val migration_2to3: Migration = object : Migration(2, 3) {
             override fun migrate(database: SupportSQLiteDatabase) {
-                database.execSQL("CREATE TABLE IF NOT EXISTS http_cookie (" +
+                database.execSQL("CREATE TABLE IF NOT EXISTS ${DBConfig.TAB_NAME_OF_HTTP_COOKIE} (" +
                             "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
                             "url TEXT NOT NULL DEFAULT ''," +
                             "cookies TEXT NOT NULL DEFAULT '')")

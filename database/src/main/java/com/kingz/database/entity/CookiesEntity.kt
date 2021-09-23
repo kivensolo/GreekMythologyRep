@@ -2,6 +2,7 @@ package com.kingz.database.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import com.kingz.database.config.DBConfig
 import java.io.Serializable
 
 /**
@@ -10,7 +11,7 @@ import java.io.Serializable
  * description：网络请求的Cookie表
  * @since DataBase v3
  */
-@Entity(tableName = "http_cookie", primaryKeys = ["id"])
+@Entity(tableName = DBConfig.TAB_NAME_OF_HTTP_COOKIE, primaryKeys = ["id"])
 class CookiesEntity(
     @ColumnInfo(name = "id")
     var id: Int = 0,

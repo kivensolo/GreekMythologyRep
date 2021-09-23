@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.kingz.database.config.DBConfig
 import com.kingz.database.entity.CookiesEntity
 
 /**
@@ -19,10 +20,10 @@ interface CookiesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(cookiesList: MutableList<CookiesEntity>): List<Long>?
 
-    @Query(("DELETE FROM http_cookie"))
+    @Query("DELETE FROM ${DBConfig.TAB_NAME_OF_HTTP_COOKIE}")
     suspend fun clear()
 
     //根据指定URL查找cookie
-    @Query("SELECT * FROM http_cookie where url=:url")
+    @Query("SELECT * FROM ${DBConfig.TAB_NAME_OF_HTTP_COOKIE} where url = :url")
     fun getCookies(url: String): CookiesEntity?
 }

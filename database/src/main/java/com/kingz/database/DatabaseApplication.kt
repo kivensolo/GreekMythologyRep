@@ -40,7 +40,7 @@ open class DatabaseApplication : BaseApplication() {
     fun getAlbumDao(): AlbumDao = AppDatabase.database.getAlbumDao()
 
     fun getUserDao(): UserDao = AppDatabase.database.getUserDao()
-    fun getCookiesDao(): CookiesDao = AppDatabase.database.getCookoesDao()
+    fun getCookiesDao(): CookiesDao = AppDatabase.database.getCookiesDao()
 
     //------------ DAO 获取函数 -----------------//
     fun destroyDatabase() {

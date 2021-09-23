@@ -3,6 +3,7 @@ package com.kingz.database.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.kingz.database.config.DBConfig
 import java.io.Serializable
 
 /**
@@ -10,7 +11,7 @@ import java.io.Serializable
  * date：2021/3/31
  * description：用户收藏文章的Entity
  */
-@Entity(tableName = "collect_article")
+@Entity(tableName = DBConfig.TAB_NAME_OF_COLLECT_ARTICLE)
 class CollectionArticle : Serializable {
     @PrimaryKey(autoGenerate = true)
     var id = 0
