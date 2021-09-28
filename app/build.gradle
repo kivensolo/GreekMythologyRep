@@ -34,8 +34,8 @@ android {
         }
     }
 
-    compileSdkVersion android.compileSdkVersion
-    buildToolsVersion android.buildToolsVersion
+    compileSdkVersion build_versions.compile_sdk
+    buildToolsVersion build_versions.build_tools
 
     defaultConfig {
         applicationId 'com.kingz.customdemo'
@@ -43,8 +43,8 @@ android {
         versionCode _rootAndroid.versionCode
         versionName _rootAndroid.versionName
         signingConfig signingConfigs.ZekeSigned
-        minSdkVersion _rootAndroid.minSdkVersion
-        targetSdkVersion _rootAndroid.targetSdkVersion
+        minSdkVersion build_versions.min_sdk
+        targetSdkVersion build_versions.target_sdk
         buildConfigField("String", "APP_NAME", "\"Greek\"")
 
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'

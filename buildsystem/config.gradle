@@ -2,6 +2,7 @@
 ext {
     modulePrefix = ':'
 
+    //@deprecated  被build_versions代替
     android = [compileSdkVersion: 28,
                buildToolsVersion: '28.0.3', //AGP 3.2.1以后默认最低28.0.3
                minSdkVersion    : 21,
@@ -212,3 +213,45 @@ ext {
             "palette"             : "androidx.palette:palette:1.0.0",
     ]
 }
+
+//----------------------------------------------新的构建配置
+ext.deps = [:] //Defined empty map
+
+def versions = [:]
+versions.android_gradle_plugin = '3.6.4'
+//....
+ext.versions = versions
+
+//android.compileSdkVersion 替换成 build_versions.compile_sdk
+def build_versions = [:]
+build_versions.min_sdk = 14
+build_versions.compile_sdk = 28
+build_versions.target_sdk = 23
+build_versions.build_tools = "28.0.3" //AGP 3.2.1以后默认最低28.0.3
+ext.build_versions = build_versions
+
+//----------------------------------------------新的构建配置
+
+
+/**
+ * 添加仓库
+ * @param handler
+ * @return
+ */
+static def addRepos(RepositoryHandler handler) {
+    //使用阿里云镜像  防止Gradle同步超时
+    handler.maven { url 'https://maven.aliyun.com/repository/public'}   //central仓和jcenter仓的聚合仓
+    handler.maven { url 'https://maven.aliyun.com/repository/google' }
+    handler.maven { url "https://jitpack.io" }
+    handler.mavenCentral()
+
+    //handler.maven { url uri('D:/repos')}  //local repositories
+
+    //自己的Jcenter仓库 已废弃2021/05
+//    handler.maven{
+//            url 'https://dl.bintray.com/kivensolo/maven'
+//            //查看有哪些版本可以下载
+//            //https://dl.bintray.com/kivensolo/maven/com/github/zeke/kangaroo/
+//        }
+}
+ext.addRepos = this.&addRepos

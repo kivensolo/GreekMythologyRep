@@ -2,20 +2,12 @@
 
 // 配置Project的构建脚本类路径
 buildscript {
-    println "   The closure to use to configure the build script classpath begin run."
+    println "   The closure of use to configure the build script classpath begin run."
     apply from: 'buildsystem/config.gradle'
     def bs = buildscript
     println "   dumpBuildScript:${bs}"
 
-    repositories {
-        //使用阿里云镜像  防止Gradle同步超时
-        maven { url 'https://maven.aliyun.com/repository/public'}   //central仓和jcenter仓的聚合仓
-        maven { url 'https://maven.aliyun.com/repository/google' }
-        maven { url "https://jitpack.io" }
-        mavenCentral()
-
-        //maven { url uri('D:/repos')}  //local repositories
-    }
+    addRepos(repositories)
 
     dependencies { //Identifies the Android plugin
         classpath 'com.android.tools.build:gradle:3.6.4'
@@ -26,22 +18,7 @@ buildscript {
 }
 
 //Configures this project and each of its sub-projects
-allprojects {
-    repositories {
-        maven{ url 'https://maven.aliyun.com/repository/public'}
-        maven { url 'https://maven.aliyun.com/repository/google' }
-        maven { url "https://jitpack.io" }
-        mavenCentral()
-
-        //自己的Jcenter仓库 已废弃2021/05
-//        maven{
-//            url 'https://dl.bintray.com/kivensolo/maven'
-//            //查看有哪些版本可以下载
-//            //https://dl.bintray.com/kivensolo/maven/com/github/zeke/kangaroo/
-//        }
-    }
-
-}
+allprojects { addRepos(repositories) }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
