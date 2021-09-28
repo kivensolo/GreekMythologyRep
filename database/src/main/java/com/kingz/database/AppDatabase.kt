@@ -47,7 +47,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun getCollectArticleDao(): CollectionArticleDao
 
 
-    val databaseCreated = MutableLiveData<Boolean?>()
+    private val databaseCreated = MutableLiveData<Boolean>()
 
     companion object {
         private const val DATA_BASE_NAME = DBConfig.DATA_BASE_NAME
@@ -65,33 +65,29 @@ abstract class AppDatabase : RoomDatabase() {
         }
 
         /**
+         * 建立数据库。RoomDatabase.Builder.build()只设置数据库配置并创建一个新的数据库实例。
+         * SQLite数据库只在第一次访问时创建
+         *
          * Room启动时通过SQLiteOpenHelper检测version是否发生变化，如果有，则触发onDowngrade或者onUpgrade。
          * 在RoomOpenHelper中进行升级或降级操作: 遍历已有的Migration列表去执行特定迁移的操作。
          * 执行完毕后，会进行结果有效性判断。
-         *
-         * fallbackToDestructiveMigration()： 在迁移失败时，将
-         * 会删除数据库并重建…此时不会crash，但所有数据丢失。
          */
         private fun buildRoomDB(context: Context) =
-            Room.databaseBuilder(context.applicationContext,
-                AppDatabase::class.java, DATA_BASE_NAME)
+            Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, DATA_BASE_NAME)
                 .allowMainThreadQueries()   // 不允许主线程进行IO操作
-                .fallbackToDestructiveMigration()
-                .addMigrations(migration_1to2, migration_2to3)
-                .addCallback(object :Callback(){
+                .fallbackToDestructiveMigration() //在迁移失败时,将会删除数据库并重建…此时不会crash，但所有数据丢失。
+                .addMigrations(migration_1_2, migration_2_3)
+                .addCallback(object : Callback() {
                     override fun onDestructiveMigration(db: SupportSQLiteDatabase) {
                         // 若使用了fallbackToDestructiveMigration()
                         // 那么升级失败时次函数会被回调，可以试着在这里重新初始化D
                         super.onDestructiveMigration(db)
                     }
+
                     override fun onCreate(db: SupportSQLiteDatabase) {
                         super.onCreate(db)
-//                        Executors.newFixedThreadPool(5).execute {
-//                                //RoomDatabase创建后异步插入初始化数据，并通知MediatorLiveData
-                                val dataBase = getInstance(context)
-//                                val ids = dataBase.getCollectArticalDao().insert(*Utils.initData)
-                                dataBase.databaseCreated.postValue(true)
-//                            }
+                        val dataBase = getInstance(context)
+                        dataBase.setDatabaseCreated()
                     }
                 })
                 .build()
@@ -99,6 +95,7 @@ abstract class AppDatabase : RoomDatabase() {
         internal val database: AppDatabase by lazy {
             getInstance(DatabaseApplication.getInstance())
         }
+
 
         fun destroyDatabase() {
             INSTANCE = null
@@ -108,7 +105,7 @@ abstract class AppDatabase : RoomDatabase() {
          * 数据库迁移 V1~V2
          * 增加收藏数据表
          */
-        private val migration_1to2: Migration = object : Migration(1, 2) {
+        private val migration_1_2: Migration = object : Migration(1, 2) {
             override fun migrate(database: SupportSQLiteDatabase) {
 
                 database.run {
@@ -159,7 +156,7 @@ abstract class AppDatabase : RoomDatabase() {
          * 数据库迁移 V2~V3
          * 增加Cookies数据表
          */
-        private val migration_2to3: Migration = object : Migration(2, 3) {
+        private val migration_2_3: Migration = object : Migration(2, 3) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("CREATE TABLE IF NOT EXISTS ${DBConfig.TAB_NAME_OF_HTTP_COOKIE} (" +
                             "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
@@ -179,4 +176,7 @@ abstract class AppDatabase : RoomDatabase() {
         }
     }
 
+    private fun setDatabaseCreated() {
+        databaseCreated.postValue(true)
+    }
 }

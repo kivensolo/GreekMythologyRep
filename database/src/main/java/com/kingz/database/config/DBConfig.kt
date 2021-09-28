@@ -1,5 +1,7 @@
 package com.kingz.database.config
 
+import androidx.annotation.VisibleForTesting
+
 /**
  * author：ZekeWang
  * date：2021/9/23
@@ -27,6 +29,7 @@ package com.kingz.database.config
 class DBConfig {
      companion object {
         //---------- 数据库名
+        @VisibleForTesting
         const val DATA_BASE_NAME = "greek-mythology-db"
 
         //---------- 各表名配置项 START
