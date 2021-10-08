@@ -18,7 +18,7 @@ open class WanAndroidViewModelV2 : BaseReactiveViewModel() {
     protected val db: AppDatabase?
 
     init {
-        db = AppDatabase.getInstance(CommonApp.getInstance())
+        db = CommonApp.getInstance().getDataBase()
     }
 
     val userInfoLiveData: MutableLiveData<UserEntity> by lazy {
