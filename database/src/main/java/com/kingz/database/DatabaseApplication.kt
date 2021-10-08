@@ -1,6 +1,7 @@
 package com.kingz.database
 
 import com.facebook.stetho.Stetho
+import com.kingz.base.AppExecutors
 import com.kingz.base.BaseApplication
 import com.kingz.database.dao.AlbumDao
 import com.kingz.database.dao.CookiesDao
@@ -14,6 +15,8 @@ import com.kingz.database.dao.UserDao
  * @desc: 数据库Application顶层模块
  */
 open class DatabaseApplication : BaseApplication() {
+
+    private lateinit var mAppExecutors: AppExecutors
 
     companion object {
 
@@ -30,19 +33,25 @@ open class DatabaseApplication : BaseApplication() {
     override fun onCreate() {
         super.onCreate()
         INSTANCE = this
+        mAppExecutors = AppExecutors()
 
         // 注册数据库查看器
         Stetho.initializeWithDefaults(this)
     }
 
     //------------ DAO 获取函数  可下沉至业务层-----------------//
-    fun getSongDao(): SongDao = AppDatabase.database.getSongDao()
-    fun getAlbumDao(): AlbumDao = AppDatabase.database.getAlbumDao()
+    fun getSongDao(): SongDao = getDataBase().getSongDao()
+    fun getAlbumDao(): AlbumDao = getDataBase().getAlbumDao()
 
-    fun getUserDao(): UserDao = AppDatabase.database.getUserDao()
-    fun getCookiesDao(): CookiesDao = AppDatabase.database.getCookiesDao()
+    fun getUserDao(): UserDao = getDataBase().getUserDao()
+    fun getCookiesDao(): CookiesDao = getDataBase().getCookiesDao()
 
     //------------ DAO 获取函数 -----------------//
+
+    fun getDataBase():AppDatabase {
+        return AppDatabase.getInstance(this, mAppExecutors)
+    }
+
     fun destroyDatabase() {
         AppDatabase.destroyDatabase()
     }

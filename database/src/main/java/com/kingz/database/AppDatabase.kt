@@ -7,9 +7,11 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.kingz.base.AppExecutors
 import com.kingz.database.config.DBConfig
 import com.kingz.database.dao.*
 import com.kingz.database.entity.*
+import com.kingz.database.generator.DataGenerator
 
 /**
  * @author zeke.wang
@@ -45,7 +47,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun getUserDao(): UserDao
     abstract fun getCookiesDao(): CookiesDao
     abstract fun getCollectArticleDao(): CollectionArticleDao
-
+    abstract fun productDao(): ProductDao
+    abstract fun commentDao(): CommentDao
 
     val databaseCreated = MutableLiveData<Boolean?>()
 
@@ -55,10 +58,10 @@ abstract class AppDatabase : RoomDatabase() {
         private var INSTANCE: AppDatabase? = null
 
         @JvmStatic
-        fun getInstance(context: Context): AppDatabase {
+        fun getInstance(context: Context, executors: AppExecutors): AppDatabase {
             if (INSTANCE == null) {
                 synchronized(AppDatabase::class) {
-                    INSTANCE = buildRoomDB(context)
+                    INSTANCE = buildRoomDB(context, executors)
                 }
             }
             return INSTANCE!!
@@ -72,33 +75,36 @@ abstract class AppDatabase : RoomDatabase() {
          * fallbackToDestructiveMigration()： 在迁移失败时，将
          * 会删除数据库并重建…此时不会crash，但所有数据丢失。
          */
-        private fun buildRoomDB(context: Context) =
-            Room.databaseBuilder(context.applicationContext,
-                AppDatabase::class.java, DATA_BASE_NAME)
+        private fun buildRoomDB(appContext: Context, executors: AppExecutors) =
+            Room.databaseBuilder(appContext, AppDatabase::class.java, DATA_BASE_NAME)
                 .allowMainThreadQueries()   // 不允许主线程进行IO操作
                 .fallbackToDestructiveMigration()
                 .addMigrations(migration_1to2, migration_2to3)
-                .addCallback(object :Callback(){
+                .addCallback(object : Callback() {
                     override fun onDestructiveMigration(db: SupportSQLiteDatabase) {
                         // 若使用了fallbackToDestructiveMigration()
                         // 那么升级失败时次函数会被回调，可以试着在这里重新初始化D
                         super.onDestructiveMigration(db)
                     }
+
                     override fun onCreate(db: SupportSQLiteDatabase) {
                         super.onCreate(db)
-//                        Executors.newFixedThreadPool(5).execute {
-//                                //RoomDatabase创建后异步插入初始化数据，并通知MediatorLiveData
-                                val dataBase = getInstance(context)
-//                                val ids = dataBase.getCollectArticalDao().insert(*Utils.initData)
-                                dataBase.databaseCreated.postValue(true)
-//                            }
+                        executors.diskIO().execute {
+                            // Generate the data for pre-population
+                            // Generate the data for pre-population
+                            val database = getInstance(appContext, executors)
+                            val products: List<ProductEntity> = DataGenerator.generateProducts()
+                            val comments = DataGenerator.generateCommentsForProducts(products)
+                            insertData(database, products, comments);
+                            database.databaseCreated.postValue(true)
+                        }
                     }
                 })
                 .build()
 
-        internal val database: AppDatabase by lazy {
-            getInstance(DatabaseApplication.getInstance())
-        }
+//        internal val database: AppDatabase by lazy {
+//            getInstance(DatabaseApplication.getInstance())
+//        }
 
         fun destroyDatabase() {
             INSTANCE = null
@@ -117,13 +123,15 @@ abstract class AppDatabase : RoomDatabase() {
                      * 表名: 大小写有影响
                      * DEFAULT 无用
                      */
-                    execSQL("CREATE TABLE IF NOT EXISTS ${DBConfig.TAB_NAME_OF_COLLECT_ARTICLE} (" +
-                            "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
-                            "title_id INTEGER NOT NULL DEFAULT 1," +
-                            "date TEXT NOT NULL DEFAULT '1970-1-1 00:00'," +
-                            "title_name TEXT NOT NULL DEFAULT 'WanAndroid artical'," +
-                            "link TEXT NOT NULL," +
-                            "review_score REAL NOT NULL DEFAULT 1.0)")
+                    execSQL(
+                        "CREATE TABLE IF NOT EXISTS ${DBConfig.TAB_NAME_OF_COLLECT_ARTICLE} (" +
+                                "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+                                "title_id INTEGER NOT NULL DEFAULT 1," +
+                                "date TEXT NOT NULL DEFAULT '1970-1-1 00:00'," +
+                                "title_name TEXT NOT NULL DEFAULT 'WanAndroid artical'," +
+                                "link TEXT NOT NULL," +
+                                "review_score REAL NOT NULL DEFAULT 1.0)"
+                    )
 
 
                     /**
@@ -161,10 +169,12 @@ abstract class AppDatabase : RoomDatabase() {
          */
         private val migration_2to3: Migration = object : Migration(2, 3) {
             override fun migrate(database: SupportSQLiteDatabase) {
-                database.execSQL("CREATE TABLE IF NOT EXISTS ${DBConfig.TAB_NAME_OF_HTTP_COOKIE} (" +
+                database.execSQL(
+                    "CREATE TABLE IF NOT EXISTS ${DBConfig.TAB_NAME_OF_HTTP_COOKIE} (" +
                             "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
                             "url TEXT NOT NULL DEFAULT ''," +
-                            "cookies TEXT NOT NULL DEFAULT '')")
+                            "cookies TEXT NOT NULL DEFAULT '')"
+                )
             }
         }
 
@@ -177,6 +187,18 @@ abstract class AppDatabase : RoomDatabase() {
                 //没有变化，所以是一个空实现
             }
         }
+
+        private fun insertData(
+            database: AppDatabase,
+            products: List<ProductEntity>,
+            comments: List<CommentEntity>) {
+            database.runInTransaction {
+                database.productDao().insertAll(products)
+                database.commentDao().insertAll(comments)
+            }
+        }
     }
+
+
 
 }

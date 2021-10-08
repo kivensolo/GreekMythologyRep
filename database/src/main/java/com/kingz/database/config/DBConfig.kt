@@ -33,6 +33,7 @@ class DBConfig {
         const val TAB_NAME_OF_COLLECT_ARTICLE = "collect_article"
         const val TAB_NAME_OF_HTTP_COOKIE = "http_cookie"
         const val TAB_NAME_OF_USER = "user"
+        const val TAB_NAME_OF_PRODUCTS = "products"
         //---------- 各表名配置项 END
     }
 }
