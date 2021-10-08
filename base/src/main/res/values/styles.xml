@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="base_Theme_Dialog" parent="android:style/Theme.Dialog">
+
+        <!-- 边框 -->
+        <item name="android:windowFrame">@null</item>
+        <!-- 是悬浮还是覆盖 -->
+        <item name="android:windowIsFloating">true</item>
+        <!-- 半透明 -->
+        <item name="android:windowIsTranslucent">false</item>
+        <!-- 是否有系统自带标题栏 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 背景是否变暗 -->
+        <item name="android:backgroundDimEnabled">true</item>
+        <!-- 去除黑色背景 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!-- 居中 -->
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="base_Theme_Dialog_white" parent="android:style/Theme.Dialog">
+
+        <!-- 边框 -->
+        <item name="android:windowFrame">@null</item>
+        <!-- 是悬浮还是覆盖 -->
+        <item name="android:windowIsFloating">true</item>
+        <!-- 半透明 -->
+        <item name="android:windowIsTranslucent">false</item>
+        <!-- 是否有系统自带标题栏 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 背景是否变暗 -->
+        <item name="android:backgroundDimEnabled">false</item>
+        <!-- 去除黑色背景 -->
+        <item name="android:windowBackground">@android:color/white</item>
+        <!-- 居中 -->
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="EditText" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">#ff707070</item>
+        <item name="colorControlActivated">#ffa0a0a0</item>
+        <item name="android:paddingBottom">18dp</item>
+    </style>
+</resources>
