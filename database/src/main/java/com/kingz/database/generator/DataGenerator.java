@@ -17,6 +17,7 @@
 package com.kingz.database.generator;
 
 import com.kingz.database.entity.CommentEntity;
+import com.kingz.database.entity.Info;
 import com.kingz.database.entity.ProductEntity;
 
 import java.util.ArrayList;
@@ -51,6 +52,7 @@ public class DataGenerator {
                 product.setDescription(product.getName() + " " + DESCRIPTION[j]);
                 product.setPrice(rnd.nextInt(240));
                 product.setId(FIRST.length * i + j + 1);
+                product.setInfo(new Info());
                 products.add(product);
             }
         }
@@ -62,7 +64,7 @@ public class DataGenerator {
         List<CommentEntity> comments = new ArrayList<>();
         Random rnd = new Random();
 
-        for (Product product : products) {
+        for (ProductEntity product : products) {
             int commentsNumber = rnd.nextInt(5) + 1;
             for (int i = 0; i < commentsNumber; i++) {
                 CommentEntity comment = new CommentEntity();

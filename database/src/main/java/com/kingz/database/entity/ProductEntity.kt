@@ -15,6 +15,7 @@
  */
 package com.kingz.database.entity
 
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
@@ -27,6 +28,12 @@ class ProductEntity {
     var name: String? = null
     var description: String? = null
     var price = 0
+
+    /**
+     * 内嵌对象
+     */
+    @Embedded
+    var info:Info? = null
 
     constructor()
 

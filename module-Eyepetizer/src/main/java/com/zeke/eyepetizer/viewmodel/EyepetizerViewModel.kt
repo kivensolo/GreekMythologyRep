@@ -20,7 +20,7 @@ open class EyepetizerViewModel : BaseReactiveViewModel() {
     protected val db: AppDatabase?
 
     init {
-        db = AppDatabase.getInstance(CommonApp.getInstance())
+        db = CommonApp.getInstance().getDataBase()
     }
 
     val tabListLiveData: MutableLiveData<EyepetizerTabListInfo> by lazy {

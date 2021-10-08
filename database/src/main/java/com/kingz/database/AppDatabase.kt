@@ -32,12 +32,8 @@ import com.kingz.database.generator.DataGenerator
  *   增加HttpCookie表
  */
 @Database(
-    entities = [
-        BaseEntity::class,
-        SongEntity::class,
-        UserEntity::class,
-        CookiesEntity::class,
-        CollectionArticle::class],
+    entities = [BaseEntity::class, SongEntity::class, UserEntity::class, CookiesEntity::class,
+        ProductEntity::class, ProductFtsEntity::class, CommentEntity::class, CollectionArticle::class],
     version = 3, exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {

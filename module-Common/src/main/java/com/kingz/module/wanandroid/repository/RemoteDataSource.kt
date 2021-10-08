@@ -38,7 +38,7 @@ open class WanAndroidRemoteDataSource(iActionEvent: IUIActionEvent?)
     /**
      * 业务层的cookie处理类
      */
-    class CookiesHander : ICookiesHandler {
+    class CookiesHandler : ICookiesHandler {
         private val PATH_LOGIN = "user/login"
         private val PATH_REGISTER = "user/register"
         override fun setCookies(httpUrl: HttpUrl, cookies: String) {
@@ -97,7 +97,7 @@ open class WanAndroidRemoteDataSource(iActionEvent: IUIActionEvent?)
         }
 
         private fun createHttpClient(): OkHttpClient {
-            val cookiesHander = CookiesHander()
+            val cookiesHander = CookiesHandler()
             val okHttpClientManager = OkHttpClientManager.getInstance()
             okHttpClientManager.setBuilderFactory(object :
                 OkHttpClientManager.IClientBuilderFactory {

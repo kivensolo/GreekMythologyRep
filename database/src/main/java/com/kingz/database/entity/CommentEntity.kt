@@ -16,7 +16,7 @@
 package com.kingz.database.entity
 
 import androidx.room.*
-import com.kingz.database.model.Comment
+import com.kingz.database.converters.DateConverter
 import java.util.*
 
 @Entity(tableName = "comments",
@@ -28,51 +28,11 @@ import java.util.*
     )],
     indices = [Index(value = ["productId"])]
 )
-class CommentEntity : Comment {
+class CommentEntity {
     @PrimaryKey(autoGenerate = true)
-    private var id = 0
-    private var productId = 0
-    private var text: String? = null
-    private var postedAt: Date? = null
-    override fun getId(): Int {
-        return id
-    }
-
-    fun setId(id: Int) {
-        this.id = id
-    }
-
-    override fun getProductId(): Int {
-        return productId
-    }
-
-    fun setProductId(productId: Int) {
-        this.productId = productId
-    }
-
-    override fun getText(): String {
-        return text!!
-    }
-
-    fun setText(text: String?) {
-        this.text = text
-    }
-
-    override fun getPostedAt(): Date {
-        return postedAt!!
-    }
-
-    fun setPostedAt(postedAt: Date?) {
-        this.postedAt = postedAt
-    }
-
-    constructor() {}
-
-    @Ignore
-    constructor(id: Int, productId: Int, text: String?, postedAt: Date?) {
-        this.id = id
-        this.productId = productId
-        this.text = text
-        this.postedAt = postedAt
-    }
+    var id = 0
+    var productId = 0
+    var text: String? = null
+    @TypeConverters(DateConverter::class)
+    var postedAt: Date? = null
 }

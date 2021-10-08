@@ -6,6 +6,7 @@ import android.os.Handler
 import com.alibaba.android.arouter.launcher.ARouter
 import com.kingz.database.DatabaseApplication
 import com.kingz.module.common.utils.crash.NeverCrash
+import com.kingz.module.wanandroid.repository.LocalDataSource
 import com.scwang.smart.refresh.footer.ClassicsFooter
 import com.scwang.smart.refresh.header.ClassicsHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
@@ -128,6 +129,13 @@ open class CommonApp: DatabaseApplication(){
         super.attachBaseContext(base)
         // 主动加载非主dex
 //        MultiDex.install(this)
+    }
+
+    /**
+     * 获取本地数据源
+     */
+    fun getLocalDataSource():LocalDataSource?{
+        return LocalDataSource.getInstance(getDataBase())
     }
 
 }
