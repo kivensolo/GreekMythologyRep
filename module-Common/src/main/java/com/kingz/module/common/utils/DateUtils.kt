@@ -1,4 +1,4 @@
-package com.kingz.module.common.utils.ktx
+package com.kingz.module.common.utils
 
 import java.text.SimpleDateFormat
 import java.util.*
@@ -36,8 +36,8 @@ val Date.getCurrentTimeValue: String
 /**
  * 获取当前时间对应指定格式的字符串
  */
-fun Date.getTimeFormatString(pattern: String): String {
-    val sdfDate = SimpleDateFormat(pattern, Locale.getDefault())
+fun Date.getTimeFormatString(format: String): String {
+    val sdfDate = SimpleDateFormat(format, Locale.getDefault())
     return sdfDate.format(time)
 }
 // </editor-fold>
@@ -140,6 +140,7 @@ object DateUtils {
         }
     }
 
+   // <editor-fold defaultstate="collapsed" desc="判断日期是否相等">
     /**
      * 两个日期是否相同
      * @param time1 被比较日期1
@@ -168,8 +169,10 @@ object DateUtils {
         return (tmp1[Calendar.YEAR] == tmp2[Calendar.YEAR] &&
                 tmp1[Calendar.MONTH] == tmp2[Calendar.MONTH])
     }
+   // </editor-fold>
 
 
+  // <editor-fold defaultstate="collapsed" desc="星期&周数等判断">
     /**
      * 判断目标日期是否是周末，即周六、日
      *
@@ -177,7 +180,7 @@ object DateUtils {
      * @return true|false
      */
     fun isWeekend(date: Date): Boolean {
-        val week: Int = getWeekFormCalendar(date)
+        val week: Int = getDayOfWeek(date)
         return week == 0 || week == 6
     }
 
@@ -190,11 +193,13 @@ object DateUtils {
      *      MONDAY~SATURDAY : 1~6
      *      SUNDAY: 0
      */
-    fun getWeekFormCalendar(date: Date): Int {
+    fun getDayOfWeek(date: Date): Int {
         val calendar = Calendar.getInstance()
         calendar.time = date
         return calendar[Calendar.DAY_OF_WEEK] - 1
     }
+  // </editor-fold>
+
 
     /**
      * 是否是闰年
@@ -260,7 +265,7 @@ object DateUtils {
      * @param weekStart 周起始标准(周日为1，周六为7)
      * @return 月视图，起始偏移量
      */
-    fun getDayOffsetInMonth(cal: Calendar, weekStart: Int): Int {
+    private fun getDayOffsetInMonth(cal: Calendar, weekStart: Int): Int {
         //日期所在的星期index  1~7(周日~周六)
         val calendar = Calendar.getInstance()
         calendar.set(cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),1,12,0,0)

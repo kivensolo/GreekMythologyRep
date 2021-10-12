@@ -20,15 +20,11 @@ object HexUtil {
      * Encode byteArray to CharArray.
      * @param data: bytes array
      */
-    fun encodeHex(data: ByteArray?): CharArray? {
-        return encodeHex(data, true)
-    }
-
-    fun encodeHex(data: ByteArray?, toLowerCase: Boolean): CharArray? {
+    fun encodeHex(data: ByteArray?, toLowerCase: Boolean = true): CharArray? {
         return encodeHex(data, if (toLowerCase) DIGITS_LOWER else DIGITS_UPPER)
     }
 
-    fun encodeHex(data: ByteArray?, toDigits: CharArray): CharArray? {
+    private fun encodeHex(data: ByteArray?, toDigits: CharArray): CharArray? {
         if (data == null) return null
         val l = data.size
         val out = CharArray(l shl 1)
@@ -95,6 +91,14 @@ object HexUtil {
      */
     fun charToByte(c: Char): Byte {
         return "0123456789ABCDEF".indexOf(c).toByte()
+    }
+
+    /**
+     * Hex to Int
+     * @param byte byte value
+     */
+    fun byteToInt(byte: Byte): Int {
+        return byte.toInt() and 0xFF
     }
 
     fun toDigit(ch: Char, index: Int): Int {
