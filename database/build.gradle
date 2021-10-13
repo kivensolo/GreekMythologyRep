@@ -40,11 +40,11 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     implementation deps.appcompat
-    implementation rootProject.ext.dependencies["core-ktx"]
+    implementation deps.core_ktx
 
-    testImplementation rootProject.ext.test["junit"]
-    androidTestImplementation rootProject.ext.test["test-ext-junit"]
-    androidTestImplementation rootProject.ext.test["support-test-espresso"]
+    testImplementation test.junit
+    androidTestImplementation test.ext_junit
+    androidTestImplementation test.espresso_core
 
     api project(':base')
     // 进行room注解编译的工具,不添加的话生成不了AppDatabase_Impl.java文件

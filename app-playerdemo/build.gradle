@@ -33,12 +33,12 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation deps.appcompat
-    implementation rootProject.ext.dependencies["core-ktx"]
+    implementation deps.core_ktx
     implementation rootProject.ext.dependencies["constraintLayout"]
 
-    testImplementation rootProject.ext.test["junit"]
-    androidTestImplementation rootProject.ext.test["test-ext-junit"]
-    androidTestImplementation rootProject.ext.test["support-test-espresso"]
+    testImplementation test.junit
+    androidTestImplementation test.ext_junit
+    androidTestImplementation test.espresso_core
 
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-runtime:2.2.0'

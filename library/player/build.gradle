@@ -32,8 +32,8 @@ dependencies {
     api "tv.danmaku.ijk.media:ijkplayer-exo:${lib_versions.ijk}"
 
     implementation "androidx.appcompat:appcompat:1.1.0"
-    testImplementation rootProject.ext.test["junit"]
-    androidTestImplementation rootProject.ext.test["test-ext-junit"]
+    testImplementation test.junit
+    androidTestImplementation test.ext_junit
     implementation "androidx.core:core-ktx:1.2.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }

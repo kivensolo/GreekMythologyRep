@@ -38,20 +38,20 @@ kapt {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    testImplementation root_test["junit"]
-    testImplementation root_test["ktx-coroutines-test"]
-    androidTestImplementation root_test["test-ext-junit"]
-    androidTestImplementation root_test["support-test-espresso"]
+    testImplementation test.junit
+    testImplementation test.kotlinx_coroutines
+    androidTestImplementation test.ext_junit
+    androidTestImplementation test.espresso_core
 
     //网络库由Base层引出
     api project(':library-network' )
 
-    api root_dependencies["multidex"]
+    api deps.multidex
 
     api deps.appcompat
-    api root_dependencies["kotlin"]
-    api root_dependencies["kotlin-reflect"]
-    api root_dependencies["core-ktx"]
+    api deps.kotlin.stblib
+    api deps.kotlin.reflect
+    api deps.core_ktx
     api deps.activity.activity_ktx
     api deps.fragment.fragmen_ktx
     api deps.coroutines.core

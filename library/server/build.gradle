@@ -12,7 +12,7 @@ android {
         versionCode rootProject.ext.android.versionCode
         versionName rootProject.ext.android.versionName
 
-        testInstrumentationRunner rootProject.ext.test["AndroidJUnitRunner"]
+        testInstrumentationRunner test.android_junit_runner
         consumerProguardFiles 'consumer-rules.pro'
     }
 
@@ -30,10 +30,10 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation rootProject.ext.dependencies["kotlin"]
+    implementation deps.kotlin.stblib
     implementation deps.appcompat
-    implementation rootProject.ext.dependencies["core-ktx"]
-    testImplementation rootProject.ext.test["junit"]
-    androidTestImplementation rootProject.ext.test["test-ext-junit"]
-    androidTestImplementation rootProject.ext.test["support-test-espresso"]
+    implementation deps.core_ktx
+    testImplementation test.junit
+    androidTestImplementation test.ext_junit
+    androidTestImplementation test.espresso_core
 }

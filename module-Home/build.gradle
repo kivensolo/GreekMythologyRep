@@ -78,9 +78,9 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation deps.appcompat
-    testImplementation rootProject.ext.test["junit"]
-    androidTestImplementation rootProject.ext.test["test-ext-junit"]
-    androidTestImplementation rootProject.ext.test["support-test-espresso"]
+    testImplementation test.junit
+    androidTestImplementation test.ext_junit
+    androidTestImplementation test.espresso_core
 
     implementation root_dependencies["arouter"]
     kapt root_dependencies["arouter_compiler"]

@@ -47,19 +47,20 @@ android {
 }
 
 
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation deps.appcompat
-    implementation rootProject.ext.dependencies["core-ktx"]
+    implementation deps.core_ktx
 
     //Testing
-    testImplementation rootProject.ext.test["junit"]
-    testImplementation rootProject.ext.test["mockito-core"]
-    testImplementation rootProject.ext.test["core-testing"]
-    testImplementation rootProject.ext.test["ktx-coroutines-test"]
-    androidTestImplementation rootProject.ext.test["test-ext-junit"]
-    androidTestImplementation rootProject.ext.test["support-test-espresso"]
+    testImplementation test.junit
+    testImplementation test.mockito_core
+    testImplementation test.core_testing
+    testImplementation test.kotlinx_coroutines
+    androidTestImplementation test.ext_junit
+    androidTestImplementation test.espresso_core
 
     implementation project(':module-Common')
     implementation project(':library-network')

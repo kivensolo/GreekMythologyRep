@@ -12,7 +12,7 @@ android {
         versionCode rootProject.ext.android.versionCode
         versionName rootProject.ext.android.versionName
 
-        testInstrumentationRunner rootProject.ext.test["AndroidJUnitRunner"]
+        testInstrumentationRunner test.android_junit_runner
         consumerProguardFiles 'consumer-rules.pro'
     }
 
@@ -27,19 +27,19 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation rootProject.ext.dependencies["kotlin"]
+    implementation deps.kotlin.stblib
     implementation deps.appcompat
-    implementation rootProject.ext.dependencies["core-ktx"]   //1.3.2
+    implementation deps.core_ktx   //1.3.2
 
     // 自身单元测试
-    testImplementation(rootProject.ext.test["junit"])
-    androidTestImplementation rootProject.ext.test["test-ext-junit"]
-    androidTestImplementation rootProject.ext.test["support-test-espresso"]
+    testImplementation(test.junit)
+    androidTestImplementation test.ext_junit
+    androidTestImplementation test.espresso_core
 
     // 此单元测试库源码依赖, 使用 compileOnly
-    compileOnly rootProject.ext.test["junit"]
-    compileOnly rootProject.ext.test["test-rules"]
-    compileOnly rootProject.ext.test["test-ext-junit"]
-    compileOnly rootProject.ext.test["support-test-espresso"]
+    compileOnly test.junit
+    compileOnly test.runner_rules
+    compileOnly test.ext_junit
+    compileOnly test.espresso_core
     compileOnly rootProject.ext.dependencies["kangaroo"]
 }

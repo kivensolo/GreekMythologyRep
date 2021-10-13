@@ -196,8 +196,8 @@ dependencies {
         // ViewModel and LiveData
     implementation deps.lifecycle.extensions
     implementation deps.appcompat
-    implementation _rootDependencies["kotlin"]
-    implementation _rootDependencies["kotlin-reflect"]
+    implementation deps.kotlin.stblib
+    implementation deps.kotlin.reflect
     implementation deps.coroutines.core
     implementation deps.coroutines.android
 
@@ -229,12 +229,12 @@ dependencies {
     implementation _rootDependencies["xul_cache"]
 
     // Test library
-    testImplementation        _rootTest["junit"]
-    androidTestImplementation _rootTest["test-core"]
-    androidTestImplementation _rootTest["test-runner"]
-    androidTestImplementation _rootTest["test-rules"]
-    androidTestImplementation _rootTest["test-ext-junit"]
-    androidTestImplementation _rootTest["support-test-espresso"]
+    testImplementation        test.junit
+    androidTestImplementation test.core
+    androidTestImplementation test.runner
+    androidTestImplementation test.runner_rules
+    androidTestImplementation test.ext_junit
+    androidTestImplementation test.espresso_core
 
     // ----------------------- 业务组件Module
     implementation createProject(':module-Common')
