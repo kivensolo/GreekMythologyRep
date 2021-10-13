@@ -28,6 +28,7 @@
             android:layout_centerVertical="true"
             android:theme="@style/RippleButton"
             android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:tint="@color/app_dark_normal"
             android:src="@mipmap/ic_arrow_back_white_24dp"/>
     </RelativeLayout>
 
@@ -38,7 +39,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:ellipsize="marquee"
-        android:textColor="@color/base_bg_color"
+        android:textColor="@color/app_dark_normal"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="30dp"
         android:singleLine="true"
@@ -49,7 +50,8 @@
         android:id="@+id/ivRight"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        tools:src="@drawable/ic_more_vert"
+        android:src="@drawable/ic_more_vert"
+        android:tint="@color/app_dark_normal"
         android:contentDescription="更多"
         android:theme="@style/RippleButton"
         android:layout_gravity="end|center_vertical" />

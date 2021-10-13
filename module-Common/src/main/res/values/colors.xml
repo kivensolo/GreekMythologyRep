@@ -13,6 +13,8 @@
     <color name="color_line_divider">@color/gray</color>
     <color name="color_pressed">@color/deep_gray</color>
 
+    <color name="app_dark_normal">@color/black</color>
+
     <!-- 浅灰色颜色，适用于底色为暗色时的蒙层效果   -->
     <color name="bkg_gary">#14FFFFFF</color>
 
