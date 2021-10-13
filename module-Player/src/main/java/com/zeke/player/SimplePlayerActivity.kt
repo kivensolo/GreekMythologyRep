@@ -21,7 +21,7 @@ import me.jessyan.autosize.internal.CustomAdapt
  * description：直播播放器
  */
 @Route(path = RouterConfig.PAGE_PLAYER)
-class FullScreenPlayer : PlayerActivity(),CustomAdapt {
+class SimplePlayerActivity : PlayerActivity(),CustomAdapt {
     private var playFragment: PlayFragment? = null
     private lateinit var fullPlayerPageBinding: FullPlayerPageBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,11 +34,6 @@ class FullScreenPlayer : PlayerActivity(),CustomAdapt {
 
     override val viewModel: BaseReactiveViewModel
         get() = TODO("Use MVVM mode.")
-
-    override fun getLayoutView(): View {
-        fullPlayerPageBinding = FullPlayerPageBinding.inflate(LayoutInflater.from(this))
-        return fullPlayerPageBinding.root
-    }
 
     override fun initRotation() {}
 
@@ -80,8 +75,12 @@ class FullScreenPlayer : PlayerActivity(),CustomAdapt {
 
     override fun getContentLayout(): Int = R.layout.layout_invalid
 
+    override fun getContentView(): View? {
+        fullPlayerPageBinding = FullPlayerPageBinding.inflate(LayoutInflater.from(this))
+        return fullPlayerPageBinding.root
+    }
+
     override fun initData(savedInstanceState: Bundle?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     /**

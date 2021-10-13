@@ -4,7 +4,7 @@
     <application android:allowBackup="true">
 
         <activity
-            android:name="com.zeke.player.FullScreenPlayer"
+            android:name="com.zeke.player.SimplePlayerActivity"
             android:configChanges="locale|screenSize|keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:screenOrientation="landscape"

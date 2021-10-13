@@ -17,11 +17,11 @@ class CenterBarController(view: View) : BaseController() {
         rootView = view.findViewById(R.id.play_pause_center)
     }
     fun setOnClickListener(listener: View.OnClickListener?) {
-        rootView.setOnClickListener(listener)
+        rootView?.setOnClickListener(listener)
     }
 
     override fun show() {
-       rootView.visibility = View.VISIBLE
+        rootView?.visibility = View.VISIBLE
     }
 
 }

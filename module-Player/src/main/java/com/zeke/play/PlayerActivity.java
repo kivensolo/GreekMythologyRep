@@ -7,7 +7,6 @@ import android.content.res.Configuration;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.view.MotionEvent;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
@@ -38,11 +37,6 @@ public abstract class PlayerActivity extends BaseVMActivity {
         keepScreenOn();
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
         initRotation();
-    }
-
-    @Deprecated
-    protected View getLayoutView(){
-        return null;
     }
 
     /**
