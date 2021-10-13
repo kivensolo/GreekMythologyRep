@@ -26,6 +26,7 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
     //优化思路: 全局单例weakRefebceDialog,显示的地方直接show,隐藏的地方直接dismiss
     private var progress: View? = null
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ARouter.getInstance().inject(this)
@@ -39,7 +40,7 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
         initData(savedInstanceState)
     }
 
-    private fun initContentView() {
+    protected open fun initContentView() {
         val contentLayout = getContentLayout()
         if (contentLayout != R.layout.layout_invalid) {
             setContentView(contentLayout)

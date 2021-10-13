@@ -4,8 +4,6 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 def root_dependencies = rootProject.ext.dependencies
-def root_test = rootProject.ext.test
-
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion

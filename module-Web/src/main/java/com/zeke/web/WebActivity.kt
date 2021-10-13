@@ -1,5 +1,6 @@
 package com.zeke.web
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
@@ -11,10 +12,10 @@ import android.webkit.WebView
 import android.widget.LinearLayout
 import android.widget.PopupMenu
 import androidx.activity.viewModels
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.gyf.immersionbar.ImmersionBar
 import com.just.agentweb.AgentWeb
 import com.just.agentweb.WebChromeClient
 import com.just.agentweb.WebViewClient
@@ -25,10 +26,9 @@ import com.kingz.module.wanandroid.WADConstants
 import com.kingz.module.wanandroid.bean.Article
 import com.kingz.module.wanandroid.viewmodel.WanAndroidViewModelV2
 import com.zeke.web.databinding.WebPageBinding
-import kotlinx.android.synthetic.main.web_page.*
 
 @Route(path = RouterConfig.PAGE_WEB)
-class WebActivity : BaseHeaderActivity(),
+class WebActivity : BaseHeaderActivity<WebPageBinding>(),
     PopupMenu.OnMenuItemClickListener {
 
     override val viewModel: WanAndroidViewModelV2 by viewModels {
@@ -56,25 +56,23 @@ class WebActivity : BaseHeaderActivity(),
     private var isStatus = false
     var popupMenu: PopupMenu? = null
 
-    private lateinit var bindingobj:WebPageBinding
 
     override fun getContentLayout(): Int  = com.kingz.base.R.layout.layout_invalid
 
-    override fun getContentView(): View? {
-        if(!::bindingobj.isInitialized){
-            bindingobj = WebPageBinding.inflate(LayoutInflater.from(this))
-        }
-        return bindingobj.root
+    override fun initContentView() {
+        //TODO 优化，提到BaseHeader 用反射动态初始化
+        viewBindingObj = WebPageBinding.inflate(LayoutInflater.from(this))
+        super.initContentView()
     }
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        ImmersionBar.with(this)
-            .transparentStatusBar()
-            .init()
+//        ImmersionBar.with(this)
+//            .transparentStatusBar()
+//            .init()
         setRightDrawableRes(R.drawable.btn_more_selector)
 //        setHeaderBackgroundColor(Color.TRANSPARENT)
-        setHeaderMarginTopInImmersion(web_root_layout)
+        setHeaderMarginTopInImmersion(viewBindingObj.root as ConstraintLayout)
     }
 
     override fun initData(savedInstanceState: Bundle?) {
@@ -114,8 +112,8 @@ class WebActivity : BaseHeaderActivity(),
     private fun loadUrl(url: String?) {
         if (agentWeb == null) {
             agentWeb = AgentWeb.with(this)
-                .setAgentWebParent(
-                    web_root_layout!!, LinearLayout.LayoutParams(
+                .setAgentWebParent(viewBindingObj.root as ViewGroup,
+                    LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.MATCH_PARENT
                     )
@@ -158,14 +156,11 @@ class WebActivity : BaseHeaderActivity(),
         }
     }
 
-    private fun setIconEnable(menu: Menu, enable: Boolean) {
+    @SuppressLint("PrivateApi")
+    private fun setIconEnable(menu: Menu, enable: Boolean = true) {
         try {
-            val clazz =
-                Class.forName("com.android.internal.view.menu.MenuBuilder")
-            val m = clazz.getDeclaredMethod(
-                "setOptionalIconsVisible",
-                Boolean::class.javaPrimitiveType
-            )
+            val clazz = Class.forName("com.android.internal.view.menu.MenuBuilder")
+            val m = clazz.getDeclaredMethod("setOptionalIconsVisible",Boolean::class.javaPrimitiveType)
             m.isAccessible = true
             //传入参数
             m.invoke(menu, enable)
@@ -178,7 +173,7 @@ class WebActivity : BaseHeaderActivity(),
         if (popupMenu == null) {
             popupMenu = PopupMenu(this, findViewById(R.id.ivRight))
             popupMenu!!.menu.clear()
-            setIconEnable(popupMenu!!.menu, true)
+            setIconEnable(popupMenu!!.menu)
             popupMenu!!.menuInflater
                 .inflate(R.menu.toolbar_menu, popupMenu!!.menu)
             popupMenu!!.setOnMenuItemClickListener(this)

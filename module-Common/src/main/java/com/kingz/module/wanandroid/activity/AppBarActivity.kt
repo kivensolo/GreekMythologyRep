@@ -39,7 +39,7 @@ class AppBarActivity : BaseVMActivity() {
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
         mFragmentManager = supportFragmentManager
-        findViewById<View>(R.id.ivLeft)?.setOnClickListener {
+        findViewById<View>(R.id.toolbar_left)?.setOnClickListener {
             val trans: FragmentTransaction = mFragmentManager!!.beginTransaction()
             trans.remove(curFragment!!)
             trans.commitAllowingStateLoss()

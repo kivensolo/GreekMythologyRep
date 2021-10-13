@@ -7,27 +7,18 @@
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
     android:background="@color/stats_bar_color"
-    tools:layout_height="50dp"
+    tools:layout_height="40dp"
     app:contentInsetStart="0dp"
     app:layout_collapseMode="pin"
     app:layout_scrollFlags="scroll|snap"
     android:padding="10dp">
 
-    <RelativeLayout
+    <Button
         android:id="@+id/toolbar_left"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start|center_vertical"
-        android:gravity="center">
-
-        <ImageView
-            android:id="@+id/ivLeft"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_centerVertical="true"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:src="@mipmap/ic_arrow_back_white_24dp"/>
-    </RelativeLayout>
+        android:layout_height="match_parent"
+        android:drawableStart="@mipmap/ic_arrow_back_white_24dp"
+        android:background="@android:color/transparent"/>
 
     <TextView
         android:id="@+id/tvTitle"
