@@ -42,7 +42,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation root_dependencies["appcompat"]
+    implementation deps.appcompat
     implementation root_dependencies["recyclerView"]
 
     // 工具库由Common引出

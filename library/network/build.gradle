@@ -36,10 +36,10 @@ dependencies {
     implementation "androidx.appcompat:appcompat:1.1.0"
 
     //mvvm协程支持
-    implementation lib_dependencies["lifecycle-livedata-ktx"]
-    implementation lib_dependencies["lifecycle-livedata-core-ktx"]
-    implementation lib_dependencies["lifecycle-runtime-ktx"]
-    implementation lib_dependencies["lifecycle-viewmodel-ktx"]
+    implementation deps.lifecycle.livedata_ktx
+    implementation deps.lifecycle.livedata_core_ktx
+    implementation deps.lifecycle.runtime_ktx
+    implementation deps.lifecycle.viewmodel_ktx
 
     //RxJava2(RxAndroid) + retrofit2
     api lib_dependencies["rxjava"]

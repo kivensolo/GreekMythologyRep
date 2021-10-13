@@ -48,23 +48,23 @@ dependencies {
 
     api root_dependencies["multidex"]
 
-    api root_dependencies["appcompat"]
+    api deps.appcompat
     api root_dependencies["kotlin"]
     api root_dependencies["kotlin-reflect"]
     api root_dependencies["core-ktx"]
-    api root_dependencies["activity-ktx"]
-    api root_dependencies["fragment-ktx"]
-    api root_dependencies["coroutines-core"]
-    api root_dependencies["coroutines-android"]
+    api deps.activity.activity_ktx
+    api deps.fragment.fragmen_ktx
+    api deps.coroutines.core
+    api deps.coroutines.android
 
     api root_dependencies["arouter"]
     kapt root_dependencies["arouter_compiler"]
 
     // mvvm + jetPack
-    api root_dependencies["lifecycle-viewmodel-ktx"]
-    api root_dependencies["lifecycle-livedata-ktx"]
-    api root_dependencies["lifecycle-runtime-ktx"]
-    api root_dependencies["lifecycle-extensions"]
+    api deps.lifecycle.viewmodel_ktx
+    api deps.lifecycle.livedata_ktx
+    api deps.lifecycle.runtime_ktx
+    api deps.lifecycle.extensions
 
     // Room数据库支持
     api root_dependencies["room-common"]

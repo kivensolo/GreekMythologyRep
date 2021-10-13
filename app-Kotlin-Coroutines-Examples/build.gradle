@@ -50,7 +50,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation rootProject.ext.dependencies["appcompat"]
+    implementation deps.appcompat
     implementation rootProject.ext.dependencies["core-ktx"]
 
     //Testing
@@ -68,15 +68,15 @@ dependencies {
     kapt rootProject.ext.dependencies["room-compiler"]
 
     // Lifecycle组件
-    implementation rootProject.ext.dependencies["lifecycle-viewmodel-ktx"]
-    implementation rootProject.ext.dependencies["lifecycle-livedata-ktx"]
-    implementation rootProject.ext.dependencies["lifecycle-runtime-ktx"]
-    implementation rootProject.ext.dependencies["lifecycle-extensions"]
+    implementation deps.lifecycle.viewmodel_ktx
+    implementation deps.lifecycle.livedata_ktx
+    implementation deps.lifecycle.runtime_ktx
+    implementation deps.lifecycle.extensions
     implementation rootProject.ext.dependencies["paging-runtime-ktx"]
 
     // android-ktx
-    implementation rootProject.ext.dependencies["activity-ktx"]
-    implementation rootProject.ext.dependencies["fragment-ktx"]
+    implementation deps.activity.activity_ktx
+    implementation deps.fragment.fragmen_ktx
 
     // UI组件
     implementation rootProject.ext.dependencies["recyclerView"]

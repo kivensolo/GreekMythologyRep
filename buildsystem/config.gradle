@@ -1,3 +1,10 @@
+def versions = [:]
+versions.android_gradle_plugin = '3.6.4'
+versions.androidx = '1.1.0'
+versions.androidx_ktx = '1.1.0'
+versions.coroutines = '1.4.3'
+versions.jetpack_version = '2.2.0'
+ext.versions = versions
 
 ext {
     modulePrefix = ':'
@@ -19,8 +26,6 @@ ext {
     coroutines_version = '1.4.3'
 
     androidx = '1.1.0'
-    androidx_ktx = '1.1.0'
-    jetpack_version = '2.2.0'
 
     lib_versions = [
             rxJava                : '2.2.2',
@@ -94,32 +99,13 @@ ext {
 
 
     dependencies = [
-            "appcompat"              : "androidx.appcompat:appcompat:${rootProject.ext.androidx}",
             "core-ktx"               : "androidx.core:core-ktx:${rootProject.ext.androidx}",
 
             "multidex"               :"androidx.multidex:multidex:2.0.1",
 
-            // 安卓Ktx扩展
-            "activity-ktx"           : "androidx.activity:activity-ktx:${rootProject.ext.androidx_ktx}",
-            "fragment-ktx"           : "androidx.fragment:fragment-ktx:${rootProject.ext.androidx_ktx}",
-
             // Kotlin
             "kotlin"                 : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$rootProject.ext.kotlin_version",
             "kotlin-reflect"         : "org.jetbrains.kotlin:kotlin-reflect:$rootProject.ext.kotlin_version",
-
-            // 协程库支持
-            "coroutines-core"        : "org.jetbrains.kotlinx:kotlinx-coroutines-core:$rootProject.ext.coroutines_version",
-            "coroutines-android"     : "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.ext.coroutines_version",
-
-            // mvvm协程支持
-            // 1. 在viewmodel中使用协程作用域的库 如：viewmodelScope
-            "lifecycle-viewmodel-ktx": "androidx.lifecycle:lifecycle-viewmodel-ktx:${rootProject.ext.jetpack_version}",
-            // 2. 在livedata中使用协程作用域的库
-            "lifecycle-livedata-ktx" : "androidx.lifecycle:lifecycle-livedata-ktx:${rootProject.ext.jetpack_version}",
-            "lifecycle-livedata-core-ktx" : "androidx.lifecycle:lifecycle-livedata-core-ktx:${rootProject.ext.jetpack_version}",
-            // 3. 在activity中使用协程作用域的库  如：lifecycleScope
-            "lifecycle-runtime-ktx"  : "androidx.lifecycle:lifecycle-runtime-ktx:${rootProject.ext.jetpack_version}",
-            "lifecycle-extensions"   : "androidx.lifecycle:lifecycle-extensions:${rootProject.ext.jetpack_version}",
 
             // Arouter解耦组件 https://github.com/alibaba/ARouter/blob/master/README_CN.md
             "arouter"              : "com.alibaba:arouter-api:$lib_versions.arouter",
@@ -215,12 +201,15 @@ ext {
 }
 
 //----------------------------------------------新的构建配置
-ext.deps = [:] //Defined empty map
 
-def versions = [:]
-versions.android_gradle_plugin = '3.6.4'
-//....
-ext.versions = versions
+
+//def versions = [:]
+//versions.android_gradle_plugin = '3.6.4'
+//versions.androidx = '1.1.0'
+//versions.androidx_ktx = '1.1.0'
+//versions.coroutines = '1.4.3'
+//versions.jetpack_version = '2.2.0'
+//ext.versions = versions
 
 //android.compileSdkVersion 替换成 build_versions.compile_sdk
 def build_versions = [:]
@@ -229,6 +218,47 @@ build_versions.compile_sdk = 28
 build_versions.target_sdk = 23
 build_versions.build_tools = "28.0.3" //AGP 3.2.1以后默认最低28.0.3
 ext.build_versions = build_versions
+
+//DEFINED EMPTY DEPENDENCIES MAP
+def deps = [:]
+
+//安卓基础组件
+def activity = [:]
+activity.activity_ktx = "androidx.activity:activity-ktx:$versions.androidx_ktx"
+deps.activity = activity
+def fragment = [:]
+fragment.fragmen_ktx = "androidx.fragment:fragment-ktx:${versions.androidx_ktx}"
+deps.fragment = fragment
+
+deps.appcompat = "androidx.appcompat:appcompat:$versions.androidx_ktx"
+
+//Lifecycle组件
+def lifecycle =[:]
+
+    /* 在viewmodel中使用协程作用域的库 如：viewmodelScope */
+lifecycle.viewmodel_ktx = "androidx.lifecycle:lifecycle-viewmodel-ktx:${versions.jetpack_version}"
+
+    /* 在livedata中使用协程作用域的库 */
+lifecycle.livedata_ktx = "androidx.lifecycle:lifecycle-livedata-ktx:${versions.jetpack_version}"
+lifecycle.livedata_core_ktx = "androidx.lifecycle:lifecycle-livedata-core-ktx:${versions.jetpack_version}"
+
+    /* 在activity中使用协程作用域的库  如：lifecycleScope */
+lifecycle.runtime_ktx = "androidx.lifecycle:lifecycle-runtime-ktx:${versions.jetpack_version}"
+
+lifecycle.extensions = "androidx.lifecycle:lifecycle-extensions:${versions.jetpack_version}"
+
+deps.lifecycle = lifecycle
+
+
+//协程库支持
+def coroutines = [:]
+coroutines.core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.coroutines"
+coroutines.android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutines"
+coroutines.test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$versions.coroutines"
+deps.coroutines = coroutines
+
+
+ext.deps = deps
 
 //----------------------------------------------新的构建配置
 

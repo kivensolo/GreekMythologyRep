@@ -194,12 +194,12 @@ dependencies {
 
     //  ----------------------- 核心组件 START
         // ViewModel and LiveData
-    implementation _rootDependencies["lifecycle-extensions"]
-    implementation _rootDependencies["appcompat"]
+    implementation deps.lifecycle.extensions
+    implementation deps.appcompat
     implementation _rootDependencies["kotlin"]
     implementation _rootDependencies["kotlin-reflect"]
-    implementation _rootDependencies["coroutines-core"]
-    implementation _rootDependencies["coroutines-android"]
+    implementation deps.coroutines.core
+    implementation deps.coroutines.android
 
     implementation _rootDependencies["gilde"]
     implementation _rootDependencies["gilde_annotations"]
