@@ -6,32 +6,29 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.webkit.WebView
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.PopupMenu
-import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.gyf.immersionbar.ImmersionBar
 import com.just.agentweb.AgentWeb
 import com.just.agentweb.WebChromeClient
 import com.just.agentweb.WebViewClient
-import com.kingz.base.BaseVMActivity
+import com.kingz.base.BaseHeaderActivity
 import com.kingz.base.factory.ViewModelFactory
 import com.kingz.module.common.router.RouterConfig
 import com.kingz.module.wanandroid.WADConstants
 import com.kingz.module.wanandroid.bean.Article
 import com.kingz.module.wanandroid.viewmodel.WanAndroidViewModelV2
-import kotlinx.android.synthetic.main.web_activity.*
+import com.zeke.web.databinding.WebPageBinding
+import kotlinx.android.synthetic.main.web_page.*
 
 @Route(path = RouterConfig.PAGE_WEB)
-class WebActivity : BaseVMActivity(),
+class WebActivity : BaseHeaderActivity(),
     PopupMenu.OnMenuItemClickListener {
 
     override val viewModel: WanAndroidViewModelV2 by viewModels {
@@ -42,7 +39,7 @@ class WebActivity : BaseVMActivity(),
 
     @JvmField
     @Autowired(name = RouterConfig.PARAM_WEB_ARTICAL_INFO)
-    var atricalInfo: Article? = null
+    var articalInfo: Article? = null
 
     /**
      * 当前url
@@ -58,41 +55,49 @@ class WebActivity : BaseVMActivity(),
      */
     private var isStatus = false
     var popupMenu: PopupMenu? = null
-    private var toolbarrightImg: ImageView?= null
-    private var titleTextView: TextView?= null
 
-    override fun getContentLayout(): Int {
-        return R.layout.web_activity
+    private lateinit var bindingobj:WebPageBinding
+
+    override fun getContentLayout(): Int  = com.kingz.base.R.layout.layout_invalid
+
+    override fun getContentView(): View? {
+        if(!::bindingobj.isInitialized){
+            bindingobj = WebPageBinding.inflate(LayoutInflater.from(this))
+        }
+        return bindingobj.root
     }
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        toolbarrightImg = findViewById(R.id.iv_toolbar_right)
-        toolbarrightImg?.setImageResource(R.drawable.btn_more_selector)
-        titleTextView = findViewById(R.id.tvTitle)
+        ImmersionBar.with(this)
+            .transparentStatusBar()
+            .init()
+        setRightDrawableRes(R.drawable.btn_more_selector)
+//        setHeaderBackgroundColor(Color.TRANSPARENT)
+        setHeaderMarginTopInImmersion(web_root_layout)
     }
 
     override fun initData(savedInstanceState: Bundle?) {
-        isCollect = atricalInfo?.collect ?: false
+        isCollect = articalInfo?.collect ?: false
         isStatus = isCollect
-        isArticle = (atricalInfo?.id ?: -1) > 0
-        setTitleText(atricalInfo?.title)
-        loadUrl(atricalInfo?.link)
+        isArticle = (articalInfo?.id ?: -1) > 0
+        setTitle(articalInfo?.title)
+        loadUrl(articalInfo?.link)
     }
 
     override fun onResume() {
         super.onResume()
-        agentWeb!!.webLifeCycle.onResume()
+        agentWeb?.webLifeCycle?.onResume()
     }
 
     override fun onPause() {
         super.onPause()
-        agentWeb!!.webLifeCycle.onPause()
+        agentWeb?.webLifeCycle?.onPause()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        agentWeb!!.webLifeCycle.onDestroy()
+        agentWeb?.webLifeCycle?.onDestroy()
     }
 
     override fun onBackPressed() {
@@ -106,7 +111,7 @@ class WebActivity : BaseVMActivity(),
         }
     }
 
-    fun loadUrl(url: String?) {
+    private fun loadUrl(url: String?) {
         if (agentWeb == null) {
             agentWeb = AgentWeb.with(this)
                 .setAgentWebParent(
@@ -128,7 +133,7 @@ class WebActivity : BaseVMActivity(),
                     ) {
                         super.onReceivedTitle(view, title)
                         if (!TextUtils.isEmpty(title)) {
-                            setTitleText(title)
+                            setTitle(title)
                         }
                     }
                 })
@@ -153,10 +158,6 @@ class WebActivity : BaseVMActivity(),
         }
     }
 
-    private fun setTitleText(text: String?) {
-        titleTextView?.text = text
-    }
-
     private fun setIconEnable(menu: Menu, enable: Boolean) {
         try {
             val clazz =
@@ -175,7 +176,7 @@ class WebActivity : BaseVMActivity(),
 
     private fun clickMenu() {
         if (popupMenu == null) {
-            popupMenu = PopupMenu(this, toolbarrightImg)
+            popupMenu = PopupMenu(this, findViewById(R.id.ivRight))
             popupMenu!!.menu.clear()
             setIconEnable(popupMenu!!.menu, true)
             popupMenu!!.menuInflater

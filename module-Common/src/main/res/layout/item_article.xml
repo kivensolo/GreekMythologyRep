@@ -26,7 +26,7 @@
             android:background="@drawable/bg_article_top"
             android:textSize="12sp"
             android:layout_marginEnd="10dp"
-            android:textColor="@color/orange_red"
+            android:textColor="@color/blue_light"
             android:visibility="gone"
             tools:visibility="visible"/>
 
@@ -42,7 +42,7 @@
             android:layout_marginEnd="10dp"
             android:background="@drawable/bg_article_new"
             android:textSize="12sp"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/colorAccent"
             android:visibility="gone"
             tools:visibility="visible"/>
 

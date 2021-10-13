@@ -32,7 +32,7 @@ import java.util.concurrent.TimeUnit
  * 基于exo播放器组件
  */
 @Route(path = "/module_Music/detailPage")
-class MusicDetailPageActivty : PlayerActivity() {
+class MusicDetailPageActivity : PlayerActivity() {
     //播放区域的Fragment
     private var playFragment: PlayFragment? = null
     private var vodInfoFragment: VodInfoFragment? = null
@@ -48,7 +48,7 @@ class MusicDetailPageActivty : PlayerActivity() {
     }
 
     override fun initView(savedInstanceState: Bundle?) {
-//        super.initView(savedInstanceState)
+        super.initView(savedInstanceState)
         if (savedInstanceState == null) {
             initFragment()
         }

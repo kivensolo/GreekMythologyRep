@@ -1,6 +1,8 @@
 package com.kingz.module.wanandroid.activity
 
 import android.os.Bundle
+import android.view.View
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -15,7 +17,7 @@ import com.kingz.module.wanandroid.fragemnts.UserCollectionFragment
 import com.kingz.module.wanandroid.viewmodel.WanAndroidViewModelV2
 import com.zeke.kangaroo.utils.ToastUtils
 import com.zeke.kangaroo.utils.ZLog
-import kotlinx.android.synthetic.main.include_toolbar_back.*
+//import kotlinx.android.synthetic.main.view_page_header.*
 
 /**
  * author：ZekeWang
@@ -37,7 +39,7 @@ class AppBarActivity : BaseVMActivity() {
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
         mFragmentManager = supportFragmentManager
-        ivLeft?.setOnClickListener {
+        findViewById<View>(R.id.ivLeft)?.setOnClickListener {
             val trans: FragmentTransaction = mFragmentManager!!.beginTransaction()
             trans.remove(curFragment!!)
             trans.commitAllowingStateLoss()
@@ -60,7 +62,7 @@ class AppBarActivity : BaseVMActivity() {
         ZLog.d("type = $type")
         when (type) {
             WADConstants.Type.TYPE_TAB_COLLECT -> { //1
-                tvTitle?.setText(R.string.mine_collect)
+                findViewById<TextView>(R.id.tvTitle)?.setText(R.string.mine_collect)
                 switchFragment(UserCollectionFragment())
             }
         }

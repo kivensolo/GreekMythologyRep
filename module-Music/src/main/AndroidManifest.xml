@@ -3,7 +3,7 @@
 
     <application android:allowBackup="true">
         <activity
-            android:name="com.zeke.music.activities.MusicDetailPageActivty"
+            android:name="com.zeke.music.activities.MusicDetailPageActivity"
             android:configChanges="locale|screenSize|keyboardHidden|orientation"
             android:launchMode="singleTask"
             android:screenOrientation="fullSensor"

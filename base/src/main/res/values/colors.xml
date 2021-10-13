@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <color name="stats_bar_color">#ff202020</color>
+
+    <color name="black">#ff000000</color>
+    <color name="app_dark_normal">@color/black</color>
+
+</resources>

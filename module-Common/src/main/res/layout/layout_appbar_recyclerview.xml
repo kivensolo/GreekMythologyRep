@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <include layout="@layout/include_toolbar_back"/>
+            <include layout="@layout/view_page_header"/>
 
             <!--    enterAlwaysCollapsed。这里涉及到Child View的高度和最小高度，
             向下滚动时，Child View先向下滚动最小高度值，

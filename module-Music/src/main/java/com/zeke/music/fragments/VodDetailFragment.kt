@@ -51,6 +51,7 @@ class VodDetailFragment : CommonFragment<MusicViewModel>() {
     }
 
     override fun initView() {
+        super.initView()
         nameScoreTextview = rootView?.findViewById(R.id.tv_name_video)
         newEpisodeTv = rootView?.findViewById(R.id.tv_episode_desc)
         actorTv = rootView?.findViewById(R.id.tv_actor)

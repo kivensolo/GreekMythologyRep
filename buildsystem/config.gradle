@@ -136,6 +136,7 @@ ext {
 
             // My lib
             "kangaroo"           : "io.github.kivensolo:kangaroo:1.0.7@aar",
+
             "xul_cache"          : "com.github.xul:cache:1.0.0",
 
             //https://github.com/zhihu/Matisse   本地图像和视频选择器

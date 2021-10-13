@@ -21,7 +21,7 @@ import com.kingz.module.common.router.Router
 import com.kingz.module.common.router.RouterConfig
 import com.zeke.kangaroo.utils.ZLog
 import com.zeke.module_player.R
-import com.zeke.music.activities.MusicDetailPageActivty
+import com.zeke.music.activities.MusicDetailPageActivity
 import com.zeke.music.adapter.VideoRecomAdapter
 import com.zeke.music.bean.RelatedVideoInfo
 import com.zeke.music.bean.VideoInfo
@@ -159,7 +159,7 @@ class VodInfoFragment : BaseFragment(), IPlayerView {
         if (id == R.id.iv_detail_arrow_more) {
             if (activity != null) {
                 //通过Activity来与Fragment交互
-                (activity as MusicDetailPageActivty?)?.showOrDismissVideoDetail(true, mVideoInfo)
+                (activity as MusicDetailPageActivity?)?.showOrDismissVideoDetail(true, mVideoInfo)
             }
         } else if (id == R.id.episode_more) {
             ZLog.d(TAG, "onClick --- 更多剧集UI暂时未实现")
