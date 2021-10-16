@@ -72,7 +72,7 @@ class SampleMediaListFragment : BaseFragment() {
         return R.layout.fragment_file_list
     }
 
-    override fun onViewCreated() {}
+    override fun onFragmentRenderIsRender() {}
     internal inner class SampleMediaItem(var mUrl: String, var mName: String)
 
     internal inner class SampleMediaAdapter(context: Context?) :

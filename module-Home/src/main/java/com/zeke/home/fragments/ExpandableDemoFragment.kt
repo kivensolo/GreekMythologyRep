@@ -47,7 +47,7 @@ class ExpandableDemoFragment : BaseFragment(), DemoContract.View,
         return R.layout.fragment_all_demo
     }
 
-    override fun onViewCreated() {
+    override fun onFragmentRenderIsRender() {
         listView = rootView?.findViewById(android.R.id.list)
         expandAdapter = DemoFragmentExpandableListAdapter(context)
         listView?.apply {

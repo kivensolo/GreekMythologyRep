@@ -38,8 +38,8 @@ class HomeLiveFragment : HomeBaseFragment<LivePresenter>(), LiveContract.View {
         return R.layout.fragment_live_tab
     }
 
-    override fun onViewCreated() {
-        super.onViewCreated() // 有公共控件可以复用 调用一次super
+    override fun onFragmentRenderIsRender() {
+        super.onFragmentRenderIsRender() // 有公共控件可以复用 调用一次super
         // 具体子页面对公共View组件的设置
         tableLayout?.apply {
             tabMode = TabLayout.MODE_SCROLLABLE

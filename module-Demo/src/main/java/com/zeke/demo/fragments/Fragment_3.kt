@@ -23,7 +23,7 @@ class Fragment_3 : BaseFragment() {
         ZLog.d("onCreate")
     }
 
-    override fun onViewCreated() {
+    override fun onFragmentRenderIsRender() {
         ZLog.d("onViewCreated")
     }
 

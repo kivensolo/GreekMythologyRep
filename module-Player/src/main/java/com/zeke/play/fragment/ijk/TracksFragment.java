@@ -54,7 +54,7 @@ public class TracksFragment extends BaseFragment {
     }
 
     @Override
-    public void onViewCreated() {
+    public void onFragmentRenderIsRender() {
         mTrackListView = getRootView().findViewById(R.id.track_list_view);
     }
 

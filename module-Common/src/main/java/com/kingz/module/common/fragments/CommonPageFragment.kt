@@ -36,12 +36,12 @@ open class CommonPageFragment: BaseFragment(){
         initRecyclerView()
     }
 
-    open fun initRecyclerView(){
-        mRecyclerView = rootView!!.findViewById(R.id.recycler_view) as RecyclerView
+    override fun onFragmentRenderIsRender() {
+        showLoadingView()
     }
 
-    override fun onViewCreated() {
-        showLoadingView()
+    open fun initRecyclerView(){
+        mRecyclerView = rootView!!.findViewById(R.id.recycler_view) as RecyclerView
     }
 
     open fun showLoadingView(){

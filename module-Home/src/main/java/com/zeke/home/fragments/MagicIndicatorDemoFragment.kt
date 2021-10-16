@@ -21,7 +21,7 @@ class MagicIndicatorDemoFragment: BaseFragment(){
         return R.layout.fragment_indicator_demo_main_layout
     }
 
-    override fun onViewCreated() {}
+    override fun onFragmentRenderIsRender() {}
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

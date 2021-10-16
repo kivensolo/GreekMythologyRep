@@ -47,7 +47,9 @@ import java.util.Locale;
  * 3：滑动快进
  * 4：浮层的出入动画
  * 5:频道列表
+ * //已废弃 被Player库代替
  */
+@Deprecated
 public class ApolloMediaPlayer extends BaseActivity {
 
     private static final String TAG = "ApolloMediaPlayer";
@@ -225,7 +227,7 @@ public class ApolloMediaPlayer extends BaseActivity {
 
             @Override
             public void onSurfaceViewCreated(SurfaceHolder surface) {
-                ZLog.d(TAG,"ApolloMpalayer onSurfaceViewCreated. Auto play first Video.");
+                ZLog.d(TAG,"ApolloMplayer onSurfaceViewCreated. Auto play first Video.");
                 mPlayer.setVideoURI(Uri.parse(channelLists.get(0).playUrl));
             }
 
@@ -235,18 +237,18 @@ public class ApolloMediaPlayer extends BaseActivity {
 
             @Override
             public void onPlaying(MediaPlayer mp) {
-                ZLog.d(TAG,"ApolloMpalayer onPlaying.");
+                ZLog.d(TAG,"ApolloMplayer onPlaying.");
 
             }
 
             @Override
             public void onSeek(MediaPlayer mp, int max, int progress) {
-                ZLog.d(TAG,"ApolloMpalayer onSeek.  progress = " + progress + "; max = " + max);
+                ZLog.d(TAG,"ApolloMplayer onSeek.  progress = " + progress + "; max = " + max);
             }
 
             @Override
             public void onStop(MediaPlayer mp) {
-                ZLog.d(TAG,"ApolloMpalayer onStop.");
+                ZLog.d(TAG,"ApolloMplayer onStop.");
             }
 
             @Override
@@ -255,8 +257,9 @@ public class ApolloMediaPlayer extends BaseActivity {
 
             @Override
             public void onError() {
+                dismissLoadingDialog();
                 stopSeekBarTimer();
-                ZLog.i(TAG, "ApolloMpalayer onError");
+                ZLog.i(TAG, "ApolloMplayer onError");
             }
 
             @Override

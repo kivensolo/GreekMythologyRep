@@ -17,6 +17,7 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import com.kingz.base.view.dialog.ZDialogHelper
 import com.kingz.module.common.AppLifeCycle
 import com.zeke.kangaroo.utils.AppInfoUtils
 import com.zeke.kangaroo.utils.ZLog
@@ -27,7 +28,6 @@ import com.zeke.kangaroo.utils.ZLog
  * des: MVP模式的基类
  */
 abstract class BaseActivity : AppCompatActivity() {
-    var isLoadding = false
     var isActivityShow = false
         protected set
 
@@ -60,25 +60,13 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     fun showLoadingDialog() {
-        if (!isFinishing) {
-            ZLog.i(TAG, "showLoadingDialog")
-            if (isLoadding) {
-                return
-            }
-            isLoadding = true
-            //TODO 替换新版本的加载圈
-            isLoadding = showDialog(5, null)
-        }
+        ZLog.i(TAG,"showLoadingDialog")
+        ZDialogHelper.showLoadingDialog(this)
     }
 
     fun dismissLoadingDialog() {
-        if (!isFinishing) {
-            if (isLoadding) {
-                ZLog.i(TAG, "dismissLoadingDialog")
-                dismissDialog(5)
-            }
-            isLoadding = false
-        }
+        ZLog.i(TAG,"showLoadingDialog")
+        ZDialogHelper.dismissLoadingDialog()
     }
 
     //避免getActivity为空,不保存fragment的实例

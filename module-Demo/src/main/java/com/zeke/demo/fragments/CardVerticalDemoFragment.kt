@@ -59,7 +59,7 @@ class CardVerticalDemoFragment : BaseFragment() {
         }
     }
 
-    override fun onViewCreated() {
+    override fun onFragmentRenderIsRender() {
     }
 
     /**

@@ -71,8 +71,8 @@ class HomeContainerFragment : HomeBaseFragment<RecomPresenter>(), RecomPageContr
     /**
      *
      */
-    override fun onViewCreated() {
-        super.onViewCreated()
+    override fun onFragmentRenderIsRender() {
+        super.onFragmentRenderIsRender()
         mPresenter.getPageContent(activity!!)
     }
 

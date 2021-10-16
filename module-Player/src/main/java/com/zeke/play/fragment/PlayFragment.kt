@@ -40,7 +40,11 @@ class PlayFragment : BaseFragment(), IPlayerView, CustomAdapt {
     //UI交互控制器
     var mUiSwitcher: PlayerUiSwitcher? = null
         private set
-    //播放行为控制器
+
+    /**
+     * 播放行为控制器
+     * 注意：在onFragmentViewCreated才会初始化
+     */
     private var playPresenter: PlayPresenter? = null
     private var playView: SurfaceView? = null
     //手势控制
@@ -81,7 +85,7 @@ class PlayFragment : BaseFragment(), IPlayerView, CustomAdapt {
     override fun getLayoutId(): Int = R.layout.player_view_controller_basic_new
 
     @SuppressLint("ClickableViewAccessibility")
-    override fun onViewCreated() {
+    override fun onFragmentRenderIsRender() {
         playView = rootView?.findViewById(R.id.surface_container)
         //playView.setOnClickListener(this);
         playView?.setOnTouchListener { _, event ->
@@ -296,7 +300,7 @@ class PlayFragment : BaseFragment(), IPlayerView, CustomAdapt {
         }
 
         override fun onGestureUpdateVideoTime(duration: Long) {
-            if (playPresenter!!.isPlayeing) {
+            if (playPresenter!!.isPlaying) {
                 playPresenter?.pause()
             }
             val time = limitSeekingTime(duration)

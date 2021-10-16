@@ -39,7 +39,7 @@ abstract class HomeBaseFragment<T : IPresenter> : BaseFragment(), IView {
     override fun getLayoutId(): Int = R.layout.fragment_tab
 
     @CallSuper
-    override fun onViewCreated() {
+    override fun onFragmentRenderIsRender() {
         viewPagerAdapter = HomePagerAdapter(childFragmentManager, PageCreator())
         tableLayout = rootView?.findViewById(R.id.tab_layout)
         viewPager = rootView?.findViewById(R.id.viewpager)

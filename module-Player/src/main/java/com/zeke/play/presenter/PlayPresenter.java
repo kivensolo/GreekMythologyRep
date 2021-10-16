@@ -54,9 +54,13 @@ public class PlayPresenter extends AbsBasePresenter implements IPlayerEventsList
         mPlayer.setPlayerEventListener(this);
     }
 
+    /**
+     * 解码以下视频花屏
+     * http://116.77.67.2:5000/nn_live/nn_x64/aWQ9WERTU1NFSEQmdXJsX2MxPTc1NmU2NDY1NjY2OTZlNjU2NDAwJm5kbmk9MTE2Ljc3LjY3LjI6NTAwMCZubl9haz0wMTE4MDYzMmZiYTBlYzRiNmE0ODA4N2U3NWUyNThlYjA5Jm5waXBzPTE3Mi4yNy4xNy42Njo1MTAwJm5jbXNpZD0xMDAzMDIwMSZuZ3M9NjE2/OTFkODQwMDA1ZDc4MWU2N2E5MjA1YTgzYWUxMWYmbm5kPXRlc3QmbnNkPXR3bmV0Lmd1YW5nZG9uZy5zaGVuc2hhbiZuZnQ9dHMybTN1OCZubl91c2VyX2lkPWxpdWppbnRhbyZuZHQ9c3RiJm5kaT04VDIwMTRBMjk3RkFBNzc1Jm5kdj0xLjAuMC5TVEIuRlRUSC5U/T1VDSC5PVFRfU0tXMDEuUmVsZWFzZSZuc3Q9aXB0diZuY2E9JTI2bmNvaSUzZFNhbmRTdG9uZV9TM19saXZlMTAlMjZubl9jcCUzZHR3JTI2bmN2MmklM2RjZG52Ml9saXZlXzEwOSZuYWw9MDE4NTFkNjk2MTA2MDc5OGY3ZjMwMzAzNmY5OWFlNjM0NmM3NTk3MGZk/ZmEyYg,,/XDSSSEHD.m3u8
+     */
     public void startPlay() {
         if(mPlayParams == null){
-            ZLog.e("No play source.Please confirm playparams!!!");
+            ZLog.e("No play source.Please confirm play params!!!");
             onError(mPlayer, ERROR_PLAY_PARAMS, -1);
             return;
         }
@@ -73,7 +77,7 @@ public class PlayPresenter extends AbsBasePresenter implements IPlayerEventsList
      * 切换播放状态
      */
     public void togglePlay(){
-        if(isPlayeing()){
+        if(isPlaying()){
             pause();
         }else{
             play();
@@ -90,7 +94,7 @@ public class PlayPresenter extends AbsBasePresenter implements IPlayerEventsList
         playerView.showPauseStateView();
     }
 
-    public boolean isPlayeing(){
+    public boolean isPlaying(){
         return mPlayer.isPlaying();
     }
 
@@ -144,6 +148,7 @@ public class PlayPresenter extends AbsBasePresenter implements IPlayerEventsList
 
     @Override
     public boolean onError(IPlayer player, int what, int extra) {
+        ZLog.d(TAG,"onError: what="+what+",extra="+extra);
         return false;
     }
 

@@ -10,10 +10,12 @@ import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatEditText
 import com.kingz.base.R
+import com.kingz.drawable.ProgressDrawable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -65,6 +67,47 @@ object ZDialogHelper {
         } else {
             view.findViewById<TextView>(R.id.dialogMessage).text = message
         }
+    }
+
+    /**
+     * 显示加载提示的Dialog，支持子线程调用
+     */
+    fun showLoadingDialog(
+        context: Context,
+        message: String = ""
+    ) = GlobalScope.launch(Dispatchers.Main) {
+        val view: View = LayoutInflater.from(context).inflate(R.layout.dialog_loading_base, null)
+        val messageView: TextView = view.findViewById(R.id.loadingMessage)
+        val loadingImage: ImageView = view.findViewById(R.id.loadingImage)
+        if (message.isNotEmpty()) {
+            messageView.visibility = View.VISIBLE
+            messageView.text = message
+        } else {
+            messageView.visibility = View.INVISIBLE
+        }
+        loadingImage.setImageDrawable(
+            ProgressDrawable().apply {start()}
+        )
+        if (!isDialogShowing()) {
+            dialog = Dialog(context, R.style.base_Theme_Dialog).apply {
+                setContentView(view)
+                setCancelable(false)
+                setCanceledOnTouchOutside(false)
+                show()
+            }
+
+            dialog?.window?.apply {
+                setGravity(Gravity.CENTER)
+                attributes?.width = 120
+                attributes?.height = 120
+            }
+        } else {
+            messageView.text = message
+        }
+    }
+
+    fun dismissLoadingDialog() = GlobalScope.launch(Dispatchers.Main) {
+        dialog?.dismiss()
     }
 
     /**
@@ -193,10 +236,6 @@ object ZDialogHelper {
             attributes?.width = 500
             attributes?.height = WindowManager.LayoutParams.WRAP_CONTENT
         }
-    }
-
-    fun dismissDialog() {
-        dialog?.dismiss()
     }
 
     /**

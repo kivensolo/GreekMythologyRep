@@ -188,7 +188,7 @@ abstract class BasePlayView @JvmOverloads constructor(
         }
 
         override fun onGestureUpdateVideoTime(duration: Long) {
-            if (playPresenter!!.isPlayeing) {
+            if (playPresenter!!.isPlaying) {
                 playPresenter?.pause()
             }
             val time = limitSeekingTime(duration)
@@ -200,7 +200,7 @@ abstract class BasePlayView @JvmOverloads constructor(
         }
 
         override fun onGestureDoubleClick() {
-            mUiSwitcher?.setCenterPauseIconVisible(playPresenter!!.isPlayeing)
+            mUiSwitcher?.setCenterPauseIconVisible(playPresenter!!.isPlaying)
             togglePlayState()
         }
 

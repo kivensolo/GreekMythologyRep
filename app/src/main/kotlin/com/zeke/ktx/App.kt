@@ -43,7 +43,7 @@ open class App : CommonApp() {
         super.onCreate()
         instance = this
         initCacheCenter()
-        initScreenParms()
+        initScreenParams()
         init()
 //        initFpsDebugView()
         initStrictListenner()
@@ -69,7 +69,7 @@ open class App : CommonApp() {
                 .play()
     }
 
-    private fun initScreenParms() {
+    private fun initScreenParams() {
         val screenDensity:Float
         val screenDensityDpi:Int
         resources.displayMetrics.let {
@@ -78,7 +78,7 @@ open class App : CommonApp() {
             screenDensity = it.density
             screenDensityDpi = it.densityDpi
         }
-         Log.i(TAG, "SCREEN_SIZE = ($SCREEN_WIDTH,$SCREEN_HEIGHT)  " +
+         Log.i(TAG, "SCREEN_SIZE = ($SCREEN_WIDTH x $SCREEN_HEIGHT)  " +
                  "Density=$screenDensity ,DensityDpi(Density*160)= $screenDensityDpi")
     }
 
