@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">Kotlin-Coroutines-Android-Examples</string>
-    <string name="single_network_call">Single Network Call</string>
-    <string name="series_network_calls">Series Network Calls</string>
-    <string name="parallel_network_calls">Parallel Network Calls</string>
+    <string name="single_network_call">单条网络请求</string>
+    <string name="series_network_calls">多条网络请求</string>
+    <string name="parallel_network_calls">并发网络请求</string>
     <string name="room_database">Room Database</string>
-    <string name="timeout">Timeout</string>
+    <string name="timeout">超时测试</string>
     <string name="try_catch_error">Try-Catch Error</string>
     <string name="exception_handler">ExceptionHandler</string>
     <string name="ignore_error_and_continue">Ignore Error And Continue</string>

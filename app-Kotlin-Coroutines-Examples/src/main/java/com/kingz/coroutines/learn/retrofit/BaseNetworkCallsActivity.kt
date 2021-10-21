@@ -5,7 +5,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -44,7 +43,7 @@ abstract class BaseNetworkCallsActivity<T:ViewModel> : AppCompatActivity() {
     }
 
     open fun setupObserver(){
-        getUser().observe(this, Observer {
+        getUser().observe(this, {
             when (it.status) {
                 Status.SUCCESS -> {
                     progressBar.visibility = View.GONE
@@ -60,6 +59,7 @@ abstract class BaseNetworkCallsActivity<T:ViewModel> : AppCompatActivity() {
                     progressBar.visibility = View.GONE
                     Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
                 }
+                else -> {}
             }
         })
     }

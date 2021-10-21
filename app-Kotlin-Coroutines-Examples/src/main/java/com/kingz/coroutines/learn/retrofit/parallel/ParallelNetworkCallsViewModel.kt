@@ -35,7 +35,7 @@ class ParallelNetworkCallsViewModel(
     private fun fetchUsers() {
         viewModelScope.launch {
             users.postValue(ResponseResult.loading(null))
-            // coroutineScope is needed, else in case of any network error, it will crash
+            // 需要coroutineScope，否则在任何网络错误的情况下，它将崩溃
             try {
                 coroutineScope {
                     // coroutineScope 若有任何一个网络任务出错，则会触发try_catch

@@ -15,10 +15,7 @@ class ApiUserAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         DataViewHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.item_layout, parent,
-                false
-            )
+            LayoutInflater.from(parent.context).inflate(R.layout.item_layout, parent,false)
         )
 
     override fun getItemCount(): Int = users.size
@@ -36,6 +33,7 @@ class ApiUserAdapter(
             itemView.textViewUserEmail.text = user.email
             Glide.with(itemView.imageViewAvatar.context)
                 .load(user.avatar)
+                .error(R.drawable.resource_heart3)
                 .into(itemView.imageViewAvatar)
         }
     }
