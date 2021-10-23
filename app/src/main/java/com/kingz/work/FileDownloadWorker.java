@@ -7,7 +7,7 @@ import androidx.work.Data;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
-import com.zeke.kangaroo.utils.ZLog;
+import com.zeke.kangaroo.zlog.ZLog;
 
 /**
  * author：KingZ

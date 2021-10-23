@@ -41,5 +41,6 @@ dependencies {
     compileOnly test.runner_rules
     compileOnly test.ext_junit
     compileOnly test.espresso_core
-    compileOnly rootProject.ext.dependencies["kangaroo"]
+//    compileOnly rootProject.ext.dependencies["kangaroo"]
+    compileOnly project(":Akangaroo")
 }

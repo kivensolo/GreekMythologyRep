@@ -4,7 +4,7 @@ import android.app.Service
 import android.content.Intent
 import android.content.ServiceConnection
 import android.os.IBinder
-import com.zeke.kangaroo.utils.ZLog
+import com.zeke.kangaroo.zlog.ZLog
 import java.util.*
 
 /**

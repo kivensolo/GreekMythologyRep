@@ -5,7 +5,7 @@ import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.MessageQueue;
 
-import com.zeke.kangaroo.utils.ZLog;
+import com.zeke.kangaroo.zlog.ZLog;
 
 /**
  * author: King.Z <br>

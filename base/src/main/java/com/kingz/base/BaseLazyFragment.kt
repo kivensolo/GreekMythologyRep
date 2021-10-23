@@ -2,7 +2,7 @@ package com.kingz.base
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.zeke.kangaroo.utils.ZLog
+import com.zeke.kangaroo.zlog.ZLog
 
 /**
  * 实现Fragment懒加载控制的Base类,支持复杂的 Fragment 嵌套组合。

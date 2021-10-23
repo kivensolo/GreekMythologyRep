@@ -225,7 +225,6 @@ dependencies {
     implementation fileTree(include: ['*.jar','*.aar'], dir: 'libs')
     implementation _rootDependencies["gson"]
 //    implementation _rootDependencies["xxPermissions"] // 动态权限申请库
-    //implementation _rootDependencies["kangaroo"]
     implementation _rootDependencies["xul_cache"]
 
     // Test library

@@ -9,7 +9,7 @@ import androidx.test.filters.MediumTest;
 
 import com.kingz.four_components.service.LocalService;
 import com.kingz.four_components.service.MyComponentsOfService;
-import com.zeke.kangaroo.utils.ZLog;
+import com.zeke.kangaroo.zlog.ZLog;
 import com.zeke.test.BaseServiceTest;
 
 import org.junit.Before;

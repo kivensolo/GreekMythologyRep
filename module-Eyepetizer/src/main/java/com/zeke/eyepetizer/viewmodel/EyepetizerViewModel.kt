@@ -8,7 +8,7 @@ import com.zeke.eyepetizer.bean.EyepetizerTabListInfo
 import com.zeke.eyepetizer.bean.EyepetizerTabPageData
 import com.zeke.eyepetizer.bean.VideoDetailMergeData
 import com.zeke.eyepetizer.respository.EyepetizerRemoteDataSource
-import com.zeke.kangaroo.utils.ZLog
+import com.zeke.kangaroo.zlog.ZLog
 import com.zeke.reactivehttp.base.BaseReactiveViewModel
 import kotlinx.coroutines.Job
 import retrofit2.http.Url

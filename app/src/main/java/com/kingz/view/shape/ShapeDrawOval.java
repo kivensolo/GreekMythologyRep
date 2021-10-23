@@ -18,7 +18,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.kingz.module.common.BaseActivity;
-import com.zeke.kangaroo.utils.ZLog;
+import com.zeke.kangaroo.zlog.ZLog;
 
 public class ShapeDrawOval extends BaseActivity {
 

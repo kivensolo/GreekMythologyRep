@@ -28,7 +28,7 @@ open class BasePracticeView @JvmOverloads constructor(
     }
 
     init{
-        paint.textSize = UIUtils.dip2px(context,
+        paint.textSize = UIUtils.dip2px(
             defaultFontSize
         ).toFloat()
         paint.isAntiAlias = true

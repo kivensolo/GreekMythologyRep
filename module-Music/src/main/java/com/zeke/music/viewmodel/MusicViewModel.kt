@@ -1,7 +1,7 @@
 package com.zeke.music.viewmodel
 
 import androidx.lifecycle.MutableLiveData
-import com.zeke.kangaroo.utils.ZLog
+import com.zeke.kangaroo.zlog.ZLog
 import com.zeke.music.bean.RelatedVideoInfo
 import com.zeke.music.bean.VideoInfo
 import com.zeke.music.repository.YinYueTaiRemoteDataSource

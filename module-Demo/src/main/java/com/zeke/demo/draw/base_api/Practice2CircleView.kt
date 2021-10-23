@@ -12,7 +12,7 @@ class Practice2CircleView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : BasePracticeView(context, attrs, defStyleAttr) {
 
-    var paintWidth = UIUtils.dip2px(context,20f)
+    var paintWidth = UIUtils.dip2px(20f)
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)

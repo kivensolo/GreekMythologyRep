@@ -13,7 +13,7 @@ import android.view.Window;
 import android.widget.TextView;
 
 import com.kingz.customdemo.R;
-import com.zeke.kangaroo.utils.ZLog;
+import com.zeke.kangaroo.zlog.ZLog;
 
 /**
  * author: King.Z

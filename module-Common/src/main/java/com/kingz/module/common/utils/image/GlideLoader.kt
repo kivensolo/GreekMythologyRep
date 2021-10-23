@@ -33,7 +33,7 @@ object GlideLoader {
             .transition(DrawableTransitionOptions.withCrossFade())  //渐入动画效果
             .transform(
                 CenterCropRoundCornerTransform(
-                    UIUtils.dip2px(context, corner.toFloat()),
+                    UIUtils.dip2px( corner.toFloat()),
                     false
                 )
             )      //centerCrop +  cornerCrop 效果
@@ -54,7 +54,7 @@ object GlideLoader {
             .transition(DrawableTransitionOptions.withCrossFade())  //渐入动画效果
             .transform(
                 CenterCropRoundCornerTransform(
-                    UIUtils.dip2px(context,corner.toFloat()),
+                    UIUtils.dip2px(corner.toFloat()),
                     true
                 )
             )      //centerCrop +  cornerCrop 效果

@@ -8,11 +8,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
+
 import com.kingz.customdemo.R;
 import com.kingz.recyclerview.data.MgPosterBean;
 import com.zeke.kangaroo.adapter.CommonRecyclerAdapter;
-import com.zeke.kangaroo.utils.ZLog;
+import com.zeke.kangaroo.zlog.ZLog;
 import com.zeke.ktx.App;
 import com.zeke.network.OkHttpClientManager;
 

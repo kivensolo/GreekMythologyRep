@@ -40,7 +40,7 @@ class Paint15TextStaticLayoutView @JvmOverloads constructor(
     private var staticLayout1:StaticLayout
     private var staticLayout2:StaticLayout
     init{
-        textPaint.textSize = UIUtils.dip2px(context,18f).toFloat()
+        textPaint.textSize = UIUtils.dip2px(18f).toFloat()
         val text1 = "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
         staticLayout1 = StaticLayout(text1, textPaint, 600,
                 Layout.Alignment.ALIGN_NORMAL, 1f, 0f, true)

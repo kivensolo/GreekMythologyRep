@@ -7,7 +7,7 @@ import androidx.lifecycle.switchMap
 import com.kingz.module.wanandroid.bean.UserInfoBean
 import com.kingz.module.wanandroid.response.WanAndroidResponse
 import com.kingz.module.wanandroid.viewmodel.WanAndroidViewModelV2
-import com.zeke.kangaroo.utils.ZLog
+import com.zeke.kangaroo.zlog.ZLog
 
 class LoginViewModel : WanAndroidViewModelV2() {
 

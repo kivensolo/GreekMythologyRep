@@ -32,7 +32,7 @@ class PathSampleView @JvmOverloads constructor(
     )
 
     private fun dp2px(dpValue: Float): Float {
-        return UIUtils.dip2px(context, dpValue).toFloat()
+        return UIUtils.dip2px( dpValue).toFloat()
     }
     init {
         pathPaint.color = startColor

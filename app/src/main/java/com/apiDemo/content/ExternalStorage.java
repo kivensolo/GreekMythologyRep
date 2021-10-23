@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 import com.kingz.customdemo.R;
 import com.kingz.utils.ToastTools;
-import com.zeke.kangaroo.utils.ZLog;
+import com.zeke.kangaroo.zlog.ZLog;
 
 import java.io.File;
 import java.io.FileOutputStream;

@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import com.kingz.customdemo.R
 import com.kingz.module.common.BaseActivity
-import com.zeke.kangaroo.utils.ZLog
+import com.zeke.kangaroo.zlog.ZLog
 import kotlinx.coroutines.*
 import kotlin.system.measureTimeMillis
 

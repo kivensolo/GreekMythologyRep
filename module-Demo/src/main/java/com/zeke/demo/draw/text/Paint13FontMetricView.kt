@@ -7,7 +7,7 @@ import com.zeke.demo.R
 import com.zeke.demo.base.BasePracticeView
 import com.zeke.demo.model.CardItemConst
 import com.zeke.kangaroo.utils.UIUtils
-import com.zeke.kangaroo.utils.ZLog
+import com.zeke.kangaroo.zlog.ZLog
 
 /**
  * author: King.Z <br>
@@ -39,8 +39,8 @@ class Paint13FontMetricView @JvmOverloads constructor(
     private var baselineY = 0f
     private val textDrawY = 100f
     var baseX = 0
-    private val sampleTextSize = UIUtils.dip2px(context,32f).toFloat()
-    private val descTextSize = UIUtils.dip2px(context,15f).toFloat()
+    private val sampleTextSize = UIUtils.dip2px(32f).toFloat()
+    private val descTextSize = UIUtils.dip2px(15f).toFloat()
 
 
     init{
@@ -114,7 +114,7 @@ class Paint13FontMetricView @JvmOverloads constructor(
     }
 
     private fun drawDescText(canvas: Canvas) {
-        canvas.translate(0f, UIUtils.dip2px(context,80f).toFloat())
+        canvas.translate(0f, UIUtils.dip2px(80f).toFloat())
         drawInfoText(canvas, resources.getColor(R.color.black), "top|Max-ascent: ${fontMetrics!!.top}", mDescPaint!!)
         drawInfoText(canvas, resources.getColor(R.color.skygreen), "ascent: ${fontMetrics!!.ascent}", mDescPaint!!)
         drawInfoText(canvas, resources.getColor(R.color.blue), "baseline: 0", mDescPaint!!)

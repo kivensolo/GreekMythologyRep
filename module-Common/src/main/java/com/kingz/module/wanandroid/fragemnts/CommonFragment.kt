@@ -11,7 +11,7 @@ import com.kingz.module.common.R
 import com.kingz.module.common.router.RouterConfig
 import com.kingz.module.common.utils.ktx.SDKVersion
 import com.kingz.module.wanandroid.bean.Article
-import com.zeke.kangaroo.utils.ZLog
+import com.zeke.kangaroo.zlog.ZLog
 import com.zeke.reactivehttp.base.BaseReactiveViewModel
 
 /**

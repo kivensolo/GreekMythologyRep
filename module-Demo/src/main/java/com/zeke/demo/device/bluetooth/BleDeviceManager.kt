@@ -14,7 +14,7 @@ import android.widget.Toast
 import com.hjq.permissions.OnPermissionCallback
 import com.hjq.permissions.XXPermissions
 import com.zeke.kangaroo.utils.ToastUtils
-import com.zeke.kangaroo.utils.ZLog
+import com.zeke.kangaroo.zlog.ZLog
 import java.util.*
 import kotlin.collections.HashMap
 

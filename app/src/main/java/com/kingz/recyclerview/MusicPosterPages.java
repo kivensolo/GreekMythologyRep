@@ -22,7 +22,7 @@ import com.kingz.module.common.base.BaseActivity;
 import com.kingz.pages.photo.filmlist.MyItemDecoration;
 import com.kingz.recyclerview.data.MgPosterBean;
 import com.kingz.recyclerview.data.MgResponseBean;
-import com.zeke.kangaroo.utils.ZLog;
+import com.zeke.kangaroo.zlog.ZLog;
 import com.zeke.network.OkHttpClientManager;
 
 import java.util.ArrayList;

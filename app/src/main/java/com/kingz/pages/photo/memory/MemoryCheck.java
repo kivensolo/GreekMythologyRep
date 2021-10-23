@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import com.kingz.customdemo.R;
 import com.kingz.module.common.base.BaseActivity;
 import com.zeke.kangaroo.utils.BitMapUtils;
-import com.zeke.kangaroo.utils.ZLog;
+import com.zeke.kangaroo.zlog.ZLog;
 
 import java.util.Locale;
 

@@ -10,7 +10,7 @@ import com.kingz.library.player.IPlayer;
 import com.kingz.library.player.IPlayerEventsListener;
 import com.kingz.library.player.exo.ExoPlayer;
 import com.kingz.module.common.bean.MediaParams;
-import com.zeke.kangaroo.utils.ZLog;
+import com.zeke.kangaroo.zlog.ZLog;
 import com.zeke.play.view.IPlayerView;
 
 import org.jetbrains.annotations.NotNull;

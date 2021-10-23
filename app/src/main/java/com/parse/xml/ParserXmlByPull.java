@@ -1,6 +1,6 @@
 package com.parse.xml;
 
-import com.zeke.kangaroo.utils.ZLog;
+import com.zeke.kangaroo.zlog.ZLog;
 import com.zeke.ktx.App;
 
 import org.xmlpull.v1.XmlPullParser;

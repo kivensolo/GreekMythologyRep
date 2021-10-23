@@ -10,7 +10,7 @@ import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import com.zeke.demo.R
 import com.zeke.demo.base.BaseDemoView
-import com.zeke.kangaroo.utils.ZLog
+import com.zeke.kangaroo.zlog.ZLog
 
 
 class GlideCircleDemoView : BaseDemoView {

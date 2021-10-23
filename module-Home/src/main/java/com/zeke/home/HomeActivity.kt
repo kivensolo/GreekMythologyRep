@@ -43,7 +43,7 @@ import com.zeke.home.model.HomeSongModel
 import com.zeke.home.service.NSDService
 import com.zeke.home.wanandroid.viewmodel.HomeViewModel
 import com.zeke.kangaroo.utils.ToastUtils
-import com.zeke.kangaroo.utils.ZLog
+import com.zeke.kangaroo.zlog.ZLog
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.main_bottom_layout.*
 import kotlinx.android.synthetic.main.slide_menu_layout.*

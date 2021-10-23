@@ -17,7 +17,7 @@ import androidx.appcompat.widget.AppCompatTextView;
 
 import com.kingz.customdemo.R;
 import com.zeke.kangaroo.utils.ScreenDisplayUtils;
-import com.zeke.kangaroo.utils.ZLog;
+import com.zeke.kangaroo.zlog.ZLog;
 
 /**
  * author: King.Z <br>

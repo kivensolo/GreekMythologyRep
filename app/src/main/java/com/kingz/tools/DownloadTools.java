@@ -8,7 +8,7 @@ import android.text.format.Formatter;
 import android.util.Log;
 
 import com.zeke.kangaroo.utils.EncryptTools;
-import com.zeke.kangaroo.utils.ZLog;
+import com.zeke.kangaroo.zlog.ZLog;
 import com.zeke.ktx.App;
 
 import java.io.File;

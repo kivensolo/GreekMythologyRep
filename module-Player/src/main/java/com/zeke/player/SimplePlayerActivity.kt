@@ -11,7 +11,7 @@ import androidx.fragment.app.FragmentManager
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.kingz.module.common.bean.MediaParams
 import com.kingz.module.common.router.RouterConfig
-import com.zeke.kangaroo.utils.ZLog
+import com.zeke.kangaroo.zlog.ZLog
 import com.zeke.module_player.R
 import com.zeke.module_player.databinding.FullPlayerPageBinding
 import com.zeke.play.PlayerActivity

@@ -7,7 +7,7 @@ import android.net.Uri;
 import android.os.Handler;
 
 import com.kingz.four_components.ObtainProviderDataPage;
-import com.zeke.kangaroo.utils.ZLog;
+import com.zeke.kangaroo.zlog.ZLog;
 
 /**
  * Copyright(C) 2016, 北京视达科科技有限公司

@@ -7,7 +7,7 @@ import android.view.ViewConfiguration;
 
 import com.zeke.kangaroo.utils.ScreenDisplayUtils;
 import com.zeke.kangaroo.utils.VolumeUtils;
-import com.zeke.kangaroo.utils.ZLog;
+import com.zeke.kangaroo.zlog.ZLog;
 import com.zeke.play.gesture.IGestureCallBack;
 
 import java.util.concurrent.TimeUnit;

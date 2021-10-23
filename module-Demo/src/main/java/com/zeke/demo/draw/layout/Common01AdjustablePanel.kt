@@ -8,7 +8,7 @@ import android.widget.SeekBar
 import androidx.appcompat.widget.AppCompatSeekBar
 import com.zeke.demo.R
 import com.zeke.kangaroo.utils.UIUtils
-import com.zeke.kangaroo.utils.ZLog
+import com.zeke.kangaroo.zlog.ZLog
 
 
 /**
@@ -26,9 +26,9 @@ class Common01AdjustablePanel @JvmOverloads constructor(context: Context?,
     var parentLayout: FrameLayout? = null
     var heightBar: AppCompatSeekBar? = null
     var widthBar: AppCompatSeekBar? = null
-    var bottomMargin: Float = UIUtils.dip2px(context,48f).toFloat()
-    var containerMinWidth: Float =  UIUtils.dip2px(context,80f).toFloat()
-    var containerMinHeight: Float =  UIUtils.dip2px(context,100f).toFloat()
+    var bottomMargin: Float = UIUtils.dip2px(48f).toFloat()
+    var containerMinWidth: Float =  UIUtils.dip2px(80f).toFloat()
+    var containerMinHeight: Float =  UIUtils.dip2px(100f).toFloat()
 
 
     override fun onAttachedToWindow() {
@@ -56,6 +56,6 @@ class Common01AdjustablePanel @JvmOverloads constructor(context: Context?,
 //    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
 //        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
     //FIXME 为什么写死高度，内容就不绘制了？
-//        setMeasuredDimension(width, UIUtils.dip2px(context,600f))
+//        setMeasuredDimension(width, UIUtils.dip2px(600f))
 //    }
 }

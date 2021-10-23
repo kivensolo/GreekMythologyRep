@@ -13,7 +13,7 @@ import com.kingz.module.wanandroid.fragemnts.CommonFragment
 import com.zeke.eyepetizer.bean.EyepetizerTabListInfo
 import com.zeke.eyepetizer.bean.TabListBean
 import com.zeke.eyepetizer.viewmodel.EyepetizerViewModel
-import com.zeke.kangaroo.utils.ZLog
+import com.zeke.kangaroo.zlog.ZLog
 import com.zeke.moudle_eyepetizer.R
 
 /**

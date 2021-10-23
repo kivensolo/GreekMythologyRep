@@ -7,7 +7,7 @@ import androidx.lifecycle.Observer
 import com.kingz.database.entity.CollectionArticle
 import com.kingz.module.wanandroid.bean.Article
 import com.kingz.module.wanandroid.bean.CollectListBean
-import com.zeke.kangaroo.utils.ZLog
+import com.zeke.kangaroo.zlog.ZLog
 
 /**
  * author：ZekeWang

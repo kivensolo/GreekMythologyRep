@@ -35,11 +35,11 @@ class Paint10GetPathView @JvmOverloads constructor(
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        paint.textSize = UIUtils.dip2px(context,36f).toFloat()
+        paint.textSize = UIUtils.dip2px(36f).toFloat()
         canvas.drawText(content, 0f, 130f, paint)
 
         canvas.translate(0f,150f)
-        pathPaint.textSize = UIUtils.dip2px(context,36f).toFloat()
+        pathPaint.textSize = UIUtils.dip2px(36f).toFloat()
         pathPaint.color = Color.RED
         pathPaint.style = Paint.Style.STROKE
         pathPaint.getTextPath(content,0,content.length,40f,130f,dstPath)

@@ -17,7 +17,7 @@ import com.kingz.customdemo.R;
 import com.zeke.kangaroo.utils.BitMapUtils;
 import com.zeke.kangaroo.utils.ScreenShotUtils;
 import com.zeke.kangaroo.utils.UIUtils;
-import com.zeke.kangaroo.utils.ZLog;
+import com.zeke.kangaroo.zlog.ZLog;
 
 import java.util.Arrays;
 
@@ -52,13 +52,13 @@ public class BitmapPhotosActivity extends PhotosActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        WIDTH = UIUtils.dip2px(this, 370);
-        HEIGHT = UIUtils.dip2px(this, 240);
+        WIDTH = UIUtils.dip2px( 370);
+        HEIGHT = UIUtils.dip2px( 240);
         ZLog.d(TAG, "WIDTH=" + WIDTH + ";HEIGHT=" + HEIGHT);
         srcBitmap = BitMapUtils.drawable2Bitmap(getResources().getDrawable(R.drawable.glide_cover), WIDTH, HEIGHT);
         waterMark = BitMapUtils.drawable2Bitmap(getResources().getDrawable(R.drawable.raspberry_pi_logo),
-                UIUtils.dip2px(this, 35),
-                UIUtils.dip2px(this, 40));
+                UIUtils.dip2px( 35),
+                UIUtils.dip2px( 40));
         datas = Arrays.asList(fakeData);
         super.onCreate(savedInstanceState);
         setImageView();
@@ -68,8 +68,8 @@ public class BitmapPhotosActivity extends PhotosActivity {
     private void setImageView() {
         picView.setImageBitmap(srcBitmap);
 
-        changeSizeBitmap = BitMapUtils.setZoomImg(srcBitmap, UIUtils.dip2px(this, 190),
-                UIUtils.dip2px(this, 120));
+        changeSizeBitmap = BitMapUtils.setZoomImg(srcBitmap, UIUtils.dip2px( 190),
+                UIUtils.dip2px( 120));
         rotate180_Bitmap = BitMapUtils.setRotateImage(180, srcBitmap);
         rotateYZ_Bitmap = BitMapUtils.setRotateImage_XYZ(0f, 20f, 10f, srcBitmap);
         Rounded_Bitmap = BitMapUtils.setRoundCorner(srcBitmap, 45);
@@ -83,7 +83,7 @@ public class BitmapPhotosActivity extends PhotosActivity {
         int shawdo_mark = srcBitmap.getWidth() - srcBitmap.getWidth() / 2;
         int mark_y = srcBitmap.getHeight() - srcBitmap.getHeight() / 4;
         Paint textPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DEV_KERN_TEXT_FLAG);
-        textPaint.setTextSize(UIUtils.dip2px(this, 20.0f));
+        textPaint.setTextSize(UIUtils.dip2px( 20.0f));
         textPaint.setTypeface(Typeface.DEFAULT_BOLD);
         textPaint.setColor(getResources().getColor(R.color.yellow));
         text_waterMarkBitmap = BitMapUtils.createWaterMarkText(srcBitmap,
@@ -150,8 +150,8 @@ public class BitmapPhotosActivity extends PhotosActivity {
     private void showGif(String url) {
         RequestOptions requestOptions = new RequestOptions()
 //                .placeholder(R.drawable.android) //设置“加载中”状态时显示的图片
-                .override(UIUtils.dip2px(this, 350),
-                        UIUtils.dip2px(this, 240))
+                .override(UIUtils.dip2px( 350),
+                        UIUtils.dip2px( 240))
                 .fitCenter()
                 .diskCacheStrategy(DiskCacheStrategy.DATA)
                 .error(R.drawable.alert_dialog_icon); //设置“加载失败”状态时显示的图片

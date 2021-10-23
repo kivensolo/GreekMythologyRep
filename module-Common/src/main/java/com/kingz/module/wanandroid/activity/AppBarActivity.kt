@@ -16,7 +16,7 @@ import com.kingz.module.wanandroid.WADConstants
 import com.kingz.module.wanandroid.fragemnts.UserCollectionFragment
 import com.kingz.module.wanandroid.viewmodel.WanAndroidViewModelV2
 import com.zeke.kangaroo.utils.ToastUtils
-import com.zeke.kangaroo.utils.ZLog
+import com.zeke.kangaroo.zlog.ZLog
 //import kotlinx.android.synthetic.main.view_page_header.*
 
 /**

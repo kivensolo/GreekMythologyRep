@@ -3,7 +3,7 @@ package com.kingz.functiontest
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.kingz.database.DatabaseApplication
 import com.kingz.database.dao.SongDao_Impl
-import com.zeke.kangaroo.utils.ZLog
+import com.zeke.kangaroo.zlog.ZLog
 import com.zeke.test.BaseInstrumentedTest
 import org.junit.Assert.assertTrue
 import org.junit.Test

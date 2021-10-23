@@ -10,7 +10,7 @@ import com.zeke.home.entity.TemplatePageData
 import com.zeke.home.entity.TimeTableData
 import com.zeke.home.fragments.SimplePageContentFragment
 import com.zeke.home.presenters.LivePresenter
-import com.zeke.kangaroo.utils.ZLog
+import com.zeke.kangaroo.zlog.ZLog
 import java.util.*
 
 /**

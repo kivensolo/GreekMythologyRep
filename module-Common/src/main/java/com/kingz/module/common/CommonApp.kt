@@ -11,7 +11,7 @@ import com.scwang.smart.refresh.footer.ClassicsFooter
 import com.scwang.smart.refresh.header.ClassicsHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.tencent.bugly.crashreport.CrashReport
-import com.zeke.kangaroo.utils.ZLog
+import com.zeke.kangaroo.zlog.ZLog
 
 
 /**
@@ -93,9 +93,7 @@ open class CommonApp: DatabaseApplication(){
     }
 
     private fun initLog() {
-         if (BuildConfig.DEBUG) {
-            ZLog.isDebug = true
-         }
+        ZLog.init(this,enableLog = BuildConfig.DEBUG)
     }
 
     private fun initARouter() {

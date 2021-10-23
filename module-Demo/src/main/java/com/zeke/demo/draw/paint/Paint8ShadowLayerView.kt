@@ -34,7 +34,7 @@ class Paint8ShadowLayerView @JvmOverloads constructor(
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         val zoomImg = BitMapUtils.setZoomImg(bitmap, 350, 280)
-        paint.textSize = UIUtils.dip2px(context,32f).toFloat()
+        paint.textSize = UIUtils.dip2px(32f).toFloat()
         paint.setShadowLayer(10f, 0f, 0f, Color.RED)
         canvas.drawText("JetPack", 80f, 180f, paint)
         canvas.drawBitmap(zoomImg, 500f, 50f, paint)

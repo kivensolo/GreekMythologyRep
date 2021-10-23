@@ -19,7 +19,7 @@ import com.kingz.module.common.base.BaseFragment
 import com.kingz.module.common.base.IPresenter
 import com.kingz.module.common.router.Router
 import com.kingz.module.common.router.RouterConfig
-import com.zeke.kangaroo.utils.ZLog
+import com.zeke.kangaroo.zlog.ZLog
 import com.zeke.module_player.R
 import com.zeke.music.activities.MusicDetailPageActivity
 import com.zeke.music.adapter.VideoRecomAdapter

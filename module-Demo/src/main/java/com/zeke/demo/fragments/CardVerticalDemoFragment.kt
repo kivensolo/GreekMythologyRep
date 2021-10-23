@@ -11,7 +11,7 @@ import com.zeke.demo.R
 import com.zeke.demo.model.CardItemModel
 import com.zeke.demo.model.DemoContentModel
 import com.zeke.kangaroo.adapter.CommonRecyclerAdapter
-import com.zeke.kangaroo.utils.ZLog
+import com.zeke.kangaroo.zlog.ZLog
 
 /**
  * author：KingZ

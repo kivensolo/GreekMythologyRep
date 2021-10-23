@@ -3,7 +3,7 @@ package com.zeke.home.service
 import android.content.Context
 import android.net.nsd.NsdManager
 import android.net.nsd.NsdServiceInfo
-import com.zeke.kangaroo.utils.ZLog
+import com.zeke.kangaroo.zlog.ZLog
 
 /**
  * Copyright (c) 2021, 北京视达科科技有限责任公司 All rights reserved.

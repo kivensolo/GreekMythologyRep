@@ -21,7 +21,7 @@ class Practice3RectView @JvmOverloads constructor(
         //练习内容：使用 canvas.drawRoundRect() 方法画圆角矩形
         paint.style = Paint.Style.STROKE
         paint.color = Color.BLACK
-        paint.strokeWidth = UIUtils.px2dip(context, 30f).toFloat()
+        paint.strokeWidth = UIUtils.px2dip( 30f).toFloat()
         canvas.drawRect(rect, paint)
 
         paint.style = Paint.Style.FILL

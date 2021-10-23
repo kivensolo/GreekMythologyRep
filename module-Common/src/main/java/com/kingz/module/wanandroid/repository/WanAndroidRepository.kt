@@ -7,7 +7,7 @@ import com.kingz.module.wanandroid.api.WanAndroidApiService
 import com.kingz.module.wanandroid.bean.Article
 import com.kingz.module.wanandroid.bean.CollectBean
 import com.kingz.module.wanandroid.response.WanAndroidResponse
-import com.zeke.kangaroo.utils.ZLog
+import com.zeke.kangaroo.zlog.ZLog
 
 /**
  * author: King.Z <br>

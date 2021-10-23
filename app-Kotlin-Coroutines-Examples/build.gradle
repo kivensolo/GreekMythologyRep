@@ -64,7 +64,7 @@ dependencies {
 
     implementation project(':module-Common')
     implementation project(':library-network')
-
+    implementation project(':Akangaroo')
     // Room-compiler
     kapt rootProject.ext.dependencies["room-compiler"]
 

@@ -4,7 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import com.kingz.module.common.base.BaseFragment
 import com.zeke.demo.R
-import com.zeke.kangaroo.utils.ZLog
+import com.zeke.kangaroo.zlog.ZLog
 
 /**
  * author: King.Z <br>

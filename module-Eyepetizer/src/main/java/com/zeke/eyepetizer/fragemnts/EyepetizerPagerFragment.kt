@@ -20,7 +20,7 @@ import com.zeke.eyepetizer.adapter.EyepetizerPagerAdapter
 import com.zeke.eyepetizer.bean.EyepetizerTabPageData
 import com.zeke.eyepetizer.bean.Item
 import com.zeke.eyepetizer.viewmodel.EyepetizerViewModel
-import com.zeke.kangaroo.utils.ZLog
+import com.zeke.kangaroo.zlog.ZLog
 import com.zeke.moudle_eyepetizer.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

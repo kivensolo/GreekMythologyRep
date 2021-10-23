@@ -2,6 +2,7 @@ package com.module
 
 import android.content.Context
 
+@Deprecated("被袋鼠库的UIUtils代替")
 object UIUtil {
     fun dip2px(context: Context, dpValue: Float): Int {
         val scale = context.resources.displayMetrics.density

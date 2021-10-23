@@ -15,7 +15,7 @@ import com.kingz.customdemo.R;
 import com.kingz.utils.ToastTools;
 import com.module.tools.ScreenTools;
 import com.mplayer.ExtMplayer;
-import com.zeke.kangaroo.utils.ZLog;
+import com.zeke.kangaroo.zlog.ZLog;
 
 import org.json.JSONObject;
 

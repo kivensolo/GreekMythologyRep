@@ -14,7 +14,7 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.kingz.customdemo.R;
-import com.zeke.kangaroo.utils.ZLog;
+import com.zeke.kangaroo.zlog.ZLog;
 
 import java.lang.ref.WeakReference;
 import java.util.WeakHashMap;

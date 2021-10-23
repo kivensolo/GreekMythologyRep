@@ -15,7 +15,7 @@ import androidx.annotation.Nullable;
 
 import com.kingz.customdemo.R;
 import com.module.tools.ScreenTools;
-import com.zeke.kangaroo.utils.ZLog;
+import com.zeke.kangaroo.zlog.ZLog;
 
 import java.util.ArrayList;
 

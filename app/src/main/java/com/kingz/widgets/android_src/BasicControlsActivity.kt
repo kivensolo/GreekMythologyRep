@@ -71,8 +71,8 @@ class BasicControlsActivity : AppCompatActivity(),
     private fun BasicControlsBinding.initTextViews() {
         val arduinoDrawable = context.resources.getDrawable(R.drawable.arduino)
         arduinoDrawable.setBounds(
-            0, 0, UIUtils.dip2px(context, 20f),
-            UIUtils.dip2px(context, 10f)
+            0, 0, UIUtils.dip2px( 20f),
+            UIUtils.dip2px( 10f)
         )
         withStartDrawableLTRTextView.setCompoundDrawables(
             arduinoDrawable,

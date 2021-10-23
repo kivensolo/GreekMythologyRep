@@ -2,7 +2,7 @@ package com.zeke.test
 
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
-import com.zeke.kangaroo.utils.ZLog
+import com.zeke.kangaroo.zlog.ZLog
 import org.junit.Before
 
 /**

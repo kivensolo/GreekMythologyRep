@@ -17,8 +17,8 @@ open abstract class BaseDemoView : View {
         const val IMG_HIGHT = 300
     }
     constructor(context: Context) : super(context){
-        // IMG_WIDTH = UIUtils.dip2px(context,400f)
-        // IMG_HIGHT = UIUtils.dip2px(context,300f)
+        // IMG_WIDTH = UIUtils.dip2px(400f)
+        // IMG_HIGHT = UIUtils.dip2px(300f)
         layoutParams  = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT)
     }

@@ -2,7 +2,7 @@ package com.zeke.demo.device.bluetooth;
 
 import android.text.TextUtils;
 
-import com.zeke.kangaroo.utils.ZLog;
+import com.zeke.kangaroo.zlog.ZLog;
 
 import java.math.BigInteger;
 import java.nio.ByteBuffer;

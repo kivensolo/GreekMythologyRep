@@ -18,7 +18,7 @@ import com.kingz.customdemo.R;
 import com.kingz.filemanager.adapter.FileListAdapter;
 import com.kingz.module.common.base.BaseActivity;
 import com.zeke.kangaroo.utils.FileUtils;
-import com.zeke.kangaroo.utils.ZLog;
+import com.zeke.kangaroo.zlog.ZLog;
 
 import java.io.DataOutputStream;
 import java.io.File;
@@ -208,7 +208,7 @@ public class FileManagerActivity extends BaseActivity implements AdapterView.OnI
         Intent intent = new Intent();
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setAction(Intent.ACTION_VIEW);
-        String type = FileUtils.getMIMEType(file);
+        String type = FileUtils.Companion.getMIMEType(file);
         Log.d(TAG, "Clicked File Type is :" + type);
         intent.setDataAndType(Uri.fromFile(file), type);   //打开设置打开文件的类型
         try {

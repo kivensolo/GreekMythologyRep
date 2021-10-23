@@ -9,7 +9,7 @@ import android.widget.SeekBar.OnSeekBarChangeListener
 import com.module.tools.ScreenTools
 import com.zeke.demo.R
 import com.zeke.kangaroo.utils.ScreenDisplayUtils
-import com.zeke.kangaroo.utils.ZLog
+import com.zeke.kangaroo.zlog.ZLog
 
 /**
  * author: King.Z <br></br>

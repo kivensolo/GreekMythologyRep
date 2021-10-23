@@ -13,7 +13,7 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.kingz.base.factory.ViewModelFactory
 import com.kingz.module.common.CommonApp.Companion.getInstance
 import com.kingz.module.common.bean.MediaParams
-import com.zeke.kangaroo.utils.ZLog
+import com.zeke.kangaroo.zlog.ZLog
 import com.zeke.module_player.R
 import com.zeke.music.bean.VideoInfo
 import com.zeke.music.fragments.VodDetailFragment

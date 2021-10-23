@@ -16,7 +16,7 @@ import com.kingz.mode.PosterGroupInfo;
 import com.kingz.pages.photo.filmlist.FilmListRecyclerViewHolder;
 import com.zeke.kangaroo.utils.EncryptTools;
 import com.zeke.kangaroo.utils.FileUtils;
-import com.zeke.kangaroo.utils.ZLog;
+import com.zeke.kangaroo.zlog.ZLog;
 import com.zeke.ktx.App;
 
 import java.io.File;
@@ -69,7 +69,7 @@ public class FilmRecycleViewPageAdapter extends RecyclerView.Adapter<FilmListRec
 
         // 保存当前海报信息
         // TODO 使用glide替换。
-        FileUtils.saveObjectWithPath(posterList, new File(dataPath, FILM_FILE_NAME));
+        FileUtils.Companion.saveObjectWithPath(posterList, new File(dataPath, FILM_FILE_NAME));
         ZLog.d(TAG, "储存影片数据至本地指定目录!");
     }
 
@@ -91,9 +91,9 @@ public class FilmRecycleViewPageAdapter extends RecyclerView.Adapter<FilmListRec
             return;
         }
         File file = new File(dataPath, md5);
-        if(FileUtils.readObjectWithPath(file) != null){
+        if(FileUtils.Companion.readObjectWithPath(file) != null){
             //加载缓存图片
-            Bitmap cacheBitmap = (Bitmap) FileUtils.readObjectWithPath(file);
+            Bitmap cacheBitmap = (Bitmap) FileUtils.Companion.readObjectWithPath(file);
             viewHolder.getmImageView().setImageBitmap(cacheBitmap);
             return;
         }

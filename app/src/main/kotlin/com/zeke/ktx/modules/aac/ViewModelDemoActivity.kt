@@ -8,7 +8,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.kingz.customdemo.R
 import com.kingz.module.common.BaseActivity
-import com.zeke.kangaroo.utils.ZLog
+import com.zeke.kangaroo.zlog.ZLog
 import com.zeke.ktx.modules.aac.viewmodels.User
 import com.zeke.ktx.modules.aac.viewmodels.UserInfoViewModel
 import kotlinx.android.synthetic.main.activity_crossfade.*

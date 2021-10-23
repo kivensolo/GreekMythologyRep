@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.google.gson.Gson;
 import com.google.gson.internal.$Gson$Types;
-import com.zeke.kangaroo.utils.ZLog;
+import com.zeke.kangaroo.zlog.ZLog;
 import com.zeke.network.interceptor.LoggingInterceptor;
 
 import org.jetbrains.annotations.NotNull;
@@ -484,8 +484,8 @@ public class OkHttpClientManager {
                     }
 //                    File filePath = new File(App.instance.getApplicationContext().getAppContext().getCacheDir().getPath(), "FilmPageDir");
 //                    File file = new File(filePath, EncryptTools.MD5(url));
-//                    FileUtils.saveBitmapWithPath(file, bm, Bitmap.CompressFormat.PNG, 90);
-//                    FileUtils.dealPathFilesWithOldDate(filePath.toString(), System.currentTimeMillis() - TimeUnit.DAYS.toMillis(3));
+//                    FileUtils.Companion.saveBitmapWithPath(file, bm, Bitmap.CompressFormat.PNG, 90);
+//                    FileUtils.Companion.dealPathFilesWithOldDate(filePath.toString(), System.currentTimeMillis() - TimeUnit.DAYS.toMillis(3));
                     setImage(view,bm);
                 } catch (Exception e) {
                     setErrorResId(view, errorResId);

@@ -20,7 +20,7 @@ import androidx.core.app.ActivityCompat
 import com.kingz.base.view.dialog.ZDialogHelper
 import com.kingz.module.common.AppLifeCycle
 import com.zeke.kangaroo.utils.AppInfoUtils
-import com.zeke.kangaroo.utils.ZLog
+import com.zeke.kangaroo.zlog.ZLog
 
 /**
  * author: King.Z

@@ -1,8 +1,9 @@
 
+
 ext {
 
     kotlin_version = '1.4.31'
-    kangaroo_v = '1.0.7@aar'
+    kangaroo_v = '1.0.8@aar'
     jetpack_version = '2.2.0'
 
     lib_versions = [

@@ -1,6 +1,6 @@
 package com.zeke.network.interceptor
 
-import com.zeke.kangaroo.utils.ZLog
+import com.zeke.kangaroo.zlog.ZLog
 import com.zeke.network.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.MediaType

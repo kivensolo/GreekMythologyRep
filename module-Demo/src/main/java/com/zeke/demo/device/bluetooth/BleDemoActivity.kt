@@ -12,7 +12,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kingz.base.BaseVMActivity
 import com.zeke.demo.R
-import com.zeke.kangaroo.utils.ZLog
+import com.zeke.kangaroo.zlog.ZLog
 import com.zeke.reactivehttp.base.BaseReactiveViewModel
 import kotlinx.android.synthetic.main.activity_bluetooth_demo.*
 import java.util.*

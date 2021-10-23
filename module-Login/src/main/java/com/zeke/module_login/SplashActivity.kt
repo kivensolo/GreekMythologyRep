@@ -21,7 +21,7 @@ import com.kingz.module.common.router.RouterConfig
 import com.kingz.module.common.user.UserInfo
 import com.kingz.module.wanandroid.bean.Data
 import com.kingz.module.wanandroid.bean.UserInfoBean
-import com.zeke.kangaroo.utils.ZLog
+import com.zeke.kangaroo.zlog.ZLog
 import com.zeke.module_login.viewmodel.LoginViewModel
 import kotlinx.android.synthetic.main.form_view.*
 import kotlinx.android.synthetic.main.splash_activity.*

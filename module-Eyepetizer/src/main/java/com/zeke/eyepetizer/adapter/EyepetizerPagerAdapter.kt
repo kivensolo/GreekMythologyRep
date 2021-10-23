@@ -28,7 +28,7 @@ import com.zeke.eyepetizer.bean.ItemTypeBanner
 import com.zeke.eyepetizer.bean.cards.item.*
 import com.zeke.eyepetizer.constant.ViewTypeEnum
 import com.zeke.eyepetizer.videodetail.VideoDetailPlayActivity
-import com.zeke.kangaroo.utils.ZLog
+import com.zeke.kangaroo.zlog.ZLog
 import com.zeke.moudle_eyepetizer.R
 import java.text.SimpleDateFormat
 import java.util.*

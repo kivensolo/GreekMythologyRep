@@ -31,7 +31,7 @@ import com.youth.banner.indicator.CircleIndicator
 import com.youth.banner.transformer.ScaleInTransformer
 import com.zeke.home.wanandroid.adapter.HomeBannerAdapter
 import com.zeke.home.wanandroid.viewmodel.HomeViewModel
-import com.zeke.kangaroo.utils.ZLog
+import com.zeke.kangaroo.zlog.ZLog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.withContext

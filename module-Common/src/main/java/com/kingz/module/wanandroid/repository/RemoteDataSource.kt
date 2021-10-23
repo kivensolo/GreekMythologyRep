@@ -9,7 +9,7 @@ import com.kingz.module.common.user.UserInfo
 import com.kingz.module.wanandroid.api.WanAndroidApiService
 import com.kingz.module.wanandroid.bean.*
 import com.kingz.module.wanandroid.response.WanAndroidResponse
-import com.zeke.kangaroo.utils.ZLog
+import com.zeke.kangaroo.zlog.ZLog
 import com.zeke.network.OkHttpClientManager
 import com.zeke.network.cookie.ICookiesHandler
 import com.zeke.network.interceptor.AddCookiesInterceptor

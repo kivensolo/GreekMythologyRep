@@ -10,7 +10,7 @@ import android.view.View
 import android.widget.Toast
 import com.kingz.customdemo.R
 import com.kingz.module.common.BaseActivity
-import com.zeke.kangaroo.utils.ZLog
+import com.zeke.kangaroo.zlog.ZLog
 
 /**
  * author: King.Z <br></br>
@@ -56,7 +56,7 @@ class AIDLActivity : BaseActivity() {
             isBinded = true
             Toast.makeText(this@AIDLActivity, "服务器已连接！", Toast.LENGTH_SHORT).show()
             mBooks = mIBookManager?.books
-            ZLog.d(localClassName, mBooks?.toString())
+            ZLog.d(localClassName, mBooks.toString())
         }
 
         override fun onServiceDisconnected(name: ComponentName) {

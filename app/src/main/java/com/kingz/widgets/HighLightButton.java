@@ -12,8 +12,7 @@ import androidx.appcompat.widget.AppCompatButton;
 
 import com.kingz.customdemo.R;
 import com.zeke.kangaroo.utils.UIUtils;
-import com.zeke.kangaroo.utils.ZLog;
-import com.zeke.ktx.App;
+import com.zeke.kangaroo.zlog.ZLog;
 
 /**
  * author: King.Z
@@ -25,8 +24,8 @@ public class HighLightButton extends AppCompatButton {
 
     private static final String TAG = "HightLightButton";
 
-    public static final int DEFAULT_SIZE = UIUtils.dip2px(App.instance.getBaseContext(),26);
-    public static final int FOCUSED_SIZE = UIUtils.dip2px(App.instance.getBaseContext(),35);
+    public static final int DEFAULT_SIZE = UIUtils.dip2px(26);
+    public static final int FOCUSED_SIZE = UIUtils.dip2px(35);
     /*焦点标记*/
     private boolean mFocusedFlag = false;
     /*选定标记*/

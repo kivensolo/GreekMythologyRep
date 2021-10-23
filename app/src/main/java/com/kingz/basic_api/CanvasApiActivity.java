@@ -13,7 +13,7 @@ import android.widget.ScrollView;
 import androidx.annotation.Nullable;
 
 import com.kingz.module.common.BaseActivity;
-import com.zeke.kangaroo.utils.ZLog;
+import com.zeke.kangaroo.zlog.ZLog;
 
 /**
  * author: King.Z <br>

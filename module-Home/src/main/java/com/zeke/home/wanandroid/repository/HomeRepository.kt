@@ -6,7 +6,7 @@ import com.kingz.module.wanandroid.bean.ArticleData
 import com.kingz.module.wanandroid.bean.BannerItem
 import com.kingz.module.wanandroid.repository.WanAndroidRepository
 import com.kingz.module.wanandroid.response.WanAndroidResponse
-import com.zeke.kangaroo.utils.ZLog
+import com.zeke.kangaroo.zlog.ZLog
 
 /**
  * author：ZekeWang

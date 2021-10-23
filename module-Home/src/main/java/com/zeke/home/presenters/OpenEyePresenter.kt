@@ -5,7 +5,7 @@ import com.zeke.home.api.DataApiService
 import com.zeke.home.api.RecomDataServiceImpl
 import com.zeke.home.contract.RecomPageContract
 import com.zeke.home.entity.TemplatePageData
-import com.zeke.kangaroo.utils.ZLog
+import com.zeke.kangaroo.zlog.ZLog
 import com.zeke.network.response.IRequestResponse
 
 /**

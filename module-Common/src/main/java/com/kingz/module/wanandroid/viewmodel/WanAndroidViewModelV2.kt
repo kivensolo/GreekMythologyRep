@@ -7,7 +7,7 @@ import com.kingz.module.common.CommonApp
 import com.kingz.module.wanandroid.bean.Article
 import com.kingz.module.wanandroid.bean.CollectActionBean
 import com.kingz.module.wanandroid.repository.WanAndroidRemoteDataSource
-import com.zeke.kangaroo.utils.ZLog
+import com.zeke.kangaroo.zlog.ZLog
 import com.zeke.reactivehttp.base.BaseReactiveViewModel
 import kotlinx.coroutines.Job
 

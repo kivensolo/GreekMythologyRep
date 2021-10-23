@@ -41,11 +41,14 @@ public class ScreenTools {
 		// return (int) (Original * mainScale + 0.5f);
 	}
 
+	@Deprecated //被UIUtils.dipToPx替换
     public static int OperationWidth(int Original) {
 		return Operation(Original);
 		// return (int) (SCREEN_WIDTH * (Original * 1.0f / DESIGN_WIDTH) +
 		// 0.5f);
 	}
+
+	@Deprecated //被UIUtils.dipToPx替换
     public static int Operation(int Original) {
 		return (int) (SCREEN_HEIGHT * (Original * 1.0f / DESIGN_HEIGHT) + 0.5f);
 	}

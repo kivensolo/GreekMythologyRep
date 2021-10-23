@@ -70,27 +70,27 @@ public class ArcsSampleView extends View {
         mPaints[3].setColor(0x88888888);
         useCenterArray[3] = true;
 
-        mBigOval = new RectF(UIUtils.dip2px(context, 40f),
-                UIUtils.dip2px(context, 10f),
-                UIUtils.dip2px(context, 280f),
-                UIUtils.dip2px(context, 250f));
+        mBigOval = new RectF(UIUtils.dip2px( 40f),
+                UIUtils.dip2px( 10f),
+                UIUtils.dip2px( 280f),
+                UIUtils.dip2px( 250f));
 
-        mOvals[0] = new RectF(UIUtils.dip2px(context, 10f),
-                UIUtils.dip2px(context, 270f),
-                UIUtils.dip2px(context, 70f),
-                UIUtils.dip2px(context, 330f));
-        mOvals[1] = new RectF(UIUtils.dip2px(context, 90f),
-                UIUtils.dip2px(context, 270f),
-                UIUtils.dip2px(context, 150f),
-                UIUtils.dip2px(context, 330f));
-        mOvals[2] = new RectF(UIUtils.dip2px(context, 170f),
-                UIUtils.dip2px(context, 270f),
-                UIUtils.dip2px(context, 230f),
-                UIUtils.dip2px(context, 330f));
-        mOvals[3] = new RectF(UIUtils.dip2px(context, 250f),
-                UIUtils.dip2px(context, 270f),
-                UIUtils.dip2px(context, 310f),
-                UIUtils.dip2px(context, 330f));
+        mOvals[0] = new RectF(UIUtils.dip2px( 10f),
+                UIUtils.dip2px( 270f),
+                UIUtils.dip2px( 70f),
+                UIUtils.dip2px( 330f));
+        mOvals[1] = new RectF(UIUtils.dip2px( 90f),
+                UIUtils.dip2px( 270f),
+                UIUtils.dip2px( 150f),
+                UIUtils.dip2px( 330f));
+        mOvals[2] = new RectF(UIUtils.dip2px( 170f),
+                UIUtils.dip2px( 270f),
+                UIUtils.dip2px( 230f),
+                UIUtils.dip2px( 330f));
+        mOvals[3] = new RectF(UIUtils.dip2px( 250f),
+                UIUtils.dip2px( 270f),
+                UIUtils.dip2px( 310f),
+                UIUtils.dip2px( 330f));
 
         mFramePaint = new Paint();
         mFramePaint.setAntiAlias(true);

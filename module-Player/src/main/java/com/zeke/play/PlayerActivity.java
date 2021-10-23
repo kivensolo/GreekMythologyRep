@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 import androidx.annotation.Nullable;
 
 import com.kingz.base.BaseVMActivity;
-import com.zeke.kangaroo.utils.ZLog;
+import com.zeke.kangaroo.zlog.ZLog;
 import com.zeke.module_player.R;
 
 /**
