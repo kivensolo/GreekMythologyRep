@@ -46,8 +46,8 @@ dependencies {
     // 工具库由Common引出
     api project(":library-views")
     api project(':database')
-//    api root_dependencies["kangaroo"]
-    api project(":Akangaroo")
+    api root_dependencies["kangaroo"]
+//    api project(":Akangaroo")
     api root_dependencies["banner"]
     api root_dependencies["smartRefresh_Core"]
     api root_dependencies["smartRefresh_Header_Classics"]

@@ -102,8 +102,8 @@ dependencies {
     api root_dependencies["immersionbar"]
     api root_dependencies["immersionbar_fragment"]
 
-//    api root_dependencies["kangaroo"]
-    api project(":Akangaroo")
+    api root_dependencies["kangaroo"]
+//    api project(":Akangaroo")
 
     api root_dependencies["xul_cache"]
 

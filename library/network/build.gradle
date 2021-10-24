@@ -53,8 +53,8 @@ dependencies {
     implementation lib_dependencies["okio"]
     implementation lib_dependencies["ok_log"]
     implementation lib_dependencies["stetho-okhttp3"]
-//    implementation lib_dependencies["kangaroo"]
-    implementation project(":Akangaroo")
+    implementation lib_dependencies["kangaroo"]
+//    implementation project(":Akangaroo")
 
 
     //https://github.com/DingProg/NetworkCaptureSelf  会有checkSelfPermission的判断
