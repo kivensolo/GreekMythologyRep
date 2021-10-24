@@ -10,6 +10,7 @@ import com.github.xulcache.CacheDomain
 import com.kingz.module.common.CommonApp
 import com.takt.FpsTools
 import com.zeke.kangaroo.utils.AppInfoUtils
+import com.zeke.kangaroo.utils.UIUtils
 import java.util.concurrent.TimeUnit
 
 
@@ -52,6 +53,7 @@ open class App : CommonApp() {
 //                .setFrameThreshold(2)
 //                .start();
         //Bmob.initialize(this, "fea19b87f0795833b30de91f46f1465c");
+        UIUtils.init(this)
     }
 
 
