@@ -1,14 +1,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.zeke.moudle_eyepetizer">
 
     <application android:allowBackup="true">
         <activity
             android:name="com.zeke.eyepetizer.videodetail.VideoDetailPlayActivity"
-            android:configChanges="locale|screenSize|keyboardHidden|orientation"
+            android:supportsPictureInPicture="true"
+            android:configChanges="locale|screenSize|smallestScreenSize|keyboardHidden
+            |screenLayout|orientation"
             android:launchMode="singleTask"
             android:screenOrientation="fullSensor"
             android:windowFullscreen="true"
             android:windowContentOverlay="@null"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+            android:windowSoftInputMode="stateAlwaysHidden"
+            tools:targetApi="n" />
     </application>
 </manifest>
