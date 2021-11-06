@@ -103,7 +103,7 @@ public class KingzPlayerView extends SurfaceView {
             @Override
             public boolean onError(MediaPlayer mp, int what, int extra) {
                 ZLog.d(TAG,"mp is onError() ");
-                ToastTools.getInstance().showToast(mContext, "播放出错！" + "what=" + what + ";extra=" + extra);
+                ToastTools.i().showToast(mContext, "播放出错！" + "what=" + what + ";extra=" + extra);
                 if (null != onStateChangeListener) {
                     onStateChangeListener.onError();
                 }

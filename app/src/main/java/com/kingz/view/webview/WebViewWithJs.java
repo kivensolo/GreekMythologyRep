@@ -117,7 +117,7 @@ public abstract class WebViewWithJs extends WebView {
         @JavascriptInterface
         public void showToastByJs(String msg) {
             ZLog.i(TAG, "showToastByJs() msg=" + msg);
-            ToastTools.getInstance().showToast(context, msg);
+            ToastTools.i().showToast(context, msg);
         }
 
         @JavascriptInterface

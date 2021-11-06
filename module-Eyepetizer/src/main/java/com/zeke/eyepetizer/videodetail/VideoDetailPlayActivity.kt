@@ -3,7 +3,10 @@ package com.zeke.eyepetizer.videodetail
 import android.app.PendingIntent
 import android.app.PictureInPictureParams
 import android.app.RemoteAction
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.res.Configuration
 import android.graphics.Rect
 import android.graphics.drawable.Icon
@@ -30,6 +33,7 @@ import com.zeke.eyepetizer.bean.VideoDetailMergeData
 import com.zeke.eyepetizer.bean.cards.item.VideoSmallCard
 import com.zeke.eyepetizer.viewmodel.EyepetizerViewModel
 import com.zeke.moudle_eyepetizer.R
+import com.zeke.moudle_eyepetizer.databinding.ActivityDetailVideoBinding
 import kotlinx.android.synthetic.main.activity_detail_video.*
 
 /**
@@ -55,6 +59,13 @@ private const val ACTION_STOPWATCH_CONTROL = "stopwatch_control"
 /** Intent extra for stopwatch controls from Picture-in-Picture mode.  */
 private const val EXTRA_CONTROL_TYPE = "control_type"
 
+private const val CONTROL_TYPE_CLEAR = 1
+private const val CONTROL_TYPE_START_OR_PAUSE = 2
+
+private const val REQUEST_CLEAR = 3
+private const val REQUEST_START_OR_PAUSE = 4
+
+
 @Route(path = RouterConfig.PAGE_EYE_DETAIL)
 class VideoDetailPlayActivity : BaseVMActivity() {
 
@@ -70,27 +81,50 @@ class VideoDetailPlayActivity : BaseVMActivity() {
     private var mPageData: VideoDetailMergeData? = null
     private lateinit var mAdapter: VideoPlayAdapter
 
+
     override val viewModel: EyepetizerViewModel by viewModels {
         ViewModelFactory.build { EyepetizerViewModel() }
     }
 
     //是否在画中画模式
     private var isInPIPMode = false
+    private lateinit var binding: ActivityDetailVideoBinding
 
-    override fun getContentLayout(): Int = R.layout.activity_detail_video
+    /**
+     * A [BroadcastReceiver] for handling action items on the picture-in-picture mode.
+     */
+    private val broadcastReceiver = object : BroadcastReceiver() {
+
+        // Called when an item is clicked.
+        override fun onReceive(context: Context?, intent: Intent?) {
+            if (intent == null || intent.action != ACTION_STOPWATCH_CONTROL) {
+                return
+            }
+            when (intent.getIntExtra(EXTRA_CONTROL_TYPE, 0)) {
+//                CONTROL_TYPE_START_OR_PAUSE -> viewModel.startOrPause()
+//                CONTROL_TYPE_CLEAR -> viewModel.clear()
+            }
+        }
+    }
+
+    override fun getContentView(): View? {
+        binding = ActivityDetailVideoBinding.inflate(layoutInflater)
+        return binding.root
+    }
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-
         mAdapter = VideoPlayAdapter()
         // 列表初始化
-        with(videoRecycler){
+        with(binding.videoRecycler){
             layoutManager = LinearLayoutManager(context)
             visibility = View.GONE
             adapter = mAdapter.apply {
                 onRelatedItemClick = { reloadMediaInfo(it)}
             }
         }
+        // 处理来自图中图模式的动作图标的事件
+        registerReceiver(broadcastReceiver, IntentFilter(ACTION_STOPWATCH_CONTROL))
     }
 
     override fun initViewModel() {
@@ -100,7 +134,7 @@ class VideoDetailPlayActivity : BaseVMActivity() {
 //            ZLog.d("Video detail page recom data is ok :$it")
             mPageData = result
             if (result != null) {
-                videoRecycler.visibility = View.VISIBLE
+                binding.videoRecycler.visibility = View.VISIBLE
                 mAdapter.setData(result.detailData, result.relatedData.itemList)
             }
         })
@@ -112,7 +146,7 @@ class VideoDetailPlayActivity : BaseVMActivity() {
 
     override fun initData(savedInstanceState: Bundle?) {
         parseIntent()
-        with(videoPlayer) {
+        with(binding.videoPlayer) {
             setDataSource(mediaParams!!)
             open()
         }
@@ -146,7 +180,7 @@ class VideoDetailPlayActivity : BaseVMActivity() {
             this.videoType = videoData.type
         }
 
-        with(videoPlayer) {
+        with(binding.videoPlayer) {
             stop()
             setDataSource(mediaParams!!)
             open()
@@ -154,8 +188,8 @@ class VideoDetailPlayActivity : BaseVMActivity() {
         }
 
         //刷新列表前重置状态
-        videoRecycler.visibility = View.GONE
-        videoRecycler.scrollToPosition(0)
+        binding.videoRecycler.visibility = View.GONE
+        binding.videoRecycler.scrollToPosition(0)
 
         //获取数据
         viewModel.getVideoDetailAndReleatedData(videoData.id)
@@ -173,21 +207,42 @@ class VideoDetailPlayActivity : BaseVMActivity() {
         super.onUserLeaveHint()
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             isInPIPMode = true
-            //PictureInPictureParams指定自定义操作
-            val visibleRect = Rect()
-            videoPlayer.getGlobalVisibleRect(visibleRect)
-            val pipParams = PictureInPictureParams.Builder()
+
+//            setPictureInPictureParams(pipParams)
+//            enterPictureInPictureMode(pipParams)
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun updatePictureInPictureParams(started: Boolean): PictureInPictureParams {
+        //PictureInPictureParams指定自定义操作
+        val visibleRect = Rect()
+        binding.videoPlayer.getGlobalVisibleRect(visibleRect)
+        val pipParams = PictureInPictureParams.Builder()
             // Set action items for the picture-in-picture mode. These are the only custom controls
             // available during the picture-in-picture mode.
-                .setActions(listOf(
+            .setActions(
+                listOf(
                     // "Clear" action.
-                    createRemoteAction(
-                        R.drawable.exo_icon_pause,
-                        R.string.collect_failed,
-                        3,
-                        1
-                    )
-                ))
+                    if (started) {
+                        // "Pause" action when the stopwatch is already started.
+                        createRemoteAction(
+                            R.drawable.exo_icon_pause,
+                            R.string.collect_failed,
+                            REQUEST_START_OR_PAUSE,
+                            CONTROL_TYPE_START_OR_PAUSE
+                        )
+                    } else {
+                        // "Start" action when the stopwatch is not started.
+                        createRemoteAction(
+                            R.drawable.exo_icon_play,
+                            R.string.collect_failed,
+                            REQUEST_START_OR_PAUSE,
+                            CONTROL_TYPE_START_OR_PAUSE
+                        )
+                    }
+                )
+            )
             .setAspectRatio(Rational(16, 9))
             // Specify the portion of the screen that turns into the picture-in-picture mode.
             // This makes the transition animation smoother.
@@ -199,23 +254,18 @@ class VideoDetailPlayActivity : BaseVMActivity() {
             // that the picture-in-picture mode is resized with a cross fade animation.
 //            .setSeamlessResizeEnabled(false) //API30
             .build()
-            setPictureInPictureParams(pipParams)
-            enterPictureInPictureMode(pipParams)
-        }
+        return pipParams
     }
 
     override fun onPictureInPictureModeChanged(
         isInPictureInPictureMode: Boolean,
         newConfig: Configuration
     ) {
-        if(isInPictureInPictureMode){
-            // Hide the full-screen UI (controls, etc.) while in picture-in-picture mode.
-            videoRecycler.visibility = View.GONE
-        }else{
-            // Restore the full-screen UI.
-            videoRecycler.visibility = View.VISIBLE
+        binding.videoRecycler.visibility = if (isInPictureInPictureMode) {
+            View.GONE
+        } else {
+            View.VISIBLE
         }
-//        super.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig)
     }
 
     override fun onStart() {
@@ -229,19 +279,21 @@ class VideoDetailPlayActivity : BaseVMActivity() {
      */
     override fun onStop() {
         super.onStop()
-        videoPlayer.pause()
-        videoPlayer.stop()
+        binding.videoPlayer.apply {
+           pause()
+           stop()
+        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        videoPlayer.release()
+        binding.videoPlayer.release()
     }
 
 
-      /**
-     * Creates a [RemoteAction]. It is used as an action icon on the overlay of the
-     * picture-in-picture mode.
+    /**
+     * Creates a [RemoteAction]. It is used as an action icon
+     * on the overlay of the picture-in-picture mode.
      */
     @RequiresApi(Build.VERSION_CODES.O)
     private fun createRemoteAction(

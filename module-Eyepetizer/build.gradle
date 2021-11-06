@@ -10,9 +10,9 @@ android {
     compileSdkVersion root_android.compileSdkVersion
     buildToolsVersion root_android.buildToolsVersion
 
-    // 按模块不启用View Binding
+    // 按模块启用View Binding
     viewBinding {
-        enabled = false
+        enabled = true
     }
 
     defaultConfig {

@@ -44,7 +44,7 @@ class BasicControlsActivity : AppCompatActivity(),
     }
 
     private fun initViews() {
-        mToast = ToastTools.getInstance()
+        mToast = ToastTools.i()
 
         basicControlsBinding.apply {
             initTextViews()

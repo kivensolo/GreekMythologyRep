@@ -37,7 +37,7 @@ public class ToastTools {
         mToast.show();
     }
 
-    public static ToastTools getInstance() {
+    public static ToastTools i() {
         if(mToastTools == null){
             synchronized (ToastTools.class){
                 if (mToastTools == null) {

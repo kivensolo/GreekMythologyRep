@@ -103,6 +103,7 @@ dependencies {
     api root_dependencies["immersionbar_fragment"]
 
     api root_dependencies["kangaroo"]
+    api 'com.elvishew:xlog:1.11.0'
 //    api project(":Akangaroo")
 
     api root_dependencies["xul_cache"]

@@ -51,7 +51,9 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
 
 
     @LayoutRes
-    abstract fun getContentLayout(): Int
+    open fun getContentLayout(): Int{
+        return R.layout.layout_invalid
+    }
 
     open fun getContentView():View? {return null}
 

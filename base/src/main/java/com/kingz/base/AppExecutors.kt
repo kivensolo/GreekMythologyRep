@@ -23,20 +23,25 @@ import java.util.concurrent.Executors
 /**
  * Global executor pools for the whole application.
  *
- *
- * Grouping tasks like this avoids the effects of task starvation (e.g. disk reads don't wait behind
- * webservice requests).
+ * Grouping tasks like this avoids the effects of task starvation
+ * (e.g. disk reads don't wait behind webservice requests).
  */
 class AppExecutors private constructor(
     private val mDiskIO: Executor,
     private val mNetworkIO: Executor,
     private val mMainThread: Executor
 ) {
-    constructor() : this(
-        Executors.newSingleThreadExecutor(), Executors.newFixedThreadPool(3),
-        MainThreadExecutor()
-    ) {
+    companion object{
+        private val CPU_COUNT = Runtime.getRuntime().availableProcessors()
+        //线程池最大容纳线程数
+        private val maximumPoolSize: Int = CPU_COUNT * 2 + 1
     }
+
+    constructor() : this(
+        Executors.newSingleThreadExecutor(),
+        Executors.newFixedThreadPool(maximumPoolSize),
+        MainThreadExecutor()
+    )
 
     fun diskIO(): Executor {
         return mDiskIO

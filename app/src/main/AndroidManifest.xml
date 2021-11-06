@@ -155,7 +155,7 @@
 
         <!--BitmapDemo页面-->
         <activity
-            android:name="com.kingz.file.DownloadAPPActivity"
+            android:name="com.kingz.file.WorkManagerDemoActivity"
             android:theme="@style/AppTheme" />
 
         <!--图片缓存测试页面-->
