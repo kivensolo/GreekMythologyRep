@@ -9,8 +9,10 @@ import android.widget.RelativeLayout
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.work.*
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.kingz.base.BaseSimpleActivity
 import com.kingz.customdemo.databinding.DownloadDemoLayoutBinding
+import com.kingz.module.common.router.RouterConfig
 import com.kingz.utils.ToastTools
 import com.kingz.work.FileDownloadWorker
 import com.module.views.progress.HorizontalProgressBarNoNumber
@@ -25,6 +27,7 @@ import java.util.concurrent.TimeUnit
  * workmanager文件下载测试
  *
  */
+@Route(path = RouterConfig.PAGE_DEMO_WORK_MANAGER)
 class WorkManagerDemoActivity : BaseSimpleActivity() {
     private val updateLiveData = MutableLiveData<String>()
     override fun initData(savedInstanceState: Bundle?) {

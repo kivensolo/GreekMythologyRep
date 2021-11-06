@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import com.alibaba.android.arouter.launcher.ARouter
 import com.kingz.module.common.R
+import com.zeke.kangaroo.zlog.ZLog
 
 
 /**
@@ -13,6 +14,7 @@ import com.kingz.module.common.R
 object Router {
     fun startActivity(url: String) {
         if (TextUtils.isEmpty(url)) return
+        ZLog.d("ARouter startActivity by router: $url")
         // Simple jump within application (Jump via URL in 'Advanced usage')
         ARouter.getInstance().build(url).navigation()
     }

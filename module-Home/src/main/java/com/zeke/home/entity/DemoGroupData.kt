@@ -11,8 +11,8 @@ import java.util.*
  */
 
 // Demo分组的数据实例
-data class DemoGroup(val title: String?,
-                     val desc: String?,
+data class DemoGroup(val title: String = "UnKnow",
+                     val desc: String = "",
                      val samples: MutableList<DemoSample> = ArrayList()){
     fun getSampleByIndex(index: Int): DemoSample {
         return samples[index]
@@ -29,21 +29,25 @@ abstract class ISampleEntity {
 }
 
 // 每一个Demo实例的数据类
-data class DemoSample(var name: String?,
-                      private var classPath: String?) : ISampleEntity() {
+data class DemoSample(var name: String? = "unKnow",
+                      var path: String = "") : ISampleEntity() {
     private val cacheClass = HashMap<String?, Class<*>>()
 
     override fun getDemoClass(): Class<*>? {
-        if (cacheClass.containsKey(classPath)) {
-            return cacheClass[classPath]
+        if (cacheClass.containsKey(path)) {
+            return cacheClass[path]
         }
         try {
-            val clazzObj = Class.forName(classPath)
-            cacheClass[classPath] = clazzObj
+            val clazzObj = Class.forName(path)
+            cacheClass[path] = clazzObj
             return clazzObj
         } catch (e: ClassNotFoundException) {
             e.printStackTrace()
         }
         return null
+    }
+
+    fun isRouterMode():Boolean{
+        return path.startsWith("/")
     }
 }

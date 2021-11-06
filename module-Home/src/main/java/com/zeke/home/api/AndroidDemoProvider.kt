@@ -5,6 +5,7 @@ import android.content.res.AssetManager
 import android.os.AsyncTask
 import android.util.JsonReader
 import android.widget.Toast
+import com.zeke.home.demo.NavigationData
 import com.zeke.home.entity.DemoGroup
 import com.zeke.home.entity.DemoSample
 import com.zeke.kangaroo.zlog.ZLog
@@ -19,6 +20,8 @@ import java.util.*
  * date：2020/2/15
  * description：Demo样例数据的数据提供实现类，
  * 负责Demo数据配置文件解析和数据返回
+ *
+ * TODO 从注册表中拿数据，而是本地数据列表
  */
 class AndroidDemoProvider : DataApiService<MutableList<DemoGroup>> {
     companion object {
@@ -33,20 +36,22 @@ class AndroidDemoProvider : DataApiService<MutableList<DemoGroup>> {
      * @param callback DataApiService.IDataResponse
      */
     override fun requestData(context: Context,@NotNull callback: IRequestResponse<MutableList<DemoGroup>>) {
-        mCallBack = callback
-        val assetManager = context.assets
-        val uris: Array<String>
-        val uriList = ArrayList<String>()
-        checkMainList(assetManager, uriList, context)
-        // 显式指定数组的长度，数组元素全部被初始化为null。
-        // 相当于Java数组的动态初始化。
-        // uris = arrayOfNulls<String?>(uriList.size)
-        uris = uriList.toTypedArray()
-        // 同java  Arrays.sort(uris);
-        uris.sort()
+        callback.onSuccess(NavigationData().groupList)
 
-        // AsyncTask 异步加载列表数据
-        SampleListLoader(context).execute(uris[0])
+//        mCallBack = callback
+//        val assetManager = context.assets
+//        val uris: Array<String>
+//        val uriList = ArrayList<String>()
+//        checkMainList(assetManager, uriList, context)
+//        // 显式指定数组的长度，数组元素全部被初始化为null。
+//        // 相当于Java数组的动态初始化。
+//        // uris = arrayOfNulls<String?>(uriList.size)
+//        uris = uriList.toTypedArray()
+//        // 同java  Arrays.sort(uris);
+//        uris.sort()
+//
+//        // AsyncTask 异步加载列表数据
+//        SampleListLoader(context).execute(uris[0])
     }
 
     /**
@@ -137,8 +142,8 @@ class AndroidDemoProvider : DataApiService<MutableList<DemoGroup>> {
 
         @Throws(IOException::class)
         private fun readEntry(reader: JsonReader): DemoSample {
-            var sampleName: String? = null
-            var clazzName: String? = null
+            var sampleName: String = ""
+            var clazzName: String = ""
 
             reader.beginObject()
             while (reader.hasNext()) {

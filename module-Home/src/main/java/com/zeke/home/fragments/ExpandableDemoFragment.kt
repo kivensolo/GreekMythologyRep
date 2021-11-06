@@ -6,6 +6,7 @@ import android.widget.ExpandableListView
 import android.widget.Toast
 import com.kingz.module.common.BaseActivity
 import com.kingz.module.common.base.BaseFragment
+import com.kingz.module.common.router.Router
 import com.kingz.module.home.R
 import com.zeke.home.adapter.DemoFragmentExpandableListAdapter
 import com.zeke.home.contract.DemoContract
@@ -14,6 +15,7 @@ import com.zeke.home.entity.DemoSample
 import com.zeke.home.presenters.DemoPresenter
 import com.zeke.kangaroo.view.animation.AnimatedExpandableListView
 import com.zeke.kangaroo.zlog.ZLog
+
 
 /**
  * author：KingZ
@@ -73,15 +75,19 @@ class ExpandableDemoFragment : BaseFragment(), DemoContract.View,
 //		ActivityOptions opts = ActivityOptions.makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight());
         activity!!.overridePendingTransition(R.anim.zoom_enter, R.anim.zoom_exit)
         val data = expandAdapter!!.getChild(groupPosition, childPosition) as DemoSample
-        val intent = data.buildIntent(activity!!)
-        if (intent == null) {
-            Toast.makeText(activity,
+        if(data.isRouterMode()){
+            Router.startActivity(data.path)
+        }else{
+            val intent = data.buildIntent(activity!!)
+            if (intent == null) {
+                Toast.makeText(activity,
                     "Target page resolve failed.Please confirm class path!",
-                    Toast.LENGTH_SHORT)
-                    .show()
-        } else {
-            startActivity(intent, opts.toBundle())
+                    Toast.LENGTH_SHORT).show()
+            } else {
+                startActivity(intent, opts.toBundle())
+            }
         }
+
         return true
     }
 

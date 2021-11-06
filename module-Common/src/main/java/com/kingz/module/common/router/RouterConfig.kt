@@ -4,7 +4,12 @@ package com.kingz.module.common.router
  * ARouter配置
  */
 object RouterConfig {
-    const val PAGE_MAIN = "/modle_Home/main"
+    //App模块
+    const val PAGE_DEMO_WORK_MANAGER = "/app/demo/work_manager"
+
+// <editor-fold defaultstate="collapsed" desc="Home模块">
+    const val PAGE_MAIN = "/home/main"
+// </editor-fold>
     const val PAGE_LOGIN = "/module_Login/login"
     const val PAGE_WEB = "/module_Web/web"
     const val PAGE_DETAIL = "/module_MPlayer/detailPage"
@@ -20,6 +25,7 @@ object RouterConfig {
 
     /*------------路由参数 Start---------------------*/
     const val PARAM_WEB_ARTICAL_INFO = "PARAM_WEB_ARTICAL"
+
 
 
 }
