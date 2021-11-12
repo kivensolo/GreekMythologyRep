@@ -2,6 +2,7 @@ apply {
     plugin 'com.android.library'
     plugin 'kotlin-android'
     plugin 'kotlin-android-extensions'
+    plugin 'kotlin-kapt'
 
     from '../buildsystem/config.gradle'
     from '../buildsystem/utils.gradle'
@@ -23,6 +24,18 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
+
+        // Arouter的Kotlin配置
+        kapt {
+            arguments {
+                arg("AROUTER_MODULE_NAME", project.getName())
+            }
+        }
+    }
+
+    //  启用View Binding
+    viewBinding {
+        enabled = true
     }
 
     buildTypes {
@@ -44,6 +57,10 @@ android {
 
 dependencies {
     implementation project(':module-Common')
+
+    //arouter
+    implementation _rootDependencies["arouter"]
+    kapt _rootDependencies["arouter_compiler"]
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
