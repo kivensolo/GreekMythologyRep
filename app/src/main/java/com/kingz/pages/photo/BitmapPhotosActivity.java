@@ -9,11 +9,13 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.kingz.customdemo.R;
+import com.kingz.module.common.router.RouterConfig;
 import com.zeke.kangaroo.utils.BitMapUtils;
 import com.zeke.kangaroo.utils.ScreenShotUtils;
 import com.zeke.kangaroo.utils.UIUtils;
@@ -26,6 +28,7 @@ import java.util.Arrays;
  * date:  2016/8/6 23:05
  * description: bitmap效果测试
  */
+@Route(path = RouterConfig.PAGE_GRAPHIC_BITMAP_OVERALL)
 public class BitmapPhotosActivity extends PhotosActivity {
     public static final String TAG = "BitmapPhotosActivity";
     public static int WIDTH;

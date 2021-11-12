@@ -11,8 +11,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.kingz.customdemo.R;
+import com.kingz.module.common.router.RouterConfig;
 
+@Route(path = RouterConfig.PAGE_NEW_FEATURES)
 public class NewFeaturesMainActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override

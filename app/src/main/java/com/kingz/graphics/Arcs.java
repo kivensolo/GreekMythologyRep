@@ -3,8 +3,10 @@ package com.kingz.graphics;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.kingz.customdemo.databinding.ActivityArcsDemoBinding;
 import com.kingz.module.common.BaseActivity;
+import com.kingz.module.common.router.RouterConfig;
 
 /**
  * author: King.Z
@@ -17,6 +19,7 @@ import com.kingz.module.common.BaseActivity;
 * <p>
  * FIXME 有严重的性能损耗
  */
+@Route(path = RouterConfig.PAGE_GRAPHIC_ARCS)
 public class Arcs extends BaseActivity {
     ActivityArcsDemoBinding arcsDemoBinding = null;
 

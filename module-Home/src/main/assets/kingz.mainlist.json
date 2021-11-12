@@ -137,14 +137,6 @@
     "name": "Images & Graphics",
     "samples": [
       {
-        "name": "BitMapOverall",
-        "class": "com.kingz.pages.photo.BitmapPhotosActivity"
-      },
-      {
-        "name": "Arcs",
-        "class": "com.kingz.graphics.Arcs"
-      },
-      {
         "name": "PathDemo",
         "class": "com.kingz.graphics.PathDemoActivity"
       },

@@ -271,16 +271,13 @@
 
         <!-- ************ Acticity-alias 测试页面 ************ -->
         <activity
-            android:name="com.kingz.four_components.activity.AttrOfAliasAct"
-            android:theme="@style/AppTheme" />
+            android:name="com.kingz.four_components.activity.AttrOfAliasAct" />
 
         <!--  ************ 图形方面  Start ************ -->
         <activity
-            android:name="com.kingz.graphics.Arcs"
-            android:theme="@style/AppTheme" />
+            android:name="com.kingz.graphics.Arcs"/>
         <activity
-            android:name="com.zeke.demo.glide.GlideCardDemoActivity"
-            android:theme="@style/AppTheme" />
+            android:name="com.zeke.demo.glide.GlideCardDemoActivity"/>
 
 
         <!--  ************ 图形方面  End ************ -->

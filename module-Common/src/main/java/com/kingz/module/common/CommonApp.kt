@@ -52,7 +52,7 @@ open class CommonApp: DatabaseApplication(){
         initARouter()
         initLog()
         initBugly()
-        initCrashCatcher()
+//        initCrashCatcher()
     }
 
     private fun initCrashCatcher() {

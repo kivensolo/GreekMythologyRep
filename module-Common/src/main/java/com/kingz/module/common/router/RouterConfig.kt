@@ -4,8 +4,12 @@ package com.kingz.module.common.router
  * ARouter配置
  */
 object RouterConfig {
-    //App模块
+   // <editor-fold defaultstate="collapsed" desc="App模块">
     const val PAGE_DEMO_WORK_MANAGER = "/app/demo/work_manager"
+    const val PAGE_NEW_FEATURES = "/app/new_features"
+    const val PAGE_GRAPHIC_BITMAP_OVERALL = "/app/graphics/bitmapOverall"
+    const val PAGE_GRAPHIC_ARCS = "/app/graphics/arcs"
+   // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Home模块">
     const val PAGE_MAIN = "/home/main"

@@ -11,17 +11,25 @@ import com.zeke.home.entity.DemoSample
  */
 class NavigationData {
     var groupList:MutableList<DemoGroup> = mutableListOf(
-        DemoGroup("File",
+        DemoGroup("File","文件相关",
             samples = arrayListOf(
-                DemoSample("DownloadFile", RouterConfig.PAGE_DEMO_WORK_MANAGER),
-                DemoSample("DownloadFile2", RouterConfig.PAGE_DEMO_WORK_MANAGER)
+                DemoSample("File Test",     "com.kingz.file.FileAndPicTestACT"),
+                DemoSample("DownloadFile",      RouterConfig.PAGE_DEMO_WORK_MANAGER),
+                DemoSample("ExternalStorage", "com.apiDemo.content.ExternalStorage"),
             )
         ),
-        DemoGroup("Images & Graphics",
+        DemoGroup("Images & Graphics","图像相关",
             samples = arrayListOf(
-                DemoSample("Palette", RouterConfig.PAGE_PALETTE_DEMO),
-                DemoSample("ColorMatrix", RouterConfig.PAGE_COLOR_MATRIX),
-                DemoSample("PixelCopy", RouterConfig.PAGE_PIXEL_COPY)
+                DemoSample("Arcs",          RouterConfig.PAGE_GRAPHIC_ARCS),
+                DemoSample("BitMapOverall", RouterConfig.PAGE_GRAPHIC_BITMAP_OVERALL),
+                DemoSample("ColorMatrix",   RouterConfig.PAGE_COLOR_MATRIX),
+                DemoSample("Palette",       RouterConfig.PAGE_PALETTE_DEMO),
+                DemoSample("PixelCopy",     RouterConfig.PAGE_PIXEL_COPY)
+            )
+        ),
+        DemoGroup("NewFeatures","新特性",
+            samples = arrayListOf(
+                DemoSample("NewFeature of UI", RouterConfig.PAGE_PALETTE_DEMO)
             )
         )
     )
