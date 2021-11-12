@@ -7,9 +7,16 @@ object RouterConfig {
     //App模块
     const val PAGE_DEMO_WORK_MANAGER = "/app/demo/work_manager"
 
-// <editor-fold defaultstate="collapsed" desc="Home模块">
+    // <editor-fold defaultstate="collapsed" desc="Home模块">
     const val PAGE_MAIN = "/home/main"
-// </editor-fold>
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="Demo模块">
+    const val PAGE_PALETTE_DEMO = "/module_Demo/palette"
+    const val PAGE_COLOR_MATRIX = "/module_Demo/ColorMatrix"
+    const val PAGE_PIXEL_COPY = "/module_Demo/PixelCopy"
+    // </editor-fold>
+
     const val PAGE_LOGIN = "/module_Login/login"
     const val PAGE_WEB = "/module_Web/web"
     const val PAGE_DETAIL = "/module_MPlayer/detailPage"

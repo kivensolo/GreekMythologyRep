@@ -26,6 +26,9 @@
             android:theme="@style/AppTheme"
             tools:targetApi="lollipop" />
 
+        <activity
+            android:name=".graphics.PixelCopyDemo"/>
+
 
         <activity android:name="com.zeke.demo.photoview.sample.PhotoViewMainActivity"/>
 

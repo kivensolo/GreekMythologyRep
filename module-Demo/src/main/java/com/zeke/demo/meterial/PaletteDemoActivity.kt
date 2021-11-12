@@ -5,7 +5,9 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Bundle
 import androidx.palette.graphics.Palette
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.kingz.base.BaseVMActivity
+import com.kingz.module.common.router.RouterConfig
 import com.zeke.demo.R
 import com.zeke.reactivehttp.base.BaseReactiveViewModel
 import kotlinx.android.synthetic.main.activity_palette_demo.*
@@ -58,6 +60,7 @@ import kotlinx.android.synthetic.main.activity_palette_demo.*
  *  API:
  *   https://developer.android.google.cn/reference/androidx/palette/graphics/Palette
  */
+@Route(path = RouterConfig.PAGE_PALETTE_DEMO)
 class PaletteDemoActivity : BaseVMActivity() {
     override val viewModel: BaseReactiveViewModel
         get() = TODO("Not yet implemented")
