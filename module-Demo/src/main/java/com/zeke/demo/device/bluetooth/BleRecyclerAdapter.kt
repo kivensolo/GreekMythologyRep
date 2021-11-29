@@ -2,6 +2,7 @@ package com.zeke.demo.device.bluetooth
 
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import com.kingz.ble.BluetoothDeviceWrapper
 import com.zeke.demo.R
 
 /**

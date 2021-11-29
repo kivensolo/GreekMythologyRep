@@ -11,6 +11,9 @@ import android.text.TextUtils
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kingz.base.BaseVMActivity
+import com.kingz.ble.BleDeviceManager
+import com.kingz.ble.BluetoothDeviceWrapper
+import com.kingz.ble.response.BleEventCallBack
 import com.zeke.demo.R
 import com.zeke.kangaroo.zlog.ZLog
 import com.zeke.reactivehttp.base.BaseReactiveViewModel
@@ -217,8 +220,8 @@ class BleDemoActivity : BaseVMActivity() {
             }
         }
 
-        bleManager = BleDeviceManager(lContext!!).apply {
-            setScanCallBack(object : BleDeviceManager.BleScanCallBack() {
+        bleManager = BleDeviceManager.apply {
+            setScanCallBack(object : BleEventCallBack() {
                 override fun onScanResult(callbackType: Int, result: ScanResult) {
                     super.onScanResult(callbackType, result)
                     val deviceWrapper = BluetoothDeviceWrapper(
@@ -273,11 +276,10 @@ class BleDemoActivity : BaseVMActivity() {
         }
 
         disconnect_bluetooth?.setOnClickListener {
-            bleManager?.disconectDevice()
+            bleManager?.disconnect()
         }
 
         readConfig?.setOnClickListener {
-            bleManager?.readBleVersionCharacter()
         }
     }
 

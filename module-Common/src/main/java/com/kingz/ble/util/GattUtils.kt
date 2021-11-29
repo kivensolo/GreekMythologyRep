@@ -1,4 +1,4 @@
-package com.zeke.demo.device.bluetooth
+package com.kingz.ble.util
 
 import java.util.*
 
@@ -6,6 +6,9 @@ import java.util.*
  * author：ZekeWang
  * date：2021/8/4
  * description：
+ * 标准uuid:
+ *
+ * 0x00002A37-0000-1000-8000-00805F9B34FB
  */
 object GattUtils {
     const val leastSigBits:Long = 0x800000800000000L

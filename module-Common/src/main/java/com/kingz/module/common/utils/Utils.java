@@ -245,13 +245,10 @@ public final class Utils {
                 throw new NullPointerException("u should init first");
             }
             return (Application) app;
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (NoSuchMethodException
+                | IllegalAccessException
+                | InvocationTargetException
+                | ClassNotFoundException e) {
             e.printStackTrace();
         }
         throw new NullPointerException("u should init first");

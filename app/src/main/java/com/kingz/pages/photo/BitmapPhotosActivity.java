@@ -27,6 +27,8 @@ import java.util.Arrays;
  * author: King.Z
  * date:  2016/8/6 23:05
  * description: bitmap效果测试
+ *
+ * TODO 优化，进页面太卡了
  */
 @Route(path = RouterConfig.PAGE_GRAPHIC_BITMAP_OVERALL)
 public class BitmapPhotosActivity extends PhotosActivity {

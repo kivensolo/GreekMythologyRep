@@ -12,20 +12,18 @@ object RvUtils {
     /**
      * 平滑滚动到第1个元素
      */
-    fun smoothScrollTop(rv: RecyclerView?) {
-        if (rv != null) {
-            val layoutManager: RecyclerView.LayoutManager? = rv.layoutManager
-            if (layoutManager is LinearLayoutManager) {
-                val linearLayoutManager: LinearLayoutManager = layoutManager
-                val first: Int = linearLayoutManager.findFirstVisibleItemPosition()
-                val last: Int = linearLayoutManager.findLastVisibleItemPosition()
-                val visibleCount = last - first + 1
-                val scrollIndex = visibleCount * 2 - 1
-                if (first > scrollIndex) {
-                    rv.scrollToPosition(scrollIndex)
-                }
+    fun smoothScrollTop(rv: RecyclerView) {
+        val layoutManager: RecyclerView.LayoutManager? = rv.layoutManager
+        if (layoutManager is LinearLayoutManager) {
+            val linearLayoutManager: LinearLayoutManager = layoutManager
+            val first: Int = linearLayoutManager.findFirstVisibleItemPosition()
+            val last: Int = linearLayoutManager.findLastVisibleItemPosition()
+            val visibleCount = last - first + 1
+            val scrollIndex = visibleCount * 2 - 1
+            if (first > scrollIndex) {
+                rv.scrollToPosition(scrollIndex)
             }
-            rv.smoothScrollToPosition(0)
         }
+        rv.smoothScrollToPosition(0)
     }
 }

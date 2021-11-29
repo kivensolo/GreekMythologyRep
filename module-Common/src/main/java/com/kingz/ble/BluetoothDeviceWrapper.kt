@@ -1,6 +1,7 @@
-package com.zeke.demo.device.bluetooth
+package com.kingz.ble
 
 import android.bluetooth.BluetoothDevice
+import android.text.TextUtils
 import kotlin.math.abs
 import kotlin.math.pow
 
@@ -11,8 +12,11 @@ import kotlin.math.pow
  * description：蓝牙设备包装类，加了一个信号强度，以及距离，距离计算因子
  */
 class BluetoothDeviceWrapper(
-    rssi: Int,  //信号强度
-    var device: BluetoothDevice? = null
+    var rssi: Int = -1,  //信号强度
+    var device: BluetoothDevice?=null,
+    var showName:String ?= "",
+    var extInfo:String ?= "",
+    var syncTime:String ?= ""
 ) : Comparable<BluetoothDeviceWrapper> {
 
     /**
@@ -38,7 +42,7 @@ class BluetoothDeviceWrapper(
         if (this === other) return true
         if (other == null || javaClass != other.javaClass) return false
         val wrapper = other as BluetoothDeviceWrapper
-        return device?.equals(wrapper.device)?:false
+        return TextUtils.equals(device?.address, wrapper.device?.address)
     }
 
     override fun hashCode(): Int {

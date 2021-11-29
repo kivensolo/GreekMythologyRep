@@ -19,8 +19,6 @@ import com.zeke.ktx.App;
 import com.zeke.network.OkHttpClientManager;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 /**
  * author: King.Z
@@ -154,12 +152,4 @@ public class MgPosterAdapter extends CommonRecyclerAdapter<MgPosterBean> {
         remove(position);
         notifyItemRemoved(position);
     }
-
-    private static Date getBeforeDay(Date date, int i) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.add(Calendar.DAY_OF_YEAR, i * (-1));
-        return calendar.getTime();
-    }
-
 }

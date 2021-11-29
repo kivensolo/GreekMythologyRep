@@ -7,6 +7,8 @@ private val weekDays = arrayListOf(
     "星期天", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"
 )
 
+const val patternFormatChinese:String = "yyyy年MM月dd日 HH:mm:ss"
+
 // <editor-fold defaultstate="collapsed" desc="简单日期格式化定义">
 /** 年月日 */
 val sdfDate: SimpleDateFormat
@@ -23,6 +25,14 @@ val sdfCurrentTimeValue: SimpleDateFormat
 // </editor-fold>
 
 // <editor-fold defaultstate="collapsed" desc="Date扩展属性&函数">
+
+/**
+ * 获取当前时间指定偏移量的指定格式字符串
+ */
+fun Date.getTimeFormatString(pattern: String, offSetMs: Long = 0L): String{
+    val sdfDate = SimpleDateFormat(pattern, Locale.getDefault())
+    return sdfDate.format(time + offSetMs)
+}
 
 val Date.formatDate: String
     get() = sdfDate.format(time)
@@ -42,8 +52,9 @@ fun Date.getTimeFormatString(format: String): String {
 }
 // </editor-fold>
 
+// <editor-fold defaultstate="collapsed" desc="数字的时间扩展属性">
 /**
- * N天前
+ * 当前时间，N天前
  */
 val Int.daysAgo: String
     get() = Calendar.getInstance().run {
@@ -52,7 +63,7 @@ val Int.daysAgo: String
     }
 
 /**
- * N天后
+ * 当前时间，N天后
  */
 val Int.daysLater: String
     get() = Calendar.getInstance().run {
@@ -61,7 +72,7 @@ val Int.daysLater: String
     }
 
 /**
- * N周前
+ * 当前时间，N周前
  */
 val Int.weekAgo: String
     get() = Calendar.getInstance().run {
@@ -70,7 +81,7 @@ val Int.weekAgo: String
     }
 
 /**
- * N周后
+ * 当前时间，N周后
  */
 val Int.weekLater: String
     get() = Calendar.getInstance().run {
@@ -79,7 +90,7 @@ val Int.weekLater: String
     }
 
 /**
- * N月前
+ * 当前时间，N月前
  */
 val Int.monthAgo: String
     get() = Calendar.getInstance().run {
@@ -88,7 +99,7 @@ val Int.monthAgo: String
     }
 
 /**
- * N月后
+ * 当前时间，N月后
  */
 val Int.monthLater: String
     get() = Calendar.getInstance().run {
@@ -97,7 +108,7 @@ val Int.monthLater: String
     }
 
 /**
- * N年前
+ * 当前时间，N年前
  */
 val Int.yearAgo: String
     get() = Calendar.getInstance().run {
@@ -106,13 +117,14 @@ val Int.yearAgo: String
     }
 
 /**
- * N年后
+ * 当前时间，N年后
  */
 val Int.yearLater: String
     get() = Calendar.getInstance().run {
         this.add(Calendar.YEAR, +this@yearLater)
         sdfDate.format(this.timeInMillis)
     }
+// </editor-fold>
 
 /**
  * 日期工具类
@@ -268,12 +280,13 @@ object DateUtils {
     private fun getDayOffsetInMonth(cal: Calendar, weekStart: Int): Int {
         //日期所在的星期index  1~7(周日~周六)
         val calendar = Calendar.getInstance()
-        calendar.set(cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),1,12,0,0)
+        calendar.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), 1, 12, 0, 0)
         val weekIndex: Int = calendar.get(Calendar.DAY_OF_WEEK)
         return when (weekStart) {
             Calendar.SUNDAY -> weekIndex - 1
             Calendar.MONDAY -> {
-                if (weekIndex == Calendar.SUNDAY) { 6  //偏移6天(前6天是上个月的)
+                if (weekIndex == Calendar.SUNDAY) {
+                    6  //偏移6天(前6天是上个月的)
                 } else {
                     weekIndex - Calendar.MONDAY        //偏移0~5
                 }
@@ -282,5 +295,21 @@ object DateUtils {
             else -> weekIndex
         }
     }
+
+   // <editor-fold defaultstate="collapsed" desc="日期偏移量">
+    /**
+     * Get the date of the specified offset days based on the current date.
+     *
+     * @param date Current date
+     * @param i    offset days
+     * @return new date
+     */
+    fun getOffsetDate(date: Date, i: Int): Date {
+        val calendar = Calendar.getInstance()
+        calendar.time = date
+        calendar.add(Calendar.DAY_OF_YEAR, i)
+        return calendar.time
+    }
+   // </editor-fold>
 }
 
