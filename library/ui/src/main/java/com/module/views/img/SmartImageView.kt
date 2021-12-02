@@ -12,7 +12,10 @@ import com.module.views.R
  * author：ZekeWang
  * date：2021/7/2
  * description：
- * - 支持自定义圆角
+ * - 支持自定义圆角，如：
+ *      app:border="5,ff00ff00,100,100"
+ *      app:border_dash="3,3"
+ *      app:render_mode="clip"
  * - 支持圆角模式选择(Clip或者Xfermode)
  */
 class SmartImageView @JvmOverloads constructor(

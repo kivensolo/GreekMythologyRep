@@ -5,6 +5,7 @@ versions.androidx_ktx = '1.1.0'
 versions.coroutines = '1.4.3'
 versions.jetpack_version = '2.2.0'
 versions.kotlin = '1.4.31'
+versions.materialDialogs = '0.9.4.4'
 ext.versions = versions
 
 ext {
@@ -247,6 +248,10 @@ coroutines.core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.corou
 coroutines.android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutines"
 deps.coroutines = coroutines
 
+// meterial支持
+def meterial = [:]
+meterial.dialogs = "com.afollestad.material-dialogs:commons:$versions.materialDialogs"
+deps.meterial = meterial
 
 ext.deps = deps
 

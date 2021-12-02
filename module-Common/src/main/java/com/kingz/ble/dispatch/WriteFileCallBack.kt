@@ -1,11 +1,9 @@
-package com.kapplication.beidou.watch.ble.dispatch
+package com.kingz.ble.dispatch
 
 import com.kapplication.beidou.watch.ble.response.BleResponse
-import com.kapplication.beidou.watch.ble.response.ResponseOfFlashWrite
-import com.kapplication.beidou.watch.ble.util.HexUtil
-import com.kapplication.common.log.KLog
-import com.kingz.ble.dispatch.IBleResponseCallBack
 import com.kingz.ble.exception.BleException
+import com.kingz.module.common.utils.HexUtil
+import com.zeke.kangaroo.zlog.ZLog
 import kotlin.coroutines.Continuation
 import kotlin.coroutines.resume
 
@@ -19,9 +17,9 @@ class WriteFileCallBack(private val size: Int, private val continuation: Continu
     private var index: Int = 0
 
     override fun onSuccess(response: BleResponse) {
-        KLog.d("write bin file Flash onResult(${(index + 1)}/${size}):[${HexUtil.formatHexString(response.result, true)}]")
-        val result = ResponseOfFlashWrite(response.result)
-        if (result.isSuccess()) {
+        ZLog.d("write bin file Flash onResult(${(index + 1)}/${size}):[${HexUtil.formatHexString(response.result, true)}]")
+        val isSuccess = true // 根据返回数据判断数据是否成功
+        if (isSuccess) {
             if (index == (size - 1)) {
                 continuation?.resume(true)
             }
@@ -32,7 +30,7 @@ class WriteFileCallBack(private val size: Int, private val continuation: Continu
     }
 
     override fun onError(exception: BleException) {
-        KLog.e("write bin file Flash onError:[${exception.reason}", exception)
+        ZLog.e("write bin file Flash onError:[${exception.reason}", exception)
         continuation?.resume(false)
     }
 }

@@ -176,8 +176,8 @@
     <color name="navy">#000080</color><!--海军色 -->
 
 
-    <color name="colorPrimary">@color/white</color>
-    <color name="colorPrimaryDark">@color/app_white_gray</color>
+    <color name="colorPrimary">@color/app_light_green</color>
+    <color name="colorPrimaryDark">@color/app_light_green_translucent</color>
     <color name="colorAccent">#FF4081</color>
 
     <!--  白色主题  -->

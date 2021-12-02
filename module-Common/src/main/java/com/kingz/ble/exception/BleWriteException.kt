@@ -1,7 +1,7 @@
-package com.kapplication.beidou.watch.ble.exception
+package com.kingz.ble.exception
 
-import com.kapplication.beidou.watch.ble.cons.BleMsg
-import com.kingz.ble.exception.BleException
+import com.kingz.ble.cons.BleMsg
+
 
 class BleWriteException(
     override var code: Int = BleMsg.MSG_OF_WRITE_ERROR,

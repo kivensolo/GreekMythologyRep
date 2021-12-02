@@ -2,22 +2,21 @@
 
 package com.kapplication.beidou.watch.ble.dispatch
 
+import BleWriteTask
 import android.bluetooth.BluetoothGatt
 import android.bluetooth.BluetoothGattCharacteristic
 import android.os.Handler
 import android.os.Looper
 import android.text.TextUtils
-import com.kapplication.beidou.watch.ble.cons.BleMsg
-import com.kapplication.beidou.watch.ble.cons.EventCode
-import com.kapplication.beidou.watch.ble.exception.BleWriteException
-import com.kapplication.beidou.watch.ble.flash.FlashWriteData
-import com.kapplication.beidou.watch.ble.model.BleChannelType
-import com.kapplication.beidou.watch.ble.model.IBleData
-import com.kapplication.beidou.watch.ble.model.SimpleBleData
 import com.kapplication.beidou.watch.ble.response.BleResponse
-import com.kapplication.common.log.KLog
+import com.kingz.ble.cons.BleMsg
 import com.kingz.ble.dispatch.BleSliceTask
+import com.kingz.ble.dispatch.IBleManagerDelegate
 import com.kingz.ble.dispatch.IBleResponseCallBack
+import com.kingz.ble.exception.BleWriteException
+import com.kingz.ble.model.IBleData
+import com.kingz.ble.model.SimpleBleData
+import com.zeke.kangaroo.zlog.ZLog
 import java.util.*
 import java.util.concurrent.ConcurrentLinkedQueue
 
@@ -45,7 +44,7 @@ open class BlueToothDataDispatcher(val delegate: IBleManagerDelegate) {
     /**
      * 前序发送任务
      */
-    private var preSendTask:BleWriteTask ?= null
+    private var preSendTask: BleWriteTask?= null
 
     /**
      * 前序分片任务
@@ -124,15 +123,10 @@ open class BlueToothDataDispatcher(val delegate: IBleManagerDelegate) {
             private fun checkPreTaskTimeOut(): Boolean {
                 if (dataWriting) {
                     if (waitCounts >= 3) {
-                        KLog.w("PreData is write time out, drop.")
+                        ZLog.w("PreData is write time out, drop.")
                         uiHandler.post {
-                            val reason = if (preSendTask?.data is FlashWriteData) {
-                                (preSendTask?.data as FlashWriteData).readBack.toString()
-                            } else {
-                                "Data Write Exception"
-                            }
                             preSendTask?.callback?.onError(
-                                BleWriteException(code = BleMsg.MSG_OF_WRITE_OVER_TIME, reason)
+                                BleWriteException(code = BleMsg.MSG_OF_WRITE_OVER_TIME, "Data Write Exception")
                             )
                         }
                         resetWrite()
@@ -207,14 +201,14 @@ open class BlueToothDataDispatcher(val delegate: IBleManagerDelegate) {
 
   // <editor-fold defaultstate="collapsed" desc="蓝牙事件回调">
     fun onMtuChanged(mtu: Int, status: Int){
-        KLog.d(TAG, "onMtuChanged() mtu=$mtu  status=$status (0 is success)")
+        ZLog.d(TAG, "onMtuChanged() mtu=$mtu  status=$status (0 is success)")
         when(status){
             BluetoothGatt.GATT_SUCCESS -> { //MTU设置成功
                 currentBleMtu = mtu - 3     // 减去蓝牙协议头的三个字节
             }
-            EventCode.MTU_CHANGE_ILLEGAL -> {
-                // 设置的mtu无效, 使用原有大小
-            }
+//            EventCode.MTU_CHANGE_ILLEGAL -> {
+//                // 设置的mtu无效, 使用原有大小
+//            }
             else->{}
         }
     }
@@ -283,7 +277,7 @@ open class BlueToothDataDispatcher(val delegate: IBleManagerDelegate) {
      * 填充分片返回数据
      */
     private fun inflateSliceResponse(
-        result: ByteArray, writeTask:BleWriteTask
+        result: ByteArray, writeTask: BleWriteTask
     ) {
 //        TLog("InflateSliceResponse sliceCount:${writeTask.sliceCounts} currentId:${writeTask.sliceId}")
         val tempArray = ByteArray(sliceBufferResponseData.size + result.size)
@@ -385,11 +379,8 @@ open class BlueToothDataDispatcher(val delegate: IBleManagerDelegate) {
         data: IBleData, sliceMode: Boolean = true, callback: IBleResponseCallBack? = null
     ) {
         if (sliceMode) {
-            val sliceNum = when (data.getType()) {
-                BleChannelType.UART,
-                BleChannelType.FLASH -> currentBleMtu
-                else -> DEFAULT_WRITE_DATA_SPLIT_COUNT
-            }
+            //TODO 自定义分片大小
+            val sliceNum = DEFAULT_WRITE_DATA_SPLIT_COUNT
             addSliceTaskToQueue(BleSliceTask(data, sliceNum, callback))
         } else {
             val bleWriteTask = BleWriteTask(data, callback)
@@ -453,9 +444,7 @@ open class BlueToothDataDispatcher(val delegate: IBleManagerDelegate) {
 
         val size = byteQueue.size
         byteQueue.forEachIndexed { index, bytes ->
-            val simpleBleData = SimpleBleData(
-                dataObj.getType(), bytes
-            )
+            val simpleBleData = SimpleBleData(bytes)
             simpleBleData.realTaskName = dataObj::class.java.simpleName
             val bleSendTask = BleWriteTask(simpleBleData, callback)
             bleSendTask.sliceCounts = pkgCount
@@ -516,13 +505,13 @@ open class BlueToothDataDispatcher(val delegate: IBleManagerDelegate) {
     }
 
     private fun TLog(msg:String){
-        if(DEBUG_MODE){ KLog.d(TAG,msg) }
+        if(DEBUG_MODE){ ZLog.d(TAG,msg) }
     }
     private fun TLogW(msg:String){
-        if(DEBUG_MODE){ KLog.w(TAG,msg) }
+        if(DEBUG_MODE){ ZLog.w(TAG,msg) }
     }
 
     private fun TLogE(msg:String){
-        if(DEBUG_MODE){ KLog.e(TAG,msg) }
+        if(DEBUG_MODE){ ZLog.e(TAG,msg) }
     }
 }

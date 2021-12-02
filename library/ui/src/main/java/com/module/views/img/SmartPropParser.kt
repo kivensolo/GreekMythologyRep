@@ -62,7 +62,7 @@ class SmartPropParser(
 /**
  * 元素边框。
  * 宽度，颜色，ltx-radius，lty-radius，rtx-radius，rty-radius，brx-radius，bry-radius，blx-radius，bly-radius，位置
- * 宽度，颜色，圆角x-radius，圆角y-radius，位置
+ * 宽度，颜色，圆角x-radius(dp值)，圆角y-radius(dp值)，位置
  * 宽度，颜色，圆角x-radius，圆角y-radius
  * 宽度，颜色，位置
  * 如：8,E01595EF,12,12,0.35

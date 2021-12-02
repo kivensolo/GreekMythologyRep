@@ -34,7 +34,7 @@
     </style>
 
     <style name="SlideMenuListStyle">
-        <item name="android:padding">@dimen/size_16dp</item>
+        <item name="android:padding">@dimen/size_10dp</item>
         <item name="android:drawablePadding">@dimen/size_4dp</item>
         <item name="android:background">?android:attr/selectableItemBackground</item>
         <item name="android:layout_width">match_parent</item>

@@ -18,5 +18,6 @@
 
         <activity android:name="com.zeke.home.ScrollableTabExampleActivity" />
 
+        <activity android:name="com.zeke.home.wanandroid.setting.SettingActivity" />
     </application>
 </manifest>

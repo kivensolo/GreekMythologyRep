@@ -1,8 +1,8 @@
-package com.kapplication.beidou.watch.ble.dispatch
 
-import com.kapplication.beidou.watch.ble.model.IBleData
-import com.kapplication.beidou.watch.ble.model.SimpleBleData
+import com.kapplication.beidou.watch.ble.dispatch.IBleTask
 import com.kingz.ble.dispatch.IBleResponseCallBack
+import com.kingz.ble.model.IBleData
+import com.kingz.ble.model.SimpleBleData
 
 class BleWriteTask(
     var data: IBleData,

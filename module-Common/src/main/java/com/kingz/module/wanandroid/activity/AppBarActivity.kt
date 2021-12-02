@@ -1,5 +1,8 @@
 package com.kingz.module.wanandroid.activity
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -12,9 +15,12 @@ import com.kingz.base.BaseVMActivity
 import com.kingz.base.factory.ViewModelFactory
 import com.kingz.module.common.R
 import com.kingz.module.common.router.RouterConfig
+import com.kingz.module.common.setting.SettingUtil
+import com.kingz.module.common.utils.StatusBarUtil
 import com.kingz.module.wanandroid.WADConstants
 import com.kingz.module.wanandroid.fragemnts.UserCollectionFragment
 import com.kingz.module.wanandroid.viewmodel.WanAndroidViewModelV2
+import com.module.tools.ColorUtils
 import com.zeke.kangaroo.utils.ToastUtils
 import com.zeke.kangaroo.zlog.ZLog
 //import kotlinx.android.synthetic.main.view_page_header.*
@@ -25,16 +31,53 @@ import com.zeke.kangaroo.zlog.ZLog
  * description：带有AppBar的Layout页面
  */
 @Route(path = RouterConfig.PAGE_COMMON_APPBAR)
-class AppBarActivity : BaseVMActivity() {
+open class AppBarActivity : BaseVMActivity() {
     // 当前fragment
     private var curFragment: Fragment? = null
     private var mFragmentManager: FragmentManager? = null
+    /**
+     * theme color
+     */
+    protected var mThemeColor: Int = SettingUtil.getAppThemeColor()
 
     override val viewModel: WanAndroidViewModelV2 by viewModels {
         ViewModelFactory.build { WanAndroidViewModelV2() }
     }
 
     override fun getContentLayout(): Int = R.layout.layout_appbar_recycler_list_page
+
+    override fun onResume() {
+        super.onResume()
+        initColor()
+    }
+
+    open fun initColor() {
+        mThemeColor = if (SettingUtil.getIsNightMode()) {
+            resources.getColor(R.color.colorPrimary)
+        } else {
+            SettingUtil.getAppThemeColor()
+        }
+        StatusBarUtil.setColor(this, mThemeColor, 0)
+        if (this.supportActionBar != null) {
+            this.supportActionBar?.setBackgroundDrawable(ColorDrawable(mThemeColor))
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            window.statusBarColor = CircleView.shiftColorDown(mThemeColor)
+//            // 最近任务栏上色
+//            val tDesc = ActivityManager.TaskDescription(
+//                    getString(R.string.app_name),
+//                    BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher),
+//                    mThemeColor)
+//            setTaskDescription(tDesc)
+            if (SettingUtil.getNavBar()) {
+                window.navigationBarColor = ColorUtils.shiftColorDown(mThemeColor)
+            } else {
+                window.navigationBarColor = Color.BLACK
+            }
+        }
+    }
+
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)

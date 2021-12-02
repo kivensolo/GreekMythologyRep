@@ -13,6 +13,7 @@ object RouterConfig {
 
     // <editor-fold defaultstate="collapsed" desc="Home模块">
     const val PAGE_MAIN = "/home/main"
+    const val PAGE_SETTING = "/home/setting"
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Demo模块">

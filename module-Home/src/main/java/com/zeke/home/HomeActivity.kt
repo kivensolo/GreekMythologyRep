@@ -130,6 +130,10 @@ class HomeActivity : BaseVMActivity(),ISwitcher {
             }
         }
 
+        setting?.setOnClickListener {
+            Router.startActivity(RouterConfig.PAGE_SETTING)
+        }
+
         tvLogout?.setOnClickListener {
             if (mIsDoubleClieckLogout) {
                 mIsDoubleClieckLogout = false

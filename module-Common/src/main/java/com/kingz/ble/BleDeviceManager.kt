@@ -2,6 +2,7 @@
 
 package com.kingz.ble
 
+import BleWriteTask
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Application
@@ -14,13 +15,12 @@ import android.os.Looper
 import android.os.Message
 import com.hjq.permissions.OnPermissionCallback
 import com.hjq.permissions.XXPermissions
-import com.kapplication.beidou.watch.ble.dispatch.BleWriteTask
 import com.kapplication.beidou.watch.ble.dispatch.BlueToothDataDispatcher
-import com.kapplication.beidou.watch.ble.dispatch.IBleManagerDelegate
-import com.kapplication.beidou.watch.ble.exception.BleWriteException
 import com.kingz.ble.cons.BleMsg
 import com.kingz.ble.controller.GattCharacteristicController
+import com.kingz.ble.dispatch.IBleManagerDelegate
 import com.kingz.ble.dispatch.IBleResponseCallBack
+import com.kingz.ble.exception.BleWriteException
 import com.kingz.ble.model.IBleData
 import com.kingz.ble.response.BleEventCallBack
 import com.kingz.module.common.utils.getTimeFormatString
@@ -64,7 +64,7 @@ import kotlin.collections.HashMap
  *  5.蓝牙如果出现扫描不到的情况，那是因为手机没有开启定位权限，清单文件中写上定位权限，代码中在动态获取下就OK了。
  *
  */
-object BleDeviceManager {
+public object BleDeviceManager {
     private const val TAG = "BleDeviceManager"
 
     // <editor-fold defaultstate="collapsed" desc="老版Android蓝牙GATT Server事件广播action">

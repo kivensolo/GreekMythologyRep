@@ -83,6 +83,11 @@
                     style="@style/SlideMenuListStyle"
                     android:drawableLeft="@drawable/ic_menu_about"
                     android:text="@string/menu_about" />
+                <TextView
+                    android:id="@+id/setting"
+                    style="@style/SlideMenuListStyle"
+                    android:drawableStart="@drawable/ic_menu_about"
+                    android:text="@string/menu_setting" />
 
                 <TextView
                     android:id="@+id/tvLogout"

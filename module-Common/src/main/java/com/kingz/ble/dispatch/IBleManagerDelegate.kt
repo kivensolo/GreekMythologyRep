@@ -1,4 +1,7 @@
-package com.kapplication.beidou.watch.ble.dispatch
+package com.kingz.ble.dispatch
+
+import BleWriteTask
+
 
 /**
  * 回调线程都是子线程
