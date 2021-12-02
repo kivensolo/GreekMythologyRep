@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.module.views.img.SmartImageView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="48dp"
-    android:layout_height="48dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <com.module.views.img.SmartImageView
-        android:id="@+id/iv_preview"
-        android:layout_width="44dp"
-        android:layout_height="44dp"
-        app:border="0,ff9e9e9e,22,22"
-        app:render_mode="xfermode"
-        android:src="@color/red"
-        android:layout_centerInParent="true"
-        tools:ignore="ContentDescription" />
-</RelativeLayout>
+    android:id="@+id/iv_preview"
+    android:layout_width="40dp"
+    android:layout_height="40dp"
+    android:layout_centerInParent="true"
+    android:src="@color/red"
+    app:border="0,ff9e9e9e,20,20"
+    app:render_mode="clip"
+    tools:ignore="ContentDescription" />
