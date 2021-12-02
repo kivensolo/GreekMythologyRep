@@ -18,71 +18,54 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <!--        &lt;!&ndash;-->
-        <!--            AppbarLayout就是一个竖直方向的LinearLayout,-->
-        <!--            只不过它添加了一些材料的概念和特性，可以定制子View的滑动-->
-        <!--            严重依赖于CoordinatorLayout，用于CoordinatorLayout 的直接子View&ndash;&gt;-->
-        <!--        <com.google.android.material.appbar.AppBarLayout-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:orientation="vertical"-->
-        <!--            tools:background="@color/colorPrimary"-->
-        <!--            app:elevation="0dp">-->
+        <!--&lt;!&ndash;
+            AppbarLayout就是一个竖直方向的LinearLayout,
+            只不过它添加了一些材料的概念和特性，可以定制子View的滑动
+            严重依赖于CoordinatorLayout，用于CoordinatorLayout 的直接子View&ndash;&gt;
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:background="@color/colorPrimary"
+            app:elevation="0dp">
 
-        <!--            <include layout="@layout/top_tool_bar" />-->
-        <!--        </com.google.android.material.appbar.AppBarLayout>-->
-
-        <!-- 内容区域-->
-             <FrameLayout
-                 android:id="@+id/content"
-                 android:layout_width="match_parent"
-                 android:layout_height="0dp"
-                 app:layout_constraintBottom_toTopOf="@+id/main_bottom_layout"
-                 app:layout_constraintEnd_toEndOf="parent"
-                 app:layout_constraintStart_toStartOf="parent"
-                 app:layout_constraintTop_toTopOf="parent" />
+            <include layout="@layout/top_tool_bar" />
+        </com.google.android.material.appbar.AppBarLayout>-->
 
 <!--    整体式Viewpager2的内容区域    -->
-       <!-- <androidx.viewpager2.widget.ViewPager2
+        <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/contentViewPager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@+id/line"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />-->
+            app:layout_constraintTop_toTopOf="parent" />
 
         <View
             android:id="@+id/line"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/gray"
-            app:layout_constraintBottom_toTopOf="@+id/main_bottom_layout"
+            app:layout_constraintBottom_toTopOf="@+id/appBottomTabLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-         <include
-             android:id="@+id/main_bottom_layout"
-             layout="@layout/main_bottom_layout"/>
-
-       <!--
-       底部搞成tabLayout
-       <com.google.android.material.tabs.TabLayout
+        <com.google.android.material.tabs.TabLayout
             android:id="@+id/appBottomTabLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:background="@color/app_white"
             android:elevation="3dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:tabIconTint="@color/text_dark"
             app:tabTextColor="@color/text_dark"
-            app:tabSelectedTextColor="@color/ic_green_light"
+            app:tabIconTint="@color/tab_tint_color"
+            app:tabSelectedTextColor="@color/google_green"
             app:tabIndicator="@null"
             app:tabMode="fixed"
-            app:tabRippleColor="@android:color/transparent"/>-->
+            app:tabRippleColor="@android:color/transparent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </com.module.slide.SuperSlidingPaneLayout>

@@ -11,15 +11,17 @@ import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.WindowManager
+import android.widget.LinearLayout
 import androidx.activity.viewModels
-import androidx.annotation.ColorInt
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.gyf.immersionbar.ImmersionBar
+import com.google.android.material.tabs.TabLayoutMediator
 import com.hjq.permissions.OnPermissionCallback
 import com.hjq.permissions.XXPermissions
 import com.kingz.base.BaseVMActivity
@@ -35,7 +37,6 @@ import com.kingz.module.home.R
 import com.kingz.module.wanandroid.WADConstants
 import com.kingz.module.wanandroid.activity.AppBarActivity
 import com.module.slide.SuperSlidingPaneLayout
-import com.module.tools.ColorUtils
 import com.zeke.eyepetizer.fragemnts.EyepetizerHomeFragment
 import com.zeke.home.fragments.home.HomeContainerFragment
 import com.zeke.home.fragments.home.HomeLiveFragment
@@ -45,7 +46,6 @@ import com.zeke.home.wanandroid.viewmodel.HomeViewModel
 import com.zeke.kangaroo.utils.ToastUtils
 import com.zeke.kangaroo.zlog.ZLog
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.main_bottom_layout.*
 import kotlinx.android.synthetic.main.slide_menu_layout.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -56,29 +56,21 @@ import java.lang.String
  * 首页
  */
 @Route(path = RouterConfig.PAGE_MAIN)
-class HomeActivity : BaseVMActivity(),ISwitcher {
+class HomeActivity : BaseVMActivity(), View.OnClickListener{
 
-    /*companion object {
+    companion object {
         const val TAG = "HomeActivity"
 
         val tabMap = linkedMapOf(
-            "知识" to R.drawable.tab_knowlega_icon,
-            "直播" to R.drawable.tab_vod_icon,
-            "" to R.drawable.publish_add,
-            "开眼视频" to R.drawable.tab_eyepetizer_icon,
-            "我的" to R.drawable.tab_mine_icon
+            "知识" to R.drawable.ic_knowlege_nor,
+            "直播" to R.drawable.ic_live_nor,
+            "CCC" to R.drawable.publish_add,
+            "开眼" to R.drawable.ic_eyepetizer_nor,
+            "我的" to R.drawable.ic_knowlege_nor
         )
-    }*/
+    }
 
-    // 知识专栏(玩Android、Demo等)
-    private lateinit var homeKnowlegeFragment: HomeContainerFragment
-    // 视频直播
-    private lateinit var homeLiveFragment: HomeLiveFragment
-    // 开眼视频
-    private lateinit var homeOpenEyeFragment: EyepetizerHomeFragment
-
-    private lateinit var panelSlidelLsr: HomePanelSlidelLsr
-
+    private lateinit var panelSlidelLsr: HomePanelSlideLsr
     private var mIsDoubleClieckLogout= false
     private val MSG_CLICK_LOGOUT_PASS = 0x0001
     private var mHandler:Handler = Handler(object : Handler.Callback {
@@ -105,12 +97,8 @@ class HomeActivity : BaseVMActivity(),ISwitcher {
 
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
 
-        initFragments()
-
-        initBottomTab()
-
+        initViewPager()
         initSlidingPaneLayout()
-
         initSlideMenuView()
     }
 
@@ -176,7 +164,7 @@ class HomeActivity : BaseVMActivity(),ISwitcher {
     }
 
     private fun initSlidingPaneLayout() {
-        panelSlidelLsr = HomePanelSlidelLsr()
+        panelSlidelLsr = HomePanelSlideLsr()
         slidPanelLayout?.setPanelSlideListener(panelSlidelLsr)
         slidPanelLayout?.sliderFadeColor = ContextCompat.getColor(this, R.color.black_transparent)
         slidPanelLayout?.coveredFadeColor = ContextCompat.getColor(this, R.color.transparent)
@@ -194,28 +182,6 @@ class HomeActivity : BaseVMActivity(),ISwitcher {
 
         viewModel.getUserInfo()
         NSDService().init(baseContext)
-    }
-
-    /**
-     * 初始化首页的Fragment
-     */
-    private fun initFragments() {
-        homeKnowlegeFragment = HomeContainerFragment()
-        homeLiveFragment = HomeLiveFragment()
-        homeOpenEyeFragment = EyepetizerHomeFragment()
-
-        with(supportFragmentManager.beginTransaction()){
-            add(R.id.content, homeKnowlegeFragment)
-            add(R.id.content, homeLiveFragment)
-            add(R.id.content, homeOpenEyeFragment)
-            commit()
-        }
-
-        supportFragmentManager.beginTransaction()
-            .show(homeKnowlegeFragment)
-            .hide(homeLiveFragment)
-            .hide(homeOpenEyeFragment)
-            .commit()
     }
 
     override fun initViewModel() {
@@ -237,19 +203,28 @@ class HomeActivity : BaseVMActivity(),ISwitcher {
         super.onDestroy()
     }
 
-    private fun initBottomTab() {
-       /* // TODO 内容区域的ViewPager2适配器
+    private fun initViewPager() {
+        //禁止左右滑动翻页
+//        contentViewPager.isUserInputEnabled = false
         contentViewPager.adapter = object : FragmentStateAdapter(this) {
             override fun getItemCount(): Int = tabMap.size
 
             override fun createFragment(position: Int): Fragment = when (position) {
                 0 -> HomeContainerFragment()
                 1 -> HomeLiveFragment()
-                2 -> EyepetizerHomeFragment()
+                2 -> HomeLiveFragment()     //TODO 后续接入新的Fragment
                 3 -> EyepetizerHomeFragment()
-                else -> EyepetizerHomeFragment()
+                else -> HomeLiveFragment()  //TODO 后续接入新的Fragment
             }
         }
+        contentViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                ZLog.d(TAG, "onPageSelected position=${position}")
+            }
+        })
+
+        // Bind tablayout & viewpager2
         TabLayoutMediator(appBottomTabLayout,contentViewPager){ tab, position ->
             val key = tabMap.keys.elementAt(position)
             tab.text = key
@@ -261,16 +236,14 @@ class HomeActivity : BaseVMActivity(),ISwitcher {
             val params = appBottomTabLayout.getTabAt(i)?.view?.getChildAt(0)?.layoutParams as LinearLayout.LayoutParams?
             params?.bottomMargin = 3
             appBottomTabLayout.getTabAt(i)?.view?.getChildAt(0)?.layoutParams = params
-        }*/
+        }
 
-        //默认选中页
-        tabKnowlegaPage.isChecked = true
-
-        tabKnowlegaPage.setOnClickListener(this)
-        tabLive.setOnClickListener(this)
-        tabPublish.setOnClickListener(this)
-        tabEyetizer.setOnClickListener(this)
-        tabMine.setOnClickListener(this)
+        // 拦截长按操作
+        val tabStrip = appBottomTabLayout.getChildAt(0) as LinearLayout
+        for (i in 0 until tabStrip.childCount) {
+            tabStrip.getChildAt(i).setOnLongClickListener { true }
+        }
+        appBottomTabLayout.foregroundTintList
     }
 
     private fun permissionCheck() {
@@ -287,40 +260,6 @@ class HomeActivity : BaseVMActivity(),ISwitcher {
                     Manifest.permission.WRITE_EXTERNAL_STORAGE
                 ),
                 0x1001
-            )
-        }
-    }
-
-    override fun switchFragment(@ISwitcher.ButtomType type: Int) {
-        ZLog.d("switchFragment:$type")
-        when (type) {
-            ISwitcher.TYPE_KNOWLEGA -> {
-//                ZLog.d("switchFragment:" + BitmapUtils.native_get_Hello())
-                fragmentsChange(
-                    homeKnowlegeFragment,
-                    homeLiveFragment,
-                    homeOpenEyeFragment
-                )
-            }
-            ISwitcher.TYPE_LIVE -> fragmentsChange(
-                homeLiveFragment,
-                homeKnowlegeFragment,
-                homeOpenEyeFragment
-            )
-
-            ISwitcher.TYPE_EYEPETIZER -> {
-                //setNavigationBarColor(resources.getColor(R.color.google_red))
-                fragmentsChange(
-                    homeOpenEyeFragment,
-                    homeKnowlegeFragment,
-                    homeLiveFragment
-                )
-            }
-            ISwitcher.TYPE_MINE -> fragmentsChange(
-                null,
-                homeKnowlegeFragment,
-                homeLiveFragment,
-                homeOpenEyeFragment
             )
         }
     }
@@ -364,12 +303,6 @@ class HomeActivity : BaseVMActivity(),ISwitcher {
             R.id.tvVersion -> {
                 clickVersion(true)
             }
-
-            // ---- 新版Buttom
-            R.id.tabKnowlegaPage -> switchFragment(ISwitcher.TYPE_KNOWLEGA)
-            R.id.tabLive -> switchFragment(ISwitcher.TYPE_LIVE)
-            R.id.tabEyetizer -> switchFragment(ISwitcher.TYPE_EYEPETIZER)
-            R.id.tabMine -> switchFragment(ISwitcher.TYPE_MINE)
         }
     }
 
@@ -377,7 +310,7 @@ class HomeActivity : BaseVMActivity(),ISwitcher {
         if (isClick) { addHeart(1) }
     }
 
-    inner class HomePanelSlidelLsr : SuperSlidingPaneLayout.SimplePanelSlideListener() {
+    inner class HomePanelSlideLsr : SuperSlidingPaneLayout.SimplePanelSlideListener() {
         override fun onPanelOpened(panel: View?) {
             super.onPanelOpened(panel)
             addHeart(RandomUtils.INSTANCE.random(5, 15))
@@ -411,20 +344,6 @@ class HomeActivity : BaseVMActivity(),ISwitcher {
 //            .hideBar(BarHide.FLAG_HIDE_STATUS_BAR)
 //            .navigationBarColor(R.color.colorPrimaryDark)
 //            .init()
-    }
-
-    /**
-     * 测试修改导航栏效果
-     */
-    private fun setNavigationBarColor(@ColorInt color:Int){
-        val barParams = ImmersionBar.with(this).barParams
-        if(!barParams.hideNavigationBar){
-            window.navigationBarColor = ColorUtils.blendARGB(
-                color,
-                barParams.navigationBarColorTransform,
-                barParams.navigationBarAlpha
-            )
-        }
     }
 }
 
