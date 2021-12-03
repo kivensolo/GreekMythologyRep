@@ -20,6 +20,8 @@ object RouterConfig {
     const val PAGE_PALETTE_DEMO = "/module_Demo/palette"
     const val PAGE_COLOR_MATRIX = "/module_Demo/ColorMatrix"
     const val PAGE_PIXEL_COPY = "/module_Demo/PixelCopy"
+    const val PAGE_APPBAR_DEMO = "/module_Demo/Appbar"
+    const val PAGE_IMMERSION = "/module_Demo/ImmersionBar"
     // </editor-fold>
 
     const val PAGE_LOGIN = "/module_Login/login"

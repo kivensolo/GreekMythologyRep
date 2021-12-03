@@ -28,7 +28,10 @@ abstract class ISampleEntity {
     protected abstract fun getDemoClass(): Class<*>?
 }
 
-// 每一个Demo实例的数据类
+/**
+ * 每一个Demo实例的数据类
+ * @param path 页面路径 可以是AroutPath，也可以是直接的class包路径
+ */
 data class DemoSample(var name: String? = "unKnow",
                       var path: String = "") : ISampleEntity() {
     private val cacheClass = HashMap<String?, Class<*>>()

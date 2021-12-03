@@ -19,7 +19,6 @@
 
             <ImageView
                 android:id="@+id/iv_tab_menu"
-                style="@style/OnClickStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/size_10dp"

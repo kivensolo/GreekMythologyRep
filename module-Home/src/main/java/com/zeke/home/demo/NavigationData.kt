@@ -11,6 +11,16 @@ import com.zeke.home.entity.DemoSample
  */
 class NavigationData {
     var groupList:MutableList<DemoGroup> = mutableListOf(
+        DemoGroup("基础控件","原生基本控件",
+            samples = arrayListOf(
+                DemoSample("BasicControls", "com.kingz.widgets.android_src.BasicControlsActivity"),
+            )
+        ),
+        DemoGroup("RecyclerView","RecyclerView",
+            samples = arrayListOf(
+                DemoSample("DragRecyclerView", "com.kingz.recyclerview.MusicPosterPages"),
+            )
+        ),
         DemoGroup("File","文件相关",
             samples = arrayListOf(
                 DemoSample("File Test",     "com.kingz.file.FileAndPicTestACT"),
@@ -22,14 +32,26 @@ class NavigationData {
             samples = arrayListOf(
                 DemoSample("Arcs",          RouterConfig.PAGE_GRAPHIC_ARCS),
                 DemoSample("BitMapOverall", RouterConfig.PAGE_GRAPHIC_BITMAP_OVERALL),
-                DemoSample("ColorMatrix",   RouterConfig.PAGE_COLOR_MATRIX),
                 DemoSample("Palette",       RouterConfig.PAGE_PALETTE_DEMO),
                 DemoSample("PixelCopy",     RouterConfig.PAGE_PIXEL_COPY)
             )
         ),
+        DemoGroup("About Color","颜色",
+            samples = arrayListOf(
+                DemoSample("ColorMatrix",   RouterConfig.PAGE_COLOR_MATRIX),
+                DemoSample("NewFeature of UI", RouterConfig.PAGE_NEW_FEATURES)
+            )
+        ),
+        DemoGroup("Meterial Design","MD设计",
+            samples = arrayListOf(
+                DemoSample("AppBarLayout效果", RouterConfig.PAGE_NEW_FEATURES),
+                DemoSample("沉浸式效果测试", RouterConfig.PAGE_PALETTE_DEMO)
+            )
+        ),
         DemoGroup("NewFeatures","新特性",
             samples = arrayListOf(
-                DemoSample("NewFeature of UI", RouterConfig.PAGE_PALETTE_DEMO)
+                DemoSample("NewFeature of UI", RouterConfig.PAGE_NEW_FEATURES),
+                DemoSample("Palette", RouterConfig.PAGE_PALETTE_DEMO)
             )
         )
     )

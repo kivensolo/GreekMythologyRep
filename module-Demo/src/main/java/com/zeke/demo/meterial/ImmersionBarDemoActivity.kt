@@ -2,8 +2,10 @@ package com.zeke.demo.meterial
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.gyf.immersionbar.BarHide
 import com.gyf.immersionbar.ImmersionBar
+import com.kingz.module.common.router.RouterConfig
 import com.zeke.demo.R
 import kotlinx.android.synthetic.main.activity_appbarlayout_demo.*
 
@@ -20,6 +22,7 @@ import kotlinx.android.synthetic.main.activity_appbarlayout_demo.*
  *  - View.SYSTEM_UI_FLAG_LAYOUT_STABLE
  *      防止系统栏隐藏时内容区域大小发生变化
  */
+@Route(path= RouterConfig.PAGE_IMMERSION)
 class ImmersionBarDemoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

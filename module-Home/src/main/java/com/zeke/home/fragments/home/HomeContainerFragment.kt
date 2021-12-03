@@ -1,10 +1,12 @@
 package com.zeke.home.fragments.home
 
 import android.util.Log
+import android.view.View
 import androidx.annotation.StringDef
 import androidx.fragment.app.Fragment
 import com.kingz.module.common.BaseActivity
 import com.kingz.module.home.R
+import com.module.slide.SuperSlidingPaneLayout
 import com.zeke.home.contract.RecomPageContract
 import com.zeke.home.entity.TemplatePageData
 import com.zeke.home.fragments.ExpandableDemoFragment
@@ -74,6 +76,11 @@ class HomeContainerFragment : HomeBaseFragment<RecomPresenter>(), RecomPageContr
     override fun onFragmentRenderIsRender() {
         super.onFragmentRenderIsRender()
         mPresenter.getPageContent(activity!!)
+        tableLayout?.findViewById<View>(R.id.iv_tab_menu)?.setOnClickListener {
+            activity?.findViewById<SuperSlidingPaneLayout>(R.id.slidPanelLayout)?.apply {
+                openPane()
+            }
+        }
     }
 
 }
