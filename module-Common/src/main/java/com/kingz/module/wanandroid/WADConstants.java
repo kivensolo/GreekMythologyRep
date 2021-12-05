@@ -18,15 +18,21 @@ public interface WADConstants {
     String KEY_TYPE = "key_type";
     String KEY_CHECK_TIME = "key_check_time";
 
+    String EXTRA_SHOW_FRAGMENT_NAME = "show_fragment_name";
+    String EXTRA_SHOW_FRAGMENT_ARGUMENTS = "show_fragment_args";
+    String EXTRA_SHOW_FRAGMENT_TITLE = "show_fragment_title";
+
     interface Key{
         String KEY_FRAGEMTN_TYPE = "key_fragmennt_type";
 
     }
 
-    interface Type {
+   interface Type {
         int TYPE_TAB_COLLECT = 1;
         int TYPE_TAB_KNOWLEDGE = 2;
         int TYPE_TAB_WEIXIN = 3;
         int TYPE_TAB_PROJECT = 4;
+        int TYPE_SETTING = 5;
+        int TYPE_COLOR = 6;
     }
 }

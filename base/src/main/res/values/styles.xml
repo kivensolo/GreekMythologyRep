@@ -42,4 +42,10 @@
         <item name="colorControlActivated">#ffa0a0a0</item>
         <item name="android:paddingBottom">18dp</item>
     </style>
+
+    <!-- Toolbar标题字体的大小 -->
+    <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">18sp</item>
+    </style>
+
 </resources>

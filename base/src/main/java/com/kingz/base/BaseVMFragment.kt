@@ -33,7 +33,6 @@ abstract class BaseVMFragment< T : BaseReactiveViewModel>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(getLayoutResID(), container, false)
-        onCreateViewReady()
         return rootView
     }
 
@@ -49,7 +48,7 @@ abstract class BaseVMFragment< T : BaseReactiveViewModel>
     override fun onDestroyView() {
         super.onDestroyView()
         rootView = null
-        onViewDestory()
+        onViewDestroy()
     }
 
     override fun onDetach() {
@@ -57,11 +56,12 @@ abstract class BaseVMFragment< T : BaseReactiveViewModel>
         mActivity = null
     }
 
-    open fun onCreateViewReady() {}
-
+    /**
+     * 当View已经加载的回调
+     */
     open fun onViewCreated(){}
 
-    open fun onViewDestory(){}
+    open fun onViewDestroy(){}
 
     /** VIewModel中持有的UI数据监听 */
     @CallSuper

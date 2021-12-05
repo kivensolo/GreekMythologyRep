@@ -48,9 +48,9 @@ abstract class CommonFragment<T : BaseReactiveViewModel> : BaseVMFragment<T>() {
 
     open fun initData() {}
 
-    override fun onViewDestory() {
+    override fun onViewDestroy() {
         ZLog.d("onViewDestory.")
-        super.onViewDestory()
+        super.onViewDestroy()
         loadStatusView = null
     }
 

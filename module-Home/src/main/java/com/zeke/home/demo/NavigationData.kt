@@ -14,6 +14,11 @@ class NavigationData {
         DemoGroup("基础控件","原生基本控件",
             samples = arrayListOf(
                 DemoSample("BasicControls", "com.kingz.widgets.android_src.BasicControlsActivity"),
+                DemoSample("ProgressBar", "com.kingz.widgets.android_src.NativeProgressBar"),
+                DemoSample("SrcLayout", "com.kingz.widgets.android_src.LayoutPage"),
+                DemoSample("ViewPager", "com.kingz.widgets.android_src.OriginViewPager"),
+                DemoSample("WebView", "com.kingz.view.webview.WebViewActivity"),
+                DemoSample("ToolBar", RouterConfig.PAGE_TOOLBAR)
             )
         ),
         DemoGroup("RecyclerView","RecyclerView",
@@ -44,7 +49,7 @@ class NavigationData {
         ),
         DemoGroup("Meterial Design","MD设计",
             samples = arrayListOf(
-                DemoSample("AppBarLayout效果", RouterConfig.PAGE_NEW_FEATURES),
+                DemoSample("AppBarLayout效果", RouterConfig.PAGE_APPBAR_DEMO),
                 DemoSample("沉浸式效果测试", RouterConfig.PAGE_PALETTE_DEMO)
             )
         ),

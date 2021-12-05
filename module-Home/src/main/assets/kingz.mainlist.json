@@ -100,20 +100,8 @@
     "desc": "原生基本控件",
     "samples": [
       {
-        "name": "ProgressBar",
-        "class": "com.kingz.widgets.android_src.NativeProgressBar"
-      },
-      {
-        "name": "SrcLayout",
-        "class": "com.kingz.widgets.android_src.LayoutPage"
-      },
-      {
         "name": "Four major components",
         "class": "com.kingz.widgets.android_src.FourComponentPage"
-      },
-      {
-        "name": "ViewPager",
-        "class": "com.kingz.widgets.android_src.OriginViewPager"
       },
       {
         "name": "SurfaceDraw",

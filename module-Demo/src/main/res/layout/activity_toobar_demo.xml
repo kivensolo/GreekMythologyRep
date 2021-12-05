@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black_transparent"
+    android:padding="@dimen/size_5dp">
+
+    <CheckBox
+        android:id="@+id/homeAsUpEnabledCheckBox"
+        style="@style/Widget.AppCompat.CompoundButton.CheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="HomeAsUpEnabled"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <CheckBox
+        android:id="@+id/homeButtonEnabledCheckBox"
+        style="@style/Widget.AppCompat.CompoundButton.CheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="HomeButtonEnabled"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/homeAsUpEnabledCheckBox" />
+    <CheckBox
+        android:id="@+id/navigationCheckBox"
+        style="@style/Widget.AppCompat.CompoundButton.CheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="NavigationIcon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/homeButtonEnabledCheckBox" />
+
+    <CheckBox
+        android:id="@+id/mainTitleCheckBox"
+        style="@style/Widget.AppCompat.CompoundButton.CheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_5dp"
+        android:text="MainTitle"
+        app:layout_constraintStart_toEndOf="@+id/navigationCheckBox"
+        app:layout_constraintTop_toTopOf="@+id/navigationCheckBox" />
+
+    <CheckBox
+        android:id="@+id/subTitleCheckBox"
+        style="@style/Widget.AppCompat.CompoundButton.CheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/size_5dp"
+        android:text="SubTitle"
+        app:layout_constraintStart_toEndOf="@+id/mainTitleCheckBox"
+        app:layout_constraintTop_toTopOf="@+id/mainTitleCheckBox" />
+
+    <CheckBox
+        android:id="@+id/logoIconCheckBox"
+        style="@style/Widget.AppCompat.CompoundButton.CheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="LogoIcon"
+        app:layout_constraintStart_toStartOf="@+id/navigationCheckBox"
+        app:layout_constraintTop_toBottomOf="@+id/navigationCheckBox" />
+
+    <CheckBox
+        android:id="@+id/collapseIconCheckBox"
+        style="@style/Widget.AppCompat.CompoundButton.CheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CollapseIcon"
+        android:textColor="@color/red"
+        app:layout_constraintStart_toEndOf="@+id/logoIconCheckBox"
+        app:layout_constraintTop_toBottomOf="@+id/navigationCheckBox" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:background="@color/app_white_gray"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/collapseIconCheckBox">
+
+        <CheckBox
+            android:id="@+id/customLayoutCheckBox"
+            style="@style/Widget.AppCompat.CompoundButton.CheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="customLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

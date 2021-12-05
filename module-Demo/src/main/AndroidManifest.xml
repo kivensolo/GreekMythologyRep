@@ -22,6 +22,8 @@
 
         <activity
             android:name="com.zeke.demo.color.ColorMatrixActivity"/>
+        <activity
+            android:name="com.zeke.demo.widget.ToolBarTestActivity"/>
 
         <activity
             android:name=".graphics.PixelCopyDemo"/>

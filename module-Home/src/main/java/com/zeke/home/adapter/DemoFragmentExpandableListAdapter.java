@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.ColorInt;
+
+import com.kingz.module.common.setting.SettingUtil;
 import com.kingz.module.home.R;
 import com.zeke.home.entity.DemoGroup;
 import com.zeke.kangaroo.view.animation.AnimatedExpandableListView;
@@ -25,16 +28,22 @@ public class DemoFragmentExpandableListAdapter extends AnimatedExpandableListVie
     private Context mContext = null;
     private LayoutInflater mInflater;
     private List<DemoGroup> sampleGroups = null;
+    private @ColorInt int checkedColor;
 
     public DemoFragmentExpandableListAdapter(Context mContext) {
         this.mContext = mContext;
         sampleGroups = Collections.emptyList();
         mInflater = LayoutInflater.from(mContext);
+        checkedColor = SettingUtil.INSTANCE.getAppThemeColor();
     }
 
     public void setSampleGroups(List<DemoGroup> sampleGroups) {
         this.sampleGroups = sampleGroups;
         notifyDataSetChanged();
+    }
+
+    public void updateCheckedColor(@ColorInt int color){
+        checkedColor = color;
     }
 
     public boolean areAllItemsEnabled() {
@@ -96,11 +105,11 @@ public class DemoFragmentExpandableListAdapter extends AnimatedExpandableListVie
 //        viewHolder.itemText.setText(groupList.get(groupPosition));
         viewHolder.itemText.setText(sampleGroups.get(groupPosition).getTitle());
         if (isExpanded) {
-            convertView.setBackground(mContext.getResources().getDrawable(R.color.ic_green_light));
+            convertView.setBackgroundColor(checkedColor);
             viewHolder.itemText.setTextColor(mContext.getResources().getColor(R.color.white));
             viewHolder.indictorImg.setBackground(mContext.getResources().getDrawable(R.drawable.ic_down_arrow));
         } else {
-            convertView.setBackground(mContext.getResources().getDrawable(R.color.transparent));
+            convertView.setBackgroundColor(mContext.getResources().getColor(R.color.transparent));
             viewHolder.itemText.setTextColor(mContext.getResources().getColor(R.color.black));
             viewHolder.indictorImg.setBackground(mContext.getResources().getDrawable(R.drawable.ic_right_arrow));
         }

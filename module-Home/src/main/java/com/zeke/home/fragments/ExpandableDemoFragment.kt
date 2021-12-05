@@ -7,6 +7,7 @@ import android.widget.Toast
 import com.kingz.module.common.BaseActivity
 import com.kingz.module.common.base.BaseFragment
 import com.kingz.module.common.router.Router
+import com.kingz.module.common.setting.SettingUtil
 import com.kingz.module.home.R
 import com.zeke.home.adapter.DemoFragmentExpandableListAdapter
 import com.zeke.home.contract.DemoContract
@@ -58,6 +59,11 @@ class ExpandableDemoFragment : BaseFragment(), DemoContract.View,
             setOnChildClickListener(this@ExpandableDemoFragment)
         }
         mPresenter.getDemoInfo(activity!!)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        expandAdapter?.updateCheckedColor(SettingUtil.getAppThemeColor())
     }
 
 

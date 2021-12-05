@@ -270,10 +270,10 @@ class WanAndroidHomeFragment : CommonFragment<WanAndroidViewModelV2>(),
         viewModel.getArticalData(pageId)
     }
 
-    override fun onViewDestory() {
+    override fun onViewDestroy() {
         lifecycleScope.cancel()
         viewModel.cancle(this)
-        super.onViewDestory()
+        super.onViewDestroy()
     }
 
     override fun onDestroy() {

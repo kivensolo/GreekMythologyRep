@@ -22,6 +22,7 @@ object RouterConfig {
     const val PAGE_PIXEL_COPY = "/module_Demo/PixelCopy"
     const val PAGE_APPBAR_DEMO = "/module_Demo/Appbar"
     const val PAGE_IMMERSION = "/module_Demo/ImmersionBar"
+    const val PAGE_TOOLBAR = "/module_Demo/Toobar"
     // </editor-fold>
 
     const val PAGE_LOGIN = "/module_Login/login"
