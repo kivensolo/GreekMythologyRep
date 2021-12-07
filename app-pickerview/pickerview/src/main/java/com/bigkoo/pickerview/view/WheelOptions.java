@@ -222,6 +222,12 @@ public class WheelOptions<T> {
         wv_option3.setTextSize(textSize);
     }
 
+    public void setTextContentPrefixSize(int textSize) {
+        wv_option1.setPrefixTextSize(textSize);
+        wv_option2.setPrefixTextSize(textSize);
+        wv_option3.setPrefixTextSize(textSize);
+    }
+
     private void setLineSpacingMultiplier() {
 
     }
@@ -242,6 +248,25 @@ public class WheelOptions<T> {
         }
         if (label3 != null) {
             wv_option3.setLabel(label3);
+        }
+    }
+
+    /**
+     * 设置选项的前缀描述文本
+     *
+     * @param prefix1 描述文本
+     * @param prefix2 描述文本
+     * @param prefix3 描述文本
+     */
+    public void setPrefixLabels(String prefix1, String prefix2, String prefix3) {
+        if (prefix1 != null) {
+            wv_option1.setPrefixLabel(prefix1);
+        }
+        if (prefix2 != null) {
+            wv_option2.setPrefixLabel(prefix2);
+        }
+        if (prefix3 != null) {
+            wv_option3.setPrefixLabel(prefix3);
         }
     }
 
@@ -388,6 +413,17 @@ public class WheelOptions<T> {
         wv_option1.setTextColorCenter(textColorCenter);
         wv_option2.setTextColorCenter(textColorCenter);
         wv_option3.setTextColorCenter(textColorCenter);
+    }
+
+    /**
+     * 设置分割线之间的前缀文字的颜色
+     *
+     * @param textColorCenter
+     */
+    public void setTextColorCenterPrefix(int textColorCenter) {
+        wv_option1.setTextColorCenterPrefix(textColorCenter);
+        wv_option2.setTextColorCenterPrefix(textColorCenter);
+        wv_option3.setTextColorCenterPrefix(textColorCenter);
     }
 
     /**

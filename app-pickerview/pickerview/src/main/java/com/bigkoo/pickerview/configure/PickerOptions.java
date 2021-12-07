@@ -31,6 +31,7 @@ public class PickerOptions {
 
     public static final int TYPE_PICKER_OPTIONS = 1;
     public static final int TYPE_PICKER_TIME = 2;
+    public static final int TYPE_PICKER_FLOAT_DISTANCE = 3;
 
     public OnOptionsSelectListener optionsSelectListener;
     public OnTimeSelectListener timeSelectListener;
@@ -41,6 +42,7 @@ public class PickerOptions {
     public CustomListener customListener;
 
     //options picker
+    public String prefix1, prefix2, prefix3;//wheelview的前缀描述文字
     public String label1, label2, label3;//单位字符
     //单位字符的显示模式
     public WheelView.LabelAlignMode labelAlignMode;
@@ -69,10 +71,11 @@ public class PickerOptions {
     public String label_year, label_month, label_day, label_hours, label_minutes, label_seconds;//单位
     public int x_offset_year, x_offset_month, x_offset_day, x_offset_hours, x_offset_minutes, x_offset_seconds;//单位
 
-
     public PickerOptions(int buildType) {
         if (buildType == TYPE_PICKER_OPTIONS) {
             layoutRes = R.layout.pickerview_options;
+        } else if (buildType == TYPE_PICKER_FLOAT_DISTANCE) {
+            layoutRes = R.layout.pickerview_distance_options;
         } else {
             layoutRes = R.layout.pickerview_time;
         }
@@ -95,12 +98,15 @@ public class PickerOptions {
     public int bgColorWheel = PICKER_VIEW_BG_COLOR_DEFAULT;//滚轮背景颜色
     public int bgColorTitle = PICKER_VIEW_BG_COLOR_TITLE;//标题背景颜色
 
+    // size in dp
     public int textSizeSubmitCancel = 17;//确定取消按钮大小
     public int textSizeTitle = 18;//标题文字大小
     public int textSizeContent = 18;//内容文字大小
+    public int textSizeContentPrefix = 17;//内容的前缀文字大小
 
     public int textColorOut = 0xFFa8a8a8; //分割线以外的文字颜色
     public int textColorCenter = 0xFF2a2a2a; //分割线之间的文字颜色
+    public int textColorCenterPrefix = 0xFF2a2a2a; //分割线之间前缀文字颜色
     public int dividerColor = 0xFFd5d5d5; //分割线的颜色
     public int outSideColor = -1; //显示时的外部背景色颜色,默认是灰色
 

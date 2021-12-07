@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 
-
+//最核心最基础的滚轮控件库，负责单个滚轮的效果绘制
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
@@ -33,8 +33,6 @@ android {
 //    }
 //}
 
-
 dependencies {
-//    compile fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'androidx.annotation:annotation:1.1.0'
+    implementation 'androidx.annotation:annotation:1.2.0'
 }

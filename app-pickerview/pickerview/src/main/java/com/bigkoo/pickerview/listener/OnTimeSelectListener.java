@@ -5,5 +5,5 @@ import android.view.View;
 import java.util.Date;
 
 public interface OnTimeSelectListener {
-    void onTimeSelect(Date date, View v);
+    void onTimeSelect(Date date, String dateStr, View v);
 }

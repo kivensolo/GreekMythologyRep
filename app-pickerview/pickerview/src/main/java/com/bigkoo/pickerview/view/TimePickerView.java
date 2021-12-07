@@ -89,8 +89,9 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
                 @Override
                 public void onTimeSelectChanged() {
                     try {
-                        Date date = WheelTime.dateFormat.parse(wheelTime.getTime());
-                        mPickerOptions.timeSelectChangeListener.onTimeSelectChanged(date);
+                        String time = wheelTime.getTime();
+                        Date date = WheelTime.dateFormat.parse(time);
+                        mPickerOptions.timeSelectChangeListener.onTimeSelectChanged(date, time);
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
@@ -231,8 +232,9 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
     public void returnData() {
         if (mPickerOptions.timeSelectListener != null) {
             try {
-                Date date = WheelTime.dateFormat.parse(wheelTime.getTime());
-                mPickerOptions.timeSelectListener.onTimeSelect(date, clickView);
+                String time = wheelTime.getTime();
+                Date date = WheelTime.dateFormat.parse(time);
+                mPickerOptions.timeSelectListener.onTimeSelect(date, time, clickView);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -271,6 +273,7 @@ public class TimePickerView extends BasePickerView implements View.OnClickListen
             wheelTime.setLunarMode(lunar);
             wheelTime.setLabels(mPickerOptions.label_year, mPickerOptions.label_month, mPickerOptions.label_day,
                     mPickerOptions.label_hours, mPickerOptions.label_minutes, mPickerOptions.label_seconds);
+
             wheelTime.setPicker(year, month, day, hours, minute, seconds);
         } catch (ParseException e) {
             e.printStackTrace();

@@ -1,4 +1,8 @@
-apply plugin: 'com.android.library'
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-android-extensions'
+}
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
@@ -32,8 +36,6 @@ android {
 //}
 
 dependencies {
-//    compile fileTree(include: ['*.jar'], dir: 'libs')
-    api project(path: ':wheelview')
-//    api 'com.contrarywind:wheelview:4.1.0'
-    implementation 'androidx.annotation:annotation:1.1.0'
+    api project(path: ':wheelview') //原始版本为:com.contrarywind:wheelview:4.1.0
+    implementation 'androidx.annotation:annotation:1.2.0'
 }

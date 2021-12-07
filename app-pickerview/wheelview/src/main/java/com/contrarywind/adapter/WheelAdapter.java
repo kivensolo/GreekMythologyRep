@@ -1,20 +1,23 @@
 package com.contrarywind.adapter;
 
-
+/**
+ * Wheel control data adapter
+ * @param <T>
+ */
 public interface WheelAdapter<T> {
 	/**
 	 * Gets items count
 	 * @return the count of wheel items
 	 */
 	int getItemsCount();
-	
+
 	/**
 	 * Gets a wheel item by index.
 	 * @param index the item index
 	 * @return the wheel item text or null
 	 */
 	T getItem(int index);
-	
+
 	/**
 	 * Gets maximum item length. It is used to determine the wheel width.
 	 * If -1 is returned there will be used the default wheel width.
