@@ -3,6 +3,7 @@ package com.contrarywind.view;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
@@ -15,6 +16,8 @@ import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+
+import androidx.annotation.FloatRange;
 
 import com.contrarywind.adapter.WheelAdapter;
 import com.contrarywind.interfaces.IPickerViewData;
@@ -47,7 +50,7 @@ public class WheelView extends View {
      * 目前只在isCenterLabel为true的情况有效
      */
     public enum LabelAlignMode {
-        RIGHT_OF_CONTENT_TEXT, //吸附于文字的右侧
+        RIGHT_OF_CONTENT_TEXT, //吸附于文字的右侧  与文字的间隔为2倍的CENTER_CONTENT_OFFSET
         RIGHT_OF_VIEW          //位于滚轮控件最右侧
     }
 
@@ -64,7 +67,7 @@ public class WheelView extends View {
     /**
      * 后缀单位是否只在中间显示
      */
-    private boolean isCenterLabel = true;
+    private boolean suffixOnlyDrawInCenter = true;
 
     // Timer mTimer;
     private ScheduledExecutorService mExecutor = Executors.newSingleThreadScheduledExecutor();
@@ -74,14 +77,29 @@ public class WheelView extends View {
     private Paint paintCenterText;       // 选中项
     private Paint paintCenterPrefixText; // 选中项的前缀文字画笔
     private Paint paintIndicator;        // 分割线
+    private Paint paintOfDebug;          // 调试画笔
 
+    private boolean enableDebug = true;
     private WheelAdapter adapter;
 
-    private String prefixLabel;//前缀文本,只在中间行显示
-    private String label;//附加单位
+// <editor-fold defaultstate="collapsed" desc="前缀文字相关变量">
+    //前缀文本内容 --- 目前只在中间行显示
+    private String prefixLabel;
+    //前缀文字大小
+    private int prefixTextSize;
+    //前缀文字可绘制区域占整个View的横向比例, 默认0.4,最大 0.4
+    private @FloatRange(from = 0.0f,to = 0.4f) float prefixWeight = 0.35f;
+    //前缀文本的文字区域rect
+    private Rect rectOfPrefix = new Rect();
+    //中间选中项的前缀文本开始绘制位置
+    private int prefixLabelStartX = 0;
+// </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="后缀文字相关变量">
+    private String label;               //附加单位
     private LabelAlignMode labelAlignMode = LabelAlignMode.RIGHT_OF_VIEW; //附加单位的模式
-    private int textSize;//选项的文字大小
-    private int prefixTextSize;//选中项的前缀文字大小
+    private int textSize;               //选项的文字大小
+    // </editor-fold>
     private int maxTextWidth;
     private int maxTextHeight;
     private int textXOffset;
@@ -135,8 +153,11 @@ public class WheelView extends View {
     private int widthMeasureSpec;
 
     private int mGravity = Gravity.CENTER;
-    private int drawPrefixLabelStart = 0;   //中间选中项的前缀文本开始绘制位置
-    private int drawCenterContentStart = 0; //中间选中文字开始绘制位置
+    /**
+     * 中间选中文字开始绘制位置
+     * 实际上，是最后一个数据项的绘制起点坐标
+     */
+    private int drawCenterContentStart = 0;
     private int centerContentTextWidth = 0; //中间选中文字的宽度
     private int drawOutContentStart = 0;//非中间文字开始绘制位置
     private static final float SCALE_CONTENT = 0.8F;//非中间文字则用此控制高度，压扁形成3d错觉
@@ -232,6 +253,14 @@ public class WheelView extends View {
         paintIndicator = new Paint();
         paintIndicator.setColor(dividerColor);
         paintIndicator.setAntiAlias(true);
+
+        paintOfDebug = new Paint();
+        paintOfDebug.setColor(Color.rgb(255,168,190));
+        paintOfDebug.setAntiAlias(true);
+        paintOfDebug.setTextScaleX(1.0F);
+        paintOfDebug.setTypeface(typeface);
+        paintOfDebug.setTextSize(textSize);
+        paintOfDebug.setStyle(Paint.Style.FILL);
 
         setLayerType(LAYER_TYPE_SOFTWARE, null);
     }
@@ -362,6 +391,10 @@ public class WheelView extends View {
         invalidate();
     }
 
+    public final void setPrefixLabelWeight(@FloatRange(from = 0.0f,to = 0.4f) float weight){
+        this.prefixWeight = Math.min(0.4f,weight);
+    }
+
     public void setItemsVisibleCount(int visibleCount) {
         if (visibleCount % 2 == 0) {
             visibleCount += 1;
@@ -472,11 +505,13 @@ public class WheelView extends View {
                 //获取内容文字
                 String contentText;
 
+                String tempShowText = getContentText(showText);
+
                 //如果是label每项都显示的模式，并且item内容不为空、label 也不为空
-                if (!isCenterLabel && !TextUtils.isEmpty(label) && !TextUtils.isEmpty(getContentText(showText))) {
-                    contentText = getContentText(showText) + label;
+                if (!suffixOnlyDrawInCenter && hasSuffixText() && !TextUtils.isEmpty(tempShowText)) {
+                    contentText = tempShowText + label;
                 } else {
-                    contentText = getContentText(showText);
+                    contentText = tempShowText;
                 }
                 // 根据当前角度计算出偏差系数，用以在绘制时控制文字的 水平移动 透明度 倾斜程度.
                 float offsetCoefficient = (float) Math.pow(Math.abs(angle) / 90f, 2.2);
@@ -538,21 +573,25 @@ public class WheelView extends View {
             counter++;
         }
 
+        if(enableDebug){
+            canvas.drawRect(0f,firstLineY, measuredWidth * prefixWeight ,secondLineY, paintOfDebug);
+        }
+
         // 绘制前缀文本
         if (!TextUtils.isEmpty(prefixLabel)) {
-            canvas.drawText(prefixLabel, drawPrefixLabelStart, centerY, paintCenterPrefixText);
+            canvas.drawText(prefixLabel, prefixLabelStartX, centerY, paintCenterPrefixText);
         }
         onDrawLabels(canvas);
     }
 
     /**
      * 单独绘制后缀单位文字
-     * 仅支持isCenterLabel为true模式下
+     * 仅支持suffixOnlyDrawInCenter的模式
      * 为false时，label会拼接为contentText，不会单独绘制
      */
     private void onDrawLabels(Canvas canvas) {
         // 只显示选中项Label文字的模式，并且Label文字不为空，则进行绘制
-        if (!TextUtils.isEmpty(label) && isCenterLabel) {
+        if (hasSuffixText() && suffixOnlyDrawInCenter) {
             //绘制附加单位文字
             if (labelAlignMode == LabelAlignMode.RIGHT_OF_VIEW ) {
                 // 靠最右模式
@@ -560,24 +599,26 @@ public class WheelView extends View {
                 canvas.drawText(label, drawRightContentStart,
                         centerY, paintCenterText);
             } else if (labelAlignMode == LabelAlignMode.RIGHT_OF_CONTENT_TEXT) {
-                // 文字右侧吸附模式
-                int drawRightLebelStartX;
+//                // 文字右侧吸附模式, 根据centerContent的绘制起点及文本宽度绘制
+                int drawRightLabelStartX = (int) (drawCenterContentStart + centerContentTextWidth + CENTER_CONTENT_OFFSET * 2);
+
+                //@deprecated 单独计算逻辑
+               /* int drawRightLabelStartX;
                 if(TextUtils.isEmpty(prefixLabel)){
                     // 靠文字右侧的吸附模式 与文字的间隔为2倍的CENTER_CONTENT_OFFSET
                     if(mGravity == Gravity.LEFT){
-                       drawRightLebelStartX = (int) (centerContentTextWidth + CENTER_CONTENT_OFFSET * 2);
+                       drawRightLabelStartX = (int) (centerContentTextWidth + CENTER_CONTENT_OFFSET * 2);
                     }else if(mGravity == Gravity.RIGHT){
-                       drawRightLebelStartX =  measuredWidth - rectOfUnitLabel.width() -
+                       drawRightLabelStartX =  measuredWidth - rectOfUnitLabel.width() -
                                (int)(CENTER_CONTENT_OFFSET * 2);
                     }else{
                        int contentRight =  (measuredWidth + centerContentTextWidth) / 2;
-                       drawRightLebelStartX = (int) (contentRight + CENTER_CONTENT_OFFSET * 2);
+                       drawRightLabelStartX = (int) (contentRight + CENTER_CONTENT_OFFSET * 2);
                     }
                 }else{
-                    // 有前缀文本时
-                    drawRightLebelStartX = (int) (measuredWidth * 0.5 + centerContentTextWidth + CENTER_CONTENT_OFFSET * 2);
-                }
-                canvas.drawText(label, drawRightLebelStartX, centerY, paintCenterText);
+                    drawRightLabelStartX = (int) (measuredWidth * 0.5 + centerContentTextWidth + CENTER_CONTENT_OFFSET * 2);
+                }*/
+                canvas.drawText(label, drawRightLabelStartX, centerY, paintCenterText);
             }
         }
     }
@@ -720,7 +761,6 @@ public class WheelView extends View {
         return timeNum >= 0 && timeNum < 10 ? TIME_NUM[timeNum] : String.valueOf(timeNum);
     }
 
-    Rect rectOfPrefix = new Rect();
     Rect rectOfUnitLabel = new Rect();
 
     /**
@@ -739,43 +779,47 @@ public class WheelView extends View {
             paintCenterText.getTextBounds(prefixLabel, 0, prefixLabel.length(), rectOfPrefix);
         }
 
+        //内容文本宽度
+        int contentWidth = rectOfContentItem.width();
+        float contentClipWidth = measuredWidth * (1 - prefixWeight);
+        //前缀文本可绘制宽度
+        float prefixLabelClipWidth =  measuredWidth * prefixWeight;
+        if(contentWidth == 0){
+            //若内容数据文本宽度为0，则不计算绘制文本绘制的起始坐标，否则会导致后缀单位错误
+            return;
+        }
+
         switch (mGravity) {
-            case Gravity.CENTER://整体显示内容居中
-                if ((isOptions || label == null || label.equals("") || !isCenterLabel)
-                        && TextUtils.isEmpty(prefixLabel)) {
+            case Gravity.CENTER:
+                if ((isOptions || TextUtils.isEmpty(label) || !suffixOnlyDrawInCenter) && !hasPrefixText()) {
                     //选中项文字绘制起点坐标(整体居中)
-                    drawCenterContentStart = (int) ((measuredWidth - rectOfContentItem.width()) * 0.5);
+                    drawCenterContentStart = (int) ((measuredWidth - contentWidth) * 0.5);
                 } else if (!TextUtils.isEmpty(prefixLabel)) {
-                    // 有前缀文字数据时 重新计算内容绘制文本的绘制X坐标
-                    float prefixWeight;//前缀文本所占整体的宽度比例
-                    // 定制化兼容
-                    if (label.equals("kcal")) {
-                        prefixWeight = 0.38f;
-                    } else {
-                        prefixWeight = 0.4f;
-                    }
-                    drawPrefixLabelStart = (int) (
-                            ((measuredWidth * prefixWeight) - rectOfPrefix.width()) * 0.5
-                            + CENTER_CONTENT_OFFSET * 2
-                    );
-                    // [  |   ] (measuredWidth *(1-prefixWeight) )
+                    int offsetX = (int) ((prefixLabelClipWidth - rectOfPrefix.width()) / 2);
+                    prefixLabelStartX = Math.max(0,offsetX); //取最大有效值
                     drawCenterContentStart = (int) (
-                            (measuredWidth * prefixWeight)
-                            + ((measuredWidth * prefixWeight) - rectOfContentItem.width()) * 0.5
+                        prefixLabelClipWidth + (contentClipWidth - contentWidth)* 0.5
                     );
                 } else {
                     //只显示中间label时，时间选择器内容偏左一点，留出空间绘制单位标签
-                    drawCenterContentStart = (int) ((measuredWidth - rectOfContentItem.width()) * 0.25);
+                    drawCenterContentStart = (int) ((measuredWidth - contentWidth) * 0.25);
                 }
                 break;
             case Gravity.LEFT:
-                drawCenterContentStart = 0;
+                prefixLabelStartX = 0;
+                if(TextUtils.isEmpty(prefixLabel)){
+                    drawCenterContentStart = 0;
+                }else{
+                    drawCenterContentStart = (int) (prefixLabelClipWidth + CENTER_CONTENT_OFFSET);
+                }
                 break;
             case Gravity.RIGHT:
-                int xStartOffset = measuredWidth - rectOfContentItem.width() - rectOfUnitLabel.width();
-                if(labelAlignMode == LabelAlignMode.RIGHT_OF_VIEW){
+                prefixLabelStartX = (int) (prefixLabelClipWidth - rectOfPrefix.width());
+                //暂未支持前缀文本的情况
+                int xStartOffset = measuredWidth - contentWidth - rectOfUnitLabel.width();
+                if (labelAlignMode == LabelAlignMode.RIGHT_OF_VIEW) {
                     xStartOffset = xStartOffset - (int) CENTER_CONTENT_OFFSET;
-                }else{
+                } else {
                     //单位吸附于文字时右侧，给一个偏移量的间隙
                     xStartOffset = xStartOffset - (int) (CENTER_CONTENT_OFFSET * 3);
                 }
@@ -787,34 +831,37 @@ public class WheelView extends View {
     private void measuredOutContentStart(String content) {
         Rect rect = new Rect();
         paintOuterText.getTextBounds(content, 0, content.length(), rect);
+
+          //内容文本宽度
+        int contentWidth = rect.width();
+        float contentClipWidth = measuredWidth * (1 - prefixWeight);
+        //前缀文本可绘制宽度
+        float prefixLabelClipWidth =  measuredWidth * prefixWeight;
+
         switch (mGravity) {
             case Gravity.CENTER:
-                if ((isOptions || label == null || label.equals("") || !isCenterLabel)
+                if ((isOptions || !hasSuffixText() || !suffixOnlyDrawInCenter)
                 && TextUtils.isEmpty(prefixLabel)) {
                     drawOutContentStart = (int) ((measuredWidth - rect.width()) * 0.5);
                 } else if(!TextUtils.isEmpty(prefixLabel)){
-                    float prefixWeight;//前缀文本所占整体的宽度比例
-                    // 定制化兼容
-                    if(label.equals("kcal")){
-                        prefixWeight = 0.38f;
-                    }else{
-                        prefixWeight = 0.4f;
-                    }
-                    // 重新计算内容绘制文本的绘制X坐标
-                    drawOutContentStart = (int) ((measuredWidth * prefixWeight)
-                            + ((measuredWidth * prefixWeight) - rect.width()) * 0.5);
+                    drawOutContentStart = (int) (
+                        prefixLabelClipWidth + (contentClipWidth - contentWidth)* 0.5
+                    );
                 }else {//只显示中间label时，时间选择器内容偏左一点，留出空间绘制单位标签
                     drawOutContentStart = (int) ((measuredWidth - rect.width()) * 0.25);
                 }
                 break;
             case Gravity.LEFT:
-                drawOutContentStart = 0;
+                if(hasPrefixText()){
+                    drawOutContentStart = (int) (prefixLabelClipWidth + CENTER_CONTENT_OFFSET);
+                }else{
+                    drawOutContentStart = 0;
+                }
                 break;
             case Gravity.RIGHT:
-                int xOffset = measuredWidth - rect.width();
-                xOffset -= rectOfUnitLabel.width();
+                int xOffset = measuredWidth - rect.width() - rectOfUnitLabel.width();
                 if(labelAlignMode == LabelAlignMode.RIGHT_OF_VIEW){
-                    xOffset = xOffset - rectOfPrefix.width() - (int) CENTER_CONTENT_OFFSET;
+                    xOffset = xOffset - (int) CENTER_CONTENT_OFFSET;
                 }else{
                     //单位吸附于文字时右侧，给一个偏移量的间隙
                     xOffset = xOffset - (int) (CENTER_CONTENT_OFFSET * 3);
@@ -929,7 +976,7 @@ public class WheelView extends View {
      * @param isCenterLabel true|false
      */
     public void isCenterLabel(boolean isCenterLabel) {
-        this.isCenterLabel = isCenterLabel;
+        this.suffixOnlyDrawInCenter = isCenterLabel;
     }
 
     public void setGravity(int gravity) {
@@ -947,6 +994,22 @@ public class WheelView extends View {
             }
         }
         return iRet;
+    }
+
+    /**
+     * 是否有后缀文本
+     * @return true|false
+     */
+    private boolean hasSuffixText(){
+        return !TextUtils.isEmpty(label);
+    }
+
+    /**
+     * 是否有前缀文本
+     * @return true|false
+     */
+    private boolean hasPrefixText(){
+        return  !TextUtils.isEmpty(prefixLabel);
     }
 
     public void setIsOptions(boolean options) {

@@ -4,20 +4,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="5dp"
     tools:context="com.kingz.pickerview.PickerViewUseDemoActivity">
 
+    <Button
+        android:id="@+id/wheelViewButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="WheelView"
+        android:textAllCaps="false"
+        android:background="@color/colorAccent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <View
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:id="@+id/spiltView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/wheelViewButton"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorPrimaryDark"/>
     <Button
         android:id="@+id/show_from_bottom_as_dialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Show from bottom as dialog"
+        android:text="From bottom as Dialog"
         android:textAllCaps="false"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.075"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023" />
+        app:layout_constraintStart_toStartOf="@+id/wheelViewButton"
+        app:layout_constraintTop_toBottomOf="@+id/spiltView"/>
 
     <Button
         android:id="@+id/show_not_as_dialog"
@@ -35,12 +50,8 @@
         android:layout_height="wrap_content"
         android:text="Show Area Options "
         android:textAllCaps="false"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.06"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/show_not_as_dialog"
-        app:layout_constraintVertical_bias="0.011" />
+        app:layout_constraintStart_toStartOf="@+id/wheelViewButton"
+        app:layout_constraintTop_toBottomOf="@+id/show_from_bottom_as_dialog"/>
 
     <Button
         android:id="@+id/show_custom_calendar_options"
@@ -48,12 +59,8 @@
         android:layout_height="wrap_content"
         android:text="显示自定义UI效果的年份日期选择"
         android:textAllCaps="false"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.09"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/show_area_options"
-        app:layout_constraintVertical_bias="0.012" />
+        app:layout_constraintStart_toStartOf="@+id/wheelViewButton"
+        app:layout_constraintTop_toBottomOf="@+id/show_area_options"/>
 
     <Button
         android:id="@+id/show_custom_single_picker"
@@ -61,11 +68,7 @@
         android:layout_height="wrap_content"
         android:text="显示自定义简单数据字段"
         android:textAllCaps="false"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.09"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/show_custom_calendar_options"
-        app:layout_constraintVertical_bias="0.012" />
+        app:layout_constraintStart_toStartOf="@+id/show_custom_calendar_options"
+        app:layout_constraintTop_toBottomOf="@+id/show_custom_calendar_options"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

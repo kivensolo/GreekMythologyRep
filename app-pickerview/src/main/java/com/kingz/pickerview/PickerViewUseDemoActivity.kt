@@ -1,6 +1,7 @@
 package com.kingz.pickerview
 
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -45,6 +46,11 @@ class PickerViewUseDemoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        wheelViewButton.setOnClickListener {
+            startActivity(Intent(this,WheelViewDemoActivity::class.java))
+        }
+
         initTimePicker()
 
         initOptionsPicker()
@@ -121,7 +127,7 @@ class PickerViewUseDemoActivity : AppCompatActivity() {
 //        endDate.set(years + 5, months, days, hour, minute, second)
         endDate.set(years, months, days, hour, minute, second)
         tpViewAsDialog = TimePickerBuilder(this,
-            OnTimeSelectListener { date, _ ->
+            OnTimeSelectListener { date, _, _ ->
                 Toast.makeText(this, getTime(date), Toast.LENGTH_SHORT).show()
                 //Log.i("pvTime", "onTimeSelect");
             })
@@ -138,7 +144,7 @@ class PickerViewUseDemoActivity : AppCompatActivity() {
             .addOnCancelClickListener {
                 Log.i(TAG, "onCancelClickListener")
             }
-            .setTimeSelectChangeListener {
+            .setTimeSelectChangeListener { _, _->
                 Log.i(TAG, "onTimeSelectChanged")
             }
             .build()
@@ -165,7 +171,7 @@ class PickerViewUseDemoActivity : AppCompatActivity() {
 
 
         tpViewNormal = TimePickerBuilder(this,
-            OnTimeSelectListener { date, _ ->
+            OnTimeSelectListener { date, _, _->
                 Toast.makeText(this, getTime(date), Toast.LENGTH_SHORT).show()
                 //Log.i("pvTime", "onTimeSelect");
             })
@@ -176,7 +182,8 @@ class PickerViewUseDemoActivity : AppCompatActivity() {
             .setLineSpacingMultiplier(2.0f)
             .isAlphaGradient(true)
             .addOnCancelClickListener {Log.i(TAG, "onCancelClickListener")}
-            .setTimeSelectChangeListener {Log.i(TAG, "onTimeSelectChanged")}
+            .setTimeSelectChangeListener { _, _->
+                Log.i(TAG, "onTimeSelectChanged")}
             .build()
 
 

@@ -83,14 +83,16 @@ class BirthdayPickerCreater(context: Context) {
     inline fun setTimeSelectChangeListener(
         crossinline onSelect: (date: Date) -> Unit
     ):BirthdayPickerCreater {
-        builder.setTimeSelectChangeListener { onSelect(it) }
+        builder.setTimeSelectChangeListener { date, _ ->
+            onSelect(date)
+        }
         return this
     }
 
     inline fun setTimeSelectListener(
         crossinline onConfirm: (date: Date, callerView: View?) -> Unit
     ):BirthdayPickerCreater {
-        builder.setTimeSelectListener { date, v -> onConfirm(date, v) }
+        builder.setTimeSelectListener { date, _, v -> onConfirm(date, v) }
         return this
     }
 
