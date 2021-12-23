@@ -18,7 +18,7 @@ class SettingActivity : AppBarActivity(), ColorChooserDialog.ColorCallback {
 
     override fun initData(savedInstanceState: Bundle?) {
         defaultFragmentName = SettingFragment::class.java.name
-        defaultFragmentTitle = resources.getString(R.string.setting)
+        pageTitle = resources.getString(R.string.setting)
         super.initData(savedInstanceState)
     }
 

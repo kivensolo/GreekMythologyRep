@@ -56,4 +56,8 @@
     <string name="hide_navigation_bar">只隐藏导航栏</string>
     <string name="reset_bars">恢复Bars初始状态</string>
     <string name="change_navigation_bar_coor">改变导航栏颜色</string>
+
+<!--  菜单  -->
+    <string name="menu_hsv">HSV</string>
+    <string name="menu_color_matrix">Color Matrix</string>
 </resources>

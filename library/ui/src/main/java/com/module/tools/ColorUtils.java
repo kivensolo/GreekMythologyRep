@@ -96,6 +96,12 @@ public class ColorUtils {
         return Color.argb((int) a, (int) r, (int) g, (int) b);
     }
 
+    /**
+     * 调整颜色亮度
+     * @param color Tthe argb color to convert. The alpha component is ignored.
+     * @param by  The offset of Value in HSV.
+     * @return The argb color of converted.
+     */
     @ColorInt
     public static int shiftColor(
             @ColorInt int color,

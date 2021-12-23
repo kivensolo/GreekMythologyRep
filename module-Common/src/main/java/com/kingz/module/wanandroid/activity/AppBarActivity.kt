@@ -41,7 +41,12 @@ open class AppBarActivity : BaseVMActivity() {
         get() = supportFragmentManager
 
     protected var defaultFragmentName:String = ""
-    protected var defaultFragmentTitle:String = ""
+    protected var pageTitle: String = ""
+        set(value) {
+            setToolBarTitle(value)
+            field = value
+        }
+
     /**
      * theme color
      */
@@ -65,8 +70,8 @@ open class AppBarActivity : BaseVMActivity() {
             SettingUtil.getAppThemeColor()
         }
         StatusBarUtil.setColor(this, mThemeColor, 0)
-        if (this.supportActionBar != null) {
-            this.supportActionBar?.setBackgroundDrawable(ColorDrawable(mThemeColor))
+        if (supportActionBar != null) {
+            supportActionBar?.setBackgroundDrawable(ColorDrawable(mThemeColor))
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -106,21 +111,29 @@ open class AppBarActivity : BaseVMActivity() {
             finish()
             return
         }
-        val initTitle: String = intent.getStringExtra(WADConstants.EXTRA_SHOW_FRAGMENT_TITLE) ?: defaultFragmentTitle
-        findViewById<TextView>(R.id.toolbar_left)?.text = initTitle
+        setToolBarTitle(intent.getStringExtra(WADConstants.EXTRA_SHOW_FRAGMENT_TITLE) ?: pageTitle)
         doFragmentInflate(intent)
-        findViewById<Toolbar>(R.id.toolbar).run {
-//            title = initTitle
-            setNavigationIcon(R.mipmap.ic_arrow_back_white_24dp)
+        initToolBar()
+    }
 
-            //FIXME 啥意思？
-//            setSupportActionBar(this)
-            // 设置toolBar内置左上角logo是否显示
-            supportActionBar?.setDisplayHomeAsUpEnabled(false)
+    private fun initToolBar() {
+        findViewById<Toolbar>(R.id.toolbar).run {
+            //enable action bar support.
+            setSupportActionBar(this)
+            supportActionBar?.apply {
+                // 屏蔽默认title
+                setDisplayShowTitleEnabled(false)
+                // 设置toolBar内置左上角logo是否显示
+                setDisplayHomeAsUpEnabled(false)
+            }
         }
     }
 
-// <editor-fold defaultstate="collapsed" desc="Fragment处理">
+    protected fun setToolBarTitle(title:String){
+        findViewById<TextView>(R.id.tvTitle)?.text = title
+    }
+
+    // <editor-fold defaultstate="collapsed" desc="Fragment处理">
     private fun doFragmentInflate(intent: Intent) {
         val type = intent.getIntExtra(WADConstants.Key.KEY_FRAGEMTN_TYPE, 0)
         val name: String = intent.getStringExtra(WADConstants.EXTRA_SHOW_FRAGMENT_NAME) ?: defaultFragmentName
@@ -135,15 +148,19 @@ open class AppBarActivity : BaseVMActivity() {
                 switchFragment(UserCollectionFragment())
             }
             else -> {
-                switchFragment(name, initArguments)
+                switchFragment(name){
+                    it.arguments = initArguments
+                }
             }
         }
     }
 
-    protected fun switchFragment(fragmentName:String, args: Bundle) {
+    protected fun switchFragment(fragmentName: String, block:(frg: Fragment) -> Unit) {
         val factory = supportFragmentManager.fragmentFactory
         val fragment = factory.instantiate(classLoader, fragmentName)
-        fragment.arguments = args
+        fragment.apply {
+           block(this)
+        }
         switchFragment(fragment)
     }
 
@@ -153,7 +170,7 @@ open class AppBarActivity : BaseVMActivity() {
      *
      * @param targetFragment 跳转目标fragment
      */
-    private fun switchFragment(targetFragment: Fragment) {
+    private fun switchFragment(targetFragment: Fragment, addtoBackStack:Boolean = false) {
         val trans: FragmentTransaction = supportFragmentManager.beginTransaction()
         // 转场自定义动画
        /* trans.setCustomAnimations(
@@ -171,7 +188,9 @@ open class AppBarActivity : BaseVMActivity() {
             //Add和replace的区别
             trans.add(R.id.flContainer, targetFragment,targetFragment::class.java.simpleName)
             // 放入后退栈，若只有一个fragment,还是会先隐藏
-//            trans.addToBackStack(targetFragment::class.java.simpleName)
+            if(addtoBackStack){
+                trans.addToBackStack(targetFragment::class.java.simpleName)
+            }
         } else {
             //targetFragment = mFragmentManager.findFragmentByTag(targetFragment.getClass().getSimpleName());
             trans.hide(curFragment!!).show(targetFragment)
@@ -180,6 +199,9 @@ open class AppBarActivity : BaseVMActivity() {
         curFragment = targetFragment
     }
 
+    protected fun switchFragmentWithTag(tag:String):Fragment?{
+        return supportFragmentManager.findFragmentByTag(tag)
+    }
 
     private fun onBuildStartFragmentIntent(fragmentName: String, args: Bundle?, title: String?): Intent {
         val intent = Intent(Intent.ACTION_MAIN)

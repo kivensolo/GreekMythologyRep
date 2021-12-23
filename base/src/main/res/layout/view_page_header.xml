@@ -11,16 +11,14 @@
     app:contentInsetStart="0dp"
     app:layout_collapseMode="pin"
     app:layout_scrollFlags="scroll|snap"
-    app:titleTextAppearance="@style/Toolbar.TitleText"
-    android:paddingStart="10dp"
-    android:paddingEnd="10dp">
+    app:titleTextAppearance="@style/Toolbar.TitleText">
 
-    <Button
+    <ImageView
         android:id="@+id/toolbar_left"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:drawableStart="@mipmap/ic_arrow_back_white_24dp"
-        android:background="@android:color/transparent"/>
+        android:src="@mipmap/ic_arrow_back_white_24dp"
+        android:padding="10dp"/>
 
     <TextView
         android:id="@+id/tvTitle"
@@ -30,6 +28,7 @@
         android:gravity="center"
         android:ellipsize="marquee"
         android:textColor="@android:color/white"
+        android:textSize="20sp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="30dp"
         android:singleLine="true"

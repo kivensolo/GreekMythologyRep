@@ -45,4 +45,19 @@
     <dimen name="size_28sp">28sp</dimen>
 
     <dimen name="banner_height">180dp</dimen>
+
+    <!-- Standart dimens for the color wheel -->
+    <dimen name="color_wheel_radius">100dp</dimen>
+    <dimen name="color_wheel_thickness">8dp</dimen>
+    <dimen name="color_center_halo_radius">60dp</dimen>
+    <dimen name="color_center_radius">54dp</dimen>
+    <dimen name="color_pointer_halo_radius">12dp</dimen>
+    <dimen name="color_pointer_radius">10dp</dimen>
+
+    <!-- Standart dimens for the bars -->
+    <dimen name="bar_thickness">4dp</dimen>
+    <dimen name="bar_length">240dp</dimen>
+    <dimen name="bar_pointer_radius">6dp</dimen>
+    <dimen name="bar_pointer_halo_radius">14dp</dimen>
+
 </resources>

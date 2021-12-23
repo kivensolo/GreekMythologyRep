@@ -288,7 +288,7 @@ class HomeActivity : BaseVMActivity(), View.OnClickListener{
         ZLog.d("OnClick view_id=" + v?.id)
         when (v?.id) {
             // ----- 老AppBarLayout
-            R.id.iv_title_menu -> {
+            /*R.id.iv_title_menu -> {
                 if (slidPanelLayout?.isOpen == true) {
                     slidPanelLayout?.closePane()
                 } else {
@@ -297,7 +297,7 @@ class HomeActivity : BaseVMActivity(), View.OnClickListener{
             }
             R.id.iv_toolbar_right -> {
                 //TODO 进行搜索页跳转
-            }
+            }*/
             // ----- 老AppBarLayout
 
             R.id.tvVersion -> {

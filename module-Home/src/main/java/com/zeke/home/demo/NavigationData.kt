@@ -43,7 +43,7 @@ class NavigationData {
         ),
         DemoGroup("About Color","颜色",
             samples = arrayListOf(
-                DemoSample("ColorMatrix",   RouterConfig.PAGE_COLOR_MATRIX),
+                DemoSample("Color World",   RouterConfig.PAGE_COLOR_DEMO),
                 DemoSample("NewFeature of UI", RouterConfig.PAGE_NEW_FEATURES)
             )
         ),

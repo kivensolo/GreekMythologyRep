@@ -194,9 +194,9 @@ class WebActivity : BaseHeaderActivity<WebPageBinding>(),
     }
 
     fun OnClick(v: View) {
-        if (v.id == R.id.iv_toolbar_right) {
+        /*if (v.id == R.id.iv_toolbar_right) {
             clickMenu()
-        }
+        }*/
     }
 
     private fun clickShare() {

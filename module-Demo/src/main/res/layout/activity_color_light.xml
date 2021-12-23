@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#29144c"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/color_pick_view"
+        android:layout_width="0dp"
+        android:layout_height="300dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.module.views.BlurMaskCircularView
+            android:id="@+id/mask_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.module.views.colorpicker.ColorPicker
+            android:id="@+id/color_picker"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:color_wheel_thickness="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="25dp"
+            android:src="@drawable/ic_withe_light"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/color_pick_view">
+
+
+        <LinearLayout
+            android:id="@+id/ll_seek_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/tv_seek_name1"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:text="(H)色调"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp" />
+
+                <androidx.appcompat.widget.AppCompatSeekBar
+                    android:id="@+id/hueSeek"
+                    android:padding="5dp"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:max="100"
+                    android:maxHeight="2.5dp"
+                    android:minHeight="2.5dp"
+                    android:progress="100"
+                    android:progressDrawable="@drawable/seek_bar_withe"
+                    android:thumb="@drawable/ic_thumb_circular" />
+
+                <TextView
+                    android:id="@+id/tv_hue_seek"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="#ffffff"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_seek_name2"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:text="(S)饱和度"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp" />
+
+                <com.module.views.colorpicker.SaturationBar
+                    android:id="@+id/saturationBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <!--<androidx.appcompat.widget.AppCompatSeekBar
+                    android:id="@+id/satSeek"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:max="100"
+                    android:maxHeight="2.5dp"
+                    android:minHeight="2.5dp"
+                    android:progress="100"
+                    android:progressDrawable="@drawable/seek_bar_withe"
+                    android:thumb="@drawable/ic_thumb_circular" />
+
+                <TextView
+                    android:id="@+id/tv_sat_seek"
+                    android:layout_width="35dp"
+                    android:layout_height="wrap_content"
+                    android:text="1.0"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp" />-->
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_seek_name3"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:text="(V)亮度"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp" />
+
+                <com.module.views.colorpicker.ValueBar
+                    android:id="@+id/valueBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <!-- <androidx.appcompat.widget.AppCompatSeekBar
+                     android:id="@+id/valueSeek"
+                     android:layout_width="0dp"
+                     android:layout_height="wrap_content"
+                     android:layout_weight="1"
+                     android:max="100"
+                     android:maxHeight="2.5dp"
+                     android:minHeight="2.5dp"
+                     android:progress="100"
+                     android:progressDrawable="@drawable/seek_bar_withe"
+                     android:thumb="@drawable/ic_thumb_circular" />
+
+                 <TextView
+                     android:id="@+id/tv_value_seek"
+                     android:layout_width="35dp"
+                     android:layout_height="wrap_content"
+                     android:text="1.0"
+                     android:textColor="#ffffff"
+                     android:textSize="14sp" />-->
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:text="(SV)混合"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp" />
+
+                <com.module.views.colorpicker.SVBar
+                    android:id="@+id/svBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <!--<androidx.appcompat.widget.AppCompatSeekBar
+                    android:id="@+id/hueSeek"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:max="100"
+                    android:maxHeight="2.5dp"
+                    android:minHeight="2.5dp"
+                    android:progress="100"
+                    android:progressDrawable="@drawable/seek_bar_withe"
+                    android:thumb="@drawable/ic_thumb_circular" />
+
+                <TextView
+                    android:id="@+id/tv_hue_seek"
+                    android:layout_width="35dp"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="#ffffff"
+                    android:textSize="14sp" />-->
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:text="透明度"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp" />
+
+                <com.module.views.colorpicker.OpacityBar
+                    android:id="@+id/opacityBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

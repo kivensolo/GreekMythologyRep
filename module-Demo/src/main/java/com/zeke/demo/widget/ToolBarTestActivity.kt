@@ -18,7 +18,7 @@ class ToolBarTestActivity: AppBarActivity() {
 
     override fun initData(savedInstanceState: Bundle?) {
         defaultFragmentName = ToolBarFragment::class.java.name
-        defaultFragmentTitle = "ToolBar"
+        pageTitle = "ToolBar"
         super.initData(savedInstanceState)
     }
 }

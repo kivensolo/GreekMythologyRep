@@ -1,9 +1,12 @@
 package com.zeke.demo.color
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.kingz.module.common.router.RouterConfig
 import com.kingz.module.wanandroid.activity.AppBarActivity
+import com.zeke.demo.R
 
 /**
  * author: King.Z <br></br>
@@ -27,13 +30,31 @@ import com.kingz.module.wanandroid.activity.AppBarActivity
  *
  *  参考文章:http://www.tuicool.com/articles/yYvEn2q
  */
-@Route(path = RouterConfig.PAGE_COLOR_MATRIX)
-class ColorMatrixActivity : AppBarActivity() {
+@Route(path = RouterConfig.PAGE_COLOR_DEMO)
+class ColorDemoActivity : AppBarActivity() {
 
     override fun initData(savedInstanceState: Bundle?) {
         defaultFragmentName = ColorMatrixFragment::class.java.name
-        defaultFragmentTitle = "ColorMatrix"
+        pageTitle = "Color Matrix"
         super.initData(savedInstanceState)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.color_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.hsvMode -> {
+                pageTitle = "HSV"
+                switchFragment(HSVDemoFragment::class.java.name) {}
+            }
+            R.id.colorMatrixMode -> {
+                pageTitle = "Color Matrix"
+                switchFragment(ColorMatrixFragment::class.java.name) {}
+            }
+        }
+        return true
+    }
 }

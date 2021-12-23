@@ -18,19 +18,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <!--&lt;!&ndash;
-            AppbarLayout就是一个竖直方向的LinearLayout,
-            只不过它添加了一些材料的概念和特性，可以定制子View的滑动
-            严重依赖于CoordinatorLayout，用于CoordinatorLayout 的直接子View&ndash;&gt;
-        <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            tools:background="@color/colorPrimary"
-            app:elevation="0dp">
-
-            <include layout="@layout/top_tool_bar" />
-        </com.google.android.material.appbar.AppBarLayout>-->
 
 <!--    整体式Viewpager2的内容区域    -->
         <androidx.viewpager2.widget.ViewPager2
