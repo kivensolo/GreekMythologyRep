@@ -49,8 +49,8 @@ class NavigationData {
         ),
         DemoGroup("Meterial Design","MD设计",
             samples = arrayListOf(
-                DemoSample("AppBarLayout效果", RouterConfig.PAGE_APPBAR_DEMO),
-                DemoSample("沉浸式效果测试", RouterConfig.PAGE_PALETTE_DEMO)
+                DemoSample("AppBarLayout效果(TODO)", RouterConfig.PAGE_APPBAR_DEMO),
+                DemoSample("沉浸式效果测试", RouterConfig.PAGE_IMMERSION)
             )
         ),
         DemoGroup("NewFeatures","新特性",
