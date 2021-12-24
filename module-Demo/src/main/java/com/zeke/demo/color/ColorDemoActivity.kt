@@ -34,8 +34,8 @@ import com.zeke.demo.R
 class ColorDemoActivity : AppBarActivity() {
 
     override fun initData(savedInstanceState: Bundle?) {
-        defaultFragmentName = ColorMatrixFragment::class.java.name
-        pageTitle = "Color Matrix"
+        defaultFragmentName = HSVDemoFragment::class.java.name
+        pageTitle = "HSV Mode"
         super.initData(savedInstanceState)
     }
 
@@ -47,11 +47,12 @@ class ColorDemoActivity : AppBarActivity() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.hsvMode -> {
-                pageTitle = "HSV"
+                pageTitle = item.title.toString()
+                item.isChecked = true
                 switchFragment(HSVDemoFragment::class.java.name) {}
             }
             R.id.colorMatrixMode -> {
-                pageTitle = "Color Matrix"
+                pageTitle = item.title.toString()
                 switchFragment(ColorMatrixFragment::class.java.name) {}
             }
         }

@@ -11,24 +11,42 @@
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
      limitations under the License.
+参考博客: https://www.jianshu.com/p/3cd563a377ff
 
-     showAsAction这个属性可接受的值有：
-        1、always：这个值会使菜单项一直显示在Action Bar上。
-        2、ifRoom：如果有足够的空间，这个值会使菜单项显示在Action Bar上。
-        3、never：这个值使菜单项永远都不出现在Action Bar上。
-        4、withText：这个值使菜单项和它的图标，菜单文本一起显示。
+定义Menu,即菜单项的容器。
+<menu>元素必须是该文件的根节点，并且能够包含一个或多个<item>和<group>元素。
+
+<item>是菜单项，用于创建MenuItem，可能包含嵌套的<menu>元素，以便创建子菜单。常见属性如下：
+        android:title：菜单项的标题(必选)
+        android:titleCondensed:菜单项的短标题(可选)，当菜单项标题太长时会显示该属性值
+        android:onClick:方法名称。单击此菜单项时要调用的方法。该方法必须在Activity中声明为public,
+            并将menuItem作为唯一参数，该参数指示单击的项。此方法优先于OnOptionsItemSelected() 的标准回调。
+        android:showAsAction：指定菜单项的显示方式,多个属性值之间可以使用 | 隔开，参数值有：
+                1、always：这个值会使菜单项一直显示在Action Bar上。
+                2、ifRoom：在空间足够时，菜单项会显示在菜单栏中，否则收纳入溢出菜单中。
+                3、never：这个值使菜单项永远都不出现在Action Bar上。
+                4、withText：无论菜单项是否定义了icon属性，都只会显示它的标题，而不会显示图标。
+                            使用这种方式的菜单项默认会被收纳入溢出菜单中。。
+        android:actionLayout：布局资源，动作视图使用的布局文件。
+        android:actionViewClass：类名，所使用的动作视图的全类名名称。 警告：如果项目混淆记得添加对应的忽略文件。
+        android:actionProviderClass：操作提供器类名  警告：如果项目混淆记得添加对应的忽略文件。
 -->
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-        android:id="@+id/hsvMode"
-        android:orderInCategory="100"
-        android:title="@string/menu_hsv"
-        app:showAsAction="never"
-        app:actionViewClass="android.widget.TextClock" />
-    <item
-        android:id="@+id/colorMatrixMode"
-        android:orderInCategory="101"
-        android:title="@string/menu_color_matrix"
-        app:showAsAction="never" />
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:id="@+id/group_single"
+        android:checkableBehavior="single"
+        android:menuCategory="system">
+        <item
+            android:id="@+id/hsvMode"
+            android:checked="true"
+            android:orderInCategory="1"
+            android:title="@string/menu_hsv"/>
+        <item
+            android:id="@+id/colorMatrixMode"
+            android:orderInCategory="1"
+            android:title="@string/menu_color_matrix"/>
+
+    </group>
+
 </menu>
