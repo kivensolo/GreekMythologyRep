@@ -32,7 +32,6 @@
         android:actionProviderClass：操作提供器类名  警告：如果项目混淆记得添加对应的忽略文件。
 -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
     <group
         android:id="@+id/group_single"
         android:checkableBehavior="single"
@@ -40,13 +39,10 @@
         <item
             android:id="@+id/hsvMode"
             android:checked="true"
-            android:orderInCategory="1"
-            android:title="@string/menu_hsv"/>
+            android:title="@string/menu_hsv" />
         <item
             android:id="@+id/colorMatrixMode"
-            android:orderInCategory="1"
-            android:title="@string/menu_color_matrix"/>
+            android:title="@string/menu_color_matrix" />
 
     </group>
-
 </menu>

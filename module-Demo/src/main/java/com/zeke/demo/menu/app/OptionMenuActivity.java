@@ -134,7 +134,11 @@ public class OptionMenuActivity extends BaseActivity {
                 collectMenuItem.collapseActionView();
             }
             return true;
-        } else if (itemId == R.id.single_menu_01 || itemId == R.id.single_menu_02 || itemId == R.id.single_menu_03) {
+        } else if (
+                itemId == R.id.single_menu_01 ||
+                itemId == R.id.single_menu_02 ||
+                itemId == R.id.single_menu_03
+        ) {
             item.setChecked(true);
             Toast.makeText(this, "单选按钮选中：" + item.getTitle(), Toast.LENGTH_SHORT).show();
             return true;

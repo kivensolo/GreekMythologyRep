@@ -1,6 +1,7 @@
 package com.zeke.demo.color
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -44,15 +45,19 @@ class ColorDemoActivity : AppBarActivity() {
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val titleStr = item.title.toString()
+        if(TextUtils.equals(pageTitle, titleStr)){
+            return true
+        }
+        pageTitle = titleStr
+        when (item.itemId) {
             R.id.hsvMode -> {
-                pageTitle = item.title.toString()
                 item.isChecked = true
                 switchFragment(HSVDemoFragment::class.java.name) {}
             }
             R.id.colorMatrixMode -> {
-                pageTitle = item.title.toString()
+                item.isChecked = true
                 switchFragment(ColorMatrixFragment::class.java.name) {}
             }
         }

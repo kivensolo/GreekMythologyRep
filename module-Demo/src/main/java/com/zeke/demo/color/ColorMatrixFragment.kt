@@ -34,7 +34,7 @@ class ColorMatrixFragment : CommonFragment<ColorViewModel>() {
 
     override fun onViewCreated() {
         super.onViewCreated()
-        setHasOptionsMenu(true)
+//        setHasOptionsMenu(true)
         activity?.apply {
             imageView = findViewById(R.id.picImageView)
             matrixTextView = findViewById(R.id.matrixTextView)
