@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
+import android.view.Menu
 import android.view.View
 import android.widget.TextView
 import androidx.activity.viewModels
@@ -25,6 +26,8 @@ import com.kingz.module.wanandroid.viewmodel.WanAndroidViewModelV2
 import com.module.tools.ColorUtils
 import com.zeke.kangaroo.utils.ToastUtils
 import com.zeke.kangaroo.zlog.ZLog
+import java.lang.reflect.InvocationTargetException
+
 //import kotlinx.android.synthetic.main.view_page_header.*
 
 /**
@@ -129,7 +132,7 @@ open class AppBarActivity : BaseVMActivity() {
         }
     }
 
-    protected fun setToolBarTitle(title:String){
+    protected fun setToolBarTitle(title: String){
         findViewById<TextView>(R.id.tvTitle)?.text = title
     }
 
@@ -155,7 +158,7 @@ open class AppBarActivity : BaseVMActivity() {
         }
     }
 
-    protected fun switchFragment(fragmentName: String, block:(frg: Fragment) -> Unit) {
+    protected fun switchFragment(fragmentName: String, block: (frg: Fragment) -> Unit) {
         val factory = supportFragmentManager.fragmentFactory
         val fragment = factory.instantiate(classLoader, fragmentName)
         fragment.apply {
@@ -170,7 +173,7 @@ open class AppBarActivity : BaseVMActivity() {
      *
      * @param targetFragment 跳转目标fragment
      */
-    private fun switchFragment(targetFragment: Fragment, addtoBackStack:Boolean = false) {
+    private fun switchFragment(targetFragment: Fragment, addtoBackStack: Boolean = false) {
         val trans: FragmentTransaction = supportFragmentManager.beginTransaction()
         // 转场自定义动画
        /* trans.setCustomAnimations(
@@ -186,7 +189,7 @@ open class AppBarActivity : BaseVMActivity() {
                 trans.hide(this)
             }
             //Add和replace的区别
-            trans.add(R.id.flContainer, targetFragment,targetFragment::class.java.simpleName)
+            trans.add(R.id.flContainer, targetFragment, targetFragment::class.java.simpleName)
             // 放入后退栈，若只有一个fragment,还是会先隐藏
             if(addtoBackStack){
                 trans.addToBackStack(targetFragment::class.java.simpleName)
@@ -199,7 +202,7 @@ open class AppBarActivity : BaseVMActivity() {
         curFragment = targetFragment
     }
 
-    protected fun switchFragmentWithTag(tag:String):Fragment?{
+    protected fun switchFragmentWithTag(tag: String):Fragment?{
         return supportFragmentManager.findFragmentByTag(tag)
     }
 
@@ -214,7 +217,8 @@ open class AppBarActivity : BaseVMActivity() {
 
     protected fun startWithFragment(
         fragmentName: String, args: Bundle?,
-        resultTo: Fragment?, resultRequestCode: Int, title: String?) {
+        resultTo: Fragment?, resultRequestCode: Int, title: String?
+    ) {
         val intent = onBuildStartFragmentIntent(fragmentName, args, title)
         if (resultTo == null) {
             startActivity(intent)
@@ -223,5 +227,57 @@ open class AppBarActivity : BaseVMActivity() {
         }
     }
 // </editor-fold>
+
+ // <editor-fold defaultstate="collapsed" desc="菜单设置">
+    /**
+     * 选项菜单显示前事件
+     * @param menu
+     * @return
+     */
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        ZLog.i(TAG, "onPrepareOptionsMenu: ")
+        if (menu != null) {
+            setIconEnable(menu, true)
+        }
+        return super.onPrepareOptionsMenu(menu)
+    }
+
+    /**
+     * 选项菜单关闭后事件
+     * @param menu
+     */
+    override fun onOptionsMenuClosed(menu: Menu?) {
+        ZLog.i(TAG, "onOptionsMenuClosed: ")
+        super.onOptionsMenuClosed(menu)
+    }
+
+    /**
+     * Icon显示（Android 4.0以上版本需要反射方式方可显示图标，4.0之前不需要）
+     * @param menu
+     * @param enable
+     */
+    protected open fun setIconEnable(menu: Menu?, enable: Boolean) {
+        if (menu != null) {
+            //实现菜单title与Icon同时显示效果
+            val menuClass = menu.javaClass
+            if ("MenuBuilder" == menuClass.simpleName ) {
+                try {
+                    val method = menuClass.getDeclaredMethod(
+                        "setOptionalIconsVisible",
+                        java.lang.Boolean.TYPE
+                    )
+                    method.isAccessible = true
+                    method.invoke(menu, enable)
+                } catch (e: NoSuchMethodException) {
+                    e.printStackTrace()
+                } catch (e: IllegalAccessException) {
+                    e.printStackTrace()
+                } catch (e: InvocationTargetException) {
+                    e.printStackTrace()
+                }
+            }
+        }
+    }
+ // </editor-fold>
 
 }

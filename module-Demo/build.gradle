@@ -97,4 +97,5 @@ dependencies {
 //    compileOnly _rootDependencies["gilde_annotations"]
     // palette
     implementation _rootDependencies["palette"]
+    implementation 'androidx.recyclerview:recyclerview-selection:1.0.0'
 }
