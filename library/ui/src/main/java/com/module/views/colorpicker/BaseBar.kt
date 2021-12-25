@@ -19,23 +19,24 @@ abstract class BaseBar @JvmOverloads constructor(
         /**
          * Constants used to save/restore the instance state.
          */
-        protected const val STATE_PARENT = "parent"
-        protected const val STATE_COLOR = "color"
-        protected const val STATE_OPACITY = "opacity"
-        protected const val STATE_VALUE = "value"
-        protected const val STATE_SATURATION = "saturation"
-        protected const val STATE_ORIENTATION = "orientation"
+        const val STATE_PARENT = "parent"
+        const val STATE_COLOR = "color"
+        const val STATE_OPACITY = "opacity"
+        const val STATE_HUE = "hue"
+        const val STATE_VALUE = "value"
+        const val STATE_SATURATION = "saturation"
+        const val STATE_ORIENTATION = "orientation"
 
         /**
          * Constants used to identify orientation.
          */
-        protected const val ORIENTATION_HORIZONTAL = true
-        protected const val ORIENTATION_VERTICAL = false
+        const val ORIENTATION_HORIZONTAL = true
+        const val ORIENTATION_VERTICAL = false
 
         /**
          * Default orientation of the bar.
          */
-        protected const val ORIENTATION_DEFAULT = ORIENTATION_HORIZONTAL
+        const val ORIENTATION_DEFAULT = ORIENTATION_HORIZONTAL
     }
 
     /**
@@ -120,18 +121,6 @@ abstract class BaseBar @JvmOverloads constructor(
      */
     @JvmField
     protected var mHSVColorArray = FloatArray(3)
-
-    /**
-     * Factor used to calculate the position to the Opacity on the bar.
-     */
-    @JvmField
-    protected var mPosToSatFactor = 0f
-
-    /**
-     * Factor used to calculate the Opacity to the postion on the bar.
-     */
-    @JvmField
-    protected var mSatToPosFactor = 0f
 
     /**
      * `ColorPicker` instance used to control the ColorPicker.

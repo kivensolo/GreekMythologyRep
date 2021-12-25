@@ -33,6 +33,16 @@ import com.module.views.R;
 
 
 public class ValueBar extends BaseBar {
+	/**
+	 * Factor used to calculate the position to the Value on the bar.
+	 */
+	private float mPosToValFactor = 0f;
+
+	/**
+	 * Factor used to calculate the Value to the postion on the bar.
+	 */
+	private float mValToPosFactor = 0f;
+
     /**
      * Interface and listener so that changes in ValueBar are sent
      * to the host activity/fragment
@@ -102,8 +112,8 @@ public class ValueBar extends BaseBar {
 		mBarPointerPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		mBarPointerPaint.setColor(0xff81ff00);
 
-		mPosToSatFactor = 1 / ((float) mBarLength);
-		mSatToPosFactor = ((float) mBarLength) / 1;
+		mPosToValFactor = 1 / ((float) mBarLength);
+		mValToPosFactor = ((float) mBarLength) / 1;
 	}
 
 	@Override
@@ -183,15 +193,15 @@ public class ValueBar extends BaseBar {
 		}
 
 		mBarPaint.setShader(shader);
-		mPosToSatFactor = 1 / ((float) mBarLength);
-		mSatToPosFactor = ((float) mBarLength) / 1;
+		mPosToValFactor = 1 / ((float) mBarLength);
+		mValToPosFactor = ((float) mBarLength) / 1;
 
 		float[] hsvColor = new float[3];
 		Color.colorToHSV(mColor, hsvColor);
 
 		if (!isInEditMode()) {
 			mBarPointerPosition = Math
-					.round((mBarLength - (mSatToPosFactor * hsvColor[2]))
+					.round((mBarLength - (mValToPosFactor * hsvColor[2]))
 							+ mBarPointerHaloRadius);
 		} else {
 			mBarPointerPosition = mBarPointerHaloRadius;
@@ -329,7 +339,7 @@ public class ValueBar extends BaseBar {
 	 */
 	public void setValue(float value) {
 		mBarPointerPosition = Math
-				.round((mBarLength - (mSatToPosFactor * value))
+				.round((mBarLength - (mValToPosFactor * value))
 						+ mBarPointerHaloRadius);
 		calculateColor(mBarPointerPosition);
 		mBarPointerPaint.setColor(mColor);
@@ -355,7 +365,7 @@ public class ValueBar extends BaseBar {
 	    mColor = Color.HSVToColor(new float[] {
 	    		mHSVColorArray[0],
 		    	mHSVColorArray[1],
-				1 - (mPosToSatFactor * coord)
+				1 - (mPosToValFactor * coord)
 	    });
     }
 

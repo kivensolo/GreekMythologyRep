@@ -32,6 +32,15 @@ import android.view.MotionEvent;
 import com.module.views.R;
 
 public class SaturationBar extends BaseBar {
+	/**
+	 * Factor used to calculate the position to the Saturation on the bar.
+	 */
+	private float mPosToSatFactor = 0f;
+
+	/**
+	 * Factor used to calculate the Saturation to the postion on the bar.
+	 */
+	private float mSatToPosFactor = 0f;
     /**
      * Interface and listener so that changes in SaturationBar are sent
      * to the host activity/fragment

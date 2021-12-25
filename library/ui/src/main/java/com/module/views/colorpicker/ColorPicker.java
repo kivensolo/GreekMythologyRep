@@ -192,18 +192,15 @@ public class ColorPicker extends View {
     private float[] mHSV = new float[3];
 
     /**
-     * {@code SVBar} instance used to control the Saturation/Value bar.
+     * Instance used to control the fllow bars:
+     * Saturation/Value bar.
+     * Hue bar.
+     * Opacity bar.
+     * Saturation bar.
      */
     private SVBar mSVbar = null;
-
-    /**
-     * {@code OpacityBar} instance used to control the Opacity bar.
-     */
+    private HueBar mHuebar = null;
     private OpacityBar mOpacityBar = null;
-
-    /**
-     * {@code SaturationBar} instance used to control the Saturation bar.
-     */
     private SaturationBar mSaturationBar = null;
 
     /**
@@ -511,6 +508,11 @@ public class ColorPicker extends View {
      *              true for shades of grey. You have been warned!
      */
     public void setColor(int color) {
+        setColor(color,false);
+    }
+    public void setColor(int color, boolean fromHueBar) {
+        //Change the RGB value of color to HVS.
+        Color.colorToHSV(color, mHSV);
         mAngle = colorToAngle(color);
         mPointerColor.setColor(calculateColor(mAngle));
 
@@ -521,12 +523,16 @@ public class ColorPicker extends View {
             mOpacityBar.setOpacity(Color.alpha(color));
         }
 
+        if (!fromHueBar && mHuebar != null) {
+            // set the value of the hue bar
+            mHuebar.setColor(mColor);
+            mHuebar.setHue(mHSV[0]);
+        }
+
         // check if the instance isn't null
         if (mSVbar != null) {
             // the array mHSV will be filled with the HSV values of the color.
-            Color.colorToHSV(color, mHSV);
             mSVbar.setColor(mColor);
-
             // because of the design of the Saturation/Value bar,
             // we can only use Saturation or Value every time.
             // Here will be checked which we shall use.
@@ -538,19 +544,20 @@ public class ColorPicker extends View {
         }
 
         if (mSaturationBar != null) {
-            Color.colorToHSV(color, mHSV);
             mSaturationBar.setColor(mColor);
             mSaturationBar.setSaturation(mHSV[1]);
         }
-
-        if (mValueBar != null && mSaturationBar == null) {
-            Color.colorToHSV(color, mHSV);
+        if (mValueBar != null ) {
+            mValueBar.setColor(mColor);
+            mValueBar.setValue(mHSV[2]);
+        }
+       /* if (mValueBar != null && mSaturationBar == null) {
             mValueBar.setColor(mColor);
             mValueBar.setValue(mHSV[2]);
         } else if (mValueBar != null) {
-            Color.colorToHSV(color, mHSV);
             mValueBar.setValue(mHSV[2]);
-        }
+        }*/
+
         setNewCenterColor(color);
     }
 
@@ -632,6 +639,10 @@ public class ColorPicker extends View {
                     if (mSVbar != null) {
                         mSVbar.setColor(mColor);
                     }
+                    if(mHuebar != null){
+                        Color.colorToHSV(mColor,mHSV);
+                        mHuebar.setHue(mHSV[0]);
+                    }
 
                     invalidate();
                 }
@@ -677,6 +688,17 @@ public class ColorPicker extends View {
         return new float[]{x, y};
     }
 
+    /**
+     * Add a Saturation/Value bar to the color wheel.
+     *
+     * @param bar The instance of the Saturation/Value bar.
+     */
+    public void addHueBar(HueBar bar) {
+        mHuebar = bar;
+        // Give an instance of the color picker to the Saturation/Value bar.
+        mHuebar.setColorPicker(this);
+        mHuebar.setColor(mColor);
+    }
     /**
      * Add a Saturation/Value bar to the color wheel.
      *
@@ -769,6 +791,7 @@ public class ColorPicker extends View {
      */
     public void changeOpacityBarColor(int color) {
         if (mOpacityBar != null) {
+            // set the value of the opacity
             mOpacityBar.setColor(color);
         }
     }
@@ -795,6 +818,18 @@ public class ColorPicker extends View {
         }
     }
 
+    /**
+     * Used to change the color of the {@code SVBar}.
+     *
+     * @param color int of the color used to change the svBar bar color.
+     */
+    public void changeSVBarColor(int color) {
+        if (mSVbar != null) {
+            mSVbar.setColor(color);
+        }
+    }
+
+   // <editor-fold defaultstate="collapsed" desc="绑定Bar判断API">
     /**
      * Checks if there is an {@code OpacityBar} connected.
      *
@@ -830,6 +865,15 @@ public class ColorPicker extends View {
     public boolean hasSVBar() {
         return mSVbar != null;
     }
+    /**
+     * Checks if there is a {@code HueBar} connected.
+     *
+     * @return true or false.
+     */
+    public boolean hasHueBar() {
+        return mHuebar != null;
+    }
+   // </editor-fold>
 
     @Override
     protected Parcelable onSaveInstanceState() {
