@@ -82,18 +82,10 @@
                     android:textColor="#ffffff"
                     android:textSize="14sp" />
 
-                <androidx.appcompat.widget.AppCompatSeekBar
-                    android:id="@+id/hueSeek"
-                    android:padding="5dp"
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:max="100"
-                    android:maxHeight="2.5dp"
-                    android:minHeight="2.5dp"
-                    android:progress="100"
-                    android:progressDrawable="@drawable/seek_bar_withe"
-                    android:thumb="@drawable/ic_thumb_circular" />
+                <com.module.views.colorpicker.HueBar
+                    android:id="@+id/hueBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
 
                 <TextView
                     android:id="@+id/tv_hue_seek"
