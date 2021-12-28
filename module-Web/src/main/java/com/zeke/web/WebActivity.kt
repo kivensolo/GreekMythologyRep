@@ -7,7 +7,10 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
-import android.view.*
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.webkit.WebView
 import android.widget.LinearLayout
 import android.widget.PopupMenu
@@ -61,7 +64,7 @@ class WebActivity : BaseHeaderActivity<WebPageBinding>(),
 
     override fun initContentView() {
         //TODO 优化，提到BaseHeader 用反射动态初始化
-        viewBindingObj = WebPageBinding.inflate(LayoutInflater.from(this))
+        viewBindingObj = WebPageBinding.inflate(layoutInflater)
         super.initContentView()
     }
 
@@ -112,7 +115,7 @@ class WebActivity : BaseHeaderActivity<WebPageBinding>(),
     private fun loadUrl(url: String?) {
         if (agentWeb == null) {
             agentWeb = AgentWeb.with(this)
-                .setAgentWebParent(viewBindingObj.root as ViewGroup,
+                .setAgentWebParent(viewBindingObj.root as ConstraintLayout,
                     LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.MATCH_PARENT
@@ -125,10 +128,7 @@ class WebActivity : BaseHeaderActivity<WebPageBinding>(),
                     ), 2
                 )
                 .setWebChromeClient(object : WebChromeClient() {
-                    override fun onReceivedTitle(
-                        view: WebView,
-                        title: String
-                    ) {
+                    override fun onReceivedTitle(view: WebView, title: String) {
                         super.onReceivedTitle(view, title)
                         if (!TextUtils.isEmpty(title)) {
                             setTitle(title)
@@ -136,15 +136,7 @@ class WebActivity : BaseHeaderActivity<WebPageBinding>(),
                     }
                 })
                 .setWebViewClient(object : WebViewClient() {
-                    //Crash
-                    //    java.lang.IllegalArgumentException:
-                    //    Parameter specified as non-null is null: method kotlin.jvm.internal.Intrinsics.checkParameterIsNotNull,
-                    //    parameter favicon
-                    override fun onPageStarted(
-                        view: WebView,
-                        url: String,
-                        favicon: Bitmap
-                    ) {
+                    override fun onPageStarted(view: WebView,url: String,favicon: Bitmap?) {
                         super.onPageStarted(view, url, favicon)
                         mCurUrl = url
                     }
