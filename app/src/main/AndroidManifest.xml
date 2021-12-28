@@ -125,7 +125,7 @@
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name="com.kingz.text.LableTextViewPage"
+            android:name="com.kingz.text.LabelTextViewPage"
             android:theme="@android:style/Theme.DeviceDefault" />
 
         <activity
