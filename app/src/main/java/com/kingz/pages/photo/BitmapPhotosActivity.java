@@ -211,8 +211,10 @@ public class BitmapPhotosActivity extends PhotosActivity {
         text_waterMarkBitmap = null;
         shadowBitmap.recycle();
         shadowBitmap = null;
-        screenShotBitmap.recycle();
-        screenShotBitmap = null;
+        if(screenShotBitmap != null){
+            screenShotBitmap.recycle();
+            screenShotBitmap = null;
+        }
 
         super.onDestroy();
     }
