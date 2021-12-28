@@ -1,153 +1,11 @@
 [
   {
-    "name": "JetPack",
-    "desc": "JetPack",
-    "samples": [
-      {
-        "name": "Paging3 Demo",
-        "class": "com.zeke.demo.jetpack.paging.PagingDemoActivity"
-      }
-    ]
-  },
-  {
-    "name": "Animation",
-    "desc": "ViewAimation",
-    "samples": [
-      {
-        "name": "Property Animation",
-        "class": "com.kingz.view.animation.PropertyAnimationsActivity"
-      },
-      {
-        "name": "ViewFlipper Animation",
-        "class": "com.kingz.view.animation.ViewFlipperAnimation"
-      },
-      {
-        "name": "Interpolator Animation",
-        "class": "com.kingz.view.animation.InterpolatorAnimation"
-      },
-      {
-        "name": "Crossfading Two Views",
-        "class": "com.kingz.view.animation.CrossfadeActivity"
-      }
-    ]
-  },
-  {
-    "name": "AboutText",
-    "desc": "文字处理相关",
-    "samples": [
-      {
-        "name": "TextViewOfLanguages",
-        "class": "com.kingz.text.langs.TextViewOfLanguages"
-      },
-      {
-        "name": "LableText",
-        "class": "com.kingz.text.LableTextViewPage"
-      },
-      {
-        "name": "SpanLable",
-        "class": "com.kingz.text.metrics.SpansDemo"
-      }
-    ]
-  },
-  {
-    "name": "AAC",
-    "desc": "Android Architecture Components",
-    "samples": [
-      {
-        "name": "协程练习",
-        "class": "com.zeke.ktx.modules.aac.CoroutineTestActivity"
-      },
-      {
-        "name": "ViewModel Demo",
-        "class": "com.zeke.ktx.modules.aac.ViewModelDemoActivity"
-      },
-      {
-        "name": "Shared ViewModel Demo",
-        "class": "com.zeke.ktx.modules.aac.sharedvm.SharedFirstVMActivity"
-      }
-    ]
-  },
-  {
-    "name": "Custom controls",
-    "desc": "自定义控件",
-    "samples": [
-      {
-        "name": "Custom controls",
-        "class": "com.kingz.pages.CustomViewsPage"
-      },
-      {
-        "name": "新版自定义View/控件展示页面",
-        "class": "com.zeke.demo.customview.CustomViewsDemoActivity"
-      },
-      {
-        "name": "ShadowLayout",
-        "class": "com.zeke.demo.shadowlayout.ShadowLayoutDemoActivity"
-      }
-    ]
-  },
-  {
     "name": "Device",
     "desc": "与设备交互",
     "samples": [
       {
         "name": "Bluetooth",
         "class": "com.zeke.demo.device.bluetooth.BleDemoActivity"
-      }
-    ]
-  },
-  {
-    "name": "Original",
-    "desc": "原生基本控件",
-    "samples": [
-      {
-        "name": "Four major components",
-        "class": "com.kingz.widgets.android_src.FourComponentPage"
-      },
-      {
-        "name": "SurfaceDraw",
-        "class": "com.kingz.widgets.android_src.DrawRectWithSurface"
-      },
-      {
-        "name": "Fragment Lifecycle",
-        "class": "com.zeke.demo.fragments.FragementLifeCycleTestPage"
-      },
-      {
-        "name": "WebView",
-        "class": "com.kingz.view.webview.WebViewActivity"
-      }
-    ]
-  },
-  {
-    "name": "Images & Graphics",
-    "samples": [
-      {
-        "name": "PathDemo",
-        "class": "com.kingz.graphics.PathDemoActivity"
-      },
-      {
-        "name": "MemoryCheck",
-        "class": "com.kingz.pages.photo.memory.MemoryCheck"
-      },
-      {
-        "name": "Glide",
-        "class": "com.zeke.ktx.demo.glide.GlideCardDemoActivity"
-      }
-    ]
-  },
-  {
-    "name": "File",
-    "samples": [
-      {
-        "name": "File Test",
-        "class": "com.kingz.file.FileAndPicTestACT"
-      },
-      {
-        "name": "DownloadFile",
-        "class": "com.kingz.file.WorkManagerDemoActivity"
-      },
-      {
-        "name": "ExternalStorage",
-        "class": "com.apiDemo.content.ExternalStorage"
       }
     ]
   },
@@ -161,27 +19,6 @@
       {
         "name": "FilmsList",
         "class": "com.kingz.pages.photo.filmlist.FilmsListActivity"
-      }
-    ]
-  },
-  {
-    "name": "Player",
-    "samples": [
-      {
-        "name": "MediaPlayer",
-        "class": "com.mplayer.ApolloMediaPlayer"
-      },
-      {
-        "name": "Detail-With-ExoPlayer",
-        "class": "com.zeke.music.activities.MusicDetailPageActivty"
-      },
-      {
-        "name": "IJK SampleList(Not ready)",
-        "class": "com.zeke.play.activities.IJKSampleMediaActivity"
-      },
-      {
-        "name": "ZPlayerView Test",
-        "class": "com.zeke.play.activities.ZPlayerViewTest"
       }
     ]
   },
@@ -205,34 +42,6 @@
       {
         "name": "HML_Deep",
         "class": "com.kingz.communicat.HMLActuivity"
-      }
-    ]
-  },
-  {
-    "name": "BasicApi",
-    "desc": "BaseApiUnderStand",
-    "samples": [
-      {
-        "name": "Canvas",
-        "class": "com.kingz.basic_api.CanvasApiActivity"
-      }
-    ]
-  },
-  {
-    "name": "PracticeDraw",
-    "desc": "自定义View绘制练习",
-    "samples": [
-      {
-        "name": "PracticeDrawDemo",
-        "class": "com.zeke.demo.draw.PracticeDrawActivity"
-      },
-      {
-        "name": "PracticeLayout",
-        "class": "com.zeke.demo.draw.PracticeLayoutActivity"
-      },
-      {
-        "name": "CircleImageDemo",
-        "class": "com.zeke.demo.draw.SmartImageDemoActivity"
       }
     ]
   }
