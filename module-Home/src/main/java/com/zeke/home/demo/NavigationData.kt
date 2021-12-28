@@ -29,7 +29,6 @@ class NavigationData {
         ),
         DemoGroup("Custom view & widgets","自定义View绘制练习& 控件",
             samples = arrayListOf(
-                DemoSample("Canvas API",    "com.kingz.basic_api.CanvasApiActivity"),
                 DemoSample("旧版自定义View集合页面", "com.kingz.pages.CustomViewsPage"),
                 DemoSample("新版自定义View展示页面", "com.zeke.demo.customview.CustomViewsDemoActivity"),
                 DemoSample("ShadowLayout展示", "com.zeke.demo.shadowlayout.ShadowLayoutDemoActivity"),

@@ -23,6 +23,7 @@ object RouterConfig {
     const val PAGE_APPBAR_DEMO = "/module_Demo/Appbar"
     const val PAGE_IMMERSION = "/module_Demo/ImmersionBar"
     const val PAGE_TOOLBAR = "/module_Demo/Toobar"
+    const val PAGE_CANVAS_API = "/module_Demo/CanvasApi"
     // </editor-fold>
 
     const val PAGE_LOGIN = "/module_Login/login"

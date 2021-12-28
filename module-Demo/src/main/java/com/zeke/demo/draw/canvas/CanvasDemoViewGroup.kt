@@ -6,25 +6,26 @@ import android.util.AttributeSet
 import android.view.ViewGroup
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
-import com.module.tools.ScreenTools
 import com.zeke.demo.R
 import com.zeke.kangaroo.utils.ScreenDisplayUtils
+import com.zeke.kangaroo.utils.UIUtils
 import com.zeke.kangaroo.zlog.ZLog
 
 /**
  * author: King.Z <br></br>
  * date:  2017/5/26 23:12 <br></br>
+ * Canvas基础api的自定义ViewGroup页面
  */
-class CanvasDemoViewGroup @JvmOverloads
-constructor(context: Context, attrs: AttributeSet? = null) :
-        ViewGroup(context, attrs) {
-    private val viewWidth: Int
-    private val viewHeight: Int
+class CanvasDemoViewGroup @JvmOverloads constructor(
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+) : ViewGroup(context, attrs, defStyleAttr) {
+    private var viewWidth: Int = 0
+    private var viewHeight: Int
     private val charArray = arrayOf("T", "R", "S", "SK")
     private val bitMapPaint : Paint
     private lateinit var mSeekBar : Array<SeekBar?>//控制进度条
     private val mBitmap: Bitmap
-    private val dstRect: RectF
+    private lateinit var dstRect: RectF
 
     private var mTranslate = 0f
     private var mRotate = 0f
@@ -40,11 +41,10 @@ constructor(context: Context, attrs: AttributeSet? = null) :
     init {
         ZLog.d(TAG, "CanvasDemoViewGroup")
         // setBackgroundColor(context.resources.getColor(R.color.red))
-        viewWidth = ScreenDisplayUtils.getScreenWidth(context)
         viewHeight = ScreenDisplayUtils.getScreenHeight(context)
         mLayoutParams = LayoutParams(LayoutParams.MATCH_PARENT,
                 LayoutParams.WRAP_CONTENT)
-        setNumberOfSeekBar(context)
+        initSeekBars(context)
         bitMapPaint = Paint(Paint.ANTI_ALIAS_FLAG)
         bitMapPaint.color = Color.RED
         bitMapPaint.style = Paint.Style.FILL
@@ -53,10 +53,9 @@ constructor(context: Context, attrs: AttributeSet? = null) :
         val bmpOption = BitmapFactory.Options()
         bmpOption.inPreferredConfig = Bitmap.Config.RGB_565 //8888是默认值
         mBitmap = BitmapFactory.decodeResource(resources, R.drawable.marvel_qiyi, bmpOption)
-        dstRect = RectF(20f, 20f, (viewWidth - 20).toFloat(), 420f)
     }
 
-    private fun setNumberOfSeekBar(context: Context) {
+    private fun initSeekBars(context: Context) {
         mSeekBar = arrayOfNulls(SEEKBAR_NUMS)
         for (i in 0 until SEEKBAR_NUMS) {
             val seekBar = SeekBar(context)
@@ -82,6 +81,7 @@ constructor(context: Context, attrs: AttributeSet? = null) :
         ZLog.d(TAG, "onMeasure")
         //计算出所有的childView的宽高
         measureChildren(widthMeasureSpec, heightMeasureSpec)
+        viewWidth = measuredWidth
         val cCount = childCount
         var cWidth = 0
         var cHeight = 0
@@ -98,9 +98,9 @@ constructor(context: Context, attrs: AttributeSet? = null) :
             //}else{
             //    cLayouP.topMargin = ScreenTools.Operation(20);
             //}
-            ZLog.d(TAG, "onMeasure  cWidth=$cWidth;cHeight=$cHeight")
         }
-        setMeasuredDimension(viewWidth, ScreenTools.Operation(800))
+        setMeasuredDimension(viewWidth, UIUtils.dip2px(1000f))
+        dstRect = RectF(20f, 20f, (viewWidth - 20).toFloat(), 420f)
     }
 
     /**
@@ -110,14 +110,14 @@ constructor(context: Context, attrs: AttributeSet? = null) :
         ZLog.d(TAG, "onLayout")
         //MarginLayoutParams mLayoutPms = new MarginLayoutParams(LayoutParams.MATCH_PARENT,MarginLayoutParams.WRAP_CONTENT);
         //mLayoutPms.setMargins(0,ScreenTools.Operation(20),0,0);
-        var y = 460
+        var y = 0
         for (i in 0 until childCount) {
             val childView = getChildAt(i)
             childView.x = 0f
             childView.y = y.toFloat()
             childView.layoutParams = mLayoutParams
-            childView.layout(0, y, viewWidth, y + 70)
-            y += 80
+            childView.layout(0, y, viewWidth, y + UIUtils.dip2px(70f))
+            y += (childView.height + UIUtils.dip2px(10f))
         }
     }
 
@@ -126,7 +126,6 @@ constructor(context: Context, attrs: AttributeSet? = null) :
         super.onDraw(canvas)
         //TODO 为啥不绘制Bitmap呢？
         canvas.drawBitmap(mBitmap, null, dstRect, bitMapPaint)
-        //canvas.drawText(mMatrixValues,mTargetRect.left,mTargetRect.bottom,matrixValuePaint);
         canvas.save()
         // canvas.translate(mTranslate, 0f)
         // canvas.rotate(mRotate, 200f, 200f)

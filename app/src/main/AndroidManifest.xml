@@ -283,12 +283,6 @@
         <!--  ************ 图形方面  End ************ -->
 
 
-        <!--  ************ Android 基本API效果展示  Start ************ -->
-        <activity
-            android:name="com.kingz.basic_api.CanvasApiActivity"
-            android:theme="@style/AppTheme" />
-        <!--  ************ Android 基本API效果展示  End ************ -->
-
         <!--  ************ Android >=5.0 新特性展示  Start ************ -->
         <activity
             android:name="com.kingz.newfeatures.NewFeaturesMainActivity"
