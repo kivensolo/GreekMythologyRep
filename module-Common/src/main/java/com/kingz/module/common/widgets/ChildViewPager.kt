@@ -5,6 +5,7 @@ import android.graphics.PointF
 import android.util.AttributeSet
 import android.view.MotionEvent
 import androidx.viewpager.widget.ViewPager
+import kotlin.math.abs
 
 /**
  * author：ZekeWang
@@ -18,23 +19,29 @@ class ChildViewPager @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : ViewPager(context, attrs) {
-    /** 触摸时当前的点  */
-    var curP: PointF = PointF()
+    private var touchDownPoint: PointF = PointF()
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
         val curPosition: Int
         when (ev.action) {
             MotionEvent.ACTION_DOWN -> {
-                curP.x = ev.x
-                //告知父类先不进行拦截
+                touchDownPoint.x = ev.x
+                touchDownPoint.y = ev.y
+                //告知父容器先不进行拦截
                 parent.requestDisallowInterceptTouchEvent(true)
             }
             MotionEvent.ACTION_MOVE -> {
                 curPosition = currentItem
                 val count = adapter?.count ?: 0
                 var disallowParent = true
-                if (curPosition == 0 && ev.x > curP.x) {
+                val dx = ev.x - touchDownPoint.x
+                val dy = ev.y - touchDownPoint.y
+                var scrollFromLTR = false
+                if(abs(dx) > abs(dy)){ //isHorizontal
+                    scrollFromLTR = ev.x > touchDownPoint.x
+                }
+                if (curPosition == 0 && scrollFromLTR) {
                     disallowParent = false //第一页&&往左翻页
-                } else if(curPosition == (count - 1) && ev.x < curP.x) {
+                } else if(curPosition == (count - 1) && !scrollFromLTR) {
                     disallowParent = false //最后一页&&往右翻页
                 }
                 parent.requestDisallowInterceptTouchEvent(disallowParent)
