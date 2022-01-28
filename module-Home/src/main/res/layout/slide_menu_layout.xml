@@ -25,6 +25,7 @@
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/slideMenuTopBkgLayout"
                     android:layout_width="match_parent"
                     android:layout_height="190dp"
                     android:layout_marginBottom="@dimen/size_20dp"

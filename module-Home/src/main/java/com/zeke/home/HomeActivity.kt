@@ -24,12 +24,12 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.google.android.material.tabs.TabLayoutMediator
 import com.hjq.permissions.OnPermissionCallback
 import com.hjq.permissions.XXPermissions
-import com.kingz.base.BaseVMActivity
 import com.kingz.base.factory.ViewModelFactory
 import com.kingz.database.entity.BaseEntity
 import com.kingz.module.common.ext.startActivity
 import com.kingz.module.common.router.Router
 import com.kingz.module.common.router.RouterConfig
+import com.kingz.module.common.setting.SettingUtil
 import com.kingz.module.common.utils.PermissionUtils
 import com.kingz.module.common.utils.RandomUtils
 import com.kingz.module.home.BuildConfig
@@ -56,7 +56,7 @@ import java.lang.String
  * 首页
  */
 @Route(path = RouterConfig.PAGE_MAIN)
-class HomeActivity : BaseVMActivity(), View.OnClickListener{
+class HomeActivity : AppBarActivity(), View.OnClickListener{
 
     companion object {
         const val TAG = "HomeActivity"
@@ -344,6 +344,14 @@ class HomeActivity : BaseVMActivity(), View.OnClickListener{
 //            .hideBar(BarHide.FLAG_HIDE_STATUS_BAR)
 //            .navigationBarColor(R.color.colorPrimaryDark)
 //            .init()
+    }
+
+    override fun initColor() {
+        super.initColor()
+        mThemeColor = SettingUtil.getAppThemeColor()
+        findViewById<View>(R.id.slideMenuTopBkgLayout).apply {
+            setBackgroundColor(mThemeColor)
+        }
     }
 }
 
