@@ -76,8 +76,6 @@ public class SeekBarView extends View implements View.OnTouchListener {
 
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
-		// TODO Auto-generated method stub
-
 		return false;
 	}
 
