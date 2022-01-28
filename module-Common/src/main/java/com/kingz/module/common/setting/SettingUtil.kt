@@ -30,6 +30,9 @@ object SettingUtil {
      */
     fun getAppThemeColor(): Int {
         val defaultColor = CommonApp.getInstance().resources.getColor(R.color.colorPrimary)
+        if(isNightMode()){
+            return defaultColor
+        }
         val color = setting.getInt("color", defaultColor)
         return if (color != 0 && Color.alpha(color) != 255) {
             defaultColor
@@ -60,7 +63,7 @@ object SettingUtil {
     /**
      * 获取是否开启夜间模式
      */
-    fun getIsNightMode(): Boolean {
+    fun isNightMode(): Boolean {
         return setting.getBoolean("switch_nightMode", false)
     }
 

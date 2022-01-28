@@ -67,7 +67,7 @@ open class AppBarActivity : BaseVMActivity() {
     }
 
     open fun initColor() {
-        mThemeColor = if (SettingUtil.getIsNightMode()) {
+        mThemeColor = if (SettingUtil.isNightMode()) {
             resources.getColor(R.color.colorPrimary)
         } else {
             SettingUtil.getAppThemeColor()
