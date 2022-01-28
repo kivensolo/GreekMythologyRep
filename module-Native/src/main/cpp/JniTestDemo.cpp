@@ -1,6 +1,8 @@
 #include <jni.h>
 #include <string>
 #include <iostream>
+
+//声明命名空间std
 using namespace std;
 
 extern "C" {
