@@ -1,5 +1,9 @@
 package com.kingz.module.common.utils
 
+/**
+ * 字节 & 字符 & 字符串
+ * 转换工具类
+ */
 object HexUtil {
 
     private val DIGITS_LOWER = charArrayOf(
@@ -45,7 +49,7 @@ object HexUtil {
      * @return Bytes value in String.
      */
     fun formatHexString(bytes: ByteArray?, addSpace: Boolean = false): String {
-        if (bytes == null || bytes.isEmpty()) return "null"
+        if (bytes == null || bytes.isEmpty()) return "<null>"
         val sb = StringBuilder()
         for (i in bytes.indices) {
             var hex = Integer.toHexString(bytes[i].toInt() and 0xFF)
@@ -60,7 +64,7 @@ object HexUtil {
 
     /**
      * Hex string to bytes array.
-     * @param hexString String of hex
+     * @param string String of hex
      * @return Bytes value in String.
      */
     fun hexStringToBytes(string: String?): ByteArray? {
@@ -94,7 +98,7 @@ object HexUtil {
     }
 
     /**
-     * Hex to Int
+     * Byte to Int
      * @param byte byte value
      */
     fun byteToInt(byte: Byte): Int {

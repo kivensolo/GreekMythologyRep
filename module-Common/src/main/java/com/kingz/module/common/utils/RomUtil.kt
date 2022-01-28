@@ -8,7 +8,7 @@ import java.io.InputStreamReader
 
 
 /**
- * Created by chenxz on 2018/4/21.
+ * 设备ROM工具类，主要针对手机
  */
 object RomUtil {
 
@@ -54,8 +54,10 @@ object RomUtil {
         return false
     }
 
-    //MIUI V6对应的versionCode是4
-    //MIUI V7对应的versionCode是5
+    /**
+     * MIUI V6对应的versionCode是4
+     * MIUI V7对应的versionCode是5
+     */
     private fun isMIUIV6OrAbove(): Boolean {
         val miuiVersionCodeStr = getSystemProperty("ro.miui.ui.version.code")
         if (!TextUtils.isEmpty(miuiVersionCodeStr)) {
