@@ -49,7 +49,6 @@ abstract class BaseVMFragment< T : BaseReactiveViewModel>
     override fun onDestroyView() {
         super.onDestroyView()
         rootView = null
-        onViewDestroy()
     }
 
     override fun onDetach() {
@@ -61,8 +60,6 @@ abstract class BaseVMFragment< T : BaseReactiveViewModel>
      * 当View已经加载的回调
      */
     open fun onViewCreated(){}
-
-    open fun onViewDestroy(){}
 
     /** VIewModel中持有的UI数据监听 */
     @CallSuper

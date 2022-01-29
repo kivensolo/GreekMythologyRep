@@ -64,7 +64,7 @@ abstract class HomeBaseFragment<T : IPresenter> : BaseFragment(), IView {
         }
 
         loadStatusView = rootView?.findViewById(R.id.load_status)
-        loadStatusView?.showProgress()
+        loadStatusView?.showLoading()
 
         val ivSearch: View? = rootView?.findViewById(R.id.ivSearch)
         ivSearch?.setOnClickListener {
@@ -76,7 +76,7 @@ abstract class HomeBaseFragment<T : IPresenter> : BaseFragment(), IView {
         get() = TODO("not implemented")
 
     override fun showLoading() {
-        loadStatusView?.showProgress()
+        loadStatusView?.showLoading()
     }
 
     override fun hideLoading() {

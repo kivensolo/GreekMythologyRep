@@ -10,18 +10,19 @@ import androidx.recyclerview.widget.RecyclerView
  */
 object RvUtils {
     /**
-     * 平滑滚动到第1个元素
+     * 滚动到第1个元素
+     * 若可视的第一个元素，超过了2页数据，则直接滚动，否则平滑滚动
      */
     fun smoothScrollTop(rv: RecyclerView) {
         val layoutManager: RecyclerView.LayoutManager? = rv.layoutManager
         if (layoutManager is LinearLayoutManager) {
             val linearLayoutManager: LinearLayoutManager = layoutManager
-            val first: Int = linearLayoutManager.findFirstVisibleItemPosition()
-            val last: Int = linearLayoutManager.findLastVisibleItemPosition()
-            val visibleCount = last - first + 1
-            val scrollIndex = visibleCount * 2 - 1
-            if (first > scrollIndex) {
-                rv.scrollToPosition(scrollIndex)
+            val topPosition: Int = linearLayoutManager.findFirstVisibleItemPosition()
+            val bottomPosition: Int = linearLayoutManager.findLastVisibleItemPosition()
+            val visibleCount = bottomPosition - topPosition + 1
+            val directlyScrollRange = visibleCount * 2 - 1
+            if (topPosition > directlyScrollRange) {
+                rv.scrollToPosition(directlyScrollRange)
             }
         }
         rv.smoothScrollToPosition(0)

@@ -80,7 +80,7 @@ public class Win10LoadingView extends View {
         mPaint = new Paint();
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeWidth(DEFAULT_STROKE_WIDTH);
-        mPaint.setColor(Color.WHITE);
+        mPaint.setColor(Color.GREEN);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
         mPaint.setAntiAlias(true);
 
@@ -105,6 +105,7 @@ public class Win10LoadingView extends View {
         valueAnimator = ValueAnimator.ofFloat(0f, 1f).setDuration(DURATION);
 //        valueAnimator.setInterpolator(new DecelerateInterpolator());
         valueAnimator.setRepeatCount(-1);
+        valueAnimator.setDuration(3000);
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {

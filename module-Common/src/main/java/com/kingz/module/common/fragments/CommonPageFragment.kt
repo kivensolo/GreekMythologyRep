@@ -28,7 +28,7 @@ open class CommonPageFragment: BaseFragment(){
 
 
     override fun getLayoutId(): Int {
-        return R.layout.fragment_common_page
+        return R.layout.fragment_refresh_layout
     }
 
     override fun onCreateViewReady() {

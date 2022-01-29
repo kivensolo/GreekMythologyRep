@@ -5,25 +5,18 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
-import androidx.annotation.StringRes
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.animation.ScaleInAnimation
 import com.kingz.base.factory.ViewModelFactory
-import com.kingz.module.common.base.IRvScroller
-import com.kingz.module.common.utils.RvUtils
 import com.kingz.module.home.R
 import com.kingz.module.wanandroid.adapter.ArticleAdapter
 import com.kingz.module.wanandroid.bean.Article
 import com.kingz.module.wanandroid.bean.BannerItem
 import com.kingz.module.wanandroid.bean.CollectActionBean
-import com.kingz.module.wanandroid.fragemnts.CommonFragment
+import com.kingz.module.wanandroid.fragemnts.AbsListFragment
 import com.kingz.module.wanandroid.viewmodel.WanAndroidViewModelV2
 import com.like.LikeButton
-import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import com.youth.banner.Banner
@@ -33,7 +26,6 @@ import com.zeke.home.wanandroid.adapter.HomeBannerAdapter
 import com.zeke.home.wanandroid.viewmodel.HomeViewModel
 import com.zeke.kangaroo.zlog.ZLog
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.withContext
 import java.util.*
 
@@ -41,24 +33,15 @@ import java.util.*
 /**
  * 首页热门推荐(玩android)的Fragemnt
  */
-class WanAndroidHomeFragment : CommonFragment<WanAndroidViewModelV2>(),
-    IRvScroller {
+class WanAndroidHomeFragment : AbsListFragment<WanAndroidViewModelV2>() {
 
     private var banner: Banner<BannerItem, HomeBannerAdapter<BannerItem>>? = null
-    private lateinit var mRecyclerView: RecyclerView
     private var articleAdapter: ArticleAdapter? = null
-    private var swipeRefreshLayout: SmartRefreshLayout? = null
-
-    // 当前页数
-    private var mCurPage = 0
-    private var mPageCount = 0
-    // 优化: 状态通过swipeRefreshLayout内部状态RefreshState判断
-    private var isLoadingMore = false
 
     private var bannerUrls: MutableList<String> = ArrayList()
     private var bannerTitles: MutableList<String> = ArrayList()
 
-    override fun getLayoutResID() = R.layout.fragment_common_page
+    override fun getLayoutResID() = R.layout.fragment_refresh_layout
 
     override val viewModel: HomeViewModel by viewModels {
         ViewModelFactory.build { HomeViewModel() }
@@ -66,8 +49,8 @@ class WanAndroidHomeFragment : CommonFragment<WanAndroidViewModelV2>(),
 
     override fun initViewModel() {
         super.initViewModel()
-        obServArticalLiveData()
-        obServBannerLiveData()
+        obServeArticalLiveData()
+        obServeBannerLiveData()
 
         viewModel.articalCollectData.observe(this, Observer { result ->
             val message :String = if (result.isSuccess) {
@@ -100,7 +83,7 @@ class WanAndroidHomeFragment : CommonFragment<WanAndroidViewModelV2>(),
     /**
      * Banner数据观察回调
      */
-    private fun obServBannerLiveData() {
+    private fun obServeBannerLiveData() {
         viewModel.bannerLiveData.observe(this, Observer { result ->
             ZLog.d("Banner data onChanged() data size = " + result.data?.size)
             bannerUrls.clear()
@@ -118,18 +101,17 @@ class WanAndroidHomeFragment : CommonFragment<WanAndroidViewModelV2>(),
     /**
      * 文章数据观察回调
      */
-    private fun obServArticalLiveData() {
+    private fun obServeArticalLiveData() {
         viewModel.articalLiveData.observe(this, Observer {
             if (it == null) {
                 ZLog.d("artical LiveData request error. result is null.")
 //                Toast.makeText(context, resources.getString(R.string.exception_request_data),
 //                    Toast.LENGTH_SHORT).show()
-                swipeRefreshLayout?.finishRefresh()
-                showErrorView(true)
+                refreshLayout?.finishRefresh()
+                showErrorStatus()
                 return@Observer
             }
-            dismissLoading()
-            showErrorView(false)
+            showContent()
             launchIO {
                 ZLog.d("artical LiveData onObserved.")
 
@@ -142,7 +124,7 @@ class WanAndroidHomeFragment : CommonFragment<WanAndroidViewModelV2>(),
                     }
                     return@launchIO
                 }
-                swipeRefreshLayout?.apply {
+                refreshLayout?.apply {
                     if (isLoadingMore) finishLoadMore() else finishRefresh()
                 }
                 // 数据非空时
@@ -166,20 +148,6 @@ class WanAndroidHomeFragment : CommonFragment<WanAndroidViewModelV2>(),
         })
     }
 
-    private suspend fun showToast(@StringRes id:Int) {
-        withContext(Dispatchers.Main) {
-            Toast.makeText(
-                context,
-                resources.getString(id),
-                Toast.LENGTH_SHORT
-            ).show()
-        }
-    }
-
-    override fun onViewCreated() {
-        //doNothing
-        ZLog.d("onViewCreated")
-    }
 
     override fun initData() {
         super.initData()
@@ -192,18 +160,15 @@ class WanAndroidHomeFragment : CommonFragment<WanAndroidViewModelV2>(),
 
     override fun initView() {
         super.initView()
-        initRecyclerView()
-        initSwipeRefreshLayout()
+        setRecyclerAdapter()
+        initLoadMore()
         initFABInflate()
         // Banne须在RecyclerView之后初始化
         initBanner()
     }
 
-    private fun initRecyclerView() {
-        mRecyclerView = rootView?.findViewById(R.id.recycler_view) as RecyclerView
+    private fun setRecyclerAdapter() {
         mRecyclerView.apply {
-            isVerticalScrollBarEnabled = true
-            layoutManager = LinearLayoutManager(context)
             articleAdapter = ArticleAdapter()
             articleAdapter?.apply {
                 adapterAnimation = ScaleInAnimation()
@@ -234,9 +199,8 @@ class WanAndroidHomeFragment : CommonFragment<WanAndroidViewModelV2>(),
         fabView?.setOnClickListener { scrollToTop() }
     }
 
-    private fun initSwipeRefreshLayout() {
-        swipeRefreshLayout = rootView?.findViewById(R.id.swipeRefreshLayout)!!
-        swipeRefreshLayout?.apply {
+    private fun initLoadMore() {
+        refreshLayout?.apply {
             setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
                 override fun onRefresh(refreshLayout: RefreshLayout) {
                     ZLog.d("onRefresh")
@@ -269,16 +233,9 @@ class WanAndroidHomeFragment : CommonFragment<WanAndroidViewModelV2>(),
         viewModel.getArticalData(pageId)
     }
 
-    override fun onViewDestroy() {
-        lifecycleScope.cancel()
+    override fun onDestroyView() {
+        super.onDestroyView()
         viewModel.cancle(this)
-        super.onViewDestroy()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        swipeRefreshLayout?.setOnRefreshLoadMoreListener(null)
-        swipeRefreshLayout = null
         articleAdapter = null
         banner?.onDestroy(this)
         banner = null
@@ -310,30 +267,8 @@ class WanAndroidHomeFragment : CommonFragment<WanAndroidViewModelV2>(),
         articleAdapter?.setHeaderView(view = banner!!)
     }
 
-    override fun scrollToTop() {
-        RvUtils.smoothScrollTop(mRecyclerView)
-    }
-
-    override fun scrollToTopRefresh() {
-    }
-
     override fun dismissLoading() {
         super.dismissLoading()
-        swipeRefreshLayout?.visibility = View.VISIBLE
-    }
-
-    private fun showErrorView(show:Boolean) {
-        if(show){
-            swipeRefreshLayout?.visibility = View.GONE
-            showErrorStatus()
-        }else{
-            swipeRefreshLayout?.visibility = View.VISIBLE
-            loadStatusView?.visibility = View.GONE
-        }
-    }
-
-    fun showEmpty() {
-        swipeRefreshLayout?.visibility = View.GONE
-        showEmptyStatus()
+        refreshLayout?.visibility = View.VISIBLE
     }
 }

@@ -7,10 +7,10 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.kingz.base.factory.ViewModelFactory
 import com.kingz.module.home.R
-import com.kingz.module.wanandroid.adapter.KnowledgeTreeAdapter
 import com.kingz.module.wanandroid.bean.KnowledgeTreeBean
 import com.kingz.module.wanandroid.fragemnts.CommonFragment
 import com.kingz.module.wanandroid.viewmodel.WanAndroidViewModelV2
+import com.zeke.home.wanandroid.adapter.KnowledgeTreeAdapter
 import com.zeke.home.wanandroid.viewmodel.HomeViewModel
 import com.zeke.kangaroo.zlog.ZLog
 
@@ -31,7 +31,7 @@ class KnowledgeTreeFragment : CommonFragment<WanAndroidViewModelV2>() {
     }
 
     override fun getLayoutResID(): Int {
-        return R.layout.fragment_common_page  //公共fragment改个名 改为refresh之内的
+        return R.layout.fragment_refresh_layout  //公共fragment改个名 改为refresh之内的
     }
 
     override fun initViewModel() {

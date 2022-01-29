@@ -1,6 +1,7 @@
 <resources>
-    <string name="network_error" translatable="false">数据获取失败,请检查网络后重试!</string>
+    <string name="tips_network_error" translatable="false">数据获取失败,请检查网络后重试!</string>
     <string name="tips_data_empty" translatable="false">数据为空</string>
+    <string name="tips_data_load_error" translatable="false">加载失败</string>
 
     <!-- article tags -->
     <string name="article_tag_top">置顶</string>

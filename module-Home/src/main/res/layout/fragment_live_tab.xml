@@ -36,6 +36,7 @@
     <com.kingz.module.common.LoadStatusView
         android:id="@+id/load_status"
         android:layout_width="wrap_content"
+
         android:layout_height="wrap_content"
         android:layout_centerInParent="true" />
 

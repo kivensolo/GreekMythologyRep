@@ -37,7 +37,7 @@ class UserCollectionFragment : CommonFragment<WanAndroidViewModelV2>() {
         ViewModelFactory.build { CollectArticleViewModel() }
     }
 
-    override fun getLayoutResID() = R.layout.fragment_common_page
+    override fun getLayoutResID() = R.layout.fragment_refresh_layout
 
     override fun initView() {
         super.initView()

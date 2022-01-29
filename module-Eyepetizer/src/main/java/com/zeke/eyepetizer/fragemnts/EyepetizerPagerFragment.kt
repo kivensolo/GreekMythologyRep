@@ -96,7 +96,7 @@ class EyepetizerPagerFragment(
     // </editor-fold>
 
 
-    override fun getLayoutResID(): Int = R.layout.fragment_common_page
+    override fun getLayoutResID(): Int = R.layout.fragment_refresh_layout
 
     // <editor-fold defaultstate="collapsed" desc="视图初始化 UI init">
     override fun initView() {

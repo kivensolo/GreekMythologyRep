@@ -3,17 +3,20 @@ package com.kingz.module.wanandroid.fragemnts
 import android.app.Service
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.widget.Toast
 import androidx.annotation.CallSuper
+import androidx.annotation.StringRes
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.launcher.ARouter
 import com.kingz.base.BaseVMFragment
 import com.kingz.module.common.LoadStatusView
-import com.kingz.module.common.R
 import com.kingz.module.common.router.RouterConfig
 import com.kingz.module.common.utils.ktx.SDKVersion
 import com.kingz.module.wanandroid.bean.Article
 import com.zeke.kangaroo.zlog.ZLog
 import com.zeke.reactivehttp.base.BaseReactiveViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 /**
  * author：ZekeWang
@@ -26,7 +29,9 @@ import com.zeke.reactivehttp.base.BaseReactiveViewModel
  */
 abstract class CommonFragment<T : BaseReactiveViewModel> : BaseVMFragment<T>() {
 
-    //公共Loading控件  TODO 可以优化
+    /**
+     * 多状态视图View 由子类具体实现
+     */
     protected var loadStatusView: LoadStatusView? = null
 
     /**
@@ -50,20 +55,19 @@ abstract class CommonFragment<T : BaseReactiveViewModel> : BaseVMFragment<T>() {
     @CallSuper
     override fun initView() {
         ZLog.d("initView()")
-        loadStatusView = rootView?.findViewById(R.id.load_status)
-        loadStatusView?.showProgress()
+        loadStatusView?.showLoading()
     }
 
     open fun initData() {}
 
-    override fun onViewDestroy() {
-        ZLog.d("onViewDestory.")
-        super.onViewDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
+        ZLog.d("onDestroyView.")
         loadStatusView = null
     }
 
     override fun onDestroy() {
-        ZLog.d("release.")
+        ZLog.d("onDestroy.")
         super.onDestroy()
     }
 
@@ -72,6 +76,7 @@ abstract class CommonFragment<T : BaseReactiveViewModel> : BaseVMFragment<T>() {
         super.onDetach()
     }
 
+    @Deprecated("使用showXXXX")
     protected open fun dismissLoading(){
         ZLog.d("dismiss Loading View.")
         loadStatusView?.dismiss()
@@ -81,8 +86,22 @@ abstract class CommonFragment<T : BaseReactiveViewModel> : BaseVMFragment<T>() {
         loadStatusView?.showError()
     }
 
+    protected open fun showContent(){
+        loadStatusView?.showContent()
+    }
+
     protected open fun showEmptyStatus(){
         loadStatusView?.showEmpty()
+    }
+
+    protected suspend fun showToast(@StringRes id:Int) {
+        withContext(Dispatchers.Main) {
+            Toast.makeText(
+                context,
+                resources.getString(id),
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 
     /**

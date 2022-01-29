@@ -8,7 +8,7 @@ import androidx.fragment.app.viewModels
 import com.kingz.base.factory.ViewModelFactory
 import com.kingz.module.wanandroid.fragemnts.CommonFragment
 import com.zeke.demo.R
-import com.zeke.demo.databinding.ActivityColorLightBinding
+import com.zeke.demo.databinding.ActivityHvsDemoBinding
 import kotlinx.android.synthetic.main.activity_hvs_demo.*
 
 /**
@@ -30,13 +30,13 @@ import kotlinx.android.synthetic.main.activity_hvs_demo.*
  */
 class HSVDemoFragment : CommonFragment<ColorViewModel>() {
     private var mColor = 0
-    private lateinit var  colorLightBinding:ActivityColorLightBinding
+    private lateinit var  colorLightBinding:ActivityHvsDemoBinding
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        colorLightBinding = ActivityColorLightBinding.inflate(LayoutInflater.from(context))
+        colorLightBinding = ActivityHvsDemoBinding.inflate(LayoutInflater.from(context))
         return colorLightBinding.root
     }
 

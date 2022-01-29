@@ -3,5 +3,4 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/recycler_view"
     style="@style/recycler_vertical_style"
-    android:background="@color/yello"
     tools:listitem="@layout/item_article"/>
