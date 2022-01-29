@@ -1,6 +1,6 @@
 package com.kingz.module.wanandroid.bean
 
-class TreeBean {
+class KnowledgeTreeBean {
     /**
      * children : [{"children":[],"courseId":13,"id":60,"name":"Android Studio相关","order":1000,"parentChapterId":150,"visible":1},{"children":[],"courseId":13,"id":169,"name":"gradle","order":1001,"parentChapterId":150,"visible":1},{"children":[],"courseId":13,"id":269,"name":"官方发布","order":1002,"parentChapterId":150,"visible":1}]
      * courseId : 13
@@ -8,6 +8,7 @@ class TreeBean {
      * name : 开发环境
      * order : 1
      * parentChapterId : 0
+     * userControlSetTop : false
      * visible : 1
      */
     var courseId = 0
@@ -16,8 +17,7 @@ class TreeBean {
     var order = 0
     var parentChapterId = 0
     var visible = 0
-    var children: List<ChildrenBean>? =
-        null
+    var children: MutableList<ChildrenBean>? = null
 
     class ChildrenBean {
         /**

@@ -66,7 +66,6 @@ class WanAndroidHomeFragment : CommonFragment<WanAndroidViewModelV2>(),
 
     override fun initViewModel() {
         super.initViewModel()
-        ZLog.d("initViewModel()")
         obServArticalLiveData()
         obServBannerLiveData()
 

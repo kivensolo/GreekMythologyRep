@@ -98,5 +98,8 @@
     <string name="source_code_url">https://github.com/iceCola7/WanAndroid</string>
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancle</string>
+    <string name="home">Home</string>
+    <string name="knowledge_system">System</string>
+    <string name="navigation">Navigation</string>
 
 </resources>

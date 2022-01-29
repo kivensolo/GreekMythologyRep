@@ -219,4 +219,9 @@ class HomeDataSource(iActionEvent: IUIActionEvent?) : WanAndroidRemoteDataSource
         ZLog.d("get Banner ---> ")
         return apiService.bannerData()
     }
+
+    suspend fun getSystemInfo(): ResponseResult<MutableList<KnowledgeTreeBean>> {
+        ZLog.d("get knowledge system info  ---> ")
+        return apiService.getKnowledgeSystem()
+    }
 }

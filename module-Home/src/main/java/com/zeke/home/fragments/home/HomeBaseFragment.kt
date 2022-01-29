@@ -19,8 +19,8 @@ import com.zeke.home.entity.TemplatePageData
  *
  *  MVP结构
  *
- * 使用
- * |-----Toolbar-----|
+ * 使用 TabLayout + viewPager
+ * |----TabLayout----|
  * |    viewPager    |
  * |                 |
  * | loadStatusView  |

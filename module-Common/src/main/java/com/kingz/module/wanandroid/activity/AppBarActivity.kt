@@ -143,7 +143,7 @@ open class AppBarActivity : BaseVMActivity() {
         val initArguments: Bundle = intent.getBundleExtra(WADConstants.EXTRA_SHOW_FRAGMENT_ARGUMENTS) ?: Bundle()
         ZLog.d("type = $type")
         when (type) {
-            //兼容以前的代码
+            //兼容以前的代码  TODo 此类逻辑可下沉
             WADConstants.Type.TYPE_TAB_COLLECT -> { //1
                 findViewById<Toolbar>(R.id.toolbar)?.apply {
                     title = getString(R.string.mine_collect)

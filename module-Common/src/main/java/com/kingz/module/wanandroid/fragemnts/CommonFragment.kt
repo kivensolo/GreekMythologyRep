@@ -4,6 +4,7 @@ import android.app.Service
 import android.os.VibrationEffect
 import android.os.Vibrator
 import androidx.annotation.CallSuper
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.launcher.ARouter
 import com.kingz.base.BaseVMFragment
 import com.kingz.module.common.LoadStatusView
@@ -21,12 +22,19 @@ import com.zeke.reactivehttp.base.BaseReactiveViewModel
  *
  * -> initViewModel()
  * --> initView()
- *
+ * ---> initData()
  */
 abstract class CommonFragment<T : BaseReactiveViewModel> : BaseVMFragment<T>() {
 
-    //公共Loading控件
+    //公共Loading控件  TODO 可以优化
     protected var loadStatusView: LoadStatusView? = null
+
+    /**
+     * LinearLayoutManager for RecyclerView
+     */
+    protected val linearLayoutManager: LinearLayoutManager by lazy {
+        LinearLayoutManager(activity)
+    }
 
     @CallSuper
     override fun lazyInit() {

@@ -25,6 +25,13 @@ interface WanAndroidApiService : BaseApiService {
     @GET("/banner/json")
     suspend fun bannerData(): ResponseResult<MutableList<BannerItem>>?
 
+
+    /**
+     * 获取知识体系
+     * http://www.wanandroid.com/tree/json
+     */
+    @GET("tree/json")
+    suspend fun getKnowledgeSystem(): ResponseResult<MutableList<KnowledgeTreeBean>>
     //------------------------ 首页数据API End----------------------------
 
 
@@ -83,13 +90,6 @@ interface WanAndroidApiService : BaseApiService {
      */
     @GET("hotkey/json")
     suspend fun getHotKey(): HotKeyBean?
-
-    /**
-     * 知识体系
-     */
-    @GET("tree/json")
-    suspend fun getknowlegeSystem(): TreeBean?
-
 
     //------------------------ 用户信息API Start----------------------------
     /**

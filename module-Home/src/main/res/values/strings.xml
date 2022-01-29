@@ -86,6 +86,11 @@
     <string name="check_version_ing">正在检查，请稍候...</string>
     <string name="check_no_version">当前已是最新版本了</string>
 
+    <!--  玩安卓  -->
+    <string name="home">首页</string>
+    <string name="knowledge_system">体系</string>
+    <string name="navigation">导航</string>
+
     <!-- 设置: 关于 -->
     <string name="version">版本</string>
     <string name="current_version">当前版本&#160;</string>

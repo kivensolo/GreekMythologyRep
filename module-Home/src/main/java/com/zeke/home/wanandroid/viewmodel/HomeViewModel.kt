@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.kingz.base.response.ResponseResult
 import com.kingz.module.wanandroid.bean.ArticleData
 import com.kingz.module.wanandroid.bean.BannerItem
+import com.kingz.module.wanandroid.bean.KnowledgeTreeBean
 import com.kingz.module.wanandroid.repository.HomeDataSource
 import com.kingz.module.wanandroid.viewmodel.WanAndroidViewModelV2
 import com.zeke.kangaroo.zlog.ZLog
@@ -27,6 +28,10 @@ class HomeViewModel : WanAndroidViewModelV2() {
 
     val bannerLiveData: MutableLiveData<ResponseResult<List<BannerItem>>> by lazy {
         MutableLiveData<ResponseResult<List<BannerItem>>>()
+    }
+
+    val systemLiveData: MutableLiveData<ResponseResult<MutableList<KnowledgeTreeBean>>> by lazy {
+        MutableLiveData<ResponseResult<MutableList<KnowledgeTreeBean>>>()
     }
 
     /**
@@ -68,6 +73,21 @@ class HomeViewModel : WanAndroidViewModelV2() {
                 bannerLiveData.postValue(
                     ResponseResult.error(e.toString(),null)
                 )
+            }
+        }
+    }
+
+    /**
+     * 获取知识体系数据
+     */
+    fun getSystemInfo(){
+        launchIO {
+            try {
+                val result = remoteDataSource.getSystemInfo()
+                val response = ResponseResult.response(result.data)
+                systemLiveData.postValue(response)
+            } catch (e: Exception) {
+                systemLiveData.postValue(ResponseResult.error(e.toString(), null))
             }
         }
     }

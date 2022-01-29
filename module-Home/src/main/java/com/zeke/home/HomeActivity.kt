@@ -40,6 +40,7 @@ import com.module.slide.SuperSlidingPaneLayout
 import com.zeke.eyepetizer.fragemnts.EyepetizerHomeFragment
 import com.zeke.home.fragments.home.HomeContainerFragment
 import com.zeke.home.fragments.home.HomeLiveFragment
+import com.zeke.home.fragments.home.HomeSystemFragment
 import com.zeke.home.model.HomeSongModel
 import com.zeke.home.service.NSDService
 import com.zeke.home.wanandroid.viewmodel.HomeViewModel
@@ -64,10 +65,15 @@ class HomeActivity : AppBarActivity(), View.OnClickListener{
         val tabMap = linkedMapOf(
             "知识" to R.drawable.ic_knowlege_nor,
             "直播" to R.drawable.ic_live_nor,
-            "CCC" to R.drawable.publish_add,
+            "体系" to R.drawable.publish_add,
             "开眼" to R.drawable.ic_eyepetizer_nor,
             "我的" to R.drawable.ic_knowlege_nor
         )
+        private val FRAGMENT_KNOWLEGE = 0x00
+        private val FRAGMENT_LIVE = 0x01
+        private val FRAGMENT_SYSTEM = 0x02
+        private val FRAGMENT_EYEPETIZER = 0x03
+        private val FRAGMENT_USER = 0x04
     }
 
     private lateinit var panelSlidelLsr: HomePanelSlideLsr
@@ -210,10 +216,10 @@ class HomeActivity : AppBarActivity(), View.OnClickListener{
             override fun getItemCount(): Int = tabMap.size
 
             override fun createFragment(position: Int): Fragment = when (position) {
-                0 -> HomeContainerFragment()
-                1 -> HomeLiveFragment()
-                2 -> HomeLiveFragment()     //TODO 后续接入新的Fragment
-                3 -> EyepetizerHomeFragment()
+                FRAGMENT_KNOWLEGE -> HomeContainerFragment()
+                FRAGMENT_LIVE -> HomeLiveFragment()
+                FRAGMENT_SYSTEM -> HomeSystemFragment()
+                FRAGMENT_EYEPETIZER -> EyepetizerHomeFragment()
                 else -> HomeLiveFragment()  //TODO 后续接入新的Fragment
             }
         }

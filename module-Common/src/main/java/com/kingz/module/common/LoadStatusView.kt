@@ -17,6 +17,7 @@ import androidx.annotation.StringRes
 import com.module.views.loading.Win10LoadingView
 
 /**
+ * 包含多种状态的Layout
  * description: 加载、重试、错误状态的视图
  */
 class LoadStatusView @JvmOverloads constructor(
