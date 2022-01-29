@@ -2,13 +2,10 @@ package com.zeke.home.wanandroid
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.RecyclerView
 import com.kingz.base.factory.ViewModelFactory
 import com.kingz.module.home.R
 import com.kingz.module.wanandroid.bean.KnowledgeTreeBean
-import com.kingz.module.wanandroid.fragemnts.CommonFragment
+import com.kingz.module.wanandroid.fragemnts.AbsListFragment
 import com.kingz.module.wanandroid.viewmodel.WanAndroidViewModelV2
 import com.zeke.home.wanandroid.adapter.KnowledgeTreeAdapter
 import com.zeke.home.wanandroid.viewmodel.HomeViewModel
@@ -18,7 +15,7 @@ import com.zeke.kangaroo.zlog.ZLog
  * date：2022/01/28
  * description：首页 - 知识体系 Fragment
  */
-class KnowledgeTreeFragment : CommonFragment<WanAndroidViewModelV2>() {
+class KnowledgeTreeFragment : AbsListFragment<WanAndroidViewModelV2>() {
     companion object {
         fun getInstance(): KnowledgeTreeFragment = KnowledgeTreeFragment()
     }
@@ -42,30 +39,22 @@ class KnowledgeTreeFragment : CommonFragment<WanAndroidViewModelV2>() {
                 showErrorStatus()
                 return@Observer
             }
+            showContent()
             //TODO 设置数据  并检查是否显示数据UI
             mAdapter.setList(it.data)
-            dismissLoading()
         })
-    }
-
-    override fun onViewCreated() {
-        //doNothing
-        ZLog.d("onViewCreated")
-        //TODO id设置为 驼峰式
-        rootView?.findViewById<RecyclerView>(R.id.recycler_view)?.apply {
-            layoutManager = linearLayoutManager
-            itemAnimator = DefaultItemAnimator()
-            addItemDecoration(DividerItemDecoration(activity,DividerItemDecoration.VERTICAL))
-            adapter = mAdapter
-        }
     }
 
     override fun initView() {
         super.initView()
+        showLoading()
         mAdapter.run {
             setOnItemClickListener { adapter, view, position ->
                 val item = adapter.data[position] as KnowledgeTreeBean
             }
+        }
+        mRecyclerView.apply {
+            adapter = mAdapter
         }
     }
 

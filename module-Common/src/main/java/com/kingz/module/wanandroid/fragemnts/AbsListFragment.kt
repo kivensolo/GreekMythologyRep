@@ -2,6 +2,7 @@ package com.kingz.module.wanandroid.fragemnts
 
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kingz.module.common.R
@@ -40,9 +41,9 @@ abstract class AbsListFragment<T : BaseReactiveViewModel> :
             isVerticalScrollBarEnabled = true
             layoutManager = LinearLayoutManager(context)
             itemAnimator = DefaultItemAnimator()
+            addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
         }
-
-       refreshLayout = swipeRefreshLayout
+        refreshLayout = swipeRefreshLayout
     }
 
     override fun onDestroyView() {

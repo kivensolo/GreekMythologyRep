@@ -82,6 +82,10 @@ abstract class CommonFragment<T : BaseReactiveViewModel> : BaseVMFragment<T>() {
         loadStatusView?.dismiss()
     }
 
+    protected open fun showLoading(){
+        loadStatusView?.showLoading()
+    }
+
     protected open fun showErrorStatus(){
         loadStatusView?.showError()
     }
