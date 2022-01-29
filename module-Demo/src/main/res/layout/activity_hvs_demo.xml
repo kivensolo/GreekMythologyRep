@@ -17,7 +17,7 @@
         <com.module.views.BlurMaskCircularView
             android:id="@+id/mask_view"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="300dp"
             android:layout_gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -27,7 +27,7 @@
         <com.module.views.colorpicker.ColorPicker
             android:id="@+id/color_picker"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="300dp"
             app:color_wheel_thickness="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

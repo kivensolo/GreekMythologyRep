@@ -9,7 +9,7 @@ import com.kingz.base.factory.ViewModelFactory
 import com.kingz.module.wanandroid.fragemnts.CommonFragment
 import com.zeke.demo.R
 import com.zeke.demo.databinding.ActivityColorLightBinding
-import kotlinx.android.synthetic.main.activity_color_light.*
+import kotlinx.android.synthetic.main.activity_hvs_demo.*
 
 /**
  * author：ZekeWang
@@ -40,7 +40,7 @@ class HSVDemoFragment : CommonFragment<ColorViewModel>() {
         return colorLightBinding.root
     }
 
-    override fun getLayoutResID(): Int = R.layout.activity_color_light
+    override fun getLayoutResID(): Int = R.layout.activity_hvs_demo
 
     override val viewModel: ColorViewModel by viewModels {
         ViewModelFactory.build { ColorViewModel() }
