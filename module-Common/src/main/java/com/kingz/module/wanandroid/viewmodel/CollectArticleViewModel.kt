@@ -66,7 +66,9 @@ open class CollectArticleViewModel : WanAndroidViewModelV2() {
         try {
             val articleList = remoteDataSource.getArticleList(pageIndex)
             result = articleList.data
-            inserArticleList(result.datas)
+            if (result != null) {
+                inserArticleList(result?.datas)
+            }
         } catch (e: Exception) {
             ZLog.e("getMineCollectArticleList on exception: ${e.printStackTrace()}")
         } finally {

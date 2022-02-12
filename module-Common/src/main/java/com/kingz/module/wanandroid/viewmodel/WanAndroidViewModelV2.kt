@@ -60,8 +60,12 @@ open class WanAndroidViewModelV2 : BaseReactiveViewModel() {
      * @param isCollect: 是否收藏
      */
     fun changeArticleLike(srcArticle: Article, position: Int, isCollect:Boolean) {
-//        launchIO {
         val result = CollectActionBean()
+        val type = if (srcArticle.collect) {
+            CollectActionBean.TYPE.UNCOLLECT //已收藏，则取消收藏
+        } else {
+            CollectActionBean.TYPE.COLLECT //已取消收藏，则收藏
+        }
         remoteDataSource.enqueue({
             //Ext Fun for API
             if (srcArticle.collect) {
@@ -71,76 +75,28 @@ open class WanAndroidViewModelV2 : BaseReactiveViewModel() {
             }
         }) {
             onSuccess {
-                // 可能httpCode正确，但业务code错误
+                ZLog.d("Change article collect success. result=${it}, Is collected? $isCollect")
                 srcArticle.collect = isCollect
                 result.apply {
-                    result.apply {
-                        //change action type
-                        actionType = if (srcArticle.collect) {
-                            CollectActionBean.TYPE.UNCOLLECT
-                        } else {
-                            CollectActionBean.TYPE.COLLECT
-                        }
-                    }
-                    srcArticle.collect = isCollect
-                   /* isSuccess = (data.errorCode == 0)
-                    // 收藏状态更新成功时，改变Item数据
-                    if (isSuccess) {
-                        srcArticle.collect = isCollect
-                    } else {
-                        errorMsg = data.errorMsg ?: "unKnow"
-                    }*/
+                    //change action type
+                    actionType = type
+                    isSuccess = true
                 }
             }
 
             onFailed {
                 result.apply {
                     errorMsg = it.errorMessage
-                    actionType = if (srcArticle.collect) {
-                        CollectActionBean.TYPE.UNCOLLECT
-                    } else {
-                        CollectActionBean.TYPE.COLLECT
-                    }
+                    actionType = type
                     isSuccess = false
                 }
             }
 
             onFinally {
+                ZLog.d("Change artical like onFinally.")
                 result.articlePostion = position
                 articalCollectData.postValue(result)
             }
         }
-          /*  try {
-                val data = remoteDataSource.changeArticleLike(srcArticle)
-                result = CollectActionBean().apply {
-                    actionType = if (srcArticle.collect) {
-                        CollectActionBean.TYPE.UNCOLLECT
-                    } else {
-                        CollectActionBean.TYPE.COLLECT
-                    }
-                    isSuccess = (data.errorCode == 0)
-                    // 收藏状态更新成功时，改变Item数据
-                    if (isSuccess) {
-                        srcArticle.collect = isCollect
-                    } else {
-                        errorMsg = data.errorMsg ?: "unKnow"
-                    }
-                }
-            } catch (e: Exception) {
-                //java.net.SocketTimeoutException: timeout
-                ZLog.e("changeArticleLike on exception: ${e.printStackTrace()}")
-                result = CollectActionBean().apply {
-                    actionType = if (srcArticle.collect) {
-                        CollectActionBean.TYPE.UNCOLLECT
-                    } else {
-                        CollectActionBean.TYPE.COLLECT
-                    }
-                    isSuccess = false
-                }
-            }finally {
-                result?.articlePostion = position
-                articalCollectData.postValue(result)
-            }*/
-//        }
     }
 }

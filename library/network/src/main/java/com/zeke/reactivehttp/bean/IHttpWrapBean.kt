@@ -21,8 +21,9 @@ interface IHttpWrapBean<Data> {
 
     /**
      * 服务器返回的实际数据
+     * 可为null，兼容有的返回的数据节点为null的情况(比如玩安卓的文章收藏接口)
      */
-    val httpData: Data
+    val httpData: Data?
 
     /**
      * 交由外部来判断当前接口是否请求成功

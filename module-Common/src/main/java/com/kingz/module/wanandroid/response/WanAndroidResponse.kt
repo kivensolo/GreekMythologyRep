@@ -8,7 +8,7 @@ import com.zeke.reactivehttp.bean.IHttpWrapBean
  * description：玩Android数据返回
  */
 data class WanAndroidResponse<T>(
-    var data: T,
+    var data: T?,
     var errorCode: Int = 0,
     val errorMsg: String? = null
 ) : IHttpWrapBean<T> {
@@ -16,7 +16,7 @@ data class WanAndroidResponse<T>(
         get() = 200
     override val httpMsg: String
         get() = errorMsg ?: ""
-    override val httpData: T
+    override val httpData: T?
         get() = data
     override val httpIsSuccess: Boolean
         get() = errorCode == 0

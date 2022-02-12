@@ -105,7 +105,7 @@ abstract class RemoteDataSource<Api : Any>(iUiActionEvent: IUIActionEvent?, apiS
         }
     }
 
-    private suspend fun <Data> onGetResponse(callback: RequestCallback<Data>?, httpData: Data) {
+    private suspend fun <Data> onGetResponse(callback: RequestCallback<Data>?, httpData: Data?) {
         callback?.let {
             withNonCancellable {
                 callback.onSuccess?.let {
@@ -127,7 +127,10 @@ abstract class RemoteDataSource<Api : Any>(iUiActionEvent: IUIActionEvent?, apiS
      * @param apiFun
      */
     @Throws(BaseHttpException::class)
-    fun <Data> execute(apiFun: suspend Api.() -> IHttpWrapBean<Data>, baseUrl: String = ""): Data {
+    fun <Data> execute(
+        apiFun: suspend Api.() -> IHttpWrapBean<Data>,
+        baseUrl: String = ""
+    ): Data? {
         return runBlocking {
             try {
                 val asyncIO = asyncIO {
