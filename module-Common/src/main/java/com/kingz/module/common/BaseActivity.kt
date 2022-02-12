@@ -49,8 +49,7 @@ abstract class BaseActivity : AppCompatActivity() {
      * 必须在组合挂起函数中使用
      * 在开始观察前已主动切换至主线程，避免线程错误
      */
-    suspend fun <T> LiveData<T>.observeSuspend(
-        onChanged: (t: T) -> Unit) = withContext(Dispatchers.Main) {
+    suspend fun <T> LiveData<T>.observeSuspend(onChanged: (t: T) -> Unit) = withContext(Dispatchers.Main) {
         observe(this@BaseActivity, Observer { onChanged(it) })
     }
 
@@ -58,8 +57,7 @@ abstract class BaseActivity : AppCompatActivity() {
      * 不要求组合挂起函数
      * 在开始观察前已主动切换至主线程，避免线程错误
      */
-    suspend fun <T> LiveData<T>.observe(
-        onChanged: (T) -> Unit) = withContext(Dispatchers.Main) {
+    suspend fun <T> LiveData<T>.observe(onChanged: (T) -> Unit) = withContext(Dispatchers.Main) {
         observe(this@BaseActivity) { onChanged(it) }
     }
 }

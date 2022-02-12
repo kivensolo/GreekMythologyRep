@@ -122,7 +122,7 @@ abstract class BaseRemoteDataSource<Api : Any>(
     }
 
     protected fun handleException(throwable: Throwable, callback: BaseRequestCallback?) {
-
+        Log.d("DataSource", "handleException = $throwable")
         if (callback == null) {
             return
         }
@@ -132,7 +132,7 @@ abstract class BaseRemoteDataSource<Api : Any>(
             return
         }
         val exception = generateBaseExceptionReal(throwable)
-        Log.d("KingZ", "exception=$exception")
+        Log.d("DataSource", "exception=$exception")
         if (exceptionHandle(exception)) {
             callback.onFailed?.invoke(exception)
             if (callback.onFailToast()) {
@@ -193,7 +193,7 @@ abstract class BaseRemoteDataSource<Api : Any>(
                 "连接超时，请检查您的网络设置"
             }
             else -> {
-                "请求过程抛出异常：" + httpException.errorMessage
+                "网络请求异常：" + httpException.errorMessage
             }
         }
     }

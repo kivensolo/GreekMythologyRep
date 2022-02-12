@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:drawableTop="@drawable/ic_load_error"
+        android:drawableTop="@drawable/ic_network_error"
         style="@style/MultipleStatusView.Content"
         android:id="@+id/no_network_view_tv"
         android:text="@string/tips_network_error"/>

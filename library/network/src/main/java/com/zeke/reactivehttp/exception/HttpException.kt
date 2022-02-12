@@ -69,4 +69,4 @@ class LocalBadException(throwable: Throwable) : BaseHttpException(CODE_ERROR_LOC
 /**
  * 网络未连接的异常
  */
-class NetWorkDisconnectException:BaseHttpException(CODE_NET_WORK_DISABLE, "无网络连接！", null)
+class NetWorkDisconnectException:BaseHttpException(CODE_NET_WORK_DISABLE, "无网络连接, 请检查您的网络设置", null)

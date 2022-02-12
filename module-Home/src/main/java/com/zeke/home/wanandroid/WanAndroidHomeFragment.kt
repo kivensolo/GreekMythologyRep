@@ -104,8 +104,6 @@ class WanAndroidHomeFragment : AbsListFragment<WanAndroidViewModelV2>() {
         viewModel.articalLiveData.observe(this, Observer {
             if (it == null) {
                 ZLog.d("artical LiveData request error. result is null.")
-//                Toast.makeText(context, resources.getString(R.string.exception_request_data),
-//                    Toast.LENGTH_SHORT).show()
                 refreshLayout?.finishRefresh()
                 showEmptyStatus()
                 return@Observer

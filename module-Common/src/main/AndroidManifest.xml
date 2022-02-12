@@ -10,7 +10,14 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
     <application>
-        <activity
-            android:name="com.kingz.module.wanandroid.activity.AppBarActivity"/>
+        <activity android:name="com.kingz.module.wanandroid.activity.AppBarActivity" />
+
+        <receiver android:name=".receiver.NetworkChangeReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
     </application>
+
+
 </manifest>

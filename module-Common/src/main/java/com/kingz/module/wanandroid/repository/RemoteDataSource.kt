@@ -126,6 +126,7 @@ open class WanAndroidRemoteDataSource(private val iActionEvent: IUIActionEvent?)
         get() = "https://www.wanandroid.com"
 
     override fun onExceptionToastShow(msg: String) {
+        ZLog.d("onExceptionToastShow $msg")
         iActionEvent?.showToast(msg)
     }
 
