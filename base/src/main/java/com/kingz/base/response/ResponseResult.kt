@@ -1,5 +1,6 @@
 package com.kingz.base.response
 
+@Deprecated("使用[IHttpWrapBean]的实现类代替")
 data class ResponseResult<out T>(
     val code: Int?,
     val message: String?,

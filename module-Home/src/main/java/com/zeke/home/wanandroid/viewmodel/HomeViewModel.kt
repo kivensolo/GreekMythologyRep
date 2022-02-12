@@ -27,8 +27,8 @@ class HomeViewModel : WanAndroidViewModelV2() {
         MutableLiveData<ArticleData>()
     }
 
-    val bannerLiveData: MutableLiveData<ResponseResult<List<BannerItem>>> by lazy {
-        MutableLiveData<ResponseResult<List<BannerItem>>>()
+    val bannerLiveData: MutableLiveData<List<BannerItem>> by lazy {
+        MutableLiveData<List<BannerItem>>()
     }
 
     val systemLiveData: MutableLiveData<ResponseResult<MutableList<KnowledgeTreeBean>>> by lazy {
@@ -68,20 +68,12 @@ class HomeViewModel : WanAndroidViewModelV2() {
      * LiveData在Repository中
      */
     fun getBanner() {
-   /*     try {
-            launchIO {
-                val result = remoteDataSource.getBannerData()
-                if (result!!.code == -1) {
-                    bannerLiveData.postValue(ResponseResult.error(result.message ?: "未知异常"))
-                } else {
-                    bannerLiveData.postValue(ResponseResult.success(result.data))
-                }
-            }
-        } catch (e: Exception) {
-            bannerLiveData.postValue(
-                ResponseResult.error(e.toString(), null)
-            )
-        }*/
+        remoteDataSource.enqueue({ bannerData() }) {
+            onSuccess {
+                ZLog.d("Get banner data success.Post to UI.")
+                bannerLiveData.postValue(it) }
+            onFailed { ZLog.e("Get banner data fail! Reason=[${it.errorMessage}]") }
+        }
     }
 
     /**

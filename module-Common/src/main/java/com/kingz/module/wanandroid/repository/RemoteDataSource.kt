@@ -225,17 +225,6 @@ open class WanAndroidRemoteDataSource(private val iActionEvent: IUIActionEvent?)
  * 首页相关数据远
  */
 class HomeDataSource(iActionEvent: IUIActionEvent?) : WanAndroidRemoteDataSource(iActionEvent) {
-
-    /** 进行文章列表获取 */
-    suspend fun getArticals(pageId: Int = 0): WanAndroidResponse<ArticleData> {
-        return apiService.requestArticles(pageId)
-    }
-
-    suspend fun getBannerData(): ResponseResult<MutableList<BannerItem>>? {
-        ZLog.d("get Banner ---> ")
-        return apiService.bannerData()
-    }
-
     suspend fun getSystemInfo(): ResponseResult<MutableList<KnowledgeTreeBean>> {
         ZLog.d("get knowledge system info  ---> ")
         return apiService.getKnowledgeSystem()

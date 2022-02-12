@@ -23,7 +23,7 @@ interface WanAndroidApiService : BaseApiService {
      * 首页Banner
      */
     @GET("/banner/json")
-    suspend fun bannerData(): ResponseResult<MutableList<BannerItem>>?
+    suspend fun bannerData(): WanAndroidResponse<MutableList<BannerItem>>
 
 
     /**

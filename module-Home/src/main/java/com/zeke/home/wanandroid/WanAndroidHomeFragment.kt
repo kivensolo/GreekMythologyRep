@@ -83,16 +83,16 @@ class WanAndroidHomeFragment : AbsListFragment<WanAndroidViewModelV2>() {
      * Banner数据观察回调
      */
     private fun obServeBannerLiveData() {
-        viewModel.bannerLiveData.observe(this, Observer { result ->
-            ZLog.d("Banner data onChanged() data size = " + result.data?.size)
+        viewModel.bannerLiveData.observe(this, { result ->
+            ZLog.d("Banner data onChanged(). Data size:" + result?.size)
             bannerUrls.clear()
             bannerTitles.clear()
-            result.data?.forEach { item ->
+            result?.forEach { item ->
                 bannerUrls.add(item.imagePath)
                 bannerTitles.add(Html.fromHtml(item.title).toString())
             }
             banner?.apply {
-                setDatas(result.data)
+                setDatas(result)
             }
         })
     }
@@ -110,10 +110,9 @@ class WanAndroidHomeFragment : AbsListFragment<WanAndroidViewModelV2>() {
             }
             showContent()
             launchIO {
-                ZLog.d("artical LiveData onObserved.")
+                ZLog.d("Artical LiveData onObserved. Data size = ${it.datas?.size}")
 
                 val articleList = it.datas
-                ZLog.d("artical LiveData dataSize = ${articleList?.size};")
                 //当前数据为空时
                 if (articleAdapter?.getDefItemCount() == 0) {
                     withContext(Dispatchers.Main) {

@@ -26,9 +26,9 @@ abstract class RemoteDataSource<Api : Any>(iUiActionEvent: IUIActionEvent?, apiS
     /**
      * 进行网络任务分发
      * @param apiFun lambda网络请求的挂起函数
-     * @param showLoading 是否分发loading时间
+     * @param showLoading 是否分发loading事件
      * @param baseUrl 是否指明自定义的baseUrl，为空的话，使用子DataSource自定义的BaseUrl
-     * @param callbackFun 网络回调函数
+     * @param callbackFun 请求回调函数
      */
     fun <Data> enqueue(apiFun: suspend Api.() -> IHttpWrapBean<Data>,
                        showLoading: Boolean = false,
