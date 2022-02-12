@@ -3,10 +3,7 @@ package com.zeke.reactivehttp.viewmodel
 import kotlinx.coroutines.Job
 
 /**
- * @Author: leavesC
- * @Date: 2020/6/26 21:19
- * @Desc:
- * @GitHub：https://github.com/leavesC
+ * 定义ViewMode ===> View 的UI行为事件
  */
 open class BaseActionEvent
 

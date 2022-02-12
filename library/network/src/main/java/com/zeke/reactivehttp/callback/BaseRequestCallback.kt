@@ -1,5 +1,7 @@
 package com.zeke.reactivehttp.callback
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.zeke.reactivehttp.exception.BaseHttpException
 
 /**
@@ -7,12 +9,32 @@ import com.zeke.reactivehttp.exception.BaseHttpException
  * @Date: 2020/5/4 0:44
  * @Desc: Callback
  * @GitHub：https://github.com/leavesC
+ *                                          +----------+
+ *                                    +--->|onsuccess | ------+
+ * +----------+      +---------+  ok  |    +----------+       |
+ * | onstart  |----> | Waiting |------+                       |
+ * +----------+      +---------+      |    +------------+     |
+ *                          |         +--->|onsuccessIO |-----+
+ *                          | fail         +------------+     |
+ *                          V                                 V
+ *                    +----------+      +-------------+    +-----------+
+ *                    | onFailed |----> | onFailToast |--->| onFinally |
+ *                    +----------+      +-------------+    +-----------+
  */
 open class BaseRequestCallback(internal var onStart: (() -> Unit)? = null,
                                internal var onCancelled: (() -> Unit)? = null,
                                internal var onFailed: ((BaseHttpException) -> Unit)? = null,
                                internal var onFailToast: (() -> Boolean) = { true },
-                               internal var onFinally: (() -> Unit)? = null) {
+                               internal var onFinally: (() -> Unit)? = null) : Parcelable {
+
+    constructor(parcel: Parcel) : this(
+        TODO("onStart"),
+        TODO("onCancelled"),
+        TODO("onFailed"),
+        TODO("onFailToast"),
+        TODO("onFinally")
+    ) {
+    }
 
     /**
      * 在显示 Loading 之后且开始网络请求之前执行
@@ -49,6 +71,24 @@ open class BaseRequestCallback(internal var onStart: (() -> Unit)? = null,
      */
     fun onFinally(block: () -> Unit) {
         this.onFinally = block
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<BaseRequestCallback> {
+        override fun createFromParcel(parcel: Parcel): BaseRequestCallback {
+            return BaseRequestCallback(parcel)
+        }
+
+        override fun newArray(size: Int): Array<BaseRequestCallback?> {
+            return arrayOfNulls(size)
+        }
     }
 
 }

@@ -125,6 +125,7 @@ abstract class BaseRemoteDataSource<Api : Any>(
         if (callback == null) {
             return
         }
+        //区别对待协程的取消异常
         if (throwable is CancellationException) {
             callback.onCancelled?.invoke()
             return
@@ -135,7 +136,7 @@ abstract class BaseRemoteDataSource<Api : Any>(
             if (callback.onFailToast()) {
                 val error = exceptionFormat(exception)
                 if (error.isNotBlank()) {
-                    showToast(error)
+                    onExceptionToastShow(error)
                 }
             }
         }
@@ -203,8 +204,8 @@ abstract class BaseRemoteDataSource<Api : Any>(
         iUiActionEvent?.dismissLoading()
     }
 
-    protected open fun showToast(msg: String){
-
-    }
-
+    /**
+     * 异常情况下的toast提示事件
+     */
+    protected open fun onExceptionToastShow(msg: String){}
 }

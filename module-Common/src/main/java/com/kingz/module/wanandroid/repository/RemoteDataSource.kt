@@ -28,8 +28,10 @@ import retrofit2.converter.gson.GsonConverterFactory
  * description：
  *  DataSource
  *  Repository的概念分为remote-DataSource和local-DataSource
+ *
+ *  @param iActionEvent viewModel
  */
-open class WanAndroidRemoteDataSource(iActionEvent: IUIActionEvent?)
+open class WanAndroidRemoteDataSource(private val iActionEvent: IUIActionEvent?)
     : RemoteExtendDataSource<WanAndroidApiService>(
     iActionEvent = iActionEvent,
     apiServiceClass = WanAndroidApiService::class.java
@@ -119,8 +121,8 @@ open class WanAndroidRemoteDataSource(iActionEvent: IUIActionEvent?)
     final override val baseUrl: String
         get() = "https://www.wanandroid.com"
 
-    override fun showToast(msg: String) {
-        //TODO
+    override fun onExceptionToastShow(msg: String) {
+        iActionEvent?.showToast(msg)
     }
 
     open var apiService = getApiService(baseUrl)

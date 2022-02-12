@@ -25,7 +25,7 @@ class YinYueTaiRemoteDataSource(iActionEvent: IUIActionEvent?) :
     override val baseUrl: String
         get() = "https://data.yinyuetai.com"
 
-    override fun showToast(msg: String) {
+    override fun onExceptionToastShow(msg: String) {
         //TODO
     }
 

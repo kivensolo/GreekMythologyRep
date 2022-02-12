@@ -6,7 +6,6 @@ import com.zeke.music.bean.RelatedVideoInfo
 import com.zeke.music.bean.VideoInfo
 import com.zeke.music.repository.YinYueTaiRemoteDataSource
 import com.zeke.reactivehttp.base.BaseReactiveViewModel
-import kotlinx.coroutines.Job
 
 /**
  * 音乐台ViewModel
@@ -47,22 +46,5 @@ open class MusicViewModel : BaseReactiveViewModel() {
             val videoInfo = remoteDataSource.getRelatedVideoList(videoId)
             relatedVideoListLiveData.postValue(videoInfo)
         }
-    }
-
-    // 顶层接口方法
-    override fun showLoading(job: Job?) {
-        super.showLoading(job)
-    }
-
-    override fun dismissLoading() {
-        super.dismissLoading()
-    }
-
-    override fun showToast(msg: String) {
-        super.showToast(msg)
-    }
-
-    override fun finishView() {
-        super.finishView()
     }
 }

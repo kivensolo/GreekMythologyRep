@@ -22,18 +22,21 @@ class LoadStatusView @JvmOverloads constructor(
     //除开contentView之外的View
     private val mOtherIds: ArrayList<Int> = ArrayList()
 
-    // <editor-fold defaultstate="collapsed" desc="New">
+    // <editor-fold defaultstate="collapsed" desc="子UI定义">
     private val mInflater: LayoutInflater
     private val mEmptyViewResId: Int
-    private val mErrorViewResId: Int
-    private val mLoadingViewResId: Int
-    private val mNoNetworkViewResId: Int
-    private val mContentViewResId: Int
-
     private var mEmptyView: View? = null
+
+    private val mErrorViewResId: Int
     private var mErrorView: View? = null
+
+    private val mLoadingViewResId: Int
     private var mLoadingView: View? = null
+
+    private val mNoNetworkViewResId: Int
     private var mNoNetworkView: View? = null
+
+    private val mContentViewResId: Int
     private var mContentView: View? = null
 
     private var mViewStatus = STATUS_CONTENT
@@ -103,7 +106,7 @@ class LoadStatusView @JvmOverloads constructor(
     }
     // </editor-fold>
 
-// <editor-fold defaultstate="collapsed" desc="显示错误视图">
+    // <editor-fold defaultstate="collapsed" desc="显示错误视图">
 
     @JvmOverloads
     fun showError(
@@ -128,7 +131,7 @@ class LoadStatusView @JvmOverloads constructor(
         }
         showViewById(mErrorView!!.id)
     }
-// </editor-fold>
+    // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="显示加载中视图">
     @JvmOverloads
@@ -153,6 +156,7 @@ class LoadStatusView @JvmOverloads constructor(
     }
 
     // </editor-fold>
+
     // <editor-fold defaultstate="collapsed" desc="显示无网络视图">
     @JvmOverloads
     fun showNoNetwork(

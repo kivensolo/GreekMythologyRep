@@ -5,10 +5,8 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.chad.library.adapter.base.animation.ScaleInAnimation
-import com.kingz.base.factory.ViewModelFactory
 import com.kingz.module.home.R
 import com.kingz.module.wanandroid.adapter.ArticleAdapter
 import com.kingz.module.wanandroid.bean.Article
@@ -43,9 +41,10 @@ class WanAndroidHomeFragment : AbsListFragment<WanAndroidViewModelV2>() {
 
     override fun getLayoutResID() = R.layout.fragment_refresh_layout
 
-    override val viewModel: HomeViewModel by viewModels {
-        ViewModelFactory.build { HomeViewModel() }
-    }
+//    override val viewModel: HomeViewModel by viewModels {
+//        ViewModelFactory.build { HomeViewModel() }
+//    }
+    override val viewModel: HomeViewModel by getViewModel(HomeViewModel::class.java)
 
     override fun initViewModel() {
         super.initViewModel()

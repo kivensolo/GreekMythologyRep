@@ -1,6 +1,9 @@
 package com.kingz.base
 
 import android.content.Context
+import android.util.Log
+import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import com.zeke.reactivehttp.base.BaseReactiveViewModel
@@ -54,12 +57,38 @@ abstract class BaseVMActivity : BaseSimpleActivity(), IUIActionEventObserver {
 //            }
 //        })
 //    }
+// <editor-fold defaultstate="collapsed" desc="UIAction From IUIActionEvent">
 
     override fun showLoading(job: Job?) {
-        showLoading()
+        progress?.let {
+            if (!it.isShown) {
+                it.visibility = View.VISIBLE
+            }
+        }
+    }
+
+    override fun  dismissLoading() {
+        progress?.let {
+            if (it.isShown) {
+                it.visibility = View.GONE
+            }
+        }
+    }
+
+    override fun showToast(msg: String) {
+        Log.d(TAG,"showToast: $msg")
+        if (msg.isNotBlank()) {
+            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun finishView() {
         finish()
+    }
+// </editor-fold>
+
+    override fun onDestroy() {
+        dismissLoading()
+        super.onDestroy()
     }
 }

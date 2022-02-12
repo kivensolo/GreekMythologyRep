@@ -10,7 +10,10 @@ import okio.Buffer
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
-import java.io.*
+import java.io.ByteArrayOutputStream
+import java.io.Closeable
+import java.io.EOFException
+import java.io.InputStream
 import java.net.URLDecoder
 import java.nio.charset.Charset
 import java.util.zip.GZIPInputStream
@@ -23,7 +26,6 @@ class LoggingInterceptor : Interceptor {
 
     private var startTime = 0L
 
-    @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
         val requestBuffer = Buffer()

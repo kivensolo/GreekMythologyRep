@@ -6,20 +6,29 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.CallSuper
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
+import com.zeke.kangaroo.zlog.ZLog
 import com.zeke.reactivehttp.base.BaseReactiveViewModel
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.Job
 
 /**
- * 生命周期顺序为：
- *  onCreateView()
- *  |--> onCreateView (自定义: onCreateViewReady)
- *  \--->onViewCreated
+ * 与业务无关的Base层Fragment
  */
 abstract class BaseVMFragment< T : BaseReactiveViewModel>
     : BaseLazyFragment() {
+
+    override val lContext: Context?
+        get() = activity
+
+    override val lifecycleSupportedScope: CoroutineScope
+        get() = activity!!.lifecycleScope
+
+    override val lLifecycleOwner: LifecycleOwner
+        get() = this
 
     protected abstract val viewModel: T
 
@@ -92,25 +101,18 @@ abstract class BaseVMFragment< T : BaseReactiveViewModel>
 //        })
 //    }
 
-    fun launch(blockCode: suspend CoroutineScope.() -> Unit) {
-        lifecycleScope.launch {
-            try {
-                blockCode()
-            } catch (e: Exception) {
-                //异常处理
-            }
+// <editor-fold defaultstate="collapsed" desc="UI事件定义">
+    override fun showToast(msg: String) {
+        ZLog.d("Show toast $msg")
+        if (msg.isNotBlank()) {
+            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
         }
     }
 
-    fun launchMain(block: suspend CoroutineScope.() -> Unit) {
-        viewModel.launchMain { block() }
-    }
+    override fun dismissLoading(){}
 
-    fun launchIO(block: suspend CoroutineScope.() -> Unit) {
-        viewModel.launchIO { block() }
-    }
+    override fun showLoading(job: Job?) {}
 
-    fun launchDefault(block: suspend CoroutineScope.() -> Unit) {
-        viewModel.launchCPU { block() }
-    }
+    override fun finishView() {}
+// </editor-fold>
 }

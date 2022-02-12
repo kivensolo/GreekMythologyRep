@@ -10,7 +10,6 @@ import com.zeke.eyepetizer.bean.VideoDetailMergeData
 import com.zeke.eyepetizer.respository.EyepetizerRemoteDataSource
 import com.zeke.kangaroo.zlog.ZLog
 import com.zeke.reactivehttp.base.BaseReactiveViewModel
-import kotlinx.coroutines.Job
 import retrofit2.http.Url
 
 /**
@@ -64,22 +63,5 @@ open class EyepetizerViewModel : BaseReactiveViewModel() {
             val result = VideoDetailMergeData(detailTask.await(), relatedTask.await())
             detailPageLiveData.postValue(result)
         }
-    }
-
-    // 顶层接口方法
-    override fun showLoading(job: Job?) {
-        super.showLoading(job)
-    }
-
-    override fun dismissLoading() {
-        super.dismissLoading()
-    }
-
-    override fun showToast(msg: String) {
-        super.showToast(msg)
-    }
-
-    override fun finishView() {
-        super.finishView()
     }
 }

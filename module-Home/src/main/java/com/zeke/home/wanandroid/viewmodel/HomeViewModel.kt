@@ -43,16 +43,18 @@ class HomeViewModel : WanAndroidViewModelV2() {
         articalCollectData.removeObservers(owner)
     }
 
-    fun getArticalData(pageId: Int) {
+    fun getArticalData(pageId: Int = 0) {
         ZLog.d("getArticalData pageId=$pageId")
         //TODO 后续 增加异常情况下延迟重试逻辑
-        launchCPUWithCatch({
-            val result = remoteDataSource.getArticals(pageId)
-            articalLiveData.postValue(result.data)
-        }){
-            //java.net.SocketTimeoutException: timeout
-            ZLog.e("getArticalData on exception: ${it.printStackTrace()}")
-            articalLiveData.postValue(null)
+        remoteDataSource.enqueue({requestArticles(pageId)}){
+            onSuccess {
+                articalLiveData.postValue(it)
+            }
+            onFailed {
+                ZLog.e("getArticalData failed: ${it.printStackTrace()}")
+                articalLiveData.postValue(null)
+            }
+            onFinally {  }
         }
     }
 
@@ -61,20 +63,20 @@ class HomeViewModel : WanAndroidViewModelV2() {
      * LiveData在Repository中
      */
     fun getBanner() {
-        launchIO {
-            try {
+   /*     try {
+            launchIO {
                 val result = remoteDataSource.getBannerData()
-                if(result!!.code == -1){
-                    bannerLiveData.postValue(ResponseResult.error(result.message ?:"未知异常"))
-                }else{
+                if (result!!.code == -1) {
+                    bannerLiveData.postValue(ResponseResult.error(result.message ?: "未知异常"))
+                } else {
                     bannerLiveData.postValue(ResponseResult.success(result.data))
                 }
-            } catch (e: Exception) {
-                bannerLiveData.postValue(
-                    ResponseResult.error(e.toString(),null)
-                )
             }
-        }
+        } catch (e: Exception) {
+            bannerLiveData.postValue(
+                ResponseResult.error(e.toString(), null)
+            )
+        }*/
     }
 
     /**

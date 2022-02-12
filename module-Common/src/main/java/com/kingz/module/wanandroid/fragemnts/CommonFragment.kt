@@ -3,9 +3,7 @@ package com.kingz.module.wanandroid.fragemnts
 import android.app.Service
 import android.os.VibrationEffect
 import android.os.Vibrator
-import android.widget.Toast
 import androidx.annotation.CallSuper
-import androidx.annotation.StringRes
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.launcher.ARouter
 import com.kingz.base.BaseVMFragment
@@ -15,8 +13,6 @@ import com.kingz.module.common.utils.ktx.SDKVersion
 import com.kingz.module.wanandroid.bean.Article
 import com.zeke.kangaroo.zlog.ZLog
 import com.zeke.reactivehttp.base.BaseReactiveViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 /**
  * author：ZekeWang
@@ -76,16 +72,6 @@ abstract class CommonFragment<T : BaseReactiveViewModel> : BaseVMFragment<T>() {
         super.onDetach()
     }
 
-    @Deprecated("使用showXXXX")
-    protected open fun dismissLoading(){
-        ZLog.d("dismiss Loading View.")
-        loadStatusView?.dismiss()
-    }
-
-    protected open fun showLoading(){
-        loadStatusView?.showLoading()
-    }
-
     protected open fun showErrorStatus(){
         loadStatusView?.showError()
     }
@@ -96,16 +82,6 @@ abstract class CommonFragment<T : BaseReactiveViewModel> : BaseVMFragment<T>() {
 
     protected open fun showEmptyStatus(){
         loadStatusView?.showEmpty()
-    }
-
-    protected suspend fun showToast(@StringRes id:Int) {
-        withContext(Dispatchers.Main) {
-            Toast.makeText(
-                context,
-                resources.getString(id),
-                Toast.LENGTH_SHORT
-            ).show()
-        }
     }
 
     /**

@@ -2,6 +2,7 @@
 
 package com.zeke.reactivehttp.coroutine
 
+import android.util.Log
 import kotlinx.coroutines.*
 
 /**
@@ -88,22 +89,28 @@ interface ICoroutineEvent {
     /******************************和生命周期绑定的方法 START ******************************/
 
     fun launchMain(block: suspend CoroutineScope.() -> Unit): Job {
-        return lifecycleSupportedScope.launch(context = mainDispatcher, block = block)
+        val coroutineContext = mainDispatcher + CoroutineName("Worker-Main")
+        return lifecycleSupportedScope.launch(context = coroutineContext, block = block)
     }
 
     fun launchIO(block: suspend CoroutineScope.() -> Unit): Job {
-        return lifecycleSupportedScope.launch(context = ioDispatcher, block = block)
+        return lifecycleSupportedScope.launch(context = ioDispatcher + CoroutineName("Worker-IO"), block = block)
     }
 
     fun launchCPU(block: suspend CoroutineScope.() -> Unit): Job {
-        return lifecycleSupportedScope.launch(context = cpuDispatcher, block = block)
+        return lifecycleSupportedScope.launch(context = cpuDispatcher + CoroutineName("Worker-CPU"), block = block)
     }
 
     fun launchCPUWithCatch(block: suspend CoroutineScope.() -> Unit,
-                           exec:(e:Exception) -> Unit) {
-        try {
-            lifecycleSupportedScope.launch(context = cpuDispatcher, block = block)
-        }catch (e: Exception){ exec(e) }
+                           exec:(Throwable) -> Unit):Job {
+        val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
+            Log.e("KingZ","Throws an exception with message: ${throwable.message}")
+            exec(throwable)
+        }
+        return lifecycleSupportedScope.launch(
+            context = cpuDispatcher + exceptionHandler + CoroutineName("Worker-CPU2"),
+            block = block
+        )
     }
 
     fun <T> asyncMain(block: suspend CoroutineScope.() -> T): Deferred<T> {

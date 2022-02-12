@@ -16,7 +16,7 @@ class UserInfoRemoteDataSource: RemoteExtendDataSource<UserServiceApi>(
     override val baseUrl: String = UserServiceApi.BASE_URL
     var apiService = getApiService(baseUrl)
 
-    override fun showToast(msg: String) { }
+    override fun onExceptionToastShow(msg: String) { }
 
     suspend fun getUsers(): List<ApiUser>{
         return apiService.getUsers()

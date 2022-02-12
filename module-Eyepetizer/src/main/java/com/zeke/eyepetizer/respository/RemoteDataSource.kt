@@ -59,9 +59,6 @@ open class EyepetizerRemoteDataSource(iActionEvent: IUIActionEvent?)
             .build()
     }
 
-    override fun showToast(msg: String) {
-    }
-
     //获取分类列表
     suspend fun getTabList(): EyepetizerTabListInfo {
         return apiService.requestTabList()

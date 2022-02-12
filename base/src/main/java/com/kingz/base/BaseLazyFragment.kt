@@ -3,6 +3,7 @@ package com.kingz.base
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.zeke.kangaroo.zlog.ZLog
+import com.zeke.reactivehttp.viewmodel.IUIActionEventObserver
 
 /**
  * 实现Fragment懒加载控制的Base类,支持复杂的 Fragment 嵌套组合。
@@ -13,7 +14,7 @@ import com.zeke.kangaroo.zlog.ZLog
  * onCreatedView -> onActivityCreated -> onStart -> onResume
  * -> onPause -> onStop -> onDestroyView -> onDestroy -> onDetach
  * */
-abstract class BaseLazyFragment : Fragment() {
+abstract class BaseLazyFragment : Fragment(),IUIActionEventObserver {
 
     /**
      * 当使用ViewPager+Fragment形式时，setUserVisibleHint会优先Fragment生命周期函数调用，

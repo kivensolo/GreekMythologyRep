@@ -39,10 +39,13 @@ import kotlinx.coroutines.Job
  * 中的数据变化，提供了和 BaseReactiveViewModel 进行绑定的方法
  */
 
-// 连接DaaSource和ViewModel层
+/**
+ * 模块通信层，用于业务上常用的UI事件分发
+ * DataSource <=====> ViewModel <=====> UI
+ * 扩展至协程作用域顶层，以便更方便的使用协程。
+ */
 interface IUIActionEvent : ICoroutineEvent {
-
-    fun showLoading(job: Job?)
+    fun showLoading(job: Job? = null)
 
     fun dismissLoading()
 
@@ -91,6 +94,8 @@ interface IUIActionEventObserver : IUIActionEvent {
 
     /**
      * 创建ViewModel的代理方法,可用于View层获取ViewModel对象
+     * @param clazz java class of viewmodel
+     * @param factory ViewModelProvider Factory
      */
     fun <VM> getViewModel(
         clazz: Class<VM>,

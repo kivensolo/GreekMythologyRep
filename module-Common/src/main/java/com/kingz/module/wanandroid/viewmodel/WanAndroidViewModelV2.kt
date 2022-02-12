@@ -1,5 +1,6 @@
 package com.kingz.module.wanandroid.viewmodel
 
+
 import androidx.lifecycle.MutableLiveData
 import com.kingz.database.AppDatabase
 import com.kingz.database.entity.UserEntity
@@ -9,7 +10,6 @@ import com.kingz.module.wanandroid.bean.CollectActionBean
 import com.kingz.module.wanandroid.repository.WanAndroidRemoteDataSource
 import com.zeke.kangaroo.zlog.ZLog
 import com.zeke.reactivehttp.base.BaseReactiveViewModel
-import kotlinx.coroutines.Job
 
 /**
  * 玩Android的ViewModel
@@ -60,9 +60,57 @@ open class WanAndroidViewModelV2 : BaseReactiveViewModel() {
      * @param isCollect: 是否收藏
      */
     fun changeArticleLike(srcArticle: Article, position: Int, isCollect:Boolean) {
-        launchIO {
-            var result:CollectActionBean ?= null
-            try {
+//        launchIO {
+        val result = CollectActionBean()
+        remoteDataSource.enqueue({
+            //Ext Fun for API
+            if (srcArticle.collect) {
+                unCollect(srcArticle.id)
+            } else {
+                collect(srcArticle.id)
+            }
+        }) {
+            onSuccess {
+                // 可能httpCode正确，但业务code错误
+                srcArticle.collect = isCollect
+                result.apply {
+                    result.apply {
+                        //change action type
+                        actionType = if (srcArticle.collect) {
+                            CollectActionBean.TYPE.UNCOLLECT
+                        } else {
+                            CollectActionBean.TYPE.COLLECT
+                        }
+                    }
+                    srcArticle.collect = isCollect
+                   /* isSuccess = (data.errorCode == 0)
+                    // 收藏状态更新成功时，改变Item数据
+                    if (isSuccess) {
+                        srcArticle.collect = isCollect
+                    } else {
+                        errorMsg = data.errorMsg ?: "unKnow"
+                    }*/
+                }
+            }
+
+            onFailed {
+                result.apply {
+                    errorMsg = it.errorMessage
+                    actionType = if (srcArticle.collect) {
+                        CollectActionBean.TYPE.UNCOLLECT
+                    } else {
+                        CollectActionBean.TYPE.COLLECT
+                    }
+                    isSuccess = false
+                }
+            }
+
+            onFinally {
+                result.articlePostion = position
+                articalCollectData.postValue(result)
+            }
+        }
+          /*  try {
                 val data = remoteDataSource.changeArticleLike(srcArticle)
                 result = CollectActionBean().apply {
                     actionType = if (srcArticle.collect) {
@@ -92,24 +140,7 @@ open class WanAndroidViewModelV2 : BaseReactiveViewModel() {
             }finally {
                 result?.articlePostion = position
                 articalCollectData.postValue(result)
-            }
-        }
-    }
-
-    // 顶层接口方法
-    override fun showLoading(job: Job?) {
-        super.showLoading(job)
-    }
-
-    override fun dismissLoading() {
-        super.dismissLoading()
-    }
-
-    override fun showToast(msg: String) {
-        super.showToast(msg)
-    }
-
-    override fun finishView() {
-        super.finishView()
+            }*/
+//        }
     }
 }

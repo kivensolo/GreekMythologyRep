@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ProgressBar
-import android.widget.Toast
 import androidx.annotation.CallSuper
 import androidx.annotation.LayoutRes
 import androidx.annotation.RestrictTo
@@ -24,7 +23,7 @@ import kotlinx.coroutines.withContext
 abstract class BaseSimpleActivity : AppCompatActivity() {
 
     //优化思路: 全局单例weakRefebceDialog,显示的地方直接show,隐藏的地方直接dismiss
-    private var progress: View? = null
+    protected var progress: View? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -96,35 +95,8 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
         addContentView(progress, progressParams)
     }
 
-    fun showLoading() {
-        progress?.let {
-            if (!it.isShown) {
-                it.visibility = View.VISIBLE
-            }
-        }
-    }
-
-    fun dismissLoading() {
-        progress?.let {
-            if (it.isShown) {
-                it.visibility = View.GONE
-            }
-        }
-    }
-
-
-    fun showToast(msg: String) {
-        if (msg.isNotBlank()) {
-            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
-        }
-    }
 
     fun getStringFromRes(id: Int): String = resources.getString(id)
-
-    override fun onDestroy() {
-        super.onDestroy()
-        dismissLoading()
-    }
 
     /**
      * 必须在组合挂起函数中使用
