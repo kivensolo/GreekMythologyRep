@@ -12,6 +12,6 @@
    <TextView
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
-       style="@style/LoadStatusView.Content"
+       style="@style/MultipleStatusView.Content"
        android:text="Loading..."/>
 </RelativeLayout>

@@ -51,6 +51,8 @@ interface IUIActionEvent : ICoroutineEvent {
 
     fun showToast(msg: String)
 
+    fun showNoNetworkView()
+
     fun finishView()
 
 }
@@ -68,6 +70,8 @@ interface IViewModelActionEvent : IUIActionEvent {
 
     val finishViewEventLD: MutableLiveData<FinishViewEvent>
 
+    val showNoNetwork: MutableLiveData<ShowNoNetworkEvent>
+
     override fun showLoading(job: Job?) {
         showLoadingEventLD.value = ShowLoadingEvent(job)
     }
@@ -78,6 +82,10 @@ interface IViewModelActionEvent : IUIActionEvent {
 
     override fun showToast(msg: String) {
         showToastEventLD.value = ShowToastEvent(msg)
+    }
+
+    override fun showNoNetworkView() {
+        showNoNetwork.value = ShowNoNetworkEvent
     }
 
     override fun finishView() {
@@ -139,6 +147,9 @@ interface IUIActionEventObserver : IUIActionEvent {
             if (it.message.isNotBlank()) {
                 this@IUIActionEventObserver.showToast(it.message)
             }
+        })
+        viewModel.showNoNetwork.observe(lLifecycleOwner, Observer {
+            this@IUIActionEventObserver.showNoNetworkView()
         })
         viewModel.finishViewEventLD.observe(lLifecycleOwner, Observer {
             this@IUIActionEventObserver.finishView()

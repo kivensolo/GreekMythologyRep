@@ -7,12 +7,13 @@ import androidx.annotation.CallSuper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.launcher.ARouter
 import com.kingz.base.BaseVMFragment
-import com.kingz.module.common.LoadStatusView
+import com.kingz.module.common.MultipleStatusView
 import com.kingz.module.common.router.RouterConfig
 import com.kingz.module.common.utils.ktx.SDKVersion
 import com.kingz.module.wanandroid.bean.Article
 import com.zeke.kangaroo.zlog.ZLog
 import com.zeke.reactivehttp.base.BaseReactiveViewModel
+import kotlinx.coroutines.Job
 
 /**
  * author：ZekeWang
@@ -28,7 +29,7 @@ abstract class CommonFragment<T : BaseReactiveViewModel> : BaseVMFragment<T>() {
     /**
      * 多状态视图View 由子类具体实现
      */
-    protected var loadStatusView: LoadStatusView? = null
+    protected var multiStatusView: MultipleStatusView? = null
 
     /**
      * LinearLayoutManager for RecyclerView
@@ -51,7 +52,7 @@ abstract class CommonFragment<T : BaseReactiveViewModel> : BaseVMFragment<T>() {
     @CallSuper
     override fun initView() {
         ZLog.d("initView()")
-        loadStatusView?.showLoading()
+        multiStatusView?.showLoading()
     }
 
     open fun initData() {}
@@ -59,7 +60,7 @@ abstract class CommonFragment<T : BaseReactiveViewModel> : BaseVMFragment<T>() {
     override fun onDestroyView() {
         super.onDestroyView()
         ZLog.d("onDestroyView.")
-        loadStatusView = null
+        multiStatusView = null
     }
 
     override fun onDestroy() {
@@ -73,15 +74,24 @@ abstract class CommonFragment<T : BaseReactiveViewModel> : BaseVMFragment<T>() {
     }
 
     protected open fun showErrorStatus(){
-        loadStatusView?.showError()
+        multiStatusView?.showError()
     }
 
     protected open fun showContent(){
-        loadStatusView?.showContent()
+        multiStatusView?.showContent()
     }
 
+
     protected open fun showEmptyStatus(){
-        loadStatusView?.showEmpty()
+        multiStatusView?.showEmpty()
+    }
+
+    override fun showLoading(job: Job?) {
+        multiStatusView?.showLoading()
+    }
+
+    override fun showNoNetworkView() {
+        multiStatusView?.showNoNetwork()
     }
 
     /**

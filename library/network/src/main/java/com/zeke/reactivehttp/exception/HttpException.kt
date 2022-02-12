@@ -28,6 +28,8 @@ open class BaseHttpException(
          */
         const val CODE_ERROR_LOCAL_UNKNOWN = -1024520
 
+        const val CODE_NET_WORK_DISABLE = -1024521
+
     }
 
     /**
@@ -37,7 +39,7 @@ open class BaseHttpException(
         get() = this is ServerCodeBadException
 
     /**
-     * 是否是由于网络请求过程中抛出的异常（例如：服务器返回的 Json 解析失败）
+     * 是否是由于网络请求过程中抛出的异常（例如：服务器返回的 Json 解析失败、服务器链接失败）
      */
     val isLocalBadException: Boolean
         get() = this is LocalBadException
@@ -45,7 +47,7 @@ open class BaseHttpException(
 }
 
 /**
- * API 请求成功了，但 code != successCode
+ * 接口请求成功了，但 code != successCode
  * @param errorCode
  * @param errorMessage
  */
@@ -63,3 +65,8 @@ class ServerCodeBadException(
  * @param throwable
  */
 class LocalBadException(throwable: Throwable) : BaseHttpException(CODE_ERROR_LOCAL_UNKNOWN, throwable.message?: "", throwable)
+
+/**
+ * 网络未连接的异常
+ */
+class NetWorkDisconnectException:BaseHttpException(CODE_NET_WORK_DISABLE, "无网络连接！", null)

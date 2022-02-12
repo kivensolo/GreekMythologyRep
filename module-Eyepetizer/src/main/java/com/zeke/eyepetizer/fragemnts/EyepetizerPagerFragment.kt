@@ -198,7 +198,7 @@ class EyepetizerPagerFragment(
             showErrorStatus()
         }else{
             swipeRefreshLayout?.visibility = View.VISIBLE
-            loadStatusView?.visibility = View.GONE
+            multiStatusView?.visibility = View.GONE
         }
     }
 

@@ -9,6 +9,7 @@ import com.kingz.module.wanandroid.bean.KnowledgeTreeBean
 import com.kingz.module.wanandroid.repository.HomeDataSource
 import com.kingz.module.wanandroid.viewmodel.WanAndroidViewModelV2
 import com.zeke.kangaroo.zlog.ZLog
+import com.zeke.reactivehttp.exception.NetWorkDisconnectException
 
 /**
  * author：ZekeWang
@@ -51,8 +52,12 @@ class HomeViewModel : WanAndroidViewModelV2() {
                 articalLiveData.postValue(it)
             }
             onFailed {
-                ZLog.e("getArticalData failed: ${it.printStackTrace()}")
-                articalLiveData.postValue(null)
+                ZLog.e("getArticalData failed: $it")
+                if(it is NetWorkDisconnectException){
+                    showNoNetworkView()
+                }else{
+                    articalLiveData.postValue(null)
+                }
             }
             onFinally {  }
         }

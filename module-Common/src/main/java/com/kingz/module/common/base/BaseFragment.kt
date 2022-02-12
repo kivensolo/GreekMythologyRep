@@ -10,7 +10,7 @@ import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 import com.kingz.module.common.AppLifeCycle
 import com.kingz.module.common.CommonApp
-import com.kingz.module.common.LoadStatusView
+import com.kingz.module.common.MultipleStatusView
 
 
 /**
@@ -21,7 +21,7 @@ abstract class BaseFragment : Fragment() {
     protected var mActivity: Activity? = null
     var rootView: View? = null
     // 加载状态View
-    protected var loadStatusView: LoadStatusView? = null
+    protected var loadStatusView: MultipleStatusView? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

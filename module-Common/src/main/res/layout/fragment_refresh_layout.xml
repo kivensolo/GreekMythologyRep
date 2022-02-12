@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.kingz.module.common.LoadStatusView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.kingz.module.common.MultipleStatusView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/status_view"
     android:layout_width="match_parent"
@@ -33,4 +33,4 @@
         android:inflatedId="@+id/app_fab_btn"
         android:layout="@layout/app_floating_action_button" />
 
-</com.kingz.module.common.LoadStatusView>
+</com.kingz.module.common.MultipleStatusView>

@@ -82,6 +82,9 @@ abstract class BaseVMActivity : BaseSimpleActivity(), IUIActionEventObserver {
         }
     }
 
+    override fun showNoNetworkView() {
+    }
+
     override fun finishView() {
         finish()
     }

@@ -1,5 +1,6 @@
 package com.zeke.reactivehttp.datasource
 
+import android.util.Log
 import com.zeke.reactivehttp.bean.IHttpWrapBean
 import com.zeke.reactivehttp.callback.RequestCallback
 import com.zeke.reactivehttp.exception.BaseHttpException
@@ -50,6 +51,7 @@ abstract class RemoteDataSource<Api : Any>(iUiActionEvent: IUIActionEvent?, apiS
                         throw ServerCodeBadException(response)
                     }
                 } catch (throwable: Throwable) {
+                    Log.d("KingZ", "throwable=$throwable")
                     handleException(throwable, callback)
                     return@launchMain
                 }

@@ -121,7 +121,7 @@ class UserCollectionFragment : CommonFragment<WanAndroidViewModelV2>() {
             }
             dismissLoading()
             swipeRefreshLayout?.visibility = View.VISIBLE
-            loadStatusView?.visibility = View.GONE
+            multiStatusView?.visibility = View.GONE
 
             launchIO {
                 val datas = it.datas

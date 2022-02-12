@@ -5,16 +5,20 @@ import com.kingz.base.response.ResponseResult
 import com.kingz.database.DatabaseApplication
 import com.kingz.database.entity.CookiesEntity
 import com.kingz.database.entity.UserEntity
+import com.kingz.module.common.CommonApp
 import com.kingz.module.common.user.UserInfo
 import com.kingz.module.wanandroid.api.WanAndroidApiService
 import com.kingz.module.wanandroid.bean.*
 import com.kingz.module.wanandroid.response.WanAndroidResponse
+import com.zeke.kangaroo.utils.NetUtils
 import com.zeke.kangaroo.zlog.ZLog
 import com.zeke.network.OkHttpClientManager
 import com.zeke.network.cookie.ICookiesHandler
 import com.zeke.network.interceptor.AddCookiesInterceptor
 import com.zeke.network.interceptor.SaveCookiesInterceptor
 import com.zeke.reactivehttp.datasource.RemoteExtendDataSource
+import com.zeke.reactivehttp.exception.BaseHttpException
+import com.zeke.reactivehttp.exception.NetWorkDisconnectException
 import com.zeke.reactivehttp.viewmodel.IUIActionEvent
 import okhttp3.HttpUrl
 import okhttp3.Interceptor
@@ -203,8 +207,17 @@ open class WanAndroidRemoteDataSource(private val iActionEvent: IUIActionEvent?)
                              rePassword: String = ""): WanAndroidResponse<UserInfoBean> {
         return apiService.userRegister(name, password, rePassword)
     }
-    /************************ 用户相关信息数据  END************************/
 
+    /**
+     * 业务层根据具体业务，实现自定义的网络异常
+     */
+    override fun generateBaseException(throwable: Throwable): BaseHttpException {
+        if(!NetUtils.isConnect(CommonApp.getInstance().baseContext)){
+            ZLog.e("Network disable: $throwable")
+            return NetWorkDisconnectException()
+        }
+        return super.generateBaseException(throwable)
+    }
 }
 
 /**

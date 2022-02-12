@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        style="@style/LoadStatusView.Content"
+        style="@style/MultipleStatusView.Content"
         android:drawableTop="@drawable/ic_load_error"
         android:id="@+id/error_view_tv"
         android:gravity="center_horizontal"

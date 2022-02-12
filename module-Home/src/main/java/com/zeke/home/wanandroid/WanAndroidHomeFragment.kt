@@ -107,7 +107,7 @@ class WanAndroidHomeFragment : AbsListFragment<WanAndroidViewModelV2>() {
 //                Toast.makeText(context, resources.getString(R.string.exception_request_data),
 //                    Toast.LENGTH_SHORT).show()
                 refreshLayout?.finishRefresh()
-                showErrorStatus()
+                showEmptyStatus()
                 return@Observer
             }
             showContent()
@@ -159,6 +159,7 @@ class WanAndroidHomeFragment : AbsListFragment<WanAndroidViewModelV2>() {
 
     override fun initView() {
         super.initView()
+        showLoading()
         setRecyclerAdapter()
         initLoadMore()
         initFABInflate()
@@ -267,7 +268,6 @@ class WanAndroidHomeFragment : AbsListFragment<WanAndroidViewModelV2>() {
     }
 
     override fun dismissLoading() {
-        super.dismissLoading()
         refreshLayout?.visibility = View.VISIBLE
     }
 }

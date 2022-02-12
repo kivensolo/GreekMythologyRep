@@ -5,7 +5,8 @@
     android:layout_height="match_parent">
 
     <TextView
-        style="@style/LoadStatusView.Content"
+        android:drawableTop="@drawable/ic_load_error"
+        style="@style/MultipleStatusView.Content"
         android:id="@+id/no_network_view_tv"
         android:text="@string/tips_network_error"/>
 </RelativeLayout>

@@ -10,7 +10,6 @@ import android.widget.Toast
 import androidx.annotation.CallSuper
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
-import com.zeke.kangaroo.zlog.ZLog
 import com.zeke.reactivehttp.base.BaseReactiveViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
@@ -101,18 +100,13 @@ abstract class BaseVMFragment< T : BaseReactiveViewModel>
 //        })
 //    }
 
-// <editor-fold defaultstate="collapsed" desc="UI事件定义">
+    override fun showLoading(job: Job?) {}
     override fun showToast(msg: String) {
-        ZLog.d("Show toast $msg")
         if (msg.isNotBlank()) {
             Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
         }
     }
-
-    override fun dismissLoading(){}
-
-    override fun showLoading(job: Job?) {}
-
+    override fun dismissLoading() {}
+    override fun showNoNetworkView() {}
     override fun finishView() {}
-// </editor-fold>
 }

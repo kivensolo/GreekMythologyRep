@@ -59,6 +59,9 @@ open class BaseReactiveActivity : AppCompatActivity(), IUIActionEventObserver {
         }
     }
 
+    override fun showNoNetworkView() {
+    }
+
     override fun finishView() {
         finish()
     }

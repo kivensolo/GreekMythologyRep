@@ -31,6 +31,8 @@ open class BaseReactiveViewModel : ViewModel(), IViewModelActionEvent {
 
     override val showToastEventLD = MutableLiveData<ShowToastEvent>()
 
+    override val showNoNetwork = MutableLiveData<ShowNoNetworkEvent>()
+
     override val finishViewEventLD = MutableLiveData<FinishViewEvent>()
 
 }
@@ -46,6 +48,7 @@ open class BaseReactiveAndroidViewModel(application: Application)
     override val dismissLoadingEventLD = MutableLiveData<DismissLoadingEvent>()
 
     override val showToastEventLD = MutableLiveData<ShowToastEvent>()
+    override val showNoNetwork = MutableLiveData<ShowNoNetworkEvent>()
 
     override val finishViewEventLD = MutableLiveData<FinishViewEvent>()
 

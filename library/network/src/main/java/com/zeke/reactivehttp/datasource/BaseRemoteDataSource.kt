@@ -1,5 +1,6 @@
 package com.zeke.reactivehttp.datasource
 
+import android.util.Log
 import android.util.LruCache
 import com.zeke.reactivehttp.callback.BaseRequestCallback
 import com.zeke.reactivehttp.coroutine.ICoroutineEvent
@@ -131,6 +132,7 @@ abstract class BaseRemoteDataSource<Api : Any>(
             return
         }
         val exception = generateBaseExceptionReal(throwable)
+        Log.d("KingZ", "exception=$exception")
         if (exceptionHandle(exception)) {
             callback.onFailed?.invoke(exception)
             if (callback.onFailToast()) {

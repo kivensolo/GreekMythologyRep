@@ -14,3 +14,5 @@ object DismissLoadingEvent : BaseActionEvent()
 object FinishViewEvent : BaseActionEvent()
 
 class ShowToastEvent(val message: String) : BaseActionEvent()
+
+object ShowNoNetworkEvent : BaseActionEvent()

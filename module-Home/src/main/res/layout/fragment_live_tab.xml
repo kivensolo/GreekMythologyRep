@@ -33,7 +33,7 @@
     </RelativeLayout>
 
 
-    <com.kingz.module.common.LoadStatusView
+    <com.kingz.module.common.MultipleStatusView
         android:id="@+id/load_status"
         android:layout_width="wrap_content"
 

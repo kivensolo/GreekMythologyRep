@@ -13,7 +13,7 @@ import java.util.*
  * 包含多种状态的View,用于满足业务场景中的各类提示UI
  * 比如加载、重试、错误状态的视图
  */
-class LoadStatusView @JvmOverloads constructor(
+class MultipleStatusView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0    // 注意这个attr的默认值,有的控件不一定是0
@@ -56,12 +56,12 @@ class LoadStatusView @JvmOverloads constructor(
     }
 
     init {
-        val typeAttar = context.obtainStyledAttributes(attrs, R.styleable.LoadStatusView, defStyleAttr, 0)
-        mLoadingViewResId = typeAttar.getResourceId(R.styleable.LoadStatusView_loadingView, R.layout.status_default_loading_view)
-        mEmptyViewResId = typeAttar.getResourceId(R.styleable.LoadStatusView_emptyView, R.layout.status_default_empty_view)
-        mErrorViewResId = typeAttar.getResourceId(R.styleable.LoadStatusView_errorView, R.layout.status_default_error_view)
-        mNoNetworkViewResId = typeAttar.getResourceId( R.styleable.LoadStatusView_noNetworkView, R.layout.status_default_no_network_view)
-        mContentViewResId = typeAttar.getResourceId(R.styleable.LoadStatusView_contentView, NULL_CUSTOM_RESOURCE_ID)
+        val typeAttar = context.obtainStyledAttributes(attrs, R.styleable.MultipleStatusView, defStyleAttr, 0)
+        mLoadingViewResId = typeAttar.getResourceId(R.styleable.MultipleStatusView_loadingView, R.layout.status_default_loading_view)
+        mEmptyViewResId = typeAttar.getResourceId(R.styleable.MultipleStatusView_emptyView, R.layout.status_default_empty_view)
+        mErrorViewResId = typeAttar.getResourceId(R.styleable.MultipleStatusView_errorView, R.layout.status_default_error_view)
+        mNoNetworkViewResId = typeAttar.getResourceId( R.styleable.MultipleStatusView_noNetworkView, R.layout.status_default_no_network_view)
+        mContentViewResId = typeAttar.getResourceId(R.styleable.MultipleStatusView_contentView, NULL_CUSTOM_RESOURCE_ID)
         typeAttar.recycle()
         mInflater = LayoutInflater.from(getContext())
     }

@@ -35,7 +35,7 @@ abstract class AbsListFragment<T : BaseReactiveViewModel> :
 
     override fun initView() {
         super.initView()
-        loadStatusView = status_view
+        multiStatusView = status_view
         mRecyclerView = recycler_view
         mRecyclerView.run {
             isVerticalScrollBarEnabled = true
