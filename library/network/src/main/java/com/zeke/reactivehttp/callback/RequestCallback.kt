@@ -1,17 +1,15 @@
 package com.zeke.reactivehttp.callback
 
 /**
- * @Author: leavesC
  * @Date: 2020/10/28 18:16
- * @Desc: Callback
- * @GitHub：https://github.com/leavesC
+ * @Desc: 基于高阶函数实现的网络回调接口
  */
 class RequestCallback<Data>(internal var onSuccess: ((Data?) -> Unit)? = null,
                             internal var onSuccessIO: (suspend (Data?) -> Unit)? = null)
     : BaseRequestCallback() {
 
     /**
-     * 当网络请求成功时会调用此方法，随后会先后调用 onSuccessIO、onFinally 方法
+     * 当网络请求成功时会调用此方法(主线程)，随后会先后调用 onSuccessIO、onFinally 方法
      */
     fun onSuccess(block: (data: Data?) -> Unit) {
         this.onSuccess = block

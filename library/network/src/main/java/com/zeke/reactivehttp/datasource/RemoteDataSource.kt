@@ -20,7 +20,7 @@ abstract class RemoteDataSource<Api : Any>(iUiActionEvent: IUIActionEvent?, apiS
     fun <Data> enqueueLoading(apiFun: suspend Api.() -> IHttpWrapBean<Data>,
                               baseUrl: String = "",
                               callbackFun: (RequestCallback<Data>.() -> Unit)? = null): Job {
-        return enqueue(apiFun = apiFun, showLoading = true, baseUrl = baseUrl, callbackFun = callbackFun)
+        return enqueue(apiFun = apiFun, showLoading = true, baseUrl = baseUrl, callbackWrapperFun = callbackFun)
     }
 
     /**
@@ -28,15 +28,19 @@ abstract class RemoteDataSource<Api : Any>(iUiActionEvent: IUIActionEvent?, apiS
      * @param apiFun lambda网络请求的挂起函数
      * @param showLoading 是否分发loading事件
      * @param baseUrl 是否指明自定义的baseUrl，为空的话，使用子DataSource自定义的BaseUrl
-     * @param callbackFun 请求回调函数
+     * @param callbackWrapperFun 包含请求回调函数的高阶函数的函数类型参数
      */
     fun <Data> enqueue(apiFun: suspend Api.() -> IHttpWrapBean<Data>,
                        showLoading: Boolean = false,
                        baseUrl: String = "",
-                       callbackFun: (RequestCallback<Data>.() -> Unit)? = null): Job {
+                       callbackWrapperFun: (RequestCallback<Data>.() -> Unit)? = null): Job {
         return launchMain {
-            val callback = if (callbackFun == null) null else RequestCallback<Data>().apply {
-                callbackFun.invoke(this)
+            val callback = if (callbackWrapperFun == null) {
+                null
+            } else {
+                RequestCallback<Data>().apply {
+                    callbackWrapperFun.invoke(this) //将callback函数对象传递给外部高阶函数
+                 }
             }
             try {
                 if (showLoading) {

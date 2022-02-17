@@ -9,17 +9,16 @@ import com.zeke.reactivehttp.exception.BaseHttpException
  * @Date: 2020/5/4 0:44
  * @Desc: Callback
  * @GitHub：https://github.com/leavesC
- *                                          +----------+
- *                                    +--->|onsuccess | ------+
- * +----------+      +---------+  ok  |    +----------+       |
- * | onstart  |----> | Waiting |------+                       |
- * +----------+      +---------+      |    +------------+     |
- *                          |         +--->|onsuccessIO |-----+
- *                          | fail         +------------+     |
- *                          V                                 V
- *                    +----------+      +-------------+    +-----------+
- *                    | onFailed |----> | onFailToast |--->| onFinally |
- *                    +----------+      +-------------+    +-----------+
+ *
+ * +----------+      +----------+  ok  +----------+    +------------+
+ * | onstart  |----> |Processing|----->|onsuccess |--->|onsuccessIO |--+
+ * +----------+      +----------+      +----------+    +------------+  |
+ *                        | fail                                       |
+ *                        V                                            V
+ *                   +----------+        +-------------+        +-----------+
+ *                   | onFailed |------> | onFailToast |------->| onFinally |
+ *                   +----------+        +-------------+        +-----------+
+ *
  */
 open class BaseRequestCallback(internal var onStart: (() -> Unit)? = null,
                                internal var onCancelled: (() -> Unit)? = null,
