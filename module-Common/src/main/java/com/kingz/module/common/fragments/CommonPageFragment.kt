@@ -1,5 +1,7 @@
 package com.kingz.module.common.fragments
 
+import android.os.Bundle
+import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.kingz.module.common.R
 import com.kingz.module.common.base.BaseFragment
@@ -36,7 +38,7 @@ open class CommonPageFragment: BaseFragment(){
         initRecyclerView()
     }
 
-    override fun onFragmentRenderIsRender() {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         showLoadingView()
     }
 

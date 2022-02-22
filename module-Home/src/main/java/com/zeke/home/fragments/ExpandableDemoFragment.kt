@@ -1,6 +1,7 @@
 package com.zeke.home.fragments
 
 import android.app.ActivityOptions
+import android.os.Bundle
 import android.view.View
 import android.widget.ExpandableListView
 import android.widget.Toast
@@ -50,7 +51,7 @@ class ExpandableDemoFragment : BaseFragment(), DemoContract.View,
         return R.layout.fragment_all_demo
     }
 
-    override fun onFragmentRenderIsRender() {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         listView = rootView?.findViewById(android.R.id.list)
         expandAdapter = DemoFragmentExpandableListAdapter(context)
         listView?.apply {

@@ -85,7 +85,7 @@ class PlayFragment : BaseFragment(), IPlayerView, CustomAdapt {
     override fun getLayoutId(): Int = R.layout.player_view_controller_basic_new
 
     @SuppressLint("ClickableViewAccessibility")
-    override fun onFragmentRenderIsRender() {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         playView = rootView?.findViewById(R.id.surface_container)
         //playView.setOnClickListener(this);
         playView?.setOnTouchListener { _, event ->

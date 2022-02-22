@@ -31,7 +31,7 @@ class SimplePageContentFragment : BaseFragment(), IView, View.OnClickListener {
         return R.layout.single_recyclerview
     }
 
-    override fun onFragmentRenderIsRender() {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         //TODO 为啥这个recycleView有(174,48,60,99)的padding????
         mRecycleView = rootView?.findViewById(R.id.content_recycler)
         mRecycleView?.apply {

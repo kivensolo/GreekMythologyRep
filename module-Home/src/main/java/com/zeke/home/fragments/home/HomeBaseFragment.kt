@@ -1,7 +1,6 @@
 package com.zeke.home.fragments.home
 
 import android.view.View
-import androidx.annotation.CallSuper
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.viewpager.widget.ViewPager
@@ -85,8 +84,6 @@ abstract class HomeBaseFragment<T : IPresenter> : BaseFragment(), IView {
 //            SearchFragment().show(childFragmentManager, "searchFragment")
         }
     }
-    @CallSuper
-    override fun onFragmentRenderIsRender() {}
 
     override fun onDestroyView() {
         super.onDestroyView()

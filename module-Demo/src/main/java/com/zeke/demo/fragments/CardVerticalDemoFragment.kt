@@ -2,6 +2,7 @@ package com.zeke.demo.fragments
 
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -59,7 +60,7 @@ class CardVerticalDemoFragment : BaseFragment() {
         }
     }
 
-    override fun onFragmentRenderIsRender() {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     }
 
     /**

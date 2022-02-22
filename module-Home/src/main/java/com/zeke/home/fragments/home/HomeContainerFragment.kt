@@ -1,5 +1,6 @@
 package com.zeke.home.fragments.home
 
+import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.annotation.StringDef
@@ -71,8 +72,8 @@ class HomeContainerFragment : HomeBaseFragment<RecomPresenter>(), RecomPageContr
         get() = activity != null && (activity as BaseActivity)
                 .isActivityShow && isVisible
 
-    override fun onFragmentRenderIsRender() {
-        super.onFragmentRenderIsRender()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         mPresenter.getPageContent(activity!!)
         //Menu
         tableLayout?.findViewById<View>(R.id.iv_tab_menu)?.setOnClickListener {

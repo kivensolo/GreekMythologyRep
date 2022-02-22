@@ -1,5 +1,7 @@
 package com.zeke.home.fragments.home
 
+import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
 import com.kingz.module.common.BaseActivity
@@ -38,8 +40,8 @@ class HomeLiveFragment : HomeBaseFragment<LivePresenter>(), LiveContract.View {
         return R.layout.fragment_live_tab
     }
 
-    override fun onFragmentRenderIsRender() {
-        super.onFragmentRenderIsRender() // 有公共控件可以复用 调用一次super
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState) // 有公共控件可以复用 调用一次super
         // 具体子页面对公共View组件的设置
         tableLayout?.apply {
             tabMode = TabLayout.MODE_SCROLLABLE

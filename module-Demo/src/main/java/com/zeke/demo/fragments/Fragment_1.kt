@@ -2,6 +2,7 @@ package com.zeke.demo.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.view.View
 import com.kingz.module.common.base.BaseFragment
 import com.zeke.demo.R
 import com.zeke.kangaroo.zlog.ZLog
@@ -23,7 +24,7 @@ class Fragment_1 : BaseFragment() {
         ZLog.d("onCreate")
     }
 
-    override fun onFragmentRenderIsRender() {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         ZLog.d("onViewCreated")
     }
 

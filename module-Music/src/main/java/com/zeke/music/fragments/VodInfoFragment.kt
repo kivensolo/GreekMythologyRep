@@ -66,7 +66,7 @@ class VodInfoFragment : BaseFragment(), IPlayerView {
         onPresenterCreateView()
     }
 
-    override fun onFragmentRenderIsRender() {}
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
