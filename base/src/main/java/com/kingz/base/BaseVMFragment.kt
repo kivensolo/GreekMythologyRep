@@ -44,9 +44,11 @@ abstract class BaseVMFragment< T : BaseReactiveViewModel>
         return rootView
     }
 
+    /**
+     *  fragement 的initView逻辑建议在onViewCreated中处理.
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // fragement 的initView逻辑实际应该在onViewCreated中处理.
         onViewCreated()
     }
 

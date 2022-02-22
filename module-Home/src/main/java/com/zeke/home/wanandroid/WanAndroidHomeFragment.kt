@@ -159,7 +159,6 @@ class WanAndroidHomeFragment : AbsListFragment<WanAndroidViewModelV2>() {
         showLoading()
         setRecyclerAdapter()
         initLoadMore()
-        initFABInflate()
         // Banne须在RecyclerView之后初始化
         initBanner()
     }
@@ -189,11 +188,6 @@ class WanAndroidHomeFragment : AbsListFragment<WanAndroidViewModelV2>() {
             }
             adapter = articleAdapter
         }
-    }
-
-    private fun initFABInflate() {
-        val fabView = rootView?.findViewById<View>(R.id.app_fab_btn)
-        fabView?.setOnClickListener { scrollToTop() }
     }
 
     private fun initLoadMore() {

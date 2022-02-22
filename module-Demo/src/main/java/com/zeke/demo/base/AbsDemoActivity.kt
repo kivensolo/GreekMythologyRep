@@ -25,7 +25,7 @@ abstract class AbsDemoActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.fragment_tab)
+        setContentView(R.layout.fragment_tab_pagger)
         initViews()
         inflatePageData()
         initPagerAdapter()

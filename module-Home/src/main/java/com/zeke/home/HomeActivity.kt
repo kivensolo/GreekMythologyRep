@@ -226,7 +226,7 @@ class HomeActivity : AppBarActivity(), View.OnClickListener{
         contentViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                ZLog.d(TAG, "onPageSelected position=${position}")
+                ZLog.d("onPageSelected position=${position}")
             }
         })
 

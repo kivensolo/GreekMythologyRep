@@ -91,6 +91,7 @@ open class AppBarActivity : BaseVMActivity() {
                 window.navigationBarColor = Color.BLACK
             }
         }
+        //TODO 发送颜色变换的Even事件
     }
 
     override fun initView(savedInstanceState: Bundle?) {

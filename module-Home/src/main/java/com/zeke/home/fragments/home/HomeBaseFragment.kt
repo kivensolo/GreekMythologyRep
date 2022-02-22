@@ -12,6 +12,7 @@ import com.kingz.module.common.base.BaseFragment
 import com.kingz.module.common.base.IPresenter
 import com.kingz.module.home.R
 import com.zeke.home.entity.TemplatePageData
+import com.zeke.kangaroo.zlog.ZLog
 
 /**
  * time: 2020-2-8 11:38
@@ -19,11 +20,10 @@ import com.zeke.home.entity.TemplatePageData
  *
  *  MVP结构
  *
- * 使用 TabLayout + viewPager
- * |----TabLayout----|
- * |    viewPager    |
+ * 使用 AppBarLayout + viewPager
+ * |--AppBarLayout---|
  * |                 |
- * | loadStatusView  |
+ * |    viewPager    |
  * |                 |
  * |-----------------|
  * 实现切页展示
@@ -36,17 +36,31 @@ abstract class HomeBaseFragment<T : IPresenter> : BaseFragment(), IView {
     protected var currentFragment: Fragment? = null
     protected var viewPagerAdapter: HomePagerAdapter? = null
 
-    override fun getLayoutId(): Int = R.layout.fragment_tab
+    override fun getLayoutId(): Int = R.layout.fragment_tab_pager
 
-    @CallSuper
-    override fun onFragmentRenderIsRender() {
+    override fun onCreateViewReady() {
+        super.onCreateViewReady()
         viewPagerAdapter = HomePagerAdapter(childFragmentManager, PageCreator())
         tableLayout = rootView?.findViewById(R.id.tab_layout)
         viewPager = rootView?.findViewById(R.id.viewpager)
 
         // viewPager 初始化
-        with(viewPager!!){
+        viewPager?.run {
             adapter = viewPagerAdapter
+            addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                    ZLog.d("onPageScrolled()")
+                }
+
+                override fun onPageSelected(position: Int) {
+                    currentFragment = viewPagerAdapter!!.getFragment(position)
+                    ZLog.d("onPageSelected() position=$position, currentFragment=$currentFragment")
+                }
+
+                override fun onPageScrollStateChanged(state: Int) {
+                    ZLog.d("onPageScrollStateChanged()")
+                }
+            })
         }
 
         //tabLayout 初始化
@@ -70,6 +84,13 @@ abstract class HomeBaseFragment<T : IPresenter> : BaseFragment(), IView {
         ivSearch?.setOnClickListener {
 //            SearchFragment().show(childFragmentManager, "searchFragment")
         }
+    }
+    @CallSuper
+    override fun onFragmentRenderIsRender() {}
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewPager?.clearOnPageChangeListeners()
     }
 
     override val isShown: Boolean
@@ -104,9 +125,10 @@ abstract class HomeBaseFragment<T : IPresenter> : BaseFragment(), IView {
      */
     abstract fun createPageFragment(data: TemplatePageData, position: Int):Fragment
 
-    inner class HomePagerAdapter(fm: FragmentManager,
-                                 creator: PagerFragCreator<TemplatePageData>) :
-        BasePagerAdapter<TemplatePageData>(fm, creator)
+    inner class HomePagerAdapter(
+        fm: FragmentManager,
+        creator: PagerFragCreator<TemplatePageData>
+    ) : BasePagerAdapter<TemplatePageData>(fm, creator)
 
     inner class PageCreator : BasePagerAdapter.PagerFragCreator<TemplatePageData> {
         override fun createFragment(data: TemplatePageData, position: Int): Fragment {

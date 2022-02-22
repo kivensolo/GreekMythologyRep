@@ -13,9 +13,10 @@ import kotlin.math.abs
  * author: King.Z <br>
  * date:  2021/2/20 21:42 <br>
  * description:
- *  Behavior是CoordinatorLayout里面的一个内部类，通过它可以与 CoordinatorLayout的
- *  一个或者多个子View进行交互，包括 drag，swipes, flings等手势动作。
- *
+ *  FAB 行为控制器
+ *  Behavior是CoordinatorLayout里面的一个内部类，
+ *  通过它可以与 CoordinatorLayout的一个或者多个子View进行交互，
+ *  包括 drag，swipes, flings等手势动作。
  *
  * 【注意】带两个参数的constructor必须存在，否则无法被反射的形式实例化 <br>
  *   实现列表下滑时,显示FloatingActionButton
@@ -38,10 +39,7 @@ class FloatingActionButtonBehavior(
         //被观察者（RecyclerView）发生滑动的开始的时候回调的
         //nestedScrollAxes:滑动关联轴，现在只关心垂直的滑动。
         return axes == ViewCompat.SCROLL_AXIS_VERTICAL ||
-                super.onStartNestedScroll(
-                    coordinatorLayout, child, directTargetChild
-                    , target, axes, type
-                )
+                super.onStartNestedScroll(coordinatorLayout, child, directTargetChild, target, axes, type)
     }
 
     /**

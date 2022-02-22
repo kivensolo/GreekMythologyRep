@@ -107,7 +107,7 @@ class EyepetizerPagerFragment(
     }
 
     private fun initFABInflate() {
-        val fabView = rootView?.findViewById<View>(R.id.app_fab_btn)
+        val fabView = rootView?.findViewById<View>(R.id.floating_action_btn)
         fabView?.setOnClickListener { scrollToTop() }
     }
 

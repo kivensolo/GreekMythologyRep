@@ -13,6 +13,7 @@ import com.zeke.home.fragments.ExpandableDemoFragment
 import com.zeke.home.fragments.MagicIndicatorDemoFragment
 import com.zeke.home.presenters.RecomPresenter
 import com.zeke.home.wanandroid.WanAndroidHomeFragment
+import com.zeke.kangaroo.zlog.ZLog
 
 /**
  * author：KingZ
@@ -63,22 +64,32 @@ class HomeContainerFragment : HomeBaseFragment<RecomPresenter>(), RecomPageContr
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.fragment_tab
+        return R.layout.fragment_tab_pager
     }
 
     override val isShown: Boolean
         get() = activity != null && (activity as BaseActivity)
                 .isActivityShow && isVisible
 
-    /**
-     *
-     */
     override fun onFragmentRenderIsRender() {
         super.onFragmentRenderIsRender()
         mPresenter.getPageContent(activity!!)
+        //Menu
         tableLayout?.findViewById<View>(R.id.iv_tab_menu)?.setOnClickListener {
             activity?.findViewById<SuperSlidingPaneLayout>(R.id.slidPanelLayout)?.apply {
                 openPane()
+            }
+        }
+        rootViewInitFABInflate()
+    }
+
+
+    private fun rootViewInitFABInflate() {
+        val fabView = rootView?.findViewById<View>(R.id.floating_action_btn)
+        ZLog.d("kingz initFABInflate: fabView=[$fabView]")
+        fabView?.setOnClickListener {
+            if (currentFragment is WanAndroidHomeFragment) {
+                (currentFragment as WanAndroidHomeFragment).scrollToTop()
             }
         }
     }

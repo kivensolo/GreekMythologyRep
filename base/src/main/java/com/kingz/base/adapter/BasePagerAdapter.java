@@ -59,6 +59,7 @@ public class BasePagerAdapter<D> extends FragmentPagerAdapter {
      */
     @Override
     public Fragment getItem(int position) {
+
         return mCreator.createFragment(mData.get(position), position);
     }
 
