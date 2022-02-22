@@ -35,8 +35,8 @@ import com.zeke.module_player.R
 class SampleMediaListFragment : BaseFragment() {
     private var mFileListView: ListView? = null
     private var mAdapter: SampleMediaAdapter? = null
-    override fun onCreateViewReady() {
-        super.onCreateViewReady()
+    override fun initViews() {
+        super.initViews()
         mFileListView = rootView?.findViewById(R.id.file_list_view)
     }
 

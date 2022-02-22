@@ -60,8 +60,8 @@ class VodInfoFragment : BaseFragment(), IPlayerView {
         get() = activity != null && (activity as BaseActivity).isActivityShow && isViewVisible
     override fun getLayoutId(): Int = R.layout.detailpage_vodinfo_layout
 
-    override fun onCreateViewReady() {
-        super.onCreateViewReady()
+    override fun initViews() {
+        super.initViews()
         initViews(rootView)
         onPresenterCreateView()
     }

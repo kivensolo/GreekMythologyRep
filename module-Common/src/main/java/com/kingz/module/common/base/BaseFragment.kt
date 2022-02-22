@@ -37,7 +37,7 @@ abstract class BaseFragment : Fragment() {
         if(rootView == null){
             rootView = inflater.inflate(getLayoutId(), null)
         }
-        onCreateViewReady()
+        initViews()
         return rootView
     }
 
@@ -71,6 +71,6 @@ abstract class BaseFragment : Fragment() {
     @LayoutRes
     abstract fun getLayoutId(): Int
 
-    /** 进行初始化操作，在onCreateView中调用*/
-    open fun onCreateViewReady() {}
+    /** 进行UI初始化操作，在onCreateView中调用*/
+    open fun initViews() {}
 }

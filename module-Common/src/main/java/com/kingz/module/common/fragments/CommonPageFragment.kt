@@ -33,8 +33,8 @@ open class CommonPageFragment: BaseFragment(){
         return R.layout.fragment_refresh_layout
     }
 
-    override fun onCreateViewReady() {
-        super.onCreateViewReady()
+    override fun initViews() {
+        super.initViews()
         initRecyclerView()
     }
 

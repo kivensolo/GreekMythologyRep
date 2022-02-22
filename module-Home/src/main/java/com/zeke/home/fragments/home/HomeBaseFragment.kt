@@ -4,6 +4,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.viewpager.widget.ViewPager
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
 import com.kingz.base.adapter.BasePagerAdapter
 import com.kingz.module.common.IView
@@ -34,32 +35,36 @@ abstract class HomeBaseFragment<T : IPresenter> : BaseFragment(), IView {
     protected var viewPager: ViewPager? = null
     protected var currentFragment: Fragment? = null
     protected var viewPagerAdapter: HomePagerAdapter? = null
+    protected lateinit var fabButton: FloatingActionButton
 
     override fun getLayoutId(): Int = R.layout.fragment_tab_pager
 
-    override fun onCreateViewReady() {
-        super.onCreateViewReady()
+    override fun initViews() {
+        super.initViews()
         viewPagerAdapter = HomePagerAdapter(childFragmentManager, PageCreator())
-        tableLayout = rootView?.findViewById(R.id.tab_layout)
-        viewPager = rootView?.findViewById(R.id.viewpager)
+        rootView!!.apply {
+            tableLayout = findViewById(R.id.tab_layout)
+            viewPager = findViewById(R.id.viewpager)
+            fabButton = findViewById(R.id.floating_action_btn)
+            loadStatusView = findViewById(R.id.load_status)
+            loadStatusView?.showLoading()
+        }
 
         // viewPager 初始化
         viewPager?.run {
-            adapter = viewPagerAdapter
             addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-                    ZLog.d("onPageScrolled()")
-                }
+                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
 
                 override fun onPageSelected(position: Int) {
-                    currentFragment = viewPagerAdapter!!.getFragment(position)
-                    ZLog.d("onPageSelected() position=$position, currentFragment=$currentFragment")
+                    currentFragment = viewPagerAdapter?.getFragment(position)
+                    ZLog.d("onPageSelected() position=$position, currentFragment=${currentFragment!!::class.java.simpleName}")
+                    if(position != 0){
+                        fabButton.visibility = View.INVISIBLE
+                    }
                 }
-
-                override fun onPageScrollStateChanged(state: Int) {
-                    ZLog.d("onPageScrollStateChanged()")
-                }
+                override fun onPageScrollStateChanged(state: Int) {}
             })
+            adapter = viewPagerAdapter
         }
 
         //tabLayout 初始化
@@ -76,8 +81,7 @@ abstract class HomeBaseFragment<T : IPresenter> : BaseFragment(), IView {
             setupWithViewPager(viewPager)
         }
 
-        loadStatusView = rootView?.findViewById(R.id.load_status)
-        loadStatusView?.showLoading()
+
 
         val ivSearch: View? = rootView?.findViewById(R.id.ivSearch)
         ivSearch?.setOnClickListener {

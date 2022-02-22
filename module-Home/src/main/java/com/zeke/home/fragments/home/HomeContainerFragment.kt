@@ -57,7 +57,11 @@ class HomeContainerFragment : HomeBaseFragment<RecomPresenter>(), RecomPageContr
      */
     override fun createPageFragment(data: TemplatePageData, position: Int): Fragment {
         return when (data.type) {
-            TYPE_WAN_ANDROID -> WanAndroidHomeFragment()
+            TYPE_WAN_ANDROID -> {
+                currentFragment = WanAndroidHomeFragment()
+                //FIXME 兼容处理页面初次加载时不触发viewpagger onPageSelected的事件，导致无法点击fab后无效果。
+                return currentFragment as WanAndroidHomeFragment
+            }
             TYPE_DEMO -> ExpandableDemoFragment()
             TYPE_MAGICINDICATOR -> MagicIndicatorDemoFragment()
             else -> ExpandableDemoFragment()

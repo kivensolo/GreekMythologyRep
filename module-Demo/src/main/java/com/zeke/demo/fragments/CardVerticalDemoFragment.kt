@@ -41,8 +41,8 @@ class CardVerticalDemoFragment : BaseFragment() {
         pageModel = pageData
     }
 
-    override fun onCreateViewReady() {
-        super.onCreateViewReady()
+    override fun initViews() {
+        super.initViews()
         mRecycleView = rootView!!.findViewById(R.id.content_recycler)
         mRecycleView.setHasFixedSize(true)
         mRecycleView.layoutManager = LinearLayoutManager(activity!!,
