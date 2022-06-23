@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:progressDrawable="@drawable/seekbar_self_color_style"
-        android:thumb="@drawable/scrubber_control_selector_holo"
+        android:thumb="@null"
         android:progress="30"/>
 
     <!-- 自定义Style方式 -->

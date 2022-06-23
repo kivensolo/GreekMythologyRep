@@ -205,6 +205,13 @@
     <color name="divider_color">#ff404040</color>
     <!--  App主色调  End  -->
 
+    <!--  AI主色调  -->
+    <color name="text_color_blue">#586C9D</color>
+    <color name="ai_head_blur">#CC55D7F9</color>
+    <color name="ai_bottom_blur">#9CBCF2E9</color>
+    <color name="ai_face">#132EDD</color>
+    <color name="ai_face_height_light">#33FFFFFF</color>
+
     <!-- Android L 颜色 -->
     <color name="skygreen">#5FCDDA</color><!--天绿色 -->
     <color name="skygreen_b">#2cbdd7</color>

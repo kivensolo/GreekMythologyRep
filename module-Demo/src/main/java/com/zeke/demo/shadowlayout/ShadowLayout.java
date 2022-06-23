@@ -956,7 +956,7 @@ public class ShadowLayout extends FrameLayout {
     }
 
     private void initConerRadiusAttr(TypedArray attr) {
-        mCornerRadius = attr.getDimension(R.styleable.ShadowLayout_cornerRadius, getResources().getDimension(R.dimen.size_0dp));
+        mCornerRadius = attr.getDimension(R.styleable.ShadowLayout_cornerRadius, getResources().getDimension(R.dimen.dp_0));
         mCornerRadius_leftTop = attr.getDimension(R.styleable.ShadowLayout_cornerRadius_leftTop, RADIUS_INVALID_VALUE);
         mCornerRadius_leftBottom = attr.getDimension(R.styleable.ShadowLayout_cornerRadius_leftBottom, RADIUS_INVALID_VALUE);
         mCornerRadius_rightTop = attr.getDimension(R.styleable.ShadowLayout_cornerRadius_rightTop, RADIUS_INVALID_VALUE);

@@ -45,6 +45,9 @@ dependencies {
 
     // 工具库由Common引出
     api project(":library-views")
+    api project(':library-floatwindow')
+    api project(':library-blurringview')
+
     api project(':database')
     api root_dependencies["kangaroo"]
 //    api project(":Akangaroo")

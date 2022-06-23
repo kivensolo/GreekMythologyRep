@@ -106,6 +106,14 @@ class HomeActivity : AppBarActivity(), View.OnClickListener{
         initViewPager()
         initSlidingPaneLayout()
         initSlideMenuView()
+
+    /*    AIManager.initAI(this,
+            Point(
+                UIUtils.dip2px(200f),
+                UIUtils.dip2px(95f))
+        )
+//        AIManager.initAIToast(this)
+        AIManager.showAi()*/
     }
 
     private fun initSlideMenuView() {

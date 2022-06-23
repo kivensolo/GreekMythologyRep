@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bkg_ai_toast"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/ai_toast_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="6"
+        android:textSize="17sp"
+        android:textColor="@color/text_color_blue"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/ok_btn"
+        android:maxWidth="328dp"
+        android:minWidth="190dp"
+        tools:text="阿达的生命力家乐鸡精阿达的生命力家乐鸡精阿达的生命力家乐鸡精阿达的生命力家乐鸡精阿达的生命力家乐鸡精" />
+
+    <TextView
+        android:id="@+id/ok_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="14dp"
+        android:visibility="visible"
+        android:text="我知道了"
+        android:textSize="19sp"
+        android:gravity="center"
+        android:textColor="@color/text_color_blue"
+        android:background="@drawable/bg_test_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ai_toast_text" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

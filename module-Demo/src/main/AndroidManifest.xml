@@ -99,5 +99,11 @@
             android:name=".menu.app.MenuMainActivity"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
 
+        <activity android:name=".gaussian_blur.GaussianBlurDemoActivity"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
+
+        <activity android:name=".gaussian_blur.FiveHundredBlurActivity"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
+
     </application>
 </manifest>

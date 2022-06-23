@@ -20,6 +20,9 @@ import android.widget.LinearLayout;
 import com.kingz.module.common.BaseActivity;
 import com.zeke.kangaroo.zlog.ZLog;
 
+/**
+ * Shape学习：OvalShape
+ */
 public class ShapeDrawOval extends BaseActivity {
 
     public static final String TAG = "ShapeDrawOval";

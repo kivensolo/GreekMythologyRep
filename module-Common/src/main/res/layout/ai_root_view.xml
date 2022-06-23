@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.kapplication.aitest.aidai.layout.AILayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:clipChildren="false"
+    tools:ignore="SpeakableTextPresentCheck">
+
+    <com.kapplication.aitest.aidai.component.AILayer5BottomBlurView
+        android:id="@+id/aiBottomBlureView"
+        android:layout_width="105dp"
+        android:layout_height="105dp"
+        android:padding="7dp"
+        android:visibility="visible"
+        tools:visibility="visible"
+        android:layout_gravity="center" />
+
+    <com.kapplication.aitest.aidai.component.AILayer4BottomLightView
+        android:id="@+id/aiBottomLightView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:padding="3dp"
+        android:visibility="visible"
+        tools:visibility="visible"
+        android:layout_gravity="center" />
+
+    <com.kapplication.aitest.aidai.component.AILayer3HeadView
+        android:id="@+id/aiHeadView"
+        android:layout_width="83dp"
+        android:layout_height="83dp"
+        android:padding="3dp"
+        android:layout_gravity="center"
+        tools:visibility="visible"
+        android:visibility="visible" />
+
+    <com.kapplication.aitest.aidai.component.AiLayer2FaceView
+        android:id="@+id/aiFaceView"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_gravity="center"
+        android:padding="2dp"
+        tools:visibility="visible"
+        android:visibility="visible" />
+
+    <com.kapplication.aitest.aidai.component.AiLayer1EyesView
+        android:id="@+id/aiEyesView"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:layout_gravity="center"
+        tools:visibility="visible"
+        android:visibility="visible" />
+
+</com.kapplication.aitest.aidai.layout.AILayout>
+

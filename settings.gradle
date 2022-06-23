@@ -27,6 +27,8 @@ include ':library-network'
 include ':library-server'
 include ':library-hlscache'
 include ':library-unittest'
+include ':library-floatwindow'
+include ':library-blurringview'
 
 project(':library').projectDir = new File(rootDir, 'library/all')
 project(':library-player').projectDir = new File(rootDir, 'library/player')
@@ -35,6 +37,8 @@ project(':library-network').projectDir = new File(rootDir, 'library/network')
 project(':library-server').projectDir = new File(rootDir, 'library/server')
 project(':library-hlscache').projectDir = new File(rootDir, 'library/hlscache')
 project(':library-unittest').projectDir = new File(rootDir, 'library/unitTest')
+project(':library-floatwindow').projectDir = new File(rootDir, 'library/floatwindow')
+project(':library-blurringview').projectDir = new File(rootDir, 'library/blurringview')
 
 
 include ':app-pickerview'
@@ -49,11 +53,11 @@ project(':calendar_picker').projectDir = new File(rootDir, 'app-pickerview/calen
 //project(':Akangaroo').setProjectDir(file("E:\\GitHubProjects\\AKangaroo\\app"))
 
 gradle.beforeProject {
-    project -> println("------> Project [${project.name}]  Ready to config ...")
+    project -> println("Ready to config ===> ${project.name} ")
 }
 
 gradle.afterProject {
-    println "<------ Config end."
+    println "[END Config]"
 }
 
 println("> Initialization [${DEFAULT_SETTINGS_FILE}] End.")

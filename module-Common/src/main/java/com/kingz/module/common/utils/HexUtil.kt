@@ -1,5 +1,6 @@
 package com.kingz.module.common.utils
 
+
 /**
  * 字节 & 字符 & 字符串
  * 转换工具类

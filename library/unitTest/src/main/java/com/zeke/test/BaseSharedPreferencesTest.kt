@@ -29,14 +29,14 @@ abstract class BaseSharedPreferencesTest : BaseTest() {
     /**
      * 测试保存数据是否成功
      */
-    open fun testSaveData(exec: (editoe: SharedPreferences.Editor) -> Unit) {
+    open fun testSaveData(exec: (editor: SharedPreferences.Editor) -> Unit) {
         exec(mSharePreferencesEditor)
     }
 
     /**
      * 测试获取数据
      */
-    open fun testReadData(exec: (editoe: SharedPreferences) -> Unit) {
+    open fun testReadData(exec: (editor: SharedPreferences) -> Unit) {
         exec(mSharePreferences)
     }
 }

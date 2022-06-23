@@ -69,7 +69,8 @@ class NavigationData {
                 DemoSample("PixelCopy",     RouterConfig.PAGE_PIXEL_COPY),
                 DemoSample("PathDemo",     "com.kingz.graphics.PathDemoActivity"),
                 DemoSample("MemoryCheck(无效)",     "com.kingz.pages.photo.memory.MemoryCheck"),
-                DemoSample("Glide",     "com.zeke.ktx.demo.glide.GlideCardDemoActivity"),
+                DemoSample("Glide",    "com.zeke.demo.glide.GlideCardDemoActivity"),
+                DemoSample("Blur",     RouterConfig.PAGE_BLUR),
             )
         ),
         DemoGroup("About Color","颜色",

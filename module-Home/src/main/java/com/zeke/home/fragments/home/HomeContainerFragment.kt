@@ -34,6 +34,8 @@ class HomeContainerFragment : HomeBaseFragment<RecomPresenter>(), RecomPageContr
         mPresenter = RecomPresenter(this)
     }
 
+    override fun getLayoutId(): Int = R.layout.fragment_tab_pager
+
     @kotlin.annotation.Retention(AnnotationRetention.BINARY)
     @StringDef(
         TYPE_WAN_ANDROID,
@@ -66,10 +68,6 @@ class HomeContainerFragment : HomeBaseFragment<RecomPresenter>(), RecomPageContr
             TYPE_MAGICINDICATOR -> MagicIndicatorDemoFragment()
             else -> ExpandableDemoFragment()
         }
-    }
-
-    override fun getLayoutId(): Int {
-        return R.layout.fragment_tab_pager
     }
 
     override val isShown: Boolean

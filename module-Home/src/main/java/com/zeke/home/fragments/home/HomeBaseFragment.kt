@@ -42,7 +42,7 @@ abstract class HomeBaseFragment<T : IPresenter> : BaseFragment(), IView {
     override fun initViews() {
         super.initViews()
         viewPagerAdapter = HomePagerAdapter(childFragmentManager, PageCreator())
-        rootView!!.apply {
+        rootView!!.apply { //FIXME java.lang.NullPointerException: findViewById(R.id.floating_action_btn) must not be null
             tableLayout = findViewById(R.id.tab_layout)
             viewPager = findViewById(R.id.viewpager)
             fabButton = findViewById(R.id.floating_action_btn)
