@@ -35,14 +35,14 @@ abstract class HomeBaseFragment<T : IPresenter> : BaseFragment(), IView {
     protected var viewPager: ViewPager? = null
     protected var currentFragment: Fragment? = null
     protected var viewPagerAdapter: HomePagerAdapter? = null
-    protected lateinit var fabButton: FloatingActionButton
+    protected var fabButton: FloatingActionButton? = null
 
     override fun getLayoutId(): Int = R.layout.fragment_tab_pager
 
     override fun initViews() {
         super.initViews()
         viewPagerAdapter = HomePagerAdapter(childFragmentManager, PageCreator())
-        rootView!!.apply { //FIXME java.lang.NullPointerException: findViewById(R.id.floating_action_btn) must not be null
+        rootView?.apply {
             tableLayout = findViewById(R.id.tab_layout)
             viewPager = findViewById(R.id.viewpager)
             fabButton = findViewById(R.id.floating_action_btn)
@@ -59,7 +59,7 @@ abstract class HomeBaseFragment<T : IPresenter> : BaseFragment(), IView {
                     currentFragment = viewPagerAdapter?.getFragment(position)
                     ZLog.d("onPageSelected() position=$position, currentFragment=${currentFragment!!::class.java.simpleName}")
                     if(position != 0){
-                        fabButton.visibility = View.INVISIBLE
+                        fabButton?.visibility = View.INVISIBLE
                     }
                 }
                 override fun onPageScrollStateChanged(state: Int) {}
