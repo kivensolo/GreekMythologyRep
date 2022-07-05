@@ -14,7 +14,7 @@ import com.zeke.reactivehttp.base.BaseReactiveViewModel
  * date：2022/6/23
  * description：
  */
-@Route(path = RouterConfig.PAGE_BLUR)
+@Route(path = RouterConfig.PAGE_BLUR_LIST)
 class GaussianBlurDemoActivity : BaseVMActivity() {
     private lateinit var binding: ActivityGaussianBlurBinding
 
@@ -31,7 +31,10 @@ class GaussianBlurDemoActivity : BaseVMActivity() {
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
         binding.fiveHundredPx.setOnClickListener {
-            Router.startActivity(RouterConfig.PAGE_500px_BLUR)
+            Router.startActivity(RouterConfig.PAGE_500px_BLURRING)
+        }
+        binding.blurryExample.setOnClickListener {
+            Router.startActivity(RouterConfig.PAGE_BLURRY)
         }
     }
 }

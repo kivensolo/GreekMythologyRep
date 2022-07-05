@@ -21,7 +21,7 @@ import java.util.Random;
 /**
  * Demonstrates the use of the blurring view.
  */
-@Route(path = RouterConfig.PAGE_500px_BLUR)
+@Route(path = RouterConfig.PAGE_500px_BLURRING)
 public class FiveHundredBlurActivity extends AppCompatActivity {
 
     private final ImageView[] mImageViews = new ImageView[9];

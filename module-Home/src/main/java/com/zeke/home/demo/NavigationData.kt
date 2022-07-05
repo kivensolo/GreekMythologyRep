@@ -70,7 +70,7 @@ class NavigationData {
                 DemoSample("PathDemo",     "com.kingz.graphics.PathDemoActivity"),
                 DemoSample("MemoryCheck(无效)",     "com.kingz.pages.photo.memory.MemoryCheck"),
                 DemoSample("Glide",    "com.zeke.demo.glide.GlideCardDemoActivity"),
-                DemoSample("Blur",     RouterConfig.PAGE_BLUR),
+                DemoSample("Blur",     RouterConfig.PAGE_BLUR_LIST),
             )
         ),
         DemoGroup("About Color","颜色",

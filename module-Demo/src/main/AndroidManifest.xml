@@ -100,10 +100,13 @@
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
 
         <activity android:name=".gaussian_blur.GaussianBlurDemoActivity"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
+            android:theme="@style/AppTheme"/>
 
         <activity android:name=".gaussian_blur.FiveHundredBlurActivity"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
+            android:theme="@style/AppTheme" />
+
+        <activity android:name=".gaussian_blur.BlurryExampleActivity"
+            android:theme="@style/AppTheme"/>
 
     </application>
 </manifest>

@@ -10,7 +10,7 @@ import com.zeke.demo.model.CardItemModel
  * <br>
  */
 abstract class AbsCardDemoActivity : AbsDemoActivity() {
-    val cardList: MutableList<CardItemModel> by lazy { ArrayList<CardItemModel>() }
+    val cardList: MutableList<CardItemModel> by lazy { ArrayList() }
     /**
      *  初始化卡片模板数据
      */

@@ -24,8 +24,9 @@ object RouterConfig {
     const val PAGE_IMMERSION = "/module_Demo/ImmersionBar"
     const val PAGE_TOOLBAR = "/module_Demo/Toobar"
     const val PAGE_CANVAS_API = "/module_Demo/CanvasApi"
-    const val PAGE_BLUR = "/module_Demo/Blur"
-    const val PAGE_500px_BLUR = "/module_Demo/Blur_of_500px"
+    const val PAGE_BLUR_LIST = "/module_Demo/Blur"
+    const val PAGE_500px_BLURRING = "/module_Demo/Blur_of_500px"
+    const val PAGE_BLURRY = "/module_Demo/BlurryPage"
     // </editor-fold>
 
     const val PAGE_LOGIN = "/module_Login/login"
