@@ -68,7 +68,7 @@ object HexUtil {
      * @param string String of hex
      * @return Bytes value in String.
      */
-    fun hexStringToBytes(string: String?): ByteArray? {
+    fun hexString2Bytes(string: String?): ByteArray? {
         var hexString = string
         if (hexString == null || hexString == "") {
             return null
