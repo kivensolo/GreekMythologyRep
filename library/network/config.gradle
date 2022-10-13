@@ -3,7 +3,7 @@
 ext {
 
     kotlin_version = '1.4.31'
-    kangaroo_v = '1.0.10@aar'
+    kangaroo_v = 'v1.0.11'
     jetpack_version = '2.2.0'
 
     lib_versions = [
@@ -30,7 +30,7 @@ ext {
             "retrofit2-gson"         : "com.squareup.retrofit2:converter-gson:$lib_versions.retrofit",
             "retrofit2-rxjava"       : "com.squareup.retrofit2:adapter-rxjava2:2.2.0",
 
-            "kangaroo"               : "io.github.kivensolo:kangaroo:$kangaroo_v",
+            "kangaroo"               : "com.github.kivensolo:AKangaroo:$kangaroo_v",
 
 
               // mvvm协程支持

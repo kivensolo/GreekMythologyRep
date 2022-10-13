@@ -28,7 +28,6 @@ include ':library-server'
 include ':library-hlscache'
 include ':library-unittest'
 include ':library-floatwindow'
-include ':lib-blur'
 
 project(':library').projectDir = new File(rootDir, 'library/all')
 project(':library-player').projectDir = new File(rootDir, 'library/player')
@@ -38,7 +37,6 @@ project(':library-server').projectDir = new File(rootDir, 'library/server')
 project(':library-hlscache').projectDir = new File(rootDir, 'library/hlscache')
 project(':library-unittest').projectDir = new File(rootDir, 'library/unitTest')
 project(':library-floatwindow').projectDir = new File(rootDir, 'library/floatwindow')
-project(':lib-blur').projectDir = new File(rootDir, 'library/blur')
 
 
 include ':app-pickerview'
