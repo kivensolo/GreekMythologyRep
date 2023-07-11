@@ -6,7 +6,7 @@ ext {
     kotlin_version = '1.4.31'
 
     lib_versions = [
-            ijk             :'0.8.4',
+            ijk             :'0.8.8',
             exo             :'2.10.5',
     ]
 }

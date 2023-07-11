@@ -250,13 +250,6 @@ dependencies {
     implementation project(':library-unittest')
 
     // -------->>>>>>>>>> 业务组件Module
-
-    //RxJava2(RxAndroid) + retrofit2 + okhttp3
-//    implementation "io.reactivex.rxjava2:rxjava:${lib_versions.rxJava}"
-//    implementation "io.reactivex.rxjava2:rxandroid:${lib_versions.rxandroid}"
-//    implementation "com.squareup.retrofit2:retrofit:${lib_versions.rtf2}"
-//    implementation "com.squareup.retrofit2:converter-gson:${lib_versions.rtf2_2gson}"
-//    implementation "com.squareup.retrofit2:adapter-rxjava2:${lib_versions.rtf2_adapter}"
 }
 
 /**

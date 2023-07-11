@@ -48,7 +48,7 @@ dependencies {
     api project(':library-floatwindow')
 
     api project(':database')
-    api root_dependencies["kangaroo"]
+    api rootProject.ext.deps.myLib.kangaroo
 //    api project(":Akangaroo")
     api root_dependencies["banner"]
     api root_dependencies["smartRefresh_Core"]
@@ -64,11 +64,11 @@ dependencies {
     api 'com.tencent.bugly:crashreport:3.0.0'
     api 'com.tencent.bugly:nativecrashreport:3.1.0'
 
-    compileOnly root_dependencies["retrofit2"]
-    compileOnly root_dependencies["retrofit2_gson"]
-    compileOnly root_dependencies["retrofit2_rxjava2"]
-    compileOnly root_dependencies["rxJava"]
-    compileOnly root_dependencies["rxandroid"]
+    compileOnly rootProject.ext.deps.net.rtf2
+    compileOnly rootProject.ext.deps.net.rtf2_gson
+    compileOnly rootProject.ext.deps.net.rtf2_rxjava2
+    compileOnly rootProject.ext.deps.rx.rxJava
+    compileOnly rootProject.ext.deps.rx.rxandroid
 
     testImplementation test.junit
     androidTestImplementation test.ext_junit

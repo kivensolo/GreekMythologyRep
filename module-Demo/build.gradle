@@ -85,8 +85,8 @@ dependencies {
     annotationProcessor "com.github.bumptech.glide:compiler:${lib_versions.glide_c}"
 
     // retrofit2
-    implementation _rootDependencies["retrofit2"]
-    implementation _rootDependencies["retrofit2_gson"]
+    implementation rootProject.ext.deps.net.rtf2
+    implementation rootProject.ext.deps.net.rtf2_gson
 
     // 图形库 https://github.com/PhilJay/MPAndroidChart
     implementation "com.github.PhilJay:MPAndroidChart:v3.1.0"

@@ -5,6 +5,7 @@ apply plugin: 'kotlin-kapt'
 
 def root_android = rootProject.ext.android
 def root_dependencies = rootProject.ext.dependencies
+def deps = rootProject.ext.deps
 def root_test = rootProject.ext.test
 
 android {
@@ -102,7 +103,7 @@ dependencies {
     api root_dependencies["immersionbar"]
     api root_dependencies["immersionbar_fragment"]
 
-    api root_dependencies["kangaroo"]
+    api deps.myLib.kangaroo
     api 'com.elvishew:xlog:1.11.0'
 //    api project(":Akangaroo")
 

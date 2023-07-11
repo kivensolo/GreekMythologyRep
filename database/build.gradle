@@ -50,8 +50,8 @@ dependencies {
     // 进行room注解编译的工具,不添加的话生成不了AppDatabase_Impl.java文件
     kapt rootProject.ext.dependencies["room-compiler"]
     // Stetho基本调试依赖
-    implementation 'com.facebook.stetho:stetho:1.5.0'
-    implementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
+    implementation rootProject.ext.dependencies["stetho"]
+    implementation rootProject.ext.dependencies["stetho-okhttp3"]
 //    implementation 'com.squareup.okhttp3:okhttp:3.9.0'
 
     // Android-Debug-Database

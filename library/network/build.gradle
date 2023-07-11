@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply from: 'config.gradle'
+apply from: '../../buildsystem/config.gradle'
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
@@ -42,18 +42,18 @@ dependencies {
     implementation deps.lifecycle.viewmodel_ktx
 
     //RxJava2(RxAndroid) + retrofit2
-    api lib_dependencies["rxjava"]
-    api lib_dependencies["rxandroid"]
-    api lib_dependencies["retrofit2"]
-    api lib_dependencies["retrofit2-gson"]
-    api lib_dependencies["retrofit2-rxjava"]
+    api deps.rx.rxJava
+    api deps.rx.rxandroid
+    api deps.net.rtf2
+    api deps.net.rtf2_gson
+    api deps.net.rtf2_rxjava2
 
     //OkHttp3 & okio
-    implementation lib_dependencies["okHttp3"]
-    implementation lib_dependencies["okio"]
-    implementation lib_dependencies["ok_log"]
-    implementation lib_dependencies["stetho-okhttp3"]
-    implementation lib_dependencies["kangaroo"]
+    implementation deps.net.okHttp3
+    implementation deps.net.okio
+    implementation deps.net.ok_log
+    implementation deps.net.stetho_okhttp3
+    implementation deps.myLib.kangaroo
 //    implementation project(":Akangaroo")
 
 

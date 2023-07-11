@@ -6,6 +6,14 @@ versions.coroutines = '1.4.3'
 versions.jetpack_version = '2.2.0'
 versions.kotlin = '1.4.31'
 versions.materialDialogs = '0.9.4.4'
+versions.okHttp = '3.12.1'
+versions.okio = '2.1.0'
+versions.rxJava = '2.2.2'
+versions.rxandroid = '2.1.0'
+versions.rtf2 = '2.9.0'
+versions.rtf2_2gson = '2.9.0'
+versions.rtf2_rxjava2 = '2.2.0'
+
 ext.versions = versions
 
 ext {
@@ -30,13 +38,6 @@ ext {
     androidx = '1.1.0'
 
     lib_versions = [
-            rxJava                : '2.2.2',
-            rxandroid             : '2.1.0',
-            rtf2                  : '2.6.1',
-            rtf2_2gson            : '2.0.0',
-            rtf2_adapter          : '2.2.0',
-            okhttp                : '3.12.1',
-            okio                  : '2.1.0',
             cons_layout           : '1.1.3',
             bkf                   : '8.8.1',
             tr                    : '1.0.2',
@@ -60,7 +61,7 @@ ext {
             constraint            : '1.1.3',
             paging_version        : '3.0.0',
             room_version          : '2.2.1',
-            stetho                : '1.5.0',
+            stetho                : '1.6.0',
             debug_db_version      : '1.0.6',
 
             leakcanary            : '2.4',
@@ -83,6 +84,7 @@ ext {
             "room-compiler"          : "androidx.room:room-compiler:${lib_versions.room_version}",
             "room-ktx"               : "androidx.room:room-ktx:${lib_versions.room_version}",
             "stetho"                 : "com.facebook.stetho:stetho:$lib_versions.stetho",
+            "stetho-okhttp3"         : "com.facebook.stetho:stetho-okhttp3:$lib_versions.stetho",
             "debugDB"                : "com.amitshekhar.android:debug-db:$lib_versions.debug_db_version",
             "debugDB_Encrypt"        : "com.amitshekhar.android:debug-db-encrypt:$lib_versions.debug_db_version",
 
@@ -119,15 +121,6 @@ ext {
             "glide_compiler"     : "com.github.bumptech.glide:compiler:$lib_versions.glide_c",
             "glide_okhttp3"      : "com.github.bumptech.glide:okhttp3-integration:${lib_versions.glide_okhttp}",
 
-            //retrofit2
-            "retrofit2"          : "com.squareup.retrofit2:retrofit:${lib_versions.rtf2}",
-            "retrofit2_gson"     : "com.squareup.retrofit2:converter-gson:${lib_versions.rtf2_2gson}",
-            "retrofit2_rxjava2"  : "com.squareup.retrofit2:adapter-rxjava2:${lib_versions.rtf2_adapter}",
-
-            //RxJava
-            "rxJava"  : "io.reactivex.rxjava2:rxjava:${lib_versions.rxJava}",
-            "rxandroid"  : "io.reactivex.rxjava2:rxandroid:${lib_versions.rxandroid}",
-
             //https://github.com/JessYanCoding/AndroidAutoSize
             "autosize"           : "me.jessyan:autosize:$lib_versions.autosize",
             "autoLayout"         : "com.zhy:autolayout:1.4.5",
@@ -135,13 +128,7 @@ ext {
             //https://github.com/square/leakcanary  https://square.github.io/leakcanary
             "leakcanary"         : "com.squareup.leakcanary:leakcanary-android:$lib_versions.leakcanary",
 
-            // My lib
-            "kangaroo"           : "com.github.kivensolo:AKangaroo:v1.0.11",
-
             "xul_cache"          : "com.github.xul:cache:1.0.0",
-
-            //https://github.com/zhihu/Matisse   本地图像和视频选择器
-            matisse              : "com.zhihu.android:matisse:0.5.2-beta3",
 
             //动态权限申请库
             // https://github.com/yanzhenjie/AndPermission
@@ -177,7 +164,7 @@ ext {
 
 //android.compileSdkVersion 替换成 build_versions.compile_sdk
 def build_versions = [:]
-build_versions.min_sdk = 14
+build_versions.min_sdk = 21
 build_versions.compile_sdk = 28
 build_versions.target_sdk = 23
 build_versions.build_tools = "28.0.3" //AGP 3.2.1以后默认最低28.0.3
@@ -252,6 +239,42 @@ deps.coroutines = coroutines
 def meterial = [:]
 meterial.dialogs = "com.afollestad.material-dialogs:commons:$versions.materialDialogs"
 deps.meterial = meterial
+
+// ====主流开源网络库OKHttp3支持
+def net = [:]
+net.okHttp3 = "com.squareup.okhttp3:okhttp:$versions.okHttp"
+net.ok_log = "com.squareup.okhttp3:logging-interceptor:$versions.okHttp"
+net.okio = "com.squareup.okio:okio:$versions.okio"
+net.stetho_okhttp3 = "com.facebook.stetho:stetho-okhttp3:1.5.0"
+net.rtf2 = "com.squareup.retrofit2:retrofit:$versions.rtf2"
+net.rtf2_gson = "com.squareup.retrofit2:converter-gson:$versions.rtf2_2gson"
+net.rtf2_rxjava2 = "com.squareup.retrofit2:adapter-rxjava2:$versions.rtf2_rxjava2"
+deps.net = net
+
+// ====Rx系列
+def rx = [:]
+rx.rxJava = "io.reactivex.rxjava2:rxjava:$versions.rxJava"
+rx.rxandroid = "io.reactivex.rxjava2:rxandroid:$versions.rxandroid"
+deps.rx = rx
+
+
+// ====Android UI组件\UI库
+def ui_base = [:]
+ui_base.recyclerView = "androidx.recyclerview:recyclerview:1.2.0" //原来用的1.1.0
+//https://www.jianshu.com/p/b343fcff51b0
+ui_base.rcview_adapter = "com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4"
+ui_base.cardView = "androidx.cardview:cardview:1.0.0"
+ui_base.constrLay = "androidx.constraintlayout:constraintlayout:1.1.3"
+deps.ui_base = ui_base
+def ui_custom = [:]
+//https://github.com/zhihu/Matisse   本地图像和视频选择器
+ui_custom.matisse = "com.zhihu.android:matisse:0.5.2-beta3"
+deps.ui_custom = ui_custom
+
+
+def myLib = [:]
+myLib.kangaroo = "com.github.kivensolo.AKangaroo:kangaroo:v1.0.11"
+deps.myLib = myLib
 
 ext.deps = deps
 
