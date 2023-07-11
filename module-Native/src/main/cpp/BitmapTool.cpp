@@ -221,8 +221,8 @@ extern "C" {
  * @return
  */
 JNIEXPORT jboolean JNICALL
-Java_com_zeke_utils_BitmapUtils_doBlur(JNIEnv *env, jobject clazz, jobject bufObject,
-                                       jint width, jint height, jint pass) {
+Java_com_zeke_utils_MyNativeUtils_doBlur(JNIEnv *env, jobject clazz, jobject bufObject,
+										 jint width, jint height, jint pass) {
     // 获取原生数组的内存地址
     ubyte *buf = (ubyte *) env->GetDirectBufferAddress(bufObject);
     if (buf == 0) {

@@ -12,9 +12,9 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.fivehundredpx.android.blur.BlurringView;
 import com.kingz.module.common.router.RouterConfig;
 import com.zeke.demo.R;
+import com.zeke.kangaroo.blur.BlurringView;
 
 import java.util.Random;
 

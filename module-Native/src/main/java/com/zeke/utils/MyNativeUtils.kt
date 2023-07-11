@@ -7,9 +7,9 @@ import java.nio.Buffer
  * date：2021/3/17
  * description：调用native方法的图片工具类
  */
-object BitmapUtils {
+object MyNativeUtils {
     init {
-         System.loadLibrary("ZekeBitMap")
+         System.loadLibrary("WildFireLib")
     }
 
     //------- 测试方法

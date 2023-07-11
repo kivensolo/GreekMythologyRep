@@ -10,11 +10,13 @@ extern "C" {
 /**
  * 测试基础类型数据(Stirng)在Java层和jni层通信：
  *
- * 方法名格式: Java_包名_类名_Java需要调用的方法名，对于包名，包名中的 . 要改成 _ ，_ 要改成 _1
+ * 方法名格式: Java_包名_类名_Java需要调用的方法名:
+ * 包路径中的.要改成_
+ * 下划线_要改成_1
  * @param env JNIEnv接口指针(提供原生方法修改和使用Java的引用类型)
  * @return
  */
-JNIEXPORT jstring JNICALL Java_com_zeke_utils_BitmapUtils_native_1get_1Hello(
+JNIEXPORT jstring JNICALL Java_com_zeke_utils_MyNativeUtils_native_1get_1Hello(
         JNIEnv *env,
         jobject /* this */) {
     std::string hello = "Hello from C++";
@@ -34,8 +36,8 @@ JNIEXPORT jstring JNICALL Java_com_zeke_utils_BitmapUtils_native_1get_1Hello(
  * @return Java数组对象
  */
 JNIEXPORT jintArray JNICALL
-Java_com_zeke_utils_BitmapUtils_modifyArrayValue(JNIEnv *env, jobject thiz,
-        jintArray srcArray) {
+Java_com_zeke_utils_MyNativeUtils_modifyArrayValue(JNIEnv *env, jobject thiz,
+                                                   jintArray srcArray) {
     cout << "native code invoked";
 
     jboolean isCopy; // 用作判断该函数返回的字符串是否是Java字符串的副本，还是直接指向Java字符串的内存
@@ -53,7 +55,7 @@ Java_com_zeke_utils_BitmapUtils_modifyArrayValue(JNIEnv *env, jobject thiz,
     return srcArray;
 }
 
-JNIEXPORT jint JNICALL Java_com_zeke_utils_BitmapUtils__1native_1intFromJNI(
+JNIEXPORT jint JNICALL Java_com_zeke_utils_MyNativeUtils__1native_1intFromJNI(
         JNIEnv *env,
         jobject) {
     return 1 << 8;
