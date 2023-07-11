@@ -1,9 +1,12 @@
 package com.kingz.playerdemo
 
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.SurfaceHolder
 import androidx.appcompat.app.AppCompatActivity
+import com.kingz.ForegoundServiceTest
 import com.kingz.playerdemo.decode.AudioSyncDecoder
 import com.kingz.playerdemo.decode.VideoSyncDecoder
 import com.kingz.playerdemo.sync.MediaSync
@@ -86,6 +89,12 @@ class MainActivity : AppCompatActivity() {
         }
         pause_player.setOnClickListener {
             mVideoSync?.pauseMedia()
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(Intent(this, ForegoundServiceTest::class.java))
+        } else {
+            startService(Intent(this, ForegoundServiceTest::class.java))
         }
 
     }

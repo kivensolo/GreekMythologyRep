@@ -34,5 +34,11 @@
             android:label="@string/timeout"
             android:theme="@style/AppTheme" />
 
+        <activity
+            android:name="com.kingz.coroutines.multicast.LsrActivity"
+            android:label="UDP"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme" />
+
     </application>
 </manifest>

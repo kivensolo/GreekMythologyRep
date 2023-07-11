@@ -36,6 +36,7 @@ class NavigationData {
                 DemoSample("Davinci", "com.zeke.demo.draw.PracticeDrawActivity"),
                 // 可以合并到 PracticeDrawActivity 中去
                 DemoSample("PracticeLayout(TODO)", "com.zeke.demo.draw.PracticeLayoutActivity"),
+                DemoSample("BookReader翻书效果", "com.zeke.demo.draw.PracticeLayoutActivity"),
             )
         ),
         DemoGroup("文字","文字处理相关",
