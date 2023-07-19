@@ -1,4 +1,4 @@
-if (isHomeModule.toBoolean()) {
+if (enableHomeModule.toBoolean()) {
     apply plugin: 'com.android.library'
 } else {
     apply plugin: 'com.android.application'
@@ -20,7 +20,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        if (!isHomeModule.toBoolean()) {
+        if (!enableHomeModule.toBoolean()) {
             //单独调试时添加applicationId集成调试时移除
             applicationId "com.kingz.demo.home"
             multiDexEnabled true
@@ -52,7 +52,7 @@ android {
     sourceSets {
         main {
             // 单独调试与集成调试时使用不同的 AndroidManifest.xml 文件
-            if (isHomeModule.toBoolean()) {
+            if (enableHomeModule.toBoolean()) {
                 manifest.srcFile 'src/main/AndroidManifest.xml'
             } else {
                 manifest.srcFile 'src/main/manifest/AndroidManifest.xml'
@@ -86,7 +86,6 @@ dependencies {
     kapt root_dependencies["arouter_compiler"]
 
     implementation project(':module-Common')
-    implementation project(':module-Native')
     implementation project(':module-Eyepetizer')
 
     implementation root_dependencies["gson"]

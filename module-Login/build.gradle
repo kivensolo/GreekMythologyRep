@@ -1,4 +1,4 @@
-if (isLoginModule.toBoolean()) {
+if (enableLoginModule.toBoolean()) {
     apply plugin: 'com.android.library'
 } else {
     apply plugin: 'com.android.application'
@@ -20,7 +20,7 @@ android {
         versionCode root_android.versionCode
         versionName root_android.versionName
 
-        if (!isLoginModule.toBoolean()) {
+        if (!enableLoginModule.toBoolean()) {
             //单独调试时添加applicationId集成调试时移除
             applicationId "com.kingz.demo.login"
         }
@@ -39,7 +39,7 @@ android {
     sourceSets {
         main {
             // 单独调试与集成调试时使用不同的 AndroidManifest.xml 文件
-            if (isLoginModule.toBoolean()) {
+            if (enableLoginModule.toBoolean()) {
                 manifest.srcFile 'src/main/AndroidManifest.xml'
             } else {
                 manifest.srcFile 'src/main/manifest/AndroidManifest.xml'

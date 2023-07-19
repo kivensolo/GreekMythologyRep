@@ -96,7 +96,7 @@ android {
         // 开发测试阶段
         ChengDu{
             //运行在Android 5.0以上版本的设备中， 使用ART-supported格式生成multidex的速度要快很多
-            minSdkVersion 21
+            minSdkVersion build_versions.min_sdk
             versionCode 42
             versionName "1.5.15"
             dimension "area"
@@ -237,10 +237,10 @@ dependencies {
 
     // ----------------------- 业务组件Module
     implementation createProject(':module-Common')
-    if (isHomeModule.toBoolean()) {
+    if (enableHomeModule.toBoolean()) {
         implementation createProject(':module-Home')
     }
-    if (isLoginModule.toBoolean()) {
+    if (enableLoginModule.toBoolean()) {
         implementation createProject(':module-Login')
     }
     implementation createProject(":module-Demo")
