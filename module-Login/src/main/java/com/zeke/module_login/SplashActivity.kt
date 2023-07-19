@@ -214,7 +214,7 @@ class SplashActivity : BaseVMActivity(), View.OnClickListener {
      * Rest inputType to None from SIGN_UP
      */
     private fun onRegisterCancel(deltaY: Int) {
-        dissmissLoginView(deltaY)
+        disMissLoginView(deltaY)
         inputType = InputType.NONE
         buttonLeft.setText(R.string.button_login)
         buttonRight.setText(R.string.button_signup)
@@ -224,7 +224,7 @@ class SplashActivity : BaseVMActivity(), View.OnClickListener {
      * Rest inputType to None from LOGIN
      */
     private fun onLoginCancel(deltaY: Int) {
-        dissmissLoginView(deltaY)
+        disMissLoginView(deltaY)
         inputType = InputType.NONE
         updateButtonText(
             resources.getText(R.string.button_login),
@@ -237,12 +237,16 @@ class SplashActivity : BaseVMActivity(), View.OnClickListener {
      */
     private fun confirmLogin() {
         ZLog.d("click to login.")
-        if (TextUtils.isEmpty(login_name?.text ?: "") ||
-            TextUtils.isEmpty(login_pwd?.text ?: "")) {
-            ZLog.e("请输入账号和密码")
-            showToast(getStringFromRes(R.string.user_info_invalid_tips))
-        } else {
-            viewModel.login(login_name!!.text, login_pwd!!.text)
+        if(BuildConfig.DEBUG){
+            viewModel.login("kivensolo", "denglu18")
+        }else{
+            if (TextUtils.isEmpty(login_name?.text ?: "") ||
+                TextUtils.isEmpty(login_pwd?.text ?: "")) {
+                ZLog.e("请输入账号和密码")
+                showToast(getStringFromRes(R.string.user_info_invalid_tips))
+            } else {
+                viewModel.login(login_name!!.text, login_pwd!!.text)
+            }
         }
     }
 
@@ -251,8 +255,8 @@ class SplashActivity : BaseVMActivity(), View.OnClickListener {
         buttonRight?.text = right
     }
 
-    private fun dissmissLoginView(delta: Int) {
-        ZLog.d("dissmissLoginView")
+    private fun disMissLoginView(delta: Int) {
+        ZLog.d("disMissLoginView")
         loginView.animate().apply {
             translationY((-1 * delta).toFloat())
             alpha(0f)
