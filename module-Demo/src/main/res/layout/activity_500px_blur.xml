@@ -101,7 +101,7 @@
     </FrameLayout>
 
     <!-- Here, we customize the blurring view with values different from the defaults. -->
-    <com.fivehundredpx.android.blur.BlurringView
+    <com.zeke.kangaroo.blur.BlurringView
         android:id="@+id/blurring_view"
         android:layout_width="300dp"
         android:layout_height="300dp"
