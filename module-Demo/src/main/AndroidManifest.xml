@@ -108,5 +108,8 @@
         <activity android:name=".gaussian_blur.BlurryExampleActivity"
             android:theme="@style/AppTheme"/>
 
+        <activity android:name=".gaussian_blur.JNITestBlurActivity"
+            android:theme="@style/AppTheme"/>
+
     </application>
 </manifest>

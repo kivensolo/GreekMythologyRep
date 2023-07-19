@@ -1,0 +1,38 @@
+<RelativeLayout android:id="@+id/content"
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  tools:context=".gaussian_blur.GaussianBlurDemoActivity">
+
+  <ImageView
+      android:id="@+id/target_pic"
+      android:layout_width="300dp"
+      android:layout_height="300dp"
+      android:contentDescription="@null"
+      android:layout_centerHorizontal="true"
+      android:scaleType="centerCrop"
+      android:src="@drawable/p0" />
+
+  <Button
+      android:id="@+id/blur_button"
+      android:layout_below="@+id/target_pic"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:elevation="10dp"
+      android:text="Blur"
+      android:textAllCaps="false"
+      android:textColor="@android:color/black"
+      android:textSize="22sp"/>
+
+  <ImageView
+      android:id="@+id/blur_pic"
+      android:layout_width="300dp"
+      android:layout_height="300dp"
+      android:background="@color/apple_black"
+      android:contentDescription="@null"
+      android:layout_below="@+id/blur_button"
+      android:layout_centerHorizontal="true"
+      android:scaleType="centerCrop"/>
+</RelativeLayout>
+

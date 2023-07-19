@@ -12,7 +12,7 @@ import com.zeke.reactivehttp.base.BaseReactiveViewModel
 /**
  * author：ZekeWang
  * date：2022/6/23
- * description：
+ * description：图片模糊效果页面
  */
 @Route(path = RouterConfig.PAGE_BLUR_LIST)
 class GaussianBlurDemoActivity : BaseVMActivity() {
@@ -35,6 +35,9 @@ class GaussianBlurDemoActivity : BaseVMActivity() {
         }
         binding.blurryExample.setOnClickListener {
             Router.startActivity(RouterConfig.PAGE_BLURRY)
+        }
+        binding.jniTestBlur.setOnClickListener {
+            Router.startActivity(RouterConfig.PAGE_JNI_TEST_BLUR)
         }
     }
 }

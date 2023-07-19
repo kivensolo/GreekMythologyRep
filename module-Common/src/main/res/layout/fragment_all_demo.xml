@@ -11,7 +11,7 @@
         android:dividerHeight="1dp"
         android:divider="@color/gray"
         android:cacheColorHint="@color/gray"
-		android:background="@color/white_apple"
+		android:background="@color/apple_white"
         android:groupIndicator="@null">
 	</com.zeke.kangaroo.view.animation.AnimatedExpandableListView>
 

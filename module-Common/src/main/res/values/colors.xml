@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
+    <color name="apple_black">#FF1D1D1F</color>
+    <color name="apple_white">#FFF5F5F7</color>
+    <color name="apple_blue">#FF0071E3</color>
     <!--app custom-->
     <color name="base_bg_color">@color/white</color>
     <color name="base_item_tint">@color/gray</color>
@@ -17,7 +20,6 @@
     <!-- 浅灰色颜色，适用于底色为暗色时的蒙层效果   -->
     <color name="bkg_gary">#14FFFFFF</color>
 
-
     <color name="dkgray">#80808FF0</color>
     <color name="deep_gray">#afaeae</color>
     <color name="deep_gray_2">#636262</color>
@@ -28,11 +30,9 @@
     <color name="transparent">#00000000</color>
     <color name="transparent_ban">#50000000</color>
     <color name="black_transparent">#7f000000</color><!--黑色半透明色 -->
-    <color name="black_apple">#FF1D1D1F</color><!--苹果官网所使用的黑色文字颜色 -->
     <color name="white_transparent">#7fffffff</color><!--白色半透明色 -->
     <color name="divider_white">#e4e4e4</color>
     <color name="white">#FFFFFF</color>      <!--纯白色 -->
-    <color name="white_apple">#F5F5F7</color>      <!--苹果官网所使用的白色背景 -->
     <color name="dark_qian">#44222222</color>      <!--白色 -->
     <color name="darkgray">#938192</color>   <!--暗灰色 -->
     <color name="lightgreen">#7cd12e</color> <!--亮绿色 -->
@@ -73,9 +73,7 @@
     <color name="red">#ff0000</color><!--红色 -->
     <color name="qian_red">#D24D57</color>
 
-    <color name="lightgoldenrodyellow">#fafad2</color><!--亮金黄色 -->
     <color name="linen">#faf0e6</color><!--亚麻色 -->
-    <color name="antiquewhite">#faebd7</color><!--古董白 -->
     <color name="salmon">#fa8072</color><!--鲜肉色 -->
     <color name="ghostwhite">#f8f8ff</color><!--幽灵白 -->
     <color name="mintcream">#f5fffa</color><!--薄荷色 -->
@@ -172,25 +170,21 @@
     <color name="darkcyan">#008b8b</color><!--暗青色 -->
     <color name="teal">#008080</color><!--水鸭色 -->
     <color name="green">#008000</color><!--绿色 -->
-    <color name="darkgreen">#006400</color><!--暗绿色 -->
-    <color name="pullblue">#400000ff</color><!--浅蓝色 -->
-    <color name="mediumblue">#0000cd</color><!--中兰色 -->
-    <color name="navy">#000080</color><!--海军色 -->
 
 
     <color name="colorPrimary">@color/app_light_green</color>
     <color name="colorPrimaryDark">@color/app_light_green_translucent</color>
     <color name="colorAccent">#FF4081</color>
 
-    <!--  白色主题  -->
-    <color name="app_white">@color/white</color>
+    <!--  亮/暗主题色  -->
+    <color name="app_white">@color/apple_white</color>
     <color name="app_white_gray">@color/white_transparent</color>
     <color name="app_white_alpha">#efefef</color>
-
-    <!--  黑色主题  -->
-    <color name="app_dark">@color/black</color>
+    <color name="app_dark">@color/apple_black</color>
     <color name="app_dark_gray">@color/black_transparent</color>
     <color name="app_dark_transparent">@color/transparent_ban</color>
+    <color name="app_blue">@color/apple_blue</color>
+
 
     <!--  App主色调：亮绿色  -->
     <color name="app_light_green">#ff20D38F</color>
@@ -205,7 +199,8 @@
     <color name="text_color_70">#ff707070</color>
     <color name="background_spc_item">#ff404040</color>
     <color name="divider_color">#ff404040</color>
-    <color name="text_bkg_white">@color/white_apple</color>
+    <color name="text_bkg_white">@color/text_white</color>
+
 
     <!--  App主色调  End  -->
 
@@ -250,7 +245,8 @@
     <!--文字颜色-->
     <color name="text_blue">#2cbdd7</color>
     <color name="text_gray">#9e9e9e</color>
-    <color name="text_dark">@color/black_apple</color>
+    <color name="text_dark">@color/apple_black</color>
+    <color name="text_white">@color/apple_white</color>
     <color name="text_red">#f04529</color>
 
     <!-- 首页底部 svg icon 颜色-->

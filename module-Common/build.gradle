@@ -46,6 +46,7 @@ dependencies {
     // 工具库由Common引出
     api project(":library-views")
     api project(':library-floatwindow')
+    api project(':module-Native')
 
     api project(':database')
     api rootProject.ext.deps.myLib.kangaroo

@@ -22,5 +22,14 @@ object MyNativeUtils {
     external fun modifyArrayValue(array: IntArray?): IntArray?
 
 //    external fun modifyArrayValue(array:Int):Int[]
+    /**
+     * 进行图片模糊
+     * @param buf 图片数据buffer, 只能接受直接缓冲区的类型
+     * @param width 图片像素宽度
+     * @param height 图片像素高度
+     * @param pass 模糊次数
+     */
     external fun doBlur(buf: Buffer,width:Int, height:Int, pass:Int):Boolean
+
+    external fun doFastBlur(buf: Buffer,width:Int, height:Int, radius:Int):Boolean
 }

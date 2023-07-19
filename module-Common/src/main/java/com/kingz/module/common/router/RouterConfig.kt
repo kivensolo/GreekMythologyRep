@@ -27,6 +27,7 @@ object RouterConfig {
     const val PAGE_BLUR_LIST = "/module_Demo/Blur"
     const val PAGE_500px_BLURRING = "/module_Demo/Blur_of_500px"
     const val PAGE_BLURRY = "/module_Demo/BlurryPage"
+    const val PAGE_JNI_TEST_BLUR = "/module_Demo/JNIBlurPage"
     // </editor-fold>
 
     const val PAGE_LOGIN = "/module_Login/login"

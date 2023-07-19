@@ -17,4 +17,11 @@
         android:layout_height="wrap_content"
         android:text="Blurry"
         android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/jni_test_blur"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="JNI_Test_Blur"
+        android:textAllCaps="false" />
 </LinearLayout>

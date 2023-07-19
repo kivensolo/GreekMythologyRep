@@ -24,6 +24,7 @@ import com.kingz.module.wanandroid.WADConstants
 import com.kingz.module.wanandroid.fragemnts.UserCollectionFragment
 import com.kingz.module.wanandroid.viewmodel.WanAndroidViewModelV2
 import com.module.tools.ColorUtils
+import com.zeke.kangaroo.utils.ColorCompatUtils
 import com.zeke.kangaroo.utils.ToastUtils
 import com.zeke.kangaroo.zlog.ZLog
 import java.lang.reflect.InvocationTargetException
@@ -68,7 +69,7 @@ open class AppBarActivity : BaseVMActivity() {
 
     open fun initColor() {
         mThemeColor = if (SettingUtil.isNightMode()) {
-            resources.getColor(R.color.colorPrimary)
+            ColorCompatUtils.getColor(resources, R.color.colorPrimary)
         } else {
             SettingUtil.getAppThemeColor()
         }

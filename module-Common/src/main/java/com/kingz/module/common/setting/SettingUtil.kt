@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.preference.PreferenceManager
 import com.kingz.module.common.CommonApp
 import com.kingz.module.common.R
+import com.zeke.kangaroo.utils.ColorCompatUtils
 
 /**
  * APP设置的工具类
@@ -29,7 +30,8 @@ object SettingUtil {
      * 获取主题颜色
      */
     fun getAppThemeColor(): Int {
-        val defaultColor = CommonApp.getInstance().resources.getColor(R.color.colorPrimary)
+        //FIXME HOME模块单独使用时，拿不到APP的Instance
+        val defaultColor = ColorCompatUtils.getColor(CommonApp.getInstance().resources, R.color.colorPrimary)
         if(isNightMode()){
             return defaultColor
         }
