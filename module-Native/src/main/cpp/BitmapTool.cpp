@@ -5,7 +5,7 @@
 #include <jni.h>
 #include <string>
 #include "common.h"
-#include "task_runner.h"
+//#include "task_runner.h"
 
 #ifdef __cplusplus
 
@@ -243,14 +243,13 @@ extern "C" {
  * @return
  */
 JNIEXPORT jboolean JNICALL
-Java_com_zeke_utils_MyNativeUtils_doBlur(JNIEnv *env, jobject clazz, jobject bufObject,
-										 jint width, jint height, jint pass) {
-    // 获取原生数组的内存地址
+Java_com_zeke_utils_WildFireUtils_doBlur(JNIEnv *env, jobject clazz, jobject bufObject,
+                                         jint width, jint height, jint pass) {
     ubyte *buf = (ubyte *) env->GetDirectBufferAddress(bufObject);
+
     if (buf == nullptr) {
         return JNI_FALSE;
     }
-    // 进行模糊操作
     while (pass-- > 0) {
 		doBlur(buf, width, height);
 	}
@@ -277,7 +276,7 @@ Java_com_zeke_utils_MyNativeUtils_doAvgBlur(JNIEnv *env, jobject clazz, jobject 
     }
     // 进行模糊操作
     while (pass-- > 0) {
-        doBlur(buf, width, height);
+//        doBlur(buf, width, height);
     }
     return JNI_TRUE;
 }
@@ -469,8 +468,8 @@ void doFastBlur(ubyte* buf, int width, int height, int radius) {
  * @return
  */
 JNIEXPORT jboolean JNICALL
-Java_com_zeke_utils_MyNativeUtils_doFastBlur(JNIEnv *env, jobject clazz, jobject bufObject,
-											 jint width, jint height, jint radius) {
+Java_com_zeke_utils_WildFireUtils_doFastBlur(JNIEnv *env, jobject clazz, jobject bufObject,
+                                             jint width, jint height, jint radius) {
 	// 获取原生数组的内存地址
 	ubyte *buf = (ubyte *) env->GetDirectBufferAddress(bufObject);
 	if (buf == nullptr) {

@@ -16,7 +16,7 @@ extern "C" {
  * @param env JNIEnv接口指针(提供原生方法修改和使用Java的引用类型)
  * @return
  */
-JNIEXPORT jstring JNICALL Java_com_zeke_utils_MyNativeUtils_native_1get_1Hello(
+JNIEXPORT jstring JNICALL Java_com_zeke_utils_WildFireUtils_native_1get_1Hello(
         JNIEnv *env,
         jobject /* this */) {
     std::string hello = "Hello from C++";
@@ -36,7 +36,7 @@ JNIEXPORT jstring JNICALL Java_com_zeke_utils_MyNativeUtils_native_1get_1Hello(
  * @return Java数组对象
  */
 JNIEXPORT jintArray JNICALL
-Java_com_zeke_utils_MyNativeUtils_modifyArrayValue(JNIEnv *env, jobject thiz,
+Java_com_zeke_utils_WildFireUtils_modifyArrayValue(JNIEnv *env, jobject thiz,
                                                    jintArray srcArray) {
     cout << "native code invoked";
 
@@ -55,7 +55,7 @@ Java_com_zeke_utils_MyNativeUtils_modifyArrayValue(JNIEnv *env, jobject thiz,
     return srcArray;
 }
 
-JNIEXPORT jint JNICALL Java_com_zeke_utils_MyNativeUtils__1native_1intFromJNI(
+JNIEXPORT jint JNICALL Java_com_zeke_utils_WildFireUtils__1native_1intFromJNI(
         JNIEnv *env,
         jobject) {
     return 1 << 8;

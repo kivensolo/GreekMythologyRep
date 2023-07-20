@@ -6,7 +6,6 @@ add_library(WildFireLib SHARED
              # 提供到源代码文件的相对路径.
              src/main/cpp/BitmapTool.cpp
              src/main/cpp/JniTestDemo.cpp
-             src/main/cpp/XulUtils_doBlur.cpp
         )
 
 find_library(log-lib log)

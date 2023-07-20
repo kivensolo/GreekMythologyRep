@@ -109,4 +109,5 @@ dependencies {
 
     api root_dependencies["xul_cache"]
 
+    api 'androidx.databinding:databinding-runtime:4.2.2'
 }

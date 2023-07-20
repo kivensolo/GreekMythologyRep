@@ -4,10 +4,10 @@ import java.nio.Buffer
 
 /**
  * author：ZekeWang
- * date：2021/3/17
- * description：调用native方法的图片工具类
+ * date：2022/7/17
+ * description：native方法的工具类
  */
-object MyNativeUtils {
+object WildFireUtils {
     init {
          System.loadLibrary("WildFireLib")
     }
