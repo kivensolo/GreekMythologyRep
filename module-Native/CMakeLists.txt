@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 3.4.1)
 
 # 编译出一个动态库 native-lib
-add_library(WildFireLib SHARED
+add_library(WildFire SHARED
              # 提供到源代码文件的相对路径.
              src/main/cpp/BitmapTool.cpp
              src/main/cpp/JniTestDemo.cpp
@@ -11,7 +11,7 @@ add_library(WildFireLib SHARED
 find_library(log-lib log)
 
 # 关联library
-target_link_libraries(WildFireLib  ${log-lib})
+target_link_libraries(WildFire  ${log-lib})
 
 # 更多的脚本配置参考：
 #   https://cmake.org/cmake/help/latest/guide/tutorial/index.html(英)

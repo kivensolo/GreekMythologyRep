@@ -15,7 +15,7 @@
 #if _WIN32
 #	define ANDROID_LOG_DEBUG	0
 #	define __android_log_write	(void)
-#else
+#else     //Android平台
 #	include <android/log.h>
 #	include <pthread.h>
 #	include <semaphore.h>
@@ -25,6 +25,6 @@
 typedef unsigned char ubyte;
 typedef unsigned int uint32_t;
 
-//extern "C" void doBlur(ubyte* buf, int width, int height);
-//extern "C" void doFastBlur(ubyte* buf, int width, int height, int radius);
-//extern "C" void doFastBlurParallel(ubyte* buf, int width, int height, int radius);
+extern "C" void doBlur(ubyte* buf, int width, int height);
+extern "C" void doFastBlur(ubyte* buf, int width, int height, int radius);
+extern "C" void doFastBlurParallel(ubyte* buf, int width, int height, int radius);

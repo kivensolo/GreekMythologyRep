@@ -1,28 +1,37 @@
-<RelativeLayout android:id="@+id/content"
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  tools:context=".gaussian_blur.GaussianBlurDemoActivity">
+<androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".gaussian_blur.GaussianBlurDemoActivity"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
   <ImageView
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
       android:id="@+id/target_pic"
       android:layout_width="280dp"
       android:layout_height="280dp"
+      android:background="@color/base_item_tint"
       android:layout_centerHorizontal="true"
       android:contentDescription="@null"
-      android:scaleType="centerCrop"
-      android:src="@drawable/p0" />
+      android:scaleType="centerCrop"/>
 
   <androidx.appcompat.widget.AppCompatSeekBar
+      android:layout_marginTop="@dimen/size_10dp"
+      android:layout_marginEnd="@dimen/size_10dp"
+      app:layout_constraintTop_toBottomOf="@+id/target_pic"
+      app:layout_constraintStart_toStartOf="@id/target_pic"
       android:id="@+id/blur_seek_bar"
       android:layout_below="@+id/target_pic"
-      android:layout_toRightOf="@+id/blur_button"
-      android:layout_alignBottom="@+id/blur_button"
+      android:layout_centerHorizontal="true"
       android:layout_width="260dp"
       android:layout_height="wrap_content"/>
 
   <TextView
+      app:layout_constraintTop_toTopOf="@id/blur_seek_bar"
+      app:layout_constraintEnd_toStartOf="@id/blur_seek_bar"
       android:id="@+id/text_radius"
       android:textSize="18sp"
       android:text="0%"
@@ -31,25 +40,16 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"/>
 
-  <Button
-      android:id="@+id/blur_button"
-      android:layout_below="@+id/target_pic"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:elevation="10dp"
-      android:text="Blur"
-      android:textAllCaps="false"
-      android:textColor="@android:color/black"
-      android:textSize="22sp"/>
-
   <ImageView
+      app:layout_constraintStart_toStartOf="@id/target_pic"
+      app:layout_constraintTop_toBottomOf="@id/blur_seek_bar"
       android:id="@+id/blur_pic"
       android:layout_width="280dp"
       android:layout_height="280dp"
-      android:background="@color/apple_black"
+      android:background="@color/base_item_tint"
       android:contentDescription="@null"
-      android:layout_below="@+id/blur_button"
+      android:layout_below="@+id/blur_seek_bar"
       android:layout_centerHorizontal="true"
       android:scaleType="centerCrop"/>
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 

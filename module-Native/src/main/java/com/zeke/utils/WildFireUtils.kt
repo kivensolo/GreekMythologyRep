@@ -9,7 +9,7 @@ import java.nio.Buffer
  */
 object WildFireUtils {
     init {
-         System.loadLibrary("WildFireLib")
+         System.loadLibrary("WildFire")
     }
 
     //------- 测试方法
