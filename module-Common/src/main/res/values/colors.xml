@@ -183,7 +183,6 @@
     <color name="app_dark">@color/apple_black</color>
     <color name="app_dark_gray">@color/black_transparent</color>
     <color name="app_dark_transparent">@color/transparent_ban</color>
-    <color name="app_blue">@color/apple_blue</color>
 
 
     <!--  App主色调：亮绿色  -->
@@ -193,6 +192,7 @@
     <color name="app_dark_green_marker">#ff1DB6BF</color>
     <color name="app_purple">#ff854ECA</color>
     <color name="app_yellow">#ffFFED48</color>
+    <color name="app_blue">@color/apple_blue</color>
     <color name="app_red">#ffE84749</color>
     <color name="app_card_color">#ff303030</color>
     <color name="text_color_gray">#ffdedede</color>
@@ -200,6 +200,20 @@
     <color name="background_spc_item">#ff404040</color>
     <color name="divider_color">#ff404040</color>
     <color name="text_bkg_white">@color/text_white</color>
+
+    <!-- Opera GX 配色   -->
+    <color name="app_gx_red">#ffFA1E4E</color>
+    <color name="app_gx_red_fen">#ffFF7070</color>
+    <color name="app_gx_purple">#ffA970FF</color>
+    <color name="app_gx_blue">#ff4474EE</color>
+    <color name="app_gx_yellow">#ffFDF008</color>
+    <color name="app_gx_orange">#ffFF9900</color>
+    <color name="app_gx_orange2">#ffDEB768</color>
+    <color name="app_gx_green">#ff33FF4E</color>
+    <color name="app_gx_2">#ffC4FF70</color>
+    <color name="app_gx_3">#ff47FFE7</color>
+    <color name="app_gx_4">#ff5AEDBC</color>
+
 
 
     <!--  App主色调  End  -->
