@@ -7,6 +7,10 @@
 #include "common.h"
 #include "task_runner.h"
 
+#ifndef LOG_TAG
+#define LOG_TAG "JNI-Blur"
+#endif
+
 #ifdef __cplusplus
 extern "C"{
 
@@ -36,7 +40,10 @@ const int M_SIZE = DY * 2 + 1;
 
 /**
  * 进行常规模糊算法
- * @param buf
+ * 执行次数越多，图片越暗
+ * 效率低，一张 2000x1200的图，在Pixel XL设备上处理一次需要900ms左右
+ *
+ * @param buf    分配在内存的图片数据buffer数据
  * @param width  像素宽度
  * @param height 像素高度
  */
@@ -45,8 +52,7 @@ void doBlur(ubyte* buf, int width, int height) {
 	int rowBytes = width * 4;
 	int lineHead = 0;
 
-    //核心模糊区域上面
-    //对图像的每一行进行循环处理，其中 DY 是一个常量，表示模糊算法的参数
+    //上边界处理
 	for (int y = 0; y < DY; ++y, lineHead += rowBytes) {
         //对当前行的每个像素进行循环处理
         for (int x = 0, curLineHead = lineHead; x < width; ++x, curLineHead += 4) {
@@ -200,8 +206,8 @@ void doBlur(ubyte* buf, int width, int height) {
 			buf[curLineHead + 2] = b * count / 0x1000;
 		}
 	}
-//
-//	//核心模糊区域下面
+
+//	//下边界
 	lineHead = (height - DY)*rowBytes;
 	for (int y = height - DY; y < height; ++y, lineHead += rowBytes) {
 		for (int x = 0, curLineHead = lineHead; x < width; ++x, curLineHead += 4) {
@@ -263,31 +269,19 @@ Java_com_zeke_utils_WildFireUtils_doBlur(JNIEnv *env, jobject clazz, jobject buf
 }
 
 /**
- * 使用均值滤波器进行模糊操作
- * @param env       JNIEnv接口指针
- * @param clazz
+ * 并发的快速高斯模糊
+ *
+ * 效率比doFastBlur高，一张 2000x1200的图，在Pixel XL设备上，模糊半径越大，越能体现性能。
+ * 20个像素范围，需要1386ms左右
+ *
+ * FIXME radius为1时，图片会花
+ *
  * @param bufObject Java Buffer对象
- * @param width
- * @param height
- * @param pass
+ * @param width		图片宽度像素
+ * @param height	图片高度像素
+ * @param radius	模糊半径
  * @return
  */
-JNIEXPORT jboolean JNICALL
-Java_com_zeke_utils_MyNativeUtils_doAvgBlur(JNIEnv *env, jobject clazz, jobject bufObject,
-                                         jint width, jint height, jint pass) {
-    // 获取原生数组的内存地址
-    ubyte *buf = (ubyte *) env->GetDirectBufferAddress(bufObject);
-    if (buf == nullptr) {
-        return JNI_FALSE;
-    }
-    // 进行模糊操作
-    while (pass-- > 0) {
-//        doBlur(buf, width, height);
-    }
-    return JNI_TRUE;
-}
-
-
 void doFastBlurParallel(ubyte* buf, int width, int height, int radius) {
 	if (radius <= 0 || width <= radius * 2 || height < radius * 2) {
 		return;
@@ -302,15 +296,15 @@ void doFastBlurParallel(ubyte* buf, int width, int height, int radius) {
 	const int SHIFT_BITS = 6 + 12;
 	const long CPU_NUM = GET_CPU_NUM();
 
-
 	uint32_t * scalar = (uint32_t*) alloca((radius + 1) * 3 * 2 * sizeof(uint32_t));
 	{
-		float factor = 1.0f / 2.8f;
+		float factor = 1.0f / 2.8f; //方差数据  0.357142866
 		float d1 = 0.39894f / (radius*factor);
-		float d2 = (2 * radius*radius * factor*factor);
+		float d2 = (2 * radius*radius * factor*factor); //0.255102038  //0.274348408
 		for (uint32_t i = 0; i < 2 * radius + 1; i++) {
-			int d3 = i - radius;
+			int d3 = i - radius; //-1: 90.7802048  0:4575.36279  1:90.7802048
 			scalar[i] = d1*exp(-(d3 * d3) / d2) * 64 * COUNT_SCALAR;
+			__android_log_print(ANDROID_LOG_ERROR, LOG_TAG, "JiSuan scalar: %f", scalar[i]);
 		}
 	}
 
@@ -561,6 +555,11 @@ void doFastBlurParallel(ubyte* buf, int width, int height, int radius) {
 
 /**
  * 快速高斯模糊
+ *
+ * 效率比doBlur高，一张 2000x1200的图，在Pixel XL设备上处理1个radius,需要100ms左右
+ *
+ * FIXME radius为1时，图片会花
+ *
  * @param bufObject Java Buffer对象
  * @param width		图片宽度像素
  * @param height	图片高度像素
@@ -569,7 +568,7 @@ void doFastBlurParallel(ubyte* buf, int width, int height, int radius) {
  */
 void doFastBlur(ubyte* buf, int width, int height, int radius) {
 	if (radius <= 0 || width <= radius * 2 || height < radius * 2) {
-		__android_log_print(ANDROID_LOG_ERROR, "JNI-Blur", "radius params is illegal !!! ");
+		__android_log_print(ANDROID_LOG_ERROR, LOG_TAG, "radius params is illegal !!! ");
 		return;
 	}
 	int rowBytes = width * 4;
@@ -762,14 +761,13 @@ Java_com_zeke_utils_WildFireUtils_doFastBlur(JNIEnv *env, jobject clazz, jobject
 	if (buf == nullptr) {
 		return JNI_FALSE;
 	}
-//	if (GET_CPU_NUM() > 1) {
-//		__android_log_print(ANDROID_LOG_DEBUG, "Blur", "do fast blur in parallel.");
-//		doFastBlurParallel(buf, width, height, radius);
-//	} else {
-	//FIXME radius为1时会出现图片花的问题
-		__android_log_print(ANDROID_LOG_DEBUG, "JNI-Blur", "do fast blur.");
+	if (GET_CPU_NUM() > 1) {
+		__android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, "do fast blur in parallel. radius: %d",radius);
+		doFastBlurParallel(buf, width, height, radius);
+	} else {
+		__android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, "do fast blur. radius: %d",radius);
 		doFastBlur(buf, width, height, radius);
-//	}
+	}
 	return JNI_TRUE;
 }
 

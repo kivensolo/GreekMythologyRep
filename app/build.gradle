@@ -77,6 +77,7 @@ android {
              * multiDexKeepProguard 文件使用与 Proguard 相同的格式，并且支持全部 Proguard 语法。
              */
             multiDexKeepProguard file('multidex-config.pro')
+            jniDebuggable true
         }
 
         release {

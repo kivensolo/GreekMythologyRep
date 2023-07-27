@@ -1,5 +1,6 @@
 package com.zeke.demo.gaussian_blur
 
+
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -23,13 +24,14 @@ import java.nio.ByteBuffer
 class JNITestBlurActivity : AppCompatActivity() {
     //常规模糊的模糊次数
     var blurCounts = 2
+
     //快速模糊时的半径范围
     var blurRadius = 5 //(不能超过宽高的一半)
-    lateinit var uiBinding:ActivityJniBlurTestBinding
+    lateinit var uiBinding: ActivityJniBlurTestBinding
 
     private lateinit var srcBitmap: Bitmap
-    private lateinit var srcBitmapPixelBytes:ByteBuffer
-    private lateinit var blurBitmap:Bitmap
+    private lateinit var srcBitmapPixelBytes: ByteBuffer
+    private lateinit var blurBitmap: Bitmap
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +45,7 @@ class JNITestBlurActivity : AppCompatActivity() {
 
         blurBitmap = Bitmap.createBitmap(srcBitmap.width, srcBitmap.height, Bitmap.Config.ARGB_8888)
 
-        uiBinding.blurSeekBar.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener{
+        uiBinding.blurSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {}
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {}
@@ -52,7 +54,7 @@ class JNITestBlurActivity : AppCompatActivity() {
             override fun onStopTrackingTouch(seekBar: SeekBar) {
                 blurCounts = seekBar.progress / 10
                 blurRadius = seekBar.progress / 5 // MAX: 20 25的话，差不多300ms+
-                uiBinding.textRadius.text = "${seekBar.progress}%"
+                uiBinding.textRadius.text = "$blurRadius"
                 beginBlur()
             }
         })
@@ -63,7 +65,7 @@ class JNITestBlurActivity : AppCompatActivity() {
             val startMs = System.currentTimeMillis()
             val blurBitmap = blurBitmap(srcBitmap)
             if (blurBitmap != null) {
-                withContext(Dispatchers.Main){
+                withContext(Dispatchers.Main) {
                     uiBinding.blurPic.setImageBitmap(blurBitmap)
                 }
                 ZLog.d("Native Blur TIME " + (System.currentTimeMillis() - startMs).toString() + "ms")
@@ -80,32 +82,33 @@ class JNITestBlurActivity : AppCompatActivity() {
      * @param apply 原有基础上应用模糊
      * @return
      */
-    private fun blurBitmap(bitmap: Bitmap?, apply:Boolean = false): Bitmap? {
+    private fun blurBitmap(bitmap: Bitmap?, apply: Boolean = false): Bitmap? {
         if (bitmap == null) {
             return null
         }
-        ZLog.d("Start blur blurRadius= $blurRadius")
+        ZLog.d("Start blur. blurCounts=$blurCounts blurRadius= $blurRadius")
 //        synchronized(srcBitmapPixelBytes){
-            if(srcBitmapPixelBytes.array().isEmpty()){
-                srcBitmapPixelBytes = ByteBuffer.allocateDirect(bitmap.byteCount)
-            }else{
-                srcBitmapPixelBytes.clear()
-            }
-            val pxBuffer = srcBitmapPixelBytes
-            bitmap.copyPixelsToBuffer(pxBuffer)
-           val success =  WildFireUtils.doBlur(pxBuffer, bitmap.width, bitmap.height, blurCounts)
-//            val success = WildFireUtils.doFastBlur(pxBuffer, bitmap.width, bitmap.height, blurRadius)
-            pxBuffer.rewind()
-            if(!success){
-                return null
-            }
-            return if(apply){
-                bitmap.copyPixelsFromBuffer(pxBuffer)
-                bitmap
-            }else{
-                blurBitmap.copyPixelsFromBuffer(pxBuffer)
-                blurBitmap
-            }
+        if (srcBitmapPixelBytes.array().isEmpty()) {
+            srcBitmapPixelBytes = ByteBuffer.allocateDirect(bitmap.byteCount)
+        } else {
+            srcBitmapPixelBytes.clear()
+        }
+        val pxBuffer = srcBitmapPixelBytes
+        bitmap.copyPixelsToBuffer(pxBuffer)
+//        pxBuffer.rewind()
+//        val success = WildFireUtils.doBlur(pxBuffer, bitmap.width, bitmap.height, blurCounts)
+            val success = WildFireUtils.doFastBlur(pxBuffer, bitmap.width, bitmap.height, blurRadius)
+        pxBuffer.rewind()
+        if (!success) {
+            return null
+        }
+        return if (apply) {
+            bitmap.copyPixelsFromBuffer(pxBuffer)
+            bitmap
+        } else {
+            blurBitmap.copyPixelsFromBuffer(pxBuffer)
+            blurBitmap
+        }
 //        }
     }
 }

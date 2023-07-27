@@ -7,18 +7,39 @@ using namespace std;
 
 extern "C" {
     /**
-     * 测试基础类型数据(Stirng)在Java层和jni层通信：
+     * 测试Jni双向通信：
+     * Java层调用JNI层后，返回一个字符串，
+     * 并且Native代码通过JNI修改Java代码的TAG变量的值。
      *
      * 方法名格式: Java_包名_类名_Java需要调用的方法名:
      * 包路径中的.要改成_
      * 下划线_要改成_1
      * @param env JNIEnv接口指针(提供原生方法修改和使用Java的引用类型)
-     * @return
+     * @return 一个字符串
      */
-    JNIEXPORT jstring JNICALL Java_com_zeke_utils_WildFireUtils_native_1get_1Hello(
-            JNIEnv *env,
-            jobject /* this */) {
-        std::string hello = "Hello from C++";
+    JNIEXPORT jstring JNICALL Java_com_zeke_utils_WildFireUtils_testNativeDuplex(
+            JNIEnv *env, jobject clazz) {
+//        从jobject clazz 参数中获取当前 JNI 函数所属的 Java 类对象
+        jclass jcls = env->GetObjectClass(clazz);
+//        可以使用 JNIEnv 的 GetFieldID、GetStaticFieldID、GetFieldID 等函数获取字段的 ID
+        jfieldID tagFiledId = env->GetStaticFieldID(jcls, "TAG", "Ljava/lang/String;");
+        env->DeleteLocalRef(jcls);
+        if(tagFiledId != nullptr){
+            // 获取TAG字段的值
+            jstring value = (jstring)env->GetStaticObjectField(jcls, tagFiledId);
+            // 将 jstring 转换为 C 字符串
+            const char *str = env->GetStringUTFChars(value, nullptr);
+            if (str != nullptr) {
+                printf("TAG Field value: %s\n", str);// 使用字符串值
+                // 释放字符串资源
+                env->ReleaseStringUTFChars(value, str);
+            }
+            // 修改字段TAG的值
+            jstring newValue = env->NewStringUTF("JNI ahs modify value.");
+            env->SetStaticObjectField(jcls, tagFiledId, newValue);
+        }
+
+        std::string hello = "Hello I'm native content.";
         return env->NewStringUTF(hello.c_str()); //生成一个的UTF-8编码字符串
     }
 

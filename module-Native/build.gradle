@@ -48,6 +48,7 @@ android {
         debug {
             zipAlignEnabled true
             minifyEnabled false
+            jniDebuggable true
         }
         release {
             zipAlignEnabled true

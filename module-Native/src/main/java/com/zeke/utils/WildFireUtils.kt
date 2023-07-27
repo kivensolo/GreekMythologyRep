@@ -8,18 +8,21 @@ import java.nio.Buffer
  * description：native方法的工具类
  */
 object WildFireUtils {
+    const val TAG = "WildFireUtils"
+
     init {
          System.loadLibrary("WildFire")
     }
 
     //------- 测试方法
-    external fun native_get_Hello(): String
+    external fun testNativeDuplex(): String
 
     @Suppress("FunctionName")
     external fun _native_intFromJNI(): Int
 
 //     public native int[] modifyArrayValue(int[] array);
     external fun modifyArrayValue(array: IntArray?): IntArray?
+    //------- 测试方法
 
 //    external fun modifyArrayValue(array:Int):Int[]
     /**
