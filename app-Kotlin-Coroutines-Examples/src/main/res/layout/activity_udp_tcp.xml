@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <TextView
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/udpMsgText"
+        android:id="@+id/udpTips"
+        android:text="UDP"
+        android:textSize="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/udpMsgText"
+
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:textColor="@android:color/black"
+        android:textSize="7sp"
+        android:background="@color/burlywood"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tcpMsgVIew"
+        app:layout_constraintTop_toBottomOf="@+id/udpTips"/>
+
+    <TextView
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/tcpMsgVIew"
+        android:id="@+id/tcpTips"
+        android:text="TCP"
+        android:textSize="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:background="@color/darkseagreen"
+        android:id="@+id/tcpMsgVIew"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:textColor="@android:color/black"
+        android:textSize="7dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/udpMsgText"
+        app:layout_constraintTop_toBottomOf="@+id/tcpTips" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

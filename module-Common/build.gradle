@@ -49,8 +49,6 @@ dependencies {
     api project(':module-Native')
 
     api project(':database')
-    api rootProject.ext.deps.myLib.kangaroo
-//    api project(":Akangaroo")
     api root_dependencies["banner"]
     api root_dependencies["smartRefresh_Core"]
     api root_dependencies["smartRefresh_Header_Classics"]

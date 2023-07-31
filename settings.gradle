@@ -47,8 +47,11 @@ project(':pickerview').projectDir = new File(rootDir, 'app-pickerview/pickerview
 include ':calendar_picker'
 project(':calendar_picker').projectDir = new File(rootDir, 'app-pickerview/calendar_picker')
 
-//include ':Akangaroo'
-//project(':Akangaroo').setProjectDir(file("E:\\GitHubProjects\\AKangaroo\\app"))
+if(directly_use_Akangraoo.toBoolean()){
+    include ':Akangaroo'
+    project(':Akangaroo').setProjectDir(file("E:\\GitHubProjects\\AKangaroo\\app"))
+}
+
 
 gradle.beforeProject {
     project -> println("Ready to config ===> ${project.name} ")

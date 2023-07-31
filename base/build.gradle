@@ -103,9 +103,14 @@ dependencies {
     api root_dependencies["immersionbar"]
     api root_dependencies["immersionbar_fragment"]
 
-    api deps.myLib.kangaroo
+
+    if(directly_use_Akangraoo.toBoolean()){
+        api project(":Akangaroo")
+    }else{
+        api rootProject.ext.deps.myLib.Akangaroo
+    }
+
     api 'com.elvishew:xlog:1.11.0'
-//    api project(":Akangaroo")
 
     api root_dependencies["xul_cache"]
 

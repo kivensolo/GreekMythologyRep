@@ -41,6 +41,10 @@ dependencies {
     compileOnly test.runner_rules
     compileOnly test.ext_junit
     compileOnly test.espresso_core
-    compileOnly rootProject.ext.deps.myLib.kangaroo
-//    compileOnly project(":Akangaroo")
+
+    if(directly_use_Akangraoo.toBoolean()){
+        implementation project(":Akangaroo")
+    }else{
+        implementation deps.myLib.Akangaroo
+    }
 }

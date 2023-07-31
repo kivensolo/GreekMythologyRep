@@ -9,7 +9,7 @@ import com.bumptech.glide.request.RequestOptions
 /**
  * Demo templete base view.
  */
-open abstract class BaseDemoView : View {
+abstract class BaseDemoView : View {
     companion object{
         // var IMG_WIDTH:Int
         // var IMG_HIGHT:Int

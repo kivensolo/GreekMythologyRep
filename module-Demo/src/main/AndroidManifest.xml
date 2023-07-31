@@ -47,7 +47,8 @@
         <activity android:name="com.zeke.demo.photoview.sample.ImmersiveActivity" />
         <!--**photoview sample**-->
 
-        <activity android:name="com.zeke.demo.shadowlayout.ShadowLayoutDemoActivity" />
+        <activity android:name="com.zeke.demo.ShadowLayoutDemoActivity"
+            android:theme="@style/AppTheme" />
 
         <activity android:name="com.zeke.demo.fragments.FragementLifeCycleTestPage" />
 

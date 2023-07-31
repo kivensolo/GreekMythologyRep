@@ -273,7 +273,7 @@ deps.ui_custom = ui_custom
 
 
 def myLib = [:]
-myLib.kangaroo = "com.github.kivensolo.AKangaroo:kangaroo:v1.0.11"
+myLib.Akangaroo = "com.github.kivensolo.AKangaroo:kangaroo:v1.0.11"
 deps.myLib = myLib
 
 ext.deps = deps

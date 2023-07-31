@@ -1,13 +1,15 @@
-package com.zeke.demo.shadowlayout
+package com.zeke.demo
 
 import android.graphics.Color
 import android.os.Bundle
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
-import com.zeke.demo.R
 import kotlinx.android.synthetic.main.page_shadowlayout_demo.*
 
-
+/**
+ * 原生UI，使用自定义阴影控件
+ * ShadowLayout
+ */
 class ShadowLayoutDemoActivity : AppCompatActivity() {
 
     private var shadowAlpha :Int = 0

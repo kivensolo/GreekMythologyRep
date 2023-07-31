@@ -53,9 +53,11 @@ dependencies {
     implementation deps.net.okio
     implementation deps.net.ok_log
     implementation deps.net.stetho_okhttp3
-    implementation deps.myLib.kangaroo
-//    implementation project(":Akangaroo")
-
+    if(directly_use_Akangraoo.toBoolean()){
+        implementation project(":Akangaroo")
+    }else{
+        implementation deps.myLib.Akangaroo
+    }
 
     //https://github.com/DingProg/NetworkCaptureSelf  会有checkSelfPermission的判断
 //    debugImplementation 'com.github.DingProg.NetworkCaptureSelf:library:v1.0.1'

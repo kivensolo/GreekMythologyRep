@@ -9,6 +9,7 @@ import com.zeke.home.entity.DemoSample
  * date：2021/11/6
  * description：首页推荐页面Demo模块分组展示数据
  */
+//TODO 使用反射自动注册，防止底层模块改动时，上层需要手动修改
 class NavigationData {
     var groupList:MutableList<DemoGroup> = mutableListOf(
         DemoGroup("基础控件&组件","原生基本控件",
@@ -31,7 +32,7 @@ class NavigationData {
             samples = arrayListOf(
                 DemoSample("旧版自定义View集合页面", "com.kingz.pages.CustomViewsPage"),
                 DemoSample("新版自定义View展示页面", "com.zeke.demo.customview.CustomViewsDemoActivity"),
-                DemoSample("ShadowLayout展示", "com.zeke.demo.shadowlayout.ShadowLayoutDemoActivity"),
+                DemoSample("ShadowLayout展示", "com.zeke.demo.ShadowLayoutDemoActivity"),
                 //被CustomViewsDemoActivity取代
                 DemoSample("Davinci", "com.zeke.demo.draw.PracticeDrawActivity"),
                 // 可以合并到 PracticeDrawActivity 中去
