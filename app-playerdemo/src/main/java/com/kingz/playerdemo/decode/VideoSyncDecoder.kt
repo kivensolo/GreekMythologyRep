@@ -13,6 +13,8 @@ import android.view.Surface
  * date：2021/4/16
  * description：
  *  视频解码器 ------ 同步方式
+ *
+ *  TODO 倍数实现
  */
 class VideoSyncDecoder(
     private val surface: Surface,

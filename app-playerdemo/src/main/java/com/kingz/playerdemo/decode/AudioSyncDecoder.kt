@@ -25,10 +25,10 @@ class AudioSyncDecoder constructor(playUrl: String) : BaseDecoder(playUrl) {
 
     init {
         initAMExtractor()
-        initAudoTrack()
+        initAudioTrack()
     }
 
-    private fun initAudoTrack() {
+    private fun initAudioTrack() {
         initPcmEncode()
         //音频采样率
         val sampleRate = mediaFormat.getInteger(MediaFormat.KEY_SAMPLE_RATE)

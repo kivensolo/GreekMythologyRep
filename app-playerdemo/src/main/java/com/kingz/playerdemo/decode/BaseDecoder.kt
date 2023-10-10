@@ -73,7 +73,7 @@ abstract class BaseDecoder(private val playUrl: String,
             if (isAsync) {
                 setAsyncCallback()
             }
-            // STATE --- Configured
+            //配置解码器 STATE --- Configured
             configure()
         } catch (e: Exception) {
             e.printStackTrace()
