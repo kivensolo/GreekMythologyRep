@@ -1,7 +1,7 @@
 package com.zeke.home.presenters
 
 import android.content.Context
-import com.zeke.home.api.DataApiService
+import com.kingz.module.common.api.DataApiService
 import com.zeke.home.api.RecomDataServiceImpl
 import com.zeke.home.contract.RecomPageContract
 import com.zeke.home.entity.TemplatePageData

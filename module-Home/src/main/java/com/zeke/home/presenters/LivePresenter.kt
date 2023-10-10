@@ -1,7 +1,7 @@
 package com.zeke.home.presenters
 
 import android.content.Context
-import com.zeke.home.api.DataApiService
+import com.kingz.module.common.api.DataApiService
 import com.zeke.home.api.LiveDataProvider
 import com.zeke.home.callback.LiveDataResponse
 import com.zeke.home.contract.LiveContract

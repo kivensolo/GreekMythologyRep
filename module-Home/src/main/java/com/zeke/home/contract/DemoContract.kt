@@ -3,7 +3,7 @@ package com.zeke.home.contract
 import android.content.Context
 import com.kingz.module.common.IView
 import com.kingz.module.common.base.IPresenter
-import com.zeke.home.entity.DemoGroup
+import com.kingz.module.common.bean.DemoGroup
 
 /**
  * author：KingZ

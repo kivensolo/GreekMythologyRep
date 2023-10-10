@@ -10,9 +10,9 @@ import android.widget.TextView;
 
 import androidx.annotation.ColorInt;
 
+import com.kingz.module.common.bean.DemoGroup;
 import com.kingz.module.common.setting.SettingUtil;
 import com.kingz.module.home.R;
-import com.zeke.home.entity.DemoGroup;
 import com.zeke.kangaroo.view.animation.AnimatedExpandableListView;
 
 import java.util.Collections;

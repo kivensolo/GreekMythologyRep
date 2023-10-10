@@ -1,10 +1,10 @@
 package com.zeke.home.presenters
 
 import android.content.Context
+import com.kingz.module.common.api.DataApiService
+import com.kingz.module.common.bean.DemoGroup
 import com.zeke.home.api.AndroidDemoProvider
-import com.zeke.home.api.DataApiService
 import com.zeke.home.contract.DemoContract
-import com.zeke.home.entity.DemoGroup
 import com.zeke.network.response.IRequestResponse
 
 /**

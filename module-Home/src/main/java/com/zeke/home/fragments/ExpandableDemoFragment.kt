@@ -7,13 +7,13 @@ import android.widget.ExpandableListView
 import android.widget.Toast
 import com.kingz.module.common.BaseActivity
 import com.kingz.module.common.base.BaseFragment
+import com.kingz.module.common.bean.DemoGroup
+import com.kingz.module.common.bean.DemoSample
 import com.kingz.module.common.router.Router
 import com.kingz.module.common.setting.SettingUtil
 import com.kingz.module.home.R
 import com.zeke.home.adapter.DemoFragmentExpandableListAdapter
 import com.zeke.home.contract.DemoContract
-import com.zeke.home.entity.DemoGroup
-import com.zeke.home.entity.DemoSample
 import com.zeke.home.presenters.DemoPresenter
 import com.zeke.kangaroo.view.animation.AnimatedExpandableListView
 import com.zeke.kangaroo.zlog.ZLog

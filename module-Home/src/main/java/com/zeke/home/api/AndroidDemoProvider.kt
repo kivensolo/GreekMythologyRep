@@ -5,9 +5,10 @@ import android.content.res.AssetManager
 import android.os.AsyncTask
 import android.util.JsonReader
 import android.widget.Toast
+import com.kingz.module.common.api.DataApiService
+import com.kingz.module.common.bean.DemoGroup
+import com.kingz.module.common.bean.DemoSample
 import com.zeke.home.demo.NavigationData
-import com.zeke.home.entity.DemoGroup
-import com.zeke.home.entity.DemoSample
 import com.zeke.kangaroo.zlog.ZLog
 import com.zeke.network.response.IRequestResponse
 import org.jetbrains.annotations.NotNull
@@ -20,13 +21,11 @@ import java.io.InputStreamReader
  * description：Demo样例数据的数据提供实现类，
  * 负责Demo数据配置文件解析和数据返回
  *
- * TODO 从注册表中拿数据，而是本地数据列表
  */
 class AndroidDemoProvider : DataApiService<MutableList<DemoGroup>> {
     companion object {
         private val TAG = AndroidDemoProvider::class.java.simpleName
         private lateinit var mCallBack: IRequestResponse<MutableList<DemoGroup>>
-
     }
 
     /**
