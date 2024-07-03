@@ -21,7 +21,6 @@ import java.security.NoSuchAlgorithmException
 abstract class XWebViewClient : WebViewClient() {
     private val consumeMap = HashMap<String, Long>()
 
-
     override fun onPageStarted(view: WebView, url: String?, favicon: Bitmap?) {
         super.onPageStarted(view, url, favicon)
         if (TextUtils.isEmpty(url)) {
