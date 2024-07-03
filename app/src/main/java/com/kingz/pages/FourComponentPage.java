@@ -13,7 +13,7 @@ import android.widget.ListView;
 import com.kingz.customdemo.R;
 import com.kingz.four_components.ObtainProviderDataPage;
 import com.kingz.four_components.ServiceComponentsACT;
-import com.kingz.four_components.activity.AttrOfAliasAct;
+import com.kingz.four_components.activity.ChangeAppIconActivity;
 import com.kingz.ipcdemo.AIDLActivity;
 import com.kingz.mode.ListBillData;
 import com.kingz.text.LabelTextViewPage;
@@ -39,7 +39,7 @@ public class FourComponentPage extends Activity implements OnItemClickListener{
 		addItem("LableTextViewPage", LabelTextViewPage.class);
 		addItem("ContentProvider",ObtainProviderDataPage.class);
 		addItem("AIDL",AIDLActivity.class);
-		addItem("Activity-Alias",AttrOfAliasAct.class);
+		addItem("Activity-Alias", ChangeAppIconActivity.class);
 	}
 
 	private void addItem(String  name,Class<?> pageName) {

@@ -269,7 +269,7 @@
 
         <!-- ************ Acticity-alias 测试页面 ************ -->
         <activity
-            android:name="com.kingz.four_components.activity.AttrOfAliasAct" />
+            android:name="com.kingz.four_components.activity.ChangeAppIconActivity" />
 
         <!--  ************ 图形方面  Start ************ -->
         <activity

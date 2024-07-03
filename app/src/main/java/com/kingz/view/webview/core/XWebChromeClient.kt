@@ -18,7 +18,7 @@ class XWebChromeClient(webHookDispatcher: WebHookDispatcher) : WebChromeClient()
     private val mWebHookDispatcher = webHookDispatcher
 
     override fun onPermissionRequest(request: PermissionRequest?) {
-        mWebHookDispatcher.onPermissionRequest(request)
+//        mWebHookDispatcher.onPermissionRequest(request)
     }
 
     override fun onReceivedTitle(view: WebView?, title: String?) {
