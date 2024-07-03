@@ -4,8 +4,11 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 
+import com.kingz.view.webview.core.XSystemWebView;
+
 /**
  * Created by KingZ on 2016/1/16.
+ * Update at 2024/07/02
  * Discription:
  * 1、可以是用loadData，这种方法需要先将html文件读取出来，以字符串传入loadData，可以展示页面，但是不会引用css、js等文件。
 
@@ -18,7 +21,7 @@ import android.view.KeyEvent;
 public class WebViewActivity extends Activity{
 
     public static final String TAG = "WebViewActivity";
-    private WebViewWithJs mWebView;
+    private XSystemWebView mWebView;
     public static final String testUrl = "file:///android_asset/webAppTest.html";
 
     @Override
@@ -34,7 +37,7 @@ public class WebViewActivity extends Activity{
     }
 
     private void initWebView() {
-        mWebView = new WebViewWithJs(this){
+        mWebView = new XSystemWebView(this){
 
             @Override
             public void onReceiveMessage(String msg, Object info) {

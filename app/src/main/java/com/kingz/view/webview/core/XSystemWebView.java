@@ -1,4 +1,4 @@
-package com.kingz.view.webview;
+package com.kingz.view.webview.core;
 
 import android.content.Context;
 import android.graphics.Rect;
@@ -9,10 +9,12 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
-import android.widget.Toast;
 
 import com.kingz.customdemo.R;
 import com.kingz.utils.ToastTools;
+import com.kingz.view.webview.js.CommonAndroidObject;
+import com.kingz.view.webview.js.XJsBridgeImpl;
+import com.kingz.view.webview.js.XJsInterfaceUniteWrapper;
 import com.module.tools.ScreenTools;
 import com.mplayer.ExtMplayer;
 import com.zeke.kangaroo.zlog.ZLog;
@@ -26,28 +28,28 @@ import java.util.Locale;
  * date:  2016/9/28 22:20
  * description:
  */
-public abstract class WebViewWithJs extends WebView {
+public abstract class XSystemWebView extends WebView implements IWebView {
 
     private Context mContext;
     private String mNameOfJsCall = "JsExtApollo";
-    private JsExtObject mJsExtObject = new JsExtObject();
+    private XJsInterfaceUniteWrapper jsInterfaceWrapper = new XJsInterfaceUniteWrapper();
 
     private Handler viewHandler = new Handler();
     private ExtMplayer extMplayer;
 
-    public WebViewWithJs(Context context) {
+    public XSystemWebView(Context context) {
         super(context);
         this.mContext = context;
         init();
     }
 
-    public WebViewWithJs(Context context, AttributeSet attrs) {
+    public XSystemWebView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.mContext = context;
         init();
     }
 
-    public WebViewWithJs(Context context, AttributeSet attrs, int defStyleAttr) {
+    public XSystemWebView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.mContext = context;
         init();
@@ -64,13 +66,13 @@ public abstract class WebViewWithJs extends WebView {
         //设置缩放
         inittialScale();
 
-        setWebViewClient(new ZWebViewClient(){
-            @Override
-            public void onWebReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-                Toast.makeText(mContext, "Oh no! " + description, Toast.LENGTH_SHORT).show();
-            }
-        });
-        addJavascriptInterface(mJsExtObject, mNameOfJsCall);  //Binding JavaScript code to Android code
+        setWebViewClient(new XWebViewClient(){});
+
+        XJsBridgeImpl defaultJsBridge = new XJsBridgeImpl(this);
+        defaultJsBridge.bindInterfaceObject(new JsPlayerInterfaceObject());
+        jsInterfaceWrapper.wrap(defaultJsBridge);
+
+        addJavascriptInterface(jsInterfaceWrapper, mNameOfJsCall);  //Binding JavaScript code to Android code
         setBackgroundColor(getResources().getColor(R.color.lightslategray));
     }
 
@@ -100,24 +102,29 @@ public abstract class WebViewWithJs extends WebView {
     }
 
 
-    private class JsExtObject {
-        public static final String TAG = "JsExtObject";
-        private Context context;
+    public Context getViewContext() {
+        return mContext;
+    }
 
-        public JsExtObject() {
+    @Override
+    public String _waitForJsReturnValue(int index, int i) {
+        return null;
+    }
+
+    private class JsPlayerInterfaceObject extends CommonAndroidObject {
+
+        public JsPlayerInterfaceObject() {
         }
 
         @JavascriptInterface
-        public void log(String tag, String info) {
-            Log.i(tag, info);
-        }
-
-        // If set targetSdkVersion to 17 or higher,
-        // Must add the @JavascriptInterface annotation.
-        @JavascriptInterface
-        public void showToastByJs(String msg) {
-            ZLog.i(TAG, "showToastByJs() msg=" + msg);
-            ToastTools.i().showToast(context, msg);
+        public void showToastByJs(final String msg) {
+            Log.d(getTAG(), "showToastByJs() msg=" + msg);
+            viewHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    ToastTools.i().showToast(getViewContext(), msg);
+                }
+            });
         }
 
         @JavascriptInterface
@@ -209,81 +216,78 @@ public abstract class WebViewWithJs extends WebView {
         }
 
         @JavascriptInterface
-		public String createPlayer(final String x, final String y,final String width, final String height){
-            ZLog.i(TAG, "createPlayer() createPlayer  width = " + width);
-			viewHandler.post(new Runnable() {
-				@Override
-				public void run() {
-					extMplayer = new ExtMplayer(mContext);
-					extMplayer.createPlayer(x,y,width,height);
+        public String createPlayer(final String x, final String y,final String width, final String height){
+            ZLog.i(getTAG(), "createPlayer() createPlayer  width = " + width);
+            viewHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    extMplayer = new ExtMplayer(mContext);
+                    extMplayer.createPlayer(x,y,width,height);
                     ViewGroup.LayoutParams lps = new ViewGroup.LayoutParams(ScreenTools.OperationWidth(Integer.valueOf(width)),
-							ScreenTools.OperationWidth(Integer.valueOf(height)));
-					extMplayer.setX(ScreenTools.OperationWidth(Integer.valueOf(x)));
-					extMplayer.setY(ScreenTools.OperationWidth(Integer.valueOf(y)));
-					addView(extMplayer,lps);
-				}
-			});
+                            ScreenTools.OperationWidth(Integer.valueOf(height)));
+                    extMplayer.setX(ScreenTools.OperationWidth(Integer.valueOf(x)));
+                    extMplayer.setY(ScreenTools.OperationWidth(Integer.valueOf(y)));
+                    addView(extMplayer,lps);
+                }
+            });
             if(extMplayer != null){
-				return String.valueOf(extMplayer.getLatestPlayerId());
-			}
-			return "-1";
-		}
+                return String.valueOf(extMplayer.getLatestPlayerId());
+            }
+            return "-1";
+        }
 
 
         @JavascriptInterface
-		public void playVideoByUrl(final String playerId, final String playUrl,final String position){
-            ZLog.i(TAG, "playVideoByUrl() playerId = " + playerId + ";playUrl = " + playUrl + ";position=" + position);
-			viewHandler.post(new Runnable() {
-				@Override
-				public void run() {
+        public void playVideoByUrl(final String playerId, final String playUrl,final String position){
+            ZLog.i(getTAG(), "playVideoByUrl() playerId = " + playerId + ";playUrl = " + playUrl + ";position=" + position);
+            viewHandler.post(new Runnable() {
+                @Override
+                public void run() {
                     if(extMplayer != null){
                         extMplayer.playVideoByUrl(playerId,playUrl,position);
                     }
-				}
-			});
-		}
+                }
+            });
+        }
 
         @JavascriptInterface
-		public void playVideoByUrl(final String playerId,final String position){
-            ZLog.i(TAG, "playVideoByUrl() playerId = " + ";position=" + position);
-			viewHandler.post(new Runnable() {
-				@Override
-				public void run() {
+        public void playVideoByUrl(final String playerId,final String position){
+            ZLog.i(getTAG(), "playVideoByUrl() playerId = " + ";position=" + position);
+            viewHandler.post(new Runnable() {
+                @Override
+                public void run() {
                     if(extMplayer != null){
                         //extMplayer.playVideoByUrl(playerId,"rtsp://222.83.47.212:554/vod/00000050280004173152.mpg?userid=91494124504&stbip=182.138.101.47&clienttype=1&ifcharge=1&time=20170717181940+08&life=172800&vcdnid=001&boid=001&srcboid=001&backupagent=222.83.47.212:554&ctype=50&playtype=0&Drm=0&programid=00000050280004173152&contname=&fathercont=&authid=0&tscnt=0&tstm=0&tsflow=0&ifpricereqsnd=1&stbid=3C-DA-2A-B1-49-B7&nodelevel=3&terminalflag=1&distype=0",position);
                         extMplayer.playVideoByUrl(playerId,"http://video.chinanews.com/tvmining/News/MP4ZXW/DongNanTV/2016/04/29/DongNanTV_1500000_20160429_18866283_0_40.mp4",position);
                     }
-				}
-			});
-		}
+                }
+            });
+        }
         @JavascriptInterface
-		public void play(final String playerId){
-            ZLog.i(TAG, "playVideoByUrl() playerId = " + playerId);
-			viewHandler.post(new Runnable() {
-				@Override
-				public void run() {
+        public void play(final String playerId){
+            ZLog.i(getTAG(), "playVideoByUrl() playerId = " + playerId);
+            viewHandler.post(new Runnable() {
+                @Override
+                public void run() {
                     if (extMplayer != null) {
                         extMplayer.play(playerId);
                     }
                 }
-			});
-		}
+            });
+        }
         @JavascriptInterface
-		public void pause(final String playerId){
-            ZLog.i(TAG, "playVideoByUrl() playerId = " + playerId );
-			viewHandler.post(new Runnable() {
-				@Override
-				public void run() {
-					  if (extMplayer != null) {
+        public void pause(final String playerId){
+            ZLog.i(getTAG(), "playVideoByUrl() playerId = " + playerId );
+            viewHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    if (extMplayer != null) {
                         extMplayer.pause(playerId);
                     }
-				}
-			});
-		}
-
+                }
+            });
+        }
     }
-
-
 
     private void _internalOnReceiveMessage(String msg, Object info) {
         this.onReceiveMessage(msg, info);

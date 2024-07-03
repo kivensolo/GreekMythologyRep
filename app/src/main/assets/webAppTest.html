@@ -1,20 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <input type="button" value="我是网页的按钮" size="30"
-           onClick="showAndroidToast('Hello WebAPP!')"/>
-    <script type="text/javascript">
-        function showAndroidToast(toast) {
-            JsExtApollo.showToastByJs(toast);
-        }
+    <title>Android Js通信测试</title>
+    <input type="button" id="toastBtn" value="我是网页的按钮" size="30"/>
 
-    </script>
+    <input type="button" id="logBtn" value="输出android日志" size="30"/>
+
+    <script type="text/javascript" src="js/webAndroidBridge.js"></script>
 </head>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var button = document.getElementById('toastBtn');
+        button.addEventListener('click', function() {
+            var jsonData = [{
+                "type": "string",
+                "value": "通过网页发送的toast"
+            }];
+            showAndroidToast(jsonData);
+        });
+
+var button2 = document.getElementById('logBtn');
+        button2.addEventListener('click', function() {
+            var jsonData = [
+            {
+                "type": "string",
+                "value": "WebTag"
+            },
+            {
+                "type": "string",
+                "value": "这条数据是从网页发送给android的"
+            }];
+            execAndroidFunc('log', jsonData);
+        });
+
+    });
+</script>
+
 <body>
-    <div style="width:200px;height:200px;background-color:yellow;">
-        I'm box in web
-    </div>
+<div style="width:200px;height:200px;background-color:yellow;">
+    I'm box in web
+</div>
 </body>
 </html>
