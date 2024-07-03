@@ -4,11 +4,27 @@
 
     <application android:allowBackup="true">
 
-        <activity android:name="com.zeke.module_login.SplashActivity">
+        <activity
+            android:name="com.zeke.module_login.SplashActivity"
+            android:exported="true"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity-alias
+            android:name="com.zeke.module_login.SplashActivityRed"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@drawable/ic_launcher_background_red"
+            android:label="GeekMyth Red"
+            android:targetActivity="com.zeke.module_login.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity-alias>
     </application>
 </manifest>
