@@ -109,7 +109,7 @@ android {
             ]
         }
 
-        Beijing{
+        beijing{
             minSdkVersion _rootAndroid.minSdkVersion
 
             manifestPlaceholders = [
@@ -160,10 +160,50 @@ android {
      * 构建变体产物配置
      */
     applicationVariants.all { variant ->
-        //产品类型
-        def flavorName = variant.flavorName
-        //构建类型
-        def buildType = variant.buildType.name
+        def variantName = variant.name  //flavor+buildType buildType首字母大写,没有flavor时，等同于buildType
+        def flavorName = variant.flavorName //风味类型
+        def buildTypeName = variant.buildType.name //构建类型
+        logger.log(LogLevel.WARN,"ApplicationVariant +1: variantName=${variantName}, flavorName=${flavorName}, buildType=${buildTypeName}")
+
+        // 通过收集命令行执行的所有的tasks,拼接成一个完整名称(使用AS打包时，任务job只有一个，所以间接的获取当前task名称)
+        def currentTaskName = project.gradle.startParameter.taskNames.join(',')
+        logger.log(LogLevel.WARN,"  currentTaskName=$currentTaskName")
+
+        // 判断当前执行的任务是否是 单一构建类型的任务 或 全量构建
+        // 确定当前构建变体的输出目录
+        def outputDir = ""
+        if(flavorName == ""){
+            /**
+             * 1. 单个类型构建(assembleBuildtype)
+             * 2. 全量构建(assemble)
+             */
+            if (currentTaskName.contains("assemble${buildTypeName.capitalize()}")
+                    || currentTaskName == "assemble") {
+                outputDir = "${project.buildDir}/outputs/apk/${buildTypeName}/"
+            }
+        }else{
+            /**
+             * 1. 全量构建(assemble)
+             * 2. 全量风味构建(assembleFlavor)
+             * 3. 单个风味类型构建(assembleFlavorBuildType)
+             */
+            if (currentTaskName.contains("assemble${flavorName.capitalize()}")
+                    || currentTaskName == "assemble") {
+                outputDir = "${project.buildDir}/outputs/apk/${flavorName}/${buildTypeName}/"
+            }
+        }
+        logger.log(LogLevel.WARN,"  outputDir=$outputDir")
+        if (outputDir.length() > 0) {
+            println("Config clear task before [$currentTaskName]")
+
+            // 创建删除对应构建目录下的所有文件的task
+            tasks.register("clean${variant.name.capitalize()}Output") {
+                delete fileTree(dir: "$outputDir", include: '**/*.apk')
+            }
+            // 构建变体的打包task任务依赖于对应的清理任务
+            variant.assemble.dependsOn "clean${variant.name.capitalize()}Output"
+        }
+
         def vName = variant.versionName
         def vCode = variant.versionCode
         // >=AGP 3.3
@@ -171,7 +211,8 @@ android {
             // 使用 item.outputFile 会导致以下警告：
             //  API 'variantOutput.getPackageApplication()' is obsolete and has been replaced with
             // 'variant.getPackageApplicationProvider()'.
-            outputFileName = "Greek_${flavorName}_v${vName}_${vCode}_${buildType}_${releaseTime()}.apk"
+            outputFileName = "Greek_${flavorName.capitalize()}_v${vName}_${vCode}_${buildTypeName.capitalize()}_${releaseTime()}.apk"
+//            logger.log(LogLevel.WARN,"  \\--- outputFileName=${outputFileName}")
         }
 //<AGP 3.3
 //        variant.outputs.all { item ->
