@@ -34,6 +34,8 @@ import com.kingz.module.common.utils.PermissionUtils
 import com.kingz.module.common.utils.RandomUtils
 import com.kingz.module.home.BuildConfig
 import com.kingz.module.home.R
+import com.kingz.module.home.databinding.ActivityMainBinding
+import com.kingz.module.home.databinding.SlideMenuLayoutBinding
 import com.kingz.module.wanandroid.WADConstants
 import com.kingz.module.wanandroid.activity.AppBarActivity
 import com.module.slide.SuperSlidingPaneLayout
@@ -46,8 +48,6 @@ import com.zeke.home.service.NSDService
 import com.zeke.home.wanandroid.viewmodel.HomeViewModel
 import com.zeke.kangaroo.utils.ToastUtils
 import com.zeke.kangaroo.zlog.ZLog
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.slide_menu_layout.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.String
@@ -58,7 +58,8 @@ import java.lang.String
  */
 @Route(path = RouterConfig.PAGE_MAIN)
 class HomeActivity : AppBarActivity(), View.OnClickListener{
-
+    private lateinit var mainViewBinding:ActivityMainBinding
+    private lateinit var slideMenuViewBinding:SlideMenuLayoutBinding
     companion object {
         const val TAG = "HomeActivity"
 
@@ -96,7 +97,10 @@ class HomeActivity : AppBarActivity(), View.OnClickListener{
         ViewModelFactory.build { HomeViewModel() }
     }
 
-    override fun getContentLayout(): Int = R.layout.activity_main
+    override fun getContentView(): View? {
+        mainViewBinding = ActivityMainBinding.inflate(layoutInflater)
+        return mainViewBinding.root
+    }
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
@@ -117,13 +121,15 @@ class HomeActivity : AppBarActivity(), View.OnClickListener{
     }
 
     private fun initSlideMenuView() {
-        ivLogo?.setOnClickListener {
+        slideMenuViewBinding = SlideMenuLayoutBinding.inflate(layoutInflater)
+
+        slideMenuViewBinding.ivLogo.setOnClickListener {
             val result = PermissionUtils.verifyReadAndWritePermissions(this, 0)
             //TODO 进行本地图片选择或者跳转
             ZLog.d("verifyReadAndWritePermissions = $result")
         }
 
-        tvCollect?.setOnClickListener {
+        slideMenuViewBinding.tvCollect.setOnClickListener {
             startActivity<AppBarActivity> {
                 val bundle = Bundle()
                 bundle.putInt(WADConstants.Key.KEY_FRAGEMTN_TYPE,
@@ -132,11 +138,11 @@ class HomeActivity : AppBarActivity(), View.OnClickListener{
             }
         }
 
-        setting?.setOnClickListener {
+        slideMenuViewBinding.setting.setOnClickListener {
             Router.startActivity(RouterConfig.PAGE_SETTING)
         }
 
-        tvLogout?.setOnClickListener {
+        slideMenuViewBinding.tvLogout.setOnClickListener {
             if (mIsDoubleClieckLogout) {
                 mIsDoubleClieckLogout = false
                 launchIO { viewModel.userLogout() }
@@ -179,10 +185,10 @@ class HomeActivity : AppBarActivity(), View.OnClickListener{
 
     private fun initSlidingPaneLayout() {
         panelSlidelLsr = HomePanelSlideLsr()
-        slidPanelLayout?.setPanelSlideListener(panelSlidelLsr)
-        slidPanelLayout?.sliderFadeColor = ContextCompat.getColor(this, R.color.black_transparent)
-        slidPanelLayout?.coveredFadeColor = ContextCompat.getColor(this, R.color.transparent)
-        tvVersion?.text = String.format("v%s", BuildConfig.VERSION_NAME)
+        mainViewBinding.slidPanelLayout.setPanelSlideListener(panelSlidelLsr)
+        mainViewBinding.slidPanelLayout.sliderFadeColor = ContextCompat.getColor(this, R.color.black_transparent)
+        mainViewBinding.slidPanelLayout.coveredFadeColor = ContextCompat.getColor(this, R.color.transparent)
+        slideMenuViewBinding.tvVersion.text = String.format("v%s", BuildConfig.VERSION_NAME)
     }
 //   推迟到Web Fragment初始化之后
 
@@ -207,8 +213,8 @@ class HomeActivity : AppBarActivity(), View.OnClickListener{
                 finish()
                 return@Observer
             }
-            tvUser.text = it.username
-            tvLogout.visibility = View.VISIBLE
+            slideMenuViewBinding.tvUser.text = it.username
+            slideMenuViewBinding.tvLogout.visibility = View.VISIBLE
         })
     }
 
@@ -220,7 +226,8 @@ class HomeActivity : AppBarActivity(), View.OnClickListener{
     private fun initViewPager() {
         //禁止左右滑动翻页
 //        contentViewPager.isUserInputEnabled = false
-        contentViewPager.adapter = object : FragmentStateAdapter(this) {
+        val vpager = mainViewBinding.contentViewPager
+        vpager.adapter = object : FragmentStateAdapter(this) {
             override fun getItemCount(): Int = tabMap.size
 
             override fun createFragment(position: Int): Fragment = when (position) {
@@ -231,7 +238,7 @@ class HomeActivity : AppBarActivity(), View.OnClickListener{
                 else -> HomeLiveFragment()  //TODO 后续接入新的Fragment
             }
         }
-        contentViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+        vpager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 ZLog.d("onPageSelected position=${position}")
@@ -239,25 +246,25 @@ class HomeActivity : AppBarActivity(), View.OnClickListener{
         })
 
         // Bind tablayout & viewpager2
-        TabLayoutMediator(appBottomTabLayout,contentViewPager){ tab, position ->
+        TabLayoutMediator(mainViewBinding.appBottomTabLayout,vpager){ tab, position ->
             val key = tabMap.keys.elementAt(position)
             tab.text = key
             tab.setIcon(tabMap[key]!!)
         }.attach()
 
          // 设置tabIcon和tabText的间距
-        for (i in 0 .. appBottomTabLayout.tabCount) {
-            val params = appBottomTabLayout.getTabAt(i)?.view?.getChildAt(0)?.layoutParams as LinearLayout.LayoutParams?
+        for (i in 0 .. mainViewBinding.appBottomTabLayout.tabCount) {
+            val params = mainViewBinding.appBottomTabLayout.getTabAt(i)?.view?.getChildAt(0)?.layoutParams as LinearLayout.LayoutParams?
             params?.bottomMargin = 3
-            appBottomTabLayout.getTabAt(i)?.view?.getChildAt(0)?.layoutParams = params
+            mainViewBinding.appBottomTabLayout.getTabAt(i)?.view?.getChildAt(0)?.layoutParams = params
         }
 
         // 拦截长按操作
-        val tabStrip = appBottomTabLayout.getChildAt(0) as LinearLayout
+        val tabStrip = mainViewBinding.appBottomTabLayout.getChildAt(0) as LinearLayout
         for (i in 0 until tabStrip.childCount) {
             tabStrip.getChildAt(i).setOnLongClickListener { true }
         }
-        appBottomTabLayout.foregroundTintList
+        mainViewBinding.appBottomTabLayout.foregroundTintList
     }
 
     private fun permissionCheck() {
@@ -303,10 +310,10 @@ class HomeActivity : AppBarActivity(), View.OnClickListener{
         when (v?.id) {
             // ----- 老AppBarLayout
             /*R.id.iv_title_menu -> {
-                if (slidPanelLayout?.isOpen == true) {
-                    slidPanelLayout?.closePane()
+                if (mainViewBinding.slidPanelLayout.isOpen == true) {
+                    mainViewBinding.slidPanelLayout.closePane()
                 } else {
-                    slidPanelLayout?.openPane()
+                    mainViewBinding.slidPanelLayout.openPane()
                 }
             }
             R.id.iv_toolbar_right -> {
@@ -333,7 +340,7 @@ class HomeActivity : AppBarActivity(), View.OnClickListener{
 
     private fun addHeart(count: Int) {
         repeat(count) {
-            flutteringLayout.addHeart()
+            slideMenuViewBinding.flutteringLayout.addHeart()
         }
     }
 

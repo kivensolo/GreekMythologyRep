@@ -9,8 +9,7 @@
     android:fitsSystemWindows="true"
     app:compat_sliding="true"
     app:mode="scale_menu"
-    tools:context="com.zeke.home.HomeActivity"
-    tools:viewBindingIgnore="true">
+    tools:context="com.zeke.home.HomeActivity">
 
     <!--左侧滑动菜单区域-->
     <include layout="@layout/slide_menu_layout" />
