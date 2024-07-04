@@ -22,10 +22,13 @@ import com.kingz.module.common.user.UserInfo
 import com.kingz.module.wanandroid.bean.Data
 import com.kingz.module.wanandroid.bean.UserInfoBean
 import com.zeke.kangaroo.zlog.ZLog
+import com.zeke.module_login.databinding.SplashActivityBinding
 import com.zeke.module_login.viewmodel.LoginViewModel
-import kotlinx.android.synthetic.main.form_view.*
-import kotlinx.android.synthetic.main.splash_activity.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * author: King.Z <br>
@@ -34,10 +37,15 @@ import kotlinx.coroutines.*
  */
 @Route(path = RouterConfig.PAGE_LOGIN)
 class SplashActivity : BaseVMActivity(), View.OnClickListener {
+    private lateinit var binding: SplashActivityBinding
 
     private var inputType = InputType.NONE
 
-    override fun getContentLayout() = R.layout.splash_activity
+    override fun getContentView(): View {
+        val inflater =layoutInflater
+        binding = SplashActivityBinding.inflate(inflater)
+        return binding.root
+    }
 
 //    override fun createViewModel(): LoginViewModel {
 //        return ViewModelProvider(this)[LoginViewModel::class.java]
@@ -117,8 +125,8 @@ class SplashActivity : BaseVMActivity(), View.OnClickListener {
             val userInfo = UserInfo.getUserInfor()
             if (userInfo != null) {
                 withContext(Dispatchers.Main) {
-                    buttonLeft?.visibility = View.GONE
-                    buttonRight?.visibility = View.GONE
+                    binding.buttonLeft.visibility = View.GONE
+                    binding.buttonRight.visibility = View.GONE
                     showToast("欢迎回来${userInfo.username}")
                     ZLog.d("initData check userinfo:", "$userInfo")
                     openMainPage()
@@ -130,10 +138,10 @@ class SplashActivity : BaseVMActivity(), View.OnClickListener {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        buttonRight.setOnClickListener(this)
-        buttonLeft.setOnClickListener(this)
-        loginView.post {
-            loginView.apply {
+        binding.buttonRight.setOnClickListener(this)
+        binding.buttonLeft.setOnClickListener(this)
+        binding.loginView.post {
+            binding.loginView.apply {
                 val delta = top + height
                 translationY = (-1 * delta).toFloat()
             }
@@ -144,28 +152,26 @@ class SplashActivity : BaseVMActivity(), View.OnClickListener {
 
     private fun playVideo() {
         val videoUrl = "android.resource://$packageName/${R.raw.welcome_video}"
-        if (videoView is VideoView) {
-            (videoView as VideoView).setVideoPath(videoUrl)
-            (videoView as VideoView).layoutParams = RelativeLayout.LayoutParams(-1, -1)
-            (videoView as VideoView).setOnPreparedListener {
-                it.apply {
-                    isLooping = true
-                    start()
-                }
+        binding.videoView.apply {
+            setVideoPath(videoUrl)
+            layoutParams = RelativeLayout.LayoutParams(-1, -1)
+            setOnPreparedListener {
+                it.isLooping = true
+                it.start()
             }
         }
     }
 
     private fun playAppNameAnim() {
-        ObjectAnimator.ofFloat(appName, "alpha", 0f, 1f).apply {
+        ObjectAnimator.ofFloat(binding.appName, "alpha", 0f, 1f).apply {
             duration = 4000
             repeatCount = 1
             repeatMode = ObjectAnimator.REVERSE
             start()
             addListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
-                    if (appName.visibility != View.INVISIBLE) {
-                        appName.visibility = View.INVISIBLE
+                    if (binding.appName.visibility != View.INVISIBLE) {
+                        binding.appName.visibility = View.INVISIBLE
                     }
                 }
             })
@@ -173,20 +179,20 @@ class SplashActivity : BaseVMActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
-        val deltaY = loginView.top + loginView.height
+        val deltaY = binding.loginView.top + binding.loginView.height
         when (inputType) {
             InputType.NONE -> {
-                if (v == buttonLeft) {
+                if (v == binding.buttonLeft) {
                     inputType = InputType.LOGIN
                     // change text to login-mode
                     updateButtonText(
                         resources.getText(R.string.button_confirm_login),
                         resources.getText(R.string.button_cancel_login)
                     )
-                } else if (v == buttonRight) {
+                } else if (v == binding.buttonRight) {
                     inputType = InputType.SIGN_UP
-                    re_pwd.visibility = View.VISIBLE
-                    re_pwd_line.visibility = View.VISIBLE
+                    binding.loginView.getBinding().rePwd.visibility = View.VISIBLE
+                    binding.loginView.getBinding().rePwdLine.visibility = View.VISIBLE
                     // change text to singup-mode
                     updateButtonText(
                         resources.getText(R.string.button_confirm_signup),
@@ -197,14 +203,14 @@ class SplashActivity : BaseVMActivity(), View.OnClickListener {
             }
             InputType.LOGIN -> {
                 when (v?.id) {
-                    buttonLeft.id -> confirmLogin()
-                    buttonRight.id -> onLoginCancel(deltaY)
+                    binding.buttonLeft.id -> confirmLogin()
+                    binding.buttonRight.id -> onLoginCancel(deltaY)
                 }
             }
             InputType.SIGN_UP -> {
                 when (v?.id) {
-                    buttonLeft.id -> doUserRegister()
-                    buttonRight.id -> onRegisterCancel(deltaY)
+                    binding.buttonLeft.id -> doUserRegister()
+                    binding.buttonRight.id -> onRegisterCancel(deltaY)
                 }
             }
         }
@@ -216,8 +222,8 @@ class SplashActivity : BaseVMActivity(), View.OnClickListener {
     private fun onRegisterCancel(deltaY: Int) {
         disMissLoginView(deltaY)
         inputType = InputType.NONE
-        buttonLeft.setText(R.string.button_login)
-        buttonRight.setText(R.string.button_signup)
+        binding.buttonLeft.setText(R.string.button_login)
+        binding.buttonRight.setText(R.string.button_signup)
     }
 
     /**
@@ -240,35 +246,36 @@ class SplashActivity : BaseVMActivity(), View.OnClickListener {
         if(BuildConfig.DEBUG){
             viewModel.login("kivensolo", "denglu18")
         }else{
-            if (TextUtils.isEmpty(login_name?.text ?: "") ||
-                TextUtils.isEmpty(login_pwd?.text ?: "")) {
+            if (TextUtils.isEmpty(binding.loginView.getBinding().loginName.text ?: "") ||
+                TextUtils.isEmpty(binding.loginView.getBinding().loginPwd.text ?: "")) {
                 ZLog.e("请输入账号和密码")
                 showToast(getStringFromRes(R.string.user_info_invalid_tips))
             } else {
-                viewModel.login(login_name!!.text, login_pwd!!.text)
+                viewModel.login(binding.loginView.getBinding().loginName.text, binding.loginView.getBinding().loginPwd.text)
             }
         }
     }
 
     private fun updateButtonText(left: CharSequence, right: CharSequence) {
-        buttonLeft?.text = left
-        buttonRight?.text = right
+        binding.buttonLeft.text = left
+        binding.buttonRight.text = right
     }
 
     private fun disMissLoginView(delta: Int) {
         ZLog.d("disMissLoginView")
-        loginView.animate().apply {
+        binding.loginView.animate().apply {
             translationY((-1 * delta).toFloat())
             alpha(0f)
             duration = 500
         }.start()
-        re_pwd.visibility = View.GONE
-        re_pwd_line.visibility = View.GONE
+        binding.loginView.getBinding().rePwd.visibility = View.GONE
+        binding.loginView.getBinding().rePwdLine.visibility = View.GONE
     }
 
     private fun showLoginView() {
         ZLog.d("showLoginView")
-        loginView.animate().apply {
+
+        binding.loginView.animate().apply {
             translationY(0f)
             alpha(1f)
             duration = 500
@@ -278,23 +285,23 @@ class SplashActivity : BaseVMActivity(), View.OnClickListener {
     // TODO 密码强度判断
     private fun doUserRegister() {
         ZLog.d("Click to register.")
-        if (TextUtils.isEmpty(login_name?.text)) {
+        if (TextUtils.isEmpty(binding.loginView.getBinding().loginName?.text)) {
             showToast("请输入账户名")
             return
-        } else if (TextUtils.isEmpty(login_pwd?.text) || login_pwd.text.length <= 7) {
+        } else if (TextUtils.isEmpty(binding.loginView.getBinding().loginPwd?.text) || binding.loginView.getBinding().loginPwd.text.length <= 7) {
             showToast("请输入有效密码(长度大于7)")
             return
-        } else if (TextUtils.isEmpty(re_pwd?.text)) {
+        } else if (TextUtils.isEmpty(binding.loginView.getBinding().rePwd?.text)) {
             showToast("请确认注册密码")
             return
-        } else if (!TextUtils.equals(re_pwd?.text, login_pwd?.text)) {
+        } else if (!TextUtils.equals(binding.loginView.getBinding().rePwd?.text, binding.loginView.getBinding().loginPwd?.text)) {
             showToast("请输入相同密码")
             return
         }
         viewModel.singUp(
-            login_name?.text.toString(),
-            login_pwd?.text.toString(),
-            login_pwd?.text.toString()
+            binding.loginView.getBinding().loginName?.text.toString(),
+            binding.loginView.getBinding().loginPwd?.text.toString(),
+            binding.loginView.getBinding().loginPwd?.text.toString()
         )
     }
 
@@ -308,18 +315,18 @@ class SplashActivity : BaseVMActivity(), View.OnClickListener {
 
     override fun onPause() {
         super.onPause()
-        (videoView as VideoView).pause()
+        (binding.videoView as VideoView).pause()
     }
 
     override fun onResume() {
         super.onResume()
-        if (!(videoView as VideoView).isPlaying) {
-            (videoView as VideoView).start()
+        if (!(binding.videoView as VideoView).isPlaying) {
+            (binding.videoView as VideoView).start()
         }
     }
 
     override fun onDestroy() {
-        (videoView as VideoView).stopPlayback()
+        (binding.videoView as VideoView).stopPlayback()
         super.onDestroy()
     }
 

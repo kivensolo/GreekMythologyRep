@@ -4,13 +4,13 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
-import com.zeke.module_login.R
-import kotlinx.android.synthetic.main.form_view.view.*
+import com.zeke.module_login.databinding.FormViewBinding
 
 /**
  * 启动登录页面的用户账号登录视图
  */
 class LogininView : LinearLayout {
+    private lateinit var formViewbinding: FormViewBinding
 
     constructor(context: Context) : super(context) {
         loadView()
@@ -29,12 +29,14 @@ class LogininView : LinearLayout {
 
     private fun loadView() {
         orientation = VERTICAL
-        LayoutInflater.from(context).inflate(R.layout.form_view, this)
+        formViewbinding = FormViewBinding.inflate(LayoutInflater.from(context), this);
     }
+
+    fun getBinding():FormViewBinding = formViewbinding
 
     override fun setFocusable(focusable: Boolean) {
         super.setFocusable(focusable)
-        login_name?.isFocusable = focusable
-        login_pwd?.isFocusable = focusable
+        formViewbinding.loginName.isFocusable = focusable
+        formViewbinding.loginPwd.isFocusable = focusable
     }
 }

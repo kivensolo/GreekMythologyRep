@@ -4,7 +4,6 @@ if (enableLoginModule.toBoolean()) {
     apply plugin: 'com.android.application'
 }
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 def root_android = rootProject.ext.android
@@ -33,6 +32,10 @@ android {
             arguments {
                 arg("AROUTER_MODULE_NAME", project.getName())
             }
+        }
+
+        viewBinding{
+            enabled=true
         }
     }
 
