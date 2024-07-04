@@ -10,7 +10,17 @@
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.LAUNCHER" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- 启动页的自定义Scheme,方便Web页面拉起 -->
+                <data
+                    android:host="greek.com"
+                    android:pathPrefix="/splash"
+                    android:scheme="zekefish" />
             </intent-filter>
         </activity>
 

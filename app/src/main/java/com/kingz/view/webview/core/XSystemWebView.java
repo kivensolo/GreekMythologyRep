@@ -1,6 +1,7 @@
 package com.kingz.view.webview.core;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Handler;
 import android.util.AttributeSet;
@@ -8,7 +9,10 @@ import android.util.Log;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.JavascriptInterface;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
+
+import androidx.annotation.NonNull;
 
 import com.kingz.customdemo.R;
 import com.kingz.utils.ToastTools;
@@ -66,7 +70,18 @@ public abstract class XSystemWebView extends WebView implements IWebView {
         //设置缩放
         inittialScale();
 
-        setWebViewClient(new XWebViewClient(){});
+        setWebViewClient(new XWebViewClient(){
+            @Override
+            public boolean shouldOverrideUrlLoading(@NonNull WebView view, @NonNull WebResourceRequest request) {
+                if (request.getUrl().getScheme().equals("zekefish")) {
+                    // 处理自定义scheme的请求，比如启动对应Activity
+                    Intent intent = new Intent(Intent.ACTION_VIEW, request.getUrl());
+                    getViewContext().startActivity(intent);
+                    return true;
+                }
+                return super.shouldOverrideUrlLoading(view, request);
+            }
+        });
 
         XJsBridgeImpl defaultJsBridge = new XJsBridgeImpl(this);
         defaultJsBridge.bindInterfaceObject(new JsPlayerInterfaceObject());

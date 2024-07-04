@@ -6,12 +6,14 @@ import android.os.SystemClock
 import android.text.TextUtils
 import android.util.Log
 import android.webkit.SslErrorHandler
+import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import com.zeke.kangaroo.zlog.ZLog.Companion.i
+import java.net.MalformedURLException
 import java.net.URL
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
+
 
 /**
  * author: King.Z
@@ -62,9 +64,8 @@ abstract class XWebViewClient : WebViewClient() {
         super.onReceivedSslError(view, handler, error)
     }
 
-    override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-        i(TAG, "网页重定向：$url")
-        return super.shouldOverrideUrlLoading(view, url)
+    override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
+        return super.shouldOverrideUrlLoading(view, request)
     }
 
     companion object {
@@ -85,11 +86,15 @@ abstract class XWebViewClient : WebViewClient() {
                     hexString.append(String.format("%02x", b))
                 }
                 return hexString.toString()
+            } catch (e: MalformedURLException) {
+                Log.e(TAG, "Invalid URL: $urlString", e)
+                return urlString?:"emptyUrl"
             } catch (e: NoSuchAlgorithmException) {
-                throw RuntimeException("MD5 algorithm not found", e)
+                e.printStackTrace()
             } catch (e: Exception) {
-                throw RuntimeException("Error while converting URL to MD5", e)
+                e.printStackTrace()
             }
+            return urlString?:"emptyUrl"
         }
     }
 }

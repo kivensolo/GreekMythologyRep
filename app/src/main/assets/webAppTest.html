@@ -10,7 +10,14 @@
 
     <script type="text/javascript" src="js/webAndroidBridge.js"></script>
 </head>
-
+<body>
+    <div style="width:200px;height:200px;background-color:yellow;">
+        I'm box in web
+    </div>
+    <p style="font-size:20px;text-align:left;">
+        <a href="zekefish://greek.com/splash">打开App欢迎页</a>
+    </p>
+</body>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var button = document.getElementById('toastBtn');
@@ -39,9 +46,5 @@ var button2 = document.getElementById('logBtn');
     });
 </script>
 
-<body>
-<div style="width:200px;height:200px;background-color:yellow;">
-    I'm box in web
-</div>
-</body>
+
 </html>

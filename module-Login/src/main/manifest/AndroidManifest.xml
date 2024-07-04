@@ -23,12 +23,25 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+                <!-- 启动页的自定义Scheme,方便Web页面拉起 -->
                 <data
-                    android:host="asd"
-                    android:pathPrefix="/asds"
-                    android:scheme="http" />
+                    android:host="greek"
+                    android:pathPrefix="/splash"
+                    android:scheme="zekefish" />
             </intent-filter>
         </activity>
+        <activity-alias
+            android:name="com.zeke.module_login.SplashActivityRed"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@drawable/ic_launcher_background_red"
+            android:label="GeekMyth Red"
+            android:targetActivity="com.zeke.module_login.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity-alias>
     </application>
 
 </manifest>
