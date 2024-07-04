@@ -88,13 +88,14 @@ class SimplePageContentFragment : BaseFragment(), IView, View.OnClickListener {
             }
 
             holder.setOnClickListener {
-                Router.startActivity(RouterConfig.PAGE_PLAYER, Bundle().apply {
-                    putParcelable(MediaParams.PARAMS_KEY ,MediaParams().apply{
+                Router.startActivity(RouterConfig.PAGE_PLAYER){
+                    it.withParcelable(MediaParams.PARAMS_KEY,
+                        MediaParams().apply{
                         videoName = data.name
                         videoUrl = data.live
                         videoType = "live"
                     })
-                })
+                }
             }
         }
     }

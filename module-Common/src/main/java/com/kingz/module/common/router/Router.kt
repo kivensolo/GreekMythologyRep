@@ -3,6 +3,7 @@ package com.kingz.module.common.router
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.TextUtils
+import com.alibaba.android.arouter.facade.Postcard
 import com.alibaba.android.arouter.launcher.ARouter
 import com.kingz.module.common.R
 import com.zeke.kangaroo.zlog.ZLog
@@ -19,6 +20,14 @@ object Router {
         ARouter.getInstance().build(url).navigation()
     }
 
+    fun startActivity(url: String,bolck:(card: Postcard)->Unit) {
+        if (TextUtils.isEmpty(url)) return
+        // Simple jump within application (Jump via URL in 'Advanced usage')
+        val postCard = ARouter.getInstance().build(url)
+        bolck(postCard)
+        postCard.navigation()
+    }
+
     @SuppressLint("ObsoleteSdkInt")
     fun startActivity(url: String, bundle: Bundle, anim:Boolean = true) {
         if (TextUtils.isEmpty(url)) return
@@ -28,6 +37,7 @@ object Router {
         }
         postCard.with(bundle).navigation()
     }
+
 
     fun startActivityWithGreen(url: String) {
         if (TextUtils.isEmpty(url)) return

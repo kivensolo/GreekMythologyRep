@@ -14,6 +14,7 @@ import com.kingz.module.common.base.IPresenter
 import com.kingz.module.common.bean.MediaParams
 import com.zeke.kangaroo.utils.ScreenDisplayUtils
 import com.zeke.kangaroo.utils.VolumeUtils
+import com.zeke.kangaroo.zlog.ZLog
 import com.zeke.module_player.R
 import com.zeke.play.BasePlayPop
 import com.zeke.play.MediaPlayTool
@@ -34,7 +35,7 @@ import kotlin.math.min
  * description：播放器Fragment
  * 支持正常的播控操作
  */
-class PlayFragment : BaseFragment(), IPlayerView, CustomAdapt {
+class PlayFragment(var autoPlay:Boolean) : BaseFragment(), IPlayerView, CustomAdapt {
     private var mediaParams: MediaParams? = null
     private val basePlayPop: BasePlayPop? = null
     //UI交互控制器
@@ -54,9 +55,9 @@ class PlayFragment : BaseFragment(), IPlayerView, CustomAdapt {
     companion object {
         private const val ORIENTATION_CHANGE_DELAY_MS = 2000L
 
-        fun newInstance(): PlayFragment {
+        fun newInstance(autoPlay:Boolean = false): PlayFragment {
             AutoSizeConfig.getInstance().isCustomFragment = true
-            return PlayFragment()
+            return PlayFragment(autoPlay)
         }
     }
 
@@ -80,6 +81,9 @@ class PlayFragment : BaseFragment(), IPlayerView, CustomAdapt {
         if (arguments != null) {
             mediaParams = arguments!!.getParcelable(MediaParams.PARAMS_KEY)
         }
+        val mediaPlayer = MediaPlayTool.getInstance().mediaPlayerCore
+        playPresenter = PlayPresenter(mediaPlayer, this)
+        playPresenter?.setPlayParams(mediaParams)
     }
 
     override fun getLayoutId(): Int = R.layout.player_view_controller_basic_new
@@ -111,15 +115,20 @@ class PlayFragment : BaseFragment(), IPlayerView, CustomAdapt {
             }
             true
         }
-        val mediaPlayer = MediaPlayTool.getInstance().mediaPlayerCore
-        playPresenter = PlayPresenter(mediaPlayer, this)
+
         // TODO 根据类型初始化不同的UISwitcher
         mUiSwitcher = PlayerUiSwitcher(playPresenter, rootView).apply {
             setOnClickListener(this@PlayFragment)
             setVideoTitle(mediaParams?.videoName)
             setOnSeekBarChangeListener(playPresenter?.seekBarChangeListener)
         }
-        playPresenter?.onCreateView()
+        playPresenter?.apply {
+            onCreateView()
+            if (autoPlay) {
+                ZLog.d("autoPlay ")
+                startPlay()
+            }
+        }
     }
 
     override fun onClick(v: View) {
@@ -152,14 +161,13 @@ class PlayFragment : BaseFragment(), IPlayerView, CustomAdapt {
     /**
      * 设置影片数据
      */
-    fun setVideoInfo(mediaParams :MediaParams){
-        this.mediaParams = mediaParams
-        val bundle = Bundle()
-        bundle.putParcelable(MediaParams.PARAMS_KEY, mediaParams)
-        arguments = bundle
-
-        //数据传递至presenter
-        playPresenter?.setPlayParams(mediaParams)
+    fun setVideoInfo(info: MediaParams?) {
+        info?.apply {
+            mediaParams = this
+            val bundle = Bundle()
+            bundle.putParcelable(MediaParams.PARAMS_KEY, mediaParams)
+            arguments = bundle
+        }
     }
 
     fun startPlay(){
