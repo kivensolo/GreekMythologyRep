@@ -40,8 +40,16 @@ abstract class BaseVMFragment< T : BaseReactiveViewModel>
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        rootView = inflater.inflate(getLayoutResID(), container, false)
+        rootView = inflateView(inflater, container, savedInstanceState)
         return rootView
+    }
+
+    open fun inflateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(getLayoutResID(), container, false)
     }
 
     /**
@@ -76,6 +84,7 @@ abstract class BaseVMFragment< T : BaseReactiveViewModel>
     open fun initViewModel() {}
 
     /** 子类重写 获取layoutId **/
+    @Deprecated("被inflateView代替，子类复写inflateView时，就无需实现此方法")
     abstract fun getLayoutResID(): Int
 
     abstract fun initView()

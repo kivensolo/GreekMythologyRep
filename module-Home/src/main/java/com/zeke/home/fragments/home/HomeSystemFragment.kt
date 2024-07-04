@@ -1,5 +1,9 @@
 package com.zeke.home.fragments.home
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
@@ -8,18 +12,20 @@ import com.google.android.material.tabs.TabLayout
 import com.kingz.base.factory.ViewModelFactory
 import com.kingz.module.common.setting.SettingUtil
 import com.kingz.module.home.R
+import com.kingz.module.home.databinding.FragmentSystemBinding
 import com.kingz.module.wanandroid.fragemnts.CommonFragment
 import com.kingz.module.wanandroid.viewmodel.WanAndroidViewModelV2
 import com.zeke.home.wanandroid.KnowledgeTreeFragment
 import com.zeke.home.wanandroid.viewmodel.HomeViewModel
 import com.zeke.kangaroo.zlog.ZLog
-import kotlinx.android.synthetic.main.fragment_system.*
 
 /**
  * date：2022/01/28
  * description：首页 - 体系 Fragment
  */
 class HomeSystemFragment : CommonFragment<WanAndroidViewModelV2>() {
+    private lateinit var bindinbg:FragmentSystemBinding
+
     private val titleList = mutableListOf<String>()
     private val fragmentList = mutableListOf<Fragment>()
     private val systemPagerAdapter: SystemPagerAdapter by lazy {
@@ -31,7 +37,16 @@ class HomeSystemFragment : CommonFragment<WanAndroidViewModelV2>() {
     }
 
     override fun getLayoutResID(): Int {
-        return R.layout.fragment_system
+        TODO("Not yet implemented")
+    }
+    override fun inflateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        bindinbg = FragmentSystemBinding.inflate(layoutInflater)
+        rootView = bindinbg.root
+        return rootView
     }
 
     override fun initViewModel() {
@@ -52,20 +67,20 @@ class HomeSystemFragment : CommonFragment<WanAndroidViewModelV2>() {
         fragmentList.add(KnowledgeTreeFragment.getInstance())
         fragmentList.add(KnowledgeTreeFragment.getInstance())
 
-        viewPager.run {
-            addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
+        bindinbg.viewPager.run {
+            addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(bindinbg.tabLayout))
             adapter = systemPagerAdapter
         }
-        tabLayout.run {
-            setupWithViewPager(viewPager)
-            addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(viewPager))
+        bindinbg.tabLayout.run {
+            setupWithViewPager(bindinbg.viewPager)
+            addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(bindinbg.viewPager))
             addOnTabSelectedListener(onTabSelectedListener)
         }
         refreshColor()
     }
 
     fun refreshColor() {
-        tabLayout.setBackgroundColor(SettingUtil.getAppThemeColor())
+        bindinbg.tabLayout.setBackgroundColor(SettingUtil.getAppThemeColor())
     }
 
     override fun initData() {
@@ -85,7 +100,7 @@ class HomeSystemFragment : CommonFragment<WanAndroidViewModelV2>() {
         override fun onTabSelected(tab: TabLayout.Tab?) {
             // 默认切换的时候，会有一个过渡动画，设为false后，取消动画，直接显示
             tab?.let {
-                viewPager.setCurrentItem(it.position, false)
+                bindinbg.viewPager.setCurrentItem(it.position, false)
             }
         }
     }
