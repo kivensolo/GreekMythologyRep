@@ -1,15 +1,14 @@
 plugins {
     id 'com.android.library'
-    id 'kotlin-android'
-    id 'kotlin-android-extensions'
+    id 'org.jetbrains.kotlin.android'
 }
 
 android {
-    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    compileSdk build_versions.compile_sdk
 
     defaultConfig {
-        minSdkVersion rootProject.ext.android.minSdkVersion
-        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        minSdkVersion build_versions.min_sdk
+        targetSdk build_versions.target_sdk
         versionCode 34
         versionName "4.1.9"
     }
@@ -22,6 +21,9 @@ android {
     lintOptions {
         checkReleaseBuilds false
         abortOnError false
+    }
+    viewBinding {
+        enabled = true
     }
 }
 

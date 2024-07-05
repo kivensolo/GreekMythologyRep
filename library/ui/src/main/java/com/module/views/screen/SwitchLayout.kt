@@ -9,7 +9,6 @@ import android.widget.FrameLayout
  * Author: liliangyi
  * Maintainer: liliangyi
  * Date: 2020/7/21
- * Copyright: 2020 www.xgimi.com Inc. All rights reserved.
  * Desc:
  */
 class SwitchLayout : FrameLayout {

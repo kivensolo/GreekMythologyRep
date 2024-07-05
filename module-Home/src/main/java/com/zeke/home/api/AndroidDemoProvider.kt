@@ -58,7 +58,7 @@ class AndroidDemoProvider : DataApiService<MutableList<DemoGroup>> {
      */
     private fun checkMainList(assetManager: AssetManager, uriList: ArrayList<String>, context: Context) {
         try {
-            for (asset in assetManager.list("")) {
+            for (asset in assetManager.list("")!!) {
                 if (asset.endsWith(".mainlist.json")) {
                     //uriList.add("asset:///" + asset);
                     uriList.add(asset)
@@ -80,6 +80,9 @@ class AndroidDemoProvider : DataApiService<MutableList<DemoGroup>> {
             val demoGroup = ArrayList<DemoGroup>()
 
             for (uri in parms) {
+                if(uri == null){
+                    continue
+                }
                 try {
                     val inputStream = ctx.assets.open(uri)
                     readSampleGroups(JsonReader(InputStreamReader(inputStream,

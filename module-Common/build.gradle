@@ -1,19 +1,17 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.kotlin.kapt'
+}
 
 def root_dependencies = rootProject.ext.dependencies
 
 android {
-    compileSdkVersion rootProject.ext.android.compileSdkVersion
-    buildToolsVersion rootProject.ext.android.buildToolsVersion
+    compileSdk build_versions.compile_sdk
 
     defaultConfig {
-        minSdkVersion rootProject.ext.android.minSdkVersion
-        targetSdkVersion rootProject.ext.android.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        minSdk build_versions.min_sdk
+        targetSdk build_versions.target_sdk
         multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -35,6 +33,10 @@ android {
     kotlinOptions {
         // 设置jvm target为1.8 否则某些ktx的语法糖无法使用
         jvmTarget = "1.8"
+    }
+
+    viewBinding {
+        enabled = true
     }
 }
 

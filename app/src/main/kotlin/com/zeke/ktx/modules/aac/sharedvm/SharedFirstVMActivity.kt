@@ -2,9 +2,9 @@ package com.zeke.ktx.modules.aac.sharedvm
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.kingz.customdemo.R
-import kotlinx.android.synthetic.main.activity_vmshared_first.*
 
 /**
  * author: King.Z <br>
@@ -22,7 +22,8 @@ class SharedFirstVMActivity : AppCompatActivity() {
         vm.log()
 
         setContentView(R.layout.activity_vmshared_first)
-        open_second_page.setOnClickListener {
+        var openSecondBtn = findViewById<Button>(R.id.open_second_page)
+        openSecondBtn.setOnClickListener {
             startActivity(Intent(this,
                 SharedSecondVMActivity::class.java))
         }

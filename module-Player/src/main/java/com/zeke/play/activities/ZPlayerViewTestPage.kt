@@ -1,10 +1,11 @@
 package com.zeke.play.activities
 
 import android.os.Bundle
+import android.widget.Button
 import com.kingz.module.common.base.BaseActivity
 import com.kingz.module.common.bean.MediaParams
 import com.zeke.module_player.R
-import kotlinx.android.synthetic.main.activity_zplayer.*
+import com.zeke.play.wigets.SimpleZPlayerView
 
 /**
  * author：ZekeWang
@@ -16,7 +17,10 @@ class ZPlayerViewTestPage: BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_zplayer)
 
-        with(player_view){
+        var playerView = findViewById<SimpleZPlayerView>(R.id.player_view)
+        var play_player = findViewById<Button>(R.id.play_player)
+        var pause_player = findViewById<Button>(R.id.pause_player)
+        with(playerView){
             val url = "http://baobab.kaiyanapp.com/api/v1/playUrl?vid=257456&resourceType=video&editionType=high&source=ucloud&playUrlType=url_oss&udid=435865baacfc49499632ea13c5a78f944c2f28aa"
             setDataSource(MediaParams().apply {
                 videoUrl = url
@@ -25,10 +29,10 @@ class ZPlayerViewTestPage: BaseActivity() {
         }
 
         play_player.setOnClickListener{
-            player_view.play()
+            playerView.play()
         }
         pause_player.setOnClickListener {
-            player_view.stop()
+            playerView.stop()
         }
     }
 }

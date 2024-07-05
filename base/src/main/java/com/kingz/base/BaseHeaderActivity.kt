@@ -11,7 +11,6 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.viewbinding.ViewBinding
 import com.kingz.base.databinding.ViewPageHeaderBinding
 import com.zeke.kangaroo.utils.ScreenDisplayUtils
-import kotlinx.android.synthetic.main.view_page_header.*
 
 /**
  * 带Title的页面Base类
@@ -24,7 +23,7 @@ abstract class BaseHeaderActivity<T : ViewBinding> : BaseVMActivity() {
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
         headerBinding = ViewPageHeaderBinding.inflate(LayoutInflater.from(this))
-        toolbar_left?.setOnClickListener {
+        headerBinding.toolbarLeft.setOnClickListener {
             finish()
         }
 

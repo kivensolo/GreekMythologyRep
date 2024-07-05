@@ -7,7 +7,7 @@ import com.gyf.immersionbar.BarHide
 import com.gyf.immersionbar.ImmersionBar
 import com.kingz.module.common.router.RouterConfig
 import com.zeke.demo.R
-import kotlinx.android.synthetic.main.activity_appbarlayout_demo.*
+import com.zeke.demo.databinding.ActivityAppbarlayoutDemoBinding
 
 /**
  * author：ZekeWang
@@ -26,20 +26,22 @@ import kotlinx.android.synthetic.main.activity_appbarlayout_demo.*
 class ImmersionBarDemoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_appbarlayout_demo)
 
-        transparent_status?.setOnClickListener {
+        val viewBind:ActivityAppbarlayoutDemoBinding = ActivityAppbarlayoutDemoBinding.inflate(layoutInflater)
+        setContentView(viewBind.root)
+
+        viewBind.transparentStatus.setOnClickListener {
             // 手动模式
             // <= 4.4
-//            window?.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-//            window?.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
+    //            window?.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+    //            window?.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
             // >= 5.0
-//            val flag = (View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-//                    or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-//                    or View.SYSTEM_UI_FLAG_LAYOUT_STABLE)
-//            window?.decorView?.systemUiVisibility = flag
-//            window?.statusBarColor = Color.TRANSPARENT
-//            window?.navigationBarColor = Color.TRANSPARENT
+    //            val flag = (View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+    //                    or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+    //                    or View.SYSTEM_UI_FLAG_LAYOUT_STABLE)
+    //            window?.decorView?.systemUiVisibility = flag
+    //            window?.statusBarColor = Color.TRANSPARENT
+    //            window?.navigationBarColor = Color.TRANSPARENT
 
             // 引用第三方库
             ImmersionBar.with(this)
@@ -47,14 +49,14 @@ class ImmersionBarDemoActivity : AppCompatActivity() {
                 .init()
         }
 
-        hide_bars?.setOnClickListener {
+        viewBind.hideBars.setOnClickListener {
             ImmersionBar.with(this)
                 .fullScreen(true)
                 .hideBar(BarHide.FLAG_HIDE_BAR)
                 .init()
         }
 
-        change_bars_color?.setOnClickListener {
+        viewBind.changeBarsColor.setOnClickListener {
             // >= 5.0 设置状态栏颜色和Actionbar一样
 //            window?.statusBarColor = Color.RED
 //            window?.navigationBarColor = Color.RED
@@ -64,13 +66,13 @@ class ImmersionBarDemoActivity : AppCompatActivity() {
                 .init()
         }
 
-        hide_navigation_only?.setOnClickListener {
+        viewBind.hideNavigationOnly.setOnClickListener {
             ImmersionBar.with(this)
                 .hideBar(BarHide.FLAG_HIDE_NAVIGATION_BAR)
                 .init()
         }
 
-        change_navigation_color.setOnClickListener {
+        viewBind.changeNavigationColor.setOnClickListener {
             ImmersionBar.with(this)
                 .fullScreen(false)
                 .hideBar(BarHide.FLAG_SHOW_BAR)
@@ -78,7 +80,7 @@ class ImmersionBarDemoActivity : AppCompatActivity() {
                 .init()
         }
 
-        reset_bars?.setOnClickListener {
+        viewBind.resetBars.setOnClickListener {
             ImmersionBar.with(this)
                 .fullScreen(false)
                 .hideBar(BarHide.FLAG_SHOW_BAR)
@@ -87,7 +89,7 @@ class ImmersionBarDemoActivity : AppCompatActivity() {
         }
 
         // Light模式 ---- 在 Android 6.0 的以上，状态栏支持字体变灰色，Android 8.0 以上，导航栏支持导航按钮变灰色
-        change_state_bar_text_color?.setOnClickListener {
+        viewBind.changeStateBarTextColor.setOnClickListener {
             //手动调用
 //            val flag = (View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
 //                    or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN

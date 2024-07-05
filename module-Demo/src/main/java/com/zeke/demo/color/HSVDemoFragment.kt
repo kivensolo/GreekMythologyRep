@@ -7,9 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.kingz.base.factory.ViewModelFactory
 import com.kingz.module.wanandroid.fragemnts.CommonFragment
-import com.zeke.demo.R
 import com.zeke.demo.databinding.ActivityHvsDemoBinding
-import kotlinx.android.synthetic.main.activity_hvs_demo.*
 
 /**
  * author：ZekeWang
@@ -30,6 +28,8 @@ import kotlinx.android.synthetic.main.activity_hvs_demo.*
  */
 class HSVDemoFragment : CommonFragment<ColorViewModel>() {
     private var mColor = 0
+    private lateinit var viewBinding: ActivityHvsDemoBinding
+
     private lateinit var  colorLightBinding:ActivityHvsDemoBinding
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,7 +40,13 @@ class HSVDemoFragment : CommonFragment<ColorViewModel>() {
         return colorLightBinding.root
     }
 
-    override fun getLayoutResID(): Int = R.layout.activity_hvs_demo
+    override fun getLayoutResID(): Int {
+        TODO("Not yet implemented")
+    }
+    override fun inflateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        viewBinding = ActivityHvsDemoBinding.inflate(inflater, container, false)
+        return viewBinding.root
+    }
 
     override val viewModel: ColorViewModel by viewModels {
         ViewModelFactory.build { ColorViewModel() }
@@ -48,22 +54,22 @@ class HSVDemoFragment : CommonFragment<ColorViewModel>() {
 
     override fun onViewCreated() {
         super.onViewCreated()
-        color_picker.apply {
+        viewBinding.colorPicker.apply {
             //颜色初始化
             mColor = color
             colorLightBinding.maskView.setColor(color)
             setOnColorSelectedListener { mColor = it}
             setOnColorChangedListener {
                 mColor = it
-                mask_view?.setColor(it)
+                viewBinding.maskView.setColor(it)
             }
 
-            addOpacityBar(opacityBar)
+            addOpacityBar(viewBinding.opacityBar)
 
-            addHueBar(hueBar)
-            addSaturationBar(saturationBar)
-            addValueBar(valueBar)
-            addSVBar(svBar)
+            addHueBar(viewBinding.hueBar)
+            addSaturationBar(viewBinding.saturationBar)
+            addValueBar(viewBinding.valueBar)
+            addSVBar(viewBinding.svBar)
         }
     }
 }

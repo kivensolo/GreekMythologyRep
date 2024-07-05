@@ -32,7 +32,7 @@ class RecomDataServiceImpl : DataApiService<MutableList<TemplatePageData>> {
         val uriList = ArrayList<String>()
 
         try {
-            for (asset in assetManager.list("")) {
+            for (asset in assetManager.list("")!!) {
                 if (asset.endsWith("_data.json")) {
                     uriList.add(asset)
                 }
@@ -57,6 +57,9 @@ class RecomDataServiceImpl : DataApiService<MutableList<TemplatePageData>> {
             val homeRecomData = ArrayList<TemplatePageData>()
 
             for (uri in parms) {
+                if(uri == null){
+                    continue
+                }
                 try {
                     val inputStream = ctx.assets.open(uri)
                     praseLocalJsonData(JsonReader(

@@ -4,12 +4,17 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
 import android.content.Context
-import android.graphics.*
+import android.graphics.BitmapShader
+import android.graphics.Canvas
+import android.graphics.Matrix
+import android.graphics.Paint
+import android.graphics.Shader
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
@@ -17,17 +22,16 @@ import android.widget.FrameLayout
 import com.module.tools.BezierCurveHelper
 import com.module.tools.ScreenTools
 import com.module.views.R
-import kotlinx.android.synthetic.main.view_text.view.*
-
+import com.module.views.databinding.ViewTextBinding
 
 /**
  * Author: liliangyi
  * Maintainer: liliangyi
  * Date: 2020/7/21
- * Copyright: 2020 www.xgimi.com Inc. All rights reserved.
- * Desc:
+ * binding.desc: 切换效果的View
  */
 class SwitchView : FrameLayout {
+    private var binding:ViewTextBinding = ViewTextBinding.inflate((LayoutInflater.from(context)))
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
@@ -89,22 +93,22 @@ class SwitchView : FrameLayout {
                     }
 
             addView(textLayout)
-            desc.setLineSpacing(10f, 1.0f)
+            binding.desc.setLineSpacing(10f, 1.0f)
         }
         // 处理数据
         if (titleTxt.isNullOrEmpty()) {
-            title.visibility = View.GONE
-            desc.maxLines = 3
-            desc.maxEms = 16
-            desc.layoutParams.width = 660
-            desc.setTextSize(TypedValue.COMPLEX_UNIT_PX, 40f)
+            binding.title.visibility = View.GONE
+            binding.desc.maxLines = 3
+            binding.desc.maxEms = 16
+            binding.desc.layoutParams.width = 660
+            binding.desc.setTextSize(TypedValue.COMPLEX_UNIT_PX, 40f)
         } else {
-            title.text = titleTxt
+            binding.title.text = titleTxt
         }
         if (descTxt.isNullOrEmpty()) {
-            desc.visibility = View.GONE
+            binding.desc.visibility = View.GONE
         } else {
-            desc.text = descTxt
+            binding.desc.text = descTxt
         }
     }
 

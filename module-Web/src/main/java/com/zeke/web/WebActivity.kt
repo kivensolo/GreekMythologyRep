@@ -83,7 +83,7 @@ class WebActivity : BaseHeaderActivity<WebPageBinding>(),
         isStatus = isCollect
         isArticle = (articalInfo?.id ?: -1) > 0
         setTitle(articalInfo?.title)
-        loadUrl(articalInfo?.link)
+        loadUrl(articalInfo?.link?:"")
     }
 
     override fun onResume() {
@@ -112,7 +112,7 @@ class WebActivity : BaseHeaderActivity<WebPageBinding>(),
         }
     }
 
-    private fun loadUrl(url: String?) {
+    private fun loadUrl(url: String) {
         if (agentWeb == null) {
             agentWeb = AgentWeb.with(this)
                 .setAgentWebParent(viewBindingObj.root as ConstraintLayout,
@@ -251,7 +251,7 @@ class WebActivity : BaseHeaderActivity<WebPageBinding>(),
                 clickCollect()
             }
             R.id.menuRefresh -> {
-                loadUrl(mCurUrl)
+                loadUrl(mCurUrl?:"")
             }
             R.id.menuExplorer -> {
                 clickExplorer()

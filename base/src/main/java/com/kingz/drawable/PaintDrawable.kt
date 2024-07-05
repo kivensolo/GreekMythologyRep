@@ -18,7 +18,7 @@ abstract class PaintDrawable protected constructor() : Drawable() {
         mPaint.alpha = alpha
     }
 
-    override fun setColorFilter(cf: ColorFilter) {
+    override fun setColorFilter(cf: ColorFilter?) {
         mPaint.colorFilter = cf
     }
 

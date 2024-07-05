@@ -4,13 +4,14 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import androidx.palette.graphics.Palette
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.kingz.base.BaseVMActivity
 import com.kingz.module.common.router.RouterConfig
 import com.zeke.demo.R
+import com.zeke.demo.databinding.ActivityPaletteDemoBinding
 import com.zeke.reactivehttp.base.BaseReactiveViewModel
-import kotlinx.android.synthetic.main.activity_palette_demo.*
 
 /**
  * author：ZekeWang
@@ -62,10 +63,17 @@ import kotlinx.android.synthetic.main.activity_palette_demo.*
  */
 @Route(path = RouterConfig.PAGE_PALETTE_DEMO)
 class PaletteDemoActivity : BaseVMActivity() {
+    lateinit var viewBind: ActivityPaletteDemoBinding
+
     override val viewModel: BaseReactiveViewModel
         get() = TODO("Not yet implemented")
 
     override fun getContentLayout(): Int = R.layout.activity_palette_demo
+
+    override fun getContentView(): View? {
+        viewBind = ActivityPaletteDemoBinding.inflate(layoutInflater)
+        return viewBind.root
+    }
 
     override fun initData(savedInstanceState: Bundle?) {
     }
@@ -81,24 +89,24 @@ class PaletteDemoActivity : BaseVMActivity() {
         Palette.from(bitmap).generate { palette ->
             palette?.apply {
                 //Vibrant （鲜艳的）
-                vibrant.setBackgroundColor(getVibrantColor(Color.BLUE))
-                vibrant.setTextColor(darkVibrantSwatch?.bodyTextColor?:Color.RED)
+                viewBind.vibrant.setBackgroundColor(getVibrantColor(Color.BLUE))
+                viewBind.vibrant.setTextColor(darkVibrantSwatch?.bodyTextColor?:Color.RED)
                 //Vibrant light（鲜艳的 亮色）
-                light_vibrant.setBackgroundColor(getLightVibrantColor(Color.BLUE))
-                light_vibrant.setTextColor(lightVibrantSwatch?.bodyTextColor?:Color.RED)
+                viewBind.lightVibrant.setBackgroundColor(getLightVibrantColor(Color.BLUE))
+                viewBind.lightVibrant.setTextColor(lightVibrantSwatch?.bodyTextColor?:Color.RED)
                 //Vibrant dark（鲜艳的 暗色）
-                dark_vibrant.setBackgroundColor(getDarkVibrantColor(Color.BLUE))
-                dark_vibrant.setTextColor(darkVibrantSwatch?.bodyTextColor?:Color.RED)
+                viewBind.darkVibrant.setBackgroundColor(getDarkVibrantColor(Color.BLUE))
+                viewBind.darkVibrant.setTextColor(darkVibrantSwatch?.bodyTextColor?:Color.RED)
 
                 //Muted （柔和的）
-                muted.setBackgroundColor(getMutedColor(Color.BLUE))
-                muted.setTextColor(mutedSwatch?.bodyTextColor?:Color.RED)
+                viewBind.muted.setBackgroundColor(getMutedColor(Color.BLUE))
+                viewBind.muted.setTextColor(mutedSwatch?.bodyTextColor?:Color.RED)
                 //Muted light（柔和的 亮色）
-                light_muted.setBackgroundColor(getLightMutedColor(Color.BLUE))
-                light_muted.setTextColor(lightMutedSwatch?.bodyTextColor?:Color.RED)
+                viewBind.lightMuted.setBackgroundColor(getLightMutedColor(Color.BLUE))
+                viewBind.lightMuted.setTextColor(lightMutedSwatch?.bodyTextColor?:Color.RED)
                 //Muted dark（柔和的 暗色）
-                dark_muted.setBackgroundColor(getDarkMutedColor(Color.BLUE))
-                dark_muted.setTextColor(darkMutedSwatch?.bodyTextColor?:Color.RED)
+                viewBind.darkMuted.setBackgroundColor(getDarkMutedColor(Color.BLUE))
+                viewBind.darkMuted.setTextColor(darkMutedSwatch?.bodyTextColor?:Color.RED)
             }
         }
     }

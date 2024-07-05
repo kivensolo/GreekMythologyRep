@@ -1,15 +1,17 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+}
+
 apply from: 'config.gradle'
 
 android {
-    compileSdkVersion rootProject.ext.android.compileSdkVersion
-    buildToolsVersion rootProject.ext.android.buildToolsVersion
+    compileSdk build_versions.compile_sdk
+    buildToolsVersion build_versions.build_tools
 
     defaultConfig {
-        minSdkVersion rootProject.ext.android.minSdkVersion
-        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        minSdk build_versions.min_sdk
+        targetSdk build_versions.target_sdk
         versionCode rootProject.ext.android.versionCode
         versionName rootProject.ext.android.versionName
     }
@@ -19,6 +21,10 @@ android {
             minifyEnabled false
             consumerProguardFiles 'proguard-rules.txt'
         }
+    }
+
+    viewBinding {
+        enabled = true
     }
 
 }
@@ -37,9 +43,7 @@ dependencies {
     implementation "androidx.core:core-ktx:1.2.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
-repositories {
-    mavenCentral()
-}
+
 
 //打包源码
 task androidSourcesJar(type: Jar) {

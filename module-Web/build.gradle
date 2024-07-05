@@ -1,25 +1,22 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.kotlin.kapt'
+}
 
-def root_android = rootProject.ext.android
 def root_dependencies = rootProject.ext.dependencies
 
 android {
-    compileSdkVersion root_android.compileSdkVersion
-    buildToolsVersion root_android.buildToolsVersion
+    compileSdk build_versions.compile_sdk
 
-     // 按模块启用View Binding
+    // 按模块启用View Binding
     viewBinding {
         enabled = true
     }
 
     defaultConfig {
-        minSdkVersion root_android.minSdkVersion
-        targetSdkVersion root_android.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion build_versions.min_sdk
+        targetSdkVersion build_versions.target_sdk
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'

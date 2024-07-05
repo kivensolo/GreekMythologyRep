@@ -3,6 +3,7 @@ package com.kingz.drawable
 import android.animation.Animator
 import android.animation.ValueAnimator
 import android.graphics.Canvas
+import android.graphics.ColorFilter
 import android.graphics.Path
 import android.graphics.drawable.Animatable
 import android.graphics.drawable.Drawable
@@ -32,6 +33,9 @@ open class ProgressDrawable : PaintDrawable(), Animatable,
         mProgressDegree = 30 * (value / 30)
         val drawable: Drawable = this@ProgressDrawable
         drawable.invalidateSelf()
+    }
+
+    override fun setColorFilter(colorFilter: ColorFilter?) {
     }
 
     //<editor-fold desc="Drawable">

@@ -1,7 +1,9 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.kotlin.kapt'
+}
+
 
 def root_android = rootProject.ext.android
 def root_dependencies = rootProject.ext.dependencies
@@ -9,14 +11,11 @@ def deps = rootProject.ext.deps
 def root_test = rootProject.ext.test
 
 android {
-    compileSdkVersion root_android.compileSdkVersion
-    buildToolsVersion root_android.buildToolsVersion
+    compileSdk root_android.compileSdkVersion
 
     defaultConfig {
-        minSdkVersion root_android.minSdkVersion
-        targetSdkVersion root_android.targetSdkVersion
-        versionCode root_android.versionCode
-        versionName root_android.versionName
+        minSdk build_versions.min_sdk
+        targetSdk build_versions.target_sdk
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'

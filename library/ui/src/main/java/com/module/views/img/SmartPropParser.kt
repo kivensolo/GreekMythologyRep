@@ -8,8 +8,6 @@ import android.util.Log
 import android.util.Pair
 import androidx.annotation.StyleableRes
 import com.module.views.R
-import java.util.*
-import kotlin.collections.HashMap
 import kotlin.collections.set
 
 //SmartImageView各参数解析器
@@ -19,7 +17,7 @@ class SmartPropParser(
     private val typedAttr: TypedArray
 ) {
     private val TAG: String = SmartPropParser::class.java.simpleName
-    private var _typedArrayParserMap = HashMap<@StyleableRes Int, ParseInvoker>()
+    private var _typedArrayParserMap = HashMap<Int, ParseInvoker>()
 
     init {
         //初始化注册自定义属性
@@ -83,7 +81,7 @@ class ParsedStyle_Border {
             val density = context.resources.displayMetrics.density
             val borderVal = prop.getString(R.styleable.SmartImageView_border)
             if (!TextUtils.isEmpty(borderVal)) {
-                val borderParams: List<String> = borderVal.split(",")
+                val borderParams: List<String> = borderVal!!.split(",")
                 when (borderParams.size) {
                     11 -> {
                         borderObj.radiiArrayMode = true
@@ -201,7 +199,7 @@ class ParsedStyle_Border_Dash_Pattern {
             val density = context.resources.displayMetrics.density
             val borderDashValue = prop.getString(R.styleable.SmartImageView_border_dash)
             if (!TextUtils.isEmpty(borderDashValue)) {
-                val patternParams = borderDashValue.split(",")
+                val patternParams = borderDashValue!!.split(",")
                 when {
                     patternParams.size < 2 -> {}
                     patternParams.size == 2 -> {

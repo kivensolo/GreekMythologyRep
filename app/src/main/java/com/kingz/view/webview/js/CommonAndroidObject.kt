@@ -14,7 +14,7 @@ open class CommonAndroidObject : IAndroidObject {
 
     @JavascriptInterface
     fun log(tag: String?, info: String?) {
-        Log.i(tag, info)
+        Log.i(tag, info?:"null")
     }
 
     @JavascriptInterface

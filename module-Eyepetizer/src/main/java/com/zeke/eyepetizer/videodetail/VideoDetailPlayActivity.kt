@@ -34,7 +34,6 @@ import com.zeke.eyepetizer.bean.cards.item.VideoSmallCard
 import com.zeke.eyepetizer.viewmodel.EyepetizerViewModel
 import com.zeke.moudle_eyepetizer.R
 import com.zeke.moudle_eyepetizer.databinding.ActivityDetailVideoBinding
-import kotlinx.android.synthetic.main.activity_detail_video.*
 
 /**
  * author：ZekeWang
@@ -107,7 +106,7 @@ class VideoDetailPlayActivity : BaseVMActivity() {
         }
     }
 
-    override fun getContentView(): View? {
+    override fun getContentView(): View {
         binding = ActivityDetailVideoBinding.inflate(layoutInflater)
         return binding.root
     }
@@ -155,7 +154,7 @@ class VideoDetailPlayActivity : BaseVMActivity() {
 
         //背景图片加载
         GlideLoader.loadNetBitmap(this, mediaParams?.videoBkg ?: "") {
-            root.background = it
+            binding.root.background = it
         }
     }
 
@@ -168,7 +167,7 @@ class VideoDetailPlayActivity : BaseVMActivity() {
         val jsonObject = item.data
         val videoData = Gson().fromJson(jsonObject, VideoSmallCard::class.java)
 
-        GlideLoader.loadNetBitmap(this, videoData.cover.blurred) { root.background = it }      //整个页面背景图片
+        GlideLoader.loadNetBitmap(this, videoData.cover.blurred) { binding.root.background = it }      //整个页面背景图片
         //播放器缩略图
 //        GlideLoader.loadNetImage(this, videoPlayer.thumbImageView, videoData.cover.detail)   //视频封面
 

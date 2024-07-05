@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.kingz.module.common.base.BaseActivity
 import com.zeke.demo.R
-import kotlinx.android.synthetic.main.page_fragemnts_lifecycle.*
+import com.zeke.demo.databinding.PageFragemntsLifecycleBinding
 
 /**
  * author: King.Z <br>
@@ -28,18 +28,20 @@ import kotlinx.android.synthetic.main.page_fragemnts_lifecycle.*
  */
 class FragementLifeCycleTestPage:BaseActivity() {
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.page_fragemnts_lifecycle)
+        var viewBind:PageFragemntsLifecycleBinding = PageFragemntsLifecycleBinding.inflate(layoutInflater)
+        viewBind.changeA.setOnClickListener {
+            changeFragment(this@FragementLifeCycleTestPage.findViewById(R.id.fragment_a))
+        }
+        viewBind.changeA2.setOnClickListener {
+            changeFragment(this@FragementLifeCycleTestPage.findViewById(R.id.fragment_b))
+        }
+        viewBind.changeA3.setOnClickListener {
+            changeFragment(this@FragementLifeCycleTestPage.findViewById(R.id.fragment_c))
 
-        change_a.setOnClickListener {
-            changeFragment(fragment_a)
-        }
-        change_a2.setOnClickListener {
-            changeFragment(fragment_b)
-        }
-        change_a3.setOnClickListener {
-            changeFragment(fragment_c)
         }
     }
 

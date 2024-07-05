@@ -5,7 +5,6 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.os.IBinder
 import com.zeke.kangaroo.zlog.ZLog
-import java.util.*
 
 /**
  * @author zeke.wang
@@ -98,7 +97,7 @@ class BookShopService : Service() {
         return mServiceStub
     }
 
-    override fun unbindService(conn: ServiceConnection?) {
+    override fun unbindService(conn: ServiceConnection) {
         super.unbindService(conn)
     }
 

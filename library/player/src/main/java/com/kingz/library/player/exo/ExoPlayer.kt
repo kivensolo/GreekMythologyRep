@@ -49,7 +49,7 @@ class ExoPlayer(context: Context) : BasePlayer() {
         private val TAG = ExoPlayer::class.java.simpleName
         private val DEFAULT_COOKIE_MANAGER = CookieManager()
 
-        fun logD(log: String?) {
+        fun logD(log: String) {
             Log.d(TAG, log)
         }
 

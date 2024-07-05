@@ -1,10 +1,10 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.3"
+    compileSdk 29
 
     defaultConfig {
         applicationId "com.zeke.hlscache"
@@ -23,6 +23,9 @@ android {
         }
     }
 
+    viewBinding {
+        enabled = true
+    }
 }
 
 dependencies {

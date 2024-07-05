@@ -1,5 +1,9 @@
 package com.kingz.module.wanandroid.fragemnts
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -7,11 +11,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kingz.module.common.R
 import com.kingz.module.common.base.IRvScroller
+import com.kingz.module.common.databinding.FragmentRefreshLayoutBinding
+import com.kingz.module.common.databinding.IncludeBaseRecyclerViewBinding
 import com.kingz.module.common.utils.RvUtils
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.zeke.reactivehttp.base.BaseReactiveViewModel
-import kotlinx.android.synthetic.main.fragment_refresh_layout.*
-import kotlinx.android.synthetic.main.include_base_recycler_view.*
 import kotlinx.coroutines.cancel
 
 /**
@@ -22,7 +26,8 @@ import kotlinx.coroutines.cancel
  */
 abstract class AbsListFragment<T : BaseReactiveViewModel> :
     CommonFragment<T>(),IRvScroller {
-
+    private lateinit var layoutBinding: FragmentRefreshLayoutBinding
+    private lateinit var rcViewBinding: IncludeBaseRecyclerViewBinding
     protected lateinit var mRecyclerView: RecyclerView
     protected var refreshLayout: SmartRefreshLayout? = null
     // 当前页数
@@ -33,17 +38,25 @@ abstract class AbsListFragment<T : BaseReactiveViewModel> :
 
     override fun getLayoutResID(): Int  = R.layout.fragment_refresh_layout
 
+    override fun inflateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        layoutBinding = FragmentRefreshLayoutBinding.inflate(inflater)
+        rcViewBinding = IncludeBaseRecyclerViewBinding.inflate(inflater)
+        //TODO include的布局，如何使用ViewBinding
+        rootView = layoutBinding.root
+        return rootView
+    }
+
     override fun initView() {
         super.initView()
-        multiStatusView = status_view
-        mRecyclerView = recycler_view
+        multiStatusView = layoutBinding.statusView
+        mRecyclerView = rcViewBinding.recyclerView
         mRecyclerView.run {
             isVerticalScrollBarEnabled = true
             layoutManager = LinearLayoutManager(context)
             itemAnimator = DefaultItemAnimator()
             addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
         }
-        refreshLayout = swipeRefreshLayout
+        refreshLayout = layoutBinding.swipeRefreshLayout
     }
 
     override fun onDestroyView() {

@@ -2,6 +2,7 @@ package com.zeke.demo.meterial
 
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,8 +12,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.kingz.module.common.adapter.SimpleLabelAdapter
 import com.kingz.module.common.base.BaseActivity
 import com.zeke.demo.R
-import kotlinx.android.synthetic.main.activity_collapse_toolbar.*
-import java.util.*
 
 /**
  * 折叠式AppbarLayout
@@ -26,6 +25,7 @@ class CollapseToolbarNoramalActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_collapse_toolbar)
         val mainContent = findViewById<View>(R.id.main_content)
+        val backdrop = findViewById<ImageView>(R.id.backdrop)
         toolbar = findViewById(R.id.toolbar)
         toolbar?.title = "CollapseToolbar"
         setSupportActionBar(toolbar)

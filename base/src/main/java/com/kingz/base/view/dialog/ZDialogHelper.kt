@@ -131,7 +131,7 @@ object ZDialogHelper {
                     dialog?.dismiss()
                     listener?.onClick(dialog!!, BUTTON_LEFT)
                 }
-                setOnFocusChangeListener { v, hasFocus ->
+                setOnFocusChangeListener { _, hasFocus ->
                     typeface = if (hasFocus) {
                         Typeface.defaultFromStyle(Typeface.BOLD)
                     } else {
@@ -145,7 +145,7 @@ object ZDialogHelper {
                     dialog?.dismiss()
                     listener?.onClick(dialog!!, BUTTON_RIGHT)
                 }
-                setOnFocusChangeListener { v, hasFocus ->
+                setOnFocusChangeListener { _, hasFocus ->
                     typeface = if (hasFocus) {
                         Typeface.defaultFromStyle(Typeface.BOLD)
                     } else {
@@ -182,7 +182,7 @@ object ZDialogHelper {
         editorActionListener: TextView.OnEditorActionListener? = null
     ) = GlobalScope.launch(Dispatchers.Main) {
         dialog?.dismiss()
-        var editText : AppCompatEditText? = null
+        var editText : AppCompatEditText?
         val view: View = View.inflate(context, R.layout.dialog_edit_base, null).apply {
             findViewById<TextView>(R.id.dialogTitle).text = title
             editText = findViewById<AppCompatEditText>(R.id.dialogEdit).apply {
@@ -199,7 +199,7 @@ object ZDialogHelper {
                     hideSoftInputFromWindow(context, editText)
                     dialog?.dismiss()
                 }
-                setOnFocusChangeListener { v, hasFocus ->
+                setOnFocusChangeListener { _, hasFocus ->
                     typeface = if (hasFocus) {
                         Typeface.defaultFromStyle(Typeface.BOLD)
                     } else {
@@ -214,7 +214,7 @@ object ZDialogHelper {
                     hideSoftInputFromWindow(context, editText)
                     dialog?.dismiss()
                 }
-                setOnFocusChangeListener { v, hasFocus ->
+                setOnFocusChangeListener { _, hasFocus ->
                     typeface = if (hasFocus) {
                         Typeface.defaultFromStyle(Typeface.BOLD)
                     } else {

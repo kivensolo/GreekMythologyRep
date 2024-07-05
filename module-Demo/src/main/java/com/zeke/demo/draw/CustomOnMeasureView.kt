@@ -26,23 +26,23 @@ class CustomOnMeasureView @JvmOverloads constructor(
 ) : View(context, attrs, defStyle) {
 
     /** 文本 */
-    private var mTitleText: String? = null
+    private var mTitleText: String = ""
 
     /** 文本的颜色 */
     private var mTitleTextColor = 0
 
     /** 文本的大小 */
     private var mTitleTextSize = 0
-    private var mTextBoundRect: Rect? = null
-    private var borderPaint: Paint? = null
-    private var textPaint: Paint? = null
+    private lateinit var mTextBoundRect: Rect
+    private lateinit var borderPaint: Paint
+    private lateinit var textPaint: Paint
 
     private lateinit var mBitmapImg: Bitmap
     private var mBitmapImgW = 150f
     private var mBitmapImgH = 200f
     private var imagePaint: Paint? = null
     /** 图片外部Rect */
-    private var imageRect: Rect? = null
+    private lateinit var imageRect: Rect
 
     /** Pic Scale */
     private var mImageScale = -1
@@ -70,7 +70,7 @@ class CustomOnMeasureView @JvmOverloads constructor(
         textPaint!!.textSize = mTitleTextSize.toFloat()
         textPaint!!.color = mTitleTextColor
         //获取文字外围最小矩形
-        textPaint!!.getTextBounds(mTitleText, 0, mTitleText!!.length, mTextBoundRect)
+        textPaint!!.getTextBounds(mTitleText, 0, mTitleText.length, mTextBoundRect)
     }
 
     /**
@@ -83,7 +83,7 @@ class CustomOnMeasureView @JvmOverloads constructor(
             when (val attr = typedArray.getIndex(i)) {
                 R.styleable.testView_titleText -> {
                     Log.d(TAG, "Get titleText")
-                    mTitleText = typedArray.getString(attr)
+                    mTitleText = typedArray.getString(attr)?:""
                 }
                 R.styleable.testView_titleSize -> {
                     //Sise 默认设置为16sp，TypeValue可以把sp转化为px

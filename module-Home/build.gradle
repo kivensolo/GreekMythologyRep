@@ -1,23 +1,25 @@
+plugins {
+    id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.kotlin.kapt'
+}
+
 if (enableHomeModule.toBoolean()) {
     apply plugin: 'com.android.library'
 } else {
     apply plugin: 'com.android.application'
 }
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
 
 def root_android = rootProject.ext.android
 def root_dependencies = rootProject.ext.dependencies
 
 android {
-    compileSdkVersion root_android.compileSdkVersion
-    buildToolsVersion root_android.buildToolsVersion
+    compileSdk build_versions.compile_sdk
 
     defaultConfig {
-        minSdkVersion root_android.minSdkVersion
-        targetSdkVersion root_android.targetSdkVersion
+        minSdk build_versions.min_sdk
+        targetSdk build_versions.target_sdk
         versionCode 1
-        versionName "1.0"
+        versionName build_versions.versionName
 
         if (!enableHomeModule.toBoolean()) {
             //单独调试时添加applicationId集成调试时移除

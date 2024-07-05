@@ -1,8 +1,7 @@
-package com.zeke.home.entity
+package com.kingz.module.common.bean
 
 import android.content.Context
 import android.content.Intent
-import java.util.*
 
 /**
  * author：KingZ

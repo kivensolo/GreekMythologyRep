@@ -1,9 +1,11 @@
+plugins {
+    id 'com.android.library'
+}
 apply from: '../../buildsystem/config.gradle'
-apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion android.compileSdkVersion
-    buildToolsVersion android.buildToolsVersion
+    compileSdk build_versions.compile_sdk
+    buildToolsVersion build_versions.build_tools
 
     defaultConfig {
         minSdkVersion android.minSdkVersion

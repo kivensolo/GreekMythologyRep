@@ -6,12 +6,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.kingz.customdemo.R
+import com.kingz.customdemo.databinding.ActivityCrossfadeBinding
 import com.kingz.module.common.BaseActivity
 import com.zeke.kangaroo.zlog.ZLog
 import com.zeke.ktx.modules.aac.viewmodels.User
 import com.zeke.ktx.modules.aac.viewmodels.UserInfoViewModel
-import kotlinx.android.synthetic.main.activity_crossfade.*
 
 /**
  * author: King.Z <br></br>
@@ -22,10 +21,12 @@ class ViewModelDemoActivity : BaseActivity() {
     private var mShortAnimationDuration = 800
     private var testViewModel: UserInfoViewModel? = null
 
+    private lateinit var viewBinding:ActivityCrossfadeBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_crossfade)
-        content!!.visibility = View.GONE
+        viewBinding = ActivityCrossfadeBinding.inflate(layoutInflater)
+        setContentView(viewBinding.root)
+        viewBinding.content.visibility = View.GONE
         crossFade()
 
         // 创建与当前activity相关的LiveData 对象
@@ -35,7 +36,7 @@ class ViewModelDemoActivity : BaseActivity() {
         val nameObserver: Observer<User> = Observer {
             // 当数据变化时回调onChange方法
             ZLog.d("onChanged ", "it: $it")
-            lorem_ipsum_view?.text = it.toString()
+            viewBinding.loremIpsumView?.text = it.toString()
         }
 
         /**
@@ -52,7 +53,7 @@ class ViewModelDemoActivity : BaseActivity() {
             testStringLiveData.value = User("KingZ","27","Boy")
         }
 
-        lorem_ipsum_view.setOnClickListener {
+        viewBinding.loremIpsumView.setOnClickListener {
             testViewModel?.let {
                 it.testStringLiveData.value = User("KingZZZZZ","27777","Boyyyy")
             }
@@ -61,19 +62,19 @@ class ViewModelDemoActivity : BaseActivity() {
 
     private fun crossFade() { // Set the content view to 0% opacity but visible, so that it is visible
         // (but fully transparent) during the animation.
-        content?.alpha = 0f
-        content?.visibility = View.VISIBLE
-        content?.animate()?.apply {
+        viewBinding.content.alpha = 0f
+        viewBinding.content.visibility = View.VISIBLE
+        viewBinding.content.animate()?.apply {
             alpha(1f)
             duration = mShortAnimationDuration.toLong()
             setListener(null)
         }
-        loading_spinner?.animate()?.apply {
+        viewBinding.loadingSpinner.animate()?.apply {
             alpha(0f)
             duration = mShortAnimationDuration.toLong()
             setListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
-                    loading_spinner!!.visibility = View.GONE
+                    viewBinding.loadingSpinner.visibility = View.GONE
                 }
             })
         }

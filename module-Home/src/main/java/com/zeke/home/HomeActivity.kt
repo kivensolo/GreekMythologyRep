@@ -81,7 +81,7 @@ class HomeActivity : AppBarActivity(), View.OnClickListener{
     private var mIsDoubleClieckLogout= false
     private val MSG_CLICK_LOGOUT_PASS = 0x0001
     private var mHandler:Handler = Handler(object : Handler.Callback {
-        override fun handleMessage(msg: Message?): Boolean {
+        override fun handleMessage(msg: Message): Boolean {
             when(msg!!.what){
                 MSG_CLICK_LOGOUT_PASS -> {
                     mIsDoubleClieckLogout = false
@@ -188,7 +188,7 @@ class HomeActivity : AppBarActivity(), View.OnClickListener{
         mainViewBinding.slidPanelLayout.setPanelSlideListener(panelSlidelLsr)
         mainViewBinding.slidPanelLayout.sliderFadeColor = ContextCompat.getColor(this, R.color.black_transparent)
         mainViewBinding.slidPanelLayout.coveredFadeColor = ContextCompat.getColor(this, R.color.transparent)
-        slideMenuViewBinding.tvVersion.text = String.format("v%s", BuildConfig.VERSION_NAME)
+        slideMenuViewBinding.tvVersion.text = String.format("v%s", BuildConfig.BUILD_TYPE)
     }
 //   推迟到Web Fragment初始化之后
 

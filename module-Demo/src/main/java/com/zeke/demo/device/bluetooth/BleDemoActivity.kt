@@ -1,31 +1,39 @@
 package com.zeke.demo.device.bluetooth
 
-import android.bluetooth.*
+import android.Manifest
+import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothDevice
+import android.bluetooth.BluetoothGatt
+import android.bluetooth.BluetoothGattCallback
+import android.bluetooth.BluetoothGattCharacteristic
+import android.bluetooth.BluetoothGattDescriptor
 import android.bluetooth.le.ScanResult
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kingz.base.BaseVMActivity
 import com.kingz.ble.BleDeviceManager
 import com.kingz.ble.BluetoothDeviceWrapper
 import com.kingz.ble.response.BleEventCallBack
 import com.zeke.demo.R
+import com.zeke.demo.databinding.ActivityBluetoothDemoBinding
 import com.zeke.kangaroo.zlog.ZLog
 import com.zeke.reactivehttp.base.BaseReactiveViewModel
-import kotlinx.android.synthetic.main.activity_bluetooth_demo.*
-import java.util.*
-import kotlin.collections.HashMap
+import java.util.UUID
 
 
 /**
  * author：ZekeWang
  * date：2021/6/18
  * description：BLE蓝牙测试
+ * 高版本安卓增加了蓝牙连接的权限请求
  */
 class BleDemoActivity : BaseVMActivity() {
 
@@ -42,6 +50,7 @@ class BleDemoActivity : BaseVMActivity() {
     var blGatt: BluetoothGatt? = null
 
     var bleAadapter: BleRecyclerAdapter? = BleRecyclerAdapter()
+    private lateinit var viewBind:ActivityBluetoothDemoBinding
 
 
     // <editor-fold defaultstate="collapsed" desc="蓝牙扫描结果广播接收器">
@@ -56,139 +65,169 @@ class BleDemoActivity : BaseVMActivity() {
             val action = intent.action
             if (BluetoothDevice.ACTION_FOUND == action) {
                 //获得 BluetoothDevice
-                val device: BluetoothDevice =
+                val device: BluetoothDevice? =
                     intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)
-                //device.bondState == BluetoothDevice.BOND_BONDED // 配对过的状态
-                ZLog.d("onReceive findDevice=${device.name}  address=${device.address}  uuids=${device.uuids}")
-                // FIXME 有些蓝牙设备的name为null  暂无解决方案
-                device.bluetoothClass
-                devicesListInfo += "[${device.name}: ${device.address}] \n"
-                if (device.name != null && device.name.startsWith("CM")) {
-                    // 进行设备连接
-                    blGatt = device.connectGatt(context, false, object : BluetoothGattCallback() {
-                        override fun onReadRemoteRssi(
-                            gatt: BluetoothGatt?,
-                            rssi: Int,
-                            status: Int
-                        ) {
-                            super.onReadRemoteRssi(gatt, rssi, status)
-                        }
-
-                        /**
-                         * 接受BLE上行数据
-                         */
-                        override fun onCharacteristicRead(
-                            gatt: BluetoothGatt?,
-                            characteristic: BluetoothGattCharacteristic?,
-                            status: Int
-                        ) {
-                            super.onCharacteristicRead(gatt, characteristic, status)
-                            if (status == BluetoothGatt.GATT_SUCCESS) {
-                                // 收到数据
-                                val receiveByte = characteristic?.value
-                            }
-                        }
-
-                        /**
-                         * 收到BLE从机写入数据回调
-                         */
-                        override fun onCharacteristicWrite(
-                            gatt: BluetoothGatt?,
-                            characteristic: BluetoothGattCharacteristic?,
-                            status: Int
-                        ) {
-                            super.onCharacteristicWrite(gatt, characteristic, status)
-                            if (status == BluetoothGatt.GATT_SUCCESS) {
-                                // 发送成功
-
-                            } else {
-                                // 发送失败
-                            }
-                        }
-
-                        override fun onServicesDiscovered(gatt: BluetoothGatt?, status: Int) {
-                            super.onServicesDiscovered(gatt, status)
-                            //此回调说明发现当前设备了。然后就可以在里面去获取BluetoothGattService和BluetoothGattCharacteristic
-                            ZLog.d("status=$status")
-                            if (status == BluetoothGatt.GATT_SUCCESS) {
-                                //发现设备，遍历服务，初始化特征
-                                initBleCharacteristics(gatt)
-                            } else {
-                                ZLog.d("onServicesDiscovered fail-->$status")
+                device?.apply {
+                    //device.bondState == BluetoothDevice.BOND_BONDED // 配对过的状态
+                    if (ActivityCompat.checkSelfPermission(
+                            this@BleDemoActivity,
+                            Manifest.permission.BLUETOOTH_CONNECT
+                        ) != PackageManager.PERMISSION_GRANTED
+                    ) {
+                        // TODO: Consider calling ActivityCompat#requestPermissions
+                        // here to request the missing permissions, and then overriding
+                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                        //                                          int[] grantResults)
+                        // to handle the case where the user grants the permission. See the documentation
+                        // for ActivityCompat#requestPermissions for more details.
+                        return
+                    }
+                    ZLog.d("onReceive findDevice=${this.name}  address=${this.address}  uuids=${this.uuids}")
+                    // FIXME 有些蓝牙设备的name为null  暂无解决方案
+                    bluetoothClass
+                    devicesListInfo += "[${this.name}: ${this.address}] \n"
+                    if (this.name != null && this.name.startsWith("CM")) {
+                        // 进行设备连接
+                        blGatt = this.connectGatt(context, false, object : BluetoothGattCallback() {
+                            override fun onReadRemoteRssi(
+                                gatt: BluetoothGatt?,
+                                rssi: Int,
+                                status: Int
+                            ) {
+                                super.onReadRemoteRssi(gatt, rssi, status)
                             }
 
-                        }
-
-                        override fun onPhyUpdate(
-                            gatt: BluetoothGatt?,
-                            txPhy: Int,
-                            rxPhy: Int,
-                            status: Int
-                        ) {
-                            super.onPhyUpdate(gatt, txPhy, rxPhy, status)
-                        }
-
-                        override fun onMtuChanged(gatt: BluetoothGatt?, mtu: Int, status: Int) {
-                            super.onMtuChanged(gatt, mtu, status)
-                        }
-
-                        override fun onReliableWriteCompleted(
-                            gatt: BluetoothGatt?,
-                            status: Int
-                        ) {
-                            super.onReliableWriteCompleted(gatt, status)
-                        }
-
-                        override fun onDescriptorWrite(
-                            gatt: BluetoothGatt?,
-                            descriptor: BluetoothGattDescriptor?,
-                            status: Int
-                        ) {
-                            super.onDescriptorWrite(gatt, descriptor, status)
-                        }
-
-                        override fun onCharacteristicChanged(
-                            gatt: BluetoothGatt?,
-                            characteristic: BluetoothGattCharacteristic?
-                        ) {
-                            super.onCharacteristicChanged(gatt, characteristic)
-                        }
-
-                        override fun onDescriptorRead(
-                            gatt: BluetoothGatt?,
-                            descriptor: BluetoothGattDescriptor?,
-                            status: Int
-                        ) {
-                            super.onDescriptorRead(gatt, descriptor, status)
-                        }
-
-                        override fun onPhyRead(
-                            gatt: BluetoothGatt?,
-                            txPhy: Int,
-                            rxPhy: Int,
-                            status: Int
-                        ) {
-                            super.onPhyRead(gatt, txPhy, rxPhy, status)
-                        }
-
-                        override fun onConnectionStateChange(
-                            gatt: BluetoothGatt?,
-                            status: Int,
-                            newState: Int
-                        ) {
-                            ZLog.d("status=$status, newState=$newState")
-                            if (status == BluetoothGatt.STATE_CONNECTED) {
-                                ZLog.d("STATE_CONNECTED")
-                                // 连接成功  //获取服务
-                                blGatt?.discoverServices()
-                            } else if (status == BluetoothGatt.STATE_DISCONNECTED) {
-                                ZLog.e("STATE_DISCONNECTED")
-                                //断开连接
+                            /**
+                             * 接受BLE上行数据
+                             */
+                            override fun onCharacteristicRead(
+                                gatt: BluetoothGatt?,
+                                characteristic: BluetoothGattCharacteristic?,
+                                status: Int
+                            ) {
+                                super.onCharacteristicRead(gatt, characteristic, status)
+                                if (status == BluetoothGatt.GATT_SUCCESS) {
+                                    // 收到数据
+                                    val receiveByte = characteristic?.value
+                                }
                             }
-                            super.onConnectionStateChange(gatt, status, newState)
-                        }
-                    })
+
+                            /**
+                             * 收到BLE从机写入数据回调
+                             */
+                            override fun onCharacteristicWrite(
+                                gatt: BluetoothGatt?,
+                                characteristic: BluetoothGattCharacteristic?,
+                                status: Int
+                            ) {
+                                super.onCharacteristicWrite(gatt, characteristic, status)
+                                if (status == BluetoothGatt.GATT_SUCCESS) {
+                                    // 发送成功
+
+                                } else {
+                                    // 发送失败
+                                }
+                            }
+
+                            override fun onServicesDiscovered(gatt: BluetoothGatt?, status: Int) {
+                                super.onServicesDiscovered(gatt, status)
+                                //此回调说明发现当前设备了。然后就可以在里面去获取BluetoothGattService和BluetoothGattCharacteristic
+                                ZLog.d("status=$status")
+                                if (status == BluetoothGatt.GATT_SUCCESS) {
+                                    //发现设备，遍历服务，初始化特征
+                                    initBleCharacteristics(gatt)
+                                } else {
+                                    ZLog.d("onServicesDiscovered fail-->$status")
+                                }
+
+                            }
+
+                            override fun onPhyUpdate(
+                                gatt: BluetoothGatt?,
+                                txPhy: Int,
+                                rxPhy: Int,
+                                status: Int
+                            ) {
+                                super.onPhyUpdate(gatt, txPhy, rxPhy, status)
+                            }
+
+                            override fun onMtuChanged(gatt: BluetoothGatt?, mtu: Int, status: Int) {
+                                super.onMtuChanged(gatt, mtu, status)
+                            }
+
+                            override fun onReliableWriteCompleted(
+                                gatt: BluetoothGatt?,
+                                status: Int
+                            ) {
+                                super.onReliableWriteCompleted(gatt, status)
+                            }
+
+                            override fun onDescriptorWrite(
+                                gatt: BluetoothGatt?,
+                                descriptor: BluetoothGattDescriptor?,
+                                status: Int
+                            ) {
+                                super.onDescriptorWrite(gatt, descriptor, status)
+                            }
+
+                            override fun onCharacteristicChanged(
+                                gatt: BluetoothGatt?,
+                                characteristic: BluetoothGattCharacteristic?
+                            ) {
+                                super.onCharacteristicChanged(gatt, characteristic)
+                            }
+
+                            override fun onDescriptorRead(
+                                gatt: BluetoothGatt?,
+                                descriptor: BluetoothGattDescriptor?,
+                                status: Int
+                            ) {
+                                super.onDescriptorRead(gatt, descriptor, status)
+                            }
+
+                            override fun onPhyRead(
+                                gatt: BluetoothGatt?,
+                                txPhy: Int,
+                                rxPhy: Int,
+                                status: Int
+                            ) {
+                                super.onPhyRead(gatt, txPhy, rxPhy, status)
+                            }
+
+                            override fun onConnectionStateChange(
+                                gatt: BluetoothGatt?,
+                                status: Int,
+                                newState: Int
+                            ) {
+                                ZLog.d("status=$status, newState=$newState")
+                                if (status == BluetoothGatt.STATE_CONNECTED) {
+                                    ZLog.d("STATE_CONNECTED")
+                                    // 连接成功  //获取服务
+                                    if (ActivityCompat.checkSelfPermission(
+                                            this@BleDemoActivity,
+                                            Manifest.permission.BLUETOOTH_CONNECT
+                                        ) != PackageManager.PERMISSION_GRANTED
+                                    ) {
+                                        // TODO: Consider calling
+                                        //    ActivityCompat#requestPermissions
+                                        // here to request the missing permissions, and then overriding
+                                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                        //                                          int[] grantResults)
+                                        // to handle the case where the user grants the permission. See the documentation
+                                        // for ActivityCompat#requestPermissions for more details.
+                                        return
+                                    }
+                                    blGatt?.discoverServices()
+                                } else if (status == BluetoothGatt.STATE_DISCONNECTED) {
+                                    ZLog.e("STATE_DISCONNECTED")
+                                    //断开连接
+                                }
+                                super.onConnectionStateChange(gatt, status, newState)
+                            }
+                        })
+                    }
                 }
+
 
             } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED == action) {
 //                ble_device_list.text = devicesListInfo
@@ -212,6 +251,7 @@ class BleDemoActivity : BaseVMActivity() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
+        viewBind = ActivityBluetoothDemoBinding.inflate(layoutInflater)
         bleAadapter?.apply {
             clickListener = object : BleRecyclerAdapter.DeviceClickListener {
                 override fun onClick(item: BluetoothDeviceWrapper, adapterPosition: Int) {
@@ -245,22 +285,32 @@ class BleDemoActivity : BaseVMActivity() {
             })
             requestLocalPermission()
         }
-
-        device_find_recycler.apply {
+        
+        viewBind.deviceFindRecycler.apply {
             layoutManager = LinearLayoutManager(lContext)
             adapter = bleAadapter
         }
-        find_bluetooth_device.setOnClickListener {
-            ZLog.d("find_bluetooth_device onclicked.")
+        
+        viewBind.findBluetoothDevice.setOnClickListener {
+            ZLog.d("viewBind.findBluetoothDevice onclicked.")
             // Check Bluetooth state
             bleManager?.takeIf { !it.isEnable() }?.apply {
                 val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+                // 高版本做的权限检查
+                if (ActivityCompat.checkSelfPermission(
+                        this@BleDemoActivity, Manifest.permission.BLUETOOTH_CONNECT
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    return@apply
+                }
                 startActivityForResult(enableBtIntent, 1)
                 return@setOnClickListener
             }
             startScanDevices()
         }
-        change_bluetooth.setOnClickListener {
+        viewBind.changeBluetooth.setOnClickListener {
             if(bleManager?.isEnable() == true){
                 bleManager?.enableBluetooth(false)
             }else{
@@ -270,16 +320,16 @@ class BleDemoActivity : BaseVMActivity() {
         }
 
         //连接蓝牙设备
-        connect_bluetooth.setOnClickListener {
+        viewBind.connectBluetooth.setOnClickListener {
             //fisrt cancel
             bleManager?.stopScan()
         }
 
-        disconnect_bluetooth?.setOnClickListener {
+        viewBind.disconnectBluetooth.setOnClickListener {
             bleManager?.disconnect()
         }
 
-        readConfig?.setOnClickListener {
+        viewBind.readConfig.setOnClickListener {
         }
     }
 
@@ -329,6 +379,20 @@ class BleDemoActivity : BaseVMActivity() {
         //通过GATT协议 传送数据
         blGatt?.apply {
             // 开启通知【必须】  onCharacteristicRead才能回调
+            if (ActivityCompat.checkSelfPermission(
+                    this@BleDemoActivity,
+                    Manifest.permission.BLUETOOTH_CONNECT
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return
+            }
             setCharacteristicNotification(bluetoothGattCharacteristicNotify, true)
             writeCharacteristic(bluetoothGattCharacteristicWrite)
         }
@@ -363,6 +427,20 @@ class BleDemoActivity : BaseVMActivity() {
 
         //释放
         blGatt?.apply {
+            if (ActivityCompat.checkSelfPermission(
+                    this@BleDemoActivity,
+                    Manifest.permission.BLUETOOTH_CONNECT
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return
+            }
             disconnect()
             close()
         }

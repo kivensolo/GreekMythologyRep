@@ -19,19 +19,19 @@ class TextureViewRender( context: Context, override val iPlayer: IPlayer) :
 
     override var renderCallback: SurfaceRenderCallback? = null
 
-    override fun onSurfaceTextureSizeChanged(surface: SurfaceTexture?, width: Int, height: Int) {
+    override fun onSurfaceTextureSizeChanged(surface: SurfaceTexture, width: Int, height: Int) {
         renderCallback?.surfaceChanged(width, height)
     }
 
-    override fun onSurfaceTextureUpdated(surface: SurfaceTexture?) {
+    override fun onSurfaceTextureUpdated(surface: SurfaceTexture) {
     }
 
-    override fun onSurfaceTextureDestroyed(surface: SurfaceTexture?): Boolean {
+    override fun onSurfaceTextureDestroyed(surface: SurfaceTexture): Boolean {
         renderCallback?.surfaceDestroyed()
         return true
     }
 
-    override fun onSurfaceTextureAvailable(surface: SurfaceTexture?, width: Int, height: Int) {
+    override fun onSurfaceTextureAvailable(surface: SurfaceTexture, width: Int, height: Int) {
         renderCallback?.surfaceCreated()
         iPlayer.setSurface(Surface(surfaceTexture))
     }
@@ -40,5 +40,4 @@ class TextureViewRender( context: Context, override val iPlayer: IPlayer) :
         // TextureView.setSurfaceTextureListener(SurfaceTextureListener listener)
         surfaceTextureListener = this
     }
-
 }

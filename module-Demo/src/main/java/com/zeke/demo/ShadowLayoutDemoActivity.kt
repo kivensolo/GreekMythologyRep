@@ -4,14 +4,14 @@ import android.graphics.Color
 import android.os.Bundle
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.page_shadowlayout_demo.*
+import com.zeke.demo.databinding.PageShadowlayoutDemoBinding
 
 /**
  * 原生UI，使用自定义阴影控件
  * ShadowLayout
  */
 class ShadowLayoutDemoActivity : AppCompatActivity() {
-
+    private lateinit var viewBinding:PageShadowlayoutDemoBinding
     private var shadowAlpha :Int = 0
     private var red :Int = 0
     private var green:Int = 0
@@ -19,31 +19,32 @@ class ShadowLayoutDemoActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.page_shadowlayout_demo)
+        viewBinding = PageShadowlayoutDemoBinding.inflate(layoutInflater)
+        setContentView(viewBinding.root)
 
-        red = shadow_color_red_seekbar.progress
-        green = shadow_color_green_seekbar.progress
-        blue = shadow_color_blue_seekbar.progress
+        red = viewBinding.shadowColorRedSeekbar.progress
+        green = viewBinding.shadowColorGreenSeekbar.progress
+        blue = viewBinding.shadowColorBlueSeekbar.progress
 
 
-        radio_left.setOnCheckedChangeListener { _, isChecked ->
-            shadowLayout.setShadowHiddenLeft(isChecked)
+        viewBinding.radioLeft.setOnCheckedChangeListener { _, isChecked ->
+            viewBinding.shadowLayout.setShadowHiddenLeft(isChecked)
         }
-        radio_top.setOnCheckedChangeListener { _, isChecked ->
-            shadowLayout.setShadowHiddenTop(isChecked)
+        viewBinding.radioTop.setOnCheckedChangeListener { _, isChecked ->
+            viewBinding.shadowLayout.setShadowHiddenTop(isChecked)
         }
-        radio_right.setOnCheckedChangeListener { _, isChecked ->
-            shadowLayout.setShadowHiddenRight(isChecked)
+        viewBinding.radioRight.setOnCheckedChangeListener { _, isChecked ->
+            viewBinding.shadowLayout.setShadowHiddenRight(isChecked)
         }
-        radio_buttom.setOnCheckedChangeListener { _, isChecked ->
-            shadowLayout.setShadowHiddenBottom(isChecked)
+        viewBinding.radioButtom.setOnCheckedChangeListener { _, isChecked ->
+            viewBinding.shadowLayout.setShadowHiddenBottom(isChecked)
         }
 
         //-----------> 阴影颜色
-        shadow_color_red_seekbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        viewBinding.shadowColorRedSeekbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 red = progress
-                shadowLayout.setShadowColor(Color.argb(shadowAlpha, red, green, blue))
+                viewBinding.shadowLayout.setShadowColor(Color.argb(shadowAlpha, red, green, blue))
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -53,10 +54,10 @@ class ShadowLayoutDemoActivity : AppCompatActivity() {
             }
         })
 
-        shadow_color_green_seekbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        viewBinding.shadowColorGreenSeekbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 green = progress
-                shadowLayout.setShadowColor(Color.argb(shadowAlpha, red, green, blue))
+                viewBinding.shadowLayout.setShadowColor(Color.argb(shadowAlpha, red, green, blue))
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -66,10 +67,10 @@ class ShadowLayoutDemoActivity : AppCompatActivity() {
             }
         })
 
-        shadow_color_blue_seekbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        viewBinding.shadowColorBlueSeekbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 blue = progress
-                shadowLayout.setShadowColor(Color.argb(shadowAlpha, red, green, blue))
+                viewBinding.shadowLayout.setShadowColor(Color.argb(shadowAlpha, red, green, blue))
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -82,13 +83,13 @@ class ShadowLayoutDemoActivity : AppCompatActivity() {
 
 
         //阴影扩散程度
-        shadow_limit_seekbar.apply {
-            progress = shadowLayout.shadowLimit.toInt()
-            shadow_limit_tip.text = String.format("阴影扩撒程度:%s", progress)
+        viewBinding.shadowLimitSeekbar.apply {
+            progress = viewBinding.shadowLayout.shadowLimit.toInt()
+            viewBinding.shadowLimitTip.text = String.format("阴影扩撒程度:%s", progress)
             setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                    shadow_limit_tip.text = String.format("阴影扩撒程度:%s", progress)
-                    shadowLayout.setShadowLimit(progress)
+                    viewBinding.shadowLimitTip.text = String.format("阴影扩撒程度:%s", progress)
+                    viewBinding.shadowLayout.setShadowLimit(progress)
                 }
 
                 override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -100,31 +101,31 @@ class ShadowLayoutDemoActivity : AppCompatActivity() {
         }
 
         //阴影X|Y偏移量
-        shadow_color_offsetx_seekbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        viewBinding.shadowColorOffsetxSeekbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                shadow_offsetx_tip.text = String.format("阴影X偏移量:%s",progress)
-                shadowLayout.setShadowOffsetX(progress.toFloat())
+                viewBinding.shadowOffsetxTip.text = String.format("阴影X偏移量:%s",progress)
+                viewBinding.shadowLayout.setShadowOffsetX(progress.toFloat())
             }
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
-        shadow_color_offsety_seekbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        viewBinding.shadowColorOffsetySeekbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                shadow_offsety_tip.text = String.format("阴影Y偏移量:%s",progress)
-                shadowLayout.setShadowOffsetY(progress.toFloat())
+                viewBinding.shadowOffsetyTip.text = String.format("阴影Y偏移量:%s",progress)
+                viewBinding.shadowLayout.setShadowOffsetY(progress.toFloat())
             }
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
 
         //圆角效果
-        shadow_round_rect_seekbar.apply {
-            progress = shadowLayout.cornerRadius.toInt()
-            shadow_round_rect_tip.text = String.format("圆角大小:%s",progress)
+        viewBinding.shadowRoundRectSeekbar.apply {
+            progress = viewBinding.shadowLayout.cornerRadius.toInt()
+            viewBinding.shadowRoundRectTip.text = String.format("圆角大小:%s",progress)
             setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                    shadow_round_rect_tip.text = String.format("圆角大小:%s",progress)
-                    shadowLayout.setCornerRadius(progress)
+                    viewBinding.shadowRoundRectTip.text = String.format("圆角大小:%s",progress)
+                    viewBinding.shadowLayout.setCornerRadius(progress)
                 }
 
                 override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -135,11 +136,11 @@ class ShadowLayoutDemoActivity : AppCompatActivity() {
         }
 
         //透明度设置
-        shadow_alpha_seekbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        viewBinding.shadowAlphaSeekbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 shadowAlpha = progress
-                shadow_alpha_tip.text = String.format("透明度:%.0f %%",progress.toFloat() * 100 / 255)
-                shadowLayout.setShadowColor(Color.argb(shadowAlpha, red, green, blue))
+                viewBinding.shadowAlphaTip.text = String.format("透明度:%.0f %%",progress.toFloat() * 100 / 255)
+                viewBinding.shadowLayout.setShadowColor(Color.argb(shadowAlpha, red, green, blue))
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {

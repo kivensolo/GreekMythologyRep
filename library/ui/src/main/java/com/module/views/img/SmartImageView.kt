@@ -1,7 +1,16 @@
 package com.module.views.img
 
 import android.content.Context
-import android.graphics.*
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.DashPathEffect
+import android.graphics.Paint
+import android.graphics.Path
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
+import android.graphics.RectF
+import android.graphics.Xfermode
 import android.util.AttributeSet
 import android.view.View
 import androidx.appcompat.widget.AppCompatImageView
@@ -83,7 +92,7 @@ class SmartImageView @JvmOverloads constructor(
         if (borderProparser?.radiiArrayMode != false) {
             clipPath.addRoundRect(
                 bounds,
-                borderProparser?.radii,
+                borderProparser!!.radii,
                 Path.Direction.CW
             )
         } else {
@@ -111,7 +120,7 @@ class SmartImageView @JvmOverloads constructor(
             if (borderProparser?.radiiArrayMode != false) {
                 clipPath.addRoundRect(
                     bounds,
-                    borderProparser?.radii,
+                    borderProparser!!.radii,
                     Path.Direction.CW
                 )
             }else{

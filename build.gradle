@@ -7,18 +7,30 @@ buildscript {
     def bs = buildscript
     println "   dumpBuildScript:${bs}"
 
-    addRepos(repositories)
+//    addRepos(repositories)
 
-    dependencies { //Identifies the Android plugin
-        classpath 'com.android.tools.build:gradle:3.6.4'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        //classpath 'com.starcor.plugin:pluginrepo:1.0.0'
-    }
+//    dependencies { //Identifies the Android plugin
+//        classpath 'com.android.tools.build:gradle:7.4.2'
+//        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+//        //classpath 'com.starcor.plugin:pluginrepo:1.0.0'
+//    }
     println "   The closure to use to configure the build script classpath end run."
 }
 
+//使用ID形式声明各个插件，供子module使用
+plugins {
+    id 'com.android.application' version '7.4.2' apply false
+    id 'com.android.library' version '7.4.2' apply false
+    //kotlin-android Gradle plugin
+    id 'org.jetbrains.kotlin.android' version '1.6.21' apply false
+    //kotlin-kapt Gradle plugin
+    id 'org.jetbrains.kotlin.kapt' version '1.6.0' apply false
+    //kotlin-jvm Gradle plugin
+    id 'org.jetbrains.kotlin.jvm' version '1.6.21' apply false
+}
+
 //Configures this project and each of its sub-projects
-allprojects { addRepos(repositories) }
+//allprojects { addRepos(repositories) }
 
 task clean(type: Delete) {
     delete rootProject.buildDir

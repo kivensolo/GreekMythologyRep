@@ -16,7 +16,6 @@
  */
 package com.zeke.play.fragment.ijk
 
-import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -42,8 +41,7 @@ class SampleMediaListFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val activity: Activity? = activity
-        mAdapter = SampleMediaAdapter(activity)
+        mAdapter = context?.let { SampleMediaAdapter(it) }
         mFileListView?.adapter = mAdapter
         mFileListView?.onItemClickListener =
             AdapterView.OnItemClickListener { parent, view, position, id ->
@@ -74,7 +72,7 @@ class SampleMediaListFragment : BaseFragment() {
 
     internal inner class SampleMediaItem(var mUrl: String, var mName: String)
 
-    internal inner class SampleMediaAdapter(context: Context?) :
+    internal inner class SampleMediaAdapter(context: Context) :
         ArrayAdapter<SampleMediaItem?>(
             context,
             android.R.layout.simple_list_item_2
@@ -87,7 +85,7 @@ class SampleMediaListFragment : BaseFragment() {
             return position.toLong()
         }
 
-        override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {
+        override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
             var view = convertView
             if (view == null) {
                 val inflater = LayoutInflater.from(parent.context)
@@ -103,7 +101,7 @@ class SampleMediaListFragment : BaseFragment() {
             viewHolder = (viewHolder as ViewHolder)
             viewHolder.mNameTextView?.text = item?.mName
             viewHolder.mUrlTextView?.text = item?.mUrl
-            return view
+            return view!!
         }
 
         internal inner class ViewHolder {

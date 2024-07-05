@@ -25,7 +25,6 @@ import com.zeke.home.wanandroid.viewmodel.HomeViewModel
 import com.zeke.kangaroo.zlog.ZLog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import java.util.*
 
 
 /**
@@ -88,7 +87,7 @@ class WanAndroidHomeFragment : AbsListFragment<WanAndroidViewModelV2>() {
             bannerUrls.clear()
             bannerTitles.clear()
             result?.forEach { item ->
-                bannerUrls.add(item.imagePath)
+                bannerUrls.add(item.imagePath?:"")
                 bannerTitles.add(Html.fromHtml(item.title).toString())
             }
             banner?.apply {

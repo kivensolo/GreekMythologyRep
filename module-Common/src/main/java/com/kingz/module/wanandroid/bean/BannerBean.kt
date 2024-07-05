@@ -18,14 +18,14 @@ data class BannerData(
  * url : http://www.wanandroid.com/navi
  */
 data class BannerItem(
-    var desc: String,       // 简单描述
+    var desc: String?,       // 简单描述
     var id: Int,            // 文章id
-    var imagePath: String,  // 图片地址
+    var imagePath: String?,  // 图片地址
     var isVisible: Int,     // 是否可见 1:可见
     var order: Int,         // 序号
-    var title: String,      // Title
+    var title: String?,      // Title
     var type: Int,          // 类型  不知道是啥用
-    var url: String,
+    var url: String?,
     @BannerType var viewType: Int = STYLE_PIC
 ) : Parcelable {
     constructor(parcel: Parcel) : this(

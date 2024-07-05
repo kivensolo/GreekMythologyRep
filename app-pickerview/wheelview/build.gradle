@@ -3,11 +3,11 @@ apply plugin: 'com.android.library'
 //最核心最基础的滚轮控件库，负责单个滚轮的效果绘制
 
 android {
-    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    compileSdk build_versions.compile_sdk
 
     defaultConfig {
-        minSdkVersion rootProject.ext.android.minSdkVersion
-        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        minSdk build_versions.min_sdk
+        targetSdk build_versions.target_sdk
         versionCode 31
         versionName "4.1.0"
     }

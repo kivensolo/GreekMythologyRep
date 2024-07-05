@@ -1,26 +1,23 @@
-apply {
-    plugin 'com.android.library'
-    plugin 'kotlin-android'
-    plugin 'kotlin-android-extensions'
-    plugin 'kotlin-kapt'
-
-    from '../buildsystem/config.gradle'
-    from '../buildsystem/utils.gradle'
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.kotlin.kapt'
 }
+
+apply from: '../buildsystem/config.gradle'
+apply from: '../buildsystem/utils.gradle'
+
 
 def _rootAndroid = rootProject.ext.android
 def _rootDependencies = rootProject.ext.dependencies
 def _rootTest = rootProject.ext.test
 
 android {
-    compileSdkVersion rootProject.ext.android.compileSdkVersion
-    buildToolsVersion rootProject.ext.android.buildToolsVersion
+    compileSdk build_versions.compile_sdk
 
     defaultConfig {
-        minSdkVersion rootProject.ext.android.minSdkVersion
-        targetSdkVersion rootProject.ext.android.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        minSdk build_versions.min_sdk
+        targetSdk build_versions.target_sdk
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'

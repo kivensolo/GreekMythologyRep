@@ -1,5 +1,9 @@
 package com.zeke.demo.widget
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.viewModels
@@ -7,7 +11,7 @@ import com.kingz.base.factory.ViewModelFactory
 import com.kingz.module.wanandroid.fragemnts.CommonFragment
 import com.zeke.demo.R
 import com.zeke.demo.color.ColorViewModel
-import kotlinx.android.synthetic.main.activity_toobar_demo.*
+import com.zeke.demo.databinding.ActivityToobarDemoBinding
 
 /**
  * author：ZekeWang
@@ -23,7 +27,11 @@ import kotlinx.android.synthetic.main.activity_toobar_demo.*
 二、ToolBar详解  https://www.jianshu.com/p/6244687137d2
  */
 class ToolBarFragment : CommonFragment<ColorViewModel>() {
-    override fun getLayoutResID(): Int = R.layout.activity_toobar_demo
+    lateinit var viewBind: ActivityToobarDemoBinding
+    override fun inflateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        viewBind = ActivityToobarDemoBinding.inflate(layoutInflater)
+        return viewBind.root
+    }
 
     override val viewModel: ColorViewModel by viewModels {
         ViewModelFactory.build { ColorViewModel() }
@@ -43,7 +51,7 @@ class ToolBarFragment : CommonFragment<ColorViewModel>() {
 
         }
 
-        homeAsUpEnabledCheckBox.apply {
+        viewBind.homeAsUpEnabledCheckBox.apply {
             setOnCheckedChangeListener { buttonView, isChecked ->
                 (activity as ToolBarTestActivity).supportActionBar?.apply {
                     // 给左上角图标加上一个返回的图标 。
@@ -53,7 +61,7 @@ class ToolBarFragment : CommonFragment<ColorViewModel>() {
             }
             isChecked = true
         }
-        homeButtonEnabledCheckBox.setOnCheckedChangeListener { buttonView, isChecked ->
+        viewBind.homeButtonEnabledCheckBox.setOnCheckedChangeListener { buttonView, isChecked ->
             (activity as ToolBarTestActivity).supportActionBar?.apply {
                 //左上角的图标是否可以点击
                 setHomeButtonEnabled(isChecked)
@@ -64,20 +72,20 @@ class ToolBarFragment : CommonFragment<ColorViewModel>() {
             }
         }
         //
-        navigationCheckBox.setOnCheckedChangeListener { buttonView, isChecked ->
+        viewBind.navigationCheckBox.setOnCheckedChangeListener { buttonView, isChecked ->
             // 设置导航图标一定要设置在setsupportactionbar后面才有用
             toolbarView?.apply {
                 navigationIcon =
                     if (isChecked) {
                         resources.getDrawable(R.mipmap.ic_actionbar_back)
                     } else {
-                        homeAsUpEnabledCheckBox.isChecked = false
+                        viewBind.homeAsUpEnabledCheckBox.isChecked = false
                         null
                     }
             }
         }
         //设置APP图标
-        logoIconCheckBox.setOnCheckedChangeListener { buttonView, isChecked ->
+        viewBind.logoIconCheckBox.setOnCheckedChangeListener { buttonView, isChecked ->
             toolbarView?.apply {
                 setLogo(
                     if (isChecked)
@@ -88,18 +96,18 @@ class ToolBarFragment : CommonFragment<ColorViewModel>() {
             }
         }
         //设置title
-        mainTitleCheckBox.isChecked = true
-        mainTitleCheckBox.setOnCheckedChangeListener { buttonView, isChecked ->
+        viewBind.mainTitleCheckBox.isChecked = true
+        viewBind.mainTitleCheckBox.setOnCheckedChangeListener { buttonView, isChecked ->
             toolbarView?.apply {
                 title = if (isChecked) "GreekMyth" else ""
             }
         }
-        subTitleCheckBox.setOnCheckedChangeListener { buttonView, isChecked ->
+        viewBind.subTitleCheckBox.setOnCheckedChangeListener { buttonView, isChecked ->
             toolbarView?.apply {
                 title = if (isChecked) "SubTitle" else ""
             }
         }
-        collapseIconCheckBox.setOnCheckedChangeListener { buttonView, isChecked ->
+        viewBind.collapseIconCheckBox.setOnCheckedChangeListener { buttonView, isChecked ->
             toolbarView?.apply {
                 setCollapseIcon(
                     if (isChecked)
@@ -109,7 +117,7 @@ class ToolBarFragment : CommonFragment<ColorViewModel>() {
                 )
             }
         }
-        customLayoutCheckBox.setOnCheckedChangeListener { buttonView, isChecked ->
+        viewBind.customLayoutCheckBox.setOnCheckedChangeListener { buttonView, isChecked ->
             toolbarView?.apply {
                 findViewById<TextView>(R.id.tvTitle).text =
                     if (isChecked) {
@@ -119,5 +127,9 @@ class ToolBarFragment : CommonFragment<ColorViewModel>() {
                     }
             }
         }
+    }
+
+    override fun getLayoutResID(): Int {
+        TODO("Not yet implemented")
     }
 }
