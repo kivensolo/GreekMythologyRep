@@ -8,7 +8,11 @@ import android.view.ViewGroup
 import android.widget.RelativeLayout
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import androidx.work.*
+import androidx.work.Constraints
+import androidx.work.Data
+import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkInfo
+import androidx.work.WorkManager
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.kingz.base.BaseSimpleActivity
 import com.kingz.customdemo.databinding.DownloadDemoLayoutBinding
@@ -78,8 +82,8 @@ class WorkManagerDemoActivity : BaseSimpleActivity() {
     /**
      * 文件下载初始化
      */
-    private fun startDownLoadFile(url: String) {
-        val url = url.trim { it <= ' ' }
+    private fun startDownLoadFile(downloadUrl: String) {
+        val url = downloadUrl.trim { it <= ' ' }
         if (TextUtils.isEmpty(url)) {
             ZLog.e("url is empty!")
             ToastTools.i().showToast(this, "url is empty!")

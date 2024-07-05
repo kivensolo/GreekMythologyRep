@@ -5,7 +5,7 @@ import android.animation.AnimatorListenerAdapter
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.kingz.customdemo.databinding.ActivityCrossfadeBinding
 import com.kingz.module.common.BaseActivity
 import com.zeke.kangaroo.zlog.ZLog
@@ -30,7 +30,7 @@ class ViewModelDemoActivity : BaseActivity() {
         crossFade()
 
         // 创建与当前activity相关的LiveData 对象
-        testViewModel = ViewModelProviders.of(this).get(UserInfoViewModel::class.java)
+        testViewModel = ViewModelProvider(this).get(UserInfoViewModel::class.java)
 
         // Create the observer which updates the UI.
         val nameObserver: Observer<User> = Observer {
