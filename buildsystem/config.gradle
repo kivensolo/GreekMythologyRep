@@ -153,14 +153,6 @@ ext {
 //----------------------------------------------新的构建配置
 
 
-//def versions = [:]
-//versions.android_gradle_plugin = '3.6.4'
-//versions.androidx = '1.1.0'
-//versions.androidx_ktx = '1.1.0'
-//versions.coroutines = '1.4.3'
-//versions.jetpack_version = '2.2.0'
-//ext.versions = versions
-
 //把android.compileSdkVersion 替换成 build_versions.compile_sdk
 def build_versions = [:]
 build_versions.min_sdk = 21

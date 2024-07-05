@@ -147,6 +147,7 @@ android {
     viewBinding {
         enabled = true
     }
+    namespace 'com.kingz.customdemo'
 
     /**
      * 构建变体产物配置

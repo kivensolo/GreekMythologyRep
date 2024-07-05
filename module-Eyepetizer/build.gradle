@@ -53,6 +53,7 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    namespace 'com.zeke.moudle_eyepetizer'
 }
 
 dependencies {

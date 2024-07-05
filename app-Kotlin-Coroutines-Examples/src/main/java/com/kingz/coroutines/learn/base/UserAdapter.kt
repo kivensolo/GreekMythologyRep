@@ -3,11 +3,12 @@ package com.kingz.coroutines.learn.base
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.kingz.coroutines.data.local.entity.User
 import com.zeke.example.coroutines.R
-import kotlinx.android.synthetic.main.item_layout.view.*
 
 class UserAdapter(
     private val users: ArrayList<User>
@@ -29,12 +30,13 @@ class UserAdapter(
 
     class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(user: User) {
-            itemView.textViewUserName.text = user.name
-            itemView.textViewUserEmail.text = user.email
-            Glide.with(itemView.imageViewAvatar.context)
+            itemView.findViewById<TextView>(R.id.textViewUserName).text = user.name
+            itemView.findViewById<TextView>(R.id.textViewUserEmail).text = user.email
+            val avatarView = itemView.findViewById<ImageView>(R.id.imageViewAvatar)
+            Glide.with(avatarView.context)
                 .load(user.avatar)
                 .error(R.drawable.resource_heart3)
-                .into(itemView.imageViewAvatar)
+                .into(avatarView)
         }
     }
 

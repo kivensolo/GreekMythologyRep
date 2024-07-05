@@ -2,12 +2,14 @@ package com.kingz.coroutines.learn.timeout
 
 import android.os.Bundle
 import android.view.View
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.kingz.base.response.Status
 import com.kingz.coroutines.data.api.ApiHelperImpl
 import com.kingz.coroutines.data.api.RetrofitBuilder
@@ -17,7 +19,6 @@ import com.kingz.coroutines.data.model.ApiUser
 import com.kingz.coroutines.learn.base.ApiUserAdapter
 import com.kingz.coroutines.utils.ViewModelFactory
 import com.zeke.example.coroutines.R
-import kotlinx.android.synthetic.main.activity_recycler_view.*
 
 /**
  *  Learn how to add timeout to a task using Kotlin Coroutines.
@@ -29,6 +30,8 @@ class TimeoutActivity : AppCompatActivity() {
 
     private lateinit var viewModel: TimeoutViewModel
     private lateinit var adapter: ApiUserAdapter
+    protected lateinit var recyclerView: RecyclerView
+    protected lateinit var progressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +42,9 @@ class TimeoutActivity : AppCompatActivity() {
     }
 
     private fun setupUI() {
+        recyclerView = findViewById(R.id.recycler_view)
+        progressBar = findViewById(R.id.progressBar)
+
         recyclerView.layoutManager = LinearLayoutManager(this)
         adapter =
             ApiUserAdapter(

@@ -50,6 +50,7 @@ android {
     packagingOptions {
         exclude 'META-INF/kotlinx-coroutines-core.kotlin_module'
     }
+    namespace 'com.zeke.demo'
 }
 
 dependencies {

@@ -12,6 +12,9 @@ if (!enableCoroutinesModule.toBoolean()) {
 android {
     compileSdk build_versions.compile_sdk
 
+    viewBinding {
+        enabled = true
+    }
     dataBinding {
         enabled = true
     }
@@ -47,13 +50,14 @@ android {
     lintOptions {
         abortOnError false
     }
+    namespace 'com.zeke.example.coroutines'
 }
 
 
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation deps.appcompat
     implementation deps.core_ktx
 

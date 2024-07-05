@@ -6,6 +6,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.kingz.coroutines.learn.retrofit.parallel.ParallelNetworkCallsActivity
 import com.kingz.coroutines.learn.timeout.TimeoutActivity
+import com.kingz.coroutines.multicast.UDPListenerActivity
 import com.zeke.example.coroutines.R
 import com.zeke.kangaroo.zlog.ZLog
 
@@ -27,5 +28,11 @@ class CoroutinesDemosActivity : AppCompatActivity() {
         ZLog.d("startParallelNetworkCallsActivity",true)
         startActivity(Intent(this@CoroutinesDemosActivity,
             TimeoutActivity::class.java))
+    }
+
+    fun startMulticastActivity(view: View) {
+        ZLog.d("startMulticastActivity",true)
+        startActivity(Intent(this@CoroutinesDemosActivity,
+            UDPListenerActivity::class.java))
     }
 }

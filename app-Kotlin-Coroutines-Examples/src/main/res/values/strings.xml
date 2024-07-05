@@ -5,6 +5,7 @@
     <string name="parallel_network_calls">并发网络请求</string>
     <string name="room_database">Room Database</string>
     <string name="timeout">超时测试</string>
+    <string name="multicast_data">UDP/TCP</string>
     <string name="try_catch_error">Try-Catch Error</string>
     <string name="exception_handler">ExceptionHandler</string>
     <string name="ignore_error_and_continue">Ignore Error And Continue</string>

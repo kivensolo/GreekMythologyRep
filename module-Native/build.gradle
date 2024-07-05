@@ -62,6 +62,7 @@ android {
             path "CMakeLists.txt"
         }
     }
+    namespace 'com.zeke.module_native'
 
     // NDK Step3: build改项目，输出so文件
 }

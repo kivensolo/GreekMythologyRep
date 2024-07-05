@@ -4,8 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.zeke.example.coroutines.R
-import kotlinx.android.synthetic.main.activity_udp_tcp.*
+import com.zeke.example.coroutines.databinding.ActivityUdpTcpBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
@@ -19,14 +18,16 @@ import java.net.Socket
 import java.nio.ByteBuffer
 import java.nio.charset.StandardCharsets
 
-class LsrActivity: AppCompatActivity() {
+class UDPListenerActivity: AppCompatActivity() {
+    private lateinit var viewBinding:ActivityUdpTcpBinding
     private val IPV4_MULTI_CAST_PROT = 34888
     private val IPV4_MULTI_CAST_GROUP = "239.255.255.252" //224.0.0.225也可以  224.0.0.1 不行
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_udp_tcp)
+        viewBinding = ActivityUdpTcpBinding.inflate(layoutInflater)
+        setContentView(viewBinding.root)
         lifecycleScope.launch(Dispatchers.IO) {
             startMulticastListener()
         }
@@ -55,10 +56,11 @@ class LsrActivity: AppCompatActivity() {
                         Log.d("Kingz","接收到组播数据…")
 //                        destoryMulticast(socket, group)
 //                        break
-
-                        val content = udpMsgText.text.toString()
-                        udpMsgText.handler.post {
-                            udpMsgText.text = (content + "\n" + contentData)
+                        viewBinding.udpMsgText.apply {
+                            val content = text.toString()
+                            handler.post {
+                                viewBinding.udpMsgText.text = (content + "\n" + contentData)
+                            }
                         }
                     }
                 } catch (e: IOException) {
