@@ -224,7 +224,7 @@
 
         <!--自定义View Start-->
         <activity
-            android:name="com.zeke.demo.customview.CustomViewsDemoActivity"
+            android:name="com.zeke.demo.customview.CustomViewsDemoMultiCardActivity"
             android:hardwareAccelerated="false"
             android:screenOrientation="fullSensor"
             android:theme="@style/AppTheme" />

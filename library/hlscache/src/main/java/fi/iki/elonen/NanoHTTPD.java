@@ -99,7 +99,7 @@ import fi.iki.elonen.NanoHTTPD.Response.IStatus;
 import fi.iki.elonen.NanoHTTPD.Response.Status;
 
 /**
- * A simple, tiny, nicely embeddable HTTP server in Java
+ * 一个简单、小巧、可嵌入的Java HTTP服务器
  * <p/>
  * <p/>
  * NanoHTTPD

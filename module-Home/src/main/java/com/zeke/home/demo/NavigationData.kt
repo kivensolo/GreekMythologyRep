@@ -31,10 +31,9 @@ class NavigationData {
         DemoGroup("Custom view & widgets","自定义View绘制练习& 控件",
             samples = arrayListOf(
                 DemoSample("旧版自定义View集合页面", "com.kingz.pages.CustomViewsPage"),
-                DemoSample("新版自定义View展示页面", "com.zeke.demo.customview.CustomViewsDemoActivity"),
+                DemoSample("新版自定义View展示页面", "com.zeke.demo.customview.CustomViewsDemoMultiCardActivity"),
                 DemoSample("ShadowLayout展示", "com.zeke.demo.ShadowLayoutDemoActivity"),
-                //被CustomViewsDemoActivity取代
-                DemoSample("Davinci", "com.zeke.demo.draw.PracticeDrawActivity"),
+                DemoSample("Canvas API展示", "com.zeke.demo.draw.PracticeDrawActivity"),
                 // 可以合并到 PracticeDrawActivity 中去
                 DemoSample("PracticeLayout(TODO)", "com.zeke.demo.draw.PracticeLayoutActivity"),
                 DemoSample("BookReader翻书效果", "com.zeke.demo.draw.PracticeLayoutActivity"),

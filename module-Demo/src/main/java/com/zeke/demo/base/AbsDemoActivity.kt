@@ -21,7 +21,7 @@ import com.zeke.demo.model.DemoContentModel
 abstract class AbsDemoActivity : BaseActivity() {
     open var tabLayout: TabLayout? = null
     open var pager: ViewPager? = null
-    open val pageModels: MutableList<DemoContentModel> by lazy { ArrayList<DemoContentModel>() }
+    open val pageModels: MutableList<DemoContentModel> by lazy { ArrayList() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

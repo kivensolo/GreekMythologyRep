@@ -11,11 +11,10 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.zeke.demo.R
-import com.zeke.demo.base.AbsCardDemoActivity
+import com.zeke.demo.base.AbsMultiCardTabsDemoActivity
 import com.zeke.demo.customview.views.ChartMusicView
 import com.zeke.demo.customview.views.ChartTextView
 import com.zeke.demo.model.CardItemModel
-import com.zeke.demo.model.DemoContentModel
 
 
 /**
@@ -23,15 +22,7 @@ import com.zeke.demo.model.DemoContentModel
  * date:  2020/4/19 11:32 <br>
  * description: 自定义view Demo展示的页面 <br>
  */
-class CustomViewsDemoActivity : AbsCardDemoActivity() {
-    override fun initCardListData() {
-        super.initCardListData()
-        // 创建卡片数据
-        cardList.add(CardItemModel("ChartMusicView", ChartMusicView(this)))
-        cardList.add(CardItemModel("带音乐跳动效果的TextView", ChartTextView(this)))
-        cardList.add(CardItemModel("SimpleChartView", createSimpleChartView()))
-
-    }
+class CustomViewsDemoMultiCardActivity : AbsMultiCardTabsDemoActivity() {
 
     /**
      * 对于图表关键需要知道并理解的是图、数据、数据集以及 Entry，
@@ -160,7 +151,16 @@ class CustomViewsDemoActivity : AbsCardDemoActivity() {
     }
 
     override fun inflatePageData() {
+        tabDataMap = mapOf(
+            "自定义views" to mutableListOf(
+                CardItemModel("ChartMusicView", ChartMusicView(this)),
+                CardItemModel("带音乐跳动效果的TextView", ChartTextView(this)),
+                CardItemModel("SimpleChartView", createSimpleChartView())
+            ),
+        )
         super.inflatePageData()
-        pageModels.add(DemoContentModel("自定义views", cardList))
     }
+
+
+
 }

@@ -5,14 +5,33 @@ import android.os.Bundle
 import android.view.Menu
 import com.zeke.demo.R
 import com.zeke.demo.base.AbsDemoActivity
-import com.zeke.demo.draw.base_api.*
+import com.zeke.demo.draw.base_api.Practice1ColorView
+import com.zeke.demo.draw.base_api.Practice2CircleView
+import com.zeke.demo.draw.base_api.Practice3RectView
+import com.zeke.demo.draw.base_api.Practice4PointView
+import com.zeke.demo.draw.base_api.Practice5OvalView
+import com.zeke.demo.draw.base_api.Practice6LineView
+import com.zeke.demo.draw.base_api.Practice7ArcView
+import com.zeke.demo.draw.base_api.Practice8PathView
 import com.zeke.demo.draw.canvas.CanvasDemoViewGroup
-import com.zeke.demo.draw.paint.*
+import com.zeke.demo.draw.paint.Paint10GetPathView
+import com.zeke.demo.draw.paint.Paint1ShaderView
+import com.zeke.demo.draw.paint.Paint2BitmapShaderView
+import com.zeke.demo.draw.paint.Paint3ComposeShaderView
+import com.zeke.demo.draw.paint.Paint4ColorFilterView
+import com.zeke.demo.draw.paint.Paint5XfermodeView
+import com.zeke.demo.draw.paint.Paint6NormalEffectView
+import com.zeke.demo.draw.paint.Paint7PathEffectView
+import com.zeke.demo.draw.paint.Paint8ShadowLayerView
+import com.zeke.demo.draw.paint.Paint9MaskFilterView
 import com.zeke.demo.draw.path.ShadowLineChartView
-import com.zeke.demo.draw.text.*
+import com.zeke.demo.draw.text.Paint11TextEffecsView
+import com.zeke.demo.draw.text.Paint12TextDimensionView
+import com.zeke.demo.draw.text.Paint13FontMetricView
+import com.zeke.demo.draw.text.Paint14TextOnPathView
+import com.zeke.demo.draw.text.Paint15TextStaticLayoutView
 import com.zeke.demo.model.CardItemModel
 import com.zeke.demo.model.DemoContentModel
-import java.util.*
 
 /**
  * 关于绘制练习的页面
@@ -62,7 +81,7 @@ class PracticeDrawActivity : AbsDemoActivity() {
         }
 
         val canvasApiCard: MutableList<CardItemModel> = ArrayList()
-        canvasApiCard.add(CardItemModel("Canvas练习", CanvasDemoViewGroup(this@PracticeDrawActivity)))
+                canvasApiCard.add(CardItemModel("Canvas练习", CanvasDemoViewGroup(this@PracticeDrawActivity)))
 
         // 初始化Page数据
         with(pageModels) {
