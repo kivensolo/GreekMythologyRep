@@ -155,8 +155,6 @@ class SimplePlayerActivity : PlayerActivity(),CustomAdapt {
         super.onDestroy()
     }
 
-    override fun getContentLayout(): Int = R.layout.layout_invalid
-
     override fun getContentView(): View? {
         fullPlayerPageBinding = FullPlayerPageBinding.inflate(LayoutInflater.from(this))
         return fullPlayerPageBinding.root

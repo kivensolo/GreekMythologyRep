@@ -154,6 +154,7 @@ class HomeActivity : AppBarActivity(), View.OnClickListener{
             msg.what = MSG_CLICK_LOGOUT_PASS
             mHandler.sendMessageDelayed(msg, 2 * 1000)
         }
+        slideMenuViewBinding.tvVersion.text = String.format("v%s", BuildConfig.BUILD_TYPE)
     }
 
     //动态申请【外部目录读写权限】
@@ -188,7 +189,6 @@ class HomeActivity : AppBarActivity(), View.OnClickListener{
         mainViewBinding.slidPanelLayout.setPanelSlideListener(panelSlidelLsr)
         mainViewBinding.slidPanelLayout.sliderFadeColor = ContextCompat.getColor(this, R.color.black_transparent)
         mainViewBinding.slidPanelLayout.coveredFadeColor = ContextCompat.getColor(this, R.color.transparent)
-        slideMenuViewBinding.tvVersion.text = String.format("v%s", BuildConfig.BUILD_TYPE)
     }
 //   推迟到Web Fragment初始化之后
 

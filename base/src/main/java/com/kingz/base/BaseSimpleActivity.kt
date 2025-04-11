@@ -40,11 +40,11 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
     }
 
     protected open fun initContentView() {
-        val contentLayout = getContentLayout()
-        if (contentLayout != R.layout.layout_invalid) {
-            setContentView(contentLayout)
-        } else {
-            setContentView(getContentView())
+        val contentView = getContentView()
+        if(contentView != null){
+            setContentView(contentView)
+        }else{
+            setContentView(getContentLayout())
         }
     }
 
@@ -54,7 +54,7 @@ abstract class BaseSimpleActivity : AppCompatActivity() {
         return R.layout.layout_invalid
     }
 
-    open fun getContentView():View? {return null}
+    open fun getContentView():View? = null
 
     /**
      * Init immersion style bar.

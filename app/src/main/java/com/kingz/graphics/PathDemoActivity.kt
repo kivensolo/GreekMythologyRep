@@ -3,7 +3,6 @@ package com.kingz.graphics
 import android.os.Bundle
 import android.view.View
 import com.kingz.base.BaseVMActivity
-import com.kingz.base.R
 import com.zeke.reactivehttp.base.BaseReactiveViewModel
 
 /**
@@ -18,8 +17,6 @@ class PathDemoActivity: BaseVMActivity() {
 
     override val viewModel: BaseReactiveViewModel
         get() = TODO("Not yet implemented")
-
-    override fun getContentLayout()= R.layout.layout_invalid
 
     override fun getContentView(): View? {
         return PathSampleView(baseContext)
