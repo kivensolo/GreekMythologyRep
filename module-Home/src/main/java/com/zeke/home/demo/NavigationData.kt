@@ -37,6 +37,7 @@ class NavigationData {
                 // 可以合并到 PracticeDrawActivity 中去
                 DemoSample("PracticeLayout(TODO)", "com.zeke.demo.draw.PracticeLayoutActivity"),
                 DemoSample("BookReader翻书效果", "com.zeke.demo.draw.PracticeLayoutActivity"),
+                DemoSample("光带扫描效果", RouterConfig.PAGE_FLASH_SCAN),
             )
         ),
         DemoGroup("文字","文字处理相关",

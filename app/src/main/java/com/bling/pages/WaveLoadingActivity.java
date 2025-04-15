@@ -5,11 +5,9 @@ import android.os.Bundle;
 import android.widget.SeekBar;
 
 import com.kingz.customdemo.R;
-import com.module.views.loading.WaveLoadingView;
+import com.zeke.kangaroo.view.loading.WaveLoadingView;
 
 /**
- * Copyright(C) 2015, 北京视达科科技有限公司
- * All rights reserved.
  * author: King.Z
  * date:  2016/5/29 14:46
  * description: 水波Loading页面
