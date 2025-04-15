@@ -113,5 +113,8 @@
         <activity android:name=".gaussian_blur.JNITestBlurActivity"
             android:theme="@style/AppTheme"/>
 
+        <activity android:name=".draw.flash.FlashEnhanceActivity"
+            android:theme="@style/AppTheme"/>
+
     </application>
 </manifest>

@@ -31,4 +31,16 @@
         <attr name="imageHeight" format="dimension" />
         <attr name="imageScaleType" />
     </declare-styleable>
+
+    <declare-styleable name="flashEnhanceView">
+        <attr name="flashMode" format="string" />
+        <attr name="flashColors" format="string" />
+        <attr name="beginAngle" format="dimension" />
+        <attr name="animDuration" format="dimension" />
+        <attr name="animInterval" format="dimension" />
+        <attr name="repeatCount" format="dimension" />
+        <attr name="gradientRatio" format="float" />
+        <attr name="borderWidth" format="dimension" />
+        <attr name="isAutoRun" format="boolean" />
+    </declare-styleable>
 </resources>
