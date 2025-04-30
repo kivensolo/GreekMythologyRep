@@ -14,7 +14,9 @@ import com.zeke.demo.R
 import com.zeke.demo.base.AbsMultiCardTabsDemoActivity
 import com.zeke.demo.customview.views.ChartMusicView
 import com.zeke.demo.customview.views.ChartTextView
+import com.zeke.demo.customview.views.RadarView
 import com.zeke.demo.model.CardItemModel
+import com.zeke.kangaroo.utils.UIUtils
 
 
 /**
@@ -152,15 +154,25 @@ class CustomViewsDemoMultiCardActivity : AbsMultiCardTabsDemoActivity() {
 
     override fun inflatePageData() {
         tabDataMap = mapOf(
-            "自定义views" to mutableListOf(
+            "动效" to mutableListOf(
                 CardItemModel("ChartMusicView", ChartMusicView(this)),
                 CardItemModel("带音乐跳动效果的TextView", ChartTextView(this)),
-                CardItemModel("SimpleChartView", createSimpleChartView())
+                CardItemModel("雷达扫描效果", createRadarView())
+            ),
+            "图表" to mutableListOf(
+                CardItemModel("自定义LineChart", createSimpleChartView())
             ),
         )
         super.inflatePageData()
     }
 
+    private fun createRadarView(): RadarView {
+        val radarView = RadarView(this)
+        radarView.apply {
+            layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, UIUtils.dip2px(200f))
+        }
+        return radarView
+    }
 
 
 }

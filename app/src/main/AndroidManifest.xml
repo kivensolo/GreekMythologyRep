@@ -227,6 +227,7 @@
             android:name="com.zeke.demo.customview.CustomViewsDemoMultiCardActivity"
             android:hardwareAccelerated="false"
             android:screenOrientation="fullSensor"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:theme="@style/AppTheme" />
         <!--自定义View End-->
 
