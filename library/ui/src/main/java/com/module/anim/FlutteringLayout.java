@@ -56,7 +56,7 @@ public class FlutteringLayout extends RelativeLayout {
             new BounceInterpolator(),new OvershootInterpolator()
     };
 
-    private int mWidth,mHeight;
+    private int mWidth = 10,mHeight = 10;
 
     private Random mRandom;
 
@@ -262,9 +262,8 @@ public class FlutteringLayout extends RelativeLayout {
      */
     private PointF randomPointF(float scale){
         PointF pointF = new PointF();
-        pointF.x = mRandom.nextInt(mWidth);
-        pointF.y = mRandom.nextInt(mHeight)/scale;
-
+        pointF.x = mRandom.nextInt(Math.max(10, mWidth));
+        pointF.y = mRandom.nextInt(Math.max(10, mHeight)) / scale;
         return pointF;
     }
 
