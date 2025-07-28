@@ -82,7 +82,7 @@ class HomeActivity : AppBarActivity(), View.OnClickListener{
     private val MSG_CLICK_LOGOUT_PASS = 0x0001
     private var mHandler:Handler = Handler(object : Handler.Callback {
         override fun handleMessage(msg: Message): Boolean {
-            when(msg!!.what){
+            when(msg.what){
                 MSG_CLICK_LOGOUT_PASS -> {
                     mIsDoubleClieckLogout = false
                     return true
@@ -141,7 +141,8 @@ class HomeActivity : AppBarActivity(), View.OnClickListener{
         slideMenuViewBinding.setting.setOnClickListener {
             Router.startActivity(RouterConfig.PAGE_SETTING)
         }
-
+        slideMenuViewBinding.tvAbout.setOnClickListener {
+        }
         slideMenuViewBinding.tvLogout.setOnClickListener {
             if (mIsDoubleClieckLogout) {
                 mIsDoubleClieckLogout = false

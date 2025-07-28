@@ -29,6 +29,8 @@ import kotlinx.coroutines.withContext
 
 /**
  * 首页热门推荐(玩android)的Fragemnt
+ *
+ * 顶部是Banner数据，下面是文章数据。
  */
 class WanAndroidHomeFragment : AbsListFragment<WanAndroidViewModelV2>() {
 
@@ -115,16 +117,23 @@ class WanAndroidHomeFragment : AbsListFragment<WanAndroidViewModelV2>() {
                 //当前数据为空时
                 if (articleAdapter?.getDefItemCount() == 0) {
                     withContext(Dispatchers.Main) {
+                        ZLog.w("Current articleAdapter data is empty! Load new data !")
                         articleAdapter?.addData(articleList!!)
                     }
                     return@launchIO
                 }
+
+                //下拉刷新UI的处理
                 refreshLayout?.apply {
                     if (isLoadingMore) finishLoadMore() else finishRefresh()
                 }
+
                 // 数据非空时
                 val currentFirstData = articleAdapter?.getItem(0)
-                if (currentFirstData?.id != articleList!![0].id) {
+                val currentHeadDataId = currentFirstData?.id
+                val netHeadDataId = articleList!![0].id
+                ZLog.d("localHeadDataId=${currentHeadDataId}, netHeadDataId=${netHeadDataId}")
+                if (currentHeadDataId != netHeadDataId) {
                     //当前第一个数据不同于接口第一个，表示有新数据
                     ZLog.d("Has new article data. <------")
                     withContext(Dispatchers.Main) {
@@ -137,6 +146,9 @@ class WanAndroidHomeFragment : AbsListFragment<WanAndroidViewModelV2>() {
                             }
                         }
                     }
+                }else{
+                    // 当前第一个数据等于接口第一个，表示没有新数据
+                    ZLog.w("No need to refresh data. <------")
                 }
                 isLoadingMore = false
             }
