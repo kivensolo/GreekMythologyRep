@@ -74,8 +74,13 @@ public class MusicPosterPages extends BaseActivity {
             @Override
             public void onResponse(final MgResponseBean response) {
                 ZLog.d(TAG, "onResponse");
-                mAdapter.attachData(response.getData().getHitDocs());
-                mAdapter.notifyDataSetChanged();
+                MgResponseBean.Data data = response.getData();
+                if(data != null){
+                    mAdapter.attachData(data.getHitDocs());
+                    mAdapter.notifyDataSetChanged();
+                }else{
+                    ZLog.e("Get url response empty! Url: " + url);
+                }
             }
         });
     }
