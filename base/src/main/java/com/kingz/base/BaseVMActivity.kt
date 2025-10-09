@@ -78,7 +78,7 @@ abstract class BaseVMActivity : BaseSimpleActivity(), IUIActionEventObserver {
     override fun showToast(msg: String) {
         Log.d(TAG,"showToast: $msg")
         if (msg.isNotBlank()) {
-            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+            Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
         }
     }
 

@@ -34,7 +34,7 @@ class AndroidDemoProvider : DataApiService<MutableList<DemoGroup>> {
      * @param callback DataApiService.IDataResponse
      */
     override fun requestData(context: Context,@NotNull callback: IRequestResponse<MutableList<DemoGroup>>) {
-        //TODO 优化 NavigationData 层级 将这个Data迁移至app模块中
+        //TODO 优化 NavigationData 层级 将这个Data下层到每个组件中
         callback.onSuccess(NavigationData().groupList)
 
 //        mCallBack = callback
