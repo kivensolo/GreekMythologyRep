@@ -7,6 +7,7 @@ import android.content.Intent;
 /**
  * @author: KingZ
  * @Description: 列表页面数据Bean封装
+//TODO 标注被什么代替
  * @deprecated
  */
 public class ListBillData {
