@@ -96,7 +96,7 @@ public class FlutteringLayout extends RelativeLayout {
     }
 
     private void init(Context context,AttributeSet attrs){
-
+        Log.d(TAG, "init FlutteringLayout()");
         mRandom = new Random();
 
         mStartPointF = new PointF();
@@ -245,7 +245,7 @@ public class FlutteringLayout extends RelativeLayout {
             makeMeasureSpec(target);
             int width = target.getMeasuredWidth();
             int height = target.getMeasuredHeight();
-            mStartPointF.x = (mWidth + getPaddingLeft() - getPaddingRight() - width)/2;
+            mStartPointF.x = (float) (mWidth + getPaddingLeft() - getPaddingRight() - width) /2;
             mStartPointF.y = mHeight + getPaddingTop() - getPaddingBottom() - height;
 
         }
