@@ -35,7 +35,6 @@
 
                     <ImageView
                         android:id="@+id/ivLogo"
-                        style="@style/OnClickStyle"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_marginBottom="@dimen/size_4dp"
@@ -43,7 +42,6 @@
 
                     <TextView
                         android:id="@+id/tvUser"
-                        style="@style/OnClickStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="@dimen/size_16dp"
@@ -101,7 +99,6 @@
 
         <TextView
             android:id="@+id/tvVersion"
-            style="@style/OnClickStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

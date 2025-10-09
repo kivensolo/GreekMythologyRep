@@ -154,7 +154,12 @@ class HomeActivity : AppBarActivity(), View.OnClickListener{
             msg.what = MSG_CLICK_LOGOUT_PASS
             mHandler.sendMessageDelayed(msg, 2 * 1000)
         }
-        slideMenuViewBinding.tvVersion.text = String.format("v%s", BuildConfig.BUILD_TYPE)
+        slideMenuViewBinding.tvVersion.apply {
+            text = String.format("v%s", BuildConfig.BUILD_TYPE)
+            setOnClickListener {
+                clickVersion(true)
+            }
+        }
     }
 
     //动态申请【外部目录读写权限】
@@ -213,7 +218,11 @@ class HomeActivity : AppBarActivity(), View.OnClickListener{
                 finish()
                 return@Observer
             }
-            slideMenuViewBinding.tvUser.text = it.username
+            slideMenuViewBinding.tvUser.apply {
+                text = it.username
+                setOnClickListener {
+                }
+            }
             slideMenuViewBinding.tvLogout.visibility = View.VISIBLE
         })
     }
@@ -320,10 +329,6 @@ class HomeActivity : AppBarActivity(), View.OnClickListener{
                 //TODO 进行搜索页跳转
             }*/
             // ----- 老AppBarLayout
-
-            R.id.tvVersion -> {
-                clickVersion(true)
-            }
         }
     }
 
