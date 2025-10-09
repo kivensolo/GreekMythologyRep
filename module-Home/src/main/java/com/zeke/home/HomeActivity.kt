@@ -99,6 +99,7 @@ class HomeActivity : AppBarActivity(), View.OnClickListener{
 
     override fun getContentView(): View? {
         mainViewBinding = ActivityMainBinding.inflate(layoutInflater)
+        slideMenuViewBinding = SlideMenuLayoutBinding.bind(mainViewBinding.root.findViewById(R.id.menu_panel))
         return mainViewBinding.root
     }
 
@@ -121,8 +122,6 @@ class HomeActivity : AppBarActivity(), View.OnClickListener{
     }
 
     private fun initSlideMenuView() {
-        slideMenuViewBinding = SlideMenuLayoutBinding.inflate(layoutInflater)
-
         slideMenuViewBinding.ivLogo.setOnClickListener {
             val result = PermissionUtils.verifyReadAndWritePermissions(this, 0)
             //TODO 进行本地图片选择或者跳转
@@ -340,6 +339,7 @@ class HomeActivity : AppBarActivity(), View.OnClickListener{
 
     private fun addHeart(count: Int) {
         repeat(count) {
+            ZLog.d(TAG,"addHeart()")
             slideMenuViewBinding.flutteringLayout.addHeart()
         }
     }
