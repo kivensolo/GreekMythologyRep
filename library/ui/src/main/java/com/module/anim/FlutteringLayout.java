@@ -128,7 +128,6 @@ public class FlutteringLayout extends RelativeLayout {
      * 添加桃心
      */
     public void addHeart(){
-
         ImageView iv = getHeartView(randomHeartResource());
         addView(iv);
         updateStartPointF(iv);
@@ -136,7 +135,6 @@ public class FlutteringLayout extends RelativeLayout {
         Animator animator = getAnimator(iv);
         animator.addListener(new EndAnimatorListener(iv));
         animator.start();
-
     }
 
     /**
@@ -243,7 +241,6 @@ public class FlutteringLayout extends RelativeLayout {
      * @return
      */
     private void updateStartPointF(View target){
-
         if(mStartPointF.x == 0 || mStartPointF.y == 0 || !mIsSameSize){
             makeMeasureSpec(target);
             int width = target.getMeasuredWidth();
@@ -261,6 +258,9 @@ public class FlutteringLayout extends RelativeLayout {
      * @return
      */
     private PointF randomPointF(float scale){
+        if (mWidth == 0 || mHeight  == 0) {
+            return new PointF(0,0);
+        }
         PointF pointF = new PointF();
         pointF.x = mRandom.nextInt(mWidth);
         pointF.y = mRandom.nextInt(mHeight)/scale;
