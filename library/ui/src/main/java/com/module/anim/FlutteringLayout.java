@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.PointF;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
@@ -37,6 +38,7 @@ import java.util.Random;
  */
 public class FlutteringLayout extends RelativeLayout {
 
+    public static final String TAG = "FlutteringLayout";
     /**
      * 桃心
      */
