@@ -88,4 +88,15 @@
         <attr name="bar_orientation_horizontal" format="boolean" />
     </declare-styleable>
 
+    <declare-styleable name="SpeedometerView">
+        <attr name="minValue" format="integer" />
+        <attr name="maxValue" format="integer" />
+        <attr name="currentValue" format="integer" />
+        <attr name="pointerColor" format="color" />
+        <attr name="progressColor" format="color" />
+        <attr name="progressBgColor" format="color" />
+        <attr name="currentValueTextColor" format="color" />
+        <attr name="dialColor" format="color" />
+        <attr name="animationDuration" format="integer" />
+    </declare-styleable>
 </resources>
