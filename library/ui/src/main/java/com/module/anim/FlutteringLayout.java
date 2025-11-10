@@ -34,7 +34,7 @@ import java.util.Random;
 /**
  * author: King.Z <br>
  * date:  2020/8/23 10:59 <br>
- * description:  <br>
+ * description: 支持目标view(默认是桃心图片)随机飘动的Layout <br>
  */
 public class FlutteringLayout extends RelativeLayout {
 
