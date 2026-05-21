@@ -1,18 +1,29 @@
 package com.zeke.demo.draw.paint
 
-import android.annotation.SuppressLint
+import android.animation.ValueAnimator
 import android.content.Context
-import android.graphics.*
-import android.os.Build
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.ComposePathEffect
+import android.graphics.CornerPathEffect
+import android.graphics.DashPathEffect
+import android.graphics.LinearGradient
+import android.graphics.Matrix
+import android.graphics.Paint
+import android.graphics.Path
+import android.graphics.PathDashPathEffect
+import android.graphics.PathEffect
+import android.graphics.PathMeasure
+import android.graphics.RectF
+import android.graphics.Shader
 import android.util.AttributeSet
-import androidx.annotation.RequiresApi
 import com.zeke.demo.base.BasePracticeView
 
 
 /**
  * author: King.Z <br>
  * date:  2020/3/15 14:27 <br>
- * description:  <br>
+ * description: 验证画笔PathEffect特效的Demo <br>
  *     PathEffect是用来控制绘制轮廓(线条)的方式.
  *
  *     DashPathEffect是PathEffect类的一个子类,可以使paint画出类似虚线的样子,并且可以任意指定虚实的排列方式.
@@ -46,16 +57,39 @@ import com.zeke.demo.base.BasePracticeView
 class Paint7PathEffectView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : BasePracticeView(context, attrs, defStyleAttr) {
-    //储存Path效果容器
-    private var mEffects: Array<PathEffect?>
+
+    private data class EffectEntry(
+        val effect: PathEffect?,
+        val color: Int = 0,
+        //useGradientShader为true时，Shader 的颜色会完全替代 paint.color，所以color默认为0
+        val useGradientShader: Boolean = false
+    )
+
+    private companion object {
+        const val INDEX_FLOW_COLOR_DASH = 4
+    }
+
+    private var effectEntries: MutableList<EffectEntry> = mutableListOf()
     private var mPaintRect: Paint
     private var mPath: Path
-    //储存颜色的数组
-    private var mColors: IntArray
-    private var mPhase = 0f
+    private var pathLength = 0f
+    private var dashShader: LinearGradient
+    private val shaderMatrix = Matrix()
     private var bounds = RectF()
+    private var dashAnimator: ValueAnimator? = null
+    private val dashColors = intArrayOf(
+        0x4C4285F4.toInt(), // Blue (30%透明 - 头部渐隐)
+        0xFF4285F4.toInt(), // Blue
+        0xFFEA4335.toInt(), // Red
+        0xFFFBBC05.toInt(), // Yellow
+        0xFF34A853.toInt(), // Green
+        0xFF4285F4.toInt(), // Blue
+        0x4C4285F4.toInt()  // Blue (30%透明 - 尾部渐隐)
+    )
 
     init {
+        effectEntries = makeEffects(0f)
+
         isFocusable = true
         isFocusableInTouchMode = true
         paint.style = Paint.Style.STROKE
@@ -65,11 +99,13 @@ class Paint7PathEffectView @JvmOverloads constructor(
         mPaintRect.strokeWidth = 2f
 
         mPath = makeFollowPath()
-        mEffects = arrayOfNulls(6)
-        mColors = intArrayOf(Color.BLACK, Color.RED,
-                Color.BLUE, Color.GREEN,
-                Color.MAGENTA, Color.BLACK
+        pathLength = PathMeasure(mPath, false).length
+        dashShader = LinearGradient(
+            0f, 0f, pathLength * 0.5f, 0f,
+            dashColors, null,
+            Shader.TileMode.MIRROR
         )
+        startDashAnimation()
     }
 
     /**
@@ -85,26 +121,15 @@ class Paint7PathEffectView @JvmOverloads constructor(
         return p
     }
 
-
-
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    @SuppressLint("DrawAllocation")
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         mPath.computeBounds(bounds, false)
         canvas.translate(20 - bounds.left, 20 - bounds.top)
-
-        //初始化每个效果
-        makeEffects(mEffects, mPhase)
-        mPhase += 1f
-//        invalidate()
-
-        for (i in mEffects.indices) {
-            paint.pathEffect = mEffects[i]
-            paint.color = mColors[i]
-            mPaintRect.pathEffect = mEffects[i]
-            mPaintRect.color = mColors[i]
-
+        mPaintRect.color = Color.BLACK
+        for (entry in effectEntries) {
+            paint.pathEffect = entry.effect
+            paint.color = entry.color
+            paint.shader = if (entry.useGradientShader) dashShader else null
             canvas.drawPath(mPath, paint)
             canvas.drawRoundRect(bounds, 0f, 0f, mPaintRect)
             canvas.translate(0f, 145f)
@@ -112,32 +137,42 @@ class Paint7PathEffectView @JvmOverloads constructor(
     }
 
     /**
-     * 添加效果
-     * @param e  path的效果
+     * 创建多个Path效果
+     * 1. 无效果
+     * 2. 圆角平滑的path
+     * 3. Dash风格的path (非平滑)
+     * 4. 彩色渐变Dash(由ValueAnimator驱动phase)
+     * 5. 组合Path(平滑 + Dash)
+     * 6. 使用path图形来填充当前路径的dash(导流线)
+     * 7. 组合Path(平滑 + 图形path)
+     *
      * @param phase  偏移量
      */
-    private fun makeEffects(e: Array<PathEffect?>, phase: Float) {
-        // no effect
-        e[0] = null
-        //边角平滑效果, 所有拐角变成圆角
-        e[1] = CornerPathEffect(30f)
+    private fun makeEffects(phase: Float): MutableList<EffectEntry> {
+        val cornerPathEffect = CornerPathEffect(30f)
+        val dashPathEffect = DashPathEffect(floatArrayOf(24f, 6f, 15f, 30f, 3f), phase)
+        val colorDashPathEffect = DashPathEffect(floatArrayOf(24f, 6f, 15f, 30f, 3f), phase)
+        val pathDashPathEffect = PathDashPathEffect(
+            makeStampPathDash(), 12f, phase,
+            PathDashPathEffect.Style.ROTATE
+        )
 
-        //画自定义虚线
-        e[2] = DashPathEffect(floatArrayOf(24f, 6f, 15f, 30f, 3f), phase)
-
-        //使用Path图形来填充当前的路径shape则是指填充图形，advance指每个图形间的间距，
-        e[3] = PathDashPathEffect(makeStampPathDash(), 12f, phase,
-                PathDashPathEffect.Style.ROTATE)
-
-        e[4] = ComposePathEffect(e[2], e[1])
-        e[5] = ComposePathEffect(e[3], e[1])
+        return mutableListOf(
+            EffectEntry(null, Color.BLACK),
+            EffectEntry(cornerPathEffect, Color.RED),
+            EffectEntry(cornerPathEffect, useGradientShader = true),
+            EffectEntry(dashPathEffect, Color.BLUE),
+            EffectEntry(colorDashPathEffect, useGradientShader = true),
+            EffectEntry(ComposePathEffect(dashPathEffect, cornerPathEffect), Color.GREEN),
+            EffectEntry(pathDashPathEffect, Color.MAGENTA)
+        )
     }
 
     /**
      * 绘制填充图形的路径
-     * @return 印花的形状
+     * @return 印花的形状(导流线一样)
      */
-    private fun makeStampPathDash(): Path? {
+    private fun makeStampPathDash(): Path {
         val p = Path()
         //            p.moveTo(4, 0);
         //            p.lineTo(0, -4);
@@ -151,8 +186,40 @@ class Paint7PathEffectView @JvmOverloads constructor(
         return p
     }
 
+    /**
+     * 启动Dash动画，仅重建索引3的colorDashPathEffect
+     */
+    private fun startDashAnimation() {
+        val intervals = floatArrayOf(24f, 6f, 15f, 30f, 3f)
+        val patternCycleLength = intervals.sum()
+        dashAnimator = ValueAnimator.ofFloat(patternCycleLength * 4, 0f).apply {
+            duration = 2000L
+            repeatCount = ValueAnimator.INFINITE
+            addUpdateListener { animation ->
+                val phase = animation.animatedValue as Float
+                // 同步移动shader，让渐变颜色跟随dash流动
+                shaderMatrix.reset()
+                shaderMatrix.setTranslate(animation.animatedFraction * pathLength, 0f)
+                dashShader.setLocalMatrix(shaderMatrix)
+
+                effectEntries[INDEX_FLOW_COLOR_DASH] = EffectEntry(
+                    DashPathEffect(intervals, phase),
+                    useGradientShader = true
+                )
+                invalidate()
+            }
+            start()
+        }
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        dashAnimator?.cancel()
+        dashAnimator = null
+    }
+
 
     override fun getViewHeight(): Int {
-        return 880
+        return 146 * effectEntries.size
     }
 }
