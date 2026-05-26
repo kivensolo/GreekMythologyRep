@@ -14,7 +14,7 @@ class NavigationData {
     var groupList:MutableList<DemoGroup> = mutableListOf(
         DemoGroup("基础控件&组件","原生基本控件",
             samples = arrayListOf(
-                DemoSample("Four major components", "com.kingz.widgets.android_src.FourComponentPage"),
+                DemoSample("Four major components", "com.kingz.pages.FourComponentPage"),
                 DemoSample("BasicControls", "com.kingz.widgets.android_src.BasicControlsActivity"),
                 DemoSample("ProgressBar", "com.kingz.widgets.android_src.NativeProgressBar"),
                 DemoSample("SrcLayout", "com.kingz.widgets.android_src.LayoutPage"),
