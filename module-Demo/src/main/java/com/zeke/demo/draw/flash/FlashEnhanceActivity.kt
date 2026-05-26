@@ -52,10 +52,11 @@ class FlashEnhanceActivity :BaseVMActivity() {
             Color.TRANSPARENT
         )
         val list: MutableList<FlashAttrsBean> = ArrayList()
-        list.add(FlashAttrsBean(mode = "surface", colors = colorsArray, gradientRatio = 0.5f, angle = 0))
-        list.add(FlashAttrsBean(mode = "surface", colors = colorsArray, gradientRatio = 0.5f, angle = 180))
-        list.add(FlashAttrsBean(mode = "surface", colors = colorsArray, gradientRatio = 0.5f, angle = 135))
-        list.add(FlashAttrsBean(mode = "surface", colors = colorsArray, gradientRatio = 0.5f, angle = 315))
+        list.add(FlashAttrsBean(FlashEnhanceView.MODE_SURFACE, colorsArray,
+            gradientRatio = 0.5f, angle = 0)
+        )
+        list.add(FlashAttrsBean(FlashEnhanceView.MODE_SURFACE,colorsArray,
+            gradientRatio = 0.5f, angle = 135))
 
         val paralleColorsArray = intArrayOf(
             Color.TRANSPARENT,
@@ -64,8 +65,8 @@ class FlashEnhanceActivity :BaseVMActivity() {
             Color.parseColor("#390000FF"),
             Color.TRANSPARENT
         )
-        list.add(FlashAttrsBean(mode = "edge_race", colors = paralleColorsArray, gradientRatio = 0.6f, angle = 225))
-        list.add(FlashAttrsBean(mode = "edge_race", colors = paralleColorsArray, gradientRatio = 0.6f, angle = 45))
+        list.add(FlashAttrsBean(mode = FlashEnhanceView.MODE_EDGE_RACE, colors = paralleColorsArray, gradientRatio = 0.6f, angle = 225))
+        list.add(FlashAttrsBean(mode = FlashEnhanceView.MODE_EDGE_RACE, colors = paralleColorsArray, gradientRatio = 0.6f, angle = 45))
 
         val greedyColorsArray = intArrayOf(
             Color.parseColor("#190000FF"),
@@ -73,11 +74,8 @@ class FlashEnhanceActivity :BaseVMActivity() {
             Color.parseColor("#6600FF00"),
             Color.parseColor("#FF00FF00"),
         )
-        list.add(FlashAttrsBean(mode = "edge_greedy", colors = greedyColorsArray, gradientRatio = 0.6f, angle = 0))
-        list.add(FlashAttrsBean(mode = "edge_greedy", colors = greedyColorsArray, gradientRatio = 0.6f, angle = 45))
-        list.add(FlashAttrsBean(mode = "edge_greedy", colors = greedyColorsArray, gradientRatio = 0.6f, angle = 90))
-        list.add(FlashAttrsBean(mode = "edge_greedy", colors = greedyColorsArray, gradientRatio = 0.6f, angle = 125))
-        list.add(FlashAttrsBean(mode = "edge_greedy", colors = greedyColorsArray, gradientRatio = 0.6f, angle = 180))
+        list.add(FlashAttrsBean(mode = FlashEnhanceView.MODE_EDGE_GREEDY, colors = greedyColorsArray, gradientRatio = 0.6f, angle = 0))
+        list.add(FlashAttrsBean(mode = FlashEnhanceView.MODE_EDGE_GREEDY, colors = greedyColorsArray, gradientRatio = 0.6f, angle = 180))
         return list
     }
 }

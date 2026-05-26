@@ -20,6 +20,7 @@ import android.util.Log
 import android.view.View
 import androidx.core.view.isInvisible
 import com.zeke.demo.R
+import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.hypot
 import kotlin.math.max
@@ -30,9 +31,18 @@ import kotlin.math.sin
 /**
  * author：ZekeWang
  * date：2025/4/14
- * description：增强型光带扫描Render
+ * description：增强型光带扫描效果自定义View控件
  * 一个便捷的光带扫描效果自定义渲染控件
  * 支持总时长、间隔时间、运动起始角度、光带渲染模式、渲染次数等功能的控制。
+ *
+ * 支持3种光带模式：
+ * - surface: 表面扫光效果，光带从一侧扫到另一侧. (使用LinearGradient创建线性渐变)
+ * - edge_race: 边缘竞赛效果，2条光带从起点出发
+ * - edge_greedy: 边缘贪吃蛇效果，光带围绕View边缘顺时针转动. (使用SweepGradient + Matrix旋转实现环绕效果)
+ *
+ * 使用 ValueAnimator 驱动动画。
+ * 通过 updatePathParameters 计算路径参数
+ *
  */
 class FlashEnhanceView @JvmOverloads constructor(
     context: Context,
@@ -40,6 +50,12 @@ class FlashEnhanceView @JvmOverloads constructor(
     defStyle: Int = 0
 ) : View(context, attrs, defStyle) {
 
+    companion object{
+        val MODE_SURFACE = "surface"
+        val MODE_EDGE_RACE = "edge_race"
+        val MODE_EDGE_GREEDY = "edge_greedy"
+
+    }
     private val TAG = "FlashEnhanceView"
 
     //<editor-fold desc="光带效果模式">
@@ -105,6 +121,14 @@ class FlashEnhanceView @JvmOverloads constructor(
     private var progress = 0f
 
     private var mTypedArray: TypedArray
+
+// <editor-fold defaultstate="collapsed" desc="渐变效果">
+    private var sweepGradient: SweepGradient? = null
+    //基准渐变
+    private var linearGradient: LinearGradient? = null
+    //渐变矩阵    基准渐变 + 渐变矩阵 = 任意位置/角度的渐变效果
+    private val gradientMatrix = Matrix()
+// </editor-fold>
 
     //<editor-fold desc="Edge_greedy模式所需要的特有变量">
     private var matrix: Matrix? = null
@@ -245,6 +269,7 @@ class FlashEnhanceView @JvmOverloads constructor(
      * 核心步骤：
      * 1. 通过标准坐标系将角度转为弧度(极坐标)
      * 2. 通过极坐标计算起始点的方向向量（注意是起始点）
+     * [极坐标转换 ：将角度转为方向向量，实现任意角度的扫光效果]
      * 0° → 右侧水平向左 (dirX=1, dirY=0)
      * 45° → 右上往左下   (dirX=0.5, dirY=0.5)
      * 90° → 从上往下移动 (dirX=0, dirY=1)
@@ -278,11 +303,14 @@ class FlashEnhanceView @JvmOverloads constructor(
 
         if(isEdgeGreedyMode()) {
             matrix?.let {
+                sweepGradient = SweepGradient(viewCenterX, viewCenterY, mFlashColors, null)
                 it.setRotate(mFlashBeginAngle.toFloat(), viewCenterX, viewCenterY)
-                val sweepGradient = SweepGradient(viewCenterX, viewCenterY, mFlashColors, null)
-                sweepGradient.setLocalMatrix(it)
-                mFlashPaint.setShader(sweepGradient)
+                sweepGradient?.setLocalMatrix(it)
+                mFlashPaint.shader = sweepGradient
             }
+        } else {
+            linearGradient = LinearGradient(0f, 0f, gradientLength, 0f, mFlashColors, null, Shader.TileMode.CLAMP)
+            mFlashPaint.shader = linearGradient
         }
     }
 
@@ -315,7 +343,6 @@ class FlashEnhanceView @JvmOverloads constructor(
 
         val offset = progress * flashMovePathLength
 
-
         // 计算渐变起止点  Y轴的计算需转为Android视图坐标系，
         val startX = startOffsetX - dirX * offset
         val endX = startX - dirX * gradientLength
@@ -326,21 +353,49 @@ class FlashEnhanceView @JvmOverloads constructor(
             mFlashPaint.strokeWidth = mBorderFlashWidth.toFloat()
             mFlashPaint.style = Paint.Style.STROKE
             if (isEdgeGreedyMode()) {
-                //In greedy mode, shader already set in updatePathParameters()
                 val rotateAngle = progress * 360 + mFlashBeginAngle //顺时针
                 matrix?.apply {
                     reset()
                     preRotate(rotateAngle, viewCenterX, viewCenterY)
-                    mFlashPaint.shader.setLocalMatrix(this)
+                    sweepGradient?.setLocalMatrix(this)
                 }
             } else {
-                mFlashPaint.setShader(LinearGradient(startX, startY, endX, endY, mFlashColors, null, Shader.TileMode.CLAMP))
+                changeGradientMatrix(endY, startY, endX, startX)
             }
         } else {
-            mFlashPaint.setShader(LinearGradient(startX, startY, endX, endY, mFlashColors, null, Shader.TileMode.CLAMP))
+            changeGradientMatrix(endY, startY, endX, startX)
         }
         mFlashRect?.let {
             canvas.drawRect(it, mFlashPaint)
+        }
+    }
+
+    /**
+     * 改变渐变矩阵
+     * @param endY 渐变终点的Y坐标
+     * @param startY 渐变起始点的Y坐标
+     * @param endX 渐变终点的X坐标
+     * @param startX 渐变起始点的X坐标
+     *
+     * angle计算原理：
+     * 根据终点和起点的坐标差，计算出从起点到终点的角度。
+     *                     (endX, endY)
+     *                    ↗
+     *                   /
+     *                  /  角度 = atan2(Δy, Δx)
+     *                 θ /
+     * (startX, startY)●──────────────→ X轴
+     */
+    private fun changeGradientMatrix(endY: Float, startY: Float, endX: Float, startX: Float) {
+        val angle = Math.toDegrees(atan2((endY - startY).toDouble(), (endX - startX).toDouble())).toFloat()
+        gradientMatrix.apply {
+            reset()
+            //将渐变从原点 (0,0) 平移到实际的起点位置 (startX, startY)
+            postTranslate(startX, startY)
+            //绕着新的起点 (startX, startY) 旋转渐变方向，使其指向终点
+            postRotate(angle)
+            //将计算好的 Matrix 应用到 LinearGradient 上，Shader 就会按照变换后的坐标进行渲染。
+            linearGradient?.setLocalMatrix(this)
         }
     }
 
