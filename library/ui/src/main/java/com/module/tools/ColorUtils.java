@@ -124,4 +124,174 @@ public class ColorUtils {
     public static int shiftColorUp(@ColorInt int color) {
         return shiftColor(color, 1.1f);
     }
+
+    //<editor-fold desc="预制渐变颜色数组">
+
+    /**
+     * 冰蓝光晕：冷色调玻璃高光效果，适合 Surface 扫光
+     */
+    public static final int[] ICE_BLUE = {
+            Color.TRANSPARENT,
+            Color.parseColor("#1A00BFFF"),
+            Color.parseColor("#5587CEEB"),
+            Color.parseColor("#CCE0FFFF"),
+            Color.parseColor("#FFFFFF"),
+            Color.parseColor("#CCE0FFFF"),
+            Color.parseColor("#5587CEEB"),
+            Color.parseColor("#1A00BFFF"),
+            Color.TRANSPARENT
+    };
+
+    /**
+     * 金色流光：暖色调金属光泽效果
+     */
+    public static final int[] GOLDEN_SHIMMER = {
+            Color.TRANSPARENT,
+            Color.parseColor("#10FFD700"),
+            Color.parseColor("#55FFA500"),
+            Color.parseColor("#BBFFD700"),
+            Color.parseColor("#FFFFFF"),
+            Color.parseColor("#BBFFD700"),
+            Color.parseColor("#55FFA500"),
+            Color.parseColor("#10FFD700"),
+            Color.TRANSPARENT
+    };
+
+    /**
+     * 日落暖光：橙红渐变，从暗到亮的暖色
+     */
+    public static final int[] SUNSET_GLOW = {
+            Color.parseColor("#0DFF4500"),
+            Color.parseColor("#33FF6347"),
+            Color.parseColor("#66FFD700"),
+            Color.parseColor("#CCFF4500"),
+            Color.parseColor("#FFFF6347")
+    };
+
+    /**
+     * 极光绿：青绿到亮白的北极光效果
+     */
+    public static final int[] AURORA_GREEN = {
+            Color.TRANSPARENT,
+            Color.parseColor("#1000FF7F"),
+            Color.parseColor("#3300CED1"),
+            Color.parseColor("#7700FF7F"),
+            Color.parseColor("#CC7FFFD4"),
+            Color.parseColor("#FFFFFF"),
+            Color.parseColor("#CC7FFFD4"),
+            Color.parseColor("#7700FF7F"),
+            Color.parseColor("#3300CED1"),
+            Color.parseColor("#1000FF7F"),
+            Color.TRANSPARENT
+    };
+
+    /**
+     * 赛博紫：紫到品红的霓虹效果
+     */
+    public static final int[] CYBER_PURPLE = {
+            Color.TRANSPARENT,
+            Color.parseColor("#159B59FF"),
+            Color.parseColor("#33BF40BF"),
+            Color.parseColor("#77D500F9"),
+            Color.parseColor("#BBE040FB"),
+            Color.parseColor("#FFE040FB"),
+            Color.parseColor("#BBE040FB"),
+            Color.parseColor("#77D500F9"),
+            Color.parseColor("#33BF40BF"),
+            Color.parseColor("#159B59FF"),
+            Color.TRANSPARENT
+    };
+
+    /**
+     * 玫瑰金：粉金色调的柔和光泽
+     */
+    public static final int[] ROSE_GOLD = {
+            Color.TRANSPARENT,
+            Color.parseColor("#15FFB6C1"),
+            Color.parseColor("#44F4A460"),
+            Color.parseColor("#77FFDAB9"),
+            Color.parseColor("#BBFFB6C1"),
+            Color.parseColor("#FFFAF0E6"),
+            Color.parseColor("#BBFFB6C1"),
+            Color.parseColor("#77FFDAB9"),
+            Color.parseColor("#44F4A460"),
+            Color.parseColor("#15FFB6C1"),
+            Color.TRANSPARENT
+    };
+
+    /**
+     * 翡翠青：深青到浅绿的玉石质感
+     */
+    public static final int[] JADE_CYAN = {
+            Color.TRANSPARENT,
+            Color.parseColor("#15008B8B"),
+            Color.parseColor("#33008080"),
+            Color.parseColor("#6620B2AA"),
+            Color.parseColor("#AA40E0D0"),
+            Color.parseColor("#DDA0FFE0"),
+            Color.parseColor("#AA40E0D0"),
+            Color.parseColor("#6620B2AA"),
+            Color.parseColor("#33008080"),
+            Color.parseColor("#15008B8B"),
+            Color.TRANSPARENT
+    };
+
+    /**
+     * 银白闪光：纯白金属高光扫过效果
+     */
+    public static final int[] SILVER_FLASH = {
+            Color.TRANSPARENT,
+            Color.parseColor("#0AC0C0C0"),
+            Color.parseColor("#22D3D3D3"),
+            Color.parseColor("#55E8E8E8"),
+            Color.parseColor("#AAF0F0F0"),
+            Color.parseColor("#DDFFFFFF"),
+            Color.parseColor("#FFFFFF"),
+            Color.parseColor("#DDFFFFFF"),
+            Color.parseColor("#AAF0F0F0"),
+            Color.parseColor("#55E8E8E8"),
+            Color.parseColor("#22D3D3D3"),
+            Color.parseColor("#0AC0C0C0"),
+            Color.TRANSPARENT
+    };
+
+    /**
+     * 钴蓝烈焰：深蓝到亮蓝的高对比光带
+     */
+    public static final int[] COBALT_FLAME = {
+            Color.TRANSPARENT,
+            Color.parseColor("#150000CD"),
+            Color.parseColor("#331E90FF"),
+            Color.parseColor("#664169E1"),
+            Color.parseColor("#AA6495ED"),
+            Color.parseColor("#DD87CEEB"),
+            Color.parseColor("#FFADD8E6"),
+            Color.parseColor("#DD87CEEB"),
+            Color.parseColor("#AA6495ED"),
+            Color.parseColor("#664169E1"),
+            Color.parseColor("#331E90FF"),
+            Color.parseColor("#150000CD"),
+            Color.TRANSPARENT
+    };
+
+    /**
+     * 薄暮橙粉：从暗紫到橙粉的晚霞效果
+     */
+    public static final int[] DUSK_CORAL = {
+            Color.TRANSPARENT,
+            Color.parseColor("#15FF7F50"),
+            Color.parseColor("#33FF6B6B"),
+            Color.parseColor("#66FF8C69"),
+            Color.parseColor("#AAFFA07A"),
+            Color.parseColor("#DDFFB347"),
+            Color.parseColor("#FFFFD700"),
+            Color.parseColor("#DDFFB347"),
+            Color.parseColor("#AAFFA07A"),
+            Color.parseColor("#66FF8C69"),
+            Color.parseColor("#33FF6B6B"),
+            Color.parseColor("#15FF7F50"),
+            Color.TRANSPARENT
+    };
+
+    //</editor-fold>
 }
