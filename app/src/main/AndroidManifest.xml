@@ -57,6 +57,12 @@
             android:name="com.kingz.four_components.provider.KingZProvider"
             android:authorities="${packageName}"
             android:exported="false" />
+
+        <provider
+            android:name="com.kingz.pages.DemoPageInitProvider"
+            android:authorities="${packageName}.DemoPageInitProvider"
+            android:exported="false"
+            android:initOrder="999" />
         <!--android:authorities="${packageName}.BmobContentProvider">-->
 
 
@@ -168,12 +174,6 @@
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme"
             tools:ignore="LockedOrientationActivity" />
-
-        <activity
-            android:name="com.kingz.pages.photo.memory.MemoryCheck"
-            android:screenOrientation="fullSensor"
-            android:theme="@style/AppTheme" />
-
 
         <!--文件管理页面-->
         <activity

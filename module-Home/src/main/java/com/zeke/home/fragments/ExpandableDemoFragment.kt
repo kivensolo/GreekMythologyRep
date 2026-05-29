@@ -83,7 +83,7 @@ class ExpandableDemoFragment : BaseFragment(), DemoContract.View,
         activity!!.overridePendingTransition(R.anim.zoom_enter, R.anim.zoom_exit)
         val data = expandAdapter!!.getChild(groupPosition, childPosition) as DemoSample
         if(data.isRouterMode()){
-            Router.startActivity(data.path)
+            Router.startActivity(data.registKey)
         }else{
             val intent = data.buildIntent(activity!!)
             if (intent == null) {

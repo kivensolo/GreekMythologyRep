@@ -26,7 +26,7 @@ import com.zeke.demo.databinding.PageFragemntsLifecycleBinding
  *      完成onPause()-onDetach()周期
  *
  */
-class FragementLifeCycleTestPage:BaseActivity() {
+class FragmentLifeCycleTestPage:BaseActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,13 +34,13 @@ class FragementLifeCycleTestPage:BaseActivity() {
         setContentView(R.layout.page_fragemnts_lifecycle)
         var viewBind:PageFragemntsLifecycleBinding = PageFragemntsLifecycleBinding.inflate(layoutInflater)
         viewBind.changeA.setOnClickListener {
-            changeFragment(this@FragementLifeCycleTestPage.findViewById(R.id.fragment_a))
+            changeFragment(this@FragmentLifeCycleTestPage.findViewById(R.id.fragment_a))
         }
         viewBind.changeA2.setOnClickListener {
-            changeFragment(this@FragementLifeCycleTestPage.findViewById(R.id.fragment_b))
+            changeFragment(this@FragmentLifeCycleTestPage.findViewById(R.id.fragment_b))
         }
         viewBind.changeA3.setOnClickListener {
-            changeFragment(this@FragementLifeCycleTestPage.findViewById(R.id.fragment_c))
+            changeFragment(this@FragmentLifeCycleTestPage.findViewById(R.id.fragment_c))
 
         }
     }

@@ -2,6 +2,7 @@ package com.kingz.module.common.bean
 
 import android.content.Context
 import android.content.Intent
+import com.kingz.module.common.router.DemoPageRegistry
 
 /**
  * author：KingZ
@@ -29,19 +30,21 @@ abstract class ISampleEntity {
 
 /**
  * 每一个Demo实例的数据类
- * @param path 页面路径 可以是AroutPath，也可以是直接的class包路径
+ * @param registKey 路径注册key，或者路由path
  */
 data class DemoSample(var name: String? = "unKnow",
-                      var path: String = "") : ISampleEntity() {
+                      var registKey: String = "") : ISampleEntity() {
     private val cacheClass = HashMap<String?, Class<*>>()
 
     override fun getDemoClass(): Class<*>? {
-        if (cacheClass.containsKey(path)) {
-            return cacheClass[path]
+        val targetPath = DemoPageRegistry.getPath(registKey) ?: registKey
+
+        if (cacheClass.containsKey(targetPath)) {
+            return cacheClass[targetPath]
         }
         try {
-            val clazzObj = Class.forName(path)
-            cacheClass[path] = clazzObj
+            val clazzObj = Class.forName(targetPath)
+            cacheClass[targetPath] = clazzObj
             return clazzObj
         } catch (e: ClassNotFoundException) {
             e.printStackTrace()
@@ -50,6 +53,6 @@ data class DemoSample(var name: String? = "unKnow",
     }
 
     fun isRouterMode():Boolean{
-        return path.startsWith("/")
+        return registKey.startsWith("/")
     }
 }
