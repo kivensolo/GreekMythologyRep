@@ -3,34 +3,32 @@ package com.zeke.home.fragments
 import android.app.ActivityOptions
 import android.os.Bundle
 import android.view.View
-import android.widget.ExpandableListView
 import android.widget.Toast
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.kingz.module.common.BaseActivity
 import com.kingz.module.common.base.BaseFragment
 import com.kingz.module.common.bean.DemoGroup
 import com.kingz.module.common.bean.DemoSample
 import com.kingz.module.common.router.Router
-import com.kingz.module.common.setting.SettingUtil
 import com.kingz.module.home.R
-import com.zeke.home.adapter.DemoFragmentExpandableListAdapter
+import com.zeke.home.adapter.DemoGroupAdapter
 import com.zeke.home.contract.DemoContract
 import com.zeke.home.presenters.DemoPresenter
-import com.zeke.kangaroo.view.animation.AnimatedExpandableListView
-import com.zeke.kangaroo.zlog.ZLog
-
 
 /**
  * author：KingZ
  * date：2020/2/15
- * description：动画伸缩扩展列表的Demo样例Fragment
+ * uodated：2026/5/29
+ * description：Demo样例Fragment，使用RecyclerView展示分组可折叠列表
  */
-class ExpandableDemoFragment : BaseFragment(), DemoContract.View,
-    ExpandableListView.OnChildClickListener, View.OnClickListener {
+class ExpandableDemoFragment : BaseFragment(), DemoContract.View, View.OnClickListener {
 
     private var mPresenter: DemoPresenter = DemoPresenter(this)
-    private var expandAdapter: DemoFragmentExpandableListAdapter? = null
-    private var listView: AnimatedExpandableListView? = null
-
+    private var adapter: DemoGroupAdapter? = null
+    private var recyclerView: RecyclerView? = null
 
     override val isShown: Boolean
         get() = activity != null && (activity as BaseActivity).isActivityShow && isVisible
@@ -39,11 +37,9 @@ class ExpandableDemoFragment : BaseFragment(), DemoContract.View,
 
     override fun showLoading() {}
 
-    override fun showError() {
-    }
+    override fun showError() {}
 
-    override fun showEmpty() {
-    }
+    override fun showEmpty() {}
 
     override fun showMessage(tips: String) {}
 
@@ -52,40 +48,43 @@ class ExpandableDemoFragment : BaseFragment(), DemoContract.View,
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        listView = rootView?.findViewById(android.R.id.list)
-        expandAdapter = DemoFragmentExpandableListAdapter(context)
-        listView?.apply {
-            setAdapter(expandAdapter)
-            setOnGroupClickListener(ImpOnGroupClickListener())
-            setOnChildClickListener(this@ExpandableDemoFragment)
+        recyclerView = rootView?.findViewById(R.id.recycler_view)
+        recyclerView?.apply {
+            layoutManager = LinearLayoutManager(context)
+            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+            isNestedScrollingEnabled = false // 滚动事件让 RecyclerView 自己处理滚动。
+            (itemAnimator as? DefaultItemAnimator)?.let {
+                it.supportsChangeAnimations = false //禁止 change 时的交叉淡入淡出
+                it.addDuration = 0  // 插入子项时不再有淡入动画
+                it.removeDuration = 0 //移除子项立即移除，无淡出延迟
+            }
         }
+
+        adapter = DemoGroupAdapter { sample -> navigateToPage(sample) }
+        recyclerView?.adapter = adapter
+
         mPresenter.getDemoInfo(activity!!)
     }
 
     override fun onResume() {
         super.onResume()
-        expandAdapter?.updateCheckedColor(SettingUtil.getAppThemeColor())
+        adapter?.updateThemeColor(com.kingz.module.common.setting.SettingUtil.getAppThemeColor())
     }
-
 
     override fun showDemoInfo(data: MutableList<DemoGroup>) {
-        ZLog.d(TAG, "showRecomInfo()~~")
-        expandAdapter!!.setSampleGroups(data)
+        adapter?.setData(data)
     }
 
+    override fun onClick(v: View?) {}
 
-    override fun onClick(v: View?) {
-    }
-
-    override fun onChildClick(parent: ExpandableListView?, v: View?, groupPosition: Int, childPosition: Int, id: Long): Boolean {
+    private fun navigateToPage(sample: DemoSample) {
         val opts = ActivityOptions.makeCustomAnimation(activity, R.anim.fade, R.anim.hold)
-//		ActivityOptions opts = ActivityOptions.makeScaleUpAnimation(v, 0, 0, v.getWidth(), v.getHeight());
-        activity!!.overridePendingTransition(R.anim.zoom_enter, R.anim.zoom_exit)
-        val data = expandAdapter!!.getChild(groupPosition, childPosition) as DemoSample
-        if(data.isRouterMode()){
-            Router.startActivity(data.registKey)
-        }else{
-            val intent = data.buildIntent(activity!!)
+        activity?.overridePendingTransition(R.anim.zoom_enter, R.anim.zoom_exit)
+
+        if (sample.isRouterMode()) {
+            Router.startActivity(sample.registKey)
+        } else {
+            val intent = sample.buildIntent(activity!!)
             if (intent == null) {
                 Toast.makeText(activity,
                     "Target page resolve failed.Please confirm class path!",
@@ -94,22 +93,5 @@ class ExpandableDemoFragment : BaseFragment(), DemoContract.View,
                 startActivity(intent, opts.toBundle())
             }
         }
-
-        return true
     }
-
-    private inner class ImpOnGroupClickListener : ExpandableListView.OnGroupClickListener {
-
-        override fun onGroupClick(parent: ExpandableListView, v: View, groupPosition: Int, id: Long): Boolean {
-            // We call collapseGroupWithAnimation(int)/expandGroupWithAnimation(int) to animate group
-            // expansion/collapse.
-            if (listView!!.isGroupExpanded(groupPosition)) {
-                listView!!.collapseGroupWithAnimation(groupPosition)
-            } else {
-                listView!!.expandGroupWithAnimation(groupPosition)
-            }
-            return true
-        }
-    }
-
 }

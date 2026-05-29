@@ -78,6 +78,7 @@ public class ColorUtils {
     }
 
     /**
+     * 同 androidx.core.graphics.ColorUtils
      * 通过给定比例, 混合ARGB的色值;
      *
      * @param color1 第1个ARGB的颜色值

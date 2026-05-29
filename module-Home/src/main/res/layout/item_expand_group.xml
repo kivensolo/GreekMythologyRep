@@ -34,6 +34,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/parent_group"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:background="@drawable/ic_right_arrow"/>
+            android:src="@drawable/ic_right_arrow"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
