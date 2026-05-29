@@ -44,38 +44,66 @@ class FlashEnhanceActivity :BaseVMActivity() {
 
     //生成测试数据List
     private fun createDataList(): MutableList<FlashAttrsBean> {
-        val colorsArray = intArrayOf(
+        //冰蓝光晕：深天蓝 → 浅钢蓝 → 浅蓝白 → 纯白 → 浅蓝白 → ...，呈现冷色调的玻璃高光扫过效果
+        val surfaceColors = intArrayOf(
             Color.TRANSPARENT,
-            Color.parseColor("#39FF0000"),
-            Color.parseColor("#BF00FF00"),
-            Color.parseColor("#390000FF"),
+            Color.parseColor("#1A00BFFF"),
+            Color.parseColor("#5587CEEB"),
+            Color.parseColor("#CCE0FFFF"),
+            Color.parseColor("#FFFFFF"),
+            Color.parseColor("#CCE0FFFF"),
+            Color.parseColor("#5587CEEB"),
+            Color.parseColor("#1A00BFFF"),
             Color.TRANSPARENT
         )
         val list: MutableList<FlashAttrsBean> = ArrayList()
-        list.add(FlashAttrsBean(FlashEnhanceView.MODE_SURFACE, colorsArray,
+        list.add(FlashAttrsBean(FlashEnhanceView.MODE_SURFACE, surfaceColors,
             gradientRatio = 0.5f, angle = 0)
         )
-        list.add(FlashAttrsBean(FlashEnhanceView.MODE_SURFACE,colorsArray,
+        list.add(FlashAttrsBean(FlashEnhanceView.MODE_SURFACE, surfaceColors,
             gradientRatio = 0.5f, angle = 135))
 
-        val paralleColorsArray = intArrayOf(
+        //金色流光：金橙 → 纯金 → 亮白 → 纯金 → 金橙，呈现暖色调的金属光泽扫边效果
+        val edgeRaceColors = intArrayOf(
             Color.TRANSPARENT,
-            Color.parseColor("#39FF0000"),
-            Color.parseColor("#BF00FF00"),
-            Color.parseColor("#390000FF"),
+            Color.parseColor("#10FFD700"),
+            Color.parseColor("#55FFA500"),
+            Color.parseColor("#BBFFD700"),
+            Color.parseColor("#FFFFFF"),
+            Color.parseColor("#BBFFD700"),
+            Color.parseColor("#55FFA500"),
+            Color.parseColor("#10FFD700"),
             Color.TRANSPARENT
         )
-        list.add(FlashAttrsBean(mode = FlashEnhanceView.MODE_EDGE_RACE, colors = paralleColorsArray, gradientRatio = 0.6f, angle = 225))
-        list.add(FlashAttrsBean(mode = FlashEnhanceView.MODE_EDGE_RACE, colors = paralleColorsArray, gradientRatio = 0.6f, angle = 45))
-
-        val greedyColorsArray = intArrayOf(
-            Color.parseColor("#190000FF"),
-            Color.parseColor("#330000FF"),
-            Color.parseColor("#6600FF00"),
-            Color.parseColor("#FF00FF00"),
+        list.add(FlashAttrsBean(
+            mode = FlashEnhanceView.MODE_EDGE_RACE,
+            colors = edgeRaceColors,
+            gradientRatio = 0.6f,
+            angle = 0)
         )
-        list.add(FlashAttrsBean(mode = FlashEnhanceView.MODE_EDGE_GREEDY, colors = greedyColorsArray, gradientRatio = 0.6f, angle = 0))
-        list.add(FlashAttrsBean(mode = FlashEnhanceView.MODE_EDGE_GREEDY, colors = greedyColorsArray, gradientRatio = 0.6f, angle = 180))
+        list.add(FlashAttrsBean(
+            mode = FlashEnhanceView.MODE_EDGE_RACE,
+            colors = edgeRaceColors,
+            gradientRatio = 0.6f,
+            angle = 45)
+        )
+
+        list.add(FlashAttrsBean(
+            mode = FlashEnhanceView.MODE_EDGE_GREEDY,
+            interval = 0,
+            gradientRatio = 0.6f,
+            angle = 0)
+        )
+        list.add(FlashAttrsBean(
+            mode = FlashEnhanceView.MODE_EDGE_GREEDY,
+            interval = 1000,
+            gradientRatio = 0.6f,
+            angle = 180)
+        )
+        list.add(FlashAttrsBean(
+            mode = FlashEnhanceView.MODE_EDGE_GREEDY,
+            autoRun = false)
+        )
         return list
     }
 }

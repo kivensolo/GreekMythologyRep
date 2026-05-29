@@ -11,6 +11,7 @@ import android.graphics.Color
 import android.graphics.LinearGradient
 import android.graphics.Matrix
 import android.graphics.Paint
+import android.graphics.PointF
 import android.graphics.Rect
 import android.graphics.Shader
 import android.graphics.SweepGradient
@@ -36,13 +37,17 @@ import kotlin.math.sin
  * 支持总时长、间隔时间、运动起始角度、光带渲染模式、渲染次数等功能的控制。
  *
  * 支持3种光带模式：
- * - surface: 表面扫光效果，光带从一侧扫到另一侧. (使用LinearGradient创建线性渐变)
+ * -  Surface 模式
+ *      通过角度计算路径起终点，每帧用 progress 在路径上插值得到光带中心位置，
+ *      再根据方向向量和光带长度计算渐变起止坐标，直接创建 LinearGradient 渲染。
  * - edge_race: 边缘竞赛效果，2条光带从起点出发
+ *      与 Surface 模式类似但使用 Paint.Style.STROKE，光带沿边缘移动。
  * - edge_greedy: 边缘贪吃蛇效果，光带围绕View边缘顺时针转动. (使用SweepGradient + Matrix旋转实现环绕效果)
+ *      SweepGradient 以 View 中心为原点创建扫描渐变，
+ *      通过 Matrix.preRotate(rotateAngle) 旋转 Shader实现光带环绕边框旋转。
  *
  * 使用 ValueAnimator 驱动动画。
  * 通过 updatePathParameters 计算路径参数
- *
  */
 class FlashEnhanceView @JvmOverloads constructor(
     context: Context,
@@ -98,19 +103,16 @@ class FlashEnhanceView @JvmOverloads constructor(
     //光带长度(即光带渐变渲染范围宽度)
     private var gradientLength = 0f
 
-    private var flashMovePathLength = 0f
-
-    // 光带起始点的横向偏移量
-    private var startOffsetX = 0f
-
-    // 光带起始点的竖向偏移量
-    private var startOffsetY = 0f
-
     // 起始点X轴的方向向量
     private var dirX = 0f
 
     // 起始点Y轴的方向向量
     private var dirY = 0f
+
+    // 动画开始时光带中心坐标点（View 外一侧）
+    private var pathStartCenterPoint: PointF = PointF()
+    // 动画结束时光带中心坐标点（View 外另一侧）
+    private var pathEndCenterPoint: PointF = PointF()
 
     private var mFlashRect: Rect? = null
 
@@ -132,8 +134,7 @@ class FlashEnhanceView @JvmOverloads constructor(
 
     //<editor-fold desc="Edge_greedy模式所需要的特有变量">
     private var matrix: Matrix? = null
-    private var viewCenterX: Float = 0f
-    private var viewCenterY: Float = 0f
+    private var viewCenterPoint: PointF = PointF()
     //</editor-fold>
 
     init {
@@ -258,49 +259,58 @@ class FlashEnhanceView @JvmOverloads constructor(
 
     private fun initAngle() {
         if(mFlashBeginAngle == -100){
-            mFlashBeginAngle = mTypedArray.getInt(R.styleable.flashEnhanceView_isAutoRun, 45)
+            mFlashBeginAngle = mTypedArray.getInt(R.styleable.flashEnhanceView_beginAngle, 45)
         }
     }
 
     /**
      * 更新光带运动的相关参数。
      *
-     * 以Surface样式的光带为例简单说明：根据角度计算光带路径、起始点等参数，是实现运动轨迹的核心算法函数。
+     * 根据角度计算光带路径起终点等参数，是实现运动轨迹的核心算法函数。
      * 核心步骤：
-     * 1. 通过标准坐标系将角度转为弧度(极坐标)
-     * 2. 通过极坐标计算起始点的方向向量（注意是起始点）
-     * [极坐标转换 ：将角度转为方向向量，实现任意角度的扫光效果]
-     * 0° → 右侧水平向左 (dirX=1, dirY=0)
-     * 45° → 右上往左下   (dirX=0.5, dirY=0.5)
-     * 90° → 从上往下移动 (dirX=0, dirY=1)
-     * 180° → 左侧水平向右 (dirX=-1, dirY=0)
-     * 225° → 左下往右上   (dirX=-0.5, dirY=0.5)
-     * 270° → 从下往上移动 (dirX=0, dirY=-1)
-     * 3. 计算光带运动轨迹范围和光带范围长度
-     * 4. 根计算初始偏移基准点坐标
+     * 1. 通过标准坐标系将角度转为弧度(极坐标)，再转为方向向量 (dirX, dirY)
+     * 2. 根据方向向量和 View 尺寸，计算路径起终点坐标 (pathStart/pathEnd)
+     *    路径长度 = 对角线 + 光带长度，保证光带完全进出 View
+     * 3. edge_greedy 模式额外初始化 SweepGradient
      */
     private fun updatePathParameters(viewWidth: Int, viewHeight: Int) {
+        // 极坐标转换：将角度（0°~360°）转为方向向量 (dirX, dirY)
         val mathRadians = Math.toRadians(mFlashBeginAngle.toDouble())
         dirX = cos(mathRadians).toFloat()
         dirY = sin(mathRadians).toFloat()
 
-        //View对角线长度作为视觉上光带最大移动距离
         val diagonalLine = hypot(viewWidth.toDouble(), viewHeight.toDouble()).toFloat()
-
-        //为保证光带完全移出View区域，设置实际移动距离为对角线的2.2倍
-        flashMovePathLength = diagonalLine * 2.2f
-
-        // 按视图比例设置光带长度
         gradientLength = diagonalLine * mGradientRatio
 
-        viewCenterX = viewWidth.toFloat() / 2
-        viewCenterY = viewHeight.toFloat() / 2
-        // 计算初始偏移基准点
-        startOffsetX = viewCenterX + dirX * diagonalLine
+        viewCenterPoint.apply {
+            x = viewWidth.toFloat() / 2
+            y = viewHeight.toFloat() / 2
+        }
+        val viewCenterX = viewCenterPoint.x
+        val viewCenterY = viewCenterPoint.y
 
-        // Y轴的计算需转为Android视图坐标系
-        startOffsetY = viewCenterY - dirY * diagonalLine
+        // 路径半长 = (对角线 + 光带长度) / 2，保证光带完全进出 View
+        val halfPath = (diagonalLine + gradientLength) / 2f
 
+        // 路径起终点：从角度反方向一侧进入，沿角度方向移出
+        // Android Y轴向下为正，标准坐标系 sin 向上为正，所以 Y 分量取反
+        val pathStartX = viewCenterX - dirX * halfPath
+        val pathStartY = viewCenterY + dirY * halfPath
+        pathStartCenterPoint.apply {
+            x = pathStartX
+            y = pathStartY
+        }
+
+        val pathEndX = viewCenterX + dirX * halfPath
+        val pathEndY = viewCenterY - dirY * halfPath
+        pathEndCenterPoint.apply {
+            x = pathEndX
+            y = pathEndY
+        }
+
+        if (mFlashColors.size < 2) {
+            return
+        }
         if(isEdgeGreedyMode()) {
             matrix?.let {
                 sweepGradient = SweepGradient(viewCenterX, viewCenterY, mFlashColors, null)
@@ -309,7 +319,11 @@ class FlashEnhanceView @JvmOverloads constructor(
                 mFlashPaint.shader = sweepGradient
             }
         } else {
-            linearGradient = LinearGradient(0f, 0f, gradientLength, 0f, mFlashColors, null, Shader.TileMode.CLAMP)
+            linearGradient = LinearGradient(
+                -gradientLength / 2f, 0f,
+                gradientLength / 2f, 0f,
+                mFlashColors, null, Shader.TileMode.CLAMP
+            )
             mFlashPaint.shader = linearGradient
         }
     }
@@ -341,61 +355,56 @@ class FlashEnhanceView @JvmOverloads constructor(
             animator.start();
         }
 
-        val offset = progress * flashMovePathLength
+        val viewCenterX = viewCenterPoint.x
+        val viewCenterY = viewCenterPoint.y
+        val pathStartX = pathStartCenterPoint.x
+        val pathStartY = pathStartCenterPoint.y
+        val pathEndX = pathEndCenterPoint.x
+        val pathEndY = pathEndCenterPoint.y
 
-        // 计算渐变起止点  Y轴的计算需转为Android视图坐标系，
-        val startX = startOffsetX - dirX * offset
-        val endX = startX - dirX * gradientLength
-        val startY = startOffsetY + dirY * offset
-        val endY = startY + dirY * gradientLength
-
-        if (isEdgeMode()) {
+        if (isEdgeGreedyMode()) {
             mFlashPaint.strokeWidth = mBorderFlashWidth.toFloat()
             mFlashPaint.style = Paint.Style.STROKE
-            if (isEdgeGreedyMode()) {
-                val rotateAngle = progress * 360 + mFlashBeginAngle //顺时针
-                matrix?.apply {
-                    reset()
-                    preRotate(rotateAngle, viewCenterX, viewCenterY)
-                    sweepGradient?.setLocalMatrix(this)
-                }
-            } else {
-                changeGradientMatrix(endY, startY, endX, startX)
+            val rotateAngle = progress * 360 + mFlashBeginAngle
+            matrix?.apply {
+                reset()
+                preRotate(rotateAngle, viewCenterX, viewCenterY)
+                sweepGradient?.setLocalMatrix(this)
             }
         } else {
-            changeGradientMatrix(endY, startY, endX, startX)
+            // Surface 和 Edge_Race：通过 progress 插值得到光带中心，用 Matrix 定位预创建的渐变
+            val cx = pathStartX + (pathEndX - pathStartX) * progress
+            val cy = pathStartY + (pathEndY - pathStartY) * progress
+
+            /*
+             * 计算路径方向在屏幕坐标系中的角度
+             * (pathEndX - pathStartX, pathEndY - pathStartY) 就是路径从起点到终点的方向向量。
+             * atan2 算出这个方向相对于正 X 轴的角度，
+             * Math.toDegrees 转为度数，范围 [-180°, 180°]
+             *
+             * 0°   左-->右   dx正  dy=0 atan2 = 0°
+             * 45°  左下→右上  dx正  dy负 atan2 = -45°
+             * 90°  下-->上   dx>0  dy负 atan2 = -90°
+             * 180° 右-->左   dx>负 dy=0 atan2 = 180°
+              */
+            val moveAngle = Math.toDegrees(
+                atan2((pathEndY - pathStartY).toDouble(), (pathEndX - pathStartX).toDouble())
+            ).toFloat()
+
+            gradientMatrix.reset()
+            //先将渐变旋转到运动方向
+            gradientMatrix.postRotate(moveAngle)
+            //再移到当前位置
+            gradientMatrix.postTranslate(cx, cy)
+            linearGradient?.setLocalMatrix(gradientMatrix)
+
+            if (isEdgeMode()) {
+                mFlashPaint.strokeWidth = mBorderFlashWidth.toFloat()
+                mFlashPaint.style = Paint.Style.STROKE
+            }
         }
         mFlashRect?.let {
             canvas.drawRect(it, mFlashPaint)
-        }
-    }
-
-    /**
-     * 改变渐变矩阵
-     * @param endY 渐变终点的Y坐标
-     * @param startY 渐变起始点的Y坐标
-     * @param endX 渐变终点的X坐标
-     * @param startX 渐变起始点的X坐标
-     *
-     * angle计算原理：
-     * 根据终点和起点的坐标差，计算出从起点到终点的角度。
-     *                     (endX, endY)
-     *                    ↗
-     *                   /
-     *                  /  角度 = atan2(Δy, Δx)
-     *                 θ /
-     * (startX, startY)●──────────────→ X轴
-     */
-    private fun changeGradientMatrix(endY: Float, startY: Float, endX: Float, startX: Float) {
-        val angle = Math.toDegrees(atan2((endY - startY).toDouble(), (endX - startX).toDouble())).toFloat()
-        gradientMatrix.apply {
-            reset()
-            //将渐变从原点 (0,0) 平移到实际的起点位置 (startX, startY)
-            postTranslate(startX, startY)
-            //绕着新的起点 (startX, startY) 旋转渐变方向，使其指向终点
-            postRotate(angle)
-            //将计算好的 Matrix 应用到 LinearGradient 上，Shader 就会按照变换后的坐标进行渲染。
-            linearGradient?.setLocalMatrix(this)
         }
     }
 

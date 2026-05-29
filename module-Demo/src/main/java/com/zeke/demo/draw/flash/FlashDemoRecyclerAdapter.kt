@@ -1,13 +1,22 @@
 package com.zeke.demo.draw.flash
 
+import android.graphics.Color
 import android.view.View
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.module.UIUtil
+import com.module.drawable.MarqueeBorderDrawable
 
 data class FlashAttrsBean(
     val mode:String = "",
-    val colors:IntArray = IntArray(0x00000),
+    //日落暖光配色：橙红 → 番茄红 → 金色 → 橙红 → 亮番茄红，从暗到亮的暖色渐变，在深色背景上会很好看
+    val colors:IntArray = intArrayOf(
+        Color.parseColor("#0DFF4500"),
+        Color.parseColor("#33FF6347"),
+        Color.parseColor("#66FFD700"),
+        Color.parseColor("#CCFF4500"),
+        Color.parseColor("#FFFF6347"),
+    ),
     val angle:Int = 0,
     val duration:Int = 4000,
     val interval:Int = 500,
@@ -65,6 +74,12 @@ class FlashDemoRecyclerAdapter(layoutResId: Int, data: MutableList<FlashAttrsBea
             it.mGradientRatio = item.gradientRatio
             it.mBorderFlashWidth =  UIUtil.dip2px(it.context, item.borderWidth.toFloat())
             it.mFlashStarted = item.autoRun
+        }
+
+        val itemPosition = getItemPosition(item)
+        if(itemPosition == (data.size -1)){
+            //最后一个，是用来测 MarqueeBorderDrawable 与FlashEnhanceView效果差别的
+            flashEnhanceView.background = MarqueeBorderDrawable(autoRun = true)
         }
     }
 
